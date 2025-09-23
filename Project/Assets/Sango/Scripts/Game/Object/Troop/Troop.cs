@@ -491,20 +491,20 @@ namespace Sango.Game
         static List<TroopMoveEvent> tempMoveEventList = new List<TroopMoveEvent>(32);
         static List<Cell> spellRangeCells = new List<Cell>(256);
         internal bool isMoving = false;
-        Cell moveToDest = null;
+        IRenderEventBase renderEvent = null;
 
         public bool MoveTo(Cell destCell)
         {
             if (destCell == cell)
             {
-                moveToDest = null;
+                renderEvent = null;
                 isMoving = false;
                 return true;
             }
 
-            if (moveToDest == cell)
+            if (renderEvent != null && renderEvent.IsDone)
             {
-                moveToDest = null;
+                renderEvent = null;
                 isMoving = false;
                 return true;
             }
@@ -524,18 +524,24 @@ namespace Sango.Game
                 Cell start = cell;
                 for (int i = 1; i < tempCellList.Count; i++)
                 {
+                    bool isLast = i == tempCellList.Count - 1;
                     Cell dest = tempCellList[i];
-                    RenderEvent.Instance.Add(new TroopMoveEvent()
+                    TroopMoveEvent @event = new TroopMoveEvent()
                     {
                         troop = this,
                         dest = dest,
                         start = start,
-                        isLastMove = i == tempCellList.Count - 1
-                    });
-                    moveToDest = dest;
+                        isLastMove = isLast
+                    };
+
+                    if(isLast)
+                        renderEvent = @event;
+
+                    RenderEvent.Instance.Add(@event);
                     start = dest;
                 }
-                if (moveToDest == null)
+
+                if (renderEvent == null)
                 {
                     isMoving = false;
                     return true;
@@ -992,6 +998,9 @@ namespace Sango.Game
                 ScenarioEvent.Event.OnTroopLeaveCell?.Invoke(lastCell, destCell);
 
             ScenarioEvent.Event.OnTroopEnterCell?.Invoke(cell, lastCell);
+#if SANGO_DEBUG
+            Sango.Log.Print($"{BelongForce.Name}的[{Name} 部队 移动=> ({destCell.x},{destCell.y})]");
+#endif
             if (isEndMove)
             {
                 destCell.troop = this;

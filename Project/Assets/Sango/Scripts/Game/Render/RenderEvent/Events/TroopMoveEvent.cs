@@ -4,32 +4,25 @@ using UnityEngine;
 
 namespace Sango.Game.Render
 {
-    public struct TroopMoveEvent : IRenderEventBase
+    public class TroopMoveEvent : RenderEventBase
     {
         public Troop troop;
         public Cell start;
         public Cell dest;
         public bool isLastMove;
 
-        public void Enter(Scenario scenario)
-        {
-        }
-
-        public void Exit(Scenario scenario)
-        {
-        }
-
-        public bool IsVisible()
+        public override bool IsVisible()
         {
             return troop.Render.IsVisible();
         }
 
-        public bool Update(Scenario scenario, float deltaTime)
+        public override bool Update(Scenario scenario, float deltaTime)
         {
             if(!IsVisible())
             {
                 troop.UpdateCell(dest, start, isLastMove);
-                return true;
+                IsDone = true;
+                return IsDone;
             }
 
             //troop.Render.SetSmokeShow();
@@ -47,14 +40,15 @@ namespace Sango.Game.Render
                 troop.Render.SetForward(dir);
                 troop.Render.SetPosition(newPos);
                 troop.UpdateCell(dest, start, isLastMove);
-                return true;
+                IsDone = true;
+                return IsDone;
             }
             else
             {
                 newPos.y = MapRender.QueryHeight(newPos);
                 troop.Render.SetForward(dir);
                 troop.Render.SetPosition(newPos);
-                return false;
+                return IsDone;
             }
         }
     }

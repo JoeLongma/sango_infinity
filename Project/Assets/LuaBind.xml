@@ -284,6 +284,10 @@
 	<word>WindowDialog</word>
 	<word>Sango.Game.ScenarioEvent</word>
 	<word>Sango.Game.ScenarioInfo</word>
-
+	
+	<word>Sango.Game.Render.RenderEvent</word>
+	<word>Sango.Game.Render.RenderEventBase</word>
+	<word>Sango.Game.Render.WindowEvent</word>
+	<word>Sango.Game.Render.TroopMoveEvent</word>
 
 </root>

@@ -4,6 +4,7 @@ using Sango.Game;
 using Sango.Loader;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.PackageManager.UI;
 using UnityEngine;
 
 namespace Sango
@@ -17,7 +18,7 @@ namespace Sango
             //public FairyGUI.Window fgui_instance;
             public UGUIWindow ugui_instance;
 
-            public bool hasValid()
+            public bool HasValid()
             {
                 //return fgui_instance != null || ugui_instance != null;
                 return ugui_instance != null;
@@ -33,6 +34,70 @@ namespace Sango
             {
                 //fgui_instance?.Hide();
                 ugui_instance?.Hide();
+            }
+
+            public void Call<T1>(string funcName, T1 arg1)
+            {
+                if (ugui_instance == null) return;
+                LuaFunction func = ugui_instance.GetFunction(funcName);
+                if (func != null)
+                    func.Call(ugui_instance.GetTable(), arg1);
+            }
+
+            public void Call<T1, T2>(string funcName, T1 arg1, T2 arg2)
+            {
+                if (ugui_instance == null) return;
+                LuaFunction func = ugui_instance.GetFunction(funcName);
+                if (func != null)
+                    func.Call(ugui_instance.GetTable(), arg1, arg2);
+            }
+
+            public void Call<T1, T2, T3>(string funcName, T1 arg1, T2 arg2, T3 arg3)
+            {
+                if (ugui_instance == null) return;
+                LuaFunction func = ugui_instance.GetFunction(funcName);
+                if (func != null)
+                    func.Call(ugui_instance.GetTable(), arg1, arg2, arg3);
+            }
+
+            public void Call<T1, T2, T3, T4>(string funcName, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+            {
+                if (ugui_instance == null) return;
+                LuaFunction func = ugui_instance.GetFunction(funcName);
+                if (func != null)
+                    func.Call(ugui_instance.GetTable(), arg1, arg2, arg3, arg4);
+            }
+
+            public void Call<T1, T2, T3, T4, T5>(string funcName, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
+            {
+                if (ugui_instance == null) return;
+                LuaFunction func = ugui_instance.GetFunction(funcName);
+                if (func != null)
+                    func.Call(ugui_instance.GetTable(), arg1, arg2, arg3, arg4, arg5);
+            }
+
+            public void Call<T1, T2, T3, T4, T5, T6>(string funcName, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
+            {
+                if (ugui_instance == null) return;
+                LuaFunction func = ugui_instance.GetFunction(funcName);
+                if (func != null)
+                    func.Call(ugui_instance.GetTable(), arg1, arg2, arg3, arg4, arg5, arg6);
+            }
+
+            public void Call<T1, T2, T3, T4, T5, T6, T7>(string funcName, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
+            {
+                if (ugui_instance == null) return;
+                LuaFunction func = ugui_instance.GetFunction(funcName);
+                if (func != null)
+                    func.Call(ugui_instance.GetTable(), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+            }
+
+            public void Call<T1, T2, T3, T4, T5, T6, T7, T8>(string funcName, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)
+            {
+                if (ugui_instance == null) return;
+                LuaFunction func = ugui_instance.GetFunction(funcName);
+                if (func != null)
+                    func.Call(ugui_instance.GetTable(), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
             }
         }
 

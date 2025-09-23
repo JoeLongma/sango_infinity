@@ -292,6 +292,7 @@ public static class LuaBinder
 		Sango_Singletion_Sango_Game_GameDataWrap.Register(L);
 		Sango_Singletion_Sango_Game_GameStateWrap.Register(L);
 		Sango_EventBaseWrap.Register(L);
+		Sango_Singletion_Sango_Game_Render_RenderEventWrap.Register(L);
 		L.BeginModule("Log");
 		Sango_Log_LogTypeWrap.Register(L);
 		L.EndModule();
@@ -354,6 +355,12 @@ public static class LuaBinder
 		Sango_Game_ScenarioEventWrap.Register(L);
 		Sango_Game_ScenarioInfoWrap.Register(L);
 		Sango_Game_SangoObjectWrap.Register(L);
+		L.BeginModule("Render");
+		Sango_Game_Render_RenderEventWrap.Register(L);
+		Sango_Game_Render_RenderEventBaseWrap.Register(L);
+		Sango_Game_Render_WindowEventWrap.Register(L);
+		Sango_Game_Render_TroopMoveEventWrap.Register(L);
+		L.EndModule();
 		L.EndModule();
 		L.BeginModule("EventBase");
 		L.RegFunction("EventDelegate_int_int", new LuaCSFunction(Sango_EventBase_EventDelegate_int_int));

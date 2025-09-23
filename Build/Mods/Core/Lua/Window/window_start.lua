@@ -1,3 +1,4 @@
+local Window = require "Window/window"
 ---@class Window_Start
 ---@param self Window_Start
 Window_Start = Class(Window)

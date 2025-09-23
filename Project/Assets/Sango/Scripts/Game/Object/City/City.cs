@@ -983,8 +983,19 @@ namespace Sango.Game
             if (escapeCity == null)
             {
                 Scenario.Cur.corpsSet.Remove(BelongCorps);
+#if SANGO_DEBUG
                 Sango.Log.Print($"{BelongForce.Name} 灭亡!!!");
+#endif
                 Scenario.Cur.forceSet.Remove(BelongForce);
+
+                WindowEvent windowEvent = new WindowEvent()
+                {
+                    windowName = "window_dialog",
+                    arg1 = $"{BelongForce.Name} 灭亡!!!"
+                };
+                RenderEvent.Instance.Add(windowEvent);
+
+
                 if (Scenario.Cur.forceSet.DataCount == 1)
                 {
                     Sango.Log.Print($"{atk.BelongForce.Name} 统一!!!!!!!!!!!!!!");
