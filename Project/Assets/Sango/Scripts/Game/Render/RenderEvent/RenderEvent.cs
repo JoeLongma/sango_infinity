@@ -5,7 +5,7 @@ namespace Sango.Game.Render
     public class RenderEvent : Singletion<RenderEvent>
     {
         Queue<IRenderEventBase> eventQueue = new Queue<IRenderEventBase>();
-        IRenderEventBase CurEvent;
+        IRenderEventBase CurEvent { get; set; }
         public void Add(IRenderEventBase renderEvent)
         {
             eventQueue.Enqueue(renderEvent);

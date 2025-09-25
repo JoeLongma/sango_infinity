@@ -170,6 +170,7 @@ namespace Sango.Render
         public int objId { get; set; }
         public int objType { get; set; }
         public int modelId { get; set; }
+        public string modelAsset { get; set; }
         public int bindId { get; set; }
         public bool selectable { get; set; }
         public bool isStatic { get; set; }

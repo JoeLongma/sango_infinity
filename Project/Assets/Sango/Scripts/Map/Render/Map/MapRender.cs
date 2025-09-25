@@ -116,7 +116,7 @@ namespace Sango.Render
                     if(!string.IsNullOrEmpty(config.texture))
                         obj.CreateModel($"Assets/Model/{config.model}", $"Assets/Texture/{config.texture}", config.ShaderName, config.isShardMat);
                     else
-                        obj.CreateModel(null, config.model);
+                        obj.CreateModel(config.model);
                 }
 
             }

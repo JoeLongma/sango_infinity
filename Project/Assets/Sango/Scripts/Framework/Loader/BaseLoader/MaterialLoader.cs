@@ -38,7 +38,7 @@ namespace Sango.Loader
                 return GameObject.Instantiate(mat);
             }
 
-            return defaultMaterial;
+            return null;
         }
 
     }

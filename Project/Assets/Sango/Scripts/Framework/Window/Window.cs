@@ -286,7 +286,7 @@ namespace Sango
             //else
             {
 
-                UnityEngine.Object winObj = ObjectLoader.LoadObject<UnityEngine.GameObject>($"UI:Assets/UI/Prefab/{windowName}.prefab");
+                UnityEngine.Object winObj = ObjectLoader.LoadObject<UnityEngine.GameObject>($"Assets/UI/Prefab/{windowName}.prefab");
                 if (winObj != null)
                 {
                     GameObject uguiWinObj = GameObject.Instantiate(winObj) as GameObject;

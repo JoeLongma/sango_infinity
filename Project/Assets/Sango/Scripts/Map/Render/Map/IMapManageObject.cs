@@ -9,6 +9,7 @@ namespace Sango.Render
         int objId { get; set; }
         int objType { get; set; }
         int bindId { get; set; }
+        string modelAsset { get; set; }
 
         int modelId { get; set; }
         bool visible { get; set; }

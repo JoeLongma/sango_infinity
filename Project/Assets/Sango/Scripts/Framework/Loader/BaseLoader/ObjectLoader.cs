@@ -217,26 +217,32 @@ namespace Sango.Loader
             }
             else
             {
-                if (objType == TextureType)
+                UnityEngine.Object obj = null;
+                if (objType == TextureType && ps.Length > 1)
                 {
-                    return TextureLoader.LoadFromFileSync(objName, (bool)ps[0], (bool)ps[1]);
+                    obj = TextureLoader.LoadFromFileSync(objName, (bool)ps[0], (bool)ps[1]);
                 }
-                else if (objType == MaterialType)
+                else if (objType == MaterialType && ps.Length > 0)
                 {
-                    return MaterialLoader.LoadMaterial(objName, (bool)ps[0]);
+                    obj = MaterialLoader.LoadMaterial(objName, (bool)ps[0]);
                 }
-                else if (objType == GameObjectType)
+                else if (objType == GameObjectType && ps.Length > 3)
                 {
-                    return ModelLoader.LoadFromFileSync(objName, (string)ps[0], (bool)ps[1], (string)ps[2], (bool)ps[3]);
+                    obj = ModelLoader.LoadFromFileSync(objName, (string)ps[0], (bool)ps[1], (string)ps[2], (bool)ps[3]);
                 }
                 else if (objType == SpriteType)
                 {
-                    return SpriteLoader.LoadSprite(objName);
+                    obj = SpriteLoader.LoadSprite(objName);
                 }
-            }
-            return null;
-        }
 
+                if(obj == null)
+                {
+                    obj = LoadObject(assetName, "Content", objType, ps);
+                }
+
+                return obj;
+            }
+        }
 
         public static T LoadObject<T>(string assetName, params object[] ps) where T : UnityEngine.Object
         {

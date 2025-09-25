@@ -3,7 +3,9 @@ using Sango.Game.Render;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TreeEditor;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace Sango.Game
 {
@@ -652,8 +654,10 @@ namespace Sango.Game
             return base.OnDayStart(scenario);
         }
 
-        public void OnBuildingComplete(Building building)
+        public void OnBuildingComplete(Building building, Person builder)
         {
+            if(builder != null)
+                builder.merit += building.durability / 10;
             this.CalculateHarvest();
         }
 
@@ -1174,6 +1178,7 @@ namespace Sango.Game
             {
                 int value = person.BaseCommerceAbility;
                 commerce += value;
+                person.merit += value;
                 freePersons.Remove(person);
 #if SANGO_DEBUG
                 stringBuilder.Append(person.Name);
@@ -1182,6 +1187,8 @@ namespace Sango.Game
                 gold -= goldNeed;
                 person.ActionOver = true;
                 count--;
+
+
 
                 if (commerce > CityLevelType.maxCommerce)
                 {
@@ -1222,6 +1229,7 @@ namespace Sango.Game
 
                 int value = person.BaseSecurityAbility;
                 security += value;
+                person.merit += value;
                 freePersons.Remove(person);
 #if SANGO_DEBUG
                 stringBuilder.Append(person.Name);
@@ -1279,6 +1287,7 @@ namespace Sango.Game
                             Sango.Log.Print($"[{BelongForce.Name}]<{Name}>的{person.Name}发现了人才->{wild_dest.Name}");
 #endif
                             wild_dest.beFinded = true;
+                            person.merit += 100;
                             person.ActionOver = true;
                         }
                     }
@@ -1295,12 +1304,14 @@ namespace Sango.Game
                 // 搜索钱财
                 if (!person.ActionOver && GameRandom.Changce((int)(10 * ability_improve)))
                 {
+                    person.merit += 50;
                     person.ActionOver = true;
                 }
 
                 //TODO: 触发事件
 
                 // 什么也没找到
+                person.merit += 10;
                 freePersons.Remove(person);
                 person.ActionOver = true;
             }
@@ -1359,6 +1370,8 @@ namespace Sango.Game
                     population -= value;
                 }
                 troops += value;
+                person.merit += value / 10;
+
                 // TODO: 治安减少
                 security -= 10 * value / 1000;
                 freePersons.Remove(person);

@@ -4436,7 +4436,7 @@
       ],
       "desc": "标准装备的兵装，威力是最弱的",
       "icon": "ui://game/4845_7_0",
-      "model": 32,
+      "model": "Assets/Model/Prefab/Troops 1.prefab",
       "aniIds": [
         13,
         14,
@@ -4499,7 +4499,7 @@
       ],
       "desc": "有利于对付骑兵，但不利于戟兵",
       "icon": "ui://game/4845_7_1",
-      "model": 32,
+      "model": "Assets/Model/Prefab/Troops 2.prefab",
       "aniIds": [
         10,
         11,
@@ -4562,7 +4562,7 @@
       ],
       "desc": "有利于对付枪兵，但不利于骑兵",
       "icon": "ui://game/4845_7_2",
-      "model": 32,
+      "model": "Assets/Model/Prefab/Troops 3.prefab",
       "aniIds": [
         1,
         2,
@@ -4625,7 +4625,7 @@
       ],
       "desc": "可对２区格之外的敌人执行弓箭攻击",
       "icon": "ui://game/4845_7_3",
-      "model": 33,
+      "model": "Assets/Model/Prefab/Troops 4.prefab",
       "aniIds": [
         7,
         8,
@@ -4688,7 +4688,7 @@
       ],
       "desc": "有利于对付戟兵，但不利于枪兵",
       "icon": "ui://game/4845_7_4",
-      "model": 32,
+      "model": "Assets/Model/Prefab/Troops 5.prefab",
       "aniIds": [
         4,
         5,

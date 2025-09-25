@@ -14,12 +14,14 @@ namespace Sango.Game.Render
 
             MapObject = MapObject.Create(Troop.Name + "队");
             MapObject.objType = Troop.TroopType.Id;
-            MapObject.modelId = Troop.TroopType.model;
+            MapObject.modelId = Troop.TroopType.Id;
+            MapObject.modelAsset = Troop.TroopType.model;
             MapObject.transform.position = troop.cell.Position;
             MapObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
             MapObject.transform.localScale = Vector3.one;
             MapObject.bounds = new Sango.Tools.Rect(0, 0, 32, 32);
             MapObject.modelLoadedCallback = OnModelLoaded;
+            MapObject.onModelVisibleChange = OnModelVisibleChange;
             MapRender.Instance.AddDynamic(MapObject);
 
             GameObject obj = GameObject.Instantiate(Resources.Load<GameObject>("TroopName")) as GameObject;
@@ -32,10 +34,34 @@ namespace Sango.Game.Render
 
         void OnModelLoaded(GameObject obj)
         {
-            Renderer[] renderers = MapObject.GetComponentsInChildren<Renderer>(true);
-            for (int i = 0; i < renderers.Length; i++)
+            //TroopsRender troopsRender = obj.GetComponent<TroopsRender>();
+            //if(troopsRender != null )
+            //{
+
+            //}
+
+            //FlagRender flagRender = obj.GetComponent<FlagRender>();
+            //if (flagRender != null)
+            //{
+            //    flagRender.Init(Troop);
+            //}
+        }
+
+        void OnModelVisibleChange(MapObject obj)
+        {
+            if (obj.visible == false) return;
+
+            TroopsRender troopsRender = obj.GetComponentInChildren<TroopsRender>(true);
+            if (troopsRender != null)
             {
-                renderers[i].material.SetColor("_BaseColor", Troop.BelongForce.Flag.color);
+
+            }
+
+
+            FlagRender flagRender = obj.GetComponentInChildren<FlagRender>(true);
+            if (flagRender != null)
+            {
+                flagRender.Init(Troop);
             }
         }
 

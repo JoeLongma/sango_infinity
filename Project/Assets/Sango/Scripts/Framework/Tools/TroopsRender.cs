@@ -10,6 +10,12 @@ namespace Sango
     /// </summary>
     public class TroopsRender : MonoBehaviour
     {
+        public enum TroopAniType : int
+        {
+            Move = 0,
+            Attack = 1,
+            Max = 2,
+        } 
 
         /// <summary>
         /// 顶点偏移,以底部中间为基准
@@ -44,8 +50,10 @@ namespace Sango
         MaterialPropertyBlock _mpb;
         private Mesh mesh;
         public Material material;
-        Material _instanceMaterial;
-        private float meshScale = 1;
+        public Material [] aniMaterials = new Material[(int)TroopAniType.Max];
+
+        public float meshScale = 1;
+        public float totalScale = 1;
         private int elementCount = 60;
         public int showCount = 60;
         public ParticleSystem smoke;
@@ -81,7 +89,7 @@ namespace Sango
             if (mesh == null) return;
 
             int count = elementCount;
-            Vector3 srcScale = transform.lossyScale;
+            Vector3 srcScale = transform.lossyScale * totalScale;
             for (int i = 0; i < count; ++i)
             {
                 mPositions[i] = transform.rotation * Vector3.Scale(HexToPosition(hexList[i]), srcScale);
@@ -93,7 +101,7 @@ namespace Sango
         {
             if (mesh == null) return;
             int count = elementCount;
-            Vector3 srcScale = transform.lossyScale;
+            Vector3 srcScale = transform.lossyScale * totalScale;
             for (int i = 0; i < count; ++i)
             {
                 mHexPositions[i] = Vector3.Scale(HexToPosition(hexList[i]), srcScale);
@@ -153,7 +161,7 @@ namespace Sango
             if (mesh == null) return;
 
             Vector3 srcPosition = transform.position;
-            Vector3 srcScale = transform.lossyScale;
+            Vector3 srcScale = transform.lossyScale * totalScale;
             for (int i = 0; i < _matrixes.Length; i++)
             {
                 var mx = _matrixes[i];
@@ -181,7 +189,7 @@ namespace Sango
             mesh.RecalculateBounds();
 
             Vector3 srcPosition = transform.position;
-            Vector3 srcScale = transform.lossyScale;
+            Vector3 srcScale = transform.lossyScale * totalScale;
 
             mSmoothPosition = srcPosition;
 
@@ -237,11 +245,6 @@ namespace Sango
                 UpdatePosition();
             }
         }
-        bool isInitPos = false;
-        private void OnEnable()
-        {
-            isInitPos = true;
-        }
 
         public void SetSmokeShow(bool b)
         {
@@ -263,66 +266,9 @@ namespace Sango
         void UpdatePosition()
         {
             Vector3 nowPosition = transform.position;
-            //if (isInitPos)
-            //{
-            //    mSmoothPosition = nowPosition;
-            //    isInitPos = false;
-            //}
-
-
-            ////if (lastPosition != nowPosition)
-            //{
-            //    if (!mSmoothFlag && Vector3.Distance(mSmoothPosition, nowPosition) > 1f)
-            //    {
-            //        mSmoothFlag = true;
-            //        mCurSmoothTime = 0;
-            //        for (int i = 0; i < mRandomSmoothTime.Length; i++)
-            //        {
-            //            mRandomSmoothTime[i] = UnityEngine.Random.Range(0.0f, mSmoothTime);
-            //        }
-            //    }
-
-            //    if (mSmoothFlag)
-            //    {
-            //        mCurSmoothTime = mCurSmoothTime + Time.deltaTime;
-            //        Vector3 srcScale = transform.lossyScale;
-
-            //        for (int i = 0; i < showCount; i++)
-            //        {
-            //            var mx = _matrixes[i];
-            //            Vector3 targetPos = nowPosition + mPositions[i];
-            //            Vector3 srcPos = mSmoothPosition + mPositions[i];
-
-            //            float p = mCurSmoothTime / mRandomSmoothTime[i];
-            //            Vector3 destP = Vector3.Lerp(srcPos, targetPos, Mathf.Pow(p, 2));
-
-            //            float height;
-            //            if (!Map.Draw.Map.QueryHeight(destP, out height))
-            //            {
-            //                return;
-            //            }
-            //            destP.y = height;
-
-            //            mx.SetTRS(destP, Quaternion.identity, srcScale * meshScale);
-            //            _matrixes[i] = mx;
-            //        }
-
-            //        if (mCurSmoothTime > mSmoothTime)
-            //        {
-            //            mSmoothPosition = nowPosition;
-            //            mCurSmoothTime = 0;
-            //            mSmoothFlag = false;
-            //        }
-            //    }
-            //    // lastPosition = nowPosition;
-            //}
-
-
-
-
             if (lastPosition != nowPosition)
             {
-                Vector3 srcScale = transform.lossyScale;
+                Vector3 srcScale = transform.lossyScale * totalScale;
 
                 for (int i = 0; i < showCount; i++)
                 {
@@ -381,7 +327,7 @@ namespace Sango
 
 
 
-        public Vector2 size = new Vector2(1, 1);
+        public Vector2 size = new Vector2(0.34f, 0.34f);
         public Vector2 origin = new Vector2(-0.5f, -0.5f);
 
         public Renderer initTroop;
@@ -391,10 +337,21 @@ namespace Sango
         private void Awake()
         {
             origin = size * -0.5f;
-            //test = true;
-            _instanceMaterial = new Material(material);
-            material = _instanceMaterial;
+            for(int i = 0; i < aniMaterials.Length; i++)
+            {
+                Material mat = new Material(aniMaterials[i]);
+                aniMaterials[i] = mat;
+            }
+            SetAniType(0);
         }
+
+        void SetAniType(int id)
+        {
+            if (id < 0 || id >= aniMaterials.Length)
+                return;
+            material = aniMaterials[id];
+        }
+
         void Add()
         {
             //Hex.Hex hex = GetTargetHex(count++);

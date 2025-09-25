@@ -1,18 +1,19 @@
 using LuaInterface;
-using Sango.Data;
 using Sango.Loader;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Sango;
 
 namespace Sango.Render
 {
     public class MapObject : Behaviour, IMapManageObject
     {
         public delegate void ModelLoadedCallback(GameObject obj);
+        public delegate void ModelVisibleChange(MapObject obj);
+        public delegate void ModelPointCall();
 
         public ModelLoadedCallback modelLoadedCallback;
+        public ModelVisibleChange onModelVisibleChange;
+        public ModelPointCall onClick;
 
         static int buildingLayer = -1;
         Transform transCache;
@@ -40,6 +41,11 @@ namespace Sango.Render
         /// 模型ID
         /// </summary>
         public int modelId { get; set; }
+        /// <summary>
+        /// 模型资源
+        /// </summary>
+        public string modelAsset { get; set; }
+
 
         public GameObject loadedModel;
         private bool isLoading = false;
@@ -107,12 +113,6 @@ namespace Sango.Render
         }
 
 
-        LuaFunction visibleChangeFunction;
-        LuaFunction clickFunction;
-        LuaFunction pointerEnterFunciton;
-        LuaFunction pointerExitFunciton;
-        LuaFunction onModelLoadedFuction;
-
         public static MapObject Create(string name)
         {
             if (buildingLayer == -1)
@@ -164,7 +164,11 @@ namespace Sango.Render
             transCache = transform;
         }
 
-        bool _needInitVisible = false;
+        LuaFunction visibleChangeFunction;
+        LuaFunction clickFunction;
+        LuaFunction pointerEnterFunciton;
+        LuaFunction pointerExitFunciton;
+        LuaFunction onModelLoadedFuction;
 
         protected override void OnInitFunctions()
         {
@@ -174,17 +178,11 @@ namespace Sango.Render
             pointerEnterFunciton = GetFunction("OnPointerEnter");
             pointerExitFunciton = GetFunction("OnPointerExit");
             onModelLoadedFuction = GetFunction("OnModelLoaded");
-            if (_needInitVisible)
-            {
-                _needInitVisible = false;
-                CallMethod(visibleChangeFunction, visible);
-            }
+            CallMethod(visibleChangeFunction, visible);
         }
 
         public virtual void OnSelectableChange()
         {
-            //CallMethod(visibleChangeFunction, visible);
-            //if (!editorShow) return;
             if (selectable)
             {
                 MeshFilter filter = gameObject.GetComponentInChildren<MeshFilter>();
@@ -216,22 +214,20 @@ namespace Sango.Render
 
         public virtual void OnVisibleChange()
         {
-            //Debug.LogError($"OnVisibleChange  {name} -> {modelId} : {visible}");
-            if (visibleChangeFunction == null)
+            if (editorShow)
             {
-                _needInitVisible = true;
+                if (visible)
+                {
+                    ReLoadModels();
+                }
+                else
+                {
+                    if (!Tools.MapEditor.IsEditOn)
+                        ClearModels();
+                }
             }
             CallMethod(visibleChangeFunction, visible);
-            if (!editorShow) return;
-            if (visible)
-            {
-                ReLoadModels();
-            }
-            else
-            {
-                if (!Tools.MapEditor.IsEditOn)
-                    ClearModels();
-            }
+            onModelVisibleChange?.Invoke(this);
         }
 
         public bool Overlaps(Sango.Tools.Rect rect)
@@ -268,12 +264,15 @@ namespace Sango.Render
             GameObject model = null;
             if (obj != null)
             {
-                if (!PoolManager.Add(modelId, obj))
+                object pool_key = modelId;
+                if (!string.IsNullOrEmpty(modelAsset))
+                    pool_key = modelAsset;
+                if (!PoolManager.Add(pool_key, obj))
                 {
                     //GameObject.DestroyImmediate(obj, true);
                 }
                 if (!visible) return;
-                model = PoolManager.Get(modelId);
+                model = PoolManager.Get(pool_key);
             }
 
             OnModelInit(model, dontAsyncCall);
@@ -301,29 +300,33 @@ namespace Sango.Render
                 // model.transform.localScale = Vector3.one;
                 UnityTools.SetLayer(model, gameObject.layer);
 
-                if (MapRender.Instance != null)
-                {
-                    Renderer[] rs = model.transform.GetComponentsInChildren<Renderer>();
-                    if (rs != null)
-                    {
-                        foreach (Renderer r in rs)
-                        {
-                            Material[] mats = r.sharedMaterials;
-                            if (mats.Length == 1)
-                            {
-                                Material c = new Material(MapRender.Instance.terrainOutlineMat);
-                                c.mainTexture = mats[0].mainTexture;
-                                c.SetFloat("_OutlineWidth", 0.04f);
-                                mats = new Material[2] { mats[0], c };
-                                r.sharedMaterials = mats;
-                            }
-                            else
-                            {
-                                mats[1].mainTexture = mats[0].mainTexture;
-                            }
-                        }
-                    }
-                }
+                //if (MapRender.Instance != null)
+                //{
+                //    Renderer[] rs = model.transform.GetComponentsInChildren<Renderer>();
+                //    if (rs != null)
+                //    {
+                //        foreach (Renderer r in rs)
+                //        {
+                //            Material[] mats = r.sharedMaterials;
+                //            if (mats.Length == 1)
+                //            {
+                //                if ( mats[0] != null)
+                //                {
+                //                    Material c = new Material(MapRender.Instance.terrainOutlineMat);
+                //                    c.mainTexture = mats[0].mainTexture;
+                //                    c.SetFloat("_OutlineWidth", 0.04f);
+                //                    mats = new Material[2] { mats[0], c };
+                //                    r.sharedMaterials = mats;
+                //                }
+                //            }
+                //            else
+                //            {
+                //                if (mats[0] != null)
+                //                    mats[1].mainTexture = mats[0].mainTexture;
+                //            }
+                //        }
+                //    }
+                //}
                 modelLoadedCallback?.Invoke(model);
             }
             loadedModel = model;
@@ -362,6 +365,12 @@ namespace Sango.Render
 
             OnModelInit(null, false);
         }
+        public void CreateModel(string assetName)
+        {
+            GameObject obj = ObjectLoader.LoadObject<GameObject>(assetName);
+            OnModelLoaded(obj, null, false);
+        }
+
         public void CreateModel(UnityEngine.Object modelObj)
         {
             OnModelLoaded(modelObj, null, false);
@@ -374,19 +383,32 @@ namespace Sango.Render
                 return;
             }
 
-            GameObject obj = PoolManager.Get(modelId);
-            if (obj != null)
+            if(!string.IsNullOrEmpty(modelAsset))
             {
-                OnModelInit(obj);
-                return;
+                GameObject obj = PoolManager.Get(modelAsset);
+                if (obj != null)
+                {
+                    OnModelInit(obj);
+                    return;
+                }
+                CreateModel(modelAsset);
             }
-
-            if (isLoading) return;
-
-            isLoading = true;
-            if (manager != null)
+            else
             {
-                manager.LoadModel(this);
+                GameObject obj = PoolManager.Get(modelId);
+                if (obj != null)
+                {
+                    OnModelInit(obj);
+                    return;
+                }
+
+                if (isLoading) return;
+
+                isLoading = true;
+                if (manager != null)
+                {
+                    manager.LoadModel(this);
+                }
             }
         }
 
@@ -394,7 +416,10 @@ namespace Sango.Render
         {
             isLoading = false;
             if (loadedModel == null) return;
-            PoolManager.Recycle(modelId, loadedModel);
+            object pool_key = modelId;
+            if (!string.IsNullOrEmpty(modelAsset))
+                pool_key = modelAsset;
+            PoolManager.Recycle(pool_key, loadedModel);
             loadedModel = null;
         }
 
@@ -411,9 +436,7 @@ namespace Sango.Render
             {
                 ClearModels();
             }
-
             editorShow = b;
-
         }
 
         public Transform GetTransform() { return transCache; }

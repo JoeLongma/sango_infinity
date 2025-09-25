@@ -24,7 +24,7 @@ namespace Sango.Game
         /// <summary>
         /// 模型
         /// </summary>
-        [JsonProperty] public int model;
+        [JsonProperty] public string model;
 
         /// <summary>
         /// 动画

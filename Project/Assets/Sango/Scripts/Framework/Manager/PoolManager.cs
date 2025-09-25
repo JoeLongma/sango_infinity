@@ -152,6 +152,7 @@ namespace Sango
         public PoolManager()
         {
             poolNode = new GameObject("pool_node");
+            poolNode.SetActive(false);
             GameObject.DontDestroyOnLoad(poolNode);
         }
 
