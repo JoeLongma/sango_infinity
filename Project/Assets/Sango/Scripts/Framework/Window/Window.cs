@@ -233,28 +233,29 @@ namespace Sango
             {
                 table = LuaClient.GetTable(info.scriptName);
             }
-
-            if (table == null)
+            if (!string.IsNullOrEmpty(info.name))
             {
-                // ---aa_bb_cc
-                table = LuaClient.GetTable(info.name);
+                if (table == null)
+                {
+                    // ---aa_bb_cc
+                    table = LuaClient.GetTable(info.name);
+                }
+
+                string[] split_s = upperFirstChar(info.name, "_");
+
+                if (table == null)
+                {
+                    // ---Aa_Bb_Cc
+                    table = LuaClient.GetTable(string.Join("_", split_s));
+                }
+
+                if (table == null)
+                {
+                    // ---AaBbCc
+                    table = LuaClient.GetTable(string.Join("", split_s));
+                }
             }
-
-            string[] split_s = upperFirstChar(info.name, "_");
-
-            if (table == null)
-            {
-                // ---Aa_Bb_Cc
-                table = LuaClient.GetTable(string.Join("_", split_s));
-            }
-
-            if (table == null)
-            {
-                // ---AaBbCc
-                table = LuaClient.GetTable(string.Join("", split_s));
-            }
-
-            if (table == null)
+            if (table == null && !string.IsNullOrEmpty(info.resName))
             {
                 table = LuaClient.GetTable(info.resName);
             }
@@ -298,8 +299,8 @@ namespace Sango
                         {
                             name = windowName,
                             packageName = null,
-                            resName = windowName,
-                            scriptName = windowName,
+                            resName = null,
+                            scriptName = null,
                             instance = new WindowInterface() { ugui_instance = uGUIWindow }
                         };
                         windowMap.Add(windowName, info1);

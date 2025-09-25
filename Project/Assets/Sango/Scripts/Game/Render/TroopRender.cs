@@ -11,6 +11,7 @@ namespace Sango.Game.Render
         UnityEngine.UI.Text textInfo { get; set; }
 
         UGUIWindow HeadBar { get; set; }
+        string headbarKey = "troops_head_bar";
 
         public TroopRender(Troop troop)
         {
@@ -54,7 +55,6 @@ namespace Sango.Game.Render
 
         void OnModelVisibleChange(MapObject obj)
         {
-            string headbarKey = "troops_head_bar";
             if (obj.visible == false)
             {
                 if(HeadBar != null)
@@ -67,15 +67,14 @@ namespace Sango.Game.Render
             TroopsRender troopsRender = obj.GetComponentInChildren<TroopsRender>(true);
             if (troopsRender != null)
             {
-
+                troopsRender.SetShowPercent(Troop.troops / 10000.0f);
             }
-
 
             FlagRender flagRender = obj.GetComponentInChildren<FlagRender>(true);
             if (flagRender != null)
             {
                 flagRender.Init(Troop);
-            }
+            } 
 
             GameObject headBar = PoolManager.Get(headbarKey);
             if (headBar == null)
@@ -100,8 +99,8 @@ namespace Sango.Game.Render
                     {
                         name = windowName,
                         packageName = null,
-                        resName = windowName,
-                        scriptName = windowName
+                        resName = null,
+                        scriptName = null
                     });
 
                     if (table != null)
@@ -122,6 +121,12 @@ namespace Sango.Game.Render
             if(HeadBar != null)
             {
                 HeadBar.CallFunction("UpdateState", Troop);
+
+                TroopsRender troopsRender = MapObject.GetComponentInChildren<TroopsRender>(true);
+                if (troopsRender != null)
+                {
+                    troopsRender.SetShowPercent(Troop.troops / 10000.0f);
+                }
             }
         }
 
@@ -133,6 +138,12 @@ namespace Sango.Game.Render
 
         public override void Clear()
         {
+            if (HeadBar != null)
+            {
+                PoolManager.Recycle(headbarKey, HeadBar.gameObject);
+                HeadBar = null;
+            }
+
             base.Clear();
         }
     }

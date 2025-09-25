@@ -488,6 +488,7 @@ MonoBehaviour:
   xCount: 10
   flagTexWidth: 256
   flagTexHeight: 256
+  flagId: 11
 --- !u!1 &8648130925957949042
 GameObject:
   m_ObjectHideFlags: 0

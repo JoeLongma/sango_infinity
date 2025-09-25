@@ -269,10 +269,6 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 	}
 	#endif
 	#endif
-		
-	#if SANGO_COLOR
-		diffuse = diffuse * _Color.rgb;
-	#endif
 
 	//
 	// light
@@ -284,6 +280,12 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 	#else
 		half4 finalRGBA = half4(diffuse,  saturate(i.vertColor.a));
 	#endif
+
+
+#if SANGO_COLOR
+		diffuse = diffuse * _Color.rgb;
+#endif
+
 
 	#if SANGO_BLEND_HEIGHT
 	finalRGBA.a = finalRGBA.a * saturate(pow( i.posObject.y - _BlendHeight, _BlendPower));

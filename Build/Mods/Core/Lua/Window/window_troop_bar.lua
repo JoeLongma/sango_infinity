@@ -15,5 +15,5 @@ function Window_Troop_Bar:UpdateState(troop)
     self:SetActive("bg/state", false);
     self:SetImageFillAmount("bg/energyframe/energy", troop.energy / 100);
     self:SetImageFillAmount("bg/angryframe/angry", 0);
-    self:SetText("bg/number", troop.troop);
+    self:SetText("bg/number", troop.troops);
 end
