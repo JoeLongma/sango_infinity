@@ -31,6 +31,9 @@ public class Sango_TroopsRenderWrap
 		L.RegVar("uvs", new LuaCSFunction(get_uvs), new LuaCSFunction(set_uvs));
 		L.RegVar("tangents", new LuaCSFunction(get_tangents), new LuaCSFunction(set_tangents));
 		L.RegVar("material", new LuaCSFunction(get_material), new LuaCSFunction(set_material));
+		L.RegVar("aniMaterials", new LuaCSFunction(get_aniMaterials), new LuaCSFunction(set_aniMaterials));
+		L.RegVar("meshScale", new LuaCSFunction(get_meshScale), new LuaCSFunction(set_meshScale));
+		L.RegVar("totalScale", new LuaCSFunction(get_totalScale), new LuaCSFunction(set_totalScale));
 		L.RegVar("showCount", new LuaCSFunction(get_showCount), new LuaCSFunction(set_showCount));
 		L.RegVar("smoke", new LuaCSFunction(get_smoke), new LuaCSFunction(set_smoke));
 		L.RegVar("size", new LuaCSFunction(get_size), new LuaCSFunction(set_size));
@@ -452,6 +455,63 @@ public class Sango_TroopsRenderWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_aniMaterials(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.TroopsRender obj = (Sango.TroopsRender)o;
+			UnityEngine.Material[] ret = obj.aniMaterials;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index aniMaterials on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_meshScale(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.TroopsRender obj = (Sango.TroopsRender)o;
+			float ret = obj.meshScale;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index meshScale on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_totalScale(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.TroopsRender obj = (Sango.TroopsRender)o;
+			float ret = obj.totalScale;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index totalScale on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_showCount(IntPtr L)
 	{
 		object o = null;
@@ -667,6 +727,63 @@ public class Sango_TroopsRenderWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index material on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_aniMaterials(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.TroopsRender obj = (Sango.TroopsRender)o;
+			UnityEngine.Material[] arg0 = ToLua.CheckObjectArray<UnityEngine.Material>(L, 2);
+			obj.aniMaterials = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index aniMaterials on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_meshScale(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.TroopsRender obj = (Sango.TroopsRender)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.meshScale = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index meshScale on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_totalScale(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.TroopsRender obj = (Sango.TroopsRender)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.totalScale = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index totalScale on a nil value");
 		}
 	}
 

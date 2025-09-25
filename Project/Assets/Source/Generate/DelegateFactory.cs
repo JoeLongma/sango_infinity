@@ -80,6 +80,8 @@ public class DelegateFactory
 		dict.Add(typeof(Sango.AssetBundleManager.AsyncLoadAllAssetFinishCall), factory.Sango_AssetBundleManager_AsyncLoadAllAssetFinishCall);
 		dict.Add(typeof(Sango.Loader.ObjectLoader.OnObjectLoaded), factory.Sango_Loader_ObjectLoader_OnObjectLoaded);
 		dict.Add(typeof(Sango.Render.MapObject.ModelLoadedCallback), factory.Sango_Render_MapObject_ModelLoadedCallback);
+		dict.Add(typeof(Sango.Render.MapObject.ModelVisibleChange), factory.Sango_Render_MapObject_ModelVisibleChange);
+		dict.Add(typeof(Sango.Render.MapObject.ModelPointCall), factory.Sango_Render_MapObject_ModelPointCall);
 		dict.Add(typeof(Sango.Tools.EditorWindow.WindowFunction), factory.Sango_Tools_EditorWindow_WindowFunction);
 		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.Color>), factory.UnityEngine_Events_UnityAction_UnityEngine_Color);
 		dict.Add(typeof(System.Action<string,UnityEngine.Object,object>), factory.System_Action_string_UnityEngine_Object_object);
@@ -162,6 +164,8 @@ public class DelegateFactory
 		DelegateTraits<Sango.AssetBundleManager.AsyncLoadAllAssetFinishCall>.Init(factory.Sango_AssetBundleManager_AsyncLoadAllAssetFinishCall);
 		DelegateTraits<Sango.Loader.ObjectLoader.OnObjectLoaded>.Init(factory.Sango_Loader_ObjectLoader_OnObjectLoaded);
 		DelegateTraits<Sango.Render.MapObject.ModelLoadedCallback>.Init(factory.Sango_Render_MapObject_ModelLoadedCallback);
+		DelegateTraits<Sango.Render.MapObject.ModelVisibleChange>.Init(factory.Sango_Render_MapObject_ModelVisibleChange);
+		DelegateTraits<Sango.Render.MapObject.ModelPointCall>.Init(factory.Sango_Render_MapObject_ModelPointCall);
 		DelegateTraits<Sango.Tools.EditorWindow.WindowFunction>.Init(factory.Sango_Tools_EditorWindow_WindowFunction);
 		DelegateTraits<UnityEngine.Events.UnityAction<UnityEngine.Color>>.Init(factory.UnityEngine_Events_UnityAction_UnityEngine_Color);
 		DelegateTraits<System.Action<string,UnityEngine.Object,object>>.Init(factory.System_Action_string_UnityEngine_Object_object);
@@ -244,6 +248,8 @@ public class DelegateFactory
 		TypeTraits<Sango.AssetBundleManager.AsyncLoadAllAssetFinishCall>.Init(factory.Check_Sango_AssetBundleManager_AsyncLoadAllAssetFinishCall);
 		TypeTraits<Sango.Loader.ObjectLoader.OnObjectLoaded>.Init(factory.Check_Sango_Loader_ObjectLoader_OnObjectLoaded);
 		TypeTraits<Sango.Render.MapObject.ModelLoadedCallback>.Init(factory.Check_Sango_Render_MapObject_ModelLoadedCallback);
+		TypeTraits<Sango.Render.MapObject.ModelVisibleChange>.Init(factory.Check_Sango_Render_MapObject_ModelVisibleChange);
+		TypeTraits<Sango.Render.MapObject.ModelPointCall>.Init(factory.Check_Sango_Render_MapObject_ModelPointCall);
 		TypeTraits<Sango.Tools.EditorWindow.WindowFunction>.Init(factory.Check_Sango_Tools_EditorWindow_WindowFunction);
 		TypeTraits<UnityEngine.Events.UnityAction<UnityEngine.Color>>.Init(factory.Check_UnityEngine_Events_UnityAction_UnityEngine_Color);
 		TypeTraits<System.Action<string,UnityEngine.Object,object>>.Init(factory.Check_System_Action_string_UnityEngine_Object_object);
@@ -326,6 +332,8 @@ public class DelegateFactory
 		StackTraits<Sango.AssetBundleManager.AsyncLoadAllAssetFinishCall>.Push = factory.Push_Sango_AssetBundleManager_AsyncLoadAllAssetFinishCall;
 		StackTraits<Sango.Loader.ObjectLoader.OnObjectLoaded>.Push = factory.Push_Sango_Loader_ObjectLoader_OnObjectLoaded;
 		StackTraits<Sango.Render.MapObject.ModelLoadedCallback>.Push = factory.Push_Sango_Render_MapObject_ModelLoadedCallback;
+		StackTraits<Sango.Render.MapObject.ModelVisibleChange>.Push = factory.Push_Sango_Render_MapObject_ModelVisibleChange;
+		StackTraits<Sango.Render.MapObject.ModelPointCall>.Push = factory.Push_Sango_Render_MapObject_ModelPointCall;
 		StackTraits<Sango.Tools.EditorWindow.WindowFunction>.Push = factory.Push_Sango_Tools_EditorWindow_WindowFunction;
 		StackTraits<UnityEngine.Events.UnityAction<UnityEngine.Color>>.Push = factory.Push_UnityEngine_Events_UnityAction_UnityEngine_Color;
 		StackTraits<System.Action<string,UnityEngine.Object,object>>.Push = factory.Push_System_Action_string_UnityEngine_Object_object;
@@ -4093,6 +4101,116 @@ public class DelegateFactory
 	}
 
 	void Push_Sango_Render_MapObject_ModelLoadedCallback(IntPtr L, Sango.Render.MapObject.ModelLoadedCallback o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class Sango_Render_MapObject_ModelVisibleChange_Event : LuaDelegate
+	{
+		public Sango_Render_MapObject_ModelVisibleChange_Event(LuaFunction func) : base(func) { }
+		public Sango_Render_MapObject_ModelVisibleChange_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(Sango.Render.MapObject param0)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(Sango.Render.MapObject param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public Sango.Render.MapObject.ModelVisibleChange Sango_Render_MapObject_ModelVisibleChange(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			Sango.Render.MapObject.ModelVisibleChange fn = delegate(Sango.Render.MapObject param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			Sango_Render_MapObject_ModelVisibleChange_Event target = new Sango_Render_MapObject_ModelVisibleChange_Event(func);
+			Sango.Render.MapObject.ModelVisibleChange d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			Sango_Render_MapObject_ModelVisibleChange_Event target = new Sango_Render_MapObject_ModelVisibleChange_Event(func, self);
+			Sango.Render.MapObject.ModelVisibleChange d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_Sango_Render_MapObject_ModelVisibleChange(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType<Sango.Render.MapObject.ModelVisibleChange>(L, pos);
+	}
+
+	void Push_Sango_Render_MapObject_ModelVisibleChange(IntPtr L, Sango.Render.MapObject.ModelVisibleChange o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class Sango_Render_MapObject_ModelPointCall_Event : LuaDelegate
+	{
+		public Sango_Render_MapObject_ModelPointCall_Event(LuaFunction func) : base(func) { }
+		public Sango_Render_MapObject_ModelPointCall_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call()
+		{
+			func.Call();
+		}
+
+		public void CallWithSelf()
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public Sango.Render.MapObject.ModelPointCall Sango_Render_MapObject_ModelPointCall(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			Sango.Render.MapObject.ModelPointCall fn = delegate() { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			Sango_Render_MapObject_ModelPointCall_Event target = new Sango_Render_MapObject_ModelPointCall_Event(func);
+			Sango.Render.MapObject.ModelPointCall d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			Sango_Render_MapObject_ModelPointCall_Event target = new Sango_Render_MapObject_ModelPointCall_Event(func, self);
+			Sango.Render.MapObject.ModelPointCall d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_Sango_Render_MapObject_ModelPointCall(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType<Sango.Render.MapObject.ModelPointCall>(L, pos);
+	}
+
+	void Push_Sango_Render_MapObject_ModelPointCall(IntPtr L, Sango.Render.MapObject.ModelPointCall o)
 	{
 		ToLua.Push(L, o);
 	}

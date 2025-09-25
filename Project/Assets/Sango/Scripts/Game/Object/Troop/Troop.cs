@@ -987,7 +987,7 @@ namespace Sango.Game
             {
                 return true;
             }
-
+            
             return MoveTo(tryToDest);
         }
 

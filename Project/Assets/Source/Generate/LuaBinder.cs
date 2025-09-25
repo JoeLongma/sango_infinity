@@ -13,7 +13,6 @@ public static class LuaBinder
 		LuaProfilerWrap.Register(L);
 		HexMeshWrap.Register(L);
 		CameraPlaneViewWrap.Register(L);
-		WindowDialogWrap.Register(L);
 		L.BeginModule("LuaInterface");
 		LuaInterface_LuaInjectionStationWrap.Register(L);
 		LuaInterface_InjectTypeWrap.Register(L);
@@ -352,6 +351,7 @@ public static class LuaBinder
 		Sango_Game_ScenarioWrap.Register(L);
 		Sango_Game_ForceWrap.Register(L);
 		Sango_Game_TroopWrap.Register(L);
+		Sango_Game_PersonWrap.Register(L);
 		Sango_Game_ScenarioEventWrap.Register(L);
 		Sango_Game_ScenarioInfoWrap.Register(L);
 		Sango_Game_SangoObjectWrap.Register(L);

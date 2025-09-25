@@ -40,6 +40,7 @@ public class Sango_Render_MapCellWrap
 		L.RegVar("objId", new LuaCSFunction(get_objId), new LuaCSFunction(set_objId));
 		L.RegVar("objType", new LuaCSFunction(get_objType), new LuaCSFunction(set_objType));
 		L.RegVar("modelId", new LuaCSFunction(get_modelId), new LuaCSFunction(set_modelId));
+		L.RegVar("modelAsset", new LuaCSFunction(get_modelAsset), new LuaCSFunction(set_modelAsset));
 		L.RegVar("bindId", new LuaCSFunction(get_bindId), new LuaCSFunction(set_bindId));
 		L.RegVar("selectable", new LuaCSFunction(get_selectable), new LuaCSFunction(set_selectable));
 		L.RegVar("isStatic", new LuaCSFunction(get_isStatic), new LuaCSFunction(set_isStatic));
@@ -655,6 +656,25 @@ public class Sango_Render_MapCellWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_modelAsset(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapCell obj = (Sango.Render.MapCell)o;
+			string ret = obj.modelAsset;
+			LuaDLL.lua_pushstring(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index modelAsset on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_bindId(IntPtr L)
 	{
 		object o = null;
@@ -1088,6 +1108,25 @@ public class Sango_Render_MapCellWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index modelId on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_modelAsset(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapCell obj = (Sango.Render.MapCell)o;
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.modelAsset = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index modelAsset on a nil value");
 		}
 	}
 

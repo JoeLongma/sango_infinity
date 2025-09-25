@@ -281,7 +281,7 @@
 	<word>Sango.Game.Scenario</word>
 	<word>Sango.Game.Force</word>
 	<word>Sango.Game.Troop</word>
-	<word>WindowDialog</word>
+	<word>Sango.Game.Person</word>
 	<word>Sango.Game.ScenarioEvent</word>
 	<word>Sango.Game.ScenarioInfo</word>
 	

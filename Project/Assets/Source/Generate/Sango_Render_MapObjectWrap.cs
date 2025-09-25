@@ -30,6 +30,8 @@ public class Sango_Render_MapObjectWrap
 		L.RegFunction("__eq", new LuaCSFunction(op_Equality));
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
 		L.RegVar("modelLoadedCallback", new LuaCSFunction(get_modelLoadedCallback), new LuaCSFunction(set_modelLoadedCallback));
+		L.RegVar("onModelVisibleChange", new LuaCSFunction(get_onModelVisibleChange), new LuaCSFunction(set_onModelVisibleChange));
+		L.RegVar("onClick", new LuaCSFunction(get_onClick), new LuaCSFunction(set_onClick));
 		L.RegVar("loadedModel", new LuaCSFunction(get_loadedModel), new LuaCSFunction(set_loadedModel));
 		L.RegVar("manager", new LuaCSFunction(get_manager), new LuaCSFunction(set_manager));
 		L.RegVar("remainInView", new LuaCSFunction(get_remainInView), new LuaCSFunction(set_remainInView));
@@ -38,6 +40,7 @@ public class Sango_Render_MapObjectWrap
 		L.RegVar("bindId", new LuaCSFunction(get_bindId), new LuaCSFunction(set_bindId));
 		L.RegVar("objType", new LuaCSFunction(get_objType), new LuaCSFunction(set_objType));
 		L.RegVar("modelId", new LuaCSFunction(get_modelId), new LuaCSFunction(set_modelId));
+		L.RegVar("modelAsset", new LuaCSFunction(get_modelAsset), new LuaCSFunction(set_modelAsset));
 		L.RegVar("isStatic", new LuaCSFunction(get_isStatic), new LuaCSFunction(set_isStatic));
 		L.RegVar("visible", new LuaCSFunction(get_visible), new LuaCSFunction(set_visible));
 		L.RegVar("selectable", new LuaCSFunction(get_selectable), new LuaCSFunction(set_selectable));
@@ -47,6 +50,8 @@ public class Sango_Render_MapObjectWrap
 		L.RegVar("scale", new LuaCSFunction(get_scale), new LuaCSFunction(set_scale));
 		L.RegVar("coords", new LuaCSFunction(get_coords), new LuaCSFunction(set_coords));
 		L.RegVar("worldBounds", new LuaCSFunction(get_worldBounds), null);
+		L.RegFunction("ModelPointCall", new LuaCSFunction(Sango_Render_MapObject_ModelPointCall));
+		L.RegFunction("ModelVisibleChange", new LuaCSFunction(Sango_Render_MapObject_ModelVisibleChange));
 		L.RegFunction("ModelLoadedCallback", new LuaCSFunction(Sango_Render_MapObject_ModelLoadedCallback));
 		L.EndClass();
 	}
@@ -243,10 +248,17 @@ public class Sango_Render_MapObjectWrap
 		{
 			int count = LuaDLL.lua_gettop(L);
 
-			if (count == 2)
+			if (count == 2 && TypeChecker.CheckTypes<string>(L, 2))
 			{
 				Sango.Render.MapObject obj = (Sango.Render.MapObject)ToLua.CheckObject<Sango.Render.MapObject>(L, 1);
-				UnityEngine.Object arg0 = (UnityEngine.Object)ToLua.CheckObject<UnityEngine.Object>(L, 2);
+				string arg0 = ToLua.ToString(L, 2);
+				obj.CreateModel(arg0);
+				return 0;
+			}
+			else if (count == 2 && TypeChecker.CheckTypes<UnityEngine.Object>(L, 2))
+			{
+				Sango.Render.MapObject obj = (Sango.Render.MapObject)ToLua.CheckObject<Sango.Render.MapObject>(L, 1);
+				UnityEngine.Object arg0 = (UnityEngine.Object)ToLua.ToObject(L, 2);
 				obj.CreateModel(arg0);
 				return 0;
 			}
@@ -523,6 +535,44 @@ public class Sango_Render_MapObjectWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_onModelVisibleChange(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapObject obj = (Sango.Render.MapObject)o;
+			Sango.Render.MapObject.ModelVisibleChange ret = obj.onModelVisibleChange;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index onModelVisibleChange on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_onClick(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapObject obj = (Sango.Render.MapObject)o;
+			Sango.Render.MapObject.ModelPointCall ret = obj.onClick;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index onClick on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_loadedModel(IntPtr L)
 	{
 		object o = null;
@@ -671,6 +721,25 @@ public class Sango_Render_MapObjectWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index modelId on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_modelAsset(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapObject obj = (Sango.Render.MapObject)o;
+			string ret = obj.modelAsset;
+			LuaDLL.lua_pushstring(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index modelAsset on a nil value");
 		}
 	}
 
@@ -871,6 +940,56 @@ public class Sango_Render_MapObjectWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_onModelVisibleChange(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapObject obj = (Sango.Render.MapObject)o;
+			Sango.Render.MapObject.ModelVisibleChange arg0 = (Sango.Render.MapObject.ModelVisibleChange)ToLua.CheckDelegate<Sango.Render.MapObject.ModelVisibleChange>(L, 2);
+
+			if (!object.ReferenceEquals(obj.onModelVisibleChange, arg0))
+			{
+				if (obj.onModelVisibleChange != null) obj.onModelVisibleChange.SubRef();
+				obj.onModelVisibleChange = arg0;
+			}
+
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index onModelVisibleChange on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_onClick(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapObject obj = (Sango.Render.MapObject)o;
+			Sango.Render.MapObject.ModelPointCall arg0 = (Sango.Render.MapObject.ModelPointCall)ToLua.CheckDelegate<Sango.Render.MapObject.ModelPointCall>(L, 2);
+
+			if (!object.ReferenceEquals(obj.onClick, arg0))
+			{
+				if (obj.onClick != null) obj.onClick.SubRef();
+				obj.onClick = arg0;
+			}
+
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index onClick on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_loadedModel(IntPtr L)
 	{
 		object o = null;
@@ -1023,6 +1142,25 @@ public class Sango_Render_MapObjectWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_modelAsset(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapObject obj = (Sango.Render.MapObject)o;
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.modelAsset = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index modelAsset on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_isStatic(IntPtr L)
 	{
 		object o = null;
@@ -1171,6 +1309,66 @@ public class Sango_Render_MapObjectWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index coords on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Sango_Render_MapObject_ModelPointCall(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<Sango.Render.MapObject.ModelPointCall>.Create(func);
+				ToLua.Push(L, arg1);
+				func.Dispose();
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<Sango.Render.MapObject.ModelPointCall>.Create(func, self);
+				ToLua.Push(L, arg1);
+				func.Dispose();
+				self.Dispose();
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Sango_Render_MapObject_ModelVisibleChange(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<Sango.Render.MapObject.ModelVisibleChange>.Create(func);
+				ToLua.Push(L, arg1);
+				func.Dispose();
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<Sango.Render.MapObject.ModelVisibleChange>.Create(func, self);
+				ToLua.Push(L, arg1);
+				func.Dispose();
+				self.Dispose();
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
 		}
 	}
 

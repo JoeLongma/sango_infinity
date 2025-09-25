@@ -790,6 +790,7 @@ GameObject:
   - component: {fileID: 174056003858870177}
   - component: {fileID: 227613633725753443}
   - component: {fileID: -9159462744481052588}
+  - component: {fileID: -2764854377414352855}
   m_Layer: 0
   m_Name: window_troop_bar
   m_TagString: Untagged
@@ -862,7 +863,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &-9159462744481052588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -875,6 +876,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c98c14ab5e7b3b4e8704671ba65ea8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-2764854377414352855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9039031632039893254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86d360f8659d4df45a46d44a8341c79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initScale: {x: -1, y: 1, z: 1}
+  scaleFactor: {x: 0.1, y: 0.3}
 --- !u!1 &9204697333084271942
 GameObject:
   m_ObjectHideFlags: 0
