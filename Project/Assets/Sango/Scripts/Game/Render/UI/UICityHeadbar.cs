@@ -6,27 +6,24 @@ namespace Sango.Game.Render.UI
 {
     public class UICityHeadbar : UGUIWindow
     {
-        public Image headIcon;
         public Text name;
         public Image state;
         public Image food;
-        public Image energy;
-        public Image angry;
+        public Image durability;
         public Text number;
 
-        public void Init(Troop troop)
+        public void Init(City city)
         {
-            name.text = troop.Name;
-            headIcon.sprite = GameRenderHelper.LoadHeadIcon(troop.Leader.headIconID);
-            UpdateState(troop);
+            name.text = city.Name;
+            UpdateState(city);
         }
 
-        public void UpdateState(Troop troop)
+        public void UpdateState(City city)
         {
             state.enabled = false;
-            energy.fillAmount = (float)troop.energy / 100.0f;
-            angry.fillAmount = 0;
-            number.text = troop.troops.ToString();
+            food.enabled = false;
+            durability.fillAmount = (float)city.durability / city.CityLevelType.maxDurability;
+            number.text = city.troops.ToString();
         }
     }
 }

@@ -1,16 +1,13 @@
-﻿using Sango.Game.Render;
-using Sango.Game.Render.UI;
-using UnityEngine;
-using Sango.Game;
+﻿using UnityEngine;
 
 namespace Sango.Game.Render.Model
 {
     public class CityModel : MonoBehaviour
     {
         public FlagRender[] flags;
-        public void Init(Force force)
+        public void Init(City city)
         {
-            if(force == null)
+            if(city.BelongForce == null)
             {
                 foreach (FlagRender flag in flags)
                 {
@@ -29,7 +26,7 @@ namespace Sango.Game.Render.Model
                     if (flag != null)
                     {
                         flag.gameObject.SetActive(true);
-                        flag.Init(force);
+                        flag.Init(city.BelongForce);
                     }
                 }
             }

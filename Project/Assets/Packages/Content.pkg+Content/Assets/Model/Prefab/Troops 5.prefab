@@ -193,6 +193,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6334099004971977050}
   - component: {fileID: 6334099004971977049}
+  - component: {fileID: 5345388217124772446}
   m_Layer: 0
   m_Name: Troops 5
   m_TagString: Untagged
@@ -245,6 +246,20 @@ MonoBehaviour:
   mainTroop: {fileID: 6334099004200991894}
   test: 0
   testCount: 60
+--- !u!114 &5345388217124772446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6334099004971977048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ed69e91b0e726e49acf076b7443648c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flag: {fileID: 2274616802407205341}
+  troopsRender: {fileID: 6334099004971977049}
 --- !u!1001 &1974294949
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -318,6 +333,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0988494f0015c00499f33b3df84c389d, type: 3}
+--- !u!114 &2274616802407205341 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2274616803255685240, guid: 0988494f0015c00499f33b3df84c389d, type: 3}
+  m_PrefabInstance: {fileID: 1974294949}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50710ac29f3f9f24383de94070b7b6b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &9157613465045199699 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9157613463662965494, guid: 0988494f0015c00499f33b3df84c389d, type: 3}

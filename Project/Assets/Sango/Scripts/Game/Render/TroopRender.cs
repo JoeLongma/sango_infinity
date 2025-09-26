@@ -1,4 +1,5 @@
 ﻿using LuaInterface;
+using Sango.Game.Render.Model;
 using Sango.Game.Render.UI;
 using Sango.Loader;
 using Sango.Render;
@@ -10,8 +11,8 @@ namespace Sango.Game.Render
     {
         Troop Troop { get; set; }
         UnityEngine.UI.Text textInfo { get; set; }
-
         UGUIWindow HeadBar { get; set; }
+        TroopModel TroopModel { get; set; }
         string headbarKey = "troops_head_bar";
 
         public TroopRender(Troop troop)
@@ -41,54 +42,24 @@ namespace Sango.Game.Render
 
         void OnModelLoaded(GameObject obj)
         {
-            //TroopsRender troopsRender = obj.GetComponent<TroopsRender>();
-            //if(troopsRender != null )
-            //{
-
-            //}
-
-            //FlagRender flagRender = obj.GetComponent<FlagRender>();
-            //if (flagRender != null)
-            //{
-            //    flagRender.Init(Troop);
-            //}
-        }
-
-        void OnModelVisibleChange(MapObject obj)
-        {
-            if (obj.visible == false)
+            TroopModel = obj.GetComponent<TroopModel>();
+            if (TroopModel != null)
             {
-                if(HeadBar != null)
-                {
-                    PoolManager.Recycle(headbarKey, HeadBar.gameObject);
-                    HeadBar = null;
-                }
-                return;
+                TroopModel.Init(Troop);
             }
-            TroopsRender troopsRender = obj.GetComponentInChildren<TroopsRender>(true);
-            if (troopsRender != null)
-            {
-                troopsRender.SetShowPercent(Troop.troops / 10000.0f);
-            }
-
-            FlagRender flagRender = obj.GetComponentInChildren<FlagRender>(true);
-            if (flagRender != null)
-            {
-                flagRender.Init(Troop);
-            } 
 
             GameObject headBar = PoolManager.Get(headbarKey);
             if (headBar == null)
             {
                 GameObject headBarObj = ObjectLoader.LoadObject<GameObject>(GameRenderHelper.TroopHeadbarRes);
-                if(headBarObj != null)
+                if (headBarObj != null)
                 {
                     PoolManager.Add(headbarKey, headBarObj);
                     headBar = PoolManager.Get(headbarKey);
                 }
             }
 
-            if(headBar != null)
+            if (headBar != null)
             {
                 headBar.transform.SetParent(obj.transform, false);
                 headBar.transform.localPosition = new Vector3(0, 25, 0);
@@ -96,7 +67,7 @@ namespace Sango.Game.Render
                 UGUIWindow uGUIWindow = headBar.GetComponent<UGUIWindow>();
                 if (uGUIWindow != null)
                 {
-                    string windowName = "window_troop_bar";
+                    string windowName = System.IO.Path.GetFileNameWithoutExtension(GameRenderHelper.TroopHeadbarRes);
                     LuaTable table = Window.Instance.FindPeerTable(new Window.WindowInfo()
                     {
                         name = windowName,
@@ -111,7 +82,7 @@ namespace Sango.Game.Render
                         if (call != null)
                         {
                             LuaTable instance = call.Invoke<LuaTable>();
-                            if(instance != null)
+                            if (instance != null)
                             {
                                 uGUIWindow.AttachScript(instance, true);
                                 uGUIWindow.CallFunction("Init", Troop);
@@ -121,13 +92,28 @@ namespace Sango.Game.Render
                     else
                     {
                         UITroopHeadbar uITroopHeadbar = uGUIWindow as UITroopHeadbar;
-                        if(uITroopHeadbar != null)
+                        if (uITroopHeadbar != null)
                         {
                             uITroopHeadbar.Init(Troop);
                         }
                     }
                 }
                 HeadBar = uGUIWindow;
+            }
+
+        }
+
+        void OnModelVisibleChange(MapObject obj)
+        {
+            if (obj.visible == false)
+            {
+                TroopModel = null;
+                if (HeadBar != null)
+                {
+                    PoolManager.Recycle(headbarKey, HeadBar.gameObject);
+                    HeadBar = null;
+                }
+                return;
             }
         }
 
@@ -150,12 +136,11 @@ namespace Sango.Game.Render
                         uITroopHeadbar.UpdateState(Troop);
                     }
                 }
+            }
 
-                TroopsRender troopsRender = MapObject.GetComponentInChildren<TroopsRender>(true);
-                if (troopsRender != null)
-                {
-                    troopsRender.SetShowPercent(Troop.troops / 10000.0f);
-                }
+            if (TroopModel != null)
+            {
+                TroopModel.Init(Troop);
             }
         }
 
@@ -167,12 +152,12 @@ namespace Sango.Game.Render
 
         public override void Clear()
         {
+            TroopModel = null;
             if (HeadBar != null)
             {
                 PoolManager.Recycle(headbarKey, HeadBar.gameObject);
                 HeadBar = null;
             }
-
             base.Clear();
         }
     }

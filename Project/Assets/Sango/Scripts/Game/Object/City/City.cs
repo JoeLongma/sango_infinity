@@ -3,9 +3,7 @@ using Sango.Game.Render;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TreeEditor;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 namespace Sango.Game
 {
