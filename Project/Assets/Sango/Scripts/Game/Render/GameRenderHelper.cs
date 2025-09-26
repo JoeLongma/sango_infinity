@@ -1,11 +1,19 @@
 ﻿using Sango.Loader;
+using UnityEngine;
 using UnityEngine.UI;
 
-namespace Sango.Game.UI
+namespace Sango.Game
+
 {
-    public class UIHelper
+    public class GameRenderHelper
     {
         public static string HeadIconPath = "Assets/UI/AtlasTexture/Face";
+        public static string TroopHeadbarRes = "Assets/UI/Prefab/window_troop_bar.prefab";
+        public static string[] CityResPath = new string[]{
+        "Assets/Model/Prefab/p_city_1.prefab",
+        "Assets/Model/Prefab/p_city_2.prefab",
+        };
+
         public static UnityEngine.Sprite LoadHeadIcon(int id)
         {
             return LoadHeadIcon(id, 2);
@@ -20,6 +28,13 @@ namespace Sango.Game.UI
                 headSpr = ObjectLoader.LoadObject<UnityEngine.Sprite>(headPath);
             }
             return headSpr;
+        }
+
+        public static string GetCityModelAsset(int type)
+        {
+            if (type < 0 || type >= CityResPath.Length)
+                type = 0;
+            return CityResPath[type];
         }
     }
 }

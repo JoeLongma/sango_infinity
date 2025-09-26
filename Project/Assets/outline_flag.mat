@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5463016073746641911
+--- !u!114 &-2248147378058284101
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,14 +20,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mat_city
-  m_Shader: {fileID: 4800000, guid: 24a571e9815b6f8409b27103f0f3e0dc, type: 3}
+  m_Name: outline_flag
+  m_Shader: {fileID: 4800000, guid: c6895a87775d1b64290da2fcfd4f161e, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2900
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -58,7 +58,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 20ad9920d9592d44aa121fc3baa31330, type: 3}
+        m_Texture: {fileID: 2800000, guid: 896c1bce50be83141a66ca5fa1c732f3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -107,7 +107,7 @@ Material:
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
-    - _OutlineWidth: 0.0001
+    - _OutlineWidth: 0.3
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1

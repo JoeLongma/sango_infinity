@@ -23,7 +23,7 @@ namespace Sango.Render
         public OnMapLoadedCall OnMapLoaded;
         public delegate void OnSeasonChange(int curSeason);
         public Material terrainOutlineMat;
-        float _outlineWidth = 0.0035f;
+        float _outlineWidth = 3.5f;
         bool _outlineShow = true;
 
         public float showLimitLength = 1200;

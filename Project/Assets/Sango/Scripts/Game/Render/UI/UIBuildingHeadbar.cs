@@ -1,9 +1,9 @@
 ﻿using Sango.Loader;
 using UnityEngine.UI;
+namespace Sango.Game.Render.UI
 
-namespace Sango.Game.UI
 {
-    public class UITroopHeadbar : UGUIWindow
+    public class UIBuildingHeadbar : UGUIWindow
     {
         public Image headIcon;
         public Text name;
@@ -16,7 +16,7 @@ namespace Sango.Game.UI
         public void Init(Troop troop)
         {
             name.text = troop.Name;
-            headIcon.sprite = UIHelper.LoadHeadIcon(troop.Leader.headIconID);
+            headIcon.sprite = GameRenderHelper.LoadHeadIcon(troop.Leader.headIconID);
             UpdateState(troop);
         }
 

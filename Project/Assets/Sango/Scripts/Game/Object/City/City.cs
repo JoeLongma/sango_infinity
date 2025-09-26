@@ -90,7 +90,7 @@ namespace Sango.Game
         /// <summary>
         /// 模型
         /// </summary>
-        [JsonProperty] public List<int> models;
+        [JsonProperty] public int model;
 
 
         /// <summary>

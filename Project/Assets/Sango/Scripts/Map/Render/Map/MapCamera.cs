@@ -19,7 +19,7 @@ namespace Sango.Render
         public Vector2 limitDistance = new Vector2(200f, 630f);
         public Vector2 limitAngle = new Vector2(22.5f, 70f);
         public float cur_distance = 300f;
-        public Vector3 look_rotate = new Vector3(45f, 0f, 0f);
+        public Vector3 look_rotate = new Vector3(45f, -90f, 0f);
         public float zoomSpeed = 400f;
         public float keyBoardMoveSpeed = 1f;
         public float rotSpeed = 0.1f;

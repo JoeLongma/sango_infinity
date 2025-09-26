@@ -1,8 +1,7 @@
 ﻿using LuaInterface;
-using Sango.Game.UI;
+using Sango.Game.Render.UI;
 using Sango.Loader;
 using Sango.Render;
-using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 
 namespace Sango.Game.Render
@@ -81,7 +80,7 @@ namespace Sango.Game.Render
             GameObject headBar = PoolManager.Get(headbarKey);
             if (headBar == null)
             {
-                GameObject headBarObj = ObjectLoader.LoadObject<GameObject>("Assets/UI/Prefab/window_troop_bar.prefab");
+                GameObject headBarObj = ObjectLoader.LoadObject<GameObject>(GameRenderHelper.TroopHeadbarRes);
                 if(headBarObj != null)
                 {
                     PoolManager.Add(headbarKey, headBarObj);
@@ -108,8 +107,16 @@ namespace Sango.Game.Render
 
                     if (table != null)
                     {
-                        uGUIWindow.AttachScript(table, false);
-                        uGUIWindow.CallFunction("Awake", Troop);
+                        LuaFunction call = uGUIWindow.GetFunction("Create");
+                        if (call != null)
+                        {
+                            LuaTable instance = call.Invoke<LuaTable>();
+                            if(instance != null)
+                            {
+                                uGUIWindow.AttachScript(instance, true);
+                                uGUIWindow.CallFunction("Init", Troop);
+                            }
+                        }
                     }
                     else
                     {

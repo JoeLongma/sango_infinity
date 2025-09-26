@@ -16,8 +16,11 @@ namespace Sango.Game.Render
             Renderer renderer = GetComponentInChildren<Renderer>(true);
             Material outlineMat = renderer.materials[0];
             Material baseMat = renderer.materials[1];
-            Material TextMat = renderer.materials[2];
-            TextMat.SetTexture("_MainTex", TextFactory.Instance.GetTexture(force.Name.Substring(0, 1), 40));
+            if (renderer.materials.Length > 2)
+            {
+                Material TextMat = renderer.materials[2];
+                TextMat.SetTexture("_MainTex", TextFactory.Instance.GetTexture(force.Name.Substring(0, 1), 40));
+            }
 
             Vector2 textScale = new Vector2(flagW / flagTexWidth, flagH / flagTexHeight);
             outlineMat.SetTextureScale("_MainTex", textScale);
@@ -38,8 +41,12 @@ namespace Sango.Game.Render
             Renderer renderer = GetComponentInChildren<Renderer>(true);
             Material outlineMat = renderer.materials[0];
             Material baseMat = renderer.materials[1];
-            Material TextMat = renderer.materials[2];
-            TextMat.SetTexture("_MainTex", TextFactory.Instance.GetTexture(troop.Name.Substring(0, 1), 40));
+
+            if (renderer.materials.Length > 2)
+            {
+                Material TextMat = renderer.materials[2];
+                TextMat.SetTexture("_MainTex", TextFactory.Instance.GetTexture(troop.Name.Substring(0, 1), 40));
+            }
 
             Vector2 textScale = new Vector2(flagW / flagTexWidth, flagH / flagTexHeight);
             outlineMat.SetTextureScale("_MainTex", textScale);
@@ -63,7 +70,6 @@ namespace Sango.Game.Render
             Renderer renderer = GetComponentInChildren<Renderer>(true);
             Material outlineMat = renderer.sharedMaterials[0];
             Material baseMat = renderer.sharedMaterials[1];
-            Material TextMat = renderer.sharedMaterials[2];
 
             Vector2 textScale = new Vector2(flagW / flagTexWidth, flagH / flagTexHeight);
             outlineMat.SetTextureScale("_MainTex", textScale);
@@ -71,7 +77,7 @@ namespace Sango.Game.Render
             int x = flagId % xCount;
             int y = flagId / xCount;
 
-            Vector2 textOffset = new Vector2(x * (flagW / flagTexWidth) - 0.003f, -y * (flagH / flagTexHeight) -0.075f);
+            Vector2 textOffset = new Vector2(x * (flagW / flagTexWidth) - 0.003f, -y * (flagH / flagTexHeight) - 0.075f);
             outlineMat.SetTextureOffset("_MainTex", textOffset);
             baseMat.SetTextureOffset("_MainTex", textOffset);
 
