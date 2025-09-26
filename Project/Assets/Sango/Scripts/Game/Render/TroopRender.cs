@@ -1,6 +1,8 @@
 ﻿using LuaInterface;
+using Sango.Game.UI;
 using Sango.Loader;
 using Sango.Render;
+using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 
 namespace Sango.Game.Render
@@ -30,11 +32,11 @@ namespace Sango.Game.Render
             MapObject.onModelVisibleChange = OnModelVisibleChange;
             MapRender.Instance.AddDynamic(MapObject);
 
-            GameObject obj = GameObject.Instantiate(Resources.Load<GameObject>("TroopName")) as GameObject;
-            obj.transform.SetParent(MapObject.transform, false);
-            obj.transform.localPosition = new Vector3(0, 20, 0);
-            UnityEngine.UI.Text text = obj.GetComponent<UnityEngine.UI.Text>();
-            textInfo = text;
+            //GameObject obj = GameObject.Instantiate(Resources.Load<GameObject>("TroopName")) as GameObject;
+            //obj.transform.SetParent(MapObject.transform, false);
+            //obj.transform.localPosition = new Vector3(0, 20, 0);
+            //UnityEngine.UI.Text text = obj.GetComponent<UnityEngine.UI.Text>();
+            //textInfo = text;
             UpdateInfo();
         }
 
@@ -91,8 +93,9 @@ namespace Sango.Game.Render
             {
                 headBar.transform.SetParent(obj.transform, false);
                 headBar.transform.localPosition = new Vector3(0, 25, 0);
+
                 UGUIWindow uGUIWindow = headBar.GetComponent<UGUIWindow>();
-                if(uGUIWindow != null)
+                if (uGUIWindow != null)
                 {
                     string windowName = "window_troop_bar";
                     LuaTable table = Window.Instance.FindPeerTable(new Window.WindowInfo()
@@ -108,6 +111,14 @@ namespace Sango.Game.Render
                         uGUIWindow.AttachScript(table, false);
                         uGUIWindow.CallFunction("Awake", Troop);
                     }
+                    else
+                    {
+                        UITroopHeadbar uITroopHeadbar = uGUIWindow as UITroopHeadbar;
+                        if(uITroopHeadbar != null)
+                        {
+                            uITroopHeadbar.Init(Troop);
+                        }
+                    }
                 }
                 HeadBar = uGUIWindow;
             }
@@ -115,12 +126,23 @@ namespace Sango.Game.Render
 
         public void UpdateInfo()
         {
-            textInfo.color = Troop.BelongForce.Flag.color;
-            textInfo.text = $"<{Troop.BelongForce.Name}>\n[{Troop.Name}队 - {Troop.TroopType.Name}]\n [{Troop.troops}] \n -{Troop.food}-";
+            //textInfo.color = Troop.BelongForce.Flag.color;
+            //textInfo.text = $"<{Troop.BelongForce.Name}>\n[{Troop.Name}队 - {Troop.TroopType.Name}]\n [{Troop.troops}] \n -{Troop.food}-";
 
             if(HeadBar != null)
             {
-                HeadBar.CallFunction("UpdateState", Troop);
+                if( HeadBar.HasScript())
+                {
+                    HeadBar.CallFunction("UpdateState", Troop);
+                }
+                else
+                {
+                    UITroopHeadbar uITroopHeadbar = HeadBar as UITroopHeadbar;
+                    if (uITroopHeadbar != null)
+                    {
+                        uITroopHeadbar.UpdateState(Troop);
+                    }
+                }
 
                 TroopsRender troopsRender = MapObject.GetComponentInChildren<TroopsRender>(true);
                 if (troopsRender != null)

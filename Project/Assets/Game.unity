@@ -789,7 +789,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: TextFactory
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4714337929903018783, guid: f4882400008b6734689ca818a9fe1895, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714337929903018783, guid: f4882400008b6734689ca818a9fe1895, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714337929903018783, guid: f4882400008b6734689ca818a9fe1895, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6654801848133458879, guid: f4882400008b6734689ca818a9fe1895, type: 3}
+      propertyPath: m_UseGraphicAlpha
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6654801848133458879, guid: f4882400008b6734689ca818a9fe1895, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6654801848133458879, guid: f4882400008b6734689ca818a9fe1895, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1333458323953382778, guid: f4882400008b6734689ca818a9fe1895, type: 3}
+    - {fileID: 6654801848133458879, guid: f4882400008b6734689ca818a9fe1895, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f4882400008b6734689ca818a9fe1895, type: 3}
 --- !u!4 &4714337930059802860 stripped
 Transform:

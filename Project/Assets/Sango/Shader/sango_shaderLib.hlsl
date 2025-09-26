@@ -270,6 +270,12 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 	#endif
 	#endif
 
+
+#if SANGO_COLOR
+	diffuse = diffuse * _Color.rgb;
+#endif
+
+
 	//
 	// light
 	// 雾效处理
@@ -282,9 +288,6 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 	#endif
 
 
-#if SANGO_COLOR
-		diffuse = diffuse * _Color.rgb;
-#endif
 
 
 	#if SANGO_BLEND_HEIGHT

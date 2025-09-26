@@ -184,12 +184,15 @@ namespace Sango.Game
 
         public TroopRender Render { get; private set; }
         bool isMissionPrepared = false;
+        public int foodCost = 0;
+
         public override void Init(Scenario scenario)
         {
             for (int i = 0; i < TroopType.skills.Count; i++)
                 skills.Add(scenario.GetObject<Skill>(TroopType.skills[i]));
             CalculateAttribute();
             Render = new TroopRender(this);
+            foodCost = (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
         }
 
         public virtual bool Run(Corps corps, Force force, Scenario scenario)
@@ -206,6 +209,7 @@ namespace Sango.Game
                 if (person.BelongForce != null)
                     person.BelongForce.CaptiveList.Add(person);
             }
+            foodCost = (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
             //MemberList?.InitCache();// = new SangoObjectList<Person>().FromString(_memberListStr, scenario.personSet);
         }
         public override bool OnTurnStart(Scenario scenario)
@@ -233,7 +237,7 @@ namespace Sango.Game
             }
             else
             {
-                int foodCost = (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
+                foodCost = (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
                 ChangeFood(-foodCost);
             }
 
@@ -243,6 +247,13 @@ namespace Sango.Game
             }
 
             return true;
+        }
+
+        public int IsWithOutFood()
+        {
+            if (food == 0) return 0;
+            if (food < foodCost * 3) return 1;
+            return 2;
         }
 
         public void CalculateAttribute()
@@ -534,7 +545,7 @@ namespace Sango.Game
                         isLastMove = isLast
                     };
 
-                    if(isLast)
+                    if (isLast)
                         renderEvent = @event;
 
                     RenderEvent.Instance.Add(@event);
@@ -714,13 +725,13 @@ namespace Sango.Game
             {
                 int absNum = Math.Abs(num);
                 woundedTroops += (int)Math.Ceiling(absNum * 0.14f);
-                int foodCost = (int)System.Math.Ceiling(Scenario.Cur.Variables.baseFoodCostInTroop * absNum * TroopType.foodCostFactor) / 2;
+                int _foodCost = (int)System.Math.Ceiling(Scenario.Cur.Variables.baseFoodCostInTroop * absNum * TroopType.foodCostFactor) / 2;
                 int divFood = 0;
                 // 有概率保留部分
                 if (GameRandom.Changce(80))
-                    divFood += foodCost;
+                    divFood += _foodCost;
                 if (GameRandom.Changce(50))
-                    divFood += foodCost;
+                    divFood += _foodCost;
                 ChangeFood(-divFood);
             }
 
@@ -987,7 +998,7 @@ namespace Sango.Game
             {
                 return true;
             }
-            
+
             return MoveTo(tryToDest);
         }
 

@@ -107,7 +107,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8112661406354916524}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -183,7 +183,7 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8112661406354916524}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -264,7 +264,7 @@ RectTransform:
   m_Children:
   - {fileID: 4651703453518831151}
   m_Father: {fileID: 8112661406354916524}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -340,7 +340,7 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8112661406354916524}
-  m_RootOrder: 1
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -420,7 +420,7 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8112661406354916524}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -496,7 +496,7 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8112661406354916524}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -648,13 +648,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3640564434431012960}
-  - {fileID: 6623197843906061950}
   - {fileID: 8198611546600726872}
   - {fileID: 4213181292754838250}
   - {fileID: 248005340645543682}
-  - {fileID: 4833350586744284135}
   - {fileID: 3423208437301801494}
   - {fileID: 3109497930279098561}
+  - {fileID: 4833350586744284135}
+  - {fileID: 6623197843906061950}
   m_Father: {fileID: 5973749658295835790}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -733,7 +733,7 @@ RectTransform:
   m_Children:
   - {fileID: 7290133798769032007}
   m_Father: {fileID: 8112661406354916524}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -789,8 +789,8 @@ GameObject:
   - component: {fileID: 5973749658295835790}
   - component: {fileID: 174056003858870177}
   - component: {fileID: 227613633725753443}
-  - component: {fileID: -9159462744481052588}
   - component: {fileID: -2764854377414352855}
+  - component: {fileID: 7523167001694398416}
   m_Layer: 0
   m_Name: window_troop_bar
   m_TagString: Untagged
@@ -864,18 +864,6 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
---- !u!114 &-9159462744481052588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9039031632039893254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c98c14ab5e7b3b4e8704671ba65ea8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-2764854377414352855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -890,6 +878,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initScale: {x: -1, y: 1, z: 1}
   scaleFactor: {x: 0.1, y: 0.3}
+--- !u!114 &7523167001694398416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9039031632039893254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac3cb250a6e5a6246b57018cb5544e84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headIcon: {fileID: 3077469896467252950}
+  name: {fileID: 5974698298865323121}
+  state: {fileID: 6533400359583840899}
+  food: {fileID: 3891438836095054353}
+  energy: {fileID: 3592806023919246132}
+  angry: {fileID: 8263282343810267166}
+  number: {fileID: 6930222270662210776}
 --- !u!1 &9204697333084271942
 GameObject:
   m_ObjectHideFlags: 0
