@@ -13,15 +13,19 @@ public class GameStart : MonoBehaviour
 {
     [NoToLua]
     public bool Debug = false;
-    [NoToLua]
-    public bool ShowConsole = false;
 
     void Awake()
     {
 
 #if UNITY_STANDALONE_WIN && !UNITY_EDITOR
-        if (ShowConsole)
-            ServerConsole.ShowConsole();
+        string[] args = System.Environment.GetCommandLineArgs();
+        foreach (string arg in args)
+        {
+            if(arg.Equals("-console"))
+            {
+                ServerConsole.ShowConsole();
+            }
+        }
 #endif
 
         DontDestroyOnLoad(gameObject);
