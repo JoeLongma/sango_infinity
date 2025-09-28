@@ -227,7 +227,83 @@ namespace Sango.Game
             }
         }
 
+        /// <summary>
+        /// 获取移动范围
+        /// </summary>
+        /// <param name="troops"></param>
+        /// <param name="cellList"></param>
         public void GetMoveRange(Troop troops, List<Cell> cellList)
+        {
+            frontier.Clear();
+            came_from.Clear();
+            cost_so_far.Clear();
+            cellList.Add(troops.cell);
+            int moveAttr = troops.MoveAbility;
+            came_from[troops.cell] = null;
+            frontier.Enqueue(troops.cell, 0);
+            troops.cell._isChecked = true;
+            while (frontier.Count > 0)
+            {
+                Cell current = frontier.Dequeue();
+                if (current._isZOC)
+                    continue;
+
+                int cost_current = current._cost;
+                for (int i = 0; i < 6; i++)
+                {
+                    Cell next = GetNeighbor(current, i);
+                    if (next != null && next.CanMove(troops) && next.CanPassThrough(troops))
+                    {
+                        if(!next._isChecked)
+                        {
+                            bool isZoc = IsZOC(troops, next);
+                            int new_cost;
+                            if (isZoc)
+                                new_cost = moveAttr;
+                            else
+                                new_cost = cost_current + troops.MoveCost(next);
+
+                            if (new_cost > moveAttr)
+                                continue;
+
+                            next._cost = new_cost;
+                            next._isZOC = isZoc;
+                            next._isChecked = true;
+
+                            came_from[next] = current;
+                            frontier.Enqueue(next, new_cost);
+                            cellList.Add(next);
+#if SANGO_DEBUG_AI
+                            GameAIDebug.Instance.ShowCellCost(next, new_cost, troops);
+#endif
+                        }
+                        else if(!next._isZOC)
+                        {
+                            int new_cost = cost_current + troops.MoveCost(next);
+                            if (new_cost < next._cost)
+                            {
+                                next._cost = new_cost;
+                                came_from[next] = current;
+                                frontier.Enqueue(next, new_cost);
+#if SANGO_DEBUG_AI
+                                GameAIDebug.Instance.ShowCellCost(next, new_cost, troops);
+#endif
+                            }
+                        }
+                    }
+                }
+            }
+
+            for(int i = 0; i < cellList.Count; i++)
+            {
+                Cell cell = cellList[i];
+                cell._cost = 0;
+                cell._isZOC = false;
+                cell._isChecked = false;
+            }
+        }
+
+        public void GetMoveRange2(Troop troops, List<Cell> cellList)
         {
 
             frontier.Clear();
@@ -235,8 +311,8 @@ namespace Sango.Game
             cost_so_far.Clear();
             cellList.Add(troops.cell);
             int moveAttr = troops.MoveAbility;
-            frontier.Enqueue(troops.cell, 0);
             came_from[troops.cell] = null;
+            frontier.Enqueue(troops.cell, 0);
             cost_so_far[troops.cell] = new cellTempInfo()
             {
                 cost = 0,
@@ -355,7 +431,6 @@ namespace Sango.Game
         }
 
         public delegate bool CellCheck(Cell checkCell);
-
         List<Cell> closeList = new List<Cell>();
         List<Cell> openList = new List<Cell>();
         //PriorityQueue<Cell> frontier = new PriorityQueue<Cell>();

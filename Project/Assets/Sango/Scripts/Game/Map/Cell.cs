@@ -26,6 +26,9 @@ namespace Sango.Game
         public Fire fire;
         public bool moveAble;
 
+        internal int _cost = 0;
+        internal bool _isZOC = false;
+        internal bool _isChecked = false;
 
         public Cell(ushort x, ushort y)
         {

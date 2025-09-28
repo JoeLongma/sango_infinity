@@ -71,6 +71,25 @@ namespace Sango.Game
                     if (needUpdateMoverange)
                     {
                         scenario.Map.GetMoveRange(troop, troop.MoveRange);
+                        //float time = UnityEngine.Time.realtimeSinceStartup;
+                        //for (int i1 = 0; i1 < 100; i1++)
+                        //{
+                        //    troop.MoveRange.Clear();
+                        //    scenario.Map.GetMoveRange(troop, troop.MoveRange);
+                        //}
+
+                        //UnityEngine.Debug.LogError("1-->" + (UnityEngine.Time.realtimeSinceStartup - time));
+                        //time = UnityEngine.Time.realtimeSinceStartup;
+
+                        //for (int i1 = 0; i1 < 100; i1++)
+                        //{
+                        //    troop.MoveRange.Clear();
+                        //    scenario.Map.GetMoveRange2(troop, troop.MoveRange);
+                        //}
+
+                        //UnityEngine.Debug.LogError("2-->" + (UnityEngine.Time.realtimeSinceStartup - time));
+
+
                         needUpdateMoverange = false;
 #if SANGO_DEBUG_AI
                         GameAIDebug.Instance.ShowMoveRange(troop.MoveRange, troop);
