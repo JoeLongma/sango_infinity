@@ -416,10 +416,7 @@ namespace Sango.Render
         {
             isLoading = false;
             if (loadedModel == null) return;
-            object pool_key = modelId;
-            if (!string.IsNullOrEmpty(modelAsset))
-                pool_key = modelAsset;
-            PoolManager.Recycle(pool_key, loadedModel);
+            PoolManager.Recycle(loadedModel);
             loadedModel = null;
         }
 

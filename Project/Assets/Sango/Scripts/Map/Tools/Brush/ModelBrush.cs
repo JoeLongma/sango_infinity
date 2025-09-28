@@ -437,7 +437,7 @@ namespace Sango.Tools
         {
             if (model != null)
             {
-                PoolManager.Recycle(modelConfig.Id, model);
+                PoolManager.Recycle(model);
                 model.SetActive(false);
                 model = null;
             }

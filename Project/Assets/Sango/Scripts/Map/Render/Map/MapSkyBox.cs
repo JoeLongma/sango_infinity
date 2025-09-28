@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace Sango.Render
 {
@@ -35,17 +36,13 @@ namespace Sango.Render
                 seasonTextureNames = names;
                 for (int i = 0; i < seasonTextureNames.Length; ++i) {
                     string seasonName = MapRender.SeasonNames[i];
-                    Loader.TextureLoader.LoadFromFile(skyBox.map.FindTexture($"Sky/{seasonName}/{seasonTextureNames[i]}"), i, (UnityEngine.Object tex, object obj) =>
+
+                    Texture tex = skyBox.map.CreateTexture($"Sky/{seasonName}/{seasonTextureNames[i]}");
+                    seasonTextures[i] = tex;
+                    if (this == skyBox.curArea)
                     {
-                        int index = (int)obj;
-                        Texture t = tex as Texture;
-                        seasonTextures[index] = t;
-
-                        if (this == skyBox.curArea) {
-                            skyBox.UpdateRender();
-                        }
-
-                    });
+                        skyBox.UpdateRender();
+                    }
                 }
             }
 
@@ -89,19 +86,16 @@ namespace Sango.Render
                     seasonTextureNames[i] = reader.ReadString();
                     string seasonName = MapRender.SeasonNames[i];
                     if (!string.IsNullOrEmpty(seasonTextureNames[i])) {
-                        Loader.TextureLoader.LoadFromFile(skyBox.map.FindTexture($"Sky/{seasonName}/{seasonTextureNames[i]}"), i, (UnityEngine.Object tex, object obj) =>
+
+                        Texture tex = skyBox.map.CreateTexture($"Sky/{seasonName}/{seasonTextureNames[i]}");
+                        seasonTextures[i] = tex;
+                        if (this == skyBox.curArea)
                         {
-                            int index = (int)obj;
-                            Texture t = tex as Texture;
-                            seasonTextures[index] = t;
-                            if (this == skyBox.curArea) {
-                                skyBox.UpdateRender();
-                            }
-                        });
+                            skyBox.UpdateRender();
+                        }
                     }
                 }
             }
-
         }
 
         internal SkyArea curArea;

@@ -6,6 +6,7 @@ using Sango;
 using LuaInterface;
 using System.Collections.Generic;
 using Sango.Game;
+using Sango.Loader;
 
 namespace Sango.Render
 {
@@ -378,6 +379,23 @@ namespace Sango.Render
                 return finalPath;
             }
             return null;
+        }
+
+
+        public Texture CreateTexture(string textureName, string extensions = ".png")
+        {
+            string destPath = $"Assets/Map/{WorkContent}/{textureName}{extensions}";
+            Texture texture = ObjectLoader.LoadObject<Texture>(destPath);
+            if(texture == null)
+            {
+                destPath = $"Assets/Map/{DefaultContentName}/{textureName}{extensions}";
+                texture = ObjectLoader.LoadObject<Texture>(destPath);
+                if (texture == null)
+                {
+                    texture = Texture2D.whiteTexture;
+                }
+            }
+            return texture;
         }
 
         private Tools.Rect ViewRectCache;

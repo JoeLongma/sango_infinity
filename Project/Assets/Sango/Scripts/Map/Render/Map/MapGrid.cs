@@ -236,14 +236,10 @@ namespace Sango.Render
         public void SetGridTexture(string name)
         {
             gridTextureName = name;
-            Loader.TextureLoader.LoadFromFile(map.FindTexture("Grid/" + gridTextureName), null, (UnityEngine.Object tex, object obj) =>
-            {
-                Texture t = tex as Texture;
-                gridTexture = t;
-                t.mipMapBias = -1110.4f;
-                Shader.SetGlobalTexture("_GridTex", gridTexture);
-
-            }, true);
+            Texture tex = map.CreateTexture("Grid/" + gridTextureName);
+            gridTexture = tex;
+            tex.mipMapBias = -1110.4f;
+            Shader.SetGlobalTexture("_GridTex", gridTexture);
         }
         //public void LoadFrom311GridData(string filename)
         //{
