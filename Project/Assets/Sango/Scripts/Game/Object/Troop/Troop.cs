@@ -497,10 +497,10 @@ namespace Sango.Game
             return Variables.troops_adaptation_level_boost[abilityValue];
         }
 
-        static List<Cell> tempCellList = new List<Cell>(256);
-        static List<Cell> tempMoveRange = new List<Cell>(256);
-        static List<TroopMoveEvent> tempMoveEventList = new List<TroopMoveEvent>(32);
-        static List<Cell> spellRangeCells = new List<Cell>(256);
+        internal static List<Cell> tempCellList = new List<Cell>(256);
+        internal static List<Cell> tempMoveRange = new List<Cell>(256);
+        internal static List<TroopMoveEvent> tempMoveEventList = new List<TroopMoveEvent>(32);
+        internal static List<Cell> spellRangeCells = new List<Cell>(256);
         internal bool isMoving = false;
         IRenderEventBase renderEvent = null;
 
@@ -758,64 +758,23 @@ namespace Sango.Game
 
         public bool SpellSkill(Skill skill, Cell spellCell)
         {
-            Troop targetTroop = spellCell.troop;
-            BuildingBase targetBuilding = spellCell.building;
-            //TODO: 释放技能
-            tempCellList.Clear();
-            skill.GetAttackCells(this, spellCell, tempCellList);
-            for (int i = 0; i < tempCellList.Count; i++)
+            //if (renderEvent != null && renderEvent.IsDone)
+            //{
+            //    renderEvent = null;
+            //    return true;
+            //}
+
+            TroopSpellSkillEvent @event = new TroopSpellSkillEvent()
             {
-                Cell atkCell = tempCellList[i];
-                Troop beAtkTroop = atkCell.troop;
-                if (beAtkTroop != null)
-                {
-                    int damage = CalculateSkillDamage(this, beAtkTroop, skill);
-                    beAtkTroop.ChangeTroops(-damage, this);
-                    Sango.Log.Print($"{BelongForce.Name}的[{Name} - {TroopType.Name}] 使用<{skill.Name}> 攻击 {beAtkTroop.BelongForce.Name}的[{beAtkTroop.Name} - {beAtkTroop.TroopType.Name}], 造成伤害:{damage}, 目标剩余兵力: {beAtkTroop.GetTroopsNum()}");
+                troop = this,
+                skill = skill,
+                spellCell = spellCell,
+            };
+            //renderEvent = @event;
+            RenderEvent.Instance.Add(@event);
+           // return false;
 
-                    // 反击
-                    if (beAtkTroop.IsAlive && targetTroop == beAtkTroop)
-                    {
-                        float hitBack = beAtkTroop.GetAttackBackFactor(skill, Scenario.Cur.Map.Distance(cell, atkCell));
-                        if (hitBack > 0)
-                        {
-                            int hitBackDmg = (int)System.Math.Ceiling(hitBack * Troop.CalculateSkillDamage(beAtkTroop, this, null));
-                            ChangeTroops(-hitBackDmg, beAtkTroop);
-                            Sango.Log.Print($"{BelongForce.Name}的[{Name} - {TroopType.Name}] 受到 {beAtkTroop.BelongForce.Name}的[{beAtkTroop.Name} - {beAtkTroop.TroopType.Name}]反击伤害:{hitBackDmg}, 目标剩余兵力: {GetTroopsNum()}");
-
-                        }
-                    }
-                }
-
-                BuildingBase beAtkBuildingBase = atkCell.building;
-                if (beAtkBuildingBase != null)
-                {
-                    int damage = CalculateSkillDamage(this, beAtkBuildingBase, skill);
-                    Sango.Log.Print($"{BelongForce.Name}的[{Name} - {TroopType.Name}] 使用<{skill.Name}> 攻击 {beAtkBuildingBase.BelongForce?.Name}的 [{beAtkBuildingBase.Name}], 造成伤害:{damage}, 目标剩余耐久: {beAtkBuildingBase.durability}");
-                    if (beAtkBuildingBase.ChangeDurability(-damage, this))
-                    {
-                        Sango.Log.Print($"{BelongForce.Name}的[{Name} - {TroopType.Name}] 攻破城池: <{beAtkBuildingBase.Name}>");
-                    }
-                    else
-                    {
-                        // 城池反击
-                        if (targetBuilding == beAtkBuildingBase)
-                        {
-                            float hitBack = beAtkBuildingBase.GetAttackBackFactor(skill, Scenario.Cur.Map.Distance(cell, atkCell));
-                            if (hitBack > 0)
-                            {
-                                int hitBackDmg = (int)System.Math.Ceiling(hitBack * Troop.CalculateSkillDamage(beAtkBuildingBase, this, null));
-                                ChangeTroops(-hitBackDmg, beAtkBuildingBase);
-                                Sango.Log.Print($"{BelongForce.Name}的[{Name} - {TroopType.Name}] 受到 {beAtkBuildingBase.BelongForce?.Name}的[{beAtkBuildingBase.Name}]反击伤害:{hitBackDmg}, 目标剩余兵力: {GetTroopsNum()}");
-
-                            }
-                        }
-                    }
-                }
-
-            }
-            energy -= skill.costEnergy;
-            ActionOver = true;
+           
             return true;
         }
         Cell tryToDest;

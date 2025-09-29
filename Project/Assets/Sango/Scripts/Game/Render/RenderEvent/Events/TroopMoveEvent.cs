@@ -11,6 +11,22 @@ namespace Sango.Game.Render
         public Cell dest;
         public bool isLastMove;
 
+        public override void Enter(Scenario scenario)
+        {
+            if (IsVisible())
+            {
+                troop.Render.SetSmokeShow(true);
+            }
+        }
+
+        public override void Exit(Scenario scenario)
+        {
+            if (IsVisible() && isLastMove)
+            {
+                troop.Render.SetSmokeShow(false);
+            }
+        }
+
         public override bool IsVisible()
         {
             return troop.Render.IsVisible();

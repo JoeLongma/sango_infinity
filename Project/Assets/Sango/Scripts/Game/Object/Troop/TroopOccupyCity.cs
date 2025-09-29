@@ -106,6 +106,7 @@ namespace Sango.Game
             {
                 if (!troop.MoveTo(priorityActionData.movetoCell))
                     return false;
+
                 if (!troop.SpellSkill(priorityActionData.skill, priorityActionData.spellCell))
                     return false;
                 return true;

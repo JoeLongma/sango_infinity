@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -68,7 +69,7 @@ namespace Sango.Game
                             }
                         }
                         break;
-                        // 1
+                    // 1
                     case SkillAttackOffsetType.Ring:
                         {
                             if (atkOffsetPoint.Count > 1)
@@ -79,7 +80,7 @@ namespace Sango.Game
                                     cells.Add(spell);
                                     return;
                                 }
-                                spell.Ring(radius, (cell) =>{cells.Add(cell);});
+                                spell.Ring(radius, (cell) => { cells.Add(cell); });
                             }
                             else
                                 Sango.Log.Error("技能命中配置不正确!!");
@@ -127,5 +128,21 @@ namespace Sango.Game
             return isRange;
         }
 
+        public bool UpdateRender(Troop troop, Cell spellCell, Scenario scenario, float time, Action action)
+        {
+            if (time <= 0f)
+            {
+                troop.Render.FaceTo(spellCell.Position);
+                troop.Render.SetAniShow(1);
+            }
+            if (time > 1f)
+                action();
+            if (time > 2.2f)
+            {
+                troop.Render.SetAniShow(0);
+                return true;
+            }
+            return false;
+        }
     }
 }

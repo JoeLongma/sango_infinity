@@ -150,5 +150,32 @@ namespace Sango.Game.Render
             }
             base.Clear();
         }
+
+        public void SetAniShow(int name)
+        {
+            if(TroopModel != null)
+            {
+                TroopModel.SetAniShow(name);
+            }
+        }
+
+        public void FaceTo(Vector3 dest)
+        {
+            if (TroopModel != null)
+            {
+                Vector3 forward = dest - TroopModel.transform.position;
+                forward.y = 0;
+                forward = forward.normalized;
+                TroopModel.transform.forward = forward;
+            }
+        }
+
+        public void SetSmokeShow(bool b)
+        {
+            if (TroopModel != null)
+            {
+                TroopModel.SetSmokeShow(b);
+            }
+        }
     }
 }

@@ -52,12 +52,14 @@ namespace Sango
         private Mesh mesh;
         public Material material;
         public Material[] aniMaterials = new Material[(int)TroopAniType.Max];
+        public Transform[] aniNode = new Transform[60];
 
         public float meshScale = 1;
         public float totalScale = 1;
         private int elementCount = 60;
         public int showCount = 60;
         public ParticleSystem smoke;
+        private bool isAniEnabled = false;
 
         public void SetShowCount(int count)
         {
@@ -161,13 +163,14 @@ namespace Sango
         {
             if (mesh == null) return;
 
-            Vector3 srcPosition = transform.position;
+            //Vector3 srcPosition = transform.position;
             Vector3 srcScale = transform.lossyScale * totalScale;
             for (int i = 0; i < _matrixes.Length; i++)
             {
                 var mx = _matrixes[i];
+                Transform node = aniNode[i];
                 mx.SetTRS(
-                    srcPosition + mPositions[i],
+                    node.position,
                     Quaternion.identity,
                     srcScale * meshScale
                     );
@@ -202,7 +205,7 @@ namespace Sango
             GetTargetHex(count, hexList);
 
             UpdateHexPosition();
-            UpdateTroopsPosition();
+            //UpdateTroopsPosition();
             _matrixes = new Matrix4x4[count];
             for (int i = 0; i < _matrixes.Length; i++)
             {
@@ -267,14 +270,15 @@ namespace Sango
         void UpdatePosition()
         {
             Vector3 nowPosition = transform.position;
-            if (lastPosition != nowPosition)
+            if (lastPosition != nowPosition || material == aniMaterials[1])
             {
                 Vector3 srcScale = transform.lossyScale * totalScale;
 
                 for (int i = 0; i < showCount; i++)
                 {
                     var mx = _matrixes[i];
-                    Vector3 targetPos = nowPosition + mPositions[i];
+                    Transform node = aniNode[i];
+                    Vector3 targetPos = node.position;
                     float height;
                     if (!MapRender.QueryHeight(targetPos, out height))
                     {
@@ -337,6 +341,7 @@ namespace Sango
         public SpriteRenderer mainTroop;
         public bool test = false;
         public int testCount = 30;
+        public List<UnityEngine.Renderer> initTroopsRenders = new List<UnityEngine.Renderer>();
         private void Awake()
         {
             origin = size * -0.5f;
@@ -348,7 +353,7 @@ namespace Sango
             SetAniType(0);
         }
 
-        void SetAniType(int id)
+        public void SetAniType(int id)
         {
             if (id < 0 || id >= aniMaterials.Length)
                 return;
@@ -377,6 +382,7 @@ namespace Sango
                 go.transform.localPosition = Vector3.Scale(HexToPosition(hexList[i]), srcScale);
                 go.transform.localScale = srcScale;
                 go.SetActive(true);
+                initTroopsRenders.Add(go.GetComponent<Renderer>());
                 //float height = NewMap.Map.QueryHeight(go.transform.position);
                 //Vector3 pos = go.transform.position;
                 //pos.y = height;
