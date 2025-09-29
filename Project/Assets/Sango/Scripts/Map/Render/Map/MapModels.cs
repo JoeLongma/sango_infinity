@@ -245,5 +245,19 @@ namespace Sango.Render
                 }
             }
         }
+
+        public override void UpdateImmediate()
+        {
+            foreach (IMapManageObject obj in staticObjects)
+            {
+                obj.EditorShow(true);
+                obj.visible = true;
+            }
+            foreach (IMapManageObject obj in dynamicObjects)
+            {
+                obj.EditorShow(true);
+                obj.visible = true;
+            }
+        }
     }
 }

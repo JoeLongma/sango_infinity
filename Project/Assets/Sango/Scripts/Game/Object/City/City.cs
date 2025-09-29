@@ -298,8 +298,10 @@ namespace Sango.Game
 
         public override void OnScenarioPrepare(Scenario scenario)
         {
-            base.OnScenarioPrepare(scenario);
+            //x *= 2;
+            //y *= 2;
 
+            base.OnScenarioPrepare(scenario);
             //TroopList?.InitCache();// = new SangoObjectList<Troop>().FromString(_troopListStr, scenario.troopSet);
             //NeighborList?.InitCache();// = new SangoObjectList<City>().FromString(_neighborListStr, scenario.citySet);
             //CityLevelType = scenario.CommonData.CityLevelTypes.Get(_cityLevelTypeId);
@@ -1526,6 +1528,7 @@ namespace Sango.Game
 
         internal List<Troop> troopTempList = new List<Troop>();
         internal Troop CurActiveTroop = null;
+        internal List<Troop> CurActiveTroopList = new List<Troop>();
 
         public Troop EnsureTroop(Troop troop, Scenario scenario, int trunCount)
         {

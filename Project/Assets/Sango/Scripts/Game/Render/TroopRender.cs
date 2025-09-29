@@ -130,7 +130,7 @@ namespace Sango.Game.Render
 
             if (TroopModel != null)
             {
-                TroopModel.Init(Troop);
+                TroopModel.UpdateTroop(Troop);
             }
         }
 

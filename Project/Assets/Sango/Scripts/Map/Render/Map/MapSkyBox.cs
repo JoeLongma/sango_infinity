@@ -122,7 +122,11 @@ namespace Sango.Render
         {
             base.Clear();
             allAreas.Clear();
-            GameObject.Destroy(skyTrans.gameObject);
+            if (skyTrans != null)
+            {
+                GameObject.Destroy(skyTrans.gameObject);
+                skyTrans = null;
+            }
             GameObject.Destroy(skyMat);
         }
 

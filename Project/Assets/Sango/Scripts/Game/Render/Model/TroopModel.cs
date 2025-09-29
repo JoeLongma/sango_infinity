@@ -18,7 +18,7 @@ namespace Sango.Game.Render.Model
         public void UpdateTroop(Troop troop)
         {
             if (troopsRender != null)
-                troopsRender.SetShowPercent(Mathf.Clamp01(0.3f + troop.troops / 10000.0f));
+                troopsRender.SetShowPercent(Mathf.Clamp01(0.1f + (float)troop.troops / 10000.0f));
 
         }
     }

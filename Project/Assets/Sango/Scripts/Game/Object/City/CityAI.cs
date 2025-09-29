@@ -12,17 +12,35 @@ namespace Sango.Game
             if (city.BelongForce == null)
                 return true;
 
+            if (city.CurActiveTroop != null)
+            {
+                if (!city.CurActiveTroop.DoAI(scenario))
+                    return false;
+
+                city.CurActiveTroop = null;
+                return false;
+            }
+
+            if (city.CurActiveTroopList.Count > 0)
+            {
+                Troop troop = city.CurActiveTroopList[0];
+                if (!troop.DoAI(scenario))
+                    return false;
+                city.CurActiveTroopList.RemoveAt(0);
+                if (city.CurActiveTroopList.Count > 0)
+                {
+                    troop = city.CurActiveTroopList[0];
+                    troop = city.EnsureTroop(troop, scenario, 20);
+#if SANGO_DEBUG
+                    City targetCity = scenario.citySet.Get(troop.missionTarget);
+                    Sango.Log.Print($"{scenario.Info.year}年{scenario.Info.month}月{scenario.Info.day}日{city.BelongForce.Name}势力在{city.Name}由{troop.Leader.Name}率领军队出城 进攻{targetCity.BelongForce?.Name}的{targetCity.Name}!");
+#endif
+                }
+                return false;
+            }
+
             if (AICanDefense(city, scenario))
             {
-                if (city.CurActiveTroop != null)
-                {
-                    if (!city.CurActiveTroop.DoAI(scenario))
-                        return false;
-
-                    city.CurActiveTroop = null;
-                    return false;
-                }
-
                 city.troopTempList.Clear();
                 city.AutoMakeTroop(city.troopTempList, 5, false);
                 if (city.troopTempList.Count <= 0) return true;
@@ -32,7 +50,9 @@ namespace Sango.Game
                 troop = city.EnsureTroop(troop, scenario, 10);
                 troop.missionType = (int)MissionType.ProtectCity;
                 troop.missionTarget = city.Id;
+#if SANGO_DEBUG
                 Sango.Log.Print($"{city.BelongForce.Name}势力在{city.Name}由{troop.Leader.Name}率领军队出城防守!");
+#endif
                 city.CurActiveTroop = troop;
                 city.Render?.UpdateRender();
                 return false;
@@ -54,20 +74,23 @@ namespace Sango.Game
                     if (city.troops < UnityEngine.Mathf.Min(lastTargetCity.troops, lastTargetCity.allPersons.Count * 5000))
                         return true;
 
-                    List<Troop> troopList = new List<Troop>();
-                    city.AutoMakeTroop(troopList, 10, false);
-                    while (troopList.Count > 0)
+                    city.AutoMakeTroop(city.CurActiveTroopList, 10, false);
+                    if (city.CurActiveTroopList.Count > 0)
                     {
-                        Troop troop = troopList[0];
-                        troopList.RemoveAt(0);
-                        troop = city.EnsureTroop(troop, scenario, 20);
-                        troop.missionType = (int)MissionType.OccupyCity;
-                        troop.missionTarget = lastTargetCity.Id;
-                        //troop.DoAI(scenario);
-                        Sango.Log.Print($"{scenario.Info.year}年{scenario.Info.month}月{scenario.Info.day}日{city.BelongForce.Name}势力在{city.Name}由{troop.Leader.Name}率领军队出城 进攻{lastTargetCity.BelongForce?.Name}的{lastTargetCity.Name}!");
-                        troop = null;
+                        for (int i = 0; i < city.CurActiveTroopList.Count; i++)
+                        {
+                            Troop troop = city.CurActiveTroopList[i];
+                            troop.missionType = (int)MissionType.OccupyCity;
+                            troop.missionTarget = lastTargetCity.Id;
+                        }
+
+                        Troop troop1 = city.CurActiveTroopList[0];
+                        troop1 = city.EnsureTroop(troop1, scenario, 20);
+#if SANGO_DEBUG
+                        Sango.Log.Print($"{scenario.Info.year}年{scenario.Info.month}月{scenario.Info.day}日{city.BelongForce.Name}势力在{city.Name}由{troop1.Leader.Name}率领军队出城 进攻{lastTargetCity.BelongForce?.Name}的{lastTargetCity.Name}!");
+#endif
                     }
-                    return true;
+                    return false;
                 }
 
                 // 计算进攻概率
@@ -284,6 +307,8 @@ namespace Sango.Game
 
         public static bool AIBuildingByPercent(City city, BuildingType buildingType, float percent, Scenario scenario)
         {
+            if (city.effectCells.Count == 0) return true;
+
             int maxSlot = city.CityLevelType.outsideSlot;
             int leftSlot = maxSlot - city.allIntriorBuildings.Count;
             if (leftSlot <= 0)
@@ -520,8 +545,9 @@ namespace Sango.Game
             if (city.IsRoadBlocked())
                 return false;
 
-            // 兵临城下
-            if (city.IsEnemiesRound(6))
+            City.EnemyInfo enemyInfo;
+            // 兵临城下且敌军存活
+            if (city.IsEnemiesRound(6) && city.CheckEnemiesIfAlive(out enemyInfo))
                 return true;
 
             return false;
@@ -533,6 +559,9 @@ namespace Sango.Game
                 return false;
 
             if (city.freePersons.Count <= 0)
+                return false;
+
+            if (city.durability <= city.CityLevelType.maxDurability * 80 / 100)
                 return false;
 
             if (!city.IsBorderCity)

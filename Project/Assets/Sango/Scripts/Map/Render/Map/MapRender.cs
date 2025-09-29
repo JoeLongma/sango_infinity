@@ -53,37 +53,28 @@ namespace Sango.Render
 
         public static Transform terrainRoot;
         public static Transform modelRoot;
-
+        public static GameObject mapRoot;
+        public static int ScaleNX = 1;
         public MapRender()
         {
-            //Instance = this;
+
+        }
+
+        public void Init()
+        {
             WorkContent = "Default";
+            if (mapRoot == null)
+            {
+                mapRoot = new GameObject("Map");
+                mapRoot.AddComponent<MapLooper>();
 
-            GameObject go = new GameObject("Map");
-            go.AddComponent<MapLooper>();
-
-            GameObject tempGo = new GameObject("Terrain");
-            tempGo.transform.SetParent(go.transform);
-            terrainRoot = tempGo.transform;
-            tempGo = new GameObject("Model");
-            tempGo.transform.SetParent(go.transform);
-            modelRoot = tempGo.transform;
-
-            //searchingPath.Add("Assets");
-            //searchingPath.Add("Assets/Texture");
-            //searchingPath.Add("Assets/Texture/Terrain/spring");
-            //searchingPath.Add("Assets/Texture/Terrain/summer");
-            //searchingPath.Add("Assets/Texture/Terrain/autumn");
-            //searchingPath.Add("Assets/Texture/Terrain/winter");
-            //searchingPath.Add("Assets/Texture/Terrain");
-            //searchingPath.Add("Assets/Texture/Water");
-            //searchingPath.Add("Assets/Texture/Tree");
-            //searchingPath.Add("Assets/Texture/Sky");
-            //searchingPath.Add("Assets/Texture/Grid");
-            //searchingPath.Add("Assets/Texture/BaseTex");
-
-            //savedModDir = Directory.GetDirectories(Path.ModRootPath, "*", SearchOption.TopDirectoryOnly);
-
+                GameObject tempGo = new GameObject("Terrain");
+                tempGo.transform.SetParent(mapRoot.transform);
+                terrainRoot = tempGo.transform;
+                tempGo = new GameObject("Model");
+                tempGo.transform.SetParent(mapRoot.transform);
+                modelRoot = tempGo.transform;
+            }
         }
 
         protected void OnDestroy()
@@ -280,12 +271,22 @@ namespace Sango.Render
                 mapSkyBox.Clear();
             if (mapGrid != null)
                 mapGrid.Clear();
+
+            if(mapRoot != null)
+            {
+                GameObject.Destroy(mapRoot);
+                mapRoot = null;
+                modelRoot = null;
+                terrainRoot = null;
+            }    
         }
 
         public void LoadMap(string filename)
         {
 
             Clear();
+
+            Init();
 
             FileName = filename;
 
@@ -350,6 +351,29 @@ namespace Sango.Render
             mapSkyBox.OnSave(binr);
             mapCamera.OnSave(binr);
             mapModels.OnSave(binr);
+            fs.Flush();
+            binr.Close();
+            fs.Close();
+        }
+
+        public void SaveScaleMap(string filename, int scale)
+        {
+            FileStream fs = new FileStream(filename, FileMode.Create, FileAccess.ReadWrite);
+            BinaryWriter binr = new BinaryWriter(fs);
+            binr.Write(VERSION);
+            binr.Write(WorkContent);
+            binr.Write(mapWidth * scale);
+            binr.Write(mapHeight * scale);
+            mapGrid.OnSaveScale(binr, scale);
+            mapData.OnSaveScale(binr, scale);
+            mapLayer.OnSaveScale(binr, scale);
+            mapTerrain.OnSaveScale(binr, scale);
+            mapLight.OnSaveScale(binr, scale);
+            mapFog.OnSaveScale(binr, scale);
+            mapBaseColor.OnSaveScale(binr, scale);
+            mapSkyBox.OnSaveScale(binr, scale);
+            mapCamera.OnSaveScale(binr, scale);
+            mapModels.OnSaveScale(binr, scale);
             fs.Flush();
             binr.Close();
             fs.Close();
@@ -432,6 +456,28 @@ namespace Sango.Render
             if (mapLayer != null)
                 mapLayer.Update();
         }
+
+        public void UpdateImmediate()
+        {
+            if (mapTerrain != null)
+                mapTerrain.UpdateImmediate();
+
+            if (mapModels != null)
+                mapModels.UpdateImmediate();
+
+            //#if UNITY_EDITOR
+            if (mapGrid != null)
+                mapGrid.UpdateImmediate();
+            //#endif
+
+            if (mapSkyBox != null)
+                mapSkyBox.UpdateImmediate();
+
+            if (mapLayer != null)
+                mapLayer.UpdateImmediate();
+        }
+
+
 
         internal void BindModel(MapObject mapObject)
         {

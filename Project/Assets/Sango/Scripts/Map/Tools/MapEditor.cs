@@ -359,6 +359,16 @@ namespace Sango.Tools
                 }
             }
 
+            if (GUILayout.Button("放大2倍保存"))
+            {
+
+                string path = WindowDialog.SaveFileDialog("map.bin", "地图文件(*.bin)\0*.bin;\0\0");
+                if (path != null)
+                {
+                    map.SaveScaleMap(path, 2);
+                }
+            }
+
             GUILayout.EndHorizontal();
 
 

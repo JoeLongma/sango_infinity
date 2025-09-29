@@ -608,26 +608,35 @@ namespace Sango.Game
         /// <param name="cellList"></param>
         public void GetDirectMovePath(Troop troops, Cell dest, List<Cell> cellList, CellCheck action = null)
         {
+            //if (troops.cell.Distance(dest) > 200)
+            //{
+            //    UnityEngine.Debug.LogError($"寻路超出安全次数: [{troops.Name},At:<{troops.x},{troops.y}> => <{dest.x},{dest.y}>] count:{troops.cell.Distance(dest)}");
+            //    return;
+            //}
+
             frontier.Clear();
             came_from.Clear();
-            cost_so_far.Clear();
+            closeList.Clear();
             int safe_count = 10000;
             frontier.Enqueue(troops.cell, 0);
             came_from[troops.cell] = null;
-            cost_so_far[troops.cell] = new cellTempInfo()
-            {
-                cost = 0,
-                isZOC = false
-            };
+            troops.cell._isChecked = true;
+            closeList.Add(troops.cell);
 
             while (frontier.Count > 0)
             {
                 Cell current = frontier.Dequeue();
-                safe_count--;
 
                 if (safe_count < 0)
                 {
                     UnityEngine.Debug.LogError($"寻路超出安全次数: [{troops.Name},At:<{troops.x},{troops.y}> => <{dest.x},{dest.y}>]");
+                    for (int i = 0; i < closeList.Count; i++)
+                    {
+                        Cell cell = closeList[i];
+                        cell._cost = 0;
+                        cell._isZOC = false;
+                        cell._isChecked = false;
+                    }
                     return;
                 }
 
@@ -639,11 +648,17 @@ namespace Sango.Game
                         cellList.Insert(0, c);
                         c = came_from[c] as Cell;
                     }
+                    for (int i = 0; i < closeList.Count; i++)
+                    {
+                        Cell cell = closeList[i];
+                        cell._cost = 0;
+                        cell._isZOC = false;
+                        cell._isChecked = false;
+                    }
                     return;
                 }
 
-                cellTempInfo cellTempInfo = cost_so_far[current] as cellTempInfo;
-                int cost_current = cellTempInfo.cost;
+                int cost_current = current._cost;
 
                 for (int i = 0; i < 6; i++)
                 {
@@ -654,23 +669,34 @@ namespace Sango.Game
                         int next_move_cost = troops.MoveCost(next);
                         int new_cost = cost_current + next_move_cost;
 
-                        cellTempInfo cellTempInfo_next = cost_so_far[next] as cellTempInfo;
-                        if (cellTempInfo_next == null)
+                        if (!next._isChecked)
                         {
-                            cost_so_far.Add(next, new cellTempInfo() { cost = new_cost });
+                            safe_count--;
+
+                            next._cost = new_cost;
+                            next._isChecked = true;
+                            closeList.Add(next);
                             int priority = new_cost + Distance(next, dest) * 2;
                             came_from[next] = current;
                             frontier.Enqueue(next, priority);
                         }
-                        else if (new_cost < cellTempInfo_next.cost)
-                        {
-                            cellTempInfo_next.cost = new_cost;
-                            int priority = new_cost + Distance(next, dest) * 2;
-                            came_from[next] = current;
-                            frontier.Enqueue(next, priority);
-                        }
+                        //else if (new_cost < next._cost)
+                        //{
+                        //    next._cost = new_cost;
+                        //    int priority = new_cost + Distance(next, dest) * 2;
+                        //    came_from[next] = current;
+                        //    frontier.Enqueue(next, priority);
+                        //}
                     }
                 }
+            }
+
+            for (int i = 0; i < closeList.Count; i++)
+            {
+                Cell cell = closeList[i];
+                cell._cost = 0;
+                cell._isZOC = false;
+                cell._isChecked = false;
             }
         }
 

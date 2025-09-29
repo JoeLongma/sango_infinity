@@ -310,6 +310,7 @@ namespace Sango.Game
 
         public void LoadWorld()
         {
+            MapRender.Instance.Init();
             MapRender.Instance.OnMapLoaded += OnWorldLoaded;
             MapRender.Instance.LoadMap(Map.FileName);
         }

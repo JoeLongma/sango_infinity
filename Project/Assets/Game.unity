@@ -183,7 +183,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Debug: 0
-  ShowConsole: 1
 --- !u!4 &138966664
 Transform:
   m_ObjectHideFlags: 0

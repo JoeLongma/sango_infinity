@@ -122,7 +122,9 @@ namespace Sango.Render
                     reader.ReadInt32();
                     if (versionCode > 0)
                     {
-                        new San11GridData().OnLoad(versionCode, reader);
+                        San11GridData sanData = new San11GridData();
+                        sanData.OnLoad(versionCode, reader);
+                        terrainType = (byte)(sanData.tType + 1);
                     }
                 }
             }
@@ -290,6 +292,28 @@ namespace Sango.Render
             else
                 writer.Write(gridTextureName);
         }
+
+        internal override void OnSaveScale(BinaryWriter writer, int scale)
+        {
+            writer.Write(gridSize);
+
+            int scaleLength = gridDatas.Length * scale;
+            for (int x = 0; x < scaleLength; ++x)
+            {
+                GridData[] yTable = gridDatas[x/2];
+                int y_scaleLength = yTable.Length * scale;
+                for (int y = 0; y < y_scaleLength; ++y)
+                {
+                    GridData data = yTable[y/2];
+                    data.OnSave(writer);
+                }
+            }
+            if (string.IsNullOrEmpty(gridTextureName))
+                writer.Write("");
+            else
+                writer.Write(gridTextureName);
+        }
+
         internal override void OnLoad(int versionCode, BinaryReader reader)
         {
             string gridTexName = null;

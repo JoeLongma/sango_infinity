@@ -1,3 +1,4 @@
+using Sango.Hexagon;
 using Sango.Render;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace Sango
             Move = 0,
             Attack = 1,
             Max = 2,
-        } 
+        }
 
         /// <summary>
         /// 顶点偏移,以底部中间为基准
@@ -50,7 +51,7 @@ namespace Sango
         MaterialPropertyBlock _mpb;
         private Mesh mesh;
         public Material material;
-        public Material [] aniMaterials = new Material[(int)TroopAniType.Max];
+        public Material[] aniMaterials = new Material[(int)TroopAniType.Max];
 
         public float meshScale = 1;
         public float totalScale = 1;
@@ -293,6 +294,7 @@ namespace Sango
             {
                 test = false;
                 InitMesh();
+                //Add(showCount);
             }
 
             UpdatePosition();
@@ -331,13 +333,14 @@ namespace Sango
         public Vector2 origin = new Vector2(-0.5f, -0.5f);
 
         public Renderer initTroop;
+        public Transform initTroopRoot;
         public SpriteRenderer mainTroop;
         public bool test = false;
         public int testCount = 30;
         private void Awake()
         {
             origin = size * -0.5f;
-            for(int i = 0; i < aniMaterials.Length; i++)
+            for (int i = 0; i < aniMaterials.Length; i++)
             {
                 Material mat = new Material(aniMaterials[i]);
                 aniMaterials[i] = mat;
@@ -363,21 +366,25 @@ namespace Sango
 
         void Add(int count)
         {
-            //List<Hex.Hex> hexList = new List<Hex.Hex>();
-            //GetTargetHex(count, hexList);
-            //for (int i = 0; i < count; ++i) {
-            //    GameObject go = GameObject.Instantiate(initTroop.gameObject);
-            //    go.transform.SetParent(transform, false);
-            //    go.transform.localPosition = HexToPosition(hexList[i]);
-            //    go.SetActive(true);
-            //    float height = NewMap.Map.QueryHeight(go.transform.position);
-            //    Vector3 pos = go.transform.position;
-            //    pos.y = height;
-            //    go.transform.position = pos;
-            //    //Animator anim = go.GetComponent<Animator>();
-            //    //anim.playbackTime = Random.Range(0f, 1f);
-            //    //anim.Play(0, -1, Random.Range(0f, 1f));
-            //}
+            List<Hex> hexList = new List<Hex>();
+            GetTargetHex(count, hexList);
+            Vector3 srcScale = new Vector3(totalScale, totalScale, totalScale);
+            for (int i = 0; i < count; ++i)
+            {
+                GameObject go = GameObject.Instantiate(initTroop.gameObject);
+                go.name = i.ToString();
+                go.transform.SetParent(initTroopRoot, false);
+                go.transform.localPosition = Vector3.Scale(HexToPosition(hexList[i]), srcScale);
+                go.transform.localScale = srcScale;
+                go.SetActive(true);
+                //float height = NewMap.Map.QueryHeight(go.transform.position);
+                //Vector3 pos = go.transform.position;
+                //pos.y = height;
+                //go.transform.position = pos;
+                //Animator anim = go.GetComponent<Animator>();
+                //anim.playbackTime = Random.Range(0f, 1f);
+                //anim.Play(0, -1, Random.Range(0f, 1f));
+            }
         }
 
         public Vector3 HexToPosition(Hexagon.Hex hex)
@@ -460,12 +467,10 @@ namespace Sango
         }
 
 
-        //private void Update()
-        //{
-        //    if (test) {
-        //        test = false;
-        //        Add(testCount);
-        //    }
-        // }
+        [ContextMenu("test")]
+        private void Test()
+        {
+            Add(showCount);
+        }
     }
 }
