@@ -1,5 +1,8 @@
 ﻿using Sango.Hexagon;
 using Sango.Render;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -91,5 +94,27 @@ namespace Sango.Game
         {
             return Cub.Distance(other.Cub);
         }
+        public void Ring(int radius, List<Cell> list)
+        {
+            Scenario.Cur.Map.GetRing(this, radius, list);
+        }
+        public void Ring(int radius, Action<Cell> action)
+        {
+            Scenario.Cur.Map.RingAction(this, radius, action);
+        }
+
+        public void DirectionLine(Cell to, int length, Action<Cell> action)
+        {
+            Hex dir = Cub.DirectionTo(to.Cub);
+            Hex start = Cub;
+            for(int i = 0; i < length; ++i)
+            {
+                start = start.Add(dir);
+                Cell cell = Scenario.Cur.Map.GetCell(start);
+                if (cell != null && action != null)
+                    action(cell);
+            }
+        }
+
     }
 }

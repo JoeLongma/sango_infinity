@@ -607,7 +607,7 @@ namespace Sango.Game
                     Cell dest = tempCellList[i];
 
                     bool findSpell = false;
-                    skill.GetSpellRange(cell, spellRangeCells);
+                    skill.GetSpellRange(this, cell, spellRangeCells);
                     for (int k = 0; k < spellRangeCells.Count; k++)
                     {
                         Cell spellCell = spellRangeCells[k];
@@ -762,7 +762,7 @@ namespace Sango.Game
             BuildingBase targetBuilding = spellCell.building;
             //TODO: 释放技能
             tempCellList.Clear();
-            skill.GetAttackCells(spellCell, tempCellList);
+            skill.GetAttackCells(this, spellCell, tempCellList);
             for (int i = 0; i < tempCellList.Count; i++)
             {
                 Cell atkCell = tempCellList[i];

@@ -104,14 +104,14 @@ namespace Sango.Game
                             if ((cell == troop.cell && cell.building == null) || cell.IsEmpty())
                             {
                                 spellRangeCells.Clear();
-                                skill.GetSpellRange(cell, spellRangeCells);
+                                skill.GetSpellRange(troop, cell, spellRangeCells);
                                 for (int k = 0; k < spellRangeCells.Count; k++)
                                 {
                                     Cell spellCell = spellRangeCells[k];
                                     attackCells.Clear();
                                     tempTargets.Clear();
                                     int atk_priority = 0;
-                                    skill.GetAttackCells(spellCell, attackCells);
+                                    skill.GetAttackCells(troop, spellCell, attackCells);
                                     for (int m = 0; m < attackCells.Count; m++)
                                     {
                                         Cell atkCell = attackCells[m];
@@ -203,7 +203,7 @@ namespace Sango.Game
                     {
                         Cell dest = enemyCells[j];
                         int atk_priority = 0;
-                        skill.GetAttackCells(dest, attackCells);
+                        skill.GetAttackCells(troop, dest, attackCells);
                         for (int m = 0; m < attackCells.Count; m++)
                         {
                             Cell atkCell = attackCells[m];
