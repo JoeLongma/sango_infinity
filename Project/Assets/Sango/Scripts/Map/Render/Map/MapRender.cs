@@ -379,36 +379,11 @@ namespace Sango.Render
             fs.Close();
         }
 
-        List<string> searchingPath = new List<string>();
-        /// <summary>
-        /// 添加贴图查找文件夹
-        /// </summary>
-        /// <param name="dir"></param>
-        public void AddSearchingPath(string dir)
-        {
-            /// 后添加的优先查询
-            searchingPath.Insert(0, dir);
-        }
-        public string FindTexture(string textureName, string extensions = ".png")
-        {
-            string destPath = $"Assets/Map/{WorkContent}/{textureName}{extensions}";
-            string finalPath = Path.FindFile(destPath);
-            if (finalPath == null)
-            {
-                destPath = $"Assets/Map/{DefaultContentName}/{textureName}{extensions}";
-                finalPath = Path.FindFile(destPath);
-            }
-            if (!string.IsNullOrEmpty(finalPath))
-            {
-                return finalPath;
-            }
-            return null;
-        }
-
-
         public Texture CreateTexture(string textureName, string extensions = ".png")
         {
-            string destPath = $"Assets/Map/{WorkContent}/{textureName}{extensions}";
+            string destPath = $"Assets/Map/{WorkContent}/{textureName}";
+            if (!textureName.EndsWith(extensions))
+                destPath = destPath + extensions;
             Texture texture = ObjectLoader.LoadObject<Texture>(destPath);
             if(texture == null)
             {
@@ -476,8 +451,6 @@ namespace Sango.Render
             if (mapLayer != null)
                 mapLayer.UpdateImmediate();
         }
-
-
 
         internal void BindModel(MapObject mapObject)
         {

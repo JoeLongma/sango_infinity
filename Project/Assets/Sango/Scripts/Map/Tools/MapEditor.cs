@@ -213,6 +213,7 @@ namespace Sango.Tools
                     editorfree.enabled = false;
                 }
                 map.mapSkyBox.SetVisible(false);
+                map.mapCamera.enabled = false;
             }
             else if (t == 1)
             {
@@ -221,10 +222,12 @@ namespace Sango.Tools
                 EditorFreeCamera editorfree = Camera.main.gameObject.GetComponent<Sango.Tools.EditorFreeCamera>();
                 if (editorfree != null)
                 {
-                    editorfree.enabled = true;
-                    editorfree.UpdateCamera();
+                    editorfree.enabled = false;
+                    //editorfree.UpdateCamera();
                 }
                 map.mapSkyBox.SetVisible(true);
+                map.mapCamera.enabled = true;
+
             }
         }
 
@@ -346,6 +349,11 @@ namespace Sango.Tools
                     EditorFreeCamera editorfree = Camera.main.gameObject.GetComponent<Sango.Tools.EditorFreeCamera>();
                     if (editorfree != null)
                         editorfree.lookAt = map.mapCamera.GetCenterTransform();
+
+                    if (viewIs311Camera)
+                        SetCameraControlType(1);
+                    else
+                        SetCameraControlType(0);
                 }
             }
 
@@ -423,6 +431,7 @@ namespace Sango.Tools
             {
                 map.showLimitLength = v;
             }
+            EditorUIDraw.OnGUI(map.mapCamera);
 
             EditorUIDraw.OnGUI(map.mapData);
             EditorUIDraw.OnGUI(map.mapGrid);

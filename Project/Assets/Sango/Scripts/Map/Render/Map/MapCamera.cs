@@ -1,6 +1,8 @@
-﻿using System.IO;
+﻿using Sango.Tools;
+using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 namespace Sango.Render
 {
@@ -78,6 +80,7 @@ namespace Sango.Render
             //  }
 
             lookAt.position = look_position;
+
             enabled = true;
             NeedUpdateCamera();
         }
@@ -403,6 +406,7 @@ namespace Sango.Render
                     {
                         Vector3 offset = oldDragPos - ray.GetPoint(dis);
                         lookAt.position += offset;
+                        position += offset;
                         NeedUpdateCamera();
                     }
                 }
