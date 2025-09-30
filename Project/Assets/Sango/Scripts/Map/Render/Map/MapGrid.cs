@@ -1,5 +1,6 @@
 ﻿using LuaInterface;
 using Sango.Game;
+using Sango.Tools;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -459,7 +460,7 @@ namespace Sango.Render
         Transform textROOT;
         public void Update(Tools.Rect rect)
         {
-
+            if (MapEditor.IsEditOn) return;
 //#if UNITY_EDITOR
             if (last != null)
             {

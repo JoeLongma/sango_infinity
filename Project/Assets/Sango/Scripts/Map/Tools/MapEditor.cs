@@ -2,10 +2,6 @@ using RTEditor;
 using Sango.Render;
 using System.Collections.Generic;
 using UnityEngine;
-using Sango;
-using Sango.Game;
-using System;
-using UnityEditor;
 
 namespace Sango.Tools
 {
@@ -20,6 +16,9 @@ namespace Sango.Tools
         public static bool IsEditOn { get; set; }
         public string WorkContent { set; get; }
         public string DefaultContentName { get { return "Default"; } }
+
+        public static Sango.Hexagon.Coord SelectedCoord { get; set; }
+
         /// <summary>
         /// 编辑模式
         /// </summary>
@@ -131,11 +130,10 @@ namespace Sango.Tools
         {
             map.mapCamera.position = new Vector3(0, 500, 0);
             map.mapCamera.lookRotate = new Vector3(90, -90, 0);
-            viewIs311Camera = false;
-            SetCameraControlType(0);
+            viewIs311Camera = true;
+            SetCameraControlType(1);
             Camera.main.gameObject.transform.position = map.mapCamera.position;
             Camera.main.gameObject.transform.rotation = Quaternion.Euler(90, -90, 0);
-
 
             terrain_brush.AutoImportLayerTexture();
 
@@ -289,6 +287,13 @@ namespace Sango.Tools
 
         public void Update()
         {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, map.showLimitLength + 2000, rayCastLayer))
+            {
+                Sango.Hexagon.Hex hex = map.mapGrid.hexWorld.PositionToHex(hit.point);
+                SelectedCoord = Sango.Hexagon.Coord.OffsetFromCube(hex);
+            }
             BrushBase brush = CheckBrush();
             if (brush == null) return;
             brush.Update();
@@ -306,6 +311,8 @@ namespace Sango.Tools
         bool viewIs311Camera = true;
         void DrawToolbarWindow(int windowID, EditorWindow window)
         {
+            GUILayout.Label($"当前鼠标格子:{{{SelectedCoord.col},{SelectedCoord.row}}}");
+
             GUILayout.BeginHorizontal();
 
             int season = GUILayout.Toolbar(map.curSeason, toolbarSeason);

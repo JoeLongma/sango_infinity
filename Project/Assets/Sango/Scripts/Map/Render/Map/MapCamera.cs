@@ -371,7 +371,7 @@ namespace Sango.Render
         bool isPressedUI = false;
         private void MouseDragWorld()
         {
-            if (/*Input.GetKey(KeyCode.Space) &&*/ Input.GetMouseButton(0) && !isPressedUI)
+            if (!Input.GetKey(KeyCode.LeftControl) && /*Input.GetKey(KeyCode.Space) &&*/ Input.GetMouseButton(0) && !isPressedUI)
             {
 
                 if (Input.GetMouseButtonDown(0))
