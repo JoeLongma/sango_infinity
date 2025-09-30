@@ -2,9 +2,6 @@
 using Sango.Render;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Sango.Game
@@ -105,11 +102,11 @@ namespace Sango.Game
 
         public void DirectionLine(Cell to, int length, Action<Cell> action)
         {
-            Hex dir = Cub.DirectionTo(to.Cub);
+            int dir = Cub.DirectionTo(to.Cub);
             Hex start = Cub;
             for(int i = 0; i < length; ++i)
             {
-                start = start.Add(dir);
+                start = start.Neighbor(dir);
                 Cell cell = Scenario.Cur.Map.GetCell(start);
                 if (cell != null && action != null)
                     action(cell);

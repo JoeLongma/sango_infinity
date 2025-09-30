@@ -12,7 +12,7 @@ namespace Sango.Game.Render.UI
         public Image energy;
         public Image angry;
         public Text number;
-
+        public AnimationText aniText;
         public void Init(Troop troop)
         {
             name.text = troop.Name;

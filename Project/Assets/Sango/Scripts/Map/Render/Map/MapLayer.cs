@@ -179,23 +179,25 @@ namespace Sango.Render
                     if (!string.IsNullOrEmpty(diffuseTexName[i]))
                     {
 
-#if UNITY_EDITOR
-                        string[] fixName = diffuseTexName[i].Split('_');
-                        if (fixName.Length > 1)
+                        // 老版本名字修复
+                        if (versionCode < 6)
                         {
-                            if (diffuseTexName[i].StartsWith("water"))
+                            string[] fixName = diffuseTexName[i].Split('_');
+                            if (fixName.Length > 1)
                             {
-                                diffuseTexName[i] = "water_" + fixName[1];
+                                if (diffuseTexName[i].StartsWith("water"))
+                                {
+                                    diffuseTexName[i] = "water_" + fixName[1];
+                                }
+                                else
+                                    diffuseTexName[i] = "layer_" + fixName[1];
                             }
                             else
-                                diffuseTexName[i] = "layer_" + fixName[1];
+                            {
+                                if (diffuseTexName[i] == "water")
+                                    diffuseTexName[i] = "water_0";
+                            }
                         }
-                        else
-                        {
-                            if (diffuseTexName[i] == "water")
-                                diffuseTexName[i] = "water_0";
-                        }
-#endif
 
                         Texture tex = layer.map.CreateTexture($"Terrain/{seasonName}/{diffuseTexName[i]}");
                         diffuse[i] = tex;
