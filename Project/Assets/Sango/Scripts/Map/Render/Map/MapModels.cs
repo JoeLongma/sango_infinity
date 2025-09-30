@@ -181,7 +181,7 @@ namespace Sango.Render
                 Vector3 pos = new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
                 Vector3 rot = new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
                 Vector3 scale = new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
-                //CreateModel(objId, objType, bindId, modelId, pos, rot, scale);
+                CreateModel(objId, objType, bindId, modelId, pos, rot, scale);
             }
         }
 

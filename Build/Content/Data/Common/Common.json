@@ -2342,7 +2342,8 @@
       "isRange": true,
       "spellRanges": [
         2,
-        3
+        3,
+        4
       ],
       "canDamageTroop": true,
       "canDamageMachine": true,
@@ -2444,6 +2445,10 @@
       "costEnergy": "20",
       "isRange": false,
       "spellRanges": [
+        0
+      ],
+      "atkOffsetPoint": [
+        1,
         1
       ],
       "canDamageTroop": true,
@@ -2478,7 +2483,7 @@
       "costEnergy": "15",
       "isRange": true,
       "spellRanges": [
-        2
+        1
       ],
       "canDamageTroop": true,
       "canDamageMachine": true,
@@ -2495,6 +2500,11 @@
       "costEnergy": "25",
       "isRange": true,
       "spellRanges": [
+        3,
+        4
+      ],
+      "atkOffsetPoint": [
+        1,
         2
       ],
       "canDamageTroop": true,

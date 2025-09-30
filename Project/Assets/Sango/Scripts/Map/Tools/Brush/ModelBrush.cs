@@ -1,4 +1,5 @@
 using Sango.Game;
+using Sango.Loader;
 using Sango.Render;
 using System;
 using System.Collections.Generic;
@@ -388,16 +389,15 @@ namespace Sango.Tools
         {
             modelConfig = config;
 
-            Loader.ModelLoader.LoadFromFile(Path.FindFile("Assets/Model/" + config.model), Path.FindFile("Assets/Texture/" + config.texture), true, config.ShaderName, config.isShardMat, this, (UnityEngine.Object obj, object customData) =>
+            if (model != null)
             {
-                if (model != null)
-                {
-                    GameObject.Destroy(model);
-                }
-
-                model = GameObject.Instantiate(obj) as GameObject;
+                GameObject.Destroy(model);
+            }
+            model = PoolManager.Create(modelConfig.model);
+            if (model != null)
+            {
                 model.SetActive(true);
-            });
+            }
         }
 
         protected virtual void OnModelLoaded(UnityEngine.Object obj, object customData)
