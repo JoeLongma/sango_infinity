@@ -490,21 +490,5 @@ namespace Sango.Tools
         {
             map.mapCamera.position = position;
         }
-
-        public string FindTexture(string textureName, string extensions = ".png")
-        {
-            string destPath = $"Assets/Map/{WorkContent}/{textureName}{extensions}";
-            string finalPath = Path.FindFile(destPath);
-            if (finalPath == null)
-            {
-                destPath = $"Assets/Map/{DefaultContentName}/{textureName}{extensions}";
-                finalPath = Path.FindFile(destPath);
-            }
-            if (!string.IsNullOrEmpty(finalPath))
-            {
-                return finalPath;
-            }
-            return null;
-        }
     }
 }
