@@ -303,31 +303,33 @@ namespace Sango
 
             UpdatePosition();
 
-            Vector3 dirForCamera = (transform.position - Camera.main.transform.position);
+            Vector3 dirForCamera = (Camera.main.transform.position - transform.position);
             dirForCamera.y = 0;
             dirForCamera.Normalize();
             float dir = Vector3.Dot(transform.forward, dirForCamera);
             //Debug.LogError("dir ="+dir);
-            float side = Vector3.Cross(transform.forward, dirForCamera).y;
             //Debug.LogError("side ="+ side);
             if (dir > 0.6f)
             {
-                material.SetFloat("_VerticalIndex", 3);
+                material.SetFloat("_VerticalIndex", 3);     // 背面
             }
             else if (dir < -0.6f)
             {
-                material.SetFloat("_VerticalIndex", 2);
+                material.SetFloat("_VerticalIndex", 0);    // 正前
 
-            }
-            else if (side >= 0)
-            {
-                material.SetFloat("_VerticalIndex", 0);
             }
             else
             {
-                material.SetFloat("_VerticalIndex", 1);
+                float side = Vector3.Cross(transform.forward, dirForCamera).y;
+                if (side >= 0)
+                {
+                    material.SetFloat("_VerticalIndex", 1);  // 左
+                }
+                else
+                {
+                    material.SetFloat("_VerticalIndex", 2); // 右
+                }
             }
-
             DrawMesh();
         }
 

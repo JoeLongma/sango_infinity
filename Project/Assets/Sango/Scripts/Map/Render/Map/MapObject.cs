@@ -296,7 +296,7 @@ namespace Sango.Render
                 model.SetActive(true);
                 model.transform.SetParent(transCache, false);
                 model.transform.localPosition = Vector3.zero;
-                // model.transform.localRotation = Quaternion.identity;
+                model.transform.localRotation = Quaternion.identity;
                 // model.transform.localScale = Vector3.one;
                 UnityTools.SetLayer(model, gameObject.layer);
 

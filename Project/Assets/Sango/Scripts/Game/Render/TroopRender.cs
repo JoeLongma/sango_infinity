@@ -161,12 +161,12 @@ namespace Sango.Game.Render
 
         public void FaceTo(Vector3 dest)
         {
-            if (TroopModel != null)
+            if(MapObject != null)
             {
-                Vector3 forward = dest - TroopModel.transform.position;
+                Vector3 forward = dest - MapObject.transform.position;
                 forward.y = 0;
-                forward = forward.normalized;
-                TroopModel.transform.forward = forward;
+                forward.Normalize();
+                SetForward(forward);
             }
         }
 
