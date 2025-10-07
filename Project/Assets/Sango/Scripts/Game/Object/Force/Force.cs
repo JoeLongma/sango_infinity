@@ -273,7 +273,9 @@ namespace Sango.Game
             FightPower = 0;
             PersonCount = 0;
             CityCount = 0;
-            Sango.Log.Print($"{Name} 回合");
+#if SANGO_DEBUG
+            Sango.Log.Print($"==={Name} 回合===");
+#endif
 
             for (int i = 0; i < scenario.personSet.Count; ++i)
             {

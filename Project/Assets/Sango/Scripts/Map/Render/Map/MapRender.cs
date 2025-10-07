@@ -105,10 +105,16 @@ namespace Sango.Render
                 ModelConfig config = GameData.Instance.ModelConfigs.Get(obj.modelId);
                 if (config != null)
                 {
-                    if(!string.IsNullOrEmpty(config.texture))
-                        obj.CreateModel($"Assets/Model/{config.model}", $"Assets/Texture/{config.texture}", config.ShaderName, config.isShardMat);
+                    if (!string.IsNullOrEmpty(config.texture))
+                    {
+                        obj.modelAsset = $"Assets/Model/{config.model}";
+                        obj.CreateModel(obj.modelAsset, $"Assets/Texture/{config.texture}", config.ShaderName, config.isShardMat);
+                    }
                     else
+                    {
+                        obj.modelAsset = config.model;
                         obj.CreateModel(config.model);
+                    }
                 }
 
             }

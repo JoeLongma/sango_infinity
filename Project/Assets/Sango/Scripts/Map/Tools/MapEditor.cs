@@ -42,6 +42,7 @@ namespace Sango.Tools
 
         // 可编辑的物件层
         internal int rayCastLayer;
+        internal int rayCastObjectLayer;
 
         // 编辑器UI框体范围
         internal UnityEngine.Rect windowRect = new UnityEngine.Rect(20, 20, 120, 50);
@@ -97,6 +98,7 @@ namespace Sango.Tools
             if (l != null) l.SetActive(false);
 
             rayCastLayer = LayerMask.GetMask(new string[] { "Map" });
+            rayCastObjectLayer = LayerMask.GetMask(new string[] { "Building" });
 
             // 创建空地图
             if (map == null)

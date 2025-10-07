@@ -3,6 +3,7 @@ using Sango.Loader;
 using Sango.Render;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Xml;
 using UnityEngine;
 
@@ -151,7 +152,7 @@ namespace Sango.Tools
             }
             return objectIndex++;
         }
-       
+
         public void ExportConfigTo()
         {
             WindowDialog.SaveFileDialog("保存", System.IO.Path.GetDirectoryName(default_data_save_path), "ModelConfig.xml", "数据文件(*.xml)|*.xml\0");
@@ -303,7 +304,7 @@ namespace Sango.Tools
                     int h = int.Parse(xmlNode["h"].InnerText);
                     float r = float.Parse(xmlNode["r"].InnerText);
 
-                    MapObject o = MapObject.Create(name, editor.map.CoordsToPosition(x+28, y+28), new Vector3(0, r * Mathf.Rad2Deg - 90, 0), Vector3.one);
+                    MapObject o = MapObject.Create(name, editor.map.CoordsToPosition(x + 28, y + 28), new Vector3(0, r * Mathf.Rad2Deg - 90, 0), Vector3.one);
                     o.modelId = model;
                     o.objId = id;
                     editor.map.AddStatic(o);
@@ -446,6 +447,21 @@ namespace Sango.Tools
 
         public override void Update()
         {
+            if (model == null && modelConfig == null && Input.GetMouseButtonDown(0))
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, editor.map.showLimitLength + 2000, editor.rayCastObjectLayer))
+                {
+                    MapObject mapObject = hit.collider.GetComponentInParent<MapObject>();
+                    if (mapObject != null)
+                    {
+                        editor.ForceCameraToGameObject(mapObject.GetGameObject());
+                    }
+                }
+                return;
+            }
+
             if (model == null && modelConfig != null && Input.GetKeyDown(KeyCode.Space))
             {
                 SelectModel(modelConfig);

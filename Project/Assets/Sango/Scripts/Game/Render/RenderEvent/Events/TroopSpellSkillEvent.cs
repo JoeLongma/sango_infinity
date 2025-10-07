@@ -36,7 +36,7 @@ namespace Sango.Game.Render
 
         public override bool Update(Scenario scenario, float deltaTime)
         {
-            if(!IsVisible())
+            if (!IsVisible())
             {
                 Action();
                 IsDone = true;
@@ -65,8 +65,9 @@ namespace Sango.Game.Render
                 {
                     int damage = Troop.CalculateSkillDamage(troop, beAtkTroop, skill);
                     beAtkTroop.ChangeTroops(-damage, troop);
+#if SANGO_DEBUG
                     Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 使用<{skill.Name}> 攻击 {beAtkTroop.BelongForce.Name}的[{beAtkTroop.Name} - {beAtkTroop.TroopType.Name}], 造成伤害:{damage}, 目标剩余兵力: {beAtkTroop.GetTroopsNum()}");
-
+#endif
                     // 反击
                     if (beAtkTroop.IsAlive && targetTroop == beAtkTroop)
                     {
@@ -75,7 +76,9 @@ namespace Sango.Game.Render
                         {
                             int hitBackDmg = (int)System.Math.Ceiling(hitBack * Troop.CalculateSkillDamage(beAtkTroop, troop, null));
                             troop.ChangeTroops(-hitBackDmg, beAtkTroop);
+#if SANGO_DEBUG
                             Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 受到 {beAtkTroop.BelongForce.Name}的[{beAtkTroop.Name} - {beAtkTroop.TroopType.Name}]反击伤害:{hitBackDmg}, 目标剩余兵力: {troop.GetTroopsNum()}");
+#endif
 
                         }
                     }
@@ -85,10 +88,16 @@ namespace Sango.Game.Render
                 if (beAtkBuildingBase != null)
                 {
                     int damage = Troop.CalculateSkillDamage(troop, beAtkBuildingBase, skill);
+#if SANGO_DEBUG
                     Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 使用<{skill.Name}> 攻击 {beAtkBuildingBase.BelongForce?.Name}的 [{beAtkBuildingBase.Name}], 造成伤害:{damage}, 目标剩余耐久: {beAtkBuildingBase.durability}");
+#endif
+
                     if (beAtkBuildingBase.ChangeDurability(-damage, troop))
                     {
+#if SANGO_DEBUG
+
                         Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 攻破城池: <{beAtkBuildingBase.Name}>");
+#endif
                     }
                     else
                     {
@@ -100,8 +109,9 @@ namespace Sango.Game.Render
                             {
                                 int hitBackDmg = (int)System.Math.Ceiling(hitBack * Troop.CalculateSkillDamage(beAtkBuildingBase, troop, null));
                                 troop.ChangeTroops(-hitBackDmg, beAtkBuildingBase);
+#if SANGO_DEBUG
                                 Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 受到 {beAtkBuildingBase.BelongForce?.Name}的[{beAtkBuildingBase.Name}]反击伤害:{hitBackDmg}, 目标剩余兵力: {troop.GetTroopsNum()}");
-
+#endif
                             }
                         }
                     }
@@ -109,7 +119,6 @@ namespace Sango.Game.Render
 
             }
             troop.energy -= skill.costEnergy;
-            troop.ActionOver = true;
             isAction = true;
         }
 

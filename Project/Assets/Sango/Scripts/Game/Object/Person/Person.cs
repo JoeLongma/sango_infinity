@@ -319,6 +319,18 @@ namespace Sango.Game
                 return ((Intelligence + (2 * Politics)) + Glamour);
             }
         }
+
+        /// <summary>
+        /// 训练能力
+        /// </summary>
+        public int BaseTrainTroopAbility
+        {
+            get
+            {
+                return ((Command * 3 + (2 * Strength)) + Glamour) / 30;
+            }
+        }
+
         /// <summary>
         /// 农业能力
         /// </summary>

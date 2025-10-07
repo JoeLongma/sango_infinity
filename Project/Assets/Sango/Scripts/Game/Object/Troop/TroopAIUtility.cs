@@ -1,4 +1,5 @@
 ﻿using Sango.Tools;
+using System;
 using System.Collections.Generic;
 
 namespace Sango.Game
@@ -42,7 +43,7 @@ namespace Sango.Game
                         break;
                     }
                 }
-                if(!find)
+                if (!find)
                     return false;
             }
             return true;
@@ -246,7 +247,15 @@ namespace Sango.Game
             });
         }
 
-        // 技能攻击评分
+        /// <summary>
+        /// 技能攻击评分
+        /// </summary>
+        /// <param name="troop"></param>
+        /// <param name="skill"></param>
+        /// <param name="target"></param>
+        /// <param name="movetoCell"></param>
+        /// <param name="spellCell"></param>
+        /// <returns></returns>
         public static int SkillAttackPriority(Troop troop, Skill skill, Cell target, Cell movetoCell, Cell spellCell)
         {
             if (target.IsEmpty()) return 0;
@@ -299,6 +308,44 @@ namespace Sango.Game
         {
             //TODO: 攻击时被反击防守评分(上面减除了,暂时返回0)
 
+            return 0;
+        }
+
+        /// <summary>
+        /// 攻防属性评分
+        /// </summary>
+        /// <param name="troop"></param>
+        /// <param name="skill"></param>
+        /// <param name="target"></param>
+        /// <param name="movetoCell"></param>
+        /// <param name="spellCell"></param>
+        /// <returns></returns>
+        public static int SkillStatusPriority(Troop troop, Skill skill, Cell target, Cell movetoCell, Cell spellCell)
+        {
+            if (target.IsEmpty()) return 0;
+            if (target.troop != null && skill.canDamageTroop)
+            {
+                if (troop.IsEnemy(target.troop))
+                {
+                    return skill.atk * (troop.Attack - target.troop.Defence);
+                }
+                else if (skill.canDamageTeam)
+                {
+                    return skill.atk * -30;
+                }
+            }
+            else if (target.building != null && skill.canDamageBuilding)
+            {
+                //TODO: 对建筑的攻击评分
+                if (troop.IsEnemy(target.building))
+                {
+                    return skill.atkDurability * 30;
+                }
+                else if (skill.canDamageTeam)
+                {
+                    return skill.atkDurability * -10;
+                }
+            }
             return 0;
         }
 

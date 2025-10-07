@@ -736,7 +736,9 @@ namespace Sango.Game
             if (!IncreaseDate())
                 return;
 
-            Sango.Log.Print($"{Info.year}年{Info.month}月{Info.day}日  第{Info.turnCount}回");
+#if SANGO_DEBUG
+            Sango.Log.Warning($"{Info.year}年{Info.month}月{Info.day}日  第{Info.turnCount}回");
+#endif
             MakeForceQuene();
 
             HasTurnEnded = false;

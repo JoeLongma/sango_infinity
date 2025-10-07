@@ -67,8 +67,7 @@ namespace Sango.Game
         /// <summary>
         /// 士气
         /// </summary>
-        [JsonProperty]
-        public int morale;
+        [JsonProperty] public int morale;
 
         /// <summary>
         /// 金收入
@@ -89,7 +88,6 @@ namespace Sango.Game
         /// 模型
         /// </summary>
         [JsonProperty] public int model;
-
 
         /// <summary>
         /// 当前兵力
@@ -176,6 +174,7 @@ namespace Sango.Game
         internal int virtualFightPower;
         bool isUpdatedFightPower;
         bool boderLineChecked = false;
+        
         /// <summary>
         /// 所有武将
         /// </summary>
@@ -184,6 +183,13 @@ namespace Sango.Game
         /// 所有设施
         /// </summary>
         public SangoObjectList<Building> allBuildings = new SangoObjectList<Building>();
+
+        /// <summary>
+        /// 所有内城设施
+        /// </summary>
+        public SangoObjectList<Building> allInnerBuildings = new SangoObjectList<Building>();
+        public int[] innerSlot;
+
         /// <summary>
         /// 所有部队
         /// </summary>
@@ -200,8 +206,9 @@ namespace Sango.Game
         /// 
         /// </summary>
         public Dictionary<City, List<Cell>> raodToNeighborCache = new Dictionary<City, List<Cell>>();
+
         /// <summary>
-        /// 所有设施
+        /// 所有内政设施
         /// </summary>
         public SangoObjectList<Building> allIntriorBuildings = new SangoObjectList<Building>();
 
@@ -305,12 +312,12 @@ namespace Sango.Game
             //TroopList?.InitCache();// = new SangoObjectList<Troop>().FromString(_troopListStr, scenario.troopSet);
             //NeighborList?.InitCache();// = new SangoObjectList<City>().FromString(_neighborListStr, scenario.citySet);
             //CityLevelType = scenario.CommonData.CityLevelTypes.Get(_cityLevelTypeId);
-
+            innerSlot = new int[CityLevelType.insideSlot];
             if (durability <= 0)
                 durability = CityLevelType.maxDurability;
 
             // 地格占用
-            cell_list.Clear();
+            effectCells = new System.Collections.Generic.List<Cell>();
             scenario.Map.GetSpiral(x, y, BuildingType.radius, cell_list);
             foreach (Cell cell in cell_list)
                 cell.building = this;
@@ -479,8 +486,8 @@ namespace Sango.Game
                 tempTroops -= finalTroopsNum;
                 Troop troop = new Troop()
                 {
-                    energy = 100,
-                    morale = 100,
+                    energy = energy,
+                    morale = morale,
                     Leader = leader,
                     TroopType = Scenario.Cur.CommonData.TroopTypes.Get(GameRandom.Range(2, 6)),
                     troops = finalTroopsNum,
@@ -1106,6 +1113,33 @@ namespace Sango.Game
             return building;
         }
 
+        public Building BuildBuilding(int slotId, Person builder, BuildingType buildingType)
+        {
+            builder.missionType = (int)MissionType.PersonBuild;
+
+            Building building = new Building();
+            building.BelongForce = BelongForce;
+            building.BelongCorps = BelongCorps;
+            building.BelongCity = this;
+            building.BuildingType = buildingType;
+            building.SlotId = slotId;
+            building.durability = 0;
+
+            Scenario scenario = Scenario.Cur;
+
+            // TODO: 获取高度
+            // ------
+            scenario.buildingSet.Add(building);
+            building.Init(scenario);
+            builder.missionTarget = building.Id;
+            building.Builder = builder;
+            building.isComplte = false;
+            building.durability = 1;
+
+            Sango.Log.Print($"[{BelongForce.Name}]在<{Name}>由{builder.Name}开始修建: {building.Name}");
+
+            return building;
+        }
 
         /// <summary>
         /// 开发
@@ -1254,6 +1288,53 @@ namespace Sango.Game
         }
 
         /// <summary>
+        /// 训练
+        /// </summary>
+        /// <param name="person"></param>
+        /// <returns></returns>
+        public bool JobTrainTroop(List<Person> personList)
+        {
+            if (morale >= 100) return false;
+            if (personList == null || personList.Count == 0) return false;
+
+            // TODO: 特性对开发的影响
+            int goldNeed = Scenario.Cur.Variables.trainTroopCost;
+            if (gold < goldNeed)
+                return false;
+            int count = Scenario.Cur.Variables.trainTroopMaxPersonCount;
+#if SANGO_DEBUG
+            StringBuilder stringBuilder = new StringBuilder();
+#endif
+            foreach (Person person in personList)
+            {
+
+                int value = person.BaseTrainTroopAbility;
+                morale += value;
+                person.merit += value;
+                freePersons.Remove(person);
+#if SANGO_DEBUG
+                stringBuilder.Append(person.Name);
+                stringBuilder.Append(",");
+#endif
+                person.ActionOver = true;
+                gold -= goldNeed;
+                count--;
+
+                if (morale >= 100)
+                {
+                    morale = 100;
+                    break;
+                }
+                if (gold < goldNeed || count <= 0)
+                    break;
+            }
+#if SANGO_DEBUG
+            Sango.Log.Print($"[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了训练!士气提升到了:{morale}");
+#endif
+            return true;
+        }
+
+        /// <summary>
         /// 搜索
         /// </summary>
         /// <param name="person"></param>
@@ -1369,10 +1450,15 @@ namespace Sango.Game
                     troopPopulation -= value;
                     population -= value;
                 }
+
+                //士气减少
+                morale -= value * 100 / troops;
+
                 troops += value;
                 person.merit += value / 10;
 
-                // TODO: 治安减少
+
+                //治安减少
                 security -= 10 * value / 1000;
                 freePersons.Remove(person);
 #if SANGO_DEBUG
@@ -1464,6 +1550,7 @@ namespace Sango.Game
         public static List<Person> sort_by_BaseAgricultureAbility = new List<Person>();
         public static List<Person> sort_by_BaseBuildAbility = new List<Person>();
         public static List<Person> sort_by_BaseRecruitmentAbility = new List<Person>();
+        public static List<Person> sort_by_BaseTrainTroopAbility = new List<Person>();
 
         struct SortPerson
         {
@@ -1478,6 +1565,7 @@ namespace Sango.Game
             sort_by_BaseAgricultureAbility.Clear();
             sort_by_BaseBuildAbility.Clear();
             sort_by_BaseRecruitmentAbility.Clear();
+            sort_by_BaseTrainTroopAbility.Clear();
 
             sort_by_TroopAbility.AddRange(freePersons);
             sort_by_BaseCommerceAbility.AddRange(freePersons);
@@ -1485,6 +1573,7 @@ namespace Sango.Game
             sort_by_BaseAgricultureAbility.AddRange(freePersons);
             sort_by_BaseBuildAbility.AddRange(freePersons);
             sort_by_BaseRecruitmentAbility.AddRange(freePersons);
+            sort_by_BaseTrainTroopAbility.AddRange(freePersons);
 
             sort_by_TroopAbility.Sort((a, b) => { return -a.MilitaryAbility.CompareTo(b.MilitaryAbility); });
             sort_by_BaseCommerceAbility.Sort((a, b) => { return -a.BaseCommerceAbility.CompareTo(b.BaseCommerceAbility); });
@@ -1492,6 +1581,7 @@ namespace Sango.Game
             sort_by_BaseAgricultureAbility.Sort((a, b) => { return -a.BaseAgricultureAbility.CompareTo(b.BaseAgricultureAbility); });
             sort_by_BaseBuildAbility.Sort((a, b) => { return -a.BaseBuildAbility.CompareTo(b.BaseBuildAbility); });
             sort_by_BaseRecruitmentAbility.Sort((a, b) => { return -a.BaseRecruitmentAbility.CompareTo(b.BaseRecruitmentAbility); });
+            sort_by_BaseTrainTroopAbility.Sort((a, b) => { return -a.BaseTrainTroopAbility.CompareTo(b.BaseTrainTroopAbility); });
         }
 
 

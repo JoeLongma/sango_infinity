@@ -1,9 +1,6 @@
-﻿using Sango.Game.Render;
-using System;
-using System.Collections;
+﻿using Newtonsoft.Json;
+using Sango.Game.Render;
 using System.Collections.Generic;
-using System.IO;
-using Newtonsoft.Json;
 
 namespace Sango.Game
 {
@@ -34,20 +31,24 @@ namespace Sango.Game
         /// 当前耐久
         /// </summary>
         [JsonProperty] public int durability;
+        
         /// <summary>
         /// 地图坐标
         /// </summary>
         public MapCoords coords;
         [JsonProperty] public int x;
         [JsonProperty] public int y;
+        
         /// <summary>
         /// 旋转值
         /// </summary>
         [JsonProperty] public float rot;
+        
         /// <summary>
         /// 高度偏移
         /// </summary>
         [JsonProperty] public float heightOffset;
+        
         /// <summary>
         /// 是否建造完成
         /// </summary>
@@ -61,11 +62,14 @@ namespace Sango.Game
         /// </summary>
         public ObjectRender Render { get; set; }
 
-
-        public List<Cell> effectCells = new List<Cell>();
+        /// <summary>
+        /// 作用范围
+        /// </summary>
+        public List<Cell> effectCells;// = new List<Cell>();
 
         public override void OnScenarioPrepare(Scenario scenario)
         {
+            effectCells = new List<Cell>();
             //BelongForce = scenario.forceSet.Get(_belongForceId);
             //BelongCorps = scenario.corpsSet.Get(_belongCorpsId);
             //BuildingType = scenario.CommonData.BuildingTypes.Get(_buildingTypeId);

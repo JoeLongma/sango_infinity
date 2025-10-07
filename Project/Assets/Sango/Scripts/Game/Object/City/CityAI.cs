@@ -160,26 +160,20 @@ namespace Sango.Game
         /// <param name="scenario"></param>
         public static bool AIIntrior(City city, Scenario scenario)
         {
-            if (city.security < 60)
-            {
-                AISecurity(city, scenario);
-            }
 
             // 兵临城下
             if (city.IsEnemiesRound(9))
                 return true;
 
             AIBuilding(city, scenario);
-
             AIIntriorBalance(city, scenario);
-            if (city.allIntriorBuildings.Count >= city.CityLevelType.outsideSlot)
+            if (city.allIntriorBuildings.Count >= city.CityLevelType.insideSlot)
             {
                 AIIntriorBalance(city, scenario);
                 if (city.freePersons.Count > 5 && GameRandom.Changce(50))
                     AIIntriorBalance(city, scenario);
                 if (city.freePersons.Count > 8 && GameRandom.Changce(50))
                     AIIntriorBalance(city, scenario);
-                AISecurity(city, scenario);
             }
 
             if (city.wildPersons.Count > 0 && city.freePersons.Count > 0)
@@ -193,6 +187,9 @@ namespace Sango.Game
                     }
                 }
             }
+
+            AITrainTroop(city, scenario);
+            AISecurity(city, scenario);
 
             if (city.freePersons.Count > 3)
             {
@@ -307,9 +304,7 @@ namespace Sango.Game
 
         public static bool AIBuildingByPercent(City city, BuildingType buildingType, float percent, Scenario scenario)
         {
-            if (city.effectCells.Count == 0) return true;
-
-            int maxSlot = city.CityLevelType.outsideSlot;
+            int maxSlot = city.CityLevelType.insideSlot;
             int leftSlot = maxSlot - city.allIntriorBuildings.Count;
             if (leftSlot <= 0)
                 return true;
@@ -329,62 +324,26 @@ namespace Sango.Game
                     break;
                 if (city.freePersons.Count <= 0)
                     break;
-                Cell center = null;
-                Cell villageCenter = null;
-                int safeCount = 0;
-                while (safeCount < 100)
-                {
-                    safeCount++;
-                    int where2Build = GameRandom.Range(0, city.effectCells.Count);
-                    villageCenter = city.effectCells[where2Build];
-                    if (villageCenter.building != null) continue;
-                    bool too_near = false;
-                    for (int j = 0; j < city.allIntriorBuildings.Count; ++j)
-                    {
-                        Building building = city.allIntriorBuildings[j];
-                        if (villageCenter.Cub.Distance(building.CenterCell.Cub) < building.BuildingType.radius + buildingType.radius + 1)
-                        {
-                            too_near = true;
-                            break;
-                        }
-                    }
-                    if (too_near) continue;
-                    center = villageCenter;
-                    break;
-                }
 
-                if (center == null)
+                int index = -1;
+                for(int i = 0; i < city.innerSlot.Length; ++i)
                 {
-                    for (int i = 0; i < city.effectCells.Count; i++)
+                    if (city.innerSlot[i] <= 0)
                     {
-                        villageCenter = city.effectCells[i];
-                        if (villageCenter.building != null) continue;
-                        bool too_near = false;
-                        for (int j = 0; j < city.allIntriorBuildings.Count; ++j)
-                        {
-                            Building building = city.allIntriorBuildings[j];
-                            if (villageCenter.Cub.Distance(building.CenterCell.Cub) < building.BuildingType.radius + buildingType.radius + 1)
-                            {
-                                too_near = true;
-                                break;
-                            }
-                        }
-                        if (too_near) continue;
-                        center = villageCenter;
+                        index = i;
                         break;
                     }
                 }
 
-                if (center != null)
+                if(index >= 0)
                 {
                     Person person = City.sort_by_BaseBuildAbility[0];
                     City.sort_by_BaseBuildAbility.RemoveAt(0);
                     city.freePersons.Remove(person);
-                    city.BuildBuilding(center, person, buildingType);
+                    city.BuildBuilding(index, person, buildingType);
                     city.gold -= buildingType.cost;
                     person.ActionOver = true;
                 }
-
                 nowCount++;
             }
             return true;
@@ -411,7 +370,7 @@ namespace Sango.Game
 
         public static bool AIBuldIntriore(City city, Scenario scenario)
         {
-            if (city.allIntriorBuildings.Count >= city.CityLevelType.outsideSlot)
+            if (city.allIntriorBuildings.Count >= city.CityLevelType.insideSlot)
                 return true;
 
             if (city.freePersons.Count <= 0)
@@ -558,6 +517,9 @@ namespace Sango.Game
             if (city.troops < 20000)
                 return false;
 
+            if (city.morale < 80)
+                return false;
+
             if (city.freePersons.Count <= 0)
                 return false;
 
@@ -659,13 +621,40 @@ namespace Sango.Game
         {
             if (city.freePersons.Count > 0 && city.gold > 400)
             {
-                if (GameRandom.Changce((100 - city.security) * 3 / 2))
+                if (GameRandom.Changce((90 - city.security) * 3 / 2))
                 {
                     City.sort_by_BaseSecurityAbility.RemoveAll(x => x.ActionOver == true);
                     if (city.JobInspection(City.sort_by_BaseSecurityAbility))
                     {
                     }
                 }
+            }
+            return true;
+        }
+
+        public static bool AITrainTroop(City city, Scenario scenario)
+        {
+            if (city.freePersons.Count > 0 && city.gold > 400)
+            {
+                if (city.morale < 50)
+                {
+                    City.sort_by_BaseTrainTroopAbility.RemoveAll(x => x.ActionOver == true);
+                    if (city.JobTrainTroop(City.sort_by_BaseSecurityAbility))
+                    {
+                    }
+                }
+                else
+                {
+                    if (GameRandom.Changce((95 - city.morale) * 3 / 2))
+                    {
+                        City.sort_by_BaseTrainTroopAbility.RemoveAll(x => x.ActionOver == true);
+                        if (city.JobTrainTroop(City.sort_by_BaseTrainTroopAbility))
+                        {
+                        }
+                    }
+                }
+
+                
             }
             return true;
         }

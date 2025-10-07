@@ -217,6 +217,16 @@ namespace Sango.Game
         [JsonProperty] public int inspectionMaxPersonCount = 3;
 
         /// <summary>
+        /// 训练花费/人
+        /// </summary>
+        [JsonProperty] public int trainTroopCost = 200;
+
+        /// <summary>
+        /// 训练最大武将数/回合
+        /// </summary>
+        [JsonProperty] public int trainTroopMaxPersonCount = 3;
+
+        /// <summary>
         /// 招募花费/人
         /// </summary>
         [JsonProperty] public int recuritTroopCost = 200;

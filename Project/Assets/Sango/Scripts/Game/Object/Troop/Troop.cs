@@ -182,6 +182,11 @@ namespace Sango.Game
         /// </summary>
         public int Glamour { get { return Leader.Glamour; } private set { } }
 
+        public int Attack { get; private set; }
+
+        public int Defence { get; private set; }
+
+
         public TroopRender Render { get; private set; }
         bool isMissionPrepared = false;
         public int foodCost = 0;
@@ -269,6 +274,9 @@ namespace Sango.Game
             HorseLv = Leader.HorseLv;
             WaterLv = Leader.WaterLv;
             MachineLv = Leader.MachineLv;
+
+            Defence = Command * 4000 / 10000 + Intelligence * 1000 / 10000;
+            Attack = Strength * 8000 / 10000 + Command * 1000 / 10000 + Intelligence * 1000 / 10000;
         }
 
         public int MoveCost(Cell cell)
@@ -502,20 +510,21 @@ namespace Sango.Game
         internal static List<TroopMoveEvent> tempMoveEventList = new List<TroopMoveEvent>(32);
         internal static List<Cell> spellRangeCells = new List<Cell>(256);
         internal bool isMoving = false;
-        IRenderEventBase renderEvent = null;
+        IRenderEventBase moveRenderEvent = null;
+        IRenderEventBase skillRenderEvent = null;
 
         public bool MoveTo(Cell destCell)
         {
             if (destCell == cell)
             {
-                renderEvent = null;
+                moveRenderEvent = null;
                 isMoving = false;
                 return true;
             }
 
-            if (renderEvent != null && renderEvent.IsDone)
+            if (moveRenderEvent != null && moveRenderEvent.IsDone)
             {
-                renderEvent = null;
+                moveRenderEvent = null;
                 isMoving = false;
                 return true;
             }
@@ -546,13 +555,13 @@ namespace Sango.Game
                     };
 
                     if (isLast)
-                        renderEvent = @event;
+                        moveRenderEvent = @event;
 
                     RenderEvent.Instance.Add(@event);
                     start = dest;
                 }
 
-                if (renderEvent == null)
+                if (moveRenderEvent == null)
                 {
                     isMoving = false;
                     return true;
@@ -758,11 +767,16 @@ namespace Sango.Game
 
         public bool SpellSkill(Skill skill, Cell spellCell)
         {
-            //if (renderEvent != null && renderEvent.IsDone)
-            //{
-            //    renderEvent = null;
-            //    return true;
-            //}
+            if (skillRenderEvent != null)
+            {
+                if (skillRenderEvent.IsDone)
+                {
+                    skillRenderEvent = null;
+                    return true;
+                }
+                else
+                    return false;
+            }
 
             TroopSpellSkillEvent @event = new TroopSpellSkillEvent()
             {
@@ -770,12 +784,10 @@ namespace Sango.Game
                 skill = skill,
                 spellCell = spellCell,
             };
-            //renderEvent = @event;
+            skillRenderEvent = @event;
             RenderEvent.Instance.Add(@event);
-           // return false;
 
-           
-            return true;
+            return false;
         }
         Cell tryToDest;
         public bool TryMoveTo(Cell destCell)
@@ -982,10 +994,10 @@ namespace Sango.Game
                 {
                     Render.MapObject.position = cell.Position;
                 }
-                else
-                {
-                    Sango.Log.Error($"why {Name}->Render.MapObject is null");
-                }
+                //else
+                //{
+                //    Sango.Log.Error($"why {Name}->Render.MapObject is null");
+                //}
             }
         }
 
@@ -1175,14 +1187,15 @@ namespace Sango.Game
 
         public void AIPrepare(Scenario scenario)
         {
-            if ((morale <= 5 && GameRandom.Changce(60)) ||
-                (troops < 500 && GameRandom.Changce(80)) ||
-                food < (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor) * 3 && GameRandom.Changce(80)
-                )
-            {
-                missionType = (int)MissionType.ReturnCity;
-                missionTarget = BelongCity.Id;
-            }
+            // 永不退缩
+            //if ((morale <= 5 && GameRandom.Changce(60)) ||
+            //    (troops < 500 && GameRandom.Changce(80)) ||
+            //    food < (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor) * 3 && GameRandom.Changce(80)
+            //    )
+            //{
+            //    missionType = (int)MissionType.ReturnCity;
+            //    missionTarget = BelongCity.Id;
+            //}
         }
 
         public City ChangeCity(City city)
