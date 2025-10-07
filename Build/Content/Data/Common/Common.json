@@ -2341,9 +2341,7 @@
       "costEnergy": "0",
       "isRange": true,
       "spellRanges": [
-        2,
-        3,
-        4
+        2
       ],
       "canDamageTroop": true,
       "canDamageMachine": true,
@@ -2355,7 +2353,7 @@
     {
       "Id": "3",
       "Name": "突刺",
-      "atk": "250",
+      "atk": "150",
       "atkDurability": "0",
       "costEnergy": "15",
       "isRange": false,
@@ -2372,7 +2370,7 @@
     {
       "Id": "4",
       "Name": "螺旋突刺",
-      "atk": "250",
+      "atk": "200",
       "atkDurability": "0",
       "costEnergy": "20",
       "isRange": false,
@@ -2391,7 +2389,7 @@
       "Name": "二段突刺",
       "atk": "250",
       "atkDurability": "0",
-      "costEnergy": "20",
+      "costEnergy": "25",
       "isRange": false,
       "spellRanges": [
         1
@@ -2406,7 +2404,7 @@
     {
       "Id": "6",
       "Name": "熊手",
-      "atk": "250",
+      "atk": "150",
       "atkDurability": "0",
       "costEnergy": "15",
       "isRange": false,
@@ -2423,9 +2421,9 @@
     {
       "Id": "7",
       "Name": "横扫",
-      "atk": "300",
+      "atk": "200",
       "atkDurability": "0",
-      "costEnergy": "15",
+      "costEnergy": "20",
       "isRange": false,
       "spellRanges": [
         1
@@ -2440,9 +2438,9 @@
     {
       "Id": "8",
       "Name": "旋风",
-      "atk": "300",
+      "atk": "200",
       "atkDurability": "0",
-      "costEnergy": "20",
+      "costEnergy": "25",
       "isRange": false,
       "spellRanges": [
         0
@@ -2463,7 +2461,7 @@
       "Name": "火矢",
       "atk": "100",
       "atkDurability": "120",
-      "costEnergy": "15",
+      "costEnergy": "10",
       "isRange": true,
       "spellRanges": [
         2
@@ -2485,6 +2483,10 @@
       "spellRanges": [
         1
       ],
+      "atkOffsetPoint": [
+        2,
+        3
+      ],
       "canDamageTroop": true,
       "canDamageMachine": true,
       "canDamageBoat": true,
@@ -2500,12 +2502,11 @@
       "costEnergy": "25",
       "isRange": true,
       "spellRanges": [
-        3,
-        4
+        2
       ],
       "atkOffsetPoint": [
         1,
-        2
+        1
       ],
       "canDamageTroop": true,
       "canDamageMachine": true,
@@ -2517,9 +2518,9 @@
     {
       "Id": "12",
       "Name": "突击",
-      "atk": "250",
+      "atk": "150",
       "atkDurability": "0",
-      "costEnergy": "20",
+      "costEnergy": "15",
       "isRange": false,
       "spellRanges": [
         1
@@ -2534,7 +2535,7 @@
     {
       "Id": "13",
       "Name": "突破",
-      "atk": "250",
+      "atk": "200",
       "atkDurability": "0",
       "costEnergy": "20",
       "isRange": false,
@@ -4459,12 +4460,14 @@
       "kind": 3,
       "skills": [
         1,
-        3
+        3,
+        4,
+        5
       ],
       "atk": 95,
       "durabilityDmg": 25,
       "def": 85,
-      "move": 18,
+      "move": 12,
       "defType": 2,
       "atkType": 2,
       "influenceAbility": 1,
@@ -4522,12 +4525,14 @@
       "kind": 1,
       "skills": [
         1,
+        6,
+        7,
         8
       ],
       "atk": 75,
       "durabilityDmg": 30,
       "def": 105,
-      "move": 18,
+      "move": 12,
       "defType": 2,
       "atkType": 1,
       "influenceAbility": 2,
@@ -4585,12 +4590,14 @@
       "kind": 2,
       "skills": [
         2,
-        10
+        9,
+        10,
+        11
       ],
       "atk": 85,
       "durabilityDmg": 35,
       "def": 75,
-      "move": 18,
+      "move": 12,
       "defType": 3,
       "atkType": 2,
       "influenceAbility": 3,
@@ -4648,12 +4655,14 @@
       "kind": 4,
       "skills": [
         1,
-        13
+        12,
+        13,
+        14
       ],
       "atk": 105,
       "durabilityDmg": 20,
       "def": 95,
-      "move": 24,
+      "move": 18,
       "defType": 3,
       "atkType": 1,
       "influenceAbility": 4,

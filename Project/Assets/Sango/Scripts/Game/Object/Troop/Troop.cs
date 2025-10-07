@@ -229,6 +229,8 @@ namespace Sango.Game
                 woundedTroops = 0;
                 // 减少士气
                 morale = (int)Math.Ceiling(morale * 0.5f);
+                if (morale < 0)
+                    morale = 0;
                 if (troops < 500)
                 {
                     Clear();
@@ -359,7 +361,7 @@ namespace Sango.Game
 
             //士气矫正后的伤害
             damage = damage * (UnityEngine.Mathf.Max(attacker.morale - Variables.fight_morale_decay_below, 0) / (100 - Variables.fight_morale_decay_below) *
-            Variables.fight_morale_add + (1 - Variables.fight_morale_decay_percent) + UnityEngine.Mathf.Min(attacker.morale, Variables.fight_morale_decay_below) / Variables.fight_morale_decay_below * Variables.fight_morale_decay_percent);
+            Variables.fight_morale_add + (1 - Variables.fight_morale_decay_percent) + UnityEngine.Mathf.Min(UnityEngine.Mathf.Max(attacker.morale, 0), Variables.fight_morale_decay_below) / Variables.fight_morale_decay_below * Variables.fight_morale_decay_percent);
 
 
             if (skill != null)

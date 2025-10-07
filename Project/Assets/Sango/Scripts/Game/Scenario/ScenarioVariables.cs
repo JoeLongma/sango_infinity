@@ -51,7 +51,7 @@ namespace Sango.Game
         /// <summary>
         /// 基准兵力
         /// </summary>
-        [JsonProperty] public float fight_base_troops_need = 3000;
+        [JsonProperty] public float fight_base_troops_need = 2000;
 
         /// <summary>
         /// 每多基准兵力,获得一次兵力系数增益
@@ -96,7 +96,7 @@ namespace Sango.Game
         /// <summary>
         /// 最大减伤比例
         /// </summary>
-        [JsonProperty] public float fight_base_reduce_percent = 0.5f;
+        [JsonProperty] public float fight_base_reduce_percent = 0.3f;
 
         /// <summary>
         /// 攻城伤害由基准武力,影响比例

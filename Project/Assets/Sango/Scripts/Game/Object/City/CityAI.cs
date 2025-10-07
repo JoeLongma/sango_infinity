@@ -506,7 +506,7 @@ namespace Sango.Game
 
             City.EnemyInfo enemyInfo;
             // 兵临城下且敌军存活
-            if (city.IsEnemiesRound(6) && city.CheckEnemiesIfAlive(out enemyInfo))
+            if (city.IsEnemiesRound(10) && city.CheckEnemiesIfAlive(out enemyInfo))
                 return true;
 
             return false;

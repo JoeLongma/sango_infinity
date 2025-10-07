@@ -117,7 +117,7 @@ namespace Sango.Game
         public bool CanBeSpell(Troop troop)
         {
             //TODO: 完善技能释放规则
-            if (costEnergy > troop.energy)
+            if (costEnergy > troop.morale)
                 return false;
 
             return true;
@@ -137,7 +137,7 @@ namespace Sango.Game
             }
             if (time > 1f)
                 action();
-            if (time > 2.2f)
+            if (time > 2.5f)
             {
                 troop.Render.SetAniShow(0);
                 return true;

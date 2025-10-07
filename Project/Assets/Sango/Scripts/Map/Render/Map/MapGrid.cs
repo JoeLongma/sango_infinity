@@ -78,12 +78,12 @@ namespace Sango.Render
             public byte terrainType;
 
 
-//#if UNITY_EDITOR
+#if SANGO_DEBUG
             [NoToLua]
             public UnityEngine.UI.Text textObj;
             [NoToLua]
             public bool visible;
-//#endif
+#endif
 
             //public int terrainState;
             //public San11GridData san11GridData;
@@ -451,6 +451,7 @@ namespace Sango.Render
             return new Vector2Int(c, r);
         }
 
+#if SANGO_DEBUG
 
         List<GridData> last;
         List<GridData> temp1 = new List<GridData>();
@@ -458,10 +459,11 @@ namespace Sango.Render
 
         int switchIndex = 1;
         Transform textROOT;
+        [NoToLua]
         public void Update(Tools.Rect rect)
         {
             if (MapEditor.IsEditOn) return;
-//#if UNITY_EDITOR
+            if (GameDebug.enabled == false) return;
             if (last != null)
             {
                 for (int i = 0; i < last.Count; i++)
@@ -534,7 +536,7 @@ namespace Sango.Render
             else
                 switchIndex = 1;
             last = temp;
-//#endif
         }
+#endif
     }
 }

@@ -61,10 +61,15 @@ namespace Sango.Game.Render
             {
                 Cell atkCell = Troop.tempCellList[i];
                 Troop beAtkTroop = atkCell.troop;
-                if (beAtkTroop != null)
+                if (beAtkTroop != null && skill.canDamageTroop)
                 {
                     int damage = Troop.CalculateSkillDamage(troop, beAtkTroop, skill);
+                    if (damage < 0)
+                    {
+                        damage = 0;
+                    }
                     beAtkTroop.ChangeTroops(-damage, troop);
+                     
 #if SANGO_DEBUG
                     Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 使用<{skill.Name}> 攻击 {beAtkTroop.BelongForce.Name}的[{beAtkTroop.Name} - {beAtkTroop.TroopType.Name}], 造成伤害:{damage}, 目标剩余兵力: {beAtkTroop.GetTroopsNum()}");
 #endif
@@ -85,12 +90,23 @@ namespace Sango.Game.Render
                 }
 
                 BuildingBase beAtkBuildingBase = atkCell.building;
-                if (beAtkBuildingBase != null)
+                if (beAtkBuildingBase != null && skill.canDamageBuilding)
                 {
                     int damage = Troop.CalculateSkillDamage(troop, beAtkBuildingBase, skill);
 #if SANGO_DEBUG
                     Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 使用<{skill.Name}> 攻击 {beAtkBuildingBase.BelongForce?.Name}的 [{beAtkBuildingBase.Name}], 造成伤害:{damage}, 目标剩余耐久: {beAtkBuildingBase.durability}");
 #endif
+
+                    if(!skill.isRange && skill.costEnergy == 0 && beAtkBuildingBase is City)
+                    {
+                        City city = (City)beAtkBuildingBase;
+                        if (city.troops <= 0)
+                        {
+                            Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 攻破城池: <{beAtkBuildingBase.Name}>");
+                            city.OnFall(troop);
+                            return;
+                        }
+                    }
 
                     if (beAtkBuildingBase.ChangeDurability(-damage, troop))
                     {
@@ -118,7 +134,11 @@ namespace Sango.Game.Render
                 }
 
             }
-            troop.energy -= skill.costEnergy;
+            troop.morale -= skill.costEnergy;
+            if(troop.morale < 0)
+            {
+                troop.morale = 0;
+            }
             isAction = true;
         }
 
