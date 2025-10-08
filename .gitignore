@@ -28,3 +28,5 @@
 /Build/SangoInfinity.exe
 /Build/GameAssembly.dll
 /Build/baselib.dll
+/Project/LoopScrollRect.Editor.csproj
+*.csproj
