@@ -10,7 +10,7 @@ public class UITroopListItem : MonoBehaviour
     public OnSelect onSelected;
     public OnShow onShow;
 
-    void ScrollCellIndex (int idx) 
+    void ScrollCellIndex(int idx) 
     {
         index = idx;
         onShow?.Invoke(this);

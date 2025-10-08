@@ -1,5 +1,6 @@
 ﻿using Sango.Loader;
 using Sango.Render;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -158,6 +159,11 @@ namespace Sango.Game.Render.UI
 
         public void OnTroopListShow(UITroopListItem item)
         {
+            if (item.index < 0 || item.index >= troops_list.Count)
+            {
+                item.name.text = "无效";
+                return;
+            }
             Troop troop = troops_list[item.index];
             item.name.text = $"[{troop.BelongForce.Name}]<{troop.BelongCity.Name}>{troop.Name}队";
         }

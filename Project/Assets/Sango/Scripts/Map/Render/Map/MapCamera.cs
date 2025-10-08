@@ -1,8 +1,6 @@
-﻿using Sango.Tools;
-using System.IO;
+﻿using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
 namespace Sango.Render
 {
@@ -16,6 +14,7 @@ namespace Sango.Render
         public float fov = 25f;
         public float near_clip = 0.3f;
         public float far_clip = 3500f;
+        public float cameraDistanceFactor = 1;
 
         public Vector3 look_position = new Vector3(1407, 0, 796);
         public Vector2 limitDistance = new Vector2(200f, 630f);
@@ -233,6 +232,8 @@ namespace Sango.Render
                 distance = limitDistance.x;
             else if (distance > limitDistance.y)
                 distance = limitDistance.y;
+
+            cameraDistanceFactor = (cur_distance - limitDistance.x) / (limitDistance.y - limitDistance.x);
         }
 
         public void OffsetCamera(Vector3 offset)

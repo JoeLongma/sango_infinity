@@ -1627,7 +1627,6 @@ namespace Sango.Game
         public Troop EnsureTroop(Troop troop, Scenario scenario, int trunCount)
         {
             // 先加入剧本才能分配ID
-            scenario.Add(troop);
             troop.Leader.BelongTroop = troop;
             Add(troop);
             troop.BelongCorps = this.BelongCorps;
@@ -1637,6 +1636,7 @@ namespace Sango.Game
             this.CenterCell.troop = troop;
             troop.x = this.CenterCell.x;
             troop.y = this.CenterCell.y;
+            scenario.Add(troop);
             troop.Init(scenario);
             int costFood = (int)System.Math.Floor(troop.troops * trunCount * scenario.Variables.baseFoodCostInTroop * troop.TroopType.foodCostFactor);
             costFood = Math.Max(costFood, 1);
@@ -1657,7 +1657,6 @@ namespace Sango.Game
                 }
             }
 
-            Scenario.Cur.Event.OnTroopCreated?.Invoke(troop, scenario);
 
             return troop;
         }
