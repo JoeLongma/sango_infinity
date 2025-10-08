@@ -177,5 +177,17 @@ namespace Sango.Game.Render
                 TroopModel.SetSmokeShow(b);
             }
         }
+
+        public void ShowDamage(int damage)
+        {
+            if (HeadBar != null)
+            {
+                UITroopHeadbar uITroopHeadbar = HeadBar as UITroopHeadbar;
+                if (uITroopHeadbar != null)
+                {
+                    uITroopHeadbar.ShowDamage(damage);
+                }
+            }
+        }
     }
 }
