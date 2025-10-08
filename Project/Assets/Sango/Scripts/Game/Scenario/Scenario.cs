@@ -67,7 +67,12 @@ namespace Sango.Game
         public Corps Add(Corps corps) { corpsSet.Add(corps); return corps; }
         public City Add(City city) { citySet.Add(city); return city; }
         public Person Add(Person person) { personSet.Add(person); return person; }
-        public Troop Add(Troop troops) { troopsSet.Add(troops); return troops; }
+        public Troop Add(Troop troop)
+        {
+            troopsSet.Add(troop);
+            Event.OnTroopCreated?.Invoke(troop, this);
+            return troop;
+        }
         public Building Add(Building building) { buildingSet.Add(building); return building; }
         public Fire Add(Fire fire) { fireSet.Add(fire); return fire; }
         public Alliance Add(Alliance alliance) { allianceSet.Add(alliance); return alliance; }
@@ -75,7 +80,12 @@ namespace Sango.Game
         public Corps Remove(Corps corps) { corpsSet.Remove(corps); return corps; }
         public City Remove(City city) { citySet.Remove(city); return city; }
         public Person Remove(Person person) { personSet.Remove(person); return person; }
-        public Troop Remove(Troop troops) { troopsSet.Remove(troops); return troops; }
+        public Troop Remove(Troop troop)
+        {
+            troopsSet.Remove(troop);
+            Event.OnTroopDestroyed?.Invoke(troop, this);
+            return troop;
+        }
         public Building Remove(Building building) { buildingSet.Remove(building); return building; }
         public Fire Remove(Fire fire) { fireSet.Remove(fire); return fire; }
         public Alliance Remove(Alliance alliance) { allianceSet.Remove(alliance); return alliance; }
@@ -793,7 +803,7 @@ namespace Sango.Game
             {
                 for (int j = i + 1; j < forceCount; ++j)
                 {
-                    if(GameRandom.Changce(scenario.Variables.relationChangeChangce))
+                    if (GameRandom.Changce(scenario.Variables.relationChangeChangce))
                     {
                         RelationMap[i][j] += scenario.Variables.relationChangePerMonth;
                         RelationMap[j][i] += scenario.Variables.relationChangePerMonth;

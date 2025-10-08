@@ -1010,9 +1010,10 @@ namespace Sango.Game
             city.food += food;
             city.troops += troops;
             city.woundedTroops += woundedTroops;
+            // 设置了,
             IsAlive = false;
 
-            Scenario.Cur.troopsSet.Remove(this);
+            Scenario.Cur.Remove(this);
             Leader.BelongTroop = null;
             Leader.ActionOver = true;
             if (MemberList != null)
@@ -1047,8 +1048,8 @@ namespace Sango.Game
 
         public override void Clear()
         {
-            BelongCity.allTroops.Remove(this);
-            Scenario.Cur.troopsSet.Remove(this);
+            BelongCity.Remove(this);
+            Scenario.Cur.Remove(this);
             Leader.BelongTroop = null;
             if (MemberList != null)
             {
@@ -1076,14 +1077,14 @@ namespace Sango.Game
             // 先从原有势力移除
             if (BelongCorps != null)
             {
-                BelongCity.allTroops.Remove(this);
+                BelongCity.Remove(this);
             }
 
             BelongCity = city; ;
             BelongCorps = city.BelongCorps;
             BelongForce = city.BelongForce;
 
-            BelongCity.allTroops.Add(this);
+            BelongCity.Add(this);
 
             return Leader.IsSameForce(city);
         }
@@ -1207,9 +1208,9 @@ namespace Sango.Game
             {
                 last = BelongCity;
                 if (BelongCity != null)
-                    BelongCity.allTroops.Remove(this);
+                    BelongCity.Remove(this);
                 BelongCity = city;
-                city.allTroops.Add(this);
+                city.Add(this);
                 if (BelongCorps != city.BelongCorps)
                 {
                     BelongCorps = city.BelongCorps;

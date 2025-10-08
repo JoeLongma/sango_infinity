@@ -237,6 +237,10 @@ namespace Sango.Game
                 return fightPower;
             }
         }
+        public Troop Add(Troop troops) { allTroops.Add(troops); return troops; }
+        public Troop Remove(Troop troops) { allTroops.Remove(troops); return troops; }
+        public Person Add(Person person) { allPersons.Add(person); return person; }
+        public Person Remove(Person person) { allPersons.Remove(person); return person; }
 
         public void UpdateActiveTroopTypes()
         {
@@ -1623,9 +1627,9 @@ namespace Sango.Game
         public Troop EnsureTroop(Troop troop, Scenario scenario, int trunCount)
         {
             // 先加入剧本才能分配ID
-            scenario.troopsSet.Add(troop);
+            scenario.Add(troop);
             troop.Leader.BelongTroop = troop;
-            this.allTroops.Add(troop);
+            Add(troop);
             troop.BelongCorps = this.BelongCorps;
             troop.BelongForce = this.BelongForce;
             troop.BelongCity = this;
@@ -1652,6 +1656,9 @@ namespace Sango.Game
                     }
                 }
             }
+
+            Scenario.Cur.Event.OnTroopCreated?.Invoke(troop, scenario);
+
             return troop;
         }
 

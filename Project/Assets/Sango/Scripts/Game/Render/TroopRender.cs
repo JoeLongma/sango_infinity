@@ -47,7 +47,7 @@ namespace Sango.Game.Render
             {
                 TroopModel.Init(Troop);
             }
-
+            TroopModel.SetSmokeShow(false);
             GameObject headBar = PoolManager.Create(GameRenderHelper.TroopHeadbarRes);
             if (headBar != null)
             {

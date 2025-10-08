@@ -569,5 +569,10 @@ namespace Sango.Render
         {
             return 0;
         }
+
+        public void MoveCameraTo(Vector3 pos)
+        {
+            mapCamera.MoveCameraTo(pos);
+        }
     }
 }

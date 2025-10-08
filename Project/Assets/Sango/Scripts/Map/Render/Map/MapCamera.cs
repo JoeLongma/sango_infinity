@@ -85,6 +85,12 @@ namespace Sango.Render
             NeedUpdateCamera();
         }
 
+        public void MoveCameraTo(Vector3 pos)
+        {
+            lookAt.position = pos;
+            NeedUpdateCamera();
+        }
+
         public override void Clear()
         {
             base.Clear();

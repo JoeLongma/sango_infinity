@@ -74,6 +74,9 @@
         public EventDelegate<Cell, Cell> OnTroopLeaveCell;
         public EventDelegate<Cell, Cell> OnTroopEnterCell;
 
+        public EventDelegate<Troop, Scenario> OnTroopCreated;
+        public EventDelegate<Troop, Scenario> OnTroopDestroyed;
+
         public static ScenarioEvent Event { get { return Scenario.Cur.Event; } }
 
     }

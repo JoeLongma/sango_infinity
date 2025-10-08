@@ -256,12 +256,13 @@ namespace Sango
             {
                 if (b)
                 {
-                    if (!smoke.isPlaying)
+                    //if (!smoke.isPlaying || smoke.isStopped)
                         smoke.Play();
+
                 }
                 else
                 {
-                    if (smoke.isPlaying)
+                    //if (!smoke.isStopped)
                         smoke.Stop();
                 }
             }
