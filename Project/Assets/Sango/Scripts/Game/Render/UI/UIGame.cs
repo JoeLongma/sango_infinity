@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 namespace Sango.Game.Render.UI
 {
@@ -23,11 +22,13 @@ namespace Sango.Game.Render.UI
         public Transform troopListContent;
         public int totalCount = -1;
         Stack<Transform> pool = new Stack<Transform>();
-        List<Troop> troops_list = new List<Troop>();
+        //List<Troop> troops_list = new List<Troop>();
+        List<SangoObject> item_list = new List<SangoObject>();
+        public Type itemType;
+        bool needUpdateItem = true;
 
         public GameObject pauseObj;
         public GameObject resumeObj;
-
 
         public GameObject GetObject(int index)
         {
@@ -67,26 +68,34 @@ namespace Sango.Game.Render.UI
             Scenario.Cur.Event.OnTroopDestroyed += OnTroopChange;
             Scenario.Cur.Event.OnForceStart += OnForceStart;
             Scenario.Cur.Event.OnDayUpdate += OnDayUpdate;
+            Scenario.Cur.Event.OnCityFall += OnCityFall;
 
             loopScrollRect.prefabSource = this;
             loopScrollRect.dataSource = this;
-            loopScrollRect.totalCount = totalCount;
-            loopScrollRect.RefillCells();
+
+            itemType = typeof(Troop);
+            needUpdateItem = true;
+
+            //loopScrollRect.totalCount = totalCount;
+            //loopScrollRect.RefillCells();
+        }
+
+        public void OnCityFall(City city, Troop atker, Scenario scenario)
+        {
+            if (itemType == typeof(City))
+            {
+                loopScrollRect.RefreshCells();
+            }
+
         }
 
         public void OnTroopChange(Troop troop, Scenario scenario)
         {
-            troops_list.Clear();
-            scenario.troopsSet.ForEach(t =>
+            if (itemType == typeof(Troop))
             {
-                if (t.IsAlive)
-                {
-                    troops_list.Add(t);
-                }
-            });
+                needUpdateItem = true;
+            }
 
-            loopScrollRect.totalCount = troops_list.Count;
-            loopScrollRect.RefillCells();
         }
 
         public void OnForceStart(Force force, Scenario scenario)
@@ -149,23 +158,110 @@ namespace Sango.Game.Render.UI
 
         public void OnTroopListSelected(int index)
         {
-            if (index < 0 || index >= troops_list.Count)
+            if (index < 0 || index >= item_list.Count)
                 return;
 
-            Troop troop = troops_list[index];
-            Vector3 position = troop.cell.Position;
-            MapRender.Instance.MoveCameraTo(position);
+            SangoObject obj = item_list[index];
+            if (obj is Troop)
+            {
+                Troop troop = (Troop)obj;
+                Vector3 position = troop.cell.Position;
+                MapRender.Instance.MoveCameraTo(position);
+            }
+            else if (obj is City)
+            {
+                City troop = (City)obj;
+                Vector3 position = troop.CenterCell.Position;
+                MapRender.Instance.MoveCameraTo(position);
+            }
         }
 
         public void OnTroopListShow(UITroopListItem item)
         {
-            if (item.index < 0 || item.index >= troops_list.Count)
+            if (item.index < 0 || item.index >= item_list.Count)
             {
                 item.name.text = "无效";
                 return;
             }
-            Troop troop = troops_list[item.index];
-            item.name.text = $"[{troop.BelongForce.Name}]<{troop.BelongCity.Name}>{troop.Name}队";
+            SangoObject obj = item_list[item.index];
+            if (obj is Troop)
+            {
+                Troop troop = (Troop)obj;
+                item.name.text = $"[{troop.BelongForce.Name}]<{troop.BelongCity.Name}>{troop.Name}队";
+                item.name.color = troop.BelongForce.Flag.color;
+            }
+            else if (obj is City)
+            {
+                City city = (City)obj;
+                if (city.BelongForce != null)
+                {
+                    item.name.text = $"[{city.BelongForce.Name}]{city.Name}";
+                    item.name.color = city.BelongForce.Flag.color;
+
+                }
+                else
+                {
+                    item.name.text = $"{city.Name}";
+                    item.name.color = Color.white;
+                }
+
+            }
+        }
+
+        public void OnTroopTab(Toggle b)
+        {
+            if (b.isOn)
+            {
+                itemType = typeof(Troop);
+                needUpdateItem = true;
+            }
+        }
+
+        public void OnCityTab(Toggle b)
+        {
+            if (b.isOn)
+            {
+                itemType = typeof(City);
+                needUpdateItem = true;
+            }
+        }
+
+        public void Update()
+        {
+            if (needUpdateItem)
+            {
+                needUpdateItem = false;
+                if (itemType == typeof(Troop))
+                {
+
+                    item_list.Clear();
+                    Scenario.Cur.troopsSet.ForEach(t =>
+                    {
+                        if (t.IsAlive)
+                        {
+                            item_list.Add(t);
+                        }
+                    });
+
+                    loopScrollRect.totalCount = item_list.Count;
+                    loopScrollRect.RefillCells(loopScrollRect.GetFirstItem(out _));
+                }
+                else if (itemType == typeof(City))
+                {
+
+                    item_list.Clear();
+                    Scenario.Cur.citySet.ForEach(t =>
+                    {
+                        if (t.IsAlive)
+                        {
+                            item_list.Add(t);
+                        }
+                    });
+
+                    loopScrollRect.totalCount = item_list.Count;
+                    loopScrollRect.RefillCells(loopScrollRect.GetFirstItem(out _));
+                }
+            }
         }
     }
 }

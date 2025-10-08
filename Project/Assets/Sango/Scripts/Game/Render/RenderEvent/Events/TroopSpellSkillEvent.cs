@@ -139,6 +139,7 @@ namespace Sango.Game.Render
             {
                 troop.morale = 0;
             }
+            troop.Render.UpdateRender();
             isAction = true;
         }
 

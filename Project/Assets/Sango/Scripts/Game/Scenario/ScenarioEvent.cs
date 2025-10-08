@@ -77,6 +77,8 @@
         public EventDelegate<Troop, Scenario> OnTroopCreated;
         public EventDelegate<Troop, Scenario> OnTroopDestroyed;
 
+        public EventDelegate<City, Troop, Scenario> OnCityFall;
+
         public static ScenarioEvent Event { get { return Scenario.Cur.Event; } }
 
     }

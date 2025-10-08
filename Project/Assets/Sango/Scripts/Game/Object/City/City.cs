@@ -906,6 +906,7 @@ namespace Sango.Game
                 atk.EnterCity(this);
                 Render?.UpdateRender();
                 CalculateHarvest();
+                Scenario.Cur.Event.OnCityFall?.Invoke(this, atk, Scenario.Cur);
                 return;
             }
 
@@ -1038,6 +1039,7 @@ namespace Sango.Game
                 }
             }
 
+            Scenario.Cur.Event.OnCityFall?.Invoke(this, atk, Scenario.Cur);
 
         }
 
