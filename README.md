@@ -10,4 +10,8 @@
 ## 资源相关
 部分资源是由三国志11游戏中导出，游戏地图为仿照三国志11实现，本项目内涉及版权的相关资源仅可学习使用。  
 
+![截图1](http://m.qpic.cn/psc?/V53pqxsJ0cBjNo2E9XnT21E6GB2SflsR/u1t9cOvsyVOSjfy1UV.fOlhvz*yLudURxhmTFRb25Vv9B06ptI.QZ.ZJ.ex87*Wi65WCi6HUhaZ*LynGw3XclH3.VhguAkewFWvwwf5S5NY!/b&bo=QgX4AkIF.AIDd1I!&rf=viewer_4&t=5)
+
+![截图2](http://m.qpic.cn/psc?/V53pqxsJ0cBjNo2E9XnT21E6GB2SflsR/u1t9cOvsyVOSjfy1UV.fOs1xbqjJXdER4.pXHtvTv8WGWRXOt4o47b45HMyup7lTQir*mfPhvnCDsjDQfR5Z*1*Lm9Oa2x3j2wABSSmHU.g!/b&bo=QgX4AkIF.AIDd1I!&rf=viewer_4&t=5)
+
 ## Mail:1052058@qq.com
