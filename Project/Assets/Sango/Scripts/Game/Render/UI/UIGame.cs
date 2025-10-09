@@ -105,8 +105,7 @@ namespace Sango.Game.Render.UI
 
         public void OnDayUpdate(Scenario scenario)
         {
-            ScenarioInfo info = scenario.Info;
-            dateText.text = $"{info.year}年{info.month}月{info.day}日";
+            dateText.text = scenario.GetDateStr();
         }
 
         public void OnBtnPause()

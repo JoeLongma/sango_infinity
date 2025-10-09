@@ -158,7 +158,17 @@ namespace Sango.Game
 
         public override void RemoveAll(Predicate<T> match)
         {
-            throw new NotImplementedException();
+            for (int i = 1; i < objects.Length; i++)
+            {
+                T obj = objects[i];
+                if (obj != null)
+                {
+                    if(match(obj))
+                    {
+                        objects[i] = null;
+                    }
+                }
+            }
         }
 
         public int DataCount

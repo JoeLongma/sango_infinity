@@ -6,6 +6,13 @@ Window_Dialog = Class(Window)
 
 function Window_Dialog:Awake()
     self.ContentText = self:GetText("contentBg/content");
+    local co = nil;
+    co = coroutine.start(function()
+        coroutine.wait(3);
+        self.mEvent.IsDone = true;
+        self.mEvent = nil;
+        coroutine.stop(co);
+    end)
 end
 
 function Window_Dialog:InitEvent(event, content)

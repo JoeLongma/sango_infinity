@@ -44,8 +44,9 @@ namespace Sango.Game
                                     Alliance alliance = new Alliance()
                                     {
                                         ForceList = new SangoObjectList<Force>(),
-                                        leftCount = 18,
+                                        leftCount = 36,
                                         allianceType = 1,
+                                        IsAlive = true,
                                     };
                                     alliance.ForceList.Add(force);
                                     alliance.ForceList.Add(enemysenemy);
@@ -55,9 +56,8 @@ namespace Sango.Game
                                     force.AllianceList.Add(alliance);
                                     enemysenemy.AllianceList.Add(alliance);
 #if SANGO_DEBUG
-                                    Sango.Log.Print($"@外交@{force.Name} 与 {enemysenemy.Name} 达成了6个月的结盟!!");
+                                    Sango.Log.Print($"@外交@{force.Name} 于{scenario.GetDateStr()} 与 {enemysenemy.Name} 达成了12个月的结盟 Id={alliance.Id}!!");
 #endif
-
                                 }
                             }
                         }

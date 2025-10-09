@@ -33,7 +33,7 @@ namespace Sango.Game
                     troop = city.EnsureTroop(troop, scenario, 20);
 #if SANGO_DEBUG
                     City targetCity = scenario.citySet.Get(troop.missionTarget);
-                    Sango.Log.Print($"{scenario.Info.year}年{scenario.Info.month}月{scenario.Info.day}日{city.BelongForce.Name}势力在{city.Name}由{troop.Leader.Name}率领军队出城 进攻{targetCity.BelongForce?.Name}的{targetCity.Name}!");
+                    Sango.Log.Print($"{scenario.GetDateStr()}{city.BelongForce.Name}势力在{city.Name}由{troop.Leader.Name}率领军队出城 进攻{targetCity.BelongForce?.Name}的{targetCity.Name}!");
 #endif
                 }
                 return false;
@@ -87,7 +87,7 @@ namespace Sango.Game
                         Troop troop1 = city.CurActiveTroopList[0];
                         troop1 = city.EnsureTroop(troop1, scenario, 20);
 #if SANGO_DEBUG
-                        Sango.Log.Print($"{scenario.Info.year}年{scenario.Info.month}月{scenario.Info.day}日{city.BelongForce.Name}势力在{city.Name}由{troop1.Leader.Name}率领军队出城 进攻{lastTargetCity.BelongForce?.Name}的{lastTargetCity.Name}!");
+                        Sango.Log.Print($"{scenario.GetDateStr()}{city.BelongForce.Name}势力在{city.Name}由{troop1.Leader.Name}率领军队出城 进攻{lastTargetCity.BelongForce?.Name}的{lastTargetCity.Name}!");
 #endif
                     }
                     return false;
@@ -143,7 +143,7 @@ namespace Sango.Game
                                 troop.missionType = (int)MissionType.OccupyCity;
                                 troop.missionTarget = targetCity.Id;
                                 //troop.DoAI(scenario);
-                                Sango.Log.Print($"{scenario.Info.year}年{scenario.Info.month}月{scenario.Info.day}日{city.BelongForce.Name}势力在{city.Name}由{troop.Leader.Name}率领军队出城 进攻{targetCity.BelongForce?.Name ?? ""}的{targetCity.Name}!");
+                                Sango.Log.Print($"{scenario.GetDateStr()}{city.BelongForce.Name}势力在{city.Name}由{troop.Leader.Name}率领军队出城 进攻{targetCity.BelongForce?.Name ?? ""}的{targetCity.Name}!");
                                 troop = null;
                             }
                             return true;

@@ -331,7 +331,7 @@ namespace Sango.Game
                 }
                 else if (skill.canDamageTeam)
                 {
-                    return skill.atk * -30;
+                    return -skill.atk * (troop.Attack - target.troop.Defence);
                 }
             }
             else if (target.building != null && skill.canDamageBuilding)
@@ -343,7 +343,7 @@ namespace Sango.Game
                 }
                 else if (skill.canDamageTeam)
                 {
-                    return skill.atkDurability * -10;
+                    return skill.atkDurability * -30;
                 }
             }
             return 0;

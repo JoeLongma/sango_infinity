@@ -616,6 +616,9 @@ namespace Sango.Game
                 if (a != null && a.IsAlive)
                     a.OnNewTurn(this);
             }
+
+            allianceSet.RemoveAll(a => !a.IsAlive);
+
             HasTurnStarted = true;
             return true;
         }
@@ -747,7 +750,7 @@ namespace Sango.Game
                 return;
 
 #if SANGO_DEBUG
-            Sango.Log.Warning($"{Info.year}年{Info.month}月{Info.day}日  第{Info.turnCount}回");
+            Sango.Log.Warning($"{GetDateStr()}  第{Info.turnCount}回");
 #endif
             MakeForceQuene();
 
@@ -1018,6 +1021,11 @@ namespace Sango.Game
 
             RelationMap[forceA.Id][forceB.Id] = r;
             RelationMap[forceB.Id][forceA.Id] = r;
+        }
+
+        public string GetDateStr()
+        {
+            return $"{Info.year}年{Info.month}月{Info.day}日";
         }
     }
 }
