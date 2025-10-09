@@ -1,4 +1,5 @@
 ﻿using Sango.Loader;
+using System.Text;
 using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
@@ -28,10 +29,9 @@ namespace Sango.Game.Render.UI
             number.text = troop.troops.ToString();
         }
 
-        // 上升A 下降B 钱C 矛D 兵E 戟F 弩G 马H 冲车J 投石机K 船M 投石船N 气力O 耐久P 治安Q
-        public void ShowDamage(int damage)
+         public void ShowDamage(int damage, int damageType = 0)
         {
-            aniText.Create(damage.ToString(), "BE", UnityEngine.Color.red, 2);
+            UITools.ShowDamage(aniText, damage, damageType);
         }
     }
 }

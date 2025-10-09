@@ -160,5 +160,17 @@ namespace Sango.Game.Render
             }
             base.Clear();
         }
+
+           public override void ShowDamage(int damage, int damageType)
+        {
+            if (HeadBar != null)
+            {
+                UICityHeadbar uITroopHeadbar = HeadBar as UICityHeadbar;
+                if (uITroopHeadbar != null)
+                {
+                    uITroopHeadbar.ShowDamage(damage, damageType);
+                }
+            }
+        }
     }
 }

@@ -1,8 +1,7 @@
-﻿using Sango.Loader;
+﻿using System.Text;
 using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
-
 {
     public class UICityHeadbar : UGUIWindow
     {
@@ -12,6 +11,7 @@ namespace Sango.Game.Render.UI
         public Image durability;
         public Text number;
         public Text info;
+        public AnimationText aniText;
 
         public void Init(City city)
         {
@@ -30,5 +30,11 @@ namespace Sango.Game.Render.UI
                 cityInfo = $"*{cityInfo}";
             info.text = cityInfo;
         }
+
+           public void ShowDamage(int damage, int damageType = 13)
+        {
+            UITools.ShowDamage(aniText, damage, damageType);
+        }
+
     }
 }

@@ -112,9 +112,9 @@ namespace Sango.Game.Render
             //textInfo.color = Troop.BelongForce.Flag.color;
             //textInfo.text = $"<{Troop.BelongForce.Name}>\n[{Troop.Name}队 - {Troop.TroopType.Name}]\n [{Troop.troops}] \n -{Troop.food}-";
 
-            if(HeadBar != null)
+            if (HeadBar != null)
             {
-                if( HeadBar.HasScript())
+                if (HeadBar.HasScript())
                 {
                     HeadBar.CallFunction("UpdateState", Troop);
                 }
@@ -153,7 +153,7 @@ namespace Sango.Game.Render
 
         public void SetAniShow(int name)
         {
-            if(TroopModel != null)
+            if (TroopModel != null)
             {
                 TroopModel.SetAniShow(name);
             }
@@ -161,7 +161,7 @@ namespace Sango.Game.Render
 
         public void FaceTo(Vector3 dest)
         {
-            if(MapObject != null)
+            if (MapObject != null)
             {
                 Vector3 forward = dest - MapObject.transform.position;
                 forward.y = 0;
@@ -178,14 +178,14 @@ namespace Sango.Game.Render
             }
         }
 
-        public void ShowDamage(int damage)
+          public override void ShowDamage(int damage, int damageType)
         {
             if (HeadBar != null)
             {
                 UITroopHeadbar uITroopHeadbar = HeadBar as UITroopHeadbar;
                 if (uITroopHeadbar != null)
                 {
-                    uITroopHeadbar.ShowDamage(damage);
+                    uITroopHeadbar.ShowDamage(damage, damageType);
                 }
             }
         }

@@ -732,7 +732,7 @@ namespace Sango.Game
         public bool ChangeTroops(int num, SangoObject atk)
         {
             if (Render != null)
-                Render.ShowDamage(num);
+                Render.ShowDamage(num, 2);
 
             troops = troops + num;
             if (num < 0)

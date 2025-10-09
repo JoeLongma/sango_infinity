@@ -31,24 +31,24 @@ namespace Sango.Game
         /// 当前耐久
         /// </summary>
         [JsonProperty] public int durability;
-        
+
         /// <summary>
         /// 地图坐标
         /// </summary>
         public MapCoords coords;
         [JsonProperty] public int x;
         [JsonProperty] public int y;
-        
+
         /// <summary>
         /// 旋转值
         /// </summary>
         [JsonProperty] public float rot;
-        
+
         /// <summary>
         /// 高度偏移
         /// </summary>
         [JsonProperty] public float heightOffset;
-        
+
         /// <summary>
         /// 是否建造完成
         /// </summary>
@@ -135,6 +135,11 @@ namespace Sango.Game
 
         public virtual bool ChangeDurability(int num, Troop atk)
         {
+            if (num < 0)
+            {
+                if (Render != null)
+                    Render.ShowDamage(num, 13);
+            }
             durability = durability + num;
             bool isAlive = durability > 0;
             if (!isAlive)
