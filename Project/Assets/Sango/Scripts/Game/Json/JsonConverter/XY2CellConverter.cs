@@ -5,29 +5,30 @@ using System.Collections.Generic;
 
 namespace Sango.Game
 {
-    public class Id2ObjConverter<T> : JsonConverter<T> where T : SangoObject, new()
+    
+
+    public class XY2CellConverter : JsonConverter<Cell>
     {
-        public struct DelaySetValue
+        public struct DelaySetCellValue
         {
             public object target;
             public JsonProperty property;
-            public int id;
-            public Type objectType;
-
-            public static List<DelaySetValue> delaySetValues_List = new List<DelaySetValue>();
+            public int x;
+            public int y;
+            public static List<DelaySetCellValue> delaySetValues_List = new List<DelaySetCellValue>();
             public static void OnScenarioPrepare(Scenario scenario)
             {
                 for (int i = 0; i < delaySetValues_List.Count; i++)
                 {
-                    DelaySetValue setValue = delaySetValues_List[i];
-                    var value = scenario.GetObject(setValue.id, setValue.objectType);
+                    DelaySetCellValue setValue = delaySetValues_List[i];
+                    var value = scenario.Map.GetCell(setValue.x, setValue.y);
                     if (value != null && setValue.property != null)
                         setValue.property.ValueProvider.SetValue(setValue.target, value);
                 }
                 delaySetValues_List.Clear();
                 scenario.Event.OnPrepare -= OnScenarioPrepare;
             }
-            public static void Add(DelaySetValue setValue)
+            public static void Add(DelaySetCellValue setValue)
             {
                 if (delaySetValues_List.Count == 0)
                     Scenario.Cur.Event.OnPrepare += OnScenarioPrepare;
@@ -35,7 +36,7 @@ namespace Sango.Game
             }
         }
 
-        public override T Create(Type objectType)
+        public override Cell Create(Type objectType)
         {
             return null;
         }
@@ -43,21 +44,24 @@ namespace Sango.Game
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             writer.WriteStartArray();
-            SangoObject dest = value as SangoObject;
-            writer.WriteValue(dest.Id);
+            Cell dest = value as Cell;
+            writer.WriteValue(dest.x);
+            writer.WriteValue(dest.y);
             writer.WriteEndArray();
         }
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer, JsonProperty property, object target)
         {
             //while (reader.Read())
             {
-                int id = serializer.Deserialize<int>(reader);
-                DelaySetValue.Add(new DelaySetValue
+                int x = serializer.Deserialize<int>(reader);
+                int y = serializer.Deserialize<int>(reader);
+
+                DelaySetCellValue.Add(new DelaySetCellValue
                 {
-                    id = id,
+                    x = x,
+                    y = y,
                     target = target,
                     property = property,
-                    objectType = objectType
                 });
                 return null;
             }

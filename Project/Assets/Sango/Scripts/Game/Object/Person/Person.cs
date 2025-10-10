@@ -629,6 +629,8 @@ namespace Sango.Game
                     BelongCity = city;
                     city.UpdateLeader(this);
                 }
+
+                BelongTroop?.OnPersonChangeCity(this, last, city);
             }
             return last;
         }
@@ -642,15 +644,6 @@ namespace Sango.Game
 #if SANGO_DEBUG
                 Sango.Log.Print($"[{BelongForce.Name}]<{Name}>招募成功, {person.Name}加入了势力{BelongForce.Name}");
 #endif
-
-                // 有归属
-                if (!person.JoinToForce(BelongCity))
-                {
-                    person.missionType = (int)MissionType.PersonReturn;
-                    person.missionTarget = BelongCity.Id;
-                    person.missionCounter = 1;
-                }
-
                 // 如果在部队里,如果是主将则带部队加入,如果为副将则退出部队
                 Troop personTroop = person.BelongTroop;
                 if (personTroop != null)
@@ -658,25 +651,30 @@ namespace Sango.Game
                     if (person == personTroop.Leader)
                     {
                         personTroop.JoinToForce(BelongCity);
-                        // 遣返成员
-                        foreach (Person mem in personTroop.MemberList)
-                        {
-                            mem.BelongTroop = null;
-                            mem.missionType = (int)MissionType.PersonReturn;
-                            mem.missionTarget = mem.BelongCity.Id;
-                            mem.missionCounter = 1;
-                            mem.ActionOver = true;
-                        }
-                        personTroop.MemberList.Clear();
                         personTroop.ActionOver = true;
                     }
                     else
                     {
-                        personTroop.MemberList.Remove(person);
-                        person.BelongTroop = null;
+                        personTroop.RemovePerson(person);
+                        if (!person.JoinToForce(BelongCity))
+                        {
+                            person.missionType = (int)MissionType.PersonReturn;
+                            person.missionTarget = BelongCity.Id;
+                            person.missionCounter = 1;
+                        }
                     }
-                    personTroop.Init(Scenario.Cur);
+                    personTroop.CalculateAttribute();
                     personTroop.Render?.UpdateRender();
+                }
+                else
+                {
+                    // 有归属
+                    if (!person.JoinToForce(BelongCity))
+                    {
+                        person.missionType = (int)MissionType.PersonReturn;
+                        person.missionTarget = BelongCity.Id;
+                        person.missionCounter = 1;
+                    }
                 }
                 person.ActionOver = true;
             }
@@ -739,7 +737,7 @@ namespace Sango.Game
 
         public Person BeCaptive(Troop troop)
         {
-            troop.CaptiveList.Add(this);
+            troop.captiveList.Add(this);
             this.BelongForce.CaptiveList.Add(this);
             return this;
         }

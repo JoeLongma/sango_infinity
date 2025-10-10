@@ -190,11 +190,6 @@ namespace Sango.Game
         public SangoObjectList<Building> allInnerBuildings = new SangoObjectList<Building>();
         public int[] innerSlot;
 
-        /// <summary>
-        /// 所有部队
-        /// </summary>
-        public SangoObjectList<Troop> allTroops = new SangoObjectList<Troop>();
-
         public List<TroopType> activedTroopType = new List<TroopType>();
         int fightPower = 0;
         /// <summary>
@@ -237,8 +232,7 @@ namespace Sango.Game
                 return fightPower;
             }
         }
-        public Troop Add(Troop troops) { allTroops.Add(troops); return troops; }
-        public Troop Remove(Troop troops) { allTroops.Remove(troops); return troops; }
+
         public Person Add(Person person) { allPersons.Add(person); return person; }
         public Person Remove(Person person) { allPersons.Remove(person); return person; }
 
@@ -686,8 +680,6 @@ namespace Sango.Game
             CalculateHarvest();
             UpdateFightPower();
             JobHealingTroop();
-            // 准备人手信息
-            allTroops.RemoveAll(x => !x.IsAlive);
             freePersons.Clear();
             allPersons.ForEach(person =>
             {
@@ -942,7 +934,6 @@ namespace Sango.Game
                 if (person.IsFree && GameRandom.Changce(cacaptureChangce))
                 {
                     captiveList.Add(person);
-
                 }
                 else
                 {
@@ -959,27 +950,13 @@ namespace Sango.Game
                 }
             }
 
-            if (allTroops.Count > 0)
+            if(escapeCity == null)
             {
-                if (escapeCity != null)
+                Scenario.Cur.troopsSet.ForEach((troop) =>
                 {
-                    City nearCity = GetNearnestForceCity();
-                    for (int i = allTroops.Count - 1; i >= 0; --i)
-                    {
-                        Troop t = allTroops[i];
-                        t.ChangeCity(nearCity);
-                    }
-                }
-                else
-                {
-                    for (int i = allTroops.Count - 1; i >= 0; --i)
-                    {
-                        Troop t = allTroops[i];
-                        t.Clear();
-                    }
-                }
-
-                allTroops.Clear();
+                    if(troop.IsAlive && troop.BelongCity == this)
+                        troop.Clear();
+                });
             }
 
             //处理建筑
@@ -1629,15 +1606,8 @@ namespace Sango.Game
         public Troop EnsureTroop(Troop troop, Scenario scenario, int trunCount)
         {
             // 先加入剧本才能分配ID
-            troop.Leader.BelongTroop = troop;
-            Add(troop);
-            troop.BelongCorps = this.BelongCorps;
-            troop.BelongForce = this.BelongForce;
-            troop.BelongCity = this;
             troop.cell = this.CenterCell;
             this.CenterCell.troop = troop;
-            troop.x = this.CenterCell.x;
-            troop.y = this.CenterCell.y;
             scenario.Add(troop);
             troop.Init(scenario);
             int costFood = (int)System.Math.Floor(troop.troops * trunCount * scenario.Variables.baseFoodCostInTroop * troop.TroopType.foodCostFactor);
@@ -1645,21 +1615,11 @@ namespace Sango.Game
             troop.food = costFood;
             food -= costFood;
             troops -= troop.troops;
-            freePersons.Remove(troop.Leader);
-            if (troop.MemberList != null)
+            troop.ForEachPerson(person =>
             {
-                for (int i = 0; i < troop.MemberList.Count; i++)
-                {
-                    Person menber = troop.MemberList[i];
-                    if (menber != null)
-                    {
-                        menber.BelongTroop = troop;
-                        freePersons.Remove(menber);
-                    }
-                }
-            }
-
-
+                person.BelongTroop = troop;
+                freePersons.Remove(person);
+            });
             return troop;
         }
 

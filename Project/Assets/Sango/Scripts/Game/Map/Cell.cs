@@ -30,6 +30,11 @@ namespace Sango.Game
         internal bool _isZOC = false;
         internal bool _isChecked = false;
 
+        public Cell()
+        {
+           
+        }
+
         public Cell(ushort x, ushort y)
         {
             coords = new Vector2Int()

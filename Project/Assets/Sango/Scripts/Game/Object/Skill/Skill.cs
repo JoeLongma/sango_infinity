@@ -21,6 +21,7 @@ namespace Sango.Game
         [JsonProperty] public bool isRange;
         [JsonProperty] public int level;
         [JsonProperty] public int[] spellRanges;
+        [JsonProperty] public int needAblilityLevel;
 
         [JsonProperty] public List<int> atkOffsetPoint;
         //TODO:技能效果配置
@@ -112,6 +113,11 @@ namespace Sango.Game
                         break;
                 }
             }
+        }
+
+        public bool CanAddToTroop(Troop troop)
+        {
+            return troop.TroopTypeLv >= needAblilityLevel;
         }
 
         public bool CanBeSpell(Troop troop)

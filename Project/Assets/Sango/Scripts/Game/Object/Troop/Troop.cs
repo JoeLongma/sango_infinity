@@ -3,6 +3,8 @@ using Sango.Game.Render;
 using Sango.Tools;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 
 namespace Sango.Game
 {
@@ -15,52 +17,57 @@ namespace Sango.Game
         /// <summary>
         /// 所属势力
         /// </summary>
-        [JsonConverter(typeof(Id2ObjConverter<Force>))]
-        [JsonProperty]
-        public Force BelongForce;
+        public Force BelongForce => Leader.BelongForce;
 
         /// <summary>
         /// 所属势力
         /// </summary>
-        [JsonProperty]
-        [JsonConverter(typeof(Id2ObjConverter<Force>))]
-        public Corps BelongCorps;
+        public Corps BelongCorps => Leader.BelongCorps;
 
         /// <summary>
         /// 所属城池
         /// </summary>
-        [JsonConverter(typeof(Id2ObjConverter<City>))]
-        [JsonProperty]
-        public City BelongCity;
+        public City BelongCity => Leader.BelongCity;
 
         /// <summary>
         /// 统领
         /// </summary>
         [JsonConverter(typeof(Id2ObjConverter<Person>))]
         [JsonProperty]
-        public Person Leader;
+        public Person Leader { get; set; }
 
-        // <summary>
-        /// 成员列表
+        /// <summary>
+        /// 副将1
         /// </summary>
-        [JsonConverter(typeof(SangoObjectListIDConverter<Person>))]
+        [JsonConverter(typeof(Id2ObjConverter<Person>))]
         [JsonProperty]
-        public SangoObjectList<Person> MemberList;
+        public Person Member1 { get; set; }
+
+        /// <summary>
+        /// 副将2
+        /// </summary>
+        [JsonConverter(typeof(Id2ObjConverter<Person>))]
+        [JsonProperty]
+        public Person Member2 { get; set; }
 
         /// <summary>
         /// 部队类型
         /// </summary>
         [JsonConverter(typeof(Id2ObjConverter<TroopType>))]
         [JsonProperty]
-        public TroopType TroopType;
+        public TroopType TroopType { get; set; }
+
+        /// <summary>
+        /// 兵种适应力
+        /// </summary>
+        public int TroopTypeLv { get; private set; }
 
         /// <summary>
         /// 俘虏
         /// </summary>
         [JsonConverter(typeof(SangoObjectListIDConverter<Person>))]
         [JsonProperty]
-        public SangoObjectList<Person> CaptiveList = new SangoObjectList<Person>();
-
+        public SangoObjectList<Person> captiveList = new SangoObjectList<Person>();
 
         /// <summary>
         /// 部队名
@@ -68,14 +75,21 @@ namespace Sango.Game
         public override string Name => Leader.Name;
 
         /// <summary>
+        /// 所在格子
+        /// </summary>
+        [JsonProperty]
+        [JsonConverter(typeof(XY2CellConverter))]
+        public Cell cell;
+
+        /// <summary>
         /// 坐标x
         /// </summary>
-        [JsonProperty] public int x;
+        public int x => cell?.x ?? 0;
 
         /// <summary>
         /// 坐标y
         /// </summary>
-        [JsonProperty] public int y;
+        public int y => cell?.y ?? 0;
 
         /// <summary>
         /// 当前兵力
@@ -130,7 +144,7 @@ namespace Sango.Game
         /// <summary>
         /// 是否行动完毕
         /// </summary>
-        [JsonProperty] public bool isOver { get { return ActionOver; } set { ActionOver = value; } }
+        [JsonProperty] public override bool ActionOver { get; set; }
 
         /// <summary>
         /// 当前任务类型
@@ -147,8 +161,6 @@ namespace Sango.Game
         /// </summary>
         public List<Skill> skills = new List<Skill>();
 
-        public byte actionPower;
-        public Cell cell;
 
         public int SpearLv { get; private set; }
         public int HalberdLv { get; private set; }
@@ -158,33 +170,44 @@ namespace Sango.Game
         public int MachineLv { get; private set; }
 
         /// <summary>
+        /// 攻击力
+        /// </summary>
+        public int Attack { get; private set; }
+
+        /// <summary>
+        /// 防御力
+        /// </summary>
+        public int Defence { get; private set; }
+
+        /// <summary>
+        /// 建设力
+        /// </summary>
+        public int BuildPower { get; private set; }
+
+        /// <summary>
         /// 统率
         /// </summary>
-        public int Command { get { return Leader.Command; } private set { } }
+        public int Command { get; private set; }
 
         /// <summary>
         /// 武力
         /// </summary>
-        public int Strength { get { return Leader.Strength; } private set { } }
+        public int Strength { get; private set; }
 
         /// <summary>
         /// 智力
         /// </summary>
-        public int Intelligence { get { return Leader.Intelligence; } private set { } }
+        public int Intelligence { get; private set; }
 
         /// <summary>
         /// 政治
         /// </summary>
-        public int Politics { get { return Leader.Politics; } private set { } }
+        public int Politics { get; private set; }
 
         /// <summary>
         /// 魅力
         /// </summary>
-        public int Glamour { get { return Leader.Glamour; } private set { } }
-
-        public int Attack { get; private set; }
-
-        public int Defence { get; private set; }
+        public int Glamour { get; private set; }
 
 
         public TroopRender Render { get; private set; }
@@ -193,11 +216,8 @@ namespace Sango.Game
 
         public override void Init(Scenario scenario)
         {
-            for (int i = 0; i < TroopType.skills.Count; i++)
-                skills.Add(scenario.GetObject<Skill>(TroopType.skills[i]));
             CalculateAttribute();
             Render = new TroopRender(this);
-            foodCost = (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
         }
 
         public virtual bool Run(Corps corps, Force force, Scenario scenario)
@@ -209,7 +229,7 @@ namespace Sango.Game
         }
         public override void OnScenarioPrepare(Scenario scenario)
         {
-            foreach (Person person in CaptiveList)
+            foreach (Person person in captiveList)
             {
                 if (person.BelongForce != null)
                     person.BelongForce.CaptiveList.Add(person);
@@ -263,22 +283,55 @@ namespace Sango.Game
             return 2;
         }
 
+        public void ForEachMember(Action<Person> action)
+        {
+            if (Member1 != null) action(Member1);
+            if (Member2 != null) action(Member2);
+        }
+
+        public void ForEachPerson(Action<Person> action)
+        {
+            action(Leader);
+            if (Member1 != null) action(Member1);
+            if (Member2 != null) action(Member2);
+        }
+
+        /// <summary>
+        /// 计算属性
+        /// </summary>
         public void CalculateAttribute()
         {
-            Command = Leader.Command;
-            Strength = Leader.Strength;
-            Intelligence = Leader.Intelligence;
-            Politics = Leader.Politics;
-            Glamour = Leader.Glamour;
-            SpearLv = Leader.SpearLv;
-            HalberdLv = Leader.HalberdLv;
-            CrossbowLv = Leader.CrossbowLv;
-            HorseLv = Leader.HorseLv;
-            WaterLv = Leader.WaterLv;
-            MachineLv = Leader.MachineLv;
 
-            Defence = Command * 4000 / 10000 + Intelligence * 1000 / 10000;
-            Attack = Strength * 8000 / 10000 + Command * 1000 / 10000 + Intelligence * 1000 / 10000;
+            // 计算能力,能力取最大
+            ForEachPerson((p) =>
+            {
+                Command = Math.Max(Command, p.Command);
+                Strength = Math.Max(Strength, p.Strength);
+                Intelligence = Math.Max(Intelligence, p.Intelligence);
+                Politics = Math.Max(Politics, p.Politics);
+                Glamour = Math.Max(Glamour, p.Glamour);
+                TroopTypeLv = Math.Max(TroopTypeLv, CheckTroopTypeLevel(TroopType, p));
+            });
+
+            // 准备技能
+            for (int i = 0; i < TroopType.skills.Count; i++)
+            {
+                Skill skill = Scenario.Cur.GetObject<Skill>(TroopType.skills[i]);
+                if (skill != null && skill.CanAddToTroop(this))
+                    skills.Add(skill);
+            }
+
+            // 防御力 = (70%统率+30%智力) * 兵种防御力 / 100 
+            Defence = (Command * 7000 + Intelligence * 3000) * TroopType.def / 1000000;
+
+            // 攻击力 = (70%武力+30%统率) * 兵种攻击力 / 100 
+            Attack = (Strength * 7000 + Command * 3000) * TroopType.atk / 1000000;
+
+            // 建设能力 = 政治 * 67% + 50;
+            BuildPower = Politics * 6700 / 10000 + 50;
+
+            // 计算粮耗
+            foodCost = (int)System.Math.Ceiling(Scenario.Cur.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
         }
 
         public int MoveCost(Cell cell)
@@ -471,6 +524,27 @@ namespace Sango.Game
                 return 1;
             return t_map[defender_troops_type.Id];
         }
+
+        public static int CheckTroopTypeLevel(TroopType troopType, Person person)
+        {
+            switch (troopType.influenceAbility)
+            {
+                case (int)AbilityType.Spear:
+                    return person.SpearLv;
+                case (int)AbilityType.Halberd:
+                    return person.HalberdLv;
+                case (int)AbilityType.Water:
+                    return person.WaterLv;
+                case (int)AbilityType.Crossbow:
+                    return person.CrossbowLv;
+                case (int)AbilityType.Horse:
+                    return person.HorseLv;
+                case (int)AbilityType.Machine:
+                    return person.MachineLv;
+            }
+            return 0;
+        }
+
 
         // 克制系数
         //@param attacker Troops
@@ -993,8 +1067,6 @@ namespace Sango.Game
                 destCell.troop = this;
                 cell.troop = null;
                 cell = destCell;
-                x = cell.x;
-                y = cell.y;
                 if (Render.MapObject != null)
                 {
                     Render.MapObject.position = cell.Position;
@@ -1017,18 +1089,12 @@ namespace Sango.Game
             IsAlive = false;
 
             Scenario.Cur.Remove(this);
-            Leader.BelongTroop = null;
-            Leader.ActionOver = true;
-            if (MemberList != null)
+            ForEachPerson((person) =>
             {
-                for (int i = 0; i < MemberList.Count; i++)
-                {
-                    Person person = MemberList[i];
-                    if (person == null) continue;
-                    person.BelongTroop = null;
-                    person.ActionOver = true;
-                }
-            }
+                person.BelongTroop = null;
+                person.ActionOver = true;
+            });
+           
             Render.Clear();
             ActionOver = true;
             if (city == BelongCity)
@@ -1036,33 +1102,21 @@ namespace Sango.Game
                 Sango.Log.Print($"{BelongForce.Name}的[{Name}]部队回到{city.BelongForce?.Name}的城池:<{city.Name}>");
                 return;
             }
-            Leader.ChangeCity(city);
-            if (MemberList != null)
+            ForEachPerson((person) =>
             {
-                for (int i = 0; i < MemberList.Count; i++)
-                {
-                    Person person = MemberList[i];
-                    if (person == null) continue;
-                    person.ChangeCity(city);
-                }
-            }
+                person.ChangeCity(city);
+            });
+
             Sango.Log.Print($"{BelongForce.Name}的[{Name}]部队进入{city.BelongForce?.Name}的城池:<{city.Name}>");
         }
 
         public override void Clear()
         {
-            BelongCity.Remove(this);
             Scenario.Cur.Remove(this);
-            Leader.BelongTroop = null;
-            if (MemberList != null)
+            ForEachPerson((person) =>
             {
-                for (int i = 0; i < MemberList.Count; i++)
-                {
-                    Person person = MemberList[i];
-                    if (person == null) continue;
-                    person.BelongTroop = null;
-                }
-            }
+                person.BelongTroop = null;
+            });
             base.Clear();
             IsAlive = false;
             ActionOver = true;
@@ -1071,26 +1125,44 @@ namespace Sango.Game
                 cell.troop = null;
         }
 
+        public void RemovePerson(Person person)
+        {
+            if(person == null) return;
+
+            if (Member1 == person)
+            {
+                Member1.BelongTroop = null;
+                Member1 = null;
+            }
+            else if (Member2 == person)
+            {
+                Member2.BelongTroop = null;
+                Member2 = null;
+            }
+        }
+
         /// <summary>
         /// 加入某个势力,需要指定一个城市
         /// </summary>
         /// <param name="city"></param>
         public bool JoinToForce(City city)
         {
-            // 先从原有势力移除
-            if (BelongCorps != null)
+            if(Leader.IsSameForce(city)) return true;
+            ForEachMember(mem =>
             {
-                BelongCity.Remove(this);
-            }
-
-            BelongCity = city; ;
-            BelongCorps = city.BelongCorps;
-            BelongForce = city.BelongForce;
-
-            BelongCity.Add(this);
-
-            return Leader.IsSameForce(city);
+                RemovePerson(mem);
+                mem.SetMission(MissionType.PersonReturn, mem.BelongCity, 1);
+                mem.ActionOver = true;
+            });
+            CalculateAttribute();
+            return true;
         }
+
+        public void OnPersonChangeCity(Person person, City old_city, City new_city)
+        {
+
+        }
+
 
         public List<Cell> MoveRange = new List<Cell>();
         public void SetMission(MissionType missionType, int missionTarget)
@@ -1204,26 +1276,5 @@ namespace Sango.Game
             //}
         }
 
-        public City ChangeCity(City city)
-        {
-            City last = null;
-            if (BelongCity != city)
-            {
-                last = BelongCity;
-                if (BelongCity != null)
-                    BelongCity.Remove(this);
-                BelongCity = city;
-                city.Add(this);
-                if (BelongCorps != city.BelongCorps)
-                {
-                    BelongCorps = city.BelongCorps;
-                    if (BelongForce != city.BelongForce)
-                    {
-                        BelongForce = city.BelongForce;
-                    }
-                }
-            }
-            return last;
-        }
     }
 }

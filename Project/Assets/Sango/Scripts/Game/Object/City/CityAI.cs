@@ -61,11 +61,12 @@ namespace Sango.Game
             {
 
                 City lastTargetCity = null;
-                if (city.allTroops.Count > 0)
+                Troop activedTroop = scenario.troopsSet.Find(x => x.IsAlive && x.BelongCity == city);
+                if (activedTroop != null)
                 {
-                    if (city.allTroops[0].missionType == (int)MissionType.OccupyCity)
+                    if (activedTroop.missionType == (int)MissionType.OccupyCity)
                     {
-                        lastTargetCity = scenario.citySet.Get(city.allTroops[0].missionTarget);
+                        lastTargetCity = scenario.citySet.Get(activedTroop.missionTarget);
                     }
                 }
 
