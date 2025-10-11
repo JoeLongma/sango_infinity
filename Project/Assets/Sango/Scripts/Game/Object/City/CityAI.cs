@@ -107,7 +107,7 @@ namespace Sango.Game
                         else
                         {
                             // 需要兵力充足
-                            if (city.troops > UnityEngine.Mathf.Min(x.troops, x.allPersons.Count * 5000) + 5000)
+                            if (city.troops > UnityEngine.Mathf.Min(x.troops, x.allPersons.Count * 5000) - 10000)
                             {
                                 // 范围大约在
                                 int weight = (int)(1000 * (float)city.virtualFightPower / (float)x.virtualFightPower);

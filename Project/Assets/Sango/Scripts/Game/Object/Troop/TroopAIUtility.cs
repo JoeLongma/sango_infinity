@@ -327,11 +327,11 @@ namespace Sango.Game
             {
                 if (troop.IsEnemy(target.troop))
                 {
-                    return (skill.atk+10) * (troop.Attack - target.troop.Defence);
+                    return (skill.atk+10) * (troop.Attack + 200 - target.troop.Defence);
                 }
                 else if (skill.canDamageTeam)
                 {
-                    return -(skill.atk + 10) * (troop.Attack - target.troop.Defence);
+                    return -(skill.atk + 10) * (troop.Attack + 200 - target.troop.Defence);
                 }
             }
             else if (target.building != null && skill.canDamageBuilding)
@@ -339,11 +339,11 @@ namespace Sango.Game
                 //TODO: 对建筑的攻击评分
                 if (troop.IsEnemy(target.building))
                 {
-                    return skill.atkDurability * 30;
+                    return skill.atkDurability * 400;
                 }
                 else if (skill.canDamageTeam)
                 {
-                    return skill.atkDurability * -30;
+                    return skill.atkDurability * -400;
                 }
             }
             return 0;

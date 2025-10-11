@@ -348,16 +348,16 @@ namespace Sango.Game
                 + Intelligence * Variables.fight_troop_defence_intelligence_factor 
                 + Politics * Variables.fight_troop_defence_intelligence_factor 
                 + Glamour * Variables.fight_troop_defence_intelligence_factor
-                ) * TroopType.def) / 1000000;
+                ) / 10000 * TroopType.def) / 100;
 
             // 攻击力 = (70%武力+30%统率) * 兵种攻击力 / 100 * 适应力加成(A为1)
             Attack = TroopsLevelBoost((
-                 Command * Variables.fight_troop_defence_command_factor
-                + Strength * Variables.fight_troop_defence_strength_factor
-                + Intelligence * Variables.fight_troop_defence_intelligence_factor
-                + Politics * Variables.fight_troop_defence_intelligence_factor
-                + Glamour * Variables.fight_troop_defence_intelligence_factor
-                ) * TroopType.atk) / 1000000;
+                 Command * Variables.fight_troop_attack_command_factor
+                + Strength * Variables.fight_troop_attack_strength_factor
+                + Intelligence * Variables.fight_troop_attack_intelligence_factor
+                + Politics * Variables.fight_troop_attack_politics_factor
+                + Glamour * Variables.fight_troop_attack_glamour_factor
+                ) / 10000 * TroopType.atk) / 100;
 
             // 建设能力 = 政治 * 67% + 50;
             BuildPower = Politics * 6700 / 10000 + 50;
@@ -509,7 +509,7 @@ namespace Sango.Game
 
             }
 
-            int damage = (int)(Math.Pow(attacker.troops, 0.5) * attacker.Attack * Math.Pow((1 / 1500), 0.5) * (1 + skill.atkDurability / 25) * buildingType.damageBounds
+            int damage = (int)(Math.Pow(attacker.troops, 0.5f) * attacker.Attack * Math.Pow((1f / 1500f), 0.5f) * (1 + (float)skill.atkDurability / 25f) * buildingType.damageBounds
                 // 会心 
                 * crit_P
                 // 额外增益 (科技系数等)
@@ -1128,6 +1128,9 @@ namespace Sango.Game
             city.gold += gold;
             city.food += food;
             city.troops += troops;
+            if (city.troops > city.CityLevelType.maxTroops)
+                city.troops = city.CityLevelType.maxTroops;
+
             city.woundedTroops += woundedTroops;
             // 设置了,
             IsAlive = false;

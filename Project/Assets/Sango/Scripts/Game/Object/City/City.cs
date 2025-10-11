@@ -1439,6 +1439,8 @@ namespace Sango.Game
                 troops += value;
                 person.merit += value / 10;
 
+                if (troops > CityLevelType.maxTroops)
+                    troops = CityLevelType.maxTroops;
 
                 //治安减少
                 security -= 10 * value / 1000;
