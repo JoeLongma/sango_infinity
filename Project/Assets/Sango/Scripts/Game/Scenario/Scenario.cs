@@ -604,13 +604,13 @@ namespace Sango.Game
         public bool TurnStart()
         {
             if (HasTurnStarted) return true;
-            for (int i = 0; i < personSet.Count; i++)
+            for (int i = 1; i < personSet.Count; i++)
             {
                 Person person = personSet[i];
                 if (person != null && person.IsAlive)
                     person.OnNewTurn(this);
             }
-            for (int i = 0; i < allianceSet.Count; i++)
+            for (int i = 1; i < allianceSet.Count; i++)
             {
                 Alliance a = allianceSet[i];
                 if (a != null && a.IsAlive)

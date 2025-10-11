@@ -181,7 +181,7 @@ namespace Sango.Game
         public float GetAttackBackFactor(Skill skill, int distance)
         {
             if (skill.IsRange() && distance > 1)
-                return 0;
+                return 0.7f;
             else if (!skill.IsRange() && distance == 1)
                 return 0.9f;
             return 0;

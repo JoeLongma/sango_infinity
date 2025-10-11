@@ -323,15 +323,16 @@ namespace Sango.Game
         public static int SkillStatusPriority(Troop troop, Skill skill, Cell target, Cell movetoCell, Cell spellCell)
         {
             if (target.IsEmpty()) return 0;
+            int rangeFactor = skill.isRange ? 150 : 100;
             if (target.troop != null && skill.canDamageTroop)
             {
                 if (troop.IsEnemy(target.troop))
                 {
-                    return (skill.atk+10) * (troop.Attack + 200 - target.troop.Defence);
+                    return (skill.atk + 10) * (troop.Attack - target.troop.Defence + 200) * rangeFactor / 100;
                 }
                 else if (skill.canDamageTeam)
                 {
-                    return -(skill.atk + 10) * (troop.Attack + 200 - target.troop.Defence);
+                    return -(skill.atk + 10) * (troop.Attack - target.troop.Defence + 200) * rangeFactor / 100;
                 }
             }
             else if (target.building != null && skill.canDamageBuilding)
@@ -339,11 +340,11 @@ namespace Sango.Game
                 //TODO: 对建筑的攻击评分
                 if (troop.IsEnemy(target.building))
                 {
-                    return skill.atkDurability * 400;
+                    return skill.atkDurability * 4 * rangeFactor;
                 }
                 else if (skill.canDamageTeam)
                 {
-                    return skill.atkDurability * -400;
+                    return skill.atkDurability * -4 * rangeFactor;
                 }
             }
             return 0;

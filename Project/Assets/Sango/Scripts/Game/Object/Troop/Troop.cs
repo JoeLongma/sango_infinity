@@ -431,6 +431,10 @@ namespace Sango.Game
 
             ScenarioVariables Variables = Scenario.Cur.Variables;
 
+            float difficultyDamageFactor = 1;
+            if (attacker.BelongForce != null && attacker.BelongForce.IsPlayer)
+                difficultyDamageFactor = Variables.DifficultyDamageFactor;
+
             float crit_P = 1;
             if (CalculateSkillCriticalBoost(attacker, target, skill, out crit_P))
             {
@@ -475,7 +479,7 @@ namespace Sango.Game
                 * Math.Max(0, (1 + attacker.DamageTroopExtraFactor))
 
                 // 难度系数,仅对玩家生效
-                * (attacker.BelongForce.IsPlayer ? Variables.DifficultyDamageFactor : 1)
+                * difficultyDamageFactor
                 );
 
 
@@ -503,6 +507,10 @@ namespace Sango.Game
             var buildingType = target.BuildingType;
             ScenarioVariables Variables = Scenario.Cur.Variables;
 
+            float difficultyDamageFactor = 1;
+            if (attacker.BelongForce != null && attacker.BelongForce.IsPlayer)
+                difficultyDamageFactor = Variables.DifficultyDamageFactor;
+
             float crit_P = 1;
             if (CalculateSkillCriticalBoost(attacker, target, skill, out crit_P))
             {
@@ -516,7 +524,7 @@ namespace Sango.Game
                 * Math.Max(0, (1 + attacker.DamageBuildingExtraFactor))
                 * attack_troops_type.durabilityDmg / 100
                 // 难度系数,仅对玩家生效
-                * (attacker.BelongForce.IsPlayer ? Variables.DifficultyDamageFactor : 1)
+                * difficultyDamageFactor
                 );
 
             return damage;
@@ -530,6 +538,10 @@ namespace Sango.Game
             //基础伤害
             float base_atk = attacker.GetAttack();
             int base_troops = attacker.GetTroops();
+
+            float difficultyDamageFactor = 1;
+            if (attacker.BelongForce != null && attacker.BelongForce.IsPlayer)
+                difficultyDamageFactor = Variables.DifficultyDamageFactor;
 
             int damage = (int)(
                  (
@@ -556,7 +568,7 @@ namespace Sango.Game
                  )
 
                 // 难度系数,仅对玩家生效
-                * (attacker.BelongForce.IsPlayer ? Variables.DifficultyDamageFactor : 1)
+                * difficultyDamageFactor
 
                  // 额外增益 (科技系数等)
                  //* Math.Max(0, (1 + attacker.DamageTroopExtraFactor))

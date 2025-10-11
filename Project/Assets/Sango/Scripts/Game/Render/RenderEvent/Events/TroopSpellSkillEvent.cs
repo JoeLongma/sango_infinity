@@ -97,10 +97,10 @@ namespace Sango.Game.Render
                     Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 使用<{skill.Name}> 攻击 {beAtkBuildingBase.BelongForce?.Name}的 [{beAtkBuildingBase.Name}], 造成伤害:{damage}, 目标剩余耐久: {beAtkBuildingBase.durability}");
 #endif
 
-                    if(!skill.isRange && skill.costEnergy == 0 && beAtkBuildingBase is City)
+                    if(beAtkBuildingBase is City)
                     {
                         City city = (City)beAtkBuildingBase;
-                        if (city.troops <= 0)
+                        if (city.BelongForce == null || city.troops <= 0)
                         {
                             Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 攻破城池: <{beAtkBuildingBase.Name}>");
                             city.OnFall(troop);

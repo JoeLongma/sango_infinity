@@ -15850,8 +15850,6 @@
     {
       "Id": 310,
       "Name": "眭固",
-      "BelongForce": 3,
-      "BelongCorps": 3,
       "BelongCity": 6,
       "familyName": "眭",
       "giveName": "固",
