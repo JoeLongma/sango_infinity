@@ -123,11 +123,15 @@ namespace Sango.Game.Render
                             float hitBack = beAtkBuildingBase.GetAttackBackFactor(skill, Scenario.Cur.Map.Distance(troop.cell, atkCell));
                             if (hitBack > 0)
                             {
-                                int hitBackDmg = (int)System.Math.Ceiling(hitBack * Troop.CalculateSkillDamage(beAtkBuildingBase, troop, null));
-                                troop.ChangeTroops(-hitBackDmg, beAtkBuildingBase);
+                                int dam = beAtkBuildingBase.GetAttack();
+                                if (dam > 0)
+                                {
+                                    int hitBackDmg = (int)System.Math.Ceiling(hitBack * Troop.CalculateSkillDamage(beAtkBuildingBase, troop, null));
+                                    troop.ChangeTroops(-hitBackDmg, beAtkBuildingBase);
 #if SANGO_DEBUG
-                                Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 受到 {beAtkBuildingBase.BelongForce?.Name}的[{beAtkBuildingBase.Name}]反击伤害:{hitBackDmg}, 目标剩余兵力: {troop.GetTroopsNum()}");
+                                    Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 受到 {beAtkBuildingBase.BelongForce?.Name}的[{beAtkBuildingBase.Name}]反击伤害:{hitBackDmg}, 目标剩余兵力: {troop.GetTroopsNum()}");
 #endif
+                                }
                             }
                         }
                     }

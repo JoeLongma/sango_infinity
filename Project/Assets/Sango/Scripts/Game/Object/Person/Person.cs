@@ -486,9 +486,7 @@ namespace Sango.Game
                         City dest = scenario.citySet.Get(missionTarget);
                         if (!this.IsSameForce(dest))
                         {
-                            missionType = (int)MissionType.PersonReturn;
-                            missionTarget = BelongForce.Governor.BelongCity.Id;
-                            missionCounter = 1;
+                            SetMission(MissionType.PersonReturn, BelongForce.Governor.BelongCity, 1);
                             return;
                         }
                         else
@@ -496,9 +494,7 @@ namespace Sango.Game
                             missionCounter--;
                             if (missionCounter <= 0)
                             {
-                                missionType = 0;
-                                missionTarget = 0;
-                                missionCounter = 0;
+                                ClearMission();
                                 dest.OnPersonReturnCity(this);
                             }
                         }
@@ -509,9 +505,7 @@ namespace Sango.Game
                         City dest = scenario.citySet.Get(missionTarget);
                         if (BelongCorps != null && !this.IsSameForce(dest))
                         {
-                            missionType = (int)MissionType.PersonReturn;
-                            missionTarget = BelongCity.Id;
-                            missionCounter = 1;
+                            SetMission(MissionType.PersonReturn, BelongCity, 1);
                             dest.OnPersonTransformEnd(this);
                         }
                         else
@@ -519,9 +513,7 @@ namespace Sango.Game
                             missionCounter--;
                             if (missionCounter <= 0)
                             {
-                                missionType = 0;
-                                missionTarget = 0;
-                                missionCounter = 0;
+                                ClearMission();
                                 ChangeCity(dest);
                                 dest.OnPersonTransformEnd(this);
                             }
@@ -533,9 +525,7 @@ namespace Sango.Game
                         Person dest = scenario.personSet.Get(missionTarget);
                         if (BelongCorps != null && !this.IsSameForce(dest))
                         {
-                            missionType = (int)MissionType.PersonReturn;
-                            missionTarget = BelongCity.Id;
-                            missionCounter = 1;
+                            SetMission(MissionType.PersonReturn, BelongCity, 1);
                         }
                         else
                         {
@@ -543,9 +533,7 @@ namespace Sango.Game
                             if (missionCounter <= 0)
                             {
                                 JobRecuritPerson(dest);
-                                missionType = (int)MissionType.PersonReturn;
-                                missionTarget = BelongCity.Id;
-                                missionCounter = 1;
+                                SetMission(MissionType.PersonReturn, BelongCity, 1);
                             }
                         }
                     }
@@ -560,6 +548,12 @@ namespace Sango.Game
             this.missionCounter = missionCounter;
         }
 
+        public void ClearMission()
+        {
+            this.missionType = 0;
+            this.missionTarget = 0;
+            this.missionCounter = 0;
+        }
 
         public override bool OnNewTurn(Scenario scenario)
         {
@@ -576,9 +570,7 @@ namespace Sango.Game
         public void TransformToCity(City dest)
         {
             dest.trsformingPesonList.Add(this);
-            missionType = (int)MissionType.PersonTransform;
-            missionTarget = dest.Id;
-            missionCounter = Scenario.Cur.GetCityDistance(BelongCity, dest);
+            SetMission(MissionType.PersonTransform, dest, Scenario.Cur.GetCityDistance(BelongCity, dest));
             BelongCity?.freePersons.Remove(this);
             Sango.Log.Print($"*{BelongForce?.Name}的{Name}从{BelongCity.Name}向{dest.Name}转移*");
         }
@@ -658,12 +650,9 @@ namespace Sango.Game
                         personTroop.RemovePerson(person);
                         if (!person.JoinToForce(BelongCity))
                         {
-                            person.missionType = (int)MissionType.PersonReturn;
-                            person.missionTarget = BelongCity.Id;
-                            person.missionCounter = 1;
+                            person.SetMission(MissionType.PersonReturn, BelongCity, 1);
                         }
                     }
-                    personTroop.CalculateAttribute();
                     personTroop.Render?.UpdateRender();
                 }
                 else
@@ -671,9 +660,7 @@ namespace Sango.Game
                     // 有归属
                     if (!person.JoinToForce(BelongCity))
                     {
-                        person.missionType = (int)MissionType.PersonReturn;
-                        person.missionTarget = BelongCity.Id;
-                        person.missionCounter = 1;
+                        person.SetMission(MissionType.PersonReturn, BelongCity, 1);
                     }
                 }
                 person.ActionOver = true;

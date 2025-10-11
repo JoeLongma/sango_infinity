@@ -76,6 +76,7 @@
 
         public EventDelegate<Troop, Scenario> OnTroopCreated;
         public EventDelegate<Troop, Scenario> OnTroopDestroyed;
+        public EventDelegate<Troop, Scenario> OnTroopCalculateAttribute;
 
         public EventDelegate<City, Troop, Scenario> OnCityFall;
 

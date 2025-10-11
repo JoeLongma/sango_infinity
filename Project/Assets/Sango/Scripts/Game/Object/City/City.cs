@@ -1069,7 +1069,6 @@ namespace Sango.Game
 
         public Building BuildBuilding(Cell buildCenter, Person builder, BuildingType buildingType)
         {
-            builder.missionType = (int)MissionType.PersonBuild;
 
             Building building = new Building();
             building.BelongForce = BelongForce;
@@ -1086,10 +1085,11 @@ namespace Sango.Game
             // ------
             scenario.buildingSet.Add(building);
             building.Init(scenario);
-            builder.missionTarget = building.Id;
             building.Builder = builder;
             building.isComplte = false;
             building.durability = 1;
+
+            builder.SetMission(MissionType.PersonBuild, building, 0);
 
             Sango.Log.Print($"[{BelongForce.Name}]在<{Name}>由{builder.Name}开始修建: {building.Name}");
 
@@ -1098,8 +1098,6 @@ namespace Sango.Game
 
         public Building BuildBuilding(int slotId, Person builder, BuildingType buildingType)
         {
-            builder.missionType = (int)MissionType.PersonBuild;
-
             Building building = new Building();
             building.BelongForce = BelongForce;
             building.BelongCorps = BelongCorps;
@@ -1114,10 +1112,11 @@ namespace Sango.Game
             // ------
             scenario.buildingSet.Add(building);
             building.Init(scenario);
-            builder.missionTarget = building.Id;
             building.Builder = builder;
             building.isComplte = false;
             building.durability = 1;
+
+            builder.SetMission(MissionType.PersonBuild, building, 0);
 
             Sango.Log.Print($"[{BelongForce.Name}]在<{Name}>由{builder.Name}开始修建: {building.Name}");
 
@@ -1477,21 +1476,27 @@ namespace Sango.Game
             }
             else
             {
-                person.missionType = (int)MissionType.PersonRecruitPerson;
-                person.missionTarget = dest.Id;
-                person.missionCounter = Scenario.Cur.GetCityDistance(person.BelongCity, dest.BelongCity);
+                person.SetMission(MissionType.PersonRecruitPerson, dest, Scenario.Cur.GetCityDistance(person.BelongCity, dest.BelongCity));
             }
             return true;
         }
 
-        public override int GetBaseDamage()
+        public override int GetAttack()
         {
-
             ScenarioVariables Variables = Scenario.Cur.Variables;
             // 根据太守数值来计算基础伤害
-            return (int)Math.Ceiling(Variables.fight_base_damage * (
-                (Leader?.Strength ?? 50 * Variables.fight_durability_base_strength_damage_factor) +
-                (Leader?.Intelligence ?? 50 * Variables.fight_durability_base_intelligence_damage_factor)) + 100);
+            int atk = Math.Max(BuildingType.atk, (Leader?.Strength ?? 50 * 5000 + Leader?.Command ?? 50 * 5000) / 10000);
+
+            return atk;
+         }
+        public override int GetMaxDurability()
+        {
+            return CityLevelType.maxDurability;
+        }
+
+        public override int GetTroops()
+        {
+            return Math.Max(10000, durability * troops / GetMaxDurability());
         }
 
         public override int GetBaseCommand()

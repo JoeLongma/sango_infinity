@@ -79,9 +79,7 @@ namespace Sango.Game
         public virtual void OnBuildComplate()
         {
             Sango.Log.Print($"[{Builder.BelongCity.Name}]{Builder.Name}完成{Name}建造!!");
-            Builder.missionType = 0;
-            Builder.missionTarget = 0;
-            Builder.missionCounter = 0;
+            Builder.ClearMission();
             Builder = null;
         }
 
@@ -142,9 +140,7 @@ namespace Sango.Game
 
             if (Builder != null)
             {
-                Builder.missionType = 0;
-                Builder.missionTarget = 0;
-                Builder.missionCounter = 0;
+                Builder.ClearMission();
             }
             if (effectCells != null)
                 effectCells.Clear();

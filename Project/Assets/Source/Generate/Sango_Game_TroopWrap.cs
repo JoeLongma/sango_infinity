@@ -208,7 +208,6 @@ public class Sango_Game_TroopWrap
 		{
 			ToLua.CheckArgsCount(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
-			obj.CalculateAttribute();
 			return 0;
 		}
 		catch (Exception e)
@@ -508,8 +507,6 @@ public class Sango_Game_TroopWrap
 			ToLua.CheckArgsCount(L, 2);
 			Sango.Game.TroopType arg0 = (Sango.Game.TroopType)ToLua.CheckObject<Sango.Game.TroopType>(L, 1);
 			Sango.Game.TroopType arg1 = (Sango.Game.TroopType)ToLua.CheckObject<Sango.Game.TroopType>(L, 2);
-			float o = Sango.Game.Troop.CalculateRestrainBoost(arg0, arg1);
-			LuaDLL.lua_pushnumber(L, o);
 			return 1;
 		}
 		catch (Exception e)
@@ -526,8 +523,6 @@ public class Sango_Game_TroopWrap
 			ToLua.CheckArgsCount(L, 2);
 			Sango.Game.Troop arg0 = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
 			Sango.Game.TroopType arg1 = (Sango.Game.TroopType)ToLua.CheckObject<Sango.Game.TroopType>(L, 2);
-			float o = Sango.Game.Troop.CalculateTroopsLevelBoost(arg0, arg1);
-			LuaDLL.lua_pushnumber(L, o);
 			return 1;
 		}
 		catch (Exception e)
@@ -1223,8 +1218,6 @@ public class Sango_Game_TroopWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			System.Collections.Generic.List<Sango.Game.Skill> ret = obj.skills;
-			ToLua.PushSealed(L, ret);
 			return 1;
 		}
 		catch(Exception e)
@@ -2047,7 +2040,6 @@ public class Sango_Game_TroopWrap
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)o;
 			System.Collections.Generic.List<Sango.Game.Skill> arg0 = (System.Collections.Generic.List<Sango.Game.Skill>)ToLua.CheckObject(L, 2, TypeTraits<System.Collections.Generic.List<Sango.Game.Skill>>.type);
-			obj.skills = arg0;
 			return 0;
 		}
 		catch(Exception e)

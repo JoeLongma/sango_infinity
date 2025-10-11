@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Sango.Game
 {
@@ -159,8 +160,14 @@ namespace Sango.Game
         /// <summary>
         /// 当前技能
         /// </summary>
-        public List<Skill> skills = new List<Skill>();
+        [JsonProperty]
+        public List<SkillInstance> skills;
 
+        /// <summary>
+        /// 伤害额外增减
+        /// </summary>
+        public float DamageTroopExtraFactor { get; private set; }
+        public float DamageBuildingExtraFactor { get; private set; }
 
         public int SpearLv { get; private set; }
         public int HalberdLv { get; private set; }
@@ -172,12 +179,12 @@ namespace Sango.Game
         /// <summary>
         /// 攻击力
         /// </summary>
-        public int Attack { get; private set; }
+        public int Attack { get;  set; }
 
         /// <summary>
         /// 防御力
         /// </summary>
-        public int Defence { get; private set; }
+        public int Defence { get;  set; }
 
         /// <summary>
         /// 建设力
@@ -216,8 +223,9 @@ namespace Sango.Game
 
         public override void Init(Scenario scenario)
         {
-            CalculateAttribute();
+            CalculateAttribute(scenario);
             Render = new TroopRender(this);
+            foodCost = (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
         }
 
         public virtual bool Run(Corps corps, Force force, Scenario scenario)
@@ -299,9 +307,8 @@ namespace Sango.Game
         /// <summary>
         /// 计算属性
         /// </summary>
-        public void CalculateAttribute()
+        public void CalculateAttribute(Scenario scenario)
         {
-
             // 计算能力,能力取最大
             ForEachPerson((p) =>
             {
@@ -313,25 +320,37 @@ namespace Sango.Game
                 TroopTypeLv = Math.Max(TroopTypeLv, CheckTroopTypeLevel(TroopType, p));
             });
 
+            List<SkillInstance> skillInstances = new List<SkillInstance>();
             // 准备技能
             for (int i = 0; i < TroopType.skills.Count; i++)
             {
                 Skill skill = Scenario.Cur.GetObject<Skill>(TroopType.skills[i]);
                 if (skill != null && skill.CanAddToTroop(this))
-                    skills.Add(skill);
+                {
+
+                    SkillInstance ins = null;
+                    if(skills != null)
+                        ins = skills.Find(x => x.Skill == skill);
+                    if (ins != null)
+                        skillInstances.Add(ins);
+                    else
+                        skillInstances.Add(new SkillInstance() { Skill = skill, CDCount = 0 });
+                }
             }
+            skills = skillInstances;
 
-            // 防御力 = (70%统率+30%智力) * 兵种防御力 / 100 
-            Defence = (Command * 7000 + Intelligence * 3000) * TroopType.def / 1000000;
+            // 防御力 = (70%统率+30%智力) * 兵种防御力 / 100 * 适应力加成(A为1)
+            Defence = TroopsLevelBoost((Command * 7000 + Intelligence * 3000) * TroopType.def) / 1000000;
 
-            // 攻击力 = (70%武力+30%统率) * 兵种攻击力 / 100 
-            Attack = (Strength * 7000 + Command * 3000) * TroopType.atk / 1000000;
+            // 攻击力 = (70%武力+30%统率) * 兵种攻击力 / 100 * 适应力加成(A为1)
+            Attack = TroopsLevelBoost((Strength * 7000 + Command * 3000) * TroopType.atk) / 1000000;
 
             // 建设能力 = 政治 * 67% + 50;
             BuildPower = Politics * 6700 / 10000 + 50;
 
-            // 计算粮耗
-            foodCost = (int)System.Math.Ceiling(Scenario.Cur.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
+            // 事件可二次修改属性
+            scenario.Event.OnTroopCalculateAttribute?.Invoke(this, scenario);
+
         }
 
         public int MoveCost(Cell cell)
@@ -373,7 +392,7 @@ namespace Sango.Game
             if (skill.IsRange() && distance > 1)
                 return 0;
             else if (!skill.IsRange() && distance == 1)
-                return 0.5f;
+                return 0.9f;
             return 0;
         }
 
@@ -398,103 +417,126 @@ namespace Sango.Game
 
             ScenarioVariables Variables = Scenario.Cur.Variables;
 
-            //基础伤害
-            float base_dmg = (Variables.fight_base_damage * (
-                (attacker.Strength * Variables.fight_base_strength_damage_factor) +
-                (attacker.Intelligence * Variables.fight_base_intelligence_damage_factor)) +
-                attack_troops_type.atk - defender_troops_type.def);
-
-            //兵力加成系数
-            var troops_add = (attacker.troops - Variables.fight_base_troops_need) / Variables.fight_base_troop_count * Variables.fight_base_troop_factor_per_count;
-
-            //基础减伤
-            var base_reduce = Variables.fight_base_reduce_percent * target.Command / 100f;
-
-            var damage = base_dmg * (1 + troops_add) * (1 - base_reduce);
-
-            //士气矫正后的伤害
-            damage = damage * (UnityEngine.Mathf.Max(attacker.morale - Variables.fight_morale_decay_below, 0) / (100 - Variables.fight_morale_decay_below) *
-            Variables.fight_morale_add + (1 - Variables.fight_morale_decay_percent) + UnityEngine.Mathf.Min(UnityEngine.Mathf.Max(attacker.morale, 0), Variables.fight_morale_decay_below) / Variables.fight_morale_decay_below * Variables.fight_morale_decay_percent);
-
-
-            if (skill != null)
+            float crit_P = 1;
+            if (CalculateSkillCriticalBoost(attacker, target, skill, out crit_P))
             {
-                damage = damage * ((float)skill.atk / 100f);
-            }
-
-            damage = damage * CalculateTroopsLevelBoost(attacker, attack_troops_type);
-            damage = damage * CalculateRestrainBoost(attack_troops_type, defender_troops_type);
-            if (skill != null)
-            {
-                float crit_P;
-                if (CalculateSkillCriticalBoost(attacker, target, skill, out crit_P))
-                    damage = damage * crit_P;
 
             }
+            int atkBounds = skill != null ? skill.atk : 10;
+            /*
+             *公式来源参考:
+             *https://game.ali213.net/thread-5983352-1-1.html  freedomv20的[数据研究] <三国志11 战斗伤害计算公式>
+             *https://www.bilibili.com/opus/828102349572538433 ryan_knight_12吧 楚狂的 <三国志11伤害到底是怎样算的?>
+             *https://tieba.baidu.com/p/6061024246?pn=1 不懂秃驴爱的 <三国志11：部队的兵力与攻击力数据实测，究竟带多少兵才是最优解>
+             */
 
-            return (int)System.Math.Ceiling(damage);
+            int damage = (int)(
+                (
+                
+                (Math.Pow(atkBounds * 64, 0.5) +  Math.Max(0, (int)((Math.Pow(attacker.Attack, 2) -  Math.Pow(Math.Max(40, target.Defence), 2)) / 300)) +
+                Math.Max(0, (attacker.troops - target.troops) / 2000) + 50)
+                
+                * 10 * ((int)(
+                
+                (((int)(attacker.troops * 0.01) + 300) * Math.Pow((attacker.Attack + 50), 2)) / 
+                (((int)(attacker.troops * 0.01) + 300) * Math.Pow((attacker.Attack + 50), 2) * 0.01 +
+                ((int)(target.troops * 0.01) + 300) * Math.Pow((target.Defence + 50), 2) * 0.01)
+                
+                - 50)
+                
+                + 50) 
+                
+                * Math.Min(Math.Pow((attacker.troops / 4), 0.5), 40) * 0.000476190455 /* * 太鼓台系数*/ 
+                
+                + attacker.troops / 200
+                
+                )
+                //兵种相克系数
+                * CalculateRestrainBoost(attacker, target)
+                //会心系数
+                * crit_P
+                // 额外增益 (科技系数等)
+                * Math.Max(0, (1 + attacker.DamageTroopExtraFactor))
+                /* * 难度系数*/);
+
+
+            ////基础伤害
+            //float base_dmg = Variables.fight_base_damage * (attack_troops_type.atk - defender_troops_type.def);
+
+            ////兵力加成系数
+            //var troops_add = (attacker.troops - Variables.fight_base_troops_need) / Variables.fight_base_troop_count * Variables.fight_base_troop_factor_per_count;
+
+            ////基础减伤
+            //var base_reduce = Variables.fight_base_reduce_percent * target.Command / 100f;
+
+            //var damage = base_dmg * (1 + troops_add) * (1 - base_reduce);
+
+            ////士气矫正后的伤害
+            //damage = damage * (UnityEngine.Mathf.Max(attacker.morale - Variables.fight_morale_decay_below, 0) / (100 - Variables.fight_morale_decay_below) *
+            //Variables.fight_morale_add + (1 - Variables.fight_morale_decay_percent) + UnityEngine.Mathf.Min(UnityEngine.Mathf.Max(attacker.morale, 0), Variables.fight_morale_decay_below) / Variables.fight_morale_decay_below * Variables.fight_morale_decay_percent);
+
+            return damage;
         }
 
         public static int CalculateSkillDamage(Troop attacker, BuildingBase target, Skill skill)
         {
             var attack_troops_type = attacker.TroopType;
-
+            var buildingType = target.BuildingType;
             ScenarioVariables Variables = Scenario.Cur.Variables;
 
-            //基础伤害
-            float base_dmg = (Variables.fight_base_durability_damage * (
-                (attacker.Strength * Variables.fight_durability_base_strength_damage_factor) +
-                (attacker.Intelligence * Variables.fight_durability_base_intelligence_damage_factor)) +
-                attack_troops_type.durabilityDmg);
-
-            //兵力加成系数
-            var troops_add = (attacker.troops - Variables.fight_base_troops_need) / Variables.fight_base_troop_count * Variables.fight_base_troop_factor_per_count;
-
-            //基础减伤
-            var base_reduce = Variables.fight_base_reduce_percent * target.GetBaseCommand() / 100f;
-
-            var damage = base_dmg * (1 + troops_add) * (1 - base_reduce);
-
-            //士气矫正后的伤害
-            damage = damage * (UnityEngine.Mathf.Max(attacker.morale - Variables.fight_morale_decay_below, 0) / (100 - Variables.fight_morale_decay_below) *
-            Variables.fight_morale_add + (1 - Variables.fight_morale_decay_percent) + UnityEngine.Mathf.Min(attacker.morale, Variables.fight_morale_decay_below) / Variables.fight_morale_decay_below * Variables.fight_morale_decay_percent);
-
-
-            if (skill != null)
+            float crit_P = 1;
+            if (CalculateSkillCriticalBoost(attacker, target, skill, out crit_P))
             {
-                damage = damage * ((float)skill.atkDurability / 100f);
-            }
-
-            damage = damage * CalculateTroopsLevelBoost(attacker, attack_troops_type);
-            if (skill != null)
-            {
-                float crit_P;
-                if (CalculateSkillCriticalBoost(attacker, target, skill, out crit_P))
-                    damage = damage * crit_P;
 
             }
 
-            return (int)System.Math.Ceiling(damage);
+            int damage = (int)(Math.Pow(attacker.troops, 0.5) * attacker.Attack * Math.Pow((1 / 1500), 0.5) * (1 + skill.atkDurability / 25) * buildingType.damageBounds
+                // 会心 
+                * crit_P
+                // 额外增益 (科技系数等)
+                * Math.Max(0, (1 + attacker.DamageBuildingExtraFactor))
+                * attack_troops_type.durabilityDmg / 100
+                );
+
+            return damage;
         }
+
         public static int CalculateSkillDamage(BuildingBase attacker, Troop target, Skill skill)
         {
 
             ScenarioVariables Variables = Scenario.Cur.Variables;
 
             //基础伤害
-            float base_dmg = attacker.GetBaseDamage();
+            float base_atk = attacker.GetAttack();
+            int base_troops = attacker.GetTroops();
 
-            //基础减伤
-            var base_reduce = Variables.fight_base_reduce_percent * target.Command / 100f;
+            int damage = (int)(
+                 (
 
-            var damage = base_dmg * (1 - base_reduce);
+                 (Math.Max(0, (int)((Math.Pow(base_atk, 2) - Math.Pow(Math.Max(40, target.Defence), 2)) / 300)) +
+                 Math.Max(0, (base_troops - target.troops) / 2000) + 50)
 
-            if (skill != null)
-            {
-                damage = damage * (1 + (float)skill.atk / 100f);
-            }
+                 * 10 * ((int)(
 
-            return (int)System.Math.Ceiling(damage);
+                 (((int)(base_troops * 0.01) + 300) * Math.Pow((base_atk + 50), 2)) /
+                 (((int)(base_troops * 0.01) + 300) * Math.Pow((base_atk + 50), 2) * 0.01 +
+                 ((int)(target.troops * 0.01) + 300) * Math.Pow((target.Defence + 50), 2) * 0.01)
+
+                 - 50)
+
+                 + 50)
+
+                 * Math.Min(Math.Pow((base_troops / 4), 0.5), 40) * 0.000476190455 /* * 太鼓台系数*/
+
+                 + base_troops / 200
+
+                 )
+                
+                 // 额外增益 (科技系数等)
+                 //* Math.Max(0, (1 + attacker.DamageTroopExtraFactor))
+                 /* * 难度系数*/);
+
+            return damage;
         }
 
         // 暴击判断
@@ -514,12 +556,16 @@ namespace Sango.Game
         }
 
         // 克制系数
-        public static float CalculateRestrainBoost(TroopType attack_troops_type, TroopType defender_troops_type)
+        public static float CalculateRestrainBoost(Troop attacker, Troop target)
         {
             ScenarioVariables Variables = Scenario.Cur.Variables;
+            var attack_troops_type = attacker.TroopType;
+
             if (attack_troops_type.Id < 0 || attack_troops_type.Id > Variables.troops_type_restraint.Length)
                 return 1;
             float[] t_map = Variables.troops_type_restraint[attack_troops_type.Id];
+
+            var defender_troops_type = target.TroopType;
             if (defender_troops_type.Id < 0 || defender_troops_type.Id > t_map.Length)
                 return 1;
             return t_map[defender_troops_type.Id];
@@ -548,37 +594,13 @@ namespace Sango.Game
 
         // 克制系数
         //@param attacker Troops
-        public static float CalculateTroopsLevelBoost(Troop attacker, TroopType attack_troops_type)
+        public int TroopsLevelBoost(int value)
         {
             ScenarioVariables Variables = Scenario.Cur.Variables;
-            attack_troops_type = attack_troops_type ?? attacker.TroopType;
-            int abilityValue = -1;
-            switch (attack_troops_type.influenceAbility)
-            {
-                case (int)AbilityType.Spear:
-                    abilityValue = attacker.SpearLv;
-                    break;
-                case (int)AbilityType.Halberd:
-                    abilityValue = attacker.HalberdLv;
-                    break;
-                case (int)AbilityType.Water:
-                    abilityValue = attacker.WaterLv;
-                    break;
-                case (int)AbilityType.Crossbow:
-                    abilityValue = attacker.CrossbowLv;
-                    break;
-                case (int)AbilityType.Horse:
-                    abilityValue = attacker.HorseLv;
-                    break;
-                case (int)AbilityType.Machine:
-                    abilityValue = attacker.MachineLv;
-                    break;
-            }
+            if (TroopTypeLv < 0 || TroopTypeLv > Variables.troops_adaptation_level_boost.Length)
+                return value;
 
-            if (abilityValue < 0 || abilityValue > Variables.troops_adaptation_level_boost.Length)
-                return 1;
-
-            return Variables.troops_adaptation_level_boost[abilityValue];
+            return value * Variables.troops_adaptation_level_boost[TroopTypeLv] / 100;
         }
 
         internal static List<Cell> tempCellList = new List<Cell>(256);
@@ -607,10 +629,6 @@ namespace Sango.Game
 
             if (!isMoving)
             {
-                //if (!destCell.IsEmpty())
-                //{
-                //    UnityEngine.Debug.LogError("not empty cell!!");
-                //}
                 tempCellList.Clear();
                 tempMoveEventList.Clear();
                 //TODO: 移动
@@ -1094,7 +1112,7 @@ namespace Sango.Game
                 person.BelongTroop = null;
                 person.ActionOver = true;
             });
-           
+
             Render.Clear();
             ActionOver = true;
             if (city == BelongCity)
@@ -1127,7 +1145,7 @@ namespace Sango.Game
 
         public void RemovePerson(Person person)
         {
-            if(person == null) return;
+            if (person == null) return;
 
             if (Member1 == person)
             {
@@ -1139,6 +1157,8 @@ namespace Sango.Game
                 Member2.BelongTroop = null;
                 Member2 = null;
             }
+
+            CalculateAttribute(Scenario.Cur);
         }
 
         /// <summary>
@@ -1147,14 +1167,14 @@ namespace Sango.Game
         /// <param name="city"></param>
         public bool JoinToForce(City city)
         {
-            if(Leader.IsSameForce(city)) return true;
+            if (Leader.IsSameForce(city)) return false;
             ForEachMember(mem =>
             {
                 RemovePerson(mem);
                 mem.SetMission(MissionType.PersonReturn, mem.BelongCity, 1);
                 mem.ActionOver = true;
             });
-            CalculateAttribute();
+            CalculateAttribute(Scenario.Cur);
             return true;
         }
 

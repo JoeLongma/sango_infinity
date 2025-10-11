@@ -57,16 +57,16 @@ namespace Sango.Game
         /// <returns></returns>
         public static PriorityActionData PriorityAction(Troop troop, Scenario scenario, SkillAttackPriorityCalculateMethod prioritySkillAtkMethod = null, SkillDefencePriorityCalculateMethod prioritySkillDefMethod = null)
         {
-            List<Skill> skill_list = troop.skills;
+            List<SkillInstance> skill_list = troop.skills;
             troop.MoveRange.Clear();
-            prioritySkillAtkMethod = prioritySkillAtkMethod ?? SkillAttackPriority;
+            prioritySkillAtkMethod = prioritySkillAtkMethod ?? SkillStatusPriority;
             prioritySkillDefMethod = prioritySkillDefMethod ?? SkillDefencePriority;
             bool needUpdateMoverange = true;
             wightList.Clear();
             checkList.Clear();
             for (int i = 0, count = skill_list.Count; i < count; i++)
             {
-                Skill skill = skill_list[i];
+                Skill skill = skill_list[i].Skill;
                 if (skill.CanBeSpell(troop))
                 {
                     if (needUpdateMoverange)
@@ -190,14 +190,14 @@ namespace Sango.Game
 
         public static PriorityActionData PriorityAction(Troop troop, List<Cell> enemyCells, Scenario scenario, SkillAttackPriorityCalculateMethod prioritySkillAtkMethod = null, SkillDefencePriorityCalculateMethod prioritySkillDefMethod = null)
         {
-            List<Skill> skill_list = troop.skills;
+            List<SkillInstance> skill_list = troop.skills;
             List<Cell> moveRange = null;
             prioritySkillAtkMethod = prioritySkillAtkMethod ?? SkillAttackPriority;
             prioritySkillDefMethod = prioritySkillDefMethod ?? SkillDefencePriority;
             wightList.Clear();
             for (int i = 0, count = skill_list.Count; i < count; i++)
             {
-                Skill skill = skill_list[i];
+                Skill skill = skill_list[i].Skill;
                 if (skill.CanBeSpell(troop))
                 {
                     for (int j = 0; j < enemyCells.Count; j++)
@@ -327,11 +327,11 @@ namespace Sango.Game
             {
                 if (troop.IsEnemy(target.troop))
                 {
-                    return skill.atk * (troop.Attack - target.troop.Defence);
+                    return (skill.atk+10) * (troop.Attack - target.troop.Defence);
                 }
                 else if (skill.canDamageTeam)
                 {
-                    return -skill.atk * (troop.Attack - target.troop.Defence);
+                    return -(skill.atk + 10) * (troop.Attack - target.troop.Defence);
                 }
             }
             else if (target.building != null && skill.canDamageBuilding)

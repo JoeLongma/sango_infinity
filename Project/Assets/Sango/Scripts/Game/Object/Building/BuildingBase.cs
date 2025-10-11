@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Sango.Game.Render;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 
 namespace Sango.Game
 {
@@ -175,15 +176,24 @@ namespace Sango.Game
         //    return (int)((cell.TerrainType.goldDeposit + BuildingType.goldGain) * cell.Prosperity);
         //}
 
-        public virtual int GetBaseDamage() { return 0; }
+        public virtual int GetAttack() { return BuildingType.atk; }
         public virtual int GetBaseCommand() { return 0; }
         public float GetAttackBackFactor(Skill skill, int distance)
         {
             if (skill.IsRange() && distance > 1)
                 return 0;
             else if (!skill.IsRange() && distance == 1)
-                return 0.5f;
+                return 0.9f;
             return 0;
+        }
+
+        public virtual int GetMaxDurability()
+        {
+            return BuildingType.durabilityLimit;
+        }
+        public virtual int GetTroops()
+        {
+            return durability * 10000 / GetMaxDurability();
         }
     }
 }

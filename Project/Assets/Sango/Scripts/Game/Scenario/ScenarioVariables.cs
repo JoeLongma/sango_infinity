@@ -64,16 +64,6 @@ namespace Sango.Game
         [JsonProperty] public float fight_base_troop_factor_per_count = 0.05f;
 
         /// <summary>
-        /// 伤害由基准武力,影响比例
-        /// </summary>
-        [JsonProperty] public float fight_base_strength_damage_factor = 0.8f;
-
-        /// <summary>
-        /// 伤害由基准智力,影响比例
-        /// </summary>
-        [JsonProperty] public float fight_base_intelligence_damage_factor = 0.2f;
-
-        /// <summary>
         /// 士气最多影响比例
         /// </summary>
         [JsonProperty] public float fight_morale_decay_percent = 0.5f;
@@ -110,9 +100,9 @@ namespace Sango.Game
 
 
         [JsonProperty]
-        public float[] troops_adaptation_level_boost = new float[]
+        public int[] troops_adaptation_level_boost = new int[]
          // C    B        A       S        SS
-           {0.8f,   0.9f,     1f,   1.1f,    1.2f, };
+           {80,   90,     100,   110,    120, };
         [JsonProperty]
         public float[][] troops_type_restraint = new float[][]{
 
@@ -151,6 +141,7 @@ namespace Sango.Game
         /// 城池中粮食基础消耗率(每回合)
         /// </summary>
         [JsonProperty] public float baseFoodCostInCity = 0.025f;
+
         /// <summary>
         /// 城池缺粮后每回合逃跑的士兵比例
         /// </summary>
