@@ -444,9 +444,9 @@ namespace Sango.Game
                 
                 - 50)
                 
-                + 50) 
-                
-                * Math.Min(Math.Pow((attacker.troops / 4), 0.5), 40) * 0.000476190455 /* * 太鼓台系数*/ 
+                + 50)
+                // 原有基础上优化Math.Max(1, attacker.troops / 4),1兵打出15伤害同于实际测试
+                * Math.Min(Math.Pow(Math.Max(1, attacker.troops / 4), 0.5), 40) * 0.000476190455 /* * 太鼓台系数*/ 
                 
                 + attacker.troops / 200
                 
