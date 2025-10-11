@@ -2386,7 +2386,7 @@
     {
       "Id": "4",
       "Name": "螺旋突刺",
-      "atk": "25",
+      "atk": "30",
       "atkDurability": "0",
       "costEnergy": "20",
       "isRange": false,
@@ -2403,7 +2403,7 @@
     {
       "Id": "5",
       "Name": "二段突刺",
-      "atk": "25",
+      "atk": "35",
       "atkDurability": "0",
       "costEnergy": "20",
       "isRange": false,
@@ -2454,7 +2454,7 @@
     {
       "Id": "8",
       "Name": "旋风",
-      "atk": "30",
+      "atk": "33",
       "atkDurability": "0",
       "costEnergy": "20",
       "isRange": false,
@@ -2513,7 +2513,7 @@
     {
       "Id": "11",
       "Name": "乱射",
-      "atk": "15",
+      "atk": "25",
       "atkDurability": "15",
       "costEnergy": "25",
       "isRange": true,
@@ -2534,7 +2534,7 @@
     {
       "Id": "12",
       "Name": "突击",
-      "atk": "50",
+      "atk": "30",
       "atkDurability": "0",
       "costEnergy": "20",
       "isRange": false,
@@ -2551,7 +2551,7 @@
     {
       "Id": "13",
       "Name": "突破",
-      "atk": "50",
+      "atk": "35",
       "atkDurability": "0",
       "costEnergy": "20",
       "isRange": false,
@@ -2568,7 +2568,7 @@
     {
       "Id": "14",
       "Name": "突进",
-      "atk": "60",
+      "atk": "40",
       "atkDurability": "0",
       "costEnergy": "25",
       "isRange": false,
@@ -2688,7 +2688,7 @@
     {
       "Id": "21",
       "Name": "投石",
-      "atk": "20",
+      "atk": "35",
       "atkDurability": "80",
       "costEnergy": "20",
       "isRange": true,
