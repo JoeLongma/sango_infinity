@@ -33,7 +33,7 @@ namespace Sango.Game
                     troop = city.EnsureTroop(troop, scenario, 20);
 #if SANGO_DEBUG
                     City targetCity = scenario.citySet.Get(troop.missionTarget);
-                    Sango.Log.Print($"{scenario.GetDateStr()}{city.BelongForce.Name}势力在{city.Name}由{troop.Leader.Name}率领军队出城 进攻{targetCity.BelongForce?.Name}的{targetCity.Name}!");
+                    Sango.Log.Print($"{scenario.GetDateStr()}{city.BelongForce.Name}3势力在{city.Name}由{troop.Leader.Name}率领军队出城 进攻{targetCity.BelongForce?.Name}的{targetCity.Name}!");
 #endif
                 }
                 return false;
@@ -88,7 +88,7 @@ namespace Sango.Game
                         Troop troop1 = city.CurActiveTroopList[0];
                         troop1 = city.EnsureTroop(troop1, scenario, 20);
 #if SANGO_DEBUG
-                        Sango.Log.Print($"{scenario.GetDateStr()}{city.BelongForce.Name}势力在{city.Name}由{troop1.Leader.Name}率领军队出城 进攻{lastTargetCity.BelongForce?.Name}的{lastTargetCity.Name}!");
+                        Sango.Log.Print($"{scenario.GetDateStr()}{city.BelongForce.Name}2势力在{city.Name}由{troop1.Leader.Name}率领军队出城 进攻{lastTargetCity.BelongForce?.Name}的{lastTargetCity.Name}!");
 #endif
                     }
                     return false;
@@ -134,20 +134,23 @@ namespace Sango.Game
                             if (city.troops < UnityEngine.Mathf.Min(targetCity.troops, targetCity.allPersons.Count * 5000))
                                 continue;
 
-                            List<Troop> troopList = new List<Troop>();
-                            city.AutoMakeTroop(troopList, 10, false);
-                            while (troopList.Count > 0)
+                            city.AutoMakeTroop(city.CurActiveTroopList, 10, false);
+                            if (city.CurActiveTroopList.Count > 0)
                             {
-                                Troop troop = troopList[0];
-                                troopList.RemoveAt(0);
-                                troop = city.EnsureTroop(troop, scenario, 20);
-                                troop.missionType = (int)MissionType.OccupyCity;
-                                troop.missionTarget = targetCity.Id;
-                                //troop.DoAI(scenario);
-                                Sango.Log.Print($"{scenario.GetDateStr()}{city.BelongForce.Name}势力在{city.Name}由{troop.Leader.Name}率领军队出城 进攻{targetCity.BelongForce?.Name ?? ""}的{targetCity.Name}!");
-                                troop = null;
+                                for (int j = 0; j < city.CurActiveTroopList.Count; j++)
+                                {
+                                    Troop troop = city.CurActiveTroopList[j];
+                                    troop.missionType = (int)MissionType.OccupyCity;
+                                    troop.missionTarget = targetCity.Id;
+                                }
+
+                                Troop troop1 = city.CurActiveTroopList[0];
+                                troop1 = city.EnsureTroop(troop1, scenario, 20);
+#if SANGO_DEBUG
+                                Sango.Log.Print($"{scenario.GetDateStr()}{city.BelongForce.Name}1势力在{city.Name}由{troop1.Leader.Name}率领军队出城 进攻{targetCity.BelongForce?.Name}的{targetCity.Name}!");
+#endif
                             }
-                            return true;
+                            return false;
                         }
                     }
                 }

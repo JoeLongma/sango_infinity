@@ -46,10 +46,10 @@ namespace Sango.Game
         /// <summary>
         /// 基础伤害
         /// </summary>
-        [JsonProperty] public float fight_base_damage = 8;
+        [JsonProperty] public float fight_base_damage = 64;
 
         /// <summary>
-        /// 基准兵力
+        /// 基准兵力(攻守兵力差)
         /// </summary>
         [JsonProperty] public float fight_base_troops_need = 2000;
 
@@ -61,48 +61,97 @@ namespace Sango.Game
         /// <summary>
         /// 兵力系数增益
         /// </summary>
-        [JsonProperty] public float fight_base_troop_factor_per_count = 0.05f;
+        [JsonProperty] public double fight_damage_magic_number = 0.000476190455;
 
         /// <summary>
-        /// 士气最多影响比例
+        /// 伤害难度系数
         /// </summary>
-        [JsonProperty] public float fight_morale_decay_percent = 0.5f;
+        [JsonProperty] public float[] fight_damage_difficulty_factor = new float[] { 1.3f, 1, 0.7f };
 
         /// <summary>
-        /// 士气基准值
+        /// 难度
         /// </summary>
-        [JsonProperty] public float fight_morale_decay_below = 80;
+        [JsonProperty] public int difficulty = 1;
+
+
+        ///// <summary>
+        ///// 士气最多影响比例
+        ///// </summary>
+        //[JsonProperty] public float fight_morale_decay_percent = 0.5f;
+
+        ///// <summary>
+        ///// 士气基准值
+        ///// </summary>
+        //[JsonProperty] public float fight_morale_decay_below = 80;
+
+        ///// <summary>
+        ///// 每多基准值多少,获得一次士气加成
+        ///// </summary>
+        //[JsonProperty] public float fight_base_morale_increase_count = 20;
+
+        ///// <summary>
+        ///// 士气矫正加成
+        ///// </summary>
+        //[JsonProperty] public float fight_morale_add = 0.15f;
+
+        ///// <summary>
+        ///// 最大减伤比例
+        ///// </summary>
+        //[JsonProperty] public float fight_base_reduce_percent = 0.3f;
 
         /// <summary>
-        /// 每多基准值多少,获得一次士气加成
+        /// 部队攻击武力影响比例(万分比)
         /// </summary>
-        [JsonProperty] public float fight_base_morale_increase_count = 20;
+        [JsonProperty] public int fight_troop_attack_strength_factor = 7000;
+        /// <summary>
+        /// 部队攻击智力影响比例(万分比)
+        /// </summary>
+        [JsonProperty] public int fight_troop_attack_intelligence_factor = 1000;
+        /// <summary>
+        /// 部队攻击统率影响比例(万分比)
+        /// </summary>
+        [JsonProperty] public int fight_troop_attack_command_factor = 2000;
+        /// <summary>
+        /// 部队攻击政治影响比例(万分比)
+        /// </summary>
+        [JsonProperty] public int fight_troop_attack_politics_factor = 0;
+        /// <summary>
+        /// 部队攻击魅力影响比例(万分比)
+        /// </summary>
+        [JsonProperty] public int fight_troop_attack_glamour_factor = 0;
 
         /// <summary>
-        /// 士气矫正加成
+        /// 部队防御武力影响比例(万分比)
         /// </summary>
-        [JsonProperty] public float fight_morale_add = 0.15f;
+        [JsonProperty] public int fight_troop_defence_strength_factor = 1000;
+        /// <summary>
+        /// 部队防御智力影响比例(万分比)
+        /// </summary>
+        [JsonProperty] public int fight_troop_defence_intelligence_factor = 2000;
+        /// <summary>
+        /// 部队防御统率影响比例(万分比)
+        /// </summary>
+        [JsonProperty] public int fight_troop_defence_command_factor = 7000;
+        /// <summary>
+        /// 部队防御政治影响比例(万分比)
+        /// </summary>
+        [JsonProperty] public int fight_troop_defence_politics_factor = 0;
+        /// <summary>
+        /// 部队防御魅力影响比例(万分比)
+        /// </summary>
+        [JsonProperty] public int fight_troop_defence_glamour_factor = 0;
 
         /// <summary>
-        /// 最大减伤比例
+        /// 适应能力加成(百分比)
         /// </summary>
-        [JsonProperty] public float fight_base_reduce_percent = 0.3f;
-
-        /// <summary>
-        /// 攻城伤害由基准武力,影响比例
-        /// </summary>
-        [JsonProperty] public float fight_durability_base_strength_damage_factor = 0.2f;
-
-        /// <summary>
-        /// 攻城伤害由基准智力,影响比例
-        /// </summary>
-        [JsonProperty] public float fight_durability_base_intelligence_damage_factor = 0.2f;
-
-
         [JsonProperty]
         public int[] troops_adaptation_level_boost = new int[]
          // C    B        A       S        SS
            {80,   90,     100,   110,    120, };
+
+        /// <summary>
+        /// 兵种克制(小数)
+        /// </summary>
         [JsonProperty]
         public float[][] troops_type_restraint = new float[][]{
 
@@ -146,16 +195,6 @@ namespace Sango.Game
         /// 城池缺粮后每回合逃跑的士兵比例
         /// </summary>
         [JsonProperty] public float runawayWhenCityFoodNotEnough = 0.1f;
-
-        ///// <summary>
-        ///// 每点商业对应的金币收入(月)
-        ///// </summary>
-        //[JsonProperty] public float eachCommercePointToGold = 0.3f;
-
-        ///// <summary>
-        ///// 每点开发对应的粮食收入(秋季)
-        ///// </summary>
-        //[JsonProperty] public float eachAgriculturePointToFood = 15.6f;
 
         /// <summary>
         /// 民心对于收入的影响最低值
@@ -262,5 +301,16 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public int captureChangceWhenTroopFall = 5;
 
+        public float DifficultyDamageFactor
+        {
+            get
+            {
+                if (difficulty >= 0 && difficulty < fight_damage_difficulty_factor.Length)
+                {
+                    return fight_damage_difficulty_factor[difficulty];
+                }
+                return 1;
+            }
+        }
     }
 }

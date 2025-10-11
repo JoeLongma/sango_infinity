@@ -1412,7 +1412,7 @@ namespace Sango.Game
             if (TroopsIsFull) return false;
             if (Scenario.Cur.Variables.populationEnable && troopPopulation <= 500) return false;
             int goldNeed = Scenario.Cur.Variables.recuritTroopCost;
-            if (gold < goldNeed)
+            if (gold < goldNeed || security < 60)
                 return false;
             if (personList == null || personList.Count == 0) return false;
             if (troops > food) return false;

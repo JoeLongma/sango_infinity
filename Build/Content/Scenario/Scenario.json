@@ -425,7 +425,7 @@
     {
       "Id": 9,
       "Name": "卫瓘",
-      "BelongForce": 34,
+      "BelongForce": 35,
       "BelongCorps": 35,
       "BelongCity": 38,
       "familyName": "卫",
@@ -733,7 +733,7 @@
     {
       "Id": 15,
       "Name": "阎行",
-      "BelongForce": 37,
+      "BelongForce": 21,
       "BelongCorps": 21,
       "BelongCity": 21,
       "familyName": "阎",
@@ -1404,7 +1404,7 @@
     {
       "Id": 28,
       "Name": "王颀",
-      "BelongForce": 35,
+      "BelongForce": 36,
       "BelongCorps": 36,
       "BelongCity": 39,
       "familyName": "王",
@@ -4198,7 +4198,7 @@
     {
       "Id": 83,
       "Name": "夏侯玄",
-      "BelongForce": 36,
+      "BelongForce": 37,
       "BelongCorps": 37,
       "BelongCity": 11,
       "familyName": "夏侯",
@@ -5179,7 +5179,7 @@
     {
       "Id": 102,
       "Name": "毌丘俭",
-      "BelongForce": 36,
+      "BelongForce": 37,
       "BelongCorps": 37,
       "BelongCity": 11,
       "familyName": "毌丘",
@@ -5231,7 +5231,7 @@
     {
       "Id": 103,
       "Name": "毌丘秀",
-      "BelongForce": 36,
+      "BelongForce": 37,
       "BelongCorps": 37,
       "BelongCity": 11,
       "familyName": "毌丘",
@@ -5282,7 +5282,7 @@
     {
       "Id": 104,
       "Name": "毌丘甸",
-      "BelongForce": 36,
+      "BelongForce": 37,
       "BelongCorps": 37,
       "BelongCity": 11,
       "familyName": "毌丘",
@@ -5386,7 +5386,7 @@
     {
       "Id": 106,
       "Name": "韩玄",
-      "BelongForce": 3,
+      "BelongForce": 31,
       "BelongCorps": 31,
       "BelongCity": 32,
       "familyName": "韩",
@@ -5437,7 +5437,7 @@
     {
       "Id": 107,
       "Name": "韩浩",
-      "BelongForce": 3,
+      "BelongForce": 31,
       "BelongCorps": 31,
       "BelongCity": 32,
       "familyName": "韩",
@@ -5597,7 +5597,7 @@
     {
       "Id": 110,
       "Name": "韩遂",
-      "BelongForce": 37,
+      "BelongForce": 21,
       "BelongCorps": 21,
       "BelongCity": 21,
       "familyName": "韩",
@@ -6370,7 +6370,7 @@
     {
       "Id": 125,
       "Name": "魏延",
-      "BelongForce": 3,
+      "BelongForce": 31,
       "BelongCorps": 31,
       "BelongCity": 32,
       "familyName": "魏",
@@ -6772,7 +6772,7 @@
     {
       "Id": 133,
       "Name": "丘建",
-      "BelongForce": 34,
+      "BelongForce": 35,
       "BelongCorps": 35,
       "BelongCity": 38,
       "familyName": "丘",
@@ -6875,7 +6875,7 @@
     {
       "Id": 135,
       "Name": "丘本",
-      "BelongForce": 35,
+      "BelongForce": 36,
       "BelongCorps": 36,
       "BelongCity": 39,
       "familyName": "丘",
@@ -7029,7 +7029,7 @@
     {
       "Id": 138,
       "Name": "巩志",
-      "BelongForce": 31,
+      "BelongForce": 32,
       "BelongCorps": 32,
       "BelongCity": 33,
       "familyName": "巩",
@@ -7234,7 +7234,7 @@
     {
       "Id": 142,
       "Name": "许仪",
-      "BelongForce": 34,
+      "BelongForce": 35,
       "BelongCorps": 35,
       "BelongCity": 38,
       "familyName": "许",
@@ -7544,7 +7544,7 @@
     {
       "Id": 148,
       "Name": "金祎",
-      "BelongForce": 31,
+      "BelongForce": 32,
       "BelongCorps": 32,
       "BelongCity": 33,
       "familyName": "金",
@@ -7648,7 +7648,7 @@
     {
       "Id": 150,
       "Name": "金旋",
-      "BelongForce": 31,
+      "BelongForce": 32,
       "BelongCorps": 32,
       "BelongCity": 33,
       "familyName": "金",
@@ -7805,7 +7805,7 @@
     {
       "Id": 153,
       "Name": "邢道荣",
-      "BelongForce": 33,
+      "BelongForce": 34,
       "BelongCorps": 34,
       "BelongCity": 35,
       "familyName": "邢",
@@ -7957,7 +7957,7 @@
     {
       "Id": 156,
       "Name": "牵弘",
-      "BelongForce": 35,
+      "BelongForce": 36,
       "BelongCorps": 36,
       "BelongCity": 39,
       "familyName": "牵",
@@ -8931,7 +8931,7 @@
     {
       "Id": 175,
       "Name": "侯选",
-      "BelongForce": 37,
+      "BelongForce": 21,
       "BelongCorps": 21,
       "BelongCity": 21,
       "familyName": "侯",
@@ -9500,7 +9500,7 @@
     {
       "Id": 186,
       "Name": "黄忠",
-      "BelongForce": 3,
+      "BelongForce": 31,
       "BelongCorps": 31,
       "BelongCity": 32,
       "familyName": "黄",
@@ -10106,7 +10106,7 @@
     {
       "Id": 198,
       "Name": "吴纲",
-      "BelongForce": 36,
+      "BelongForce": 37,
       "BelongCorps": 37,
       "BelongCity": 11,
       "familyName": "吴",
@@ -10916,7 +10916,7 @@
     {
       "Id": 214,
       "Name": "胡烈",
-      "BelongForce": 34,
+      "BelongForce": 35,
       "BelongCorps": 35,
       "BelongCity": 38,
       "familyName": "胡",
@@ -11475,7 +11475,7 @@
     {
       "Id": 225,
       "Name": "师纂",
-      "BelongForce": 35,
+      "BelongForce": 36,
       "BelongCorps": 36,
       "BelongCity": 39,
       "familyName": "师",
@@ -13336,7 +13336,7 @@
     {
       "Id": 261,
       "Name": "焦彝",
-      "BelongForce": 36,
+      "BelongForce": 37,
       "BelongCorps": 37,
       "BelongCity": 11,
       "familyName": "焦",
@@ -13488,7 +13488,7 @@
     {
       "Id": 264,
       "Name": "锺会",
-      "BelongForce": 34,
+      "BelongForce": 35,
       "BelongCorps": 35,
       "BelongCity": 38,
       "familyName": "锺",
@@ -14046,7 +14046,7 @@
     {
       "Id": 275,
       "Name": "蒋班",
-      "BelongForce": 36,
+      "BelongForce": 37,
       "BelongCorps": 37,
       "BelongCity": 11,
       "familyName": "蒋",
@@ -14097,7 +14097,7 @@
     {
       "Id": 276,
       "Name": "蒋斌",
-      "BelongForce": 34,
+      "BelongForce": 35,
       "BelongCorps": 35,
       "BelongCity": 38,
       "familyName": "蒋",
@@ -14561,7 +14561,7 @@
     {
       "Id": 285,
       "Name": "诸葛绪",
-      "BelongForce": 34,
+      "BelongForce": 35,
       "BelongCorps": 35,
       "BelongCity": 38,
       "familyName": "诸葛",
@@ -14664,7 +14664,7 @@
     {
       "Id": 287,
       "Name": "诸葛靓",
-      "BelongForce": 36,
+      "BelongForce": 37,
       "BelongCorps": 37,
       "BelongCity": 11,
       "familyName": "诸葛",
@@ -14771,7 +14771,7 @@
     {
       "Id": 289,
       "Name": "诸葛诞",
-      "BelongForce": 36,
+      "BelongForce": 37,
       "BelongCorps": 37,
       "BelongCity": 11,
       "familyName": "诸葛",
@@ -15850,7 +15850,7 @@
     {
       "Id": 310,
       "Name": "眭固",
-      "BelongForce": 21,
+      "BelongForce": 3,
       "BelongCorps": 3,
       "BelongCity": 6,
       "familyName": "眭",
@@ -16056,7 +16056,7 @@
     {
       "Id": 314,
       "Name": "成宜",
-      "BelongForce": 37,
+      "BelongForce": 21,
       "BelongCorps": 21,
       "BelongCity": 21,
       "familyName": "成",
@@ -16107,7 +16107,7 @@
     {
       "Id": 315,
       "Name": "成公英",
-      "BelongForce": 37,
+      "BelongForce": 21,
       "BelongCorps": 21,
       "BelongCity": 21,
       "familyName": "成",
@@ -20527,7 +20527,7 @@
     {
       "Id": 400,
       "Name": "张横",
-      "BelongForce": 37,
+      "BelongForce": 21,
       "BelongCorps": 21,
       "BelongCity": 21,
       "familyName": "张",
@@ -21393,7 +21393,7 @@
     {
       "Id": 417,
       "Name": "张缉",
-      "BelongForce": 36,
+      "BelongForce": 37,
       "BelongCorps": 37,
       "BelongCity": 11,
       "familyName": "张",
@@ -22166,7 +22166,7 @@
     {
       "Id": 432,
       "Name": "赵范",
-      "BelongForce": 32,
+      "BelongForce": 33,
       "BelongCorps": 33,
       "BelongCity": 34,
       "familyName": "赵",
@@ -22478,7 +22478,7 @@
     {
       "Id": 438,
       "Name": "张杨",
-      "BelongForce": 21,
+      "BelongForce": 3,
       "BelongCorps": 3,
       "BelongCity": 6,
       "familyName": "张",
@@ -22835,7 +22835,7 @@
     {
       "Id": 445,
       "Name": "陈应",
-      "BelongForce": 32,
+      "BelongForce": 33,
       "BelongCorps": 33,
       "BelongCity": 34,
       "familyName": "陈",
@@ -23856,7 +23856,7 @@
     {
       "Id": 465,
       "Name": "程银",
-      "BelongForce": 37,
+      "BelongForce": 21,
       "BelongCorps": 21,
       "BelongCity": 21,
       "familyName": "程",
@@ -23907,7 +23907,7 @@
     {
       "Id": 466,
       "Name": "丁原",
-      "BelongForce": 21,
+      "BelongForce": 3,
       "BelongCorps": 3,
       "BelongCity": 6,
       "familyName": "丁",
@@ -24314,7 +24314,7 @@
     {
       "Id": 474,
       "Name": "田续",
-      "BelongForce": 34,
+      "BelongForce": 35,
       "BelongCorps": 35,
       "BelongCity": 38,
       "familyName": "田",
@@ -24724,7 +24724,7 @@
     {
       "Id": 482,
       "Name": "邓艾",
-      "BelongForce": 35,
+      "BelongForce": 36,
       "BelongCorps": 36,
       "BelongCity": 39,
       "familyName": "邓",
@@ -24776,7 +24776,7 @@
     {
       "Id": 483,
       "Name": "党均",
-      "BelongForce": 35,
+      "BelongForce": 36,
       "BelongCorps": 36,
       "BelongCity": 39,
       "familyName": "黨",
@@ -25030,7 +25030,7 @@
     {
       "Id": 488,
       "Name": "唐咨",
-      "BelongForce": 36,
+      "BelongForce": 37,
       "BelongCorps": 37,
       "BelongCity": 11,
       "familyName": "唐",
@@ -25383,7 +25383,7 @@
     {
       "Id": 495,
       "Name": "邓忠",
-      "BelongForce": 35,
+      "BelongForce": 36,
       "BelongCorps": 36,
       "BelongCity": 39,
       "familyName": "邓",
@@ -25992,7 +25992,7 @@
     {
       "Id": 507,
       "Name": "马玩",
-      "BelongForce": 37,
+      "BelongForce": 21,
       "BelongCorps": 21,
       "BelongCity": 21,
       "familyName": "马",
@@ -26807,7 +26807,7 @@
     {
       "Id": 523,
       "Name": "樊氏",
-      "BelongForce": 32,
+      "BelongForce": 33,
       "BelongCorps": 33,
       "BelongCity": 34,
       "familyName": "樊",
@@ -27819,7 +27819,7 @@
     {
       "Id": 543,
       "Name": "文鸯",
-      "BelongForce": 36,
+      "BelongForce": 37,
       "BelongCorps": 37,
       "BelongCity": 11,
       "familyName": "文",
@@ -27871,7 +27871,7 @@
     {
       "Id": 544,
       "Name": "文钦",
-      "BelongForce": 36,
+      "BelongForce": 37,
       "BelongCorps": 37,
       "BelongCity": 11,
       "familyName": "文",
@@ -27923,7 +27923,7 @@
     {
       "Id": 545,
       "Name": "文虎",
-      "BelongForce": 36,
+      "BelongForce": 37,
       "BelongCorps": 37,
       "BelongCity": 11,
       "familyName": "文",
@@ -28694,7 +28694,7 @@
     {
       "Id": 560,
       "Name": "鲍隆",
-      "BelongForce": 32,
+      "BelongForce": 33,
       "BelongCorps": 33,
       "BelongCity": 34,
       "familyName": "鲍",
@@ -28795,7 +28795,7 @@
     {
       "Id": 562,
       "Name": "穆顺",
-      "BelongForce": 21,
+      "BelongForce": 3,
       "BelongCorps": 3,
       "BelongCity": 6,
       "familyName": "穆",
@@ -29557,7 +29557,7 @@
     {
       "Id": 577,
       "Name": "杨欣",
-      "BelongForce": 35,
+      "BelongForce": 36,
       "BelongCorps": 36,
       "BelongCity": 39,
       "familyName": "杨",
@@ -29812,7 +29812,7 @@
     {
       "Id": 582,
       "Name": "杨丑",
-      "BelongForce": 21,
+      "BelongForce": 3,
       "BelongCorps": 3,
       "BelongCity": 6,
       "familyName": "杨",
@@ -29913,7 +29913,7 @@
     {
       "Id": 584,
       "Name": "杨秋",
-      "BelongForce": 37,
+      "BelongForce": 21,
       "BelongCorps": 21,
       "BelongCity": 21,
       "familyName": "杨",
@@ -31129,7 +31129,7 @@
     {
       "Id": 608,
       "Name": "李堪",
-      "BelongForce": 37,
+      "BelongForce": 21,
       "BelongCorps": 21,
       "BelongCity": 21,
       "familyName": "李",
@@ -31382,7 +31382,7 @@
     {
       "Id": 613,
       "Name": "李丰",
-      "BelongForce": 36,
+      "BelongForce": 37,
       "BelongCorps": 37,
       "BelongCity": 11,
       "familyName": "李",
@@ -31796,7 +31796,7 @@
     {
       "Id": 621,
       "Name": "刘贤",
-      "BelongForce": 33,
+      "BelongForce": 34,
       "BelongCorps": 34,
       "BelongCity": 35,
       "familyName": "刘",
@@ -32419,7 +32419,7 @@
     {
       "Id": 633,
       "Name": "刘度",
-      "BelongForce": 33,
+      "BelongForce": 34,
       "BelongCorps": 34,
       "BelongCity": 35,
       "familyName": "刘",
@@ -33142,7 +33142,7 @@
     {
       "Id": 647,
       "Name": "梁兴",
-      "BelongForce": 37,
+      "BelongForce": 21,
       "BelongCorps": 21,
       "BelongCity": 21,
       "familyName": "梁",
@@ -42495,7 +42495,7 @@
     },
     {
       "Id": 21,
-      "Governor": 466,
+      "Governor": 110,
       "Counsellor": 0,
       "Flag": 21,
       "TechniquePoint": 0,
@@ -42567,7 +42567,7 @@
     },
     {
       "Id": 30,
-      "Governor": 106,
+      "Governor": 466,
       "Counsellor": 0,
       "Flag": 30,
       "TechniquePoint": 0,
@@ -42575,7 +42575,7 @@
     },
     {
       "Id": 31,
-      "Governor": 150,
+      "Governor": 106,
       "Counsellor": 0,
       "Flag": 31,
       "TechniquePoint": 0,
@@ -42583,7 +42583,7 @@
     },
     {
       "Id": 32,
-      "Governor": 432,
+      "Governor": 150,
       "Counsellor": 0,
       "Flag": 32,
       "TechniquePoint": 0,
@@ -42591,7 +42591,7 @@
     },
     {
       "Id": 33,
-      "Governor": 633,
+      "Governor": 432,
       "Counsellor": 0,
       "Flag": 33,
       "TechniquePoint": 0,
@@ -42599,32 +42599,31 @@
     },
     {
       "Id": 34,
-      "Governor": 264,
-      "Counsellor": 9,
+      "Governor": 633,
       "Flag": 34,
       "TechniquePoint": 0,
       "PolicyType": 1
     },
     {
       "Id": 35,
-      "Governor": 482,
-      "Counsellor": 483,
+      "Governor": 264,
+      "Counsellor": 9,
       "Flag": 35,
       "TechniquePoint": 0,
       "PolicyType": 1
     },
     {
       "Id": 36,
-      "Governor": 102,
-      "Counsellor": 83,
+      "Governor": 482,
+      "Counsellor": 483,
       "Flag": 36,
       "TechniquePoint": 0,
       "PolicyType": 1
     },
     {
       "Id": 37,
-      "Governor": 110,
-      "Counsellor": 315,
+      "Governor": 102,
+      "Counsellor": 83,
       "Flag": 37,
       "TechniquePoint": 0,
       "PolicyType": 1
@@ -42632,7 +42631,7 @@
     {
       "Id": 38,
       "Governor": 724,
-      "Counsellor": 0,
+      "Counsellor": 315,
       "Flag": 38,
       "TechniquePoint": 0,
       "PolicyType": 1
@@ -44459,8 +44458,8 @@
       "Name": "长沙",
       "Leader": 106,
       "BuildingType": 1,
-      "BelongForce": 30,
-      "BelongCorps": 30,
+      "BelongForce": 31,
+      "BelongCorps": 31,
       "CityLevelType": 1,
       "x": 136,
       "y": 192,
@@ -44507,8 +44506,8 @@
       "Name": "武陵",
       "Leader": 150,
       "BuildingType": 1,
-      "BelongForce": 31,
-      "BelongCorps": 31,
+      "BelongForce": 32,
+      "BelongCorps": 32,
       "CityLevelType": 1,
       "x": 97,
       "y": 183,
@@ -44554,8 +44553,8 @@
       "Name": "桂阳",
       "Leader": 432,
       "BuildingType": 1,
-      "BelongForce": 32,
-      "BelongCorps": 32,
+      "BelongForce": 33,
+      "BelongCorps": 33,
       "CityLevelType": 1,
       "x": 127,
       "y": 216,
@@ -44599,8 +44598,8 @@
       "Name": "零陵",
       "Leader": 633,
       "BuildingType": 1,
-      "BelongForce": 33,
-      "BelongCorps": 33,
+      "BelongForce": 34,
+      "BelongCorps": 34,
       "CityLevelType": 1,
       "x": 98,
       "y": 213,
@@ -44737,8 +44736,8 @@
       "Name": "梓潼",
       "Leader": 264,
       "BuildingType": 1,
-      "BelongForce": 34,
-      "BelongCorps": 34,
+      "BelongForce": 35,
+      "BelongCorps": 35,
       "CityLevelType": 1,
       "x": 44,
       "y": 138,
@@ -44783,8 +44782,8 @@
       "Name": "江州",
       "Leader": 482,
       "BuildingType": 1,
-      "BelongForce": 35,
-      "BelongCorps": 35,
+      "BelongForce": 36,
+      "BelongCorps": 36,
       "CityLevelType": 1,
       "x": 58,
       "y": 175,
