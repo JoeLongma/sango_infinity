@@ -30,3 +30,5 @@
 /Build/baselib.dll
 /Project/LoopScrollRect.Editor.csproj
 *.csproj
+/Data/Export/Scenario/~$剧本配置.xlsx
+/Data/Export/Common/~$技能配置.xlsx
