@@ -164,12 +164,12 @@ namespace Sango.Game
         /// <param name="scenario"></param>
         public static bool AIIntrior(City city, Scenario scenario)
         {
-
             // 兵临城下
             if (city.IsEnemiesRound(9))
                 return true;
 
             AIBuilding(city, scenario);
+
             AIIntriorBalance(city, scenario);
             if (city.allIntriorBuildings.Count >= city.CityLevelType.insideSlot)
             {
@@ -330,7 +330,7 @@ namespace Sango.Game
                     break;
 
                 int index = -1;
-                for(int i = 0; i < city.innerSlot.Length; ++i)
+                for (int i = 0; i < city.innerSlot.Length; ++i)
                 {
                     if (city.innerSlot[i] <= 0)
                     {
@@ -339,7 +339,7 @@ namespace Sango.Game
                     }
                 }
 
-                if(index >= 0)
+                if (index >= 0)
                 {
                     Person person = City.sort_by_BaseBuildAbility[0];
                     City.sort_by_BaseBuildAbility.RemoveAt(0);
@@ -370,7 +370,41 @@ namespace Sango.Game
             return true;
         }
 
-        static List<Cell> tempCellList = new List<Cell>();
+        public static bool TryBuilding(City city, BuildingKindType buildingKindType, int count, Scenario scenario)
+        {
+            if (city.allIntriorBuildings.Count >= city.CityLevelType.insideSlot)
+                return true;
+
+            if (city.freePersons.Count <= 0)
+                return true;
+
+            // 统计一个正在建造的数量
+            int buildingNum = 0;
+            // 已建造的数量
+            int num = 0;
+            for (int i = 0; i < city.allIntriorBuildings.Count; i++)
+            {
+                Building building = city.allIntriorBuildings[i];
+                if (building.Id == (int)buildingKindType)
+                    num++;
+                if (!building.isComplte)
+                    buildingNum++;
+            }
+
+            if (num >= count) return true;
+
+            int slotIdx = -1;
+            for (int i = 0; i < city.innerSlot.Length; i++)
+            {
+                if (city.innerSlot[i] <= 0)
+                {
+                    slotIdx = i;
+                    break;
+                }
+            }
+
+            return true;
+        }
 
         public static bool AIBuldIntriore(City city, Scenario scenario)
         {
@@ -382,6 +416,9 @@ namespace Sango.Game
 
             if (city.IsBorderCity)
             {
+                // 优先建造军事
+
+
                 return AIBuildingIntriorBalance(city, scenario);
             }
             else
@@ -658,7 +695,7 @@ namespace Sango.Game
                     }
                 }
 
-                
+
             }
             return true;
         }

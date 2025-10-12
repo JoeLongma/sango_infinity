@@ -537,7 +537,7 @@ namespace Sango.Game
 
             //基础伤害
             float base_atk = attacker.GetAttack();
-            int base_troops = attacker.GetTroops();
+            int base_troops = attacker.GetSkillMethodAvaliabledTroops();
 
             float difficultyDamageFactor = 1;
             if (attacker.BelongForce != null && attacker.BelongForce.IsPlayer)

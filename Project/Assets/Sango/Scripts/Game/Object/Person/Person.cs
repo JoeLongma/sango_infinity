@@ -366,7 +366,8 @@ namespace Sango.Game
         {
             get
             {
-                return (Politics * 3 + Glamour);
+                // 建设能力 = 政治 * 67% + 50;
+                return Politics * 6700 / 10000 + 50;
             }
         }
 

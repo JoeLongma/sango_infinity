@@ -219,25 +219,25 @@ namespace Sango.Game
 
 
         /// <summary>
-        /// 工作花费 {农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装}
+        /// 工作花费 {农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马}
         /// </summary>
         [JsonProperty]
-        public int[] jobCost = new int[] { 200, 200, 100, 0, 0, 300, 0, 1000 };
+        public int[] jobCost = new int[] { 200, 200, 100, 0, 0, 300, 0, 200, 0, 0, 0, 0 };
         /// <summary>
-        /// 工作人数限制 {农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装}
+        /// 工作人数限制 {农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马}
         /// </summary>
         [JsonProperty]
-        public int[] jobMaxPersonCount = new int[] { 3, 3, 3, 3, 1, 3, 1, 3 };
+        public int[] jobMaxPersonCount = new int[] { 3, 3, 3, 3, 1, 3, 1, 3, 3, 3, 3, 3 };
         /// <summary>
-        /// 工作获取的功绩 {农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装}
+        /// 工作获取的功绩 {农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马}
         /// </summary>
         [JsonProperty]
-        public int[] jobMeritGain = new int[] { 5, 5, 5, 5, 5, 10, 20, 20 };
+        public int[] jobMeritGain = new int[] { 5, 5, 5, 5, 5, 10, 20, 20, 20, 20, 20, 20 };
         /// <summary>
-        /// 工作获取的技巧点 {农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装}
+        /// 工作获取的技巧点 {农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马}
         /// </summary>
         [JsonProperty]
-        public int[] jobTechniquePoint = new int[] { 10, 10, 10, 10, 10, 10, 10, 10 };
+        public int[] jobTechniquePoint = new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 };
 
         /// <summary>
         /// 粮食倍率

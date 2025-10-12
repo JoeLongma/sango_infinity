@@ -177,7 +177,7 @@ namespace Sango.Game
         //}
 
         public virtual int GetAttack() { return BuildingType.atk; }
-        public virtual int GetBaseCommand() { return 0; }
+        public virtual int GetDefence() { return 50; }
         public float GetAttackBackFactor(Skill skill, int distance)
         {
             if (skill.IsRange() && skill.costEnergy == 0 && distance > 1)
@@ -191,7 +191,7 @@ namespace Sango.Game
         {
             return BuildingType.durabilityLimit;
         }
-        public virtual int GetTroops()
+        public virtual int GetSkillMethodAvaliabledTroops()
         {
             return durability * 10000 / GetMaxDurability();
         }

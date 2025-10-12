@@ -1590,6 +1590,7 @@ namespace Sango.Game
         /// 生产兵装
         /// </summary>
         /// <param name="personList"></param>
+        /// <param name="itemType"></param>
         /// <returns></returns>
         public bool JobCreateItems(List<Person> personList, ItemType itemType)
         {
@@ -1603,7 +1604,7 @@ namespace Sango.Game
             ScenarioVariables variables = scenario.Variables;
             int jobId = (int)CityJobType.CreateItems;
 
-            int goldNeed = variables.jobCost[jobId];
+            int goldNeed = variables.jobCost[jobId] + itemType.cost;
             int maxCount = variables.jobMaxPersonCount[jobId];
             int count = Math.Min(personList.Count, maxCount);
 
@@ -1669,9 +1670,10 @@ namespace Sango.Game
             return true;
         }
 
-
-
-
+        /// <summary>
+        /// 获取城池的攻击力
+        /// </summary>
+        /// <returns></returns>
         public override int GetAttack()
         {
             ScenarioVariables Variables = Scenario.Cur.Variables;
@@ -1680,19 +1682,37 @@ namespace Sango.Game
 
             return atk;
         }
+
+        /// <summary>
+        /// 获取城池的防御力
+        /// </summary>
+        /// <returns></returns>
+        public override int GetDefence()
+        {
+            ScenarioVariables Variables = Scenario.Cur.Variables;
+
+            // 根据太守数值来计算基础防御
+            int def = Math.Max(50, (Leader?.Intelligence ?? 30 * 3000 + Leader?.Command ?? 30 * 7000) / 10000);
+
+            return def;
+        }
+
+        /// <summary>
+        /// 获取最大耐久
+        /// </summary>
+        /// <returns></returns>
         public override int GetMaxDurability()
         {
             return CityLevelType.maxDurability;
         }
 
-        public override int GetTroops()
+        /// <summary>
+        /// 获取
+        /// </summary>
+        /// <returns></returns>
+        public override int GetSkillMethodAvaliabledTroops()
         {
             return Math.Max(10000, durability * troops / GetMaxDurability());
-        }
-
-        public override int GetBaseCommand()
-        {
-            return Leader?.Command ?? 50;
         }
 
         public struct EnemyInfo
@@ -1874,19 +1894,20 @@ namespace Sango.Game
                     return a.distance.CompareTo(b.distance);
                 });
             }
+
             UpdateActiveTroopTypes();
             UpdateFightPower();
             SortFreePersons();
 
             if (IsBorderCity)
             {
-                AICommandList.Add(CityAI.AITransfrom);
                 AICommandList.Add(CityAI.AIAttack);
                 AICommandList.Add(CityAI.AIIntrior);
                 AICommandList.Add(CityAI.AIRecuritTroop);
             }
             else
             {
+                // 物资输送
                 AICommandList.Add(CityAI.AITransfrom);
                 AICommandList.Add(CityAI.AIIntrior);
                 AICommandList.Add(CityAI.AIRecuritTroop);
