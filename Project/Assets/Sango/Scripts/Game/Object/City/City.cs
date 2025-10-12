@@ -3,7 +3,9 @@ using Sango.Game.Render;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TreeEditor;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace Sango.Game
 {
@@ -37,7 +39,9 @@ namespace Sango.Game
         /// <summary>
         /// 库存
         /// </summary>
-        [JsonProperty] public ItemStore itemStore = new ItemStore();
+        [JsonProperty]
+        [JsonConverter(typeof(ItemStoreConverter))]
+        public ItemStore itemStore = new ItemStore();
 
         /// <summary>
         /// 商业值
@@ -174,7 +178,7 @@ namespace Sango.Game
         internal int virtualFightPower;
         bool isUpdatedFightPower;
         bool boderLineChecked = false;
-        
+
         /// <summary>
         /// 所有武将
         /// </summary>
@@ -661,7 +665,7 @@ namespace Sango.Game
 
         public void OnBuildingComplete(Building building, Person builder)
         {
-            if(builder != null)
+            if (builder != null)
                 builder.merit += building.durability / 10;
             this.CalculateHarvest();
         }
@@ -834,7 +838,7 @@ namespace Sango.Game
             bool rs = base.ChangeDurability(num, atk);
             if (rs)
             {
-                durability = 2000;
+                durability = 1500;
             }
 
             if (Render != null)
@@ -950,11 +954,11 @@ namespace Sango.Game
                 }
             }
 
-            if(escapeCity == null)
+            if (escapeCity == null)
             {
                 Scenario.Cur.troopsSet.ForEach((troop) =>
                 {
-                    if(troop.IsAlive && troop.BelongCity == this)
+                    if (troop.IsAlive && troop.BelongCity == this)
                         troop.Clear();
                 });
             }
@@ -1118,55 +1122,71 @@ namespace Sango.Game
 
             builder.SetMission(MissionType.PersonBuild, building, 0);
 
-            Sango.Log.Print($"[{BelongForce.Name}]在<{Name}>由{builder.Name}开始修建: {building.Name}");
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]在<{Name}>由{builder.Name}开始修建: {building.Name}");
 
             return building;
         }
 
         /// <summary>
-        /// 开发
+        /// 农业
         /// </summary>
-        /// <param name="person"></param>
+        /// <param name="personList"></param>
         /// <returns></returns>
         public bool JobFarming(List<Person> personList)
         {
             if (agriculture >= CityLevelType.maxAgriculture) return false;
             if (personList == null || personList.Count == 0) return false;
+            Scenario scenario = Scenario.Cur;
+            ScenarioVariables variables = scenario.Variables;
+            int jobId = (int)CityJobType.Farming;
 
             // TODO: 特性对开发的影响
-            int goldNeed = Scenario.Cur.Variables.farmingCost;
+            int goldNeed = variables.jobCost[jobId];
+            int maxCount = variables.jobMaxPersonCount[jobId];
+            int count = Math.Min(personList.Count, maxCount);
+
+            scenario.Event.OnCityCheckJobCost?.Invoke(this, jobId, personList, count,
+                (x) => { goldNeed = x; });
+
             if (gold < goldNeed)
                 return false;
-            int count = Scenario.Cur.Variables.farmingMaxPersonCount;
+
+            int meritGain = variables.jobMaxPersonCount[jobId];
+            int techniquePointGain = variables.jobTechniquePoint[jobId];
+
 
 #if SANGO_DEBUG
             StringBuilder stringBuilder = new StringBuilder();
 #endif
-            foreach (Person person in personList)
+            int totalValue = 0;
+            for (int i = 0; i < count; i++)
             {
-
-                int value = person.BaseAgricultureAbility;
-                agriculture += value;
+                Person person = personList[i];
+                totalValue += person.BaseAgricultureAbility;
+                person.merit += meritGain;
+                person.GainExp(meritGain);
                 freePersons.Remove(person);
-                gold -= goldNeed;
-                count--;
 #if SANGO_DEBUG
                 stringBuilder.Append(person.Name);
                 stringBuilder.Append(",");
 #endif
                 person.ActionOver = true;
-                if (agriculture > CityLevelType.maxAgriculture)
-                {
-                    agriculture = CityLevelType.maxAgriculture;
-                    break;
-                }
-
-                if (gold < goldNeed || count <= 0)
-                    break;
             }
 
+            scenario.Event.OnCityJobResult?.Invoke(this, jobId, personList, count,
+                (x) => { totalValue = x; });
+
+            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, count,
+                (x) => { techniquePointGain = x; });
+
+            BelongForce.GainTechniquePoint(techniquePointGain);
+            gold -= goldNeed;
+            agriculture += totalValue;
+            if (agriculture > CityLevelType.maxAgriculture)
+                agriculture = CityLevelType.maxAgriculture;
+
 #if SANGO_DEBUG
-            Sango.Log.Print($"[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了开垦!农业值达到了:{agriculture}");
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了开垦!农业值达到了:{agriculture}");
 #endif
             return true;
         }
@@ -1174,97 +1194,129 @@ namespace Sango.Game
         /// <summary>
         /// 开发
         /// </summary>
-        /// <param name="person"></param>
+        /// <param name="personList"></param>
         /// <returns></returns>
         public bool JobDevelop(List<Person> personList)
         {
             if (commerce >= CityLevelType.maxCommerce) return false;
             if (personList == null || personList.Count == 0) return false;
+            Scenario scenario = Scenario.Cur;
+
+            ScenarioVariables variables = scenario.Variables;
+            int jobId = (int)CityJobType.Develop;
 
             // TODO: 特性对开发的影响
-            int goldNeed = Scenario.Cur.Variables.developCost;
+            int goldNeed = variables.jobCost[jobId];
+            int maxCount = variables.jobMaxPersonCount[jobId];
+            int count = Math.Min(personList.Count, maxCount);
+
+            scenario.Event.OnCityCheckJobCost?.Invoke(this, jobId, personList, count,
+               (x) => { goldNeed = x; });
+
             if (gold < goldNeed)
                 return false;
 
-            int count = Scenario.Cur.Variables.developMaxPersonCount;
+            int meritGain = variables.jobMaxPersonCount[jobId];
+            int techniquePointGain = variables.jobTechniquePoint[jobId];
+
 #if SANGO_DEBUG
             StringBuilder stringBuilder = new StringBuilder();
 #endif
-            foreach (Person person in personList)
+            int totalValue = 0;
+            for (int i = 0; i < count; i++)
             {
-                int value = person.BaseCommerceAbility;
-                commerce += value;
-                person.merit += value;
+                Person person = personList[i];
+                totalValue += person.BaseCommerceAbility;
+                person.merit += meritGain;
+                person.GainExp(meritGain);
+
                 freePersons.Remove(person);
 #if SANGO_DEBUG
                 stringBuilder.Append(person.Name);
                 stringBuilder.Append(",");
 #endif
-                gold -= goldNeed;
                 person.ActionOver = true;
-                count--;
-
-
-
-                if (commerce > CityLevelType.maxCommerce)
-                {
-                    commerce = CityLevelType.maxCommerce;
-                    break;
-                }
-                if (gold < goldNeed || count <= 0)
-                    break;
             }
 
-#if SANGO_DEBUG
-            Sango.Log.Print($"[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了开发!商业值达到了:{commerce}");
-#endif
+            scenario.Event.OnCityJobResult?.Invoke(this, jobId, personList, count,
+                (x) => { totalValue = x; });
 
+            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, count,
+                (x) => { techniquePointGain = x; });
+
+            BelongForce.GainTechniquePoint(techniquePointGain);
+            gold -= goldNeed;
+            commerce += totalValue;
+            if (commerce > CityLevelType.maxCommerce)
+                commerce = CityLevelType.maxCommerce;
+
+#if SANGO_DEBUG
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了开发!商业值达到了:{commerce}");
+#endif
             return true;
         }
 
         /// <summary>
         /// 治安巡视
         /// </summary>
-        /// <param name="person"></param>
+        /// <param name="personList"></param>
         /// <returns></returns>
         public bool JobInspection(List<Person> personList)
         {
             if (security >= 100) return false;
             if (personList == null || personList.Count == 0) return false;
+            Scenario scenario = Scenario.Cur;
 
-            // TODO: 特性对开发的影响
-            int goldNeed = Scenario.Cur.Variables.inspectionCost;
+            ScenarioVariables variables = scenario.Variables;
+            int jobId = (int)CityJobType.Inspection;
+
+            int goldNeed = variables.jobCost[jobId];
+            int maxCount = variables.jobMaxPersonCount[jobId];
+            int count = Math.Min(personList.Count, maxCount);
+
+            scenario.Event.OnCityCheckJobCost?.Invoke(this, jobId, personList, count,
+                (x) => { goldNeed = x; });
+
+
             if (gold < goldNeed)
                 return false;
-            int count = Scenario.Cur.Variables.developMaxPersonCount;
+
+            int meritGain = variables.jobMaxPersonCount[jobId];
+            int techniquePointGain = variables.jobTechniquePoint[jobId];
+
 #if SANGO_DEBUG
             StringBuilder stringBuilder = new StringBuilder();
 #endif
-            foreach (Person person in personList)
+            int totalValue = 0;
+            for (int i = 0; i < count; i++)
             {
+                Person person = personList[i];
+                totalValue += person.BaseSecurityAbility;
+                person.merit += meritGain;
+                person.GainExp(meritGain);
 
-                int value = person.BaseSecurityAbility;
-                security += value;
-                person.merit += value;
                 freePersons.Remove(person);
 #if SANGO_DEBUG
                 stringBuilder.Append(person.Name);
                 stringBuilder.Append(",");
 #endif
                 person.ActionOver = true;
-                gold -= goldNeed;
-                count--;
-
-                if (security >= 100)
-                {
-                    security = 100;
-                    break;
-                }
-                if (gold < goldNeed || count <= 0)
-                    break;
             }
+            // 
+            scenario.Event.OnCityJobResult?.Invoke(this, jobId, personList, count,
+                  (x) => { totalValue = x; });
+
+            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, count,
+                (x) => { techniquePointGain = x; });
+
+            BelongForce.GainTechniquePoint(techniquePointGain);
+            gold -= goldNeed;
+            security += totalValue;
+            if (security > 100)
+                security = 100;
+
 #if SANGO_DEBUG
-            Sango.Log.Print($"[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了巡视!治安提升到了:{security}");
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了巡视!治安提升到了:{security}");
 #endif
             return true;
         }
@@ -1272,46 +1324,62 @@ namespace Sango.Game
         /// <summary>
         /// 训练
         /// </summary>
-        /// <param name="person"></param>
+        /// <param name="personList"></param>
         /// <returns></returns>
         public bool JobTrainTroop(List<Person> personList)
         {
             if (morale >= 100) return false;
             if (personList == null || personList.Count == 0) return false;
+            Scenario scenario = Scenario.Cur;
 
-            // TODO: 特性对开发的影响
-            int goldNeed = Scenario.Cur.Variables.trainTroopCost;
+            ScenarioVariables variables = scenario.Variables;
+            int jobId = (int)CityJobType.TrainTroop;
+
+            int goldNeed = variables.jobCost[jobId];
+            int maxCount = variables.jobMaxPersonCount[jobId];
+            int count = Math.Min(personList.Count, maxCount);
+
+            scenario.Event.OnCityCheckJobCost?.Invoke(this, jobId, personList, count,
+                (x) => { goldNeed = x; });
+
             if (gold < goldNeed)
                 return false;
-            int count = Scenario.Cur.Variables.trainTroopMaxPersonCount;
+
+            int meritGain = variables.jobMaxPersonCount[jobId];
+            int techniquePointGain = variables.jobTechniquePoint[jobId];
+
 #if SANGO_DEBUG
             StringBuilder stringBuilder = new StringBuilder();
 #endif
-            foreach (Person person in personList)
+            int totalValue = 0;
+            for (int i = 0; i < count; i++)
             {
+                Person person = personList[i];
+                totalValue += person.BaseTrainTroopAbility;
+                person.merit += meritGain;
+                person.GainExp(meritGain);
 
-                int value = person.BaseTrainTroopAbility;
-                morale += value;
-                person.merit += value;
                 freePersons.Remove(person);
 #if SANGO_DEBUG
                 stringBuilder.Append(person.Name);
                 stringBuilder.Append(",");
 #endif
                 person.ActionOver = true;
-                gold -= goldNeed;
-                count--;
-
-                if (morale >= 100)
-                {
-                    morale = 100;
-                    break;
-                }
-                if (gold < goldNeed || count <= 0)
-                    break;
             }
+            scenario.Event.OnCityJobResult?.Invoke(this, jobId, personList, count,
+                 (x) => { totalValue = x; });
+
+            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, count,
+                (x) => { techniquePointGain = x; });
+
+            BelongForce.GainTechniquePoint(techniquePointGain);
+            gold -= goldNeed;
+            morale += totalValue;
+            if (morale > 100)
+                morale = 100;
+
 #if SANGO_DEBUG
-            Sango.Log.Print($"[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了训练!士气提升到了:{morale}");
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了训练!士气提升到了:{morale}");
 #endif
             return true;
         }
@@ -1319,20 +1387,41 @@ namespace Sango.Game
         /// <summary>
         /// 搜索
         /// </summary>
-        /// <param name="person"></param>
+        /// <param name="personList"></param>
         /// <returns></returns>
         public bool JobSearching(List<Person> personList)
         {
             if (personList == null || personList.Count == 0) return false;
 
-            foreach (Person person in personList)
+            Scenario scenario = Scenario.Cur;
+
+            ScenarioVariables variables = scenario.Variables;
+            int jobId = (int)CityJobType.Searching;
+
+            int goldNeed = variables.jobCost[jobId];
+            int maxCount = variables.jobMaxPersonCount[jobId];
+            int count = Math.Min(personList.Count, maxCount);
+
+            scenario.Event.OnCityCheckJobCost?.Invoke(this, jobId, personList, count,
+             (x) => { goldNeed = x; });
+
+            if (gold < goldNeed)
+                return false;
+
+
+            int meritGain = variables.jobMaxPersonCount[jobId];
+            int techniquePointGain = variables.jobTechniquePoint[jobId];
+
+            for (int i = 0; i < count; i++)
             {
+                Person person = personList[i];
                 float ability_improve = (float)person.BaseSearchingAbility / 50f;
+                freePersons.Remove(person);
                 // 发现人才
                 if (wildPersons.Count > 0)
                 {
                     Person wild_dest = null;
-                    for (int i = 0; i < wildPersons.Count; i++)
+                    for (int j = 0; j < wildPersons.Count; j++)
                     {
                         Person wild = wildPersons[i];
                         if (wild != null && wild.IsAlive && wild.IsValid && !wild.beFinded)
@@ -1344,13 +1433,18 @@ namespace Sango.Game
 
                     if (wild_dest != null)
                     {
+                        scenario.Event.OnCityJobSearchingWild?.Invoke(this, jobId, personList, count,
+                            (x) => { ability_improve = x; });
+
                         if (GameRandom.Changce((int)(10f * ability_improve)))
                         {
 #if SANGO_DEBUG
-                            Sango.Log.Print($"[{BelongForce.Name}]<{Name}>的{person.Name}发现了人才->{wild_dest.Name}");
+                            Sango.Log.Print($"@内政@[{BelongForce.Name}]<{Name}>的{person.Name}发现了人才->{wild_dest.Name}");
 #endif
                             wild_dest.beFinded = true;
-                            person.merit += 100;
+                            person.merit += meritGain;
+                            person.GainExp(meritGain);
+
                             person.ActionOver = true;
                         }
                     }
@@ -1367,24 +1461,31 @@ namespace Sango.Game
                 // 搜索钱财
                 if (!person.ActionOver && GameRandom.Changce((int)(10 * ability_improve)))
                 {
-                    person.merit += 50;
+                    person.merit += meritGain;
+                    person.GainExp(meritGain);
+
                     person.ActionOver = true;
                 }
 
                 //TODO: 触发事件
 
                 // 什么也没找到
-                person.merit += 10;
-                freePersons.Remove(person);
+                person.merit += meritGain;
+                person.GainExp(meritGain);
+
                 person.ActionOver = true;
             }
+
+            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, count,
+                (x) => { techniquePointGain = x; });
+
+            BelongForce.GainTechniquePoint(techniquePointGain);
             return true;
         }
 
         /// <summary>
         /// 治疗伤兵
         /// </summary>
-        /// <param name="person"></param>
         /// <returns></returns>
         public bool JobHealingTroop()
         {
@@ -1396,7 +1497,7 @@ namespace Sango.Game
             troops += rs;
             woundedTroops -= rs;
 #if SANGO_DEBUG
-            Sango.Log.Print($"[{BelongForce.Name}]<{Name}>进行了士兵治愈!共治愈到{rs}人, 当前士兵提升到了:{troops}");
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]<{Name}>进行了士兵治愈!共治愈到{rs}人, 当前士兵提升到了:{troops}");
 #endif
             return true;
         }
@@ -1404,65 +1505,150 @@ namespace Sango.Game
         /// <summary>
         /// 招募
         /// </summary>
-        /// <param name="person"></param>
+        /// <param name="personList"></param>
         /// <returns></returns>
         public bool JobRecuritTroop(List<Person> personList)
         {
+
+            if (personList == null || personList.Count == 0) return false;
             // 城池满了不再招募
             if (TroopsIsFull) return false;
-            if (Scenario.Cur.Variables.populationEnable && troopPopulation <= 500) return false;
-            int goldNeed = Scenario.Cur.Variables.recuritTroopCost;
-            if (gold < goldNeed || security < 60)
-                return false;
-            if (personList == null || personList.Count == 0) return false;
+
+            Scenario scenario = Scenario.Cur;
+
+            if (scenario.Variables.populationEnable && troopPopulation <= 500) return false;
+            if (security < 60) return false;
             if (troops > food) return false;
-            int need = CityLevelType.maxTroops - troops - woundedTroops;
-            int count = Scenario.Cur.Variables.recuritMaxPersonCount;
+
+            ScenarioVariables variables = scenario.Variables;
+            int jobId = (int)CityJobType.TrainTroop;
+
+            int goldNeed = variables.jobCost[jobId];
+            int maxCount = variables.jobMaxPersonCount[jobId];
+            int count = Math.Min(personList.Count, maxCount);
+
+            scenario.Event.OnCityCheckJobCost?.Invoke(this, jobId, personList, count,
+                 (x) => { goldNeed = x; });
+
+            if (gold < goldNeed)
+                return false;
+
+            int meritGain = variables.jobMaxPersonCount[jobId];
+            int techniquePointGain = variables.jobTechniquePoint[jobId];
+
 #if SANGO_DEBUG
             StringBuilder stringBuilder = new StringBuilder();
             int lastTroops = troops;
 #endif
-            foreach (Person person in personList)
+            int totalValue = 0;
+            for (int i = 0; i < count; i++)
             {
-                int value = Math.Min(need, person.BaseRecruitmentAbility);
-                gold -= goldNeed;
-                if (Scenario.Cur.Variables.populationEnable)
-                {
-                    value = Math.Min(value, troopPopulation);
-                    troopPopulation -= value;
-                    population -= value;
-                }
+                Person person = personList[i];
+                totalValue += person.BaseRecruitmentAbility;
+                person.merit += meritGain;
+                person.GainExp(meritGain);
 
-                //士气减少
-                morale -= value * 100 / troops;
-
-                troops += value;
-                person.merit += value / 10;
-
-                if (troops > CityLevelType.maxTroops)
-                    troops = CityLevelType.maxTroops;
-
-                //治安减少
-                security -= 10 * value / 1000;
                 freePersons.Remove(person);
 #if SANGO_DEBUG
                 stringBuilder.Append(person.Name);
                 stringBuilder.Append(",");
 #endif
                 person.ActionOver = true;
-                count--;
-                if (TroopsIsFull || (Scenario.Cur.Variables.populationEnable && troopPopulation <= 500) || gold < goldNeed)
-                {
-                    break;
-                }
-                if (troops > food || count <= 0)
-                {
-                    break;
-                }
-
             }
+
+            scenario.Event.OnCityJobResult?.Invoke(this, jobId, personList, count,
+                 (x) => { totalValue = x; });
+
+            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, count,
+                (x) => { techniquePointGain = x; });
+
+            if (Scenario.Cur.Variables.populationEnable)
+            {
+                totalValue = Math.Min(totalValue, troopPopulation);
+                troopPopulation -= totalValue;
+                population -= totalValue;
+            }
+
+            if (totalValue + troops > CityLevelType.maxTroops)
+                totalValue = CityLevelType.maxTroops - troops;
+
+            //士气减少
+            morale -= (troops * morale + totalValue * 30) / (troops + totalValue);
+            troops += totalValue;
+            //治安减少
+            security -= Math.Min(6, 4 * totalValue / 1000);
+
+            BelongForce.GainTechniquePoint(techniquePointGain);
+
 #if SANGO_DEBUG
-            Sango.Log.Print($"[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了招募!共招募到{troops - lastTroops}人, 当前士兵人数提升到了:{troops}");
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了招募!共招募到{troops - lastTroops}人, 当前士兵人数提升到了:{troops}");
+#endif
+            return true;
+        }
+
+        /// <summary>
+        /// 生产兵装
+        /// </summary>
+        /// <param name="personList"></param>
+        /// <returns></returns>
+        public bool JobCreateItems(List<Person> personList, ItemType itemType)
+        {
+            if (personList == null || personList.Count == 0 || itemType == null) return false;
+            if (itemStore.TotalNumber >= CityLevelType.storeMax) return false;
+
+            Scenario scenario = Scenario.Cur;
+            int empty = CityLevelType.storeMax - itemStore.TotalNumber;
+            if (empty < 1000) return false;
+
+            ScenarioVariables variables = scenario.Variables;
+            int jobId = (int)CityJobType.CreateItems;
+
+            int goldNeed = variables.jobCost[jobId];
+            int maxCount = variables.jobMaxPersonCount[jobId];
+            int count = Math.Min(personList.Count, maxCount);
+
+            scenario.Event.OnCityCheckJobCost?.Invoke(this, jobId, personList, count,
+                 (x) => { goldNeed = x; });
+
+            if (gold < goldNeed)
+                return false;
+
+            int meritGain = variables.jobMaxPersonCount[jobId];
+            int techniquePointGain = variables.jobTechniquePoint[jobId];
+
+#if SANGO_DEBUG
+            StringBuilder stringBuilder = new StringBuilder();
+            int lastTroops = troops;
+#endif
+            int totalValue = 0;
+            for (int i = 0; i < count; i++)
+            {
+                Person person = personList[i];
+                totalValue += person.BaseRecruitmentAbility;
+                person.merit += meritGain;
+                person.GainExp(meritGain);
+
+                freePersons.Remove(person);
+#if SANGO_DEBUG
+                stringBuilder.Append(person.Name);
+                stringBuilder.Append(",");
+#endif
+                person.ActionOver = true;
+            }
+
+            scenario.Event.OnCityJobResult?.Invoke(this, jobId, personList, count,
+                 (x) => { totalValue = x; });
+
+            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, count,
+                (x) => { techniquePointGain = x; });
+
+            totalValue = Math.Min(empty, totalValue);
+            int exsistNumber = itemStore.Add(itemType.Id, totalValue);
+
+            BelongForce.GainTechniquePoint(techniquePointGain);
+
+#if SANGO_DEBUG
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了生产兵装!共生产了{totalValue}{itemType.Name}, 当前数量:{exsistNumber}");
 #endif
             return true;
         }
@@ -1483,6 +1669,9 @@ namespace Sango.Game
             return true;
         }
 
+
+
+
         public override int GetAttack()
         {
             ScenarioVariables Variables = Scenario.Cur.Variables;
@@ -1490,7 +1679,7 @@ namespace Sango.Game
             int atk = Math.Max(BuildingType.atk, (Leader?.Strength ?? 50 * 5000 + Leader?.Command ?? 50 * 5000) / 10000);
 
             return atk;
-         }
+        }
         public override int GetMaxDurability()
         {
             return CityLevelType.maxDurability;

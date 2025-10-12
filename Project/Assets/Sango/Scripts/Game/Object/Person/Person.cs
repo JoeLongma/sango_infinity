@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.Security.Cryptography;
 
 namespace Sango.Game
 {
@@ -13,28 +12,28 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty]
         [JsonConverter(typeof(Id2ObjConverter<Force>))]
-        public Force BelongForce;
+        public Force BelongForce { get; set; }
 
         /// <summary>
         /// 所属势力
         /// </summary>
         [JsonProperty]
         [JsonConverter(typeof(Id2ObjConverter<Force>))]
-        public Corps BelongCorps;
+        public Corps BelongCorps { get; set; }
 
         /// <summary>
         /// 所属城池
         /// </summary>
         [JsonProperty]
         [JsonConverter(typeof(Id2ObjConverter<City>))]
-        public City BelongCity;
+        public City BelongCity { get; set; }
 
         /// <summary>
         /// 所属部队
         /// </summary>
         [JsonProperty]
         [JsonConverter(typeof(Id2ObjConverter<Troop>))]
-        public Troop BelongTroop;
+        public Troop BelongTroop { get; set; }
 
         /// <summary>
         /// 姓
@@ -110,7 +109,7 @@ namespace Sango.Game
         /// </summary>
         [JsonConverter(typeof(Id2ObjConverter<Official>))]
         [JsonProperty]
-        public Official Official;
+        public Official Official { get; set; }
 
         /// <summary>
         /// 忠诚
@@ -121,6 +120,18 @@ namespace Sango.Game
         /// 功绩
         /// </summary>
         [JsonProperty] public int merit;
+
+        /// <summary>
+        /// 经验
+        /// </summary>
+        [JsonProperty] public int Exp { get; private set; }
+
+        /// <summary>
+        /// 等级
+        /// </summary>
+        [JsonProperty]
+        [JsonConverter(typeof(Id2ObjConverter<PersonLevel>))]
+        public PersonLevel Level { get; set; }
 
         /// <summary>
         /// 统御
@@ -167,14 +178,14 @@ namespace Sango.Game
         /// </summary>
         [JsonConverter(typeof(Id2ObjConverter<Person>))]
         [JsonProperty]
-        public Person Father;
+        public Person Father { get; set; }
 
         /// <summary>
         /// 母亲
         /// </summary>
         [JsonConverter(typeof(Id2ObjConverter<Person>))]
         [JsonProperty]
-        public Person Mother;
+        public Person Mother { get; set; }
 
         /// <summary>
         /// 配偶
@@ -256,6 +267,9 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public BitCheck32 actionFlag = new BitCheck32();
 
+        /// <summary>
+        /// 武将特性
+        /// </summary>
         [JsonConverter(typeof(SangoObjectListIDConverter<Feature>))]
         [JsonProperty]
         public SangoObjectList<Feature> FeatureList;
@@ -273,6 +287,9 @@ namespace Sango.Game
         public int Politics => politics.value;
         public int Glamour => glamour.value;
 
+        /// <summary>
+        /// 是否可登场
+        /// </summary>
         public virtual bool IsValid => Age >= 16;
 
 
@@ -287,7 +304,7 @@ namespace Sango.Game
         public int TroopsLimit
         {
             //TODO: 增加国家科技加持
-            get { return Official.troopsLimit + troopsLimitExtra; }
+            get { return Official.troopsLimit + Level.troops + troopsLimitExtra; }
         }
 
         /// <summary>
@@ -665,6 +682,12 @@ namespace Sango.Game
                 }
                 person.ActionOver = true;
             }
+            ScenarioVariables variables = Scenario.Cur.Variables;
+            int jobId = (int)CityJobType.RecuritPerson;
+            int meritGain = variables.jobMaxPersonCount[jobId];
+            int techniquePointGain = variables.jobTechniquePoint[jobId];
+            merit += meritGain;
+            BelongForce?.GainTechniquePoint(techniquePointGain);
             ActionOver = true;
         }
 
@@ -727,6 +750,26 @@ namespace Sango.Game
             troop.captiveList.Add(this);
             this.BelongForce.CaptiveList.Add(this);
             return this;
+        }
+
+        /// <summary>
+        /// 获取经验
+        /// </summary>
+        /// <param name="add"></param>
+        public void GainExp(int add)
+        {
+            Exp += add;
+            while (Level.exp > 0)
+            {
+                if (Exp > Level.exp)
+                {
+                    Exp = Level.exp - Exp;
+                    Level = Level.Next;
+                    Scenario.Cur.Event.OnPersonLevelUp?.Invoke(this);
+                }
+                else
+                    break;
+            }
         }
     }
 }

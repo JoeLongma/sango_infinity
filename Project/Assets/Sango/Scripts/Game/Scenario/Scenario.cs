@@ -18,18 +18,6 @@ namespace Sango.Game
     {
         public override SangoObjectType ObjectType { get { return SangoObjectType.Scenario; } }
 
-        #region limit
-        public static readonly int MAX_DATA_COUNT = 2048;
-        public static readonly int MAX_DATA_COUNT_8096 = 8096;
-        public static readonly int MAX_DATA_COUNT_2048 = 2048;
-        public static readonly int MAX_DATA_COUNT_1024 = 1024;
-        public static readonly int MAX_DATA_COUNT_512 = 512;
-        public static readonly int MAX_DATA_COUNT_256 = 256;
-        public static readonly int MAX_DATA_COUNT_128 = 128;
-        public static readonly int MAX_DATA_COUNT_64 = 64;
-        public static readonly int MAX_DATA_COUNT_32 = 32;
-        public static readonly int MAX_DATA_COUNT_16 = 16;
-        #endregion limit
         #region Data
         [JsonProperty] public ScenarioInfo Info { get; internal set; }
         [JsonProperty] public ScenarioCommonData CommonData { internal set; get; }
@@ -37,17 +25,17 @@ namespace Sango.Game
         [JsonProperty] public Map Map { internal set; get; }
 
         [JsonConverter(typeof(SangoObjectSetConverter<Force>))]
-        [JsonProperty] public SangoObjectSet<Force> forceSet = new SangoObjectSet<Force>(MAX_DATA_COUNT_128);
+        [JsonProperty] public SangoObjectSet<Force> forceSet = new SangoObjectSet<Force>();
         [JsonConverter(typeof(SangoObjectSetConverter<Corps>))]
-        [JsonProperty] public SangoObjectSet<Corps> corpsSet = new SangoObjectSet<Corps>(MAX_DATA_COUNT_128 * 8);
+        [JsonProperty] public SangoObjectSet<Corps> corpsSet = new SangoObjectSet<Corps>();
         [JsonConverter(typeof(SangoObjectSetConverter<City>))]
-        [JsonProperty] public SangoObjectSet<City> citySet = new SangoObjectSet<City>(MAX_DATA_COUNT_512);
+        [JsonProperty] public SangoObjectSet<City> citySet = new SangoObjectSet<City>();
         [JsonConverter(typeof(SangoObjectSetConverter<Person>))]
-        [JsonProperty] public SangoObjectSet<Person> personSet = new SangoObjectSet<Person>(MAX_DATA_COUNT);
+        [JsonProperty] public SangoObjectSet<Person> personSet = new SangoObjectSet<Person>();
         [JsonConverter(typeof(SangoObjectSetConverter<Troop>))]
-        [JsonProperty] public SangoObjectSet<Troop> troopsSet = new SangoObjectSet<Troop>(MAX_DATA_COUNT);
+        [JsonProperty] public SangoObjectSet<Troop> troopsSet = new SangoObjectSet<Troop>();
         [JsonConverter(typeof(SangoObjectSetConverter<Building>))]
-        [JsonProperty] public SangoObjectSet<Building> buildingSet = new SangoObjectSet<Building>(MAX_DATA_COUNT_8096);
+        [JsonProperty] public SangoObjectSet<Building> buildingSet = new SangoObjectSet<Building>();
         [JsonConverter(typeof(SangoObjectSetConverter<Fire>))]
         [JsonProperty] public SangoObjectSet<Fire> fireSet = new SangoObjectSet<Fire>();
 
@@ -248,6 +236,10 @@ namespace Sango.Game
             else if (tType == typeof(Skill))
             {
                 return CommonData.Skills.Get(id);
+            }
+            else if (tType == typeof(PersonLevel))
+            {
+                return CommonData.PersonLevels.Get(id);
             }
             //else if (tType == typeof(CityLevelType))
             //{

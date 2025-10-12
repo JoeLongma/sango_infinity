@@ -180,7 +180,7 @@ namespace Sango.Game
         public virtual int GetBaseCommand() { return 0; }
         public float GetAttackBackFactor(Skill skill, int distance)
         {
-            if (skill.IsRange() && distance > 1)
+            if (skill.IsRange() && skill.costEnergy == 0 && distance > 1)
                 return 0.7f;
             else if (!skill.IsRange() && distance == 1)
                 return 0.9f;

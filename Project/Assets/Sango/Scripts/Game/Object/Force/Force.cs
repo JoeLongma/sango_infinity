@@ -52,7 +52,7 @@ namespace Sango.Game
         /// <summary>
         /// 技巧点数
         /// </summary>
-        [JsonProperty] public int TechniquePoint { get; set; }
+        [JsonProperty] public int TechniquePoint { get; private set; }
 
         /// <summary>
         /// 势力方针
@@ -489,6 +489,11 @@ namespace Sango.Game
                     action(c);
                 }
             }
+        }
+
+        public void GainTechniquePoint(int value)
+        {
+            TechniquePoint += value;
         }
     }
 }

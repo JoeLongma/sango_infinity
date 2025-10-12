@@ -216,55 +216,28 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public float securityInfluence = 0.1f;
 
-        /// <summary>
-        /// 开发花费
-        /// </summary>
-        [JsonProperty] public int developCost = 200;
+
 
         /// <summary>
-        /// 开发最大人数/回合
+        /// 工作花费 {农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装}
         /// </summary>
-        [JsonProperty] public int developMaxPersonCount = 3;
-
+        [JsonProperty]
+        public int[] jobCost = new int[] { 200, 200, 100, 0, 0, 300, 0, 1000 };
         /// <summary>
-        /// 农业花费/人
+        /// 工作人数限制 {农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装}
         /// </summary>
-        [JsonProperty] public int farmingCost = 200;
-
+        [JsonProperty]
+        public int[] jobMaxPersonCount = new int[] { 3, 3, 3, 3, 1, 3, 1, 3 };
         /// <summary>
-        /// 农业最大人数/回合
+        /// 工作获取的功绩 {农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装}
         /// </summary>
-        [JsonProperty] public int farmingMaxPersonCount = 3;
-
+        [JsonProperty]
+        public int[] jobMeritGain = new int[] { 5, 5, 5, 5, 5, 10, 20, 20 };
         /// <summary>
-        /// 巡视花费/人
+        /// 工作获取的技巧点 {农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装}
         /// </summary>
-        [JsonProperty] public int inspectionCost = 200;
-
-        /// <summary>
-        /// 巡视最大武将数/回合
-        /// </summary>
-        [JsonProperty] public int inspectionMaxPersonCount = 3;
-
-        /// <summary>
-        /// 训练花费/人
-        /// </summary>
-        [JsonProperty] public int trainTroopCost = 200;
-
-        /// <summary>
-        /// 训练最大武将数/回合
-        /// </summary>
-        [JsonProperty] public int trainTroopMaxPersonCount = 3;
-
-        /// <summary>
-        /// 招募花费/人
-        /// </summary>
-        [JsonProperty] public int recuritTroopCost = 200;
-
-        /// <summary>
-        /// 招募最大武将数/回合
-        /// </summary>
-        [JsonProperty] public int recuritMaxPersonCount = 3;
+        [JsonProperty]
+        public int[] jobTechniquePoint = new int[] { 10, 10, 10, 10, 10, 10, 10, 10 };
 
         /// <summary>
         /// 粮食倍率

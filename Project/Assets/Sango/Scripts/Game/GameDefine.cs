@@ -28,4 +28,21 @@
 
     }
    
+    public enum CityJobType : int
+    {
+        Farming = 0,
+        Develop,
+        Inspection,
+        TrainTroop,
+        Searching,
+        RecuritTroop,
+        RecuritPerson,
+        CreateItems,
+        MaxJobCount
+    }
+
+    public class ValueRefrence<T>
+    {
+        public T value;
+    }
 }
