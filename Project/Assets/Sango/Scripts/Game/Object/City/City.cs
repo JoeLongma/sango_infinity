@@ -746,7 +746,7 @@ namespace Sango.Game
             if (building.BuildingType.isIntrior)
             {
                 allIntriorBuildings.Add(building);
-                innerSlot[building.SlotId] = Id;
+                innerSlot[building.SlotId] = building.Id;
             }
             else
             {
@@ -1749,7 +1749,7 @@ namespace Sango.Game
         /// <param name="personList"></param>
         /// <param name="itemType"></param>
         /// <returns></returns>
-        public bool JobCreateItems(Person[] personList, ItemType itemType)
+        public bool JobCreateItems(Person[] personList, ItemType itemType, int buildingNum)
         {
             if (personList == null || personList.Length == 0 || itemType == null) return false;
             if (itemStore.TotalNumber >= StoreLimit) return false;
@@ -1782,7 +1782,7 @@ namespace Sango.Game
                 Person person = personList[i];
                 if (person == null) continue;
 
-                totalValue += person.BaseBuildAbility;
+                totalValue += person.BaseCreativeAbility;
                 person.merit += meritGain;
                 person.GainExp(meritGain);
 
@@ -1793,6 +1793,8 @@ namespace Sango.Game
 #endif
                 person.ActionOver = true;
             }
+
+            totalValue = GameUtility.Method_CreateItems(totalValue, buildingNum);
 
             scenario.Event.OnCityJobResult?.Invoke(this, jobId, personList,
                  totalValue, (x) => { totalValue = x; });
@@ -2051,6 +2053,7 @@ namespace Sango.Game
             {
                 AICommandList.Add(CityAI.AIAttack);
                 AICommandList.Add(CityAI.AIIntrior);
+                AICommandList.Add(CityAI.AICreateItems);
                 AICommandList.Add(CityAI.AIRecuritTroop);
             }
             else
@@ -2058,6 +2061,7 @@ namespace Sango.Game
                 // 物资输送
                 AICommandList.Add(CityAI.AITransfrom);
                 AICommandList.Add(CityAI.AIIntrior);
+                AICommandList.Add(CityAI.AICreateItems);
                 AICommandList.Add(CityAI.AIRecuritTroop);
             }
 
@@ -2155,7 +2159,7 @@ namespace Sango.Game
                     for (int i = 0; i < allIntriorBuildings.Count; i++)
                     {
                         Building building = allIntriorBuildings[i];
-                        if (building.Id == buildingTypeId && building.isComplte)
+                        if (building.BuildingType.Id == buildingTypeId && building.isComplte)
                         {
                             complateNum++;
                         }

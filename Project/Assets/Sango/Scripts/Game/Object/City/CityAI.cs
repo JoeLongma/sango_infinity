@@ -380,6 +380,7 @@ namespace Sango.Game
         public static bool AITroop(City city, Scenario scenario)
         {
             AIRecuritTroop(city, scenario);
+            AICreateItems(city, scenario);
             //AITroopCreate(scenario);
             //AITroopLevelUp(scenario);
             //AITroopMerge(scenario);
@@ -508,15 +509,18 @@ namespace Sango.Game
         }
         public static bool AISecurity(City city, Scenario scenario)
         {
-            if (city.freePersons.Count > 1 && city.gold > 400)
+            if (city.freePersons.Count < 2 || city.gold < 400)
+                return true;
+
+            int barracksNum = city.GetIntriorBuildingComplateNumber((int)BuildingKindType.PatrolBureau);
+            if (barracksNum <= 0) return true;
+
+            if (GameRandom.Changce((90 - city.security) * 3 / 2))
             {
-                if (GameRandom.Changce((90 - city.security) * 3 / 2))
+                Person[] people = ForceAI.CounsellorRecommendDevelop(city.freePersons, out int totalValue);
+                if (people == null) return true;
+                if (city.JobInspection(people))
                 {
-                    Person[] people = ForceAI.CounsellorRecommendDevelop(city.freePersons, out int totalValue);
-                    if (people == null) return true;
-                    if (city.JobInspection(people))
-                    {
-                    }
                 }
             }
             return true;
@@ -524,9 +528,23 @@ namespace Sango.Game
 
         public static bool AITrainTroop(City city, Scenario scenario)
         {
-            if (city.freePersons.Count > 1 && city.gold > 400)
+            if (city.freePersons.Count < 2)
+                return true;
+
+            int barracksNum = city.GetIntriorBuildingComplateNumber((int)BuildingKindType.PatrolBureau);
+            if (barracksNum <= 0) return true;
+
+            if (city.morale < 50)
             {
-                if (city.morale < 50)
+                Person[] people = ForceAI.CounsellorRecommendTrainTroop(city.freePersons, out int totalValue);
+                if (people == null) return true;
+                if (city.JobTrainTroop(people))
+                {
+                }
+            }
+            else
+            {
+                if (GameRandom.Changce((95 - city.morale) * 3 / 2))
                 {
                     Person[] people = ForceAI.CounsellorRecommendTrainTroop(city.freePersons, out int totalValue);
                     if (people == null) return true;
@@ -534,20 +552,69 @@ namespace Sango.Game
                     {
                     }
                 }
-                else
-                {
-                    if (GameRandom.Changce((95 - city.morale) * 3 / 2))
-                    {
-                        Person[] people = ForceAI.CounsellorRecommendTrainTroop(city.freePersons, out int totalValue);
-                        if (people == null) return true;
-                        if (city.JobTrainTroop(people))
-                        {
-                        }
-                    }
-                }
-
-
             }
+            return true;
+        }
+
+        public static bool AICreateItems(City city, Scenario scenario)
+        {
+            if (city.freePersons.Count < 2 || city.gold < 1000)
+                return true;
+
+            if (city.itemStore.TotalNumber >= city.StoreLimit - 1000) return true;
+
+            int BlacksmithShopnum = city.GetIntriorBuildingComplateNumber((int)BuildingKindType.BlacksmithShop);
+            int StableNum = city.GetIntriorBuildingComplateNumber((int)BuildingKindType.Stable);
+            if (BlacksmithShopnum <= 0 && StableNum <= 0)
+                return true;
+
+            int totalNum = 0;
+            for (int itemTypeId = 2; itemTypeId <= 5; itemTypeId++)
+                // 获取总兵装
+                totalNum += city.itemStore.GetNumber(itemTypeId);
+
+            if (totalNum > city.troops + 5000)
+                return true;
+
+            // 统计适应偏向
+            int[] levelTotal = new int[4] { 1, 1, 1, 1 };
+            city.allPersons.ForEach(x =>
+            {
+                levelTotal[0] += x.SpearLv;
+                levelTotal[1] += x.HalberdLv;
+                levelTotal[2] += x.CrossbowLv;
+                levelTotal[3] += x.HorseLv;
+            });
+
+            int sumTotal = 0;
+            if (BlacksmithShopnum > 0)
+                sumTotal = sumTotal + levelTotal[0] + levelTotal[1] + levelTotal[2];
+
+            if (StableNum > 0)
+                sumTotal = sumTotal + levelTotal[3];
+
+            for (int itemTypeId = 2; itemTypeId <= 5; itemTypeId++)
+            {
+                if (itemTypeId == 5 && StableNum <= 0)
+                    continue;
+
+                if (itemTypeId < 5 && BlacksmithShopnum <= 0)
+                    continue;
+
+                int itemNum = city.itemStore.GetNumber(itemTypeId);
+                if (itemNum * 1000 / totalNum < levelTotal[itemTypeId - 2] * 1000 / sumTotal)
+                {
+                    Person[] people = ForceAI.CounsellorRecommendCreateItems(city.freePersons, out int totalValue);
+                    if (people == null) return true;
+                    ItemType itemType = Scenario.Cur.GetObject<ItemType>(itemTypeId);
+                    if (city.JobCreateItems(people, itemType, itemTypeId == 5 ? StableNum : BlacksmithShopnum))
+                    {
+
+                    }
+                    return true;
+                }
+            }
+            
             return true;
         }
     }

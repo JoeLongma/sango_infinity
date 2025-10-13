@@ -139,5 +139,10 @@ namespace Sango.Game
         {
             return Math.Max(1, (int)(Math.Pow(v, 0.5)) * 2 - 10);
         }
+
+        public static int Method_CreateItems(int v, int buildingNum)
+        {
+            return Math.Max(1, (int)(Math.Pow(100, 0.5f / buildingNum) * 100f) * v / 85);
+        }
     }
 }

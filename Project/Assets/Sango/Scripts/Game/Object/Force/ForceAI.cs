@@ -269,7 +269,7 @@ namespace Sango.Game
             return CounsellorRecommend3Person(sortedFreePersons, (ref int maxBuildTurn, Person check1, Person check2, Person check3) =>
             {
                 int buildAbility = 0;
-                if (check2 != null) buildAbility += check1.BaseBuildAbility;
+                if (check1 != null) buildAbility += check1.BaseBuildAbility;
                 if (check2 != null) buildAbility += check2.BaseBuildAbility;
                 if (check3 != null) buildAbility += check3.BaseBuildAbility;
 
@@ -294,7 +294,7 @@ namespace Sango.Game
             return CounsellorRecommend3Person(sortedFreePersons, (ref int maxValue, Person check1, Person check2, Person check3) =>
             {
                 int buildAbility = 0;
-                if (check2 != null) buildAbility += check1.BaseSecurityAbility;
+                if (check1 != null) buildAbility += check1.BaseSecurityAbility;
                 if (check2 != null) buildAbility += check2.BaseSecurityAbility;
                 if (check3 != null) buildAbility += check3.BaseSecurityAbility;
 
@@ -316,7 +316,7 @@ namespace Sango.Game
             return CounsellorRecommend3Person(sortedFreePersons, (ref int maxValue, Person check1, Person check2, Person check3) =>
             {
                 int buildAbility = 0;
-                if (check2 != null) buildAbility += check1.BaseCommerceAbility;
+                if (check1 != null) buildAbility += check1.BaseCommerceAbility;
                 if (check2 != null) buildAbility += check2.BaseCommerceAbility;
                 if (check3 != null) buildAbility += check3.BaseCommerceAbility;
 
@@ -339,7 +339,7 @@ namespace Sango.Game
             return CounsellorRecommend3Person(sortedFreePersons, (ref int maxValue, Person check1, Person check2, Person check3) =>
             {
                 int buildAbility = 0;
-                if (check2 != null) buildAbility += check1.BaseAgricultureAbility;
+                if (check1 != null) buildAbility += check1.BaseAgricultureAbility;
                 if (check2 != null) buildAbility += check2.BaseAgricultureAbility;
                 if (check3 != null) buildAbility += check3.BaseAgricultureAbility;
 
@@ -361,7 +361,7 @@ namespace Sango.Game
             return CounsellorRecommend3Person(sortedFreePersons, (ref int maxValue, Person check1, Person check2, Person check3) =>
             {
                 int buildAbility = 0;
-                if (check2 != null) buildAbility += check1.BaseTrainTroopAbility;
+                if (check1 != null) buildAbility += check1.BaseTrainTroopAbility;
                 if (check2 != null) buildAbility += check2.BaseTrainTroopAbility;
                 if (check3 != null) buildAbility += check3.BaseTrainTroopAbility;
 
@@ -383,9 +383,29 @@ namespace Sango.Game
             return CounsellorRecommend3Person(sortedFreePersons, (ref int maxValue, Person check1, Person check2, Person check3) =>
             {
                 int buildAbility = 0;
-                if (check2 != null) buildAbility += check1.BaseRecruitmentAbility;
+                if (check1 != null) buildAbility += check1.BaseRecruitmentAbility;
                 if (check2 != null) buildAbility += check2.BaseRecruitmentAbility;
                 if (check3 != null) buildAbility += check3.BaseRecruitmentAbility;
+
+                if (buildAbility >= maxValue) return true;
+
+                maxValue = buildAbility;
+                return true;
+
+            }, out value);
+        }
+
+        /// <summary>
+        /// 军师招募兵装生产推荐
+        /// </summary>
+        public static Person[] CounsellorRecommendCreateItems(List<Person> sortedFreePersons, out int value)
+        {
+            return CounsellorRecommend3Person(sortedFreePersons, (ref int maxValue, Person check1, Person check2, Person check3) =>
+            {
+                int buildAbility = 0;
+                if (check1 != null) buildAbility += check1.BaseCreativeAbility;
+                if (check2 != null) buildAbility += check2.BaseCreativeAbility;
+                if (check3 != null) buildAbility += check3.BaseCreativeAbility;
 
                 if (buildAbility >= maxValue) return true;
 

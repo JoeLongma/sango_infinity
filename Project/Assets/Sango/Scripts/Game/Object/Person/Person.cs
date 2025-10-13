@@ -341,6 +341,11 @@ namespace Sango.Game
         public int BaseBuildAbility => Politics;
 
         /// <summary>
+        /// 生产能力
+        /// </summary>
+        public int BaseCreativeAbility => Intelligence;
+
+        /// <summary>
         /// 搜寻能力
         /// </summary>
         public int BaseSearchingAbility
@@ -430,6 +435,11 @@ namespace Sango.Game
                 {
                     beFinded = true;
                     BelongCity.allPersons.Add(this);
+
+                    if(BelongForce != BelongCity.BelongForce || BelongCorps != BelongCity.BelongCorps)
+                    {
+                        Sango.Log.Error($"[{Id}]{Name}归属force:{BelongForce.Name} corps:{BelongCorps.Name}, 但在city[{BelongCity.Id}] force:{BelongCity.BelongForce.Name} corps:{BelongCity.BelongCorps.Name}");
+                    }
                 }
                 else
                     BelongCity.wildPersons.Add(this);
