@@ -202,98 +202,88 @@ namespace Sango.Game
         }
 
         /// <summary>
-        /// 军师建造推荐
+        /// 3人推荐代理
         /// </summary>
-        public static Person[] CounsellorRecommendBuild(List<Person> sortedFreePersons, BuildingType buildingType, out int maxBuildTurn)
+        /// <param name="checkValue"></param>
+        /// <param name="check1"></param>
+        /// <param name="check2"></param>
+        /// <param name="check3"></param>
+        /// <returns></returns>
+        public delegate bool Recommend3PersonValue(ref int checkValue, Person check1, Person check2, Person check3);
+
+        /// <summary>
+        /// 3人推荐基础函数
+        /// </summary>
+        /// <param name="personList"></param>
+        /// <param name="recommend3PersonValueFunc"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static Person[] CounsellorRecommend3Person(List<Person> personList, Recommend3PersonValue recommend3PersonValueFunc, out int value)
         {
-            maxBuildTurn = 0;
-            sortedFreePersons.RemoveAll(x => x.ActionOver);
-            int count = sortedFreePersons.Count;
+            value = 0;
+            int count = personList.Count;
             if (count <= 0)
                 return null;
 
-            ScenarioVariables scenarioVariables = Scenario.Cur.Variables;
-
-            int maxPersonCount = scenarioVariables.jobMaxPersonCount[(int)CityJobType.Build];
             Person[] checkPersons = new Person[3];
-            int buildAbility = 99999;
-            int buildCount = 999;
+            int maxValue = 99999;
             for (int i = 0; i < count; i++)
             {
-                Person person1 = sortedFreePersons[i];
-                int buildAbility1 = GameUtility.Method_BuildAbility(person1.BaseBuildAbility);
-                int _count1 = buildingType.durabilityLimit % buildAbility1 == 0 ? 0 : 1;
-                int buildCount1 = Math.Min(scenarioVariables.BuildMaxTurn, buildingType.durabilityLimit / buildAbility1 + _count1);
-
-                if (buildCount1 < buildCount)
+                Person person1 = personList[i];
+                if (recommend3PersonValueFunc(ref maxValue, person1, null, null))
                 {
                     checkPersons[0] = person1;
                     checkPersons[1] = null;
                     checkPersons[2] = null;
-                    buildCount = buildCount1;
                 }
-                else if (buildCount1 == buildCount)
-                {
-                    if (buildAbility1 < buildAbility)
-                    {
-                        checkPersons[0] = person1;
-                        checkPersons[1] = null;
-                        checkPersons[2] = null;
-                        buildAbility = buildAbility1;
-                    }
-                }
-
                 for (int j = i + 1; j < count; j++)
                 {
-                    Person person2 = sortedFreePersons[j];
-                    int buildAbility2 = GameUtility.Method_BuildAbility(person1.BaseBuildAbility + person2.BaseBuildAbility);
-                    int _count2 = buildingType.durabilityLimit % buildAbility2 == 0 ? 0 : 1;
-                    int buildCount2 = Math.Min(scenarioVariables.BuildMaxTurn, buildingType.durabilityLimit / buildAbility2 + _count2);
-                    if (buildCount2 < buildCount)
+                    Person person2 = personList[j];
+                    if (recommend3PersonValueFunc(ref maxValue, person1, person2, null))
                     {
                         checkPersons[0] = person1;
                         checkPersons[1] = person2;
                         checkPersons[2] = null;
-                        buildCount = buildCount2;
-                    }
-                    else if (buildCount2 == buildCount)
-                    {
-                        if (buildAbility2 < buildAbility)
-                        {
-                            checkPersons[0] = person1;
-                            checkPersons[1] = person2;
-                            checkPersons[2] = null;
-                            buildAbility = buildAbility2;
-                        }
                     }
                     for (int k = j + 1; k < count; k++)
                     {
-                        Person person3 = sortedFreePersons[k];
-                        int buildAbility3 = GameUtility.Method_BuildAbility(person1.BaseBuildAbility + person2.BaseBuildAbility + person3.BaseBuildAbility);
-                        int _count3 = buildingType.durabilityLimit % buildAbility3 == 0 ? 0 : 1;
-                        int buildCount3 = Math.Min(scenarioVariables.BuildMaxTurn, buildingType.durabilityLimit / buildAbility3 + _count3);
-                        if (buildCount3 < buildCount)
+                        Person person3 = personList[k];
+                        if (recommend3PersonValueFunc(ref maxValue, person1, person2, person3))
                         {
                             checkPersons[0] = person1;
                             checkPersons[1] = person2;
                             checkPersons[2] = person3;
-                            buildCount = buildCount3;
-                        }
-                        else if (buildCount3 == buildCount)
-                        {
-                            if (buildAbility3 < buildAbility)
-                            {
-                                checkPersons[0] = person1;
-                                checkPersons[1] = person2;
-                                checkPersons[2] = person3;
-                                buildAbility = buildAbility3;
-                            }
                         }
                     }
                 }
             }
-            maxBuildTurn = buildCount;
+            value = maxValue;
             return checkPersons;
+        }
+
+        /// <summary>
+        /// 军师建造推荐
+        /// </summary>
+        public static Person[] CounsellorRecommendBuild(List<Person> sortedFreePersons, BuildingType buildingType, out int maxBuildTurn)
+        {
+            return CounsellorRecommend3Person(sortedFreePersons, (ref int maxBuildTurn, Person check1, Person check2, Person check3) =>
+            {
+                int buildAbility = 0;
+                if (check2 != null) buildAbility += check1.BaseBuildAbility;
+                if (check2 != null) buildAbility += check2.BaseBuildAbility;
+                if (check3 != null) buildAbility += check3.BaseBuildAbility;
+
+                buildAbility = GameUtility.Method_BuildAbility(buildAbility);
+
+                int turnCount = buildingType.durabilityLimit % buildAbility == 0 ? 0 : 1;
+                int buildCount = Math.Min(Scenario.Cur.Variables.BuildMaxTurn, buildingType.durabilityLimit / buildAbility + turnCount);
+
+                if( buildCount >= maxBuildTurn ) return true;
+
+                maxBuildTurn = buildCount;
+                return true;
+
+            }, out maxBuildTurn);
         }
 
         /// <summary>
@@ -301,55 +291,21 @@ namespace Sango.Game
         /// </summary>
         public static Person[] CounsellorRecommendInspection(List<Person> sortedFreePersons, out int value)
         {
-            value = 0;
-            sortedFreePersons.RemoveAll(x => x.ActionOver);
-            int count = sortedFreePersons.Count;
-            if (count <= 0)
-                return null;
-
-            ScenarioVariables scenarioVariables = Scenario.Cur.Variables;
-
-            int maxPersonCount = scenarioVariables.jobMaxPersonCount[(int)CityJobType.Inspection];
-            Person[] checkPersons = new Person[3];
-            int buildAbility = 99999;
-            for (int i = 0; i < count; i++)
+            return CounsellorRecommend3Person(sortedFreePersons, (ref int maxValue, Person check1, Person check2, Person check3) =>
             {
-                Person person1 = sortedFreePersons[i];
-                int buildAbility1 = GameUtility.Method_SecurityAbility(person1.BaseSecurityAbility);
-                if (buildAbility1 < buildAbility)
-                {
-                    checkPersons[0] = person1;
-                    checkPersons[1] = null;
-                    checkPersons[2] = null;
-                    buildAbility = buildAbility1;
-                }
-                for (int j = i + 1; j < count; j++)
-                {
-                    Person person2 = sortedFreePersons[j];
-                    int buildAbility2 = GameUtility.Method_SecurityAbility(person1.BaseSecurityAbility + person2.BaseSecurityAbility);
-                    if (buildAbility2 < buildAbility)
-                    {
-                        checkPersons[0] = person1;
-                        checkPersons[1] = person2;
-                        checkPersons[2] = null;
-                        buildAbility = buildAbility2;
-                    }
-                    for (int k = j + 1; k < count; k++)
-                    {
-                        Person person3 = sortedFreePersons[k];
-                        int buildAbility3 = GameUtility.Method_SecurityAbility(person1.BaseSecurityAbility + person2.BaseSecurityAbility + person3.BaseSecurityAbility);
-                        if (buildAbility3 < buildAbility)
-                        {
-                            checkPersons[0] = person1;
-                            checkPersons[1] = person2;
-                            checkPersons[2] = person3;
-                            buildAbility = buildAbility3;
-                        }
-                    }
-                }
-            }
-            value = buildAbility;
-            return checkPersons;
+                int buildAbility = 0;
+                if (check2 != null) buildAbility += check1.BaseSecurityAbility;
+                if (check2 != null) buildAbility += check2.BaseSecurityAbility;
+                if (check3 != null) buildAbility += check3.BaseSecurityAbility;
+
+                buildAbility = GameUtility.Method_SecurityAbility(buildAbility);
+
+                if (buildAbility >= maxValue) return true;
+
+                maxValue = buildAbility;
+                return true;
+
+            }, out value);
         }
 
         /// <summary>
@@ -357,56 +313,21 @@ namespace Sango.Game
         /// </summary>
         public static Person[] CounsellorRecommendDevelop(List<Person> sortedFreePersons, out int value)
         {
-            value = 0;
-            sortedFreePersons.RemoveAll(x => x.ActionOver);
-            int count = sortedFreePersons.Count;
-            if (count <= 0)
-                return null;
-
-            ScenarioVariables scenarioVariables = Scenario.Cur.Variables;
-
-            int maxPersonCount = scenarioVariables.jobMaxPersonCount[(int)CityJobType.Develop];
-            Person[] checkPersons = new Person[3];
-            int buildAbility = 99999;
-            for (int i = 0; i < count; i++)
+            return CounsellorRecommend3Person(sortedFreePersons, (ref int maxValue, Person check1, Person check2, Person check3) =>
             {
-                Person person1 = sortedFreePersons[i];
-                int buildAbility1 = GameUtility.Method_DevelopAbility(person1.BaseCommerceAbility);
-                if (buildAbility1 < buildAbility)
-                {
-                    checkPersons[0] = person1;
-                    checkPersons[1] = null;
-                    checkPersons[2] = null;
-                    buildAbility = buildAbility1;
-                }
-                for (int j = i + 1; j < count; j++)
-                {
-                    Person person2 = sortedFreePersons[j];
-                    int buildAbility2 = GameUtility.Method_DevelopAbility(person1.BaseCommerceAbility + person2.BaseCommerceAbility);
-                    if (buildAbility2 < buildAbility)
-                    {
-                        checkPersons[0] = person1;
-                        checkPersons[1] = person2;
-                        checkPersons[2] = null;
-                        buildAbility = buildAbility2;
-                    }
-                    for (int k = j + 1; k < count; k++)
-                    {
-                        Person person3 = sortedFreePersons[k];
-                        int buildAbility3 = GameUtility.Method_DevelopAbility(person1.BaseCommerceAbility + person2.BaseCommerceAbility + person3.BaseCommerceAbility);
-                        if (buildAbility3 < buildAbility)
-                        {
-                            checkPersons[0] = person1;
-                            checkPersons[1] = person2;
-                            checkPersons[2] = person3;
-                            buildAbility = buildAbility3;
-                        }
-                    }
-                }
-            }
+                int buildAbility = 0;
+                if (check2 != null) buildAbility += check1.BaseCommerceAbility;
+                if (check2 != null) buildAbility += check2.BaseCommerceAbility;
+                if (check3 != null) buildAbility += check3.BaseCommerceAbility;
 
-            value = buildAbility;
-            return checkPersons;
+                buildAbility = GameUtility.Method_DevelopAbility(buildAbility);
+
+                if (buildAbility >= maxValue) return true;
+
+                maxValue = buildAbility;
+                return true;
+
+            }, out value);
         }
 
 
@@ -415,55 +336,21 @@ namespace Sango.Game
         /// </summary>
         public static Person[] CounsellorRecommendFarming(List<Person> sortedFreePersons, out int value)
         {
-            value = 0;
-            sortedFreePersons.RemoveAll(x => x.ActionOver);
-            int count = sortedFreePersons.Count;
-            if (count <= 0)
-                return null;
-
-            ScenarioVariables scenarioVariables = Scenario.Cur.Variables;
-
-            int maxPersonCount = scenarioVariables.jobMaxPersonCount[(int)CityJobType.Farming];
-            Person[] checkPersons = new Person[3];
-            int buildAbility = 99999;
-            for (int i = 0; i < count; i++)
+            return CounsellorRecommend3Person(sortedFreePersons, (ref int maxValue, Person check1, Person check2, Person check3) =>
             {
-                Person person1 = sortedFreePersons[i];
-                int buildAbility1 = GameUtility.Method_FarmingAbility(person1.BaseAgricultureAbility);
-                if (buildAbility1 < buildAbility)
-                {
-                    checkPersons[0] = person1;
-                    checkPersons[1] = null;
-                    checkPersons[2] = null;
-                    buildAbility = buildAbility1;
-                }
-                for (int j = i + 1; j < count; j++)
-                {
-                    Person person2 = sortedFreePersons[j];
-                    int buildAbility2 = GameUtility.Method_FarmingAbility(person1.BaseAgricultureAbility + person2.BaseAgricultureAbility);
-                    if (buildAbility2 < buildAbility)
-                    {
-                        checkPersons[0] = person1;
-                        checkPersons[1] = person2;
-                        checkPersons[2] = null;
-                        buildAbility = buildAbility2;
-                    }
-                    for (int k = j + 1; k < count; k++)
-                    {
-                        Person person3 = sortedFreePersons[k];
-                        int buildAbility3 = GameUtility.Method_FarmingAbility(person1.BaseAgricultureAbility + person2.BaseAgricultureAbility + person3.BaseAgricultureAbility);
-                        if (buildAbility3 < buildAbility)
-                        {
-                            checkPersons[0] = person1;
-                            checkPersons[1] = person2;
-                            checkPersons[2] = person3;
-                            buildAbility = buildAbility3;
-                        }
-                    }
-                }
-            }
-            value = buildAbility;
-            return checkPersons;
+                int buildAbility = 0;
+                if (check2 != null) buildAbility += check1.BaseAgricultureAbility;
+                if (check2 != null) buildAbility += check2.BaseAgricultureAbility;
+                if (check3 != null) buildAbility += check3.BaseAgricultureAbility;
+
+                buildAbility = GameUtility.Method_FarmingAbility(buildAbility);
+
+                if (buildAbility >= maxValue) return true;
+
+                maxValue = buildAbility;
+                return true;
+
+            }, out value);
         }
 
         /// <summary>
@@ -471,53 +358,21 @@ namespace Sango.Game
         /// </summary>
         public static Person[] CounsellorRecommendTrainTroop(List<Person> sortedFreePersons, out int value)
         {
-            value = 0;
-            sortedFreePersons.RemoveAll(x => x.ActionOver);
-            int count = sortedFreePersons.Count;
-            if (count <= 0)
-                return null;
-
-            ScenarioVariables scenarioVariables = Scenario.Cur.Variables;
-            Person[] checkPersons = new Person[3];
-            int buildAbility = 99999;
-            for (int i = 0; i < count; i++)
+            return CounsellorRecommend3Person(sortedFreePersons, (ref int maxValue, Person check1, Person check2, Person check3) =>
             {
-                Person person1 = sortedFreePersons[i];
-                int buildAbility1 = (person1.BaseTrainTroopAbility);
-                if (buildAbility1 < buildAbility)
-                {
-                    checkPersons[0] = person1;
-                    checkPersons[1] = null;
-                    checkPersons[2] = null;
-                    buildAbility = buildAbility1;
-                }
-                for (int j = i + 1; j < count; j++)
-                {
-                    Person person2 = sortedFreePersons[j];
-                    int buildAbility2 = (person1.BaseTrainTroopAbility + person2.BaseTrainTroopAbility);
-                    if (buildAbility2 < buildAbility)
-                    {
-                        checkPersons[0] = person1;
-                        checkPersons[1] = person2;
-                        checkPersons[2] = null;
-                        buildAbility = buildAbility2;
-                    }
-                    for (int k = j + 1; k < count; k++)
-                    {
-                        Person person3 = sortedFreePersons[k];
-                        int buildAbility3 = (person1.BaseTrainTroopAbility + person2.BaseTrainTroopAbility + person3.BaseTrainTroopAbility);
-                        if (buildAbility3 < buildAbility)
-                        {
-                            checkPersons[0] = person1;
-                            checkPersons[1] = person2;
-                            checkPersons[2] = person3;
-                            buildAbility = buildAbility3;
-                        }
-                    }
-                }
-            }
-            value = buildAbility;
-            return checkPersons;
+                int buildAbility = 0;
+                if (check2 != null) buildAbility += check1.BaseTrainTroopAbility;
+                if (check2 != null) buildAbility += check2.BaseTrainTroopAbility;
+                if (check3 != null) buildAbility += check3.BaseTrainTroopAbility;
+
+                buildAbility = GameUtility.Method_TrainTroop(buildAbility);
+
+                if (buildAbility >= maxValue) return true;
+
+                maxValue = buildAbility;
+                return true;
+
+            }, out value);
         }
 
         /// <summary>
@@ -525,54 +380,19 @@ namespace Sango.Game
         /// </summary>
         public static Person[] CounsellorRecommendRecuritTroop(List<Person> sortedFreePersons, out int value)
         {
-            value = 0;
-            sortedFreePersons.RemoveAll(x => x.ActionOver);
-            int count = sortedFreePersons.Count;
-            if (count <= 0)
-                return null;
-
-            ScenarioVariables scenarioVariables = Scenario.Cur.Variables;
-            Person[] checkPersons = new Person[3];
-            int buildAbility = 99999;
-            for (int i = 0; i < count; i++)
+            return CounsellorRecommend3Person(sortedFreePersons, (ref int maxValue, Person check1, Person check2, Person check3) =>
             {
-                Person person1 = sortedFreePersons[i];
-                int buildAbility1 = (person1.BaseRecruitmentAbility);
-                if (buildAbility1 < buildAbility)
-                {
-                    checkPersons[0] = person1;
-                    checkPersons[1] = null;
-                    checkPersons[2] = null;
-                    buildAbility = buildAbility1;
-                }
-                for (int j = i + 1; j < count; j++)
-                {
-                    Person person2 = sortedFreePersons[j];
-                    int buildAbility2 = (person1.BaseRecruitmentAbility + person2.BaseRecruitmentAbility);
-                    if (buildAbility2 < buildAbility)
-                    {
-                        checkPersons[0] = person1;
-                        checkPersons[1] = person2;
-                        checkPersons[2] = null;
-                        buildAbility = buildAbility2;
-                    }
-                    for (int k = j + 1; k < count; k++)
-                    {
-                        Person person3 = sortedFreePersons[k];
-                        int buildAbility3 = (person1.BaseRecruitmentAbility + person2.BaseRecruitmentAbility + person3.BaseRecruitmentAbility);
-                        if (buildAbility3 < buildAbility)
-                        {
-                            checkPersons[0] = person1;
-                            checkPersons[1] = person2;
-                            checkPersons[2] = person3;
-                            buildAbility = buildAbility3;
-                        }
-                    }
-                }
-            }
-            value = buildAbility;
-            return checkPersons;
-        }
+                int buildAbility = 0;
+                if (check2 != null) buildAbility += check1.BaseRecruitmentAbility;
+                if (check2 != null) buildAbility += check2.BaseRecruitmentAbility;
+                if (check3 != null) buildAbility += check3.BaseRecruitmentAbility;
 
+                if (buildAbility >= maxValue) return true;
+
+                maxValue = buildAbility;
+                return true;
+
+            }, out value);
+        }
     }
 }
