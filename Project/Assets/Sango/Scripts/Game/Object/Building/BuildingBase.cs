@@ -55,6 +55,7 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public bool isComplte;
 
+        public virtual int DurabilityLimit => BuildingType.durabilityLimit;
 
         public virtual Cell CenterCell { get; set; }
 
@@ -187,13 +188,9 @@ namespace Sango.Game
             return 0;
         }
 
-        public virtual int GetMaxDurability()
-        {
-            return BuildingType.durabilityLimit;
-        }
         public virtual int GetSkillMethodAvaliabledTroops()
         {
-            return durability * 10000 / GetMaxDurability();
+            return DurabilityLimit;
         }
     }
 }

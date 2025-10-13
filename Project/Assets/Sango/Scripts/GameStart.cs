@@ -15,6 +15,7 @@ public class GameStart : MonoBehaviour
     public bool Debug = false;
     void Awake()
     {
+
 #if UNITY_STANDALONE_WIN && !UNITY_EDITOR
         string[] args = System.Environment.GetCommandLineArgs();
         foreach (string arg in args)

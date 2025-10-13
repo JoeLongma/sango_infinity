@@ -109,5 +109,35 @@ namespace Sango.Game
         {
             return (num * num);
         }
+
+        public static int Method_BuildAbility(int v)
+        {
+            return 2 * v;
+        }
+
+        public static int Method_SecurityAbility(int v)
+        {
+            return Math.Max(1, (int)(Math.Pow(v, 0.5)) - 5);
+        }
+
+        public static int Method_FarmingAbility(int v)
+        {
+            return Math.Max(1, (int)(Math.Pow(v, 0.5)) - 5);
+        }
+
+        public static int Method_DevelopAbility(int v)
+        {
+            return Math.Max(1, (int)(Math.Pow(v, 0.5)) - 5);
+        }
+
+        public static int Method_RecuritTroop(int v, int barracksNum)
+        {
+            return Math.Max(1, (int)(Math.Pow(100, 0.5f / barracksNum) * 100f) * v / 85);
+        }
+
+        public static int Method_TrainTroop(int v)
+        {
+            return Math.Max(1, (int)(Math.Pow(v, 0.5)) * 2 - 10);
+        }
     }
 }

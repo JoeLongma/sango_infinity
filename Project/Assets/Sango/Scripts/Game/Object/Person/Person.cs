@@ -312,64 +312,33 @@ namespace Sango.Game
         /// </summary>
         public int MilitaryAbility
         {
-            get { return Command + Strength + Intelligence; }
+            get { return Command * 2 + Strength * 3; }
         }
 
         /// <summary>
         /// 商业能力
         /// </summary>
-        public int BaseCommerceAbility
-        {
-            get
-            {
-                return ((Politics * 70 * 42 / 10000 + Intelligence * 20 * 42 / 10000 + Glamour * 10 * 42 / 10000));
-            }
-        }
+        public int BaseCommerceAbility => Politics;
 
         /// <summary>
         /// 巡视能力
         /// </summary>
-        public int BaseSecurityAbility
-        {
-            get
-            {
-                return ((Intelligence + (2 * Politics)) + Glamour);
-            }
-        }
+        public int BaseSecurityAbility => Command;
 
         /// <summary>
         /// 训练能力
         /// </summary>
-        public int BaseTrainTroopAbility
-        {
-            get
-            {
-                return ((Command * 3 + (2 * Strength)) + Glamour) / 30;
-            }
-        }
+        public int BaseTrainTroopAbility => Strength;
 
         /// <summary>
         /// 农业能力
         /// </summary>
-        public int BaseAgricultureAbility
-        {
-            get
-            {
-                return ((Politics * 80 * 42 / 10000 + Intelligence * 10 * 42 / 10000 + Glamour * 10 * 42 / 10000));
-            }
-        }
+        public int BaseAgricultureAbility => Politics;
 
         /// <summary>
         /// 建设能力
         /// </summary>
-        public int BaseBuildAbility
-        {
-            get
-            {
-                // 建设能力 = 政治 * 67% + 50;
-                return Politics * 6700 / 10000 + 50;
-            }
-        }
+        public int BaseBuildAbility => Politics;
 
         /// <summary>
         /// 搜寻能力
@@ -385,13 +354,8 @@ namespace Sango.Game
         /// <summary>
         /// 招募能力
         /// </summary>
-        public int BaseRecruitmentAbility
-        {
-            get
-            {
-                return ((5 * this.Command) + (10 * this.Glamour));
-            }
-        }
+        public int BaseRecruitmentAbility => Glamour;
+
 
         public void OnPersonAgeUpdate(Scenario scenario)
         {
@@ -480,11 +444,11 @@ namespace Sango.Game
                 City city = scenario.citySet.Get(missionTarget);
                 city.trsformingPesonList.Add(this);
             }
-            else if (this.missionType == (int)MissionType.PersonBuild)
-            {
-                Building building = scenario.buildingSet.Get(missionTarget);
-                building.Builder = this;
-            }
+            //else if (this.missionType == (int)MissionType.PersonBuild)
+            //{
+            //    Building building = scenario.buildingSet.Get(missionTarget);
+            //    building.Builder = this;
+            //}
 
             OnPersonAgeUpdate(scenario);
         }

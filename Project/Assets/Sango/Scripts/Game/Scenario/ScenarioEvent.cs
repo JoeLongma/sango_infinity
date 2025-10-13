@@ -86,29 +86,29 @@ namespace Sango.Game
 
         /// <summary>
         /// 可监听改写工作花费
-        /// City, JobType, PersonList, PersonCount, OverrideFunc
+        /// City, JobType, PersonList, PersonCount, lastValue, OverrideFunc
         /// </summary>
-        public EventDelegate<City, int, List<Person>, int, Action<int>> OnCityCheckJobCost;
+        public EventDelegate<City, int, Person[], int, Action<int>> OnCityCheckJobCost;
         /// <summary>
         /// 可监听改写工作成果
-        /// City, JobType, PersonList, PersonCount, OverrideFunc
+        /// City, JobType, PersonList, PersonCount, lastValue, OverrideFunc
         /// </summary>
-        public EventDelegate<City, int, List<Person>, int, Action<int>> OnCityJobResult;
+        public EventDelegate<City, int, Person[], int, Action<int>> OnCityJobResult;
         /// <summary>
         /// 可监听改写工作获取的技巧
-        /// City, JobType, PersonList, PersonCount, OverrideFunc
+        /// City, JobType, PersonList, PersonCount, lastValue, OverrideFunc
         /// </summary>
-        public EventDelegate<City, int, List<Person>, int, Action<int>> OnCityJobGainTechniquePoint;
+        public EventDelegate<City, int, Person[], int, Action<int>> OnCityJobGainTechniquePoint;
         /// <summary>
         /// 可监听改写发现人才的几率
-        /// City, JobType, PersonList, PersonCount, OverrideFunc
+        /// City, JobType, PersonList, PersonCount, lastValue, OverrideFunc
         /// </summary>
-        public EventDelegate<City, int, List<Person>, int, Action<int>> OnCityJobSearchingWild;
+        public EventDelegate<City, int, Person, int, Action<int>> OnCityJobSearchingWild;
         /// <summary>
         /// 可监听改写发现人才的几率
-        /// City, JobType, PersonList, PersonCount, OverrideFunc
+        /// City, JobType, PersonList, PersonCount, lastValue, OverrideFunc
         /// </summary>
-        public EventDelegate<City, Troop, Action<int>> OnTroopCalculateMaxTroops;
+        public EventDelegate<City, Troop, int, Action<int>> OnTroopCalculateMaxTroops;
         /// <summary>
         /// 武将升级事件
         /// </summary>

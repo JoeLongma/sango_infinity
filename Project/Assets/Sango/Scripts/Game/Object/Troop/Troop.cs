@@ -1140,8 +1140,8 @@ namespace Sango.Game
             city.gold += gold;
             city.food += food;
             city.troops += troops;
-            if (city.troops > city.CityLevelType.maxTroops)
-                city.troops = city.CityLevelType.maxTroops;
+            if (city.troops > city.TroopsLimit)
+                city.troops = city.TroopsLimit;
 
             city.woundedTroops += woundedTroops;
             // 设置了,

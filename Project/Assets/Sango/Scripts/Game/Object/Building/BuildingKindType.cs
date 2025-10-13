@@ -45,11 +45,11 @@ namespace Sango.Game
         /// <summary>
         /// 工坊
         /// </summary>
-        BlacksmithShop1,
+        MechineFactory,
         /// <summary>
         /// 造船厂
         /// </summary>
-        BlacksmithShop2,
+        BoatFactory,
         /// <summary>
         /// 马厩
         /// </summary>

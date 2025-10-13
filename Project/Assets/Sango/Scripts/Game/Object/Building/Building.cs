@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Sango.Game.Render;
+using System.Text;
 
 namespace Sango.Game
 {
@@ -9,7 +10,12 @@ namespace Sango.Game
         public override SangoObjectType ObjectType { get { return SangoObjectType.Building; } }
 
         public override string Name { get { return BuildingType.Name; } }
-        public Person Builder { get; set; }
+
+        [JsonConverter(typeof(SangoObjectListIDConverter<Person>))]
+        [JsonProperty]
+        public SangoObjectList<Person> Builders { get; set; }
+
+        //public Person Builder { get; set; }
 
         public Person Worker { get; set; }
         /// <summary>
@@ -34,15 +40,7 @@ namespace Sango.Game
 
         public override void Init(Scenario scenario)
         {
-            if (BelongCity != null)
-            {
-                BelongCity.allBuildings.Add(this);
-                if (BuildingType.isIntrior)
-                {
-                    BelongCity.allIntriorBuildings.Add(this);
-                    BelongCity.innerSlot[SlotId] = Id;
-                }
-            }
+             BelongCity?.OnBuildingCreate(this);
 
             if (!BuildingType.isIntrior)
             {
@@ -58,15 +56,22 @@ namespace Sango.Game
 
         public override bool OnTurnStart(Scenario scenario)
         {
-            if (!isComplte)
+            if (!isComplte && Builders != null)
             {
-                durability += Builder.BaseBuildAbility;
+                int totalValue = 0;
+                for (int i = 0; i < Builders.Count; i++)
+                {
+                    Person person = Builders[i];
+                    totalValue += person.BaseBuildAbility;
+                }
+                totalValue = GameUtility.Method_BuildAbility(totalValue);
+                durability += totalValue;
                 if (durability >= BuildingType.durabilityLimit)
                 {
                     durability = BuildingType.durabilityLimit;
                     isComplte = true;
                     //CalculateHarvest();
-                    Person builder = Builder;
+                    SangoObjectList<Person> builder = Builders;
                     OnBuildComplate();
                     BelongCity.OnBuildingComplete(this, builder);
                 }
@@ -78,9 +83,35 @@ namespace Sango.Game
 
         public virtual void OnBuildComplate()
         {
-            Sango.Log.Print($"[{Builder.BelongCity.Name}]{Builder.Name}完成{Name}建造!!");
-            Builder.ClearMission();
-            Builder = null;
+            Scenario scenario = Scenario.Cur;
+            ScenarioVariables variables = scenario.Variables;
+            int jobId = (int)CityJobType.Build;
+            int meritGain = variables.jobMaxPersonCount[jobId];
+            int techniquePointGain = variables.jobTechniquePoint[jobId];
+
+#if SANGO_DEBUG
+            StringBuilder stringBuilder = new StringBuilder();
+#endif
+            for (int i = 0; i < Builders.Count; i++)
+            {
+                Person person = Builders[i];
+                person.merit += meritGain;
+                person.GainExp(meritGain);
+#if SANGO_DEBUG
+                stringBuilder.Append(person.Name);
+                stringBuilder.Append(" ");
+#endif
+                person.ClearMission();
+            }
+#if SANGO_DEBUG
+            Sango.Log.Print($"[{BelongCity.Name}]{stringBuilder}完成{Name}建造!!");
+#endif
+            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(BelongCity, jobId, Builders.objects.ToArray(),
+               techniquePointGain, (x) => { techniquePointGain = x; });
+
+            BelongForce.GainTechniquePoint(techniquePointGain);
+
+            Builders = null;
         }
 
         public void ChangeCity(City dest)
@@ -91,9 +122,9 @@ namespace Sango.Game
                 return;
             }
 
-            BelongCity.allBuildings.Remove(this);
+            BelongCity.allOutterBuildings.Remove(this);
 
-            dest.allBuildings.Add(this);
+            dest.allOutterBuildings.Add(this);
 
             BelongCorps = dest.BelongCorps;
             BelongForce = dest.BelongForce;
@@ -127,20 +158,17 @@ namespace Sango.Game
 
         public void Destroy()
         {
-            if (BelongCity != null)
-            {
-                if (BuildingType.isIntrior)
-                    BelongCity.allIntriorBuildings.Remove(this);
-
-                BelongCity.villageList.Remove(this);
-                BelongCity.allBuildings.Remove(this);
-            }
 
             Scenario.Cur.buildingSet.Remove(this);
 
-            if (Builder != null)
+            if (Builders != null)
             {
-                Builder.ClearMission();
+                for (int i = 0; i < Builders.Count; i++)
+                {
+                    Person person = Builders[i];
+                    person.ClearMission();
+                }
+                Builders = null;
             }
             if (effectCells != null)
                 effectCells.Clear();
@@ -158,7 +186,7 @@ namespace Sango.Game
 
         public override void OnFall(Troop atk)
         {
-            BelongCity.OnBuildingDestroy(this);
+            BelongCity?.OnBuildingDestroy(this);
             Destroy();
         }
     }

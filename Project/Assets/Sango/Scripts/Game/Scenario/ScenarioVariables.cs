@@ -182,14 +182,14 @@ namespace Sango.Game
         [JsonProperty] public float populationIncreaseBaseFactor = 0.0113f;
 
         /// <summary>
-        /// 队伍粮食基础消耗率
+        /// 队伍粮食基础消耗率 1粮养10兵每回合
         /// </summary>
         [JsonProperty] public float baseFoodCostInTroop = 0.1f;
 
         /// <summary>
-        /// 城池中粮食基础消耗率(每回合)
+        /// 城池中粮食基础消耗率(每回合) 1粮养40兵每回合
         /// </summary>
-        [JsonProperty] public float baseFoodCostInCity = 0.025f;
+        [JsonProperty] public float baseFoodCostInCity = 0.025f; 
 
         /// <summary>
         /// 城池缺粮后每回合逃跑的士兵比例
@@ -238,6 +238,12 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty]
         public int[] jobTechniquePoint = new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 };
+
+        /// <summary>
+        /// 建筑最大回合数
+        /// </summary>
+        [JsonProperty]
+        public int BuildMaxTurn = 10;
 
         /// <summary>
         /// 粮食倍率

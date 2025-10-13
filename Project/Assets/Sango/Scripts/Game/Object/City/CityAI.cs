@@ -169,16 +169,7 @@ namespace Sango.Game
                 return true;
 
             AIBuilding(city, scenario);
-
             AIIntriorBalance(city, scenario);
-            if (city.allIntriorBuildings.Count >= city.CityLevelType.insideSlot)
-            {
-                AIIntriorBalance(city, scenario);
-                if (city.freePersons.Count > 5 && GameRandom.Changce(50))
-                    AIIntriorBalance(city, scenario);
-                if (city.freePersons.Count > 8 && GameRandom.Changce(50))
-                    AIIntriorBalance(city, scenario);
-            }
 
             if (city.wildPersons.Count > 0 && city.freePersons.Count > 0)
             {
@@ -197,7 +188,7 @@ namespace Sango.Game
 
             if (city.freePersons.Count > 3)
             {
-                city.JobSearching(new List<Person>(city.freePersons.GetRange(0, GameRandom.Range(city.freePersons.Count / 2))));
+                city.JobSearching(city.freePersons.GetRange(0, GameRandom.Range(city.freePersons.Count / 2)).ToArray());
             }
 
             return true;
@@ -205,162 +196,6 @@ namespace Sango.Game
 
         public static bool AITransfrom(City city, Scenario scenario)
         {
-            return true;
-            //if (IsBorderCity)
-            //{
-            //    if (PersonHole > 0)
-            //    {
-            //        List<Person> people = new List<Person>();
-            //        BelongCorps.allCities.ForEach(c =>
-            //        {
-            //            if (c != this && !c.IsBorderCity)
-            //            {
-            //                people.AddRange(c.freePersons);
-            //            }
-            //        });
-
-            //        if (people.Count <= 0)
-            //        {
-            //            foreach (City city in BelongCorps.allCities)
-            //            {
-            //                if (city.IsBorderCity && PersonHole - city.PersonHole > 3)
-            //                {
-            //                    if (city.freePersons.Count > 0)
-            //                    {
-            //                        city.freePersons[0].TransformToCity(this);
-            //                        break;
-            //                    }
-            //                }
-            //            }
-            //            return;
-            //        }
-
-            //        people.Sort((a, b) =>
-            //        {
-            //            int a_m = a.MilitaryAbility;
-            //            int b_m = b.MilitaryAbility;
-            //            if (a_m == b_m)
-            //            {
-            //                return -a.Strength.CompareTo(b.Strength);
-            //            }
-            //            else
-            //            {
-            //                return -a_m.CompareTo(b_m);
-            //            }
-            //        });
-
-            //        for (int i = 0; i < PersonHole; i++)
-            //        {
-            //            if (i < people.Count)
-            //            {
-            //                Person transP = people[i];
-            //                transP.TransformToCity(this);
-            //            }
-            //        }
-            //    }
-            //    else if (PersonHole < 0)
-            //    {
-
-            //    }
-            //}
-            //else
-            //{
-            //    if (allPersons.Count + trsformingPesonList.Count == 0)
-            //    {
-            //        foreach (City city in BelongCorps.allCities)
-            //        {
-            //            if (!city.IsBorderCity && city.allPersons.Count + city.trsformingPesonList.Count > 1)
-            //            {
-            //                if (city.freePersons.Count > 0)
-            //                {
-            //                    city.freePersons[0].TransformToCity(this);
-            //                    break;
-            //                }
-            //            }
-            //        }
-            //    }
-
-            //    City destCity = null;
-            //    int maxLen = 9999999;
-            //    BelongCorps.allCities.ForEach(c =>
-            //    {
-            //        if (c != this && c.IsBorderCity && !c.TroopsIsFull)
-            //        {
-            //            int len = CenterCell.Distance(c.CenterCell);
-            //            if (len < maxLen)
-            //            {
-            //                destCity = c;
-            //                maxLen = len;
-            //            }
-            //        }
-            //    });
-            //    if (destCity != null)
-            //    {
-            //        destCity.food += food;
-            //        food = 0;
-            //        destCity.gold += gold / 3;
-            //        gold = gold / 3;
-            //        destCity.troops += troops;
-            //        troops = 0;
-            //    }
-            //}
-        }
-
-        public static bool AIBuildingByPercent(City city, BuildingType buildingType, float percent, Scenario scenario)
-        {
-            int maxSlot = city.CityLevelType.insideSlot;
-            int leftSlot = maxSlot - city.allIntriorBuildings.Count;
-            if (leftSlot <= 0)
-                return true;
-
-            int buildMax = (int)System.Math.Ceiling(maxSlot * percent);
-            int nowCount = 0;
-            city.allIntriorBuildings.ForEach(building =>
-            {
-                if (building.BuildingType.kind == buildingType.kind)
-                    nowCount++;
-            });
-
-            City.sort_by_BaseBuildAbility.RemoveAll(x => x.ActionOver == true);
-            while (nowCount < buildMax)
-            {
-                if (city.gold < buildingType.cost)
-                    break;
-                if (city.freePersons.Count <= 0)
-                    break;
-
-                int index = -1;
-                for (int i = 0; i < city.innerSlot.Length; ++i)
-                {
-                    if (city.innerSlot[i] <= 0)
-                    {
-                        index = i;
-                        break;
-                    }
-                }
-
-                if (index >= 0)
-                {
-                    Person person = City.sort_by_BaseBuildAbility[0];
-                    City.sort_by_BaseBuildAbility.RemoveAt(0);
-                    city.freePersons.Remove(person);
-                    city.BuildBuilding(index, person, buildingType);
-                    city.gold -= buildingType.cost;
-                    person.ActionOver = true;
-                }
-                nowCount++;
-            }
-            return true;
-        }
-
-        public static bool AIBuildingIntriorBalance(City city, Scenario scenario)
-        {
-            BuildingType marketType = scenario.CommonData.BuildingTypes.Find(x => x.kind == (int)BuildingKindType.Market);
-            AIBuildingByPercent(city, marketType, 0.3f, scenario);
-            BuildingType farmType = scenario.CommonData.BuildingTypes.Find(x => x.kind == (int)BuildingKindType.Farm);
-            AIBuildingByPercent(city, farmType, 0.3f, scenario);
-            BuildingType villageType = scenario.CommonData.BuildingTypes.Find(x => x.kind == (int)BuildingKindType.Village);
-            AIBuildingByPercent(city, villageType, 0.3f, scenario);
             return true;
         }
 
@@ -370,45 +205,75 @@ namespace Sango.Game
             return true;
         }
 
-        public static bool TryBuilding(City city, BuildingKindType buildingKindType, int count, Scenario scenario)
-        {
-            if (city.allIntriorBuildings.Count >= city.CityLevelType.insideSlot)
-                return true;
+        static int[][] CityBuildingTemplate = new int[][] {
+            // 后方城市
+            new int[] {
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Barracks,
+                (int)BuildingKindType.BlacksmithShop,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.PatrolBureau,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Stable,
+                (int)BuildingKindType.MechineFactory,// 12小城
 
-            if (city.freePersons.Count <= 0)
-                return true;
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.BoatFactory,
+                (int)BuildingKindType.CustomKind,// 16中城
 
-            // 统计一个正在建造的数量
-            int buildingNum = 0;
-            // 已建造的数量
-            int num = 0;
-            for (int i = 0; i < city.allIntriorBuildings.Count; i++)
-            {
-                Building building = city.allIntriorBuildings[i];
-                if (building.Id == (int)buildingKindType)
-                    num++;
-                if (!building.isComplte)
-                    buildingNum++;
-            }
 
-            if (num >= count) return true;
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.CustomKind,
+                (int)BuildingKindType.Market,// 20大城
 
-            int slotIdx = -1;
-            for (int i = 0; i < city.innerSlot.Length; i++)
-            {
-                if (city.innerSlot[i] <= 0)
-                {
-                    slotIdx = i;
-                    break;
-                }
-            }
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 24巨城
+            },
 
-            return true;
-        }
+            // 边境城市
+            new int[] {
+                (int)BuildingKindType.Barracks,
+                (int)BuildingKindType.BlacksmithShop,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.PatrolBureau,
+                (int)BuildingKindType.Stable,
+                (int)BuildingKindType.MechineFactory,
+                (int)BuildingKindType.BoatFactory,// 12小城
+
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Barracks,
+                (int)BuildingKindType.BlacksmithShop,// 16中城
+
+
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 20大城
+
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Stable,// 24巨城
+            },
+        };
 
         public static bool AIBuldIntriore(City city, Scenario scenario)
         {
-            if (city.allIntriorBuildings.Count >= city.CityLevelType.insideSlot)
+            if (city.allIntriorBuildings.Count >= city.InsideSlot)
                 return true;
 
             if (city.freePersons.Count <= 0)
@@ -417,78 +282,96 @@ namespace Sango.Game
             if (city.IsBorderCity)
             {
                 // 优先建造军事
-
-
-                return AIBuildingIntriorBalance(city, scenario);
+                return AIBuildingTemplate(1, city, scenario);
             }
             else
             {
-                return AIBuildingIntriorBalance(city, scenario);
+                return AIBuildingTemplate(0, city, scenario);
+
             }
         }
 
-        static bool AIBuldVillage(City city, Scenario scenario)
+        // 进是确定有空槽位和空闲武将才能执行
+        public static bool AIBuildingTemplate(int templateId, City city, Scenario scenario)
         {
+            Dictionary<int, int> buildingCountMap = new Dictionary<int, int>();
+            foreach (int buildingTypeId in city.buildingCountMap.Keys)
+                buildingCountMap[buildingTypeId] = city.buildingCountMap[buildingTypeId];
+
+            int[] building_list = CityBuildingTemplate[templateId];
+            int[] buildingFlag = new int[building_list.Length];
+
+            // 先排除确定的建筑
+            for (int i = 0; i < city.InsideSlot; i++)
+            {
+                int buildTypeId = building_list[i];
+                if (buildTypeId > 0)
+                {
+                    if (buildingCountMap.TryGetValue(buildTypeId, out int num))
+                    {
+                        if (num > 0)
+                        {
+                            buildingCountMap[buildTypeId] = num - 1;
+                            buildingFlag[i] = buildTypeId;
+                        }
+                    }
+                }
+            }
+
+            // 再排除不确定的建筑
+            for (int i = 0; i < city.InsideSlot; i++)
+            {
+                int buildTypeId = building_list[i];
+                if (buildTypeId == 0)
+                {
+                    bool findAny = false;
+                    foreach (int buildingTypeId in buildingCountMap.Keys)
+                    {
+                        int num = buildingCountMap[buildingTypeId];
+                        if (num > 0)
+                        {
+                            buildingCountMap[buildingTypeId] = num - 1;
+                            buildingFlag[i] = buildingTypeId;
+                            findAny = true;
+                            break;
+                        }
+                    }
+                    if (findAny)
+                        continue;
+                }
+            }
+
+            // 修建未入坑的
+            for (int i = 0; i < city.InsideSlot; i++)
+            {
+                int exsistId = buildingFlag[i];
+                if (exsistId > 0)
+                    continue;
+
+                int buildTypeId = building_list[i];
+                BuildingType buildingType = scenario.GetObject<BuildingType>(buildTypeId);
+                if (buildingType == null || buildingType.Id == 0)
+                {
+                    buildingType = scenario.GetObject<BuildingType>(GameRandom.Range((int)BuildingKindType.Market, (int)BuildingKindType.PatrolBureau));
+                }
+
+                if (city.gold < buildingType.cost + 200)
+                    return true;
+
+                int index = city.GetEmptySlot();
+                if (index < 0)
+                    return true;
+
+                int buildTurn;
+                Person[] people = ForceAI.CounsellorRecommendBuild(city.freePersons, buildingType, out buildTurn);
+                if (people != null && buildTurn <= 6)
+                {
+                    city.BuildBuilding(index, people, buildingType);
+                }
+            }
+
             return true;
-            //if (villageList.Count >= CityLevelType.villageSlot)
-            //    return;
-
-            //if (IsEnemiesRound(8))
-            //    return;
-
-            //BuildingType villageBuildingType = Scenario.Cur.CommonData.BuildingTypes.Find(x => x.kind == (int)BuildingKindType.Village);
-            //if (gold < villageBuildingType.cost)
-            //    return;
-
-            //tempCellList.Clear();
-            //Map map = Scenario.Cur.Map;
-            //float maxFertilityAndProsperity = 0;
-            //Cell buildCenter = null;
-            //for (int i = 0; i < effectCells.Count; i++)
-            //{
-            //    Cell villageCenter = effectCells[i];
-            //    if (villageCenter.building != null) continue;
-
-            //    bool too_near = false;
-            //    for (int j = 0; j < villageList.Count; ++j)
-            //    {
-            //        if (villageCenter.Cub.Distance(villageList[j].CenterCell.Cub) < villageBuildingType.radius * 2 + 1)
-            //        {
-            //            too_near = true;
-            //            break;
-            //        }
-            //    }
-
-            //    if (too_near) continue;
-
-            //    map.GetSpiral(villageCenter, villageBuildingType.radius, tempCellList);
-            //    float totalFertilityAndProsperity = 0;
-            //    for (int j = 0; j < tempCellList.Count; ++j)
-            //    {
-            //        Cell effectCell = tempCellList[j];
-            //        totalFertilityAndProsperity += effectCell.Fertility;
-            //        totalFertilityAndProsperity += effectCell.Prosperity;
-            //    }
-            //    //float totalFertilityAndProsperity = villageCenter.Fertility + villageCenter.Prosperity;
-            //    if (totalFertilityAndProsperity > maxFertilityAndProsperity)
-            //    {
-            //        maxFertilityAndProsperity -= totalFertilityAndProsperity;
-            //        buildCenter = villageCenter;
-            //    }
-            //}
-
-            //if (buildCenter != null)
-            //{
-            //    freePersons.Sort((a, b) => { return -a.BaseBuildAbility.CompareTo(b.BaseBuildAbility); });
-            //    Person builder = freePersons[0];
-            //    freePersons.RemoveAt(0);
-            //    Building village = BuildBuilding(buildCenter, builder, villageBuildingType);
-            //    gold -= villageBuildingType.cost;
-            //    villageList.Add(village);
-            //}
-
         }
-
 
         /// <summary>
         /// 军事
@@ -506,16 +389,21 @@ namespace Sango.Game
 
         public static bool AIRecuritTroop(City city, Scenario scenario)
         {
-            if (city.freePersons.Count > 0)
+            if (city.freePersons.Count <= 2) return true;
+
+            int expectationTroops = (int)(city.totalGainFood / (9 * scenario.Variables.baseFoodCostInCity)) + city.food;
+            if (city.troops >= expectationTroops)
+                return true;
+
+            int barracksNum = city.GetIntriorBuildingComplateNumber((int)BuildingKindType.Barracks);
+            if (barracksNum <= 0) return true;
+
+            Person[] people = ForceAI.CounsellorRecommendRecuritTroop(city.freePersons, out int totalValue);
+            if (people == null) return true;
+
+            if (city.JobRecuritTroop(people, barracksNum))
             {
-                City.sort_by_BaseRecruitmentAbility.RemoveAll(x => x.ActionOver == true);
-                if (City.sort_by_BaseRecruitmentAbility.Count > 0)
-                {
-                    if (city.JobRecuritTroop(City.sort_by_BaseRecruitmentAbility))
-                    {
-                        City.sort_by_BaseRecruitmentAbility.RemoveAt(0);
-                    }
-                }
+
             }
             return true;
         }
@@ -564,7 +452,7 @@ namespace Sango.Game
             if (city.freePersons.Count <= 0)
                 return false;
 
-            if (city.durability <= city.CityLevelType.maxDurability * 80 / 100)
+            if (city.durability <= city.DurabilityLimit * 80 / 100)
                 return false;
 
             if (!city.IsBorderCity)
@@ -597,75 +485,36 @@ namespace Sango.Game
 
         public static bool AIIntriorBalance(City city, Scenario scenario)
         {
-            if (city.freePersons.Count > 0 && city.gold > 400)
-            {
-                if (city.commerce >= city.agriculture)
-                {
-                    City.sort_by_BaseAgricultureAbility.RemoveAll(x => x.ActionOver == true);
-                    if (city.JobFarming(City.sort_by_BaseAgricultureAbility))
-                    {
+            if (city.freePersons.Count <= 1) return true;
 
-                    }
-                }
-                else
-                {
-                    City.sort_by_BaseCommerceAbility.RemoveAll(x => x.ActionOver == true);
-                    if (city.JobDevelop(City.sort_by_BaseCommerceAbility))
-                    {
-                    }
-                }
-            }
-            return true;
-        }
-        public static bool AIIntriorAgricultureFirst(City city, Scenario scenario)
-        {
-            if (city.freePersons.Count > 0 && city.gold > 400)
+            if (city.commerce >= city.agriculture)
             {
-                if (city.commerce < city.agriculture * 3 / 2)
+                Person[] people = ForceAI.CounsellorRecommendFarming(city.freePersons, out int totalValue);
+                if (people == null) return true;
+                if (city.JobFarming(people))
                 {
-                    if (city.JobFarming(City.sort_by_BaseAgricultureAbility))
-                    {
-                    }
-                }
-                else
-                {
-                    if (city.JobDevelop(City.sort_by_BaseCommerceAbility))
-                    {
-                    }
-                }
-            }
-            return true;
-        }
-        public static bool AIIntriorCommerceFirst(City city, Scenario scenario)
-        {
-            if (city.freePersons.Count > 0 && city.gold > 400)
-            {
-                if (city.commerce >= city.agriculture * 3 / 2)
-                {
-                    City.sort_by_BaseAgricultureAbility.RemoveAll(x => x.ActionOver == true);
-                    if (city.JobFarming(City.sort_by_BaseAgricultureAbility))
-                    {
-                    }
-                }
-                else
-                {
-                    City.sort_by_BaseCommerceAbility.RemoveAll(x => x.ActionOver == true);
-                    if (city.JobDevelop(City.sort_by_BaseCommerceAbility))
-                    {
-                    }
-                }
-            }
-            return true;
-        }
 
+                }
+            }
+            else
+            {
+                Person[] people = ForceAI.CounsellorRecommendDevelop(city.freePersons, out int totalValue);
+                if (people == null) return true;
+                if (city.JobDevelop(people))
+                {
+                }
+            }
+            return true;
+        }
         public static bool AISecurity(City city, Scenario scenario)
         {
-            if (city.freePersons.Count > 0 && city.gold > 400)
+            if (city.freePersons.Count > 1 && city.gold > 400)
             {
                 if (GameRandom.Changce((90 - city.security) * 3 / 2))
                 {
-                    City.sort_by_BaseSecurityAbility.RemoveAll(x => x.ActionOver == true);
-                    if (city.JobInspection(City.sort_by_BaseSecurityAbility))
+                    Person[] people = ForceAI.CounsellorRecommendDevelop(city.freePersons, out int totalValue);
+                    if (people == null) return true;
+                    if (city.JobInspection(people))
                     {
                     }
                 }
@@ -675,12 +524,13 @@ namespace Sango.Game
 
         public static bool AITrainTroop(City city, Scenario scenario)
         {
-            if (city.freePersons.Count > 0 && city.gold > 400)
+            if (city.freePersons.Count > 1 && city.gold > 400)
             {
                 if (city.morale < 50)
                 {
-                    City.sort_by_BaseTrainTroopAbility.RemoveAll(x => x.ActionOver == true);
-                    if (city.JobTrainTroop(City.sort_by_BaseSecurityAbility))
+                    Person[] people = ForceAI.CounsellorRecommendTrainTroop(city.freePersons, out int totalValue);
+                    if (people == null) return true;
+                    if (city.JobTrainTroop(people))
                     {
                     }
                 }
@@ -688,8 +538,9 @@ namespace Sango.Game
                 {
                     if (GameRandom.Changce((95 - city.morale) * 3 / 2))
                     {
-                        City.sort_by_BaseTrainTroopAbility.RemoveAll(x => x.ActionOver == true);
-                        if (city.JobTrainTroop(City.sort_by_BaseTrainTroopAbility))
+                        Person[] people = ForceAI.CounsellorRecommendTrainTroop(city.freePersons, out int totalValue);
+                        if (people == null) return true;
+                        if (city.JobTrainTroop(people))
                         {
                         }
                     }
