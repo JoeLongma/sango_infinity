@@ -1975,7 +1975,7 @@
       "durabilityLimit": 800,
       "atk": 0,
       "damageBounds": 1.0,
-      "isIntrior": false,
+      "isIntrior": true,
       "insideOnly": false,
       "buildNumLimit": 1,
       "goldGain": 0,
