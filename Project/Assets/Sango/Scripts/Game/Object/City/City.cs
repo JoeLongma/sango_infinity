@@ -448,11 +448,11 @@ namespace Sango.Game
             population_increase_factor = variables.populationIncreaseBaseFactor;
 
             // 计算基础收入
-            totalGainFood = BaseGainFood + agriculture * 9;
-            totalGainGold = BaseGainGold + commerce;
+            totalGainFood = BaseGainFood + agriculture * variables.agriculture_add_food;
+            totalGainGold = BaseGainGold + commerce * variables.commerce_add_gold;
 
             // 计算建筑收入
-            allOutterBuildings.ForEach(x =>
+            allIntriorBuildings.ForEach(x =>
             {
                 if (x.isComplte)
                 {
@@ -1071,6 +1071,19 @@ namespace Sango.Game
             }
 
             //处理建筑
+            for (int i = allIntriorBuildings.Count - 1; i >= 0; i--)
+            {
+                Building building = allIntriorBuildings[i];
+                if (building.isComplte && GameRandom.Changce(30))
+                {
+                    building.ChangeCorps(atk.BelongCorps);
+                }
+                else
+                {
+                    building.Destroy();
+                }
+            }
+
             for (int i = allOutterBuildings.Count - 1; i >= 0; i--)
             {
                 Building building = allOutterBuildings[i];
@@ -1692,11 +1705,18 @@ namespace Sango.Game
             int lastTroops = troops;
 #endif
             int totalValue = 0;
+            int maxValue = 0;
+            Person maxPerson = null;
             for (int i = 0; i < personList.Length; i++)
             {
                 Person person = personList[i];
                 if (person == null) continue;
-                totalValue += person.BaseRecruitmentAbility;
+                if (person.BaseRecruitmentAbility > maxValue)
+                {
+                    maxPerson = person;
+                    maxValue = person.BaseRecruitmentAbility;
+                }
+
                 person.merit += meritGain;
                 person.GainExp(meritGain);
 
@@ -1708,10 +1728,22 @@ namespace Sango.Game
                 person.ActionOver = true;
             }
 
-            int finalValue = 0;
-            for(int i = 0; i < barracksNum; ++i)
-                finalValue += GameUtility.Method_RecuritTroop(totalValue, i+1);
-            totalValue = finalValue;
+            // 最高属性武将获得100%加成,其余两个获取50%加成
+            for (int i = 0; i < personList.Length; i++)
+            {
+                Person person = personList[i];
+                if (person == null) continue;
+                if (person != maxPerson)
+                {
+                    totalValue += maxPerson.BaseRecruitmentAbility * 5;
+                }
+                else
+                {
+                    totalValue += maxPerson.BaseRecruitmentAbility * 10;
+                }
+            }
+
+            totalValue = GameUtility.Method_RecuritTroop(totalValue, barracksNum);
 
             scenario.Event.OnCityJobResult?.Invoke(this, jobId, personList,
                  totalValue, (x) => { totalValue = x; });
@@ -1777,12 +1809,17 @@ namespace Sango.Game
             int lastTroops = troops;
 #endif
             int totalValue = 0;
+            int maxValue = 0;
+            Person maxPerson = null;
             for (int i = 0; i < personList.Length; i++)
             {
                 Person person = personList[i];
                 if (person == null) continue;
-
-                totalValue += person.BaseCreativeAbility;
+                if (person.BaseCreativeAbility > maxValue)
+                {
+                    maxPerson = person;
+                    maxValue = person.BaseCreativeAbility;
+                }
                 person.merit += meritGain;
                 person.GainExp(meritGain);
 
@@ -1792,6 +1829,21 @@ namespace Sango.Game
                 stringBuilder.Append(",");
 #endif
                 person.ActionOver = true;
+            }
+
+            // 最高属性武将获得100%加成,其余两个获取50%加成
+            for (int i = 0; i < personList.Length; i++)
+            {
+                Person person = personList[i];
+                if (person == null) continue;
+                if (person != maxPerson)
+                {
+                    totalValue += maxPerson.BaseCreativeAbility * 5;
+                }
+                else
+                {
+                    totalValue += maxPerson.BaseCreativeAbility * 10;
+                }
             }
 
             totalValue = GameUtility.Method_CreateItems(totalValue, buildingNum);

@@ -73,6 +73,16 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public int difficulty = 1;
 
+        /// <summary>
+        /// 每一点农业带来的粮食收入
+        /// </summary>
+        [JsonProperty] public int agriculture_add_food = 10;
+
+        /// <summary>
+        /// 每一点商业点带来的金币收入
+        /// </summary>
+        [JsonProperty] public int commerce_add_gold = 1;
+
 
         ///// <summary>
         ///// 士气最多影响比例
@@ -248,7 +258,7 @@ namespace Sango.Game
         /// <summary>
         /// 粮食倍率
         /// </summary>
-        [JsonProperty] public float foodFactor = 2f;
+        [JsonProperty] public float foodFactor = 1f;
 
         /// <summary>
         /// 金币倍率

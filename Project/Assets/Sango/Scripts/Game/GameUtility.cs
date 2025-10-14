@@ -130,9 +130,14 @@ namespace Sango.Game
             return Math.Max(1, (int)(Math.Pow(v, 0.5)) - 5);
         }
 
-        public static int Method_RecuritTroop(int v, int barracksNum)
+        // 这里传入的v是放大了10倍的
+        public static int Method_RecuritTroop(int v, int buildingNum)
         {
-            return Math.Max(1, (int)(Math.Pow(100, 0.5f / barracksNum) * 100f) * v / 85);
+            int percent = 1000;
+            for (int i = 1; i < buildingNum; ++i)
+                percent += (int)(Math.Pow(100, 0.5f / buildingNum) * 100f);
+
+            return ((int)(v * 8.567f / 10f - 1) + 1500) * percent / 1000;
         }
 
         public static int Method_TrainTroop(int v)
@@ -140,9 +145,13 @@ namespace Sango.Game
             return Math.Max(1, (int)(Math.Pow(v, 0.5)) * 2 - 10);
         }
 
+        // 这里传入的v是放大了10倍的
         public static int Method_CreateItems(int v, int buildingNum)
         {
-            return Math.Max(1, (int)(Math.Pow(100, 0.5f / buildingNum) * 100f) * v / 85);
+            int percent = 1000;
+            for (int i = 1; i < buildingNum; ++i)
+                percent += (int)(Math.Pow(100, 0.5f / buildingNum) * 100f);
+            return (v * 15 / 10 + 1500) * percent / 1000;
         }
     }
 }

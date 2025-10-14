@@ -1,4 +1,5 @@
 ﻿using Sango.Tools;
+using System;
 using System.Collections.Generic;
 
 namespace Sango.Game
@@ -183,14 +184,13 @@ namespace Sango.Game
                 }
             }
 
-            AITrainTroop(city, scenario);
             AISecurity(city, scenario);
+            AITrainTroop(city, scenario);
 
             if (city.freePersons.Count > 3)
             {
                 city.JobSearching(city.freePersons.GetRange(0, GameRandom.Range(city.freePersons.Count / 2)).ToArray());
             }
-
             return true;
         }
 
@@ -362,29 +362,29 @@ namespace Sango.Game
                 if (index < 0)
                     return true;
 
-                int buildTurn;
-                Person[] people = ForceAI.CounsellorRecommendBuild(city.freePersons, buildingType, out buildTurn);
-                if (people != null && buildTurn <= 6)
+                Person[] people = ForceAI.CounsellorRecommendBuild(city.freePersons, buildingType);
+                if (people != null)
                 {
-                    city.BuildBuilding(index, people, buildingType);
+                    int buildAbility = 0;
+                    for (int k = 0; k < people.Length; k++)
+                    {
+                        Person person = people[k];
+                        if (person == null) continue;
+                        buildAbility += person.BaseBuildAbility;
+                    }
+
+                    buildAbility = GameUtility.Method_BuildAbility(buildAbility);
+                    int turnCount = buildingType.durabilityLimit % buildAbility == 0 ? 0 : 1;
+                    int buildCount = Math.Min(Scenario.Cur.Variables.BuildMaxTurn, buildingType.durabilityLimit / buildAbility + turnCount);
+
+                    if (buildCount <= 6)
+                    {
+                        city.BuildBuilding(index, people, buildingType);
+                    }
+                    return true;
                 }
             }
 
-            return true;
-        }
-
-        /// <summary>
-        /// 军事
-        /// </summary>
-        /// <param name="scenario"></param>
-        public static bool AITroop(City city, Scenario scenario)
-        {
-            AIRecuritTroop(city, scenario);
-            AICreateItems(city, scenario);
-            //AITroopCreate(scenario);
-            //AITroopLevelUp(scenario);
-            //AITroopMerge(scenario);
-            //AITroopTrain(scenario);
             return true;
         }
 
@@ -392,14 +392,14 @@ namespace Sango.Game
         {
             if (city.freePersons.Count <= 2) return true;
 
-            int expectationTroops = (int)(city.totalGainFood / (9 * scenario.Variables.baseFoodCostInCity)) + city.food;
+            int expectationTroops =(city.totalGainFood * 4);
             if (city.troops >= expectationTroops)
                 return true;
 
             int barracksNum = city.GetIntriorBuildingComplateNumber((int)BuildingKindType.Barracks);
             if (barracksNum <= 0) return true;
 
-            Person[] people = ForceAI.CounsellorRecommendRecuritTroop(city.freePersons, out int totalValue);
+            Person[] people = ForceAI.CounsellorRecommendRecuritTroop(city.freePersons);
             if (people == null) return true;
 
             if (city.JobRecuritTroop(people, barracksNum))
@@ -444,22 +444,32 @@ namespace Sango.Game
 
         public static bool AICanAttack(City city, Scenario scenario)
         {
+            return false;
+
             if (city.troops < 20000)
                 return false;
 
-            if (city.morale < 80)
+            if (city.morale < 80 || city.security < 80)
                 return false;
 
-            if (city.freePersons.Count <= 0)
+            if (city.freePersons.Count < 6)
                 return false;
 
-            if (city.durability <= city.DurabilityLimit * 80 / 100)
+            if (city.durability < city.DurabilityLimit)
                 return false;
 
             if (!city.IsBorderCity)
                 return false;
 
             if (city.IsEnemiesRound())
+                return false;
+
+            // 兵装检查
+            if (city.itemStore.TotalNumber < city.troops * 3 / 2)
+                return false;
+
+            // 粮食检查
+            if (city.food <= 120000 * scenario.Variables.baseFoodCostInCity + 20 * (city.troops - 10000) * scenario.Variables.baseFoodCostInTroop)
                 return false;
 
             List<City> enemiesCities = new List<City>();
@@ -471,12 +481,6 @@ namespace Sango.Game
 
             if (enemiesCities.Count == 0)
                 return false;
-
-            if (city.food < city.troops * 2)
-                return false;
-
-            //if (allTroops.Count > 0 && allTroops.Count > TroopList.Count)
-            //    return false;
 
             if (GameRandom.Changce(90))
                 return false;
@@ -490,7 +494,7 @@ namespace Sango.Game
 
             if (city.commerce >= city.agriculture)
             {
-                Person[] people = ForceAI.CounsellorRecommendFarming(city.freePersons, out int totalValue);
+                Person[] people = ForceAI.CounsellorRecommendFarming(city.freePersons);
                 if (people == null) return true;
                 if (city.JobFarming(people))
                 {
@@ -499,7 +503,7 @@ namespace Sango.Game
             }
             else
             {
-                Person[] people = ForceAI.CounsellorRecommendDevelop(city.freePersons, out int totalValue);
+                Person[] people = ForceAI.CounsellorRecommendDevelop(city.freePersons);
                 if (people == null) return true;
                 if (city.JobDevelop(people))
                 {
@@ -507,6 +511,7 @@ namespace Sango.Game
             }
             return true;
         }
+
         public static bool AISecurity(City city, Scenario scenario)
         {
             if (city.freePersons.Count < 2 || city.gold < 400)
@@ -517,7 +522,7 @@ namespace Sango.Game
 
             if (GameRandom.Changce((90 - city.security) * 3 / 2))
             {
-                Person[] people = ForceAI.CounsellorRecommendDevelop(city.freePersons, out int totalValue);
+                Person[] people = ForceAI.CounsellorRecommendDevelop(city.freePersons);
                 if (people == null) return true;
                 if (city.JobInspection(people))
                 {
@@ -536,7 +541,7 @@ namespace Sango.Game
 
             if (city.morale < 50)
             {
-                Person[] people = ForceAI.CounsellorRecommendTrainTroop(city.freePersons, out int totalValue);
+                Person[] people = ForceAI.CounsellorRecommendTrainTroop(city.freePersons);
                 if (people == null) return true;
                 if (city.JobTrainTroop(people))
                 {
@@ -546,7 +551,7 @@ namespace Sango.Game
             {
                 if (GameRandom.Changce((95 - city.morale) * 3 / 2))
                 {
-                    Person[] people = ForceAI.CounsellorRecommendTrainTroop(city.freePersons, out int totalValue);
+                    Person[] people = ForceAI.CounsellorRecommendTrainTroop(city.freePersons);
                     if (people == null) return true;
                     if (city.JobTrainTroop(people))
                     {
@@ -573,7 +578,7 @@ namespace Sango.Game
                 // 获取总兵装
                 totalNum += city.itemStore.GetNumber(itemTypeId);
 
-            if (totalNum > city.troops + 5000)
+            if (totalNum > city.troops * 2)
                 return true;
 
             // 统计适应偏向
@@ -602,9 +607,9 @@ namespace Sango.Game
                     continue;
 
                 int itemNum = city.itemStore.GetNumber(itemTypeId);
-                if (itemNum * 1000 / totalNum < levelTotal[itemTypeId - 2] * 1000 / sumTotal)
+                if (itemNum < levelTotal[itemTypeId - 2] * city.troops / sumTotal + 5000)
                 {
-                    Person[] people = ForceAI.CounsellorRecommendCreateItems(city.freePersons, out int totalValue);
+                    Person[] people = ForceAI.CounsellorRecommendCreateItems(city.freePersons);
                     if (people == null) return true;
                     ItemType itemType = Scenario.Cur.GetObject<ItemType>(itemTypeId);
                     if (city.JobCreateItems(people, itemType, itemTypeId == 5 ? StableNum : BlacksmithShopnum))
@@ -614,7 +619,7 @@ namespace Sango.Game
                     return true;
                 }
             }
-            
+
             return true;
         }
     }

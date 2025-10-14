@@ -247,6 +247,7 @@ namespace Sango.Tools
             mapObj.objId = CheckModelIndex();
             mapObj.objType = modelConfig.modelType;
             mapObj.modelId = modelConfig.Id;
+            mapObj.modelAsset = modelConfig.model;
             mapObj.position = model.transform.position;
             mapObj.rotation = model.transform.rotation.eulerAngles;
             mapObj.scale = model.transform.localScale;

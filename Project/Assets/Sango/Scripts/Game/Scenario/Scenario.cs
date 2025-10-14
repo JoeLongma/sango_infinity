@@ -241,6 +241,10 @@ namespace Sango.Game
             {
                 return CommonData.PersonLevels.Get(id);
             }
+            else if (tType == typeof(ItemType))
+            {
+                return CommonData.ItemTypes.Get(id);
+            }
             //else if (tType == typeof(CityLevelType))
             //{
             //    return CommonData.CityLevelTypes.Get(id);
