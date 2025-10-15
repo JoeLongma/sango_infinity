@@ -2,11 +2,17 @@
 # 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
 ################################################################################
 
+.gitignore
 /Project/.vs/Project
 /Project/Library
 /Project/Logs
 /Project/obj/Debug
 /Project/Temp
+/Project/Packages
+/Project/Packages/packages-lock.json
+/Project/ProjectSettings
+/Project/ProjectSettings/PackageManagerSettings.asset
+/Project/ProjectSettings/ProjectVersion.txt
 /Project/UserSettings
 /Project/Project.sln
 /Project/HSVPicker.Editors.csproj
