@@ -436,7 +436,7 @@ namespace Sango.Game
                 return false;
 
             // 兵装检查
-            if (city.itemStore.TotalNumber < city.troops * 3 / 2)
+            if (city.itemStore.TotalNumber < Math.Min(60000,city.troops * 3 / 2))
                 return false;
 
             int needFood = (int)(120000 * scenario.Variables.baseFoodCostInCity + 20 * (city.troops - 20000) * scenario.Variables.baseFoodCostInTroop);
