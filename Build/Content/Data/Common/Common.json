@@ -1794,7 +1794,7 @@
       "foodGain": 5600,
       "populationGain": 0.0,
       "cost": 0,
-      "radius": 2,
+      "radius": 1,
       "desc": "生产资金、兵粮的据点",
       "model": 30
     },
@@ -1812,7 +1812,7 @@
       "foodGain": 2800,
       "populationGain": 0.0,
       "cost": 0,
-      "radius": 2,
+      "radius": 0,
       "desc": "防御力优越的据点",
       "model": 30
     },
@@ -1830,7 +1830,7 @@
       "foodGain": 2800,
       "populationGain": 0.03,
       "cost": 0,
-      "radius": 2,
+      "radius": 0,
       "desc": "每回合对位于周围２区格内的敌方部队执行弓箭攻击",
       "icon": "ui://game/4845_7_15",
       "model": 30
@@ -2020,7 +2020,7 @@
       "foodGain": 0,
       "populationGain": 0.0,
       "cost": 800,
-      "radius": 2,
+      "radius": 0,
       "desc": "每回合对位于周围２区格内的敌方部队执行弓箭攻击",
       "icon": "ui://game/4845_7_15",
       "model": 30

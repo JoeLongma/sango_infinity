@@ -7,7 +7,7 @@ namespace Sango.Game.Render
 {
     public abstract class ObjectRender : IRender
     {
-       public bool IsVisible()
+        public bool IsVisible()
         {
             return MapObject != null && MapObject.visible;
         }
@@ -41,10 +41,7 @@ namespace Sango.Game.Render
         }
 
         public virtual void UpdateRender() { }
-
-         public virtual void ShowDamage(int damage, int damageType)
-        {
-            
-        }
+        public virtual void ShowDamage(int damage, int damageType) {; }
+        public virtual void ShowSkill(Skill skill) {; }
     }
 }

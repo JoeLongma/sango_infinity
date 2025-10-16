@@ -19,6 +19,8 @@ namespace Sango.Game.Render
             {
                 troop.Render.SetSmokeShow(true);
             }
+            if (skill.costEnergy > 0)
+                troop.Render.ShowSkill(skill);
         }
 
         public override void Exit(Scenario scenario)
@@ -51,7 +53,7 @@ namespace Sango.Game.Render
         public void Action()
         {
             if (isAction) return;
-
+         
             Troop targetTroop = spellCell.troop;
             BuildingBase targetBuilding = spellCell.building;
             //TODO: 释放技能

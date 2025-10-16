@@ -14,6 +14,7 @@ namespace Sango.Game.Render.UI
         public Image angry;
         public Text number;
         public AnimationText aniText;
+        public AnimationText skillText;
         public void Init(Troop troop)
         {
             name.text = troop.Name;
@@ -29,9 +30,14 @@ namespace Sango.Game.Render.UI
             number.text = troop.troops.ToString();
         }
 
-         public void ShowDamage(int damage, int damageType = 0)
+        public void ShowDamage(int damage, int damageType = 0)
         {
             UITools.ShowDamage(aniText, damage, damageType);
+        }
+
+        public void ShowSkill(Skill skill)
+        {
+            skillText.Create(skill.Name, 1);
         }
     }
 }

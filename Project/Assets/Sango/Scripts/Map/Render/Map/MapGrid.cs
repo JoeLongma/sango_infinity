@@ -464,7 +464,7 @@ namespace Sango.Render
         public void Update(Tools.Rect rect)
         {
             if (MapEditor.IsEditOn) return;
-            if (GameDebug.enabled == false) return;
+            //if (GameDebug.enabled == false) return;
             if (last != null)
             {
                 for (int i = 0; i < last.Count; i++)

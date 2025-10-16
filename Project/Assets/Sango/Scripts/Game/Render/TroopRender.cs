@@ -178,7 +178,7 @@ namespace Sango.Game.Render
             }
         }
 
-          public override void ShowDamage(int damage, int damageType)
+        public override void ShowDamage(int damage, int damageType)
         {
             if (HeadBar != null)
             {
@@ -186,6 +186,18 @@ namespace Sango.Game.Render
                 if (uITroopHeadbar != null)
                 {
                     uITroopHeadbar.ShowDamage(damage, damageType);
+                }
+            }
+        }
+
+        public override void ShowSkill(Skill skill)
+        {
+            if (HeadBar != null)
+            {
+                UITroopHeadbar uITroopHeadbar = HeadBar as UITroopHeadbar;
+                if (uITroopHeadbar != null)
+                {
+                    uITroopHeadbar.ShowSkill(skill);
                 }
             }
         }
