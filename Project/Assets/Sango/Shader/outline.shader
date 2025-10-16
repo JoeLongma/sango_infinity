@@ -61,9 +61,10 @@ Shader "Sango/outline_urp" {
 				{
 					VertexOutput o;
 
-					float camDist = distance(TransformObjectToWorld(v.vertex.xyz), _WorldSpaceCameraPos);
-					v.vertex.xyz += normalize(v.vertex.xyz) * camDist * _OutlineWidth * 0.001;
-
+					float camDist = distance(TransformObjectToWorld(v.vertex.xyz), _WorldSpaceCameraPos) * _OutlineWidth * 0.001;
+					float3 _vertex = v.vertex.xyz;
+					v.vertex.xyz += normalize(v.vertex.xyz) * camDist ;
+					v.vertex.xyz += normalize(v.normal.xyz) * camDist * 0.6;
 					
 					//v.vertex.xyz += normalize(v.vertex.xyz) * _OutlineWidth;
 					o.uv = TRANSFORM_TEX(v.uv, _MainTex);

@@ -17,13 +17,17 @@ namespace Sango
         {
             CatchMainCamera();
             cacheOffset = transform.localPosition;
+            tempFactor = -1;
         }
 
         private void OnDisable()
         {
-            tempFactor = -11111;
+            tempFactor = -1;
         }
-
+        private void OnEnable()
+        {
+            tempFactor = -1;
+        }
         void CatchMainCamera()
         {
             if (cacheTrans == null)
