@@ -249,6 +249,9 @@ namespace Sango.Game
         /// </summary>
         public SangoObjectList<Building> allOutterBuildings = new SangoObjectList<Building>();
 
+        public List<Troop> activedTroops = new List<Troop>();
+
+
         /// <summary>
         /// 所有内城设施
         /// </summary>
@@ -1762,49 +1765,6 @@ namespace Sango.Game
             return target;
         }
 
-
-
-        public static List<Person> sort_by_TroopAbility = new List<Person>();
-        //public static List<Person> sort_by_BaseCommerceAbility = new List<Person>();
-        //public static List<Person> sort_by_BaseSecurityAbility = new List<Person>();
-        //public static List<Person> sort_by_BaseAgricultureAbility = new List<Person>();
-        //public static List<Person> sort_by_BaseBuildAbility = new List<Person>();
-        //public static List<Person> sort_by_BaseRecruitmentAbility = new List<Person>();
-        //public static List<Person> sort_by_BaseTrainTroopAbility = new List<Person>();
-
-        struct SortPerson
-        {
-            public Person person;
-            public int attr;
-        }
-        public void SortFreePersons()
-        {
-            sort_by_TroopAbility.Clear();
-            //sort_by_BaseCommerceAbility.Clear();
-            //sort_by_BaseSecurityAbility.Clear();
-            //sort_by_BaseAgricultureAbility.Clear();
-            //sort_by_BaseBuildAbility.Clear();
-            //sort_by_BaseRecruitmentAbility.Clear();
-            //sort_by_BaseTrainTroopAbility.Clear();
-
-            sort_by_TroopAbility.AddRange(freePersons);
-            //sort_by_BaseCommerceAbility.AddRange(freePersons);
-            //sort_by_BaseSecurityAbility.AddRange(freePersons);
-            //sort_by_BaseAgricultureAbility.AddRange(freePersons);
-            //sort_by_BaseBuildAbility.AddRange(freePersons);
-            //sort_by_BaseRecruitmentAbility.AddRange(freePersons);
-            //sort_by_BaseTrainTroopAbility.AddRange(freePersons);
-
-            sort_by_TroopAbility.Sort((a, b) => { return -a.MilitaryAbility.CompareTo(b.MilitaryAbility); });
-            //sort_by_BaseCommerceAbility.Sort((a, b) => { return -a.BaseCommerceAbility.CompareTo(b.BaseCommerceAbility); });
-            //sort_by_BaseSecurityAbility.Sort((a, b) => { return -a.BaseSecurityAbility.CompareTo(b.BaseSecurityAbility); });
-            //sort_by_BaseAgricultureAbility.Sort((a, b) => { return -a.BaseAgricultureAbility.CompareTo(b.BaseAgricultureAbility); });
-            //sort_by_BaseBuildAbility.Sort((a, b) => { return -a.BaseBuildAbility.CompareTo(b.BaseBuildAbility); });
-            //sort_by_BaseRecruitmentAbility.Sort((a, b) => { return -a.BaseRecruitmentAbility.CompareTo(b.BaseRecruitmentAbility); });
-            //sort_by_BaseTrainTroopAbility.Sort((a, b) => { return -a.BaseTrainTroopAbility.CompareTo(b.BaseTrainTroopAbility); });
-        }
-
-
         public bool IsEnemiesRound(int round)
         {
             if (round < enemiesRound.Length)
@@ -1922,7 +1882,6 @@ namespace Sango.Game
 
             UpdateActiveTroopTypes();
             UpdateFightPower();
-            SortFreePersons();
 
             if (IsBorderCity)
             {
@@ -2047,6 +2006,30 @@ namespace Sango.Game
                 }
             }
             return complateNum;
+        }
+
+        public int TroopsCount
+        {
+            get
+            {
+                int troopsCount = 0;
+                SangoObjectSet<Troop> troopSet = Scenario.Cur.troopsSet;
+                for (int i = 0; i < troopSet.Count; i++)
+                {
+                    Troop troop = troopSet[i];
+                    if (troop != null && troop.IsAlive && troop.BelongCity == this)
+                        troopsCount++;
+                }
+                return troopsCount;
+            }
+        }
+
+        public int EnemyCount
+        {
+            get
+            {
+                return enemies.Count;
+            }
         }
     }
 }

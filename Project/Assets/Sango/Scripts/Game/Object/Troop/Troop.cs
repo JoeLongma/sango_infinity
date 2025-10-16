@@ -176,12 +176,12 @@ namespace Sango.Game
         /// <summary>
         /// 攻击力
         /// </summary>
-        public int Attack { get;  set; }
+        public int Attack { get; set; }
 
         /// <summary>
         /// 防御力
         /// </summary>
-        public int Defence { get;  set; }
+        public int Defence { get; set; }
 
         /// <summary>
         /// 建设力
@@ -220,6 +220,7 @@ namespace Sango.Game
 
         public override void Init(Scenario scenario)
         {
+            BelongCity.activedTroops.Add(this);
             CalculateAttribute(scenario);
             Render = new TroopRender(this);
             foodCost = (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
@@ -328,7 +329,7 @@ namespace Sango.Game
                 {
 
                     SkillInstance ins = null;
-                    if(skills != null)
+                    if (skills != null)
                         ins = skills.Find(x => x.Skill == skill);
                     if (ins != null)
                         skillInstances.Add(ins);
@@ -342,8 +343,8 @@ namespace Sango.Game
             Defence = TroopsLevelBoost((
                 Command * Variables.fight_troop_defence_command_factor
                 + Strength * Variables.fight_troop_defence_strength_factor
-                + Intelligence * Variables.fight_troop_defence_intelligence_factor 
-                + Politics * Variables.fight_troop_defence_intelligence_factor 
+                + Intelligence * Variables.fight_troop_defence_intelligence_factor
+                + Politics * Variables.fight_troop_defence_intelligence_factor
                 + Glamour * Variables.fight_troop_defence_intelligence_factor
                 ) / 10000 * TroopType.def) / 100;
 
@@ -447,22 +448,22 @@ namespace Sango.Game
 
             int damage = (int)(
                 (
-                
-                (Math.Pow(atkBounds * Variables.fight_base_damage, 0.5) +  Math.Max(0, (int)((Math.Pow(attacker.Attack, 2) -  Math.Pow(Math.Max(40, target.Defence), 2)) / 300)) +
+
+                (Math.Pow(atkBounds * Variables.fight_base_damage, 0.5) + Math.Max(0, (int)((Math.Pow(attacker.Attack, 2) - Math.Pow(Math.Max(40, target.Defence), 2)) / 300)) +
                 Math.Max(0, (attacker.troops - target.troops) / Variables.fight_base_troops_need) + 50)
-                
+
                 * 10 * ((int)(
-                
-                (((int)(attacker.troops * 0.01) + 300) * Math.Pow((attacker.Attack + 50), 2)) / 
+
+                (((int)(attacker.troops * 0.01) + 300) * Math.Pow((attacker.Attack + 50), 2)) /
                 (((int)(attacker.troops * 0.01) + 300) * Math.Pow((attacker.Attack + 50), 2) * 0.01 +
                 ((int)(target.troops * 0.01) + 300) * Math.Pow((target.Defence + 50), 2) * 0.01)
-                
+
                 - 50)
-                
+
                 + 50)
                 // 原有基础上优化Math.Max(1, attacker.troops / 4),1兵打出15伤害同于实际测试
-                * Math.Min(Math.Pow(Math.Max(1, attacker.troops / 4), 0.5), 40) 
-                
+                * Math.Min(Math.Pow(Math.Max(1, attacker.troops / 4), 0.5), 40)
+
                 * Variables.fight_damage_magic_number /* * 太鼓台系数*/
 
                 + attacker.troops / Variables.fight_base_troop_count
@@ -556,8 +557,8 @@ namespace Sango.Game
 
                  + 50)
 
-                 * Math.Min(Math.Pow(Math.Max(1, base_troops / 4), 0.5), 40) 
-                 
+                 * Math.Min(Math.Pow(Math.Max(1, base_troops / 4), 0.5), 40)
+
                  * Variables.fight_damage_magic_number /* * 太鼓台系数*/
 
                  + base_troops / Variables.fight_base_troop_count
@@ -1170,6 +1171,7 @@ namespace Sango.Game
 
         public override void Clear()
         {
+            BelongCity.activedTroops.Remove(this);
             Scenario.Cur.Remove(this);
             ForEachPerson((person) =>
             {
@@ -1183,7 +1185,7 @@ namespace Sango.Game
                 cell.troop = null;
         }
 
-        public void RemovePerson(Person person)
+        public void RemovePerson(Person person, bool justRemove = false)
         {
             if (person == null) return;
 
@@ -1191,14 +1193,30 @@ namespace Sango.Game
             {
                 Member1.BelongTroop = null;
                 Member1 = null;
+
+                Member1 = Member2;
+                Member2 = null;
             }
             else if (Member2 == person)
             {
                 Member2.BelongTroop = null;
                 Member2 = null;
             }
+            else if (Leader == person)
+            {
+                Leader.BelongTroop = null;
+                Leader = null;
 
-            CalculateAttribute(Scenario.Cur);
+                if (Member1 != null)
+                {
+                    Leader = Member1;
+                    Member1 = Member2;
+                    Member2 = null;
+                }
+            }
+
+            if (!justRemove)
+                CalculateAttribute(Scenario.Cur);
         }
 
         /// <summary>
@@ -1210,7 +1228,7 @@ namespace Sango.Game
             if (Leader.IsSameForce(city)) return false;
             ForEachMember(mem =>
             {
-                RemovePerson(mem);
+                RemovePerson(mem, true);
                 mem.SetMission(MissionType.PersonReturn, mem.BelongCity, 1);
                 mem.ActionOver = true;
             });

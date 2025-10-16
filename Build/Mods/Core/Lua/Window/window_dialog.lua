@@ -14,8 +14,10 @@ function Window_Dialog:InitEvent(event, content)
     local co = nil;
     co = coroutine.start(function()
         coroutine.wait(1);
-        self.mEvent.IsDone = true;
-        self.mEvent = nil;
+        if self.mEvent ~= nil then
+            self.mEvent.IsDone = true;
+            self.mEvent = nil;
+        end
         coroutine.stop(co);
     end)
 end

@@ -326,7 +326,7 @@ namespace Sango.Game
             Event.OnWorldLoadEnd?.Invoke(this);
             this.Map.Init(this);
             this.Prepare();
-            this.Init(null);
+            this.Init(this);
             Event.OnStart?.Invoke(this);
             this.Start();
         }
@@ -413,6 +413,7 @@ namespace Sango.Game
             isThreadPause = false;
         }
 
+        // 在Prepare之后
         public override void Init(Scenario scenario)
         {
             Sango.Game.Event.OnGameShutdown += OnGameShutdown;

@@ -41,14 +41,17 @@ namespace Sango.Game
                 {
                     if (city.CheckEnemiesIfAlive())
                     {
-                        Troop troop = AIMakeTroop(city, 15, false, scenario);
-                        if (troop != null)
+                        if (city.TroopsCount < Math.Max(3, city.EnemyCount + 1))
                         {
-                            troop = city.EnsureTroop(troop, scenario);
-                            city.CurActiveTroop = troop;
+                            Troop troop = AIMakeTroop(city, 15, false, scenario);
+                            if (troop != null)
+                            {
+                                troop = city.EnsureTroop(troop, scenario);
+                                city.CurActiveTroop = troop;
 #if SANGO_DEBUG
-                            Sango.Log.Print($"{city.BelongForce.Name}势力在{city.Name}由{troop.Leader.Name}率领军队出城防守!");
+                                Sango.Log.Print($"{city.BelongForce.Name}势力在{city.Name}由{troop.Leader.Name}率领军队出城防守!");
 #endif
+                            }
                         }
                     }
                 }
@@ -409,7 +412,7 @@ namespace Sango.Game
 
             City.EnemyInfo enemyInfo;
             // 兵临城下且敌军存活
-            if (city.IsEnemiesRound(10) && city.CheckEnemiesIfAlive(out enemyInfo))
+            if (city.IsEnemiesRound(6) && city.CheckEnemiesIfAlive(out enemyInfo))
                 return true;
 
             return false;
@@ -436,7 +439,7 @@ namespace Sango.Game
                 return false;
 
             // 兵装检查
-            if (city.itemStore.TotalNumber < Math.Min(60000,city.troops * 3 / 2))
+            if (city.itemStore.TotalNumber < Math.Min(60000, city.troops * 3 / 2))
                 return false;
 
             int needFood = (int)(120000 * scenario.Variables.baseFoodCostInCity + 20 * (city.troops - 20000) * scenario.Variables.baseFoodCostInTroop);
@@ -644,7 +647,8 @@ namespace Sango.Game
             maxTroopNum = city.itemStore.CheckCostMin(spType.costItems, maxTroopNum);
 
             // 粮食
-            int food = (int)Math.Ceiling(maxTroopNum * scenario.Variables.baseFoodCostInTroop * minTurn);
+            int turnCostFood = (int)(maxTroopNum * scenario.Variables.baseFoodCostInTroop);
+            int food = turnCostFood * minTurn;
             while (city.food < food)
             {
                 if (isAttack) return null;
@@ -653,7 +657,7 @@ namespace Sango.Game
                 if (minTurn < 5)
                     return null;
 
-                food = (int)Math.Ceiling(maxTroopNum * scenario.Variables.baseFoodCostInTroop * minTurn);
+                food = turnCostFood * minTurn;
             }
 
             spType.Cost(city, maxTroopNum);
@@ -673,6 +677,7 @@ namespace Sango.Game
                 missionType = (int)city.TroopMissionType,
                 missionTarget = city.TroopMissionTargetId,
             };
+
             if (people.Length > 1) troop.Member1 = people[1];
             if (people.Length > 2) troop.Member1 = people[2];
             city.Render?.UpdateRender();
