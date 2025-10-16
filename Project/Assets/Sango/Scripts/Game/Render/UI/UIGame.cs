@@ -186,6 +186,13 @@ namespace Sango.Game.Render.UI
             if (obj is Troop)
             {
                 Troop troop = (Troop)obj;
+
+                if(troop.BelongForce == null)
+                {
+                    int dd = 33;
+                    dd++;
+                }
+
                 item.name.text = $"[{troop.BelongForce.Name}]{troop.Name}队,{troop.Member1?.Name}{troop.Member2?.Name}";
                 item.name.color = troop.BelongForce.Flag.color;
             }

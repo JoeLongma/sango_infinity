@@ -26,15 +26,21 @@ namespace Sango.Game
             {
                 if (city.TroopMissionType == MissionType.OccupyCity)
                 {
-                    Troop troop = AIMakeTroop(city, 20, true, scenario);
-                    if (troop != null)
+                    City targetCity = scenario.citySet.Get(city.TroopMissionTargetId);
+                    if(targetCity.BelongForce != null || (targetCity.BelongForce == null && city.TroopsCount < 1))
                     {
-                        troop = city.EnsureTroop(troop, scenario);
-                        city.CurActiveTroop = troop;
+                        // 白城只去一直部队
+
+                        Troop troop = AIMakeTroop(city, 20, true, scenario);
+                        if (troop != null)
+                        {
+                            troop = city.EnsureTroop(troop, scenario);
+                            city.CurActiveTroop = troop;
 #if SANGO_DEBUG
-                        City targetCity = scenario.citySet.Get(troop.missionTarget);
-                        Sango.Log.Print($"{scenario.GetDateStr()}{city.BelongForce.Name}3势力在{city.Name}由{troop.Leader.Name}率领军队出城 进攻{targetCity.BelongForce?.Name}的{targetCity.Name}!");
+
+                            Sango.Log.Print($"{scenario.GetDateStr()}{city.BelongForce.Name}3势力在{city.Name}由{troop.Leader.Name}率领军队出城 进攻{targetCity.BelongForce?.Name}的{targetCity.Name}!");
 #endif
+                        }
                     }
                 }
                 else if (city.TroopMissionType == MissionType.ProtectCity)

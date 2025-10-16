@@ -882,9 +882,9 @@ namespace Sango.Game
             IsAlive = troops > 0;
             if (!IsAlive)
             {
+                Sango.Log.Print($"{BelongForce.Name}的[{Name} 部队 溃灭!!");
                 // 移除
                 Clear();
-                Sango.Log.Print($"{BelongForce.Name}的[{Name} 部队 溃灭!!");
             }
 
             if (Render != null)

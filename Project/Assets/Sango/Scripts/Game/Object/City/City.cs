@@ -858,7 +858,17 @@ namespace Sango.Game
             // 处理俘虏
             List<Person> captiveList = new List<Person>();
 
-            // 移除部队
+            // 必须优先处理队伍
+            if (escapeCity == null)
+            {
+                // 灭亡后,队伍要清除
+                Scenario.Cur.troopsSet.ForEach((troop) =>
+                {
+                    if (troop.IsAlive && troop.BelongForce == this.BelongForce)
+                        troop.Clear();
+                });
+            }
+
             for (int i = allPersons.Count - 1; i >= 0; --i)
             {
                 Person person = allPersons[i];
@@ -881,15 +891,6 @@ namespace Sango.Game
                         person.LeaveToWild();
                     }
                 }
-            }
-
-            if (escapeCity == null)
-            {
-                Scenario.Cur.troopsSet.ForEach((troop) =>
-                {
-                    if (troop.IsAlive && troop.BelongForce == this.BelongForce)
-                        troop.Clear();
-                });
             }
 
             //处理建筑

@@ -1224,7 +1224,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &-2764854377414352855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1238,7 +1238,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initScale: {x: -1, y: 1, z: 1}
-  scaleFactor: {x: 0.1, y: 0.3}
+  scaleFactor: {x: 0.13, y: 0.3}
+  offsetFactor: {x: 0, y: -6, z: 0}
 --- !u!114 &7523167001694398416
 MonoBehaviour:
   m_ObjectHideFlags: 0
