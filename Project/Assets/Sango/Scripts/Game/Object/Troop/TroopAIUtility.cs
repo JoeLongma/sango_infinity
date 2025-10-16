@@ -330,9 +330,9 @@ namespace Sango.Game
                 {
                     return (skill.atk + 10) * (troop.Attack - target.troop.Defence + 200) * rangeFactor / 100;
                 }
-                else if (skill.canDamageTeam)
+                else if (skill.canDamageTeam && spellCell != target)
                 {
-                    return -(skill.atk + 10) * (troop.Attack - target.troop.Defence + 200) * rangeFactor / 100;
+                    return -(skill.atk + 20) * (troop.Attack - target.troop.Defence + 200) * rangeFactor / 100;
                 }
             }
             else if (target.building != null && skill.canDamageBuilding)
@@ -342,9 +342,9 @@ namespace Sango.Game
                 {
                     return skill.atkDurability * 4 * rangeFactor;
                 }
-                else if (skill.canDamageTeam)
+                else if (skill.canDamageTeam && spellCell != target)
                 {
-                    return skill.atkDurability * -4 * rangeFactor;
+                    return skill.atkDurability * -8 * rangeFactor;
                 }
             }
             return 0;
