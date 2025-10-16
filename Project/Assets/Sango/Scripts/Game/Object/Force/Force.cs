@@ -495,5 +495,10 @@ namespace Sango.Game
         {
             TechniquePoint += value;
         }
+
+        public bool HasTechnique(int techId)
+        {
+            return true;
+        }
     }
 }

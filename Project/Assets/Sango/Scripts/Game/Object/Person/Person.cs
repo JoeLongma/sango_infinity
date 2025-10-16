@@ -274,6 +274,18 @@ namespace Sango.Game
         [JsonProperty]
         public SangoObjectList<Feature> FeatureList;
 
+        /// <summary>
+        /// 库存
+        /// </summary>
+        [JsonProperty]
+        [JsonConverter(typeof(ItemStoreConverter))]
+        public ItemStore itemStore = new ItemStore();
+
+        public bool HasItem(int itemTypeId)
+        {
+            return itemStore.GetNumber(itemTypeId) > 0;
+        }
+
         public int SpearLv => spearLv.value;
         public int HalberdLv => halberdLv.value;
         public int CrossbowLv => crossbowLv.value;

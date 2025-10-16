@@ -3,9 +3,6 @@ using Sango.Game.Render;
 using Sango.Tools;
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Sango.Game
 {
@@ -18,17 +15,17 @@ namespace Sango.Game
         /// <summary>
         /// 所属势力
         /// </summary>
-        public Force BelongForce => Leader.BelongForce;
+        public Force BelongForce => Leader?.BelongForce;
 
         /// <summary>
         /// 所属势力
         /// </summary>
-        public Corps BelongCorps => Leader.BelongCorps;
+        public Corps BelongCorps => Leader?.BelongCorps;
 
         /// <summary>
         /// 所属城池
         /// </summary>
-        public City BelongCity => Leader.BelongCity;
+        public City BelongCity => Leader?.BelongCity;
 
         /// <summary>
         /// 统领
@@ -611,6 +608,8 @@ namespace Sango.Game
 
         public static int CheckTroopTypeLevel(TroopType troopType, Person person)
         {
+            int influenceAbility = troopType.influenceAbility - 1;
+            if (influenceAbility < 0) return 0;
             switch (troopType.influenceAbility)
             {
                 case (int)AbilityType.Spear:
@@ -1270,7 +1269,7 @@ namespace Sango.Game
                             troopMissionBehaviour = new TroopProtectCity();
                             break;
                         case (int)MissionType.MovetoCity:
-                            troopMissionBehaviour = new TrooprMovetoCity();
+                            troopMissionBehaviour = new TroopMovetoCity();
                             break;
                         case (int)MissionType.ReturnCity:
                             troopMissionBehaviour = new TroopReturnCity();

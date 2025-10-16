@@ -11,6 +11,8 @@ namespace Sango.Game
         public virtual bool IsPlayer { get; set; }
         public virtual bool AIFinished { get; set; }
         public virtual bool AIPrepared { get; set; }
+        public override string Name { get { return Comander?.Name; } }
+
         /// <summary>
         /// 所属势力
         /// </summary>

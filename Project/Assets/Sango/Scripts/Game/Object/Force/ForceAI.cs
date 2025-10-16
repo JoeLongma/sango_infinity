@@ -221,7 +221,7 @@ namespace Sango.Game
         /// <param name="recommend3PersonValueFunc"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static Person[] CounsellorRecommend3Person(List<Person> personList, Recommend3PersonValue recommend3PersonValueFunc)
+        static Person[] CounsellorRecommend3Person(List<Person> personList, Recommend3PersonValue recommend3PersonValueFunc)
         {
             int count = personList.Count;
             if (count <= 0)
@@ -273,7 +273,7 @@ namespace Sango.Game
             return checkPersons;
         }
 
-        public static Person[] CounsellorRecommend2Person(List<Person> personList, Recommend2PersonValue recommend2PersonValueFunc)
+        static Person[] CounsellorRecommend2Person(List<Person> personList, Recommend2PersonValue recommend2PersonValueFunc)
         {
             int count = personList.Count;
             if (count <= 0)
@@ -282,7 +282,7 @@ namespace Sango.Game
             if (count >= 20)
                 return CounsellorFastRecommend2Person(personList, recommend2PersonValueFunc);
 
-            Person[] checkPersons = new Person[2];
+            Person[] checkPersons = new Person[3];
             int[] maxValue = new int[] { -99999, 99999 };
             bool hasValue = false;
             for (int i = 0; i < count; i++)
@@ -312,7 +312,7 @@ namespace Sango.Game
             return checkPersons;
         }
 
-        public static Person[] CounsellorRecommend1Person(List<Person> personList, Recommend1PersonValue recommend1PersonValueFunc)
+        static Person[] CounsellorRecommend1Person(List<Person> personList, Recommend1PersonValue recommend1PersonValueFunc)
         {
             int count = personList.Count;
             if (count <= 0)
@@ -321,7 +321,7 @@ namespace Sango.Game
             if (count >= 20)
                 return CounsellorFastRecommend1Person(personList, recommend1PersonValueFunc);
 
-            Person[] checkPersons = new Person[1];
+            Person[] checkPersons = new Person[3];
             int[] maxValue = new int[] { -99999, 99999 };
             bool hasValue = false;
             for (int i = 0; i < count; i++)
@@ -347,7 +347,7 @@ namespace Sango.Game
         /// <param name="recommend3PersonValueFunc"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static Person[] CounsellorFastRecommend3Person(List<Person> personList, Recommend3PersonValue fastRecommend3PersonValueFunc)
+        static Person[] CounsellorFastRecommend3Person(List<Person> personList, Recommend3PersonValue fastRecommend3PersonValueFunc)
         {
             int count = personList.Count;
             if (count <= 0)
@@ -395,7 +395,7 @@ namespace Sango.Game
 
             return checkPersons;
         }
-        public static Person[] CounsellorFastRecommend2Person(List<Person> personList, Recommend2PersonValue fastRecommend2PersonValueFunc)
+        static Person[] CounsellorFastRecommend2Person(List<Person> personList, Recommend2PersonValue fastRecommend2PersonValueFunc)
         {
             int count = personList.Count;
             if (count <= 0)
@@ -404,7 +404,7 @@ namespace Sango.Game
             if (personList.Count <= 2)
                 return personList.ToArray();
 
-            Person[] checkPersons = new Person[2];
+            Person[] checkPersons = new Person[3];
             int[] maxValues = new int[] { -99999, 99999 };
             Person person1 = null;
             // 第一位找目标属性最大
@@ -430,7 +430,7 @@ namespace Sango.Game
             }
             return checkPersons;
         }
-        public static Person[] CounsellorFastRecommend1Person(List<Person> personList, Recommend1PersonValue fastRecommend1PersonValueFunc)
+        static Person[] CounsellorFastRecommend1Person(List<Person> personList, Recommend1PersonValue fastRecommend1PersonValueFunc)
         {
             int count = personList.Count;
             if (count <= 0)
@@ -439,7 +439,7 @@ namespace Sango.Game
             if (personList.Count <= 1)
                 return personList.ToArray();
 
-            Person[] checkPersons = new Person[1];
+            Person[] checkPersons = new Person[3];
             int[] maxValues = new int[] { -99999, 99999 };
             // 第一位找目标属性最大
             for (int i = 0; i < count; i++)
@@ -626,7 +626,7 @@ namespace Sango.Game
         /// <summary>
         /// 军师部队推荐指定部队
         /// </summary>
-        public static Person[] CounsellorRecommendMakeTroop(List<Person> personList, TroopType troopType)
+        public static Person[] CounsellorRecommendMakeTroop(List<Person> personList, TroopType troopType, int maxPersonLimit = 3)
         {
             int count = personList.Count;
             if (count <= 0)
@@ -635,27 +635,55 @@ namespace Sango.Game
             if (personList.Count <= 1)
                 return personList.ToArray();
 
+            Person[] checkPersons = new Person[3];
+            Person person1 = null;
+
             //TODO: 优先内置推荐队伍
             ///
-
-            // 优先战斗力最高为主将
-            Person[] checkPersons = new Person[3] { personList[0], null, null };
-            int checkValue = checkPersons[0].MilitaryAbility;
-            Person person1 = null;
-            for (int i = 1; i < count; i++)
+            int level = 3;
+            int checkValue = 0;
+            if (troopType.validItemId > 0)
             {
-                Person person = personList[i];
-                int militaryAbility = person.MilitaryAbility;
-                if (militaryAbility > checkValue)
+                // 优先兵符携带者为主将
+                for (int i = 0; i < count; i++)
                 {
-                    checkValue = militaryAbility;
-                    checkPersons[0] = person;
-                    person1 = person;
+                    Person person = personList[i];
+                    if (person.HasItem(troopType.validItemId))
+                    {
+                        checkPersons[0] = person;
+                        person1 = person;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                while(person1 == null)
+                {
+                    // 优先战斗力最高为主将
+                    for (int i = 0; i < count; i++)
+                    {
+                        Person person = personList[i];
+                        int militaryAbility = person.MilitaryAbility;
+                        int pLevel = Troop.CheckTroopTypeLevel(troopType, person);
+                        if (pLevel == level && militaryAbility > checkValue)
+                        {
+                            checkValue = militaryAbility;
+                            checkPersons[0] = person;
+                            person1 = person;
+                        }
+                    }
+                    level--;
                 }
             }
 
+            if (maxPersonLimit == 1)
+                return checkPersons;
+
             // 补充适应,且战斗力最低
-            int level = Troop.CheckTroopTypeLevel(troopType, person1);
+            int v_int = person1.Intelligence;
+            int v_stength = person1.Strength; ;
+            int v_command = person1.Command; ;
             int destSlot = 1;
             if (level < 3)
             {
@@ -672,6 +700,9 @@ namespace Sango.Game
                                 checkValue = person.MilitaryAbility;
                                 level = checkLvl;
                                 checkPersons[destSlot] = person;
+                                v_int = Math.Max(person1.Intelligence, person.Intelligence);
+                                v_stength = Math.Max(person1.Strength, person.Strength);
+                                v_command = Math.Max(person1.Command, person.Command);
                                 destSlot++;
                             }
                         }
@@ -679,134 +710,81 @@ namespace Sango.Game
                 }
             }
 
-            // 补充智力
-            int v_int = person1.Intelligence;
-            for(int i = 0; i < destSlot; i++)
-                v_int = Math.Max(v_int, checkPersons[destSlot].Intelligence);
-
-            if(v_int < 80)
+            for (int k = 0; k < 2; k++)
             {
-                checkValue = 9999;
-                for (int i = 0; i < count; i++)
+                // 不需要补充适应,尝试补充战斗力
+                if (destSlot == k + 1)
                 {
-                    Person person = personList[i];
-                    if (person != person1 && person != checkPersons[destSlot])
+                    if (v_stength < 60)
                     {
-                        if(person.Intelligence > v_int)
+                        for (int i = 0; i < count; i++)
                         {
-                            if (person.MilitaryAbility < checkValue)
+                            Person person = personList[i];
+                            if (person != person1)
                             {
-                                checkValue = person.MilitaryAbility;
-                                checkPersons[destSlot] = person;
-                                destSlot++;
+                                int checkLvl = Troop.CheckTroopTypeLevel(troopType, person);
+                                if (person.Strength >= 70 && (checkLvl < level && level >= 3 || checkLvl <= level && level < 3))
+                                {
+                                    checkPersons[destSlot] = person;
+                                    destSlot++;
+                                    v_int = Math.Max(v_int, person.Intelligence);
+                                    v_stength = Math.Max(v_stength, person.Strength);
+                                    v_command = Math.Max(v_command, person.Command);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    else if (v_command < 60)
+                    {
+                        for (int i = 0; i < count; i++)
+                        {
+                            Person person = personList[i];
+                            if (person != person1)
+                            {
+                                int checkLvl = Troop.CheckTroopTypeLevel(troopType, person);
+                                if (person.Command >= 70 && (checkLvl < level && level >= 3 || checkLvl <= level && level < 3))
+                                {
+                                    checkPersons[destSlot] = person;
+                                    destSlot++;
+                                    v_int = Math.Max(v_int, person.Intelligence);
+                                    v_stength = Math.Max(v_stength, person.Strength);
+                                    v_command = Math.Max(v_command, person.Command);
+                                    break;
+                                }
                             }
                         }
                     }
                 }
+
+                if (destSlot == k + 1)
+                {
+                    if (person1.Intelligence < 70)
+                    {
+                        for (int i = 0; i < count; i++)
+                        {
+                            Person person = personList[i];
+                            if (person != person1)
+                            {
+                                int checkLvl = Troop.CheckTroopTypeLevel(troopType, person);
+                                if (person.Intelligence >= 80 && (checkLvl < level && level >= 3 || checkLvl <= level && level < 3))
+                                {
+                                    checkPersons[destSlot] = person;
+                                    v_int = Math.Max(v_int, person.Intelligence);
+                                    v_stength = Math.Max(v_stength, person.Strength);
+                                    v_command = Math.Max(v_command, person.Command);
+                                    destSlot++;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (destSlot == k + 2 && maxPersonLimit == k + 2)
+                    return checkPersons;
+
             }
-
-            //if(destSlot < 3)
-            //{
-            //    // 补充统率
-            //    int v_com = person1.Command;
-            //    for (int i = 0; i < destSlot; i++)
-            //        v_com = Math.Max(v_com, checkPersons[destSlot].Command);
-
-            //    if (v_com < 80)
-            //    {
-            //        checkValue = 9999;
-            //        for (int i = 0; i < count; i++)
-            //        {
-            //            Person person = personList[i];
-            //            if (person != person1 && person != checkPersons[destSlot])
-            //            {
-            //                if (person.Command > v_int)
-            //                {
-            //                    if (person.MilitaryAbility < checkValue)
-            //                    {
-            //                        checkValue = person.MilitaryAbility;
-            //                        checkPersons[destSlot] = person;
-            //                        destSlot++;
-            //                    }
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-
-            
-
-            //// 麒麟儿, 单人可成军
-            //Person[] people = CounsellorRecommend1Person(personList,
-            //    (ref int[] maxValue, Person check1) =>
-            //    {
-            //        if (check1 == null) return false;
-
-            //        int buildAbility = check1.MilitaryAbility;
-
-            //        if (check1.Strength < 80 || check1.Command < 80 || check1.Intelligence < 80)
-            //            return false;
-
-            //        if (check1.SpearLv < 3 && check1.HalberdLv < 3 && check1.CrossbowLv < 3 && check1.HorseLv < 3)
-            //            return false;
-
-            //        City city = check1.BelongCity;
-            //        bool fullWithWeapon = false;
-            //        if (check1.SpearLv >= 3 && city.itemStore.GetNumber(2) >= 4000)
-            //            fullWithWeapon = true;
-
-            //        if (!fullWithWeapon && check1.HalberdLv >= 3 && city.itemStore.GetNumber(3) >= 4000)
-            //            fullWithWeapon = true;
-
-            //        if (!fullWithWeapon && check1.CrossbowLv >= 3 && city.itemStore.GetNumber(4) >= 4000)
-            //            fullWithWeapon = true;
-
-            //        if (!fullWithWeapon && check1.HorseLv >= 3 && city.itemStore.GetNumber(5) >= 4000)
-            //            fullWithWeapon = true;
-
-            //        if (fullWithWeapon && buildAbility >= maxValue) return true;
-            //        maxValue = buildAbility;
-            //        return true;
-            //    });
-
-            //if (people != null)
-            //    return people;
-
-            //// 两人互补
-            //people = CounsellorRecommend2Person(personList,
-            //    (ref int maxValue, Person check1, Person check2) =>
-            //    {
-            //        if (check1 == null) return false;
-
-            //        int buildAbility = check1.MilitaryAbility;
-
-            //        if (check1.Strength < 80 || check1.Command < 80 || check1.Intelligence < 80)
-            //            return false;
-
-            //        if (check1.SpearLv < 3 && check1.HalberdLv < 3 && check1.CrossbowLv < 3 && check1.HorseLv < 3) return false;
-
-            //        City city = check1.BelongCity;
-            //        bool fullWithWeapon = false;
-            //        if (check1.SpearLv >= 3 && city.itemStore.GetNumber(2) >= 4000)
-            //            fullWithWeapon = true;
-
-            //        if (!fullWithWeapon && check1.HalberdLv >= 3 && city.itemStore.GetNumber(3) >= 4000)
-            //            fullWithWeapon = true;
-
-            //        if (!fullWithWeapon && check1.CrossbowLv >= 3 && city.itemStore.GetNumber(4) >= 4000)
-            //            fullWithWeapon = true;
-
-            //        if (!fullWithWeapon && check1.HorseLv >= 3 && city.itemStore.GetNumber(5) >= 4000)
-            //            fullWithWeapon = true;
-
-            //        if (fullWithWeapon && buildAbility >= maxValue) return true;
-            //        maxValue = buildAbility;
-            //        return true;
-            //    },
-            //    out value);
-
-            //if (people != null)
-            //    return people;
 
             return checkPersons;
         }

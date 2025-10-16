@@ -72,19 +72,9 @@ namespace Sango.Game
         [JsonProperty] public int morale;
 
         /// <summary>
-        /// 金收入
+        /// 是否有商人, 数字为兑换比例 0为没有商人
         /// </summary>
-        [JsonProperty] public ushort goldIncome;
-
-        /// <summary>
-        /// 粮食收入
-        /// </summary>
-        [JsonProperty] public ushort foodIncome;
-
-        /// <summary>
-        /// 是否有商人
-        /// </summary>
-        [JsonProperty] public bool hasBusiness;
+        [JsonProperty] public byte hasBusiness;
 
         /// <summary>
         /// 模型
@@ -300,14 +290,7 @@ namespace Sango.Game
             return list;
         }
 
-        public int FightPower
-        {
-            get
-            {
-                return fightPower;
-            }
-        }
-
+        public int FightPower => fightPower;
         public Person Add(Person person) { allPersons.Add(person); return person; }
         public Person Remove(Person person) { allPersons.Remove(person); return person; }
 
@@ -422,8 +405,8 @@ namespace Sango.Game
 
         public void UpdateFightPower()
         {
-            fightPower = 1000;
-            fightPower += UnityEngine.Mathf.Min(troops, allPersons.Count * 5000);
+            fightPower = 1000 + troops;
+            //fightPower += UnityEngine.Mathf.Min(troops, allPersons.Count * 5000);
             isUpdatedFightPower = true;
             virtualFightPower = FightPower;
             ForeachNeighborCities(x =>
@@ -435,7 +418,7 @@ namespace Sango.Game
                         x.UpdateFightPower();
                         x.isUpdatedFightPower = true;
                     }
-                    virtualFightPower += x.FightPower;
+                    virtualFightPower += x.FightPower / 3;
                 }
             });
         }
@@ -512,170 +495,6 @@ namespace Sango.Game
                 return len;
 
             return 0;
-        }
-
-        public void AutoMakeTroop(List<Troop> troopList, int count, bool isAttack)
-        {
-            if (FreePersonCount <= 0)
-                return;
-
-            List<Troop> temp = new List<Troop>();
-            if (troops < 6000)
-                return;
-
-            // 武将按官职-战力-排序
-            List<Person> sorted_by_Official = new List<Person>(freePersons);
-            sorted_by_Official.Sort((a, b) =>
-            {
-                Official a_o = a.Official;
-                Official b_o = b.Official;
-                int a_m = a.MilitaryAbility;
-                int b_m = b.MilitaryAbility;
-                if (a_o.level == b_o.level)
-                {
-                    if (a_m == b_m)
-                    {
-                        return -a.Strength.CompareTo(b.Strength);
-                    }
-                    else
-                    {
-                        return -a_m.CompareTo(b_m);
-                    }
-                }
-                return a_o.level.CompareTo(b_o.level);
-            });
-
-            // 临时兵力
-            int tempTroops = troops - 3000;
-
-            // 临时库存
-            ItemStore tempStore = itemStore.Copy();
-
-            // 确定主将和兵种
-            int totalCount = UnityEngine.Mathf.Min(FreePersonCount, count);
-            for (int i = 0; i < totalCount; i++)
-            {
-                Person leader = sorted_by_Official[i];
-                int personLimitTroopsNum = 5000;
-                int finalTroopsNum = UnityEngine.Mathf.Min(tempTroops, personLimitTroopsNum);
-                tempTroops -= finalTroopsNum;
-                Troop troop = new Troop()
-                {
-                    energy = energy,
-                    morale = morale,
-                    Leader = leader,
-                    TroopType = Scenario.Cur.CommonData.TroopTypes.Get(GameRandom.Range(2, 6)),
-                    troops = finalTroopsNum,
-                };
-                temp.Add(troop);
-                if (tempTroops <= 0)
-                    break;
-            }
-
-            temp.RemoveAll(x => x.troops <= 0);
-
-            bool notFull = true;
-            while (notFull)
-            {
-                notFull = false;
-                for (int i = 0; i < temp.Count; i++)
-                {
-                    Troop troop = temp[i];
-                    if (!troop.IsFull)
-                    {
-                        int need = troop.MaxTroops - troop.troops;
-                        int finalTroopsNum = UnityEngine.Mathf.Min(tempTroops, UnityEngine.Mathf.Min(need, 1000));
-                        tempTroops -= finalTroopsNum;
-                        troop.troops += finalTroopsNum;
-                        notFull = true;
-                    }
-
-                    if (tempTroops <= 0)
-                    {
-                        notFull = false;
-                        break;
-                    }
-                }
-            }
-
-            //// 确定兵种
-            //for (int i = 0; i < totalCount; i++)
-            //{
-            //    Troop troop = temp[i];
-            //}
-
-            //// 确定副将
-            //for (int i = 0; i < totalCount; i++)
-            //{
-            //    Troop troop = new Troop()
-            //    {
-            //        Leader = sorted_by_MilitaryAbility[i]
-            //    };
-            //    temp.Add(troop);
-            //}
-
-            if (temp.Count > 0)
-                troopList.AddRange(temp);
-        }
-        public Troop AutoMakeTroop(bool isAttack)
-        {
-            if (FreePersonCount <= 0)
-                return null;
-
-            if (troops < 10000)
-                return null;
-
-            // 武将按官职-战力-排序
-            int maxOfficialLevel = 9999;
-            Person dstPerson = null;
-            int minMilitaryAbility = 0;
-            int minCommand = 0;
-
-            freePersons.ForEach(person =>
-            {
-                if (dstPerson == null)
-                {
-                    dstPerson = person;
-                    maxOfficialLevel = person.Official.level;
-                    minMilitaryAbility = person.MilitaryAbility;
-                    minCommand = person.Command;
-                }
-                else
-                {
-
-                    if (person.Official.level < maxOfficialLevel)
-                    {
-                        dstPerson = person;
-                        maxOfficialLevel = person.Official.level;
-                        minMilitaryAbility = person.MilitaryAbility;
-                        minCommand = person.Command;
-                    }
-                    else if (person.Official.level == maxOfficialLevel)
-                    {
-                        int personMilitaryAbility = person.MilitaryAbility;
-                        if (personMilitaryAbility > minMilitaryAbility)
-                        {
-                            dstPerson = person;
-                            maxOfficialLevel = person.Official.level;
-                            minMilitaryAbility = personMilitaryAbility;
-                            minCommand = person.Command;
-                        }
-                        else if (personMilitaryAbility == minMilitaryAbility)
-                        {
-                            if (person.Command > minCommand)
-                            {
-                                dstPerson = person;
-                                maxOfficialLevel = person.Official.level;
-                                minMilitaryAbility = personMilitaryAbility;
-                                minCommand = person.Command;
-                            }
-                        }
-                    }
-                }
-            });
-
-            // 没写完
-            return null;
         }
 
         /// <summary>
@@ -1065,7 +884,7 @@ namespace Sango.Game
             {
                 Scenario.Cur.troopsSet.ForEach((troop) =>
                 {
-                    if (troop.IsAlive && troop.BelongCity == this)
+                    if (troop.IsAlive && troop.BelongForce == this.BelongForce)
                         troop.Clear();
                 });
             }
@@ -2017,27 +1836,31 @@ namespace Sango.Game
             return false;
         }
 
-        internal List<Troop> troopTempList = new List<Troop>();
-        internal Troop CurActiveTroop = null;
-        internal List<Troop> CurActiveTroopList = new List<Troop>();
+        public bool CheckEnemiesIfAlive()
+        {
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                EnemyInfo check = enemies[i];
+                if (check.troop.IsAlive)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
-        public Troop EnsureTroop(Troop troop, Scenario scenario, int trunCount)
+        /// 这几个属性提供给AI使用
+        internal Troop CurActiveTroop = null;
+        internal MissionType TroopMissionType = MissionType.None;
+        internal int TroopMissionTargetId;
+
+        public Troop EnsureTroop(Troop troop, Scenario scenario)
         {
             // 先加入剧本才能分配ID
             troop.cell = this.CenterCell;
             this.CenterCell.troop = troop;
             scenario.Add(troop);
             troop.Init(scenario);
-            int costFood = (int)System.Math.Floor(troop.troops * trunCount * scenario.Variables.baseFoodCostInTroop * troop.TroopType.foodCostFactor);
-            costFood = Math.Max(costFood, 1);
-            troop.food = costFood;
-            food -= costFood;
-            troops -= troop.troops;
-            troop.ForEachPerson(person =>
-            {
-                person.BelongTroop = troop;
-                freePersons.Remove(person);
-            });
             return troop;
         }
 
@@ -2201,6 +2024,11 @@ namespace Sango.Game
 
         }
 
+        /// <summary>
+        /// 获取已建造完成的建筑类型数量
+        /// </summary>
+        /// <param name="buildingTypeId"></param>
+        /// <returns></returns>
         public int GetIntriorBuildingComplateNumber(int buildingTypeId)
         {
             int complateNum = 0;

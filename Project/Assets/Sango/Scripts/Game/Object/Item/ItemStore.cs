@@ -86,7 +86,7 @@ namespace Sango.Game
         {
             if (Items.TryGetValue(itemTypeId, out int has))
             {
-                number = Math.Max(has, number);
+                number = Math.Min(has, number);
                 has -= number;
                 Items[itemTypeId] = has;
                 TotalNumber -= number;
@@ -108,6 +108,43 @@ namespace Sango.Game
             set { Add(itemTypeId, value); }
         }
 
+        public bool CheckItemEnough(int[] cost, int number)
+        {
+            if (cost == null || cost.Length == 0) return true;
+            for (int i = 0; i < cost.Length; i += 2)
+            {
+                int itemTypeId = cost[i];
+                int costN = cost[i + 1];
+                int have = GetNumber(itemTypeId);
+                if (have < costN * number)
+                    return false;
+            }
+            return true;
+        }
+
+        public void Cost(int[] cost, int number)
+        {
+            if (cost == null || cost.Length == 0) return;
+            for (int i = 0; i < cost.Length; i += 2)
+            {
+                int itemTypeId = cost[i];
+                int costN = cost[i + 1] * number;
+                Remove(itemTypeId, costN);
+            }
+        }
+
+        public int CheckCostMin(int[] cost, int number)
+        {
+            if (cost == null || cost.Length == 0) return number;
+            for (int i = 0; i < cost.Length; i += 2)
+            {
+                int itemTypeId = cost[i];
+                int costN = cost[i + 1];
+                int have = GetNumber(itemTypeId) / costN;
+                number = Math.Min(number, have);
+            }
+            return number;
+        }
 
     }
 }

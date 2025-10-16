@@ -78,7 +78,7 @@ namespace Sango.Game
                 }
             }
 
-            CheckLength(obj.Id);
+            CheckLength(obj.Id+1);
             objects[obj.Id] = obj;
         }
 

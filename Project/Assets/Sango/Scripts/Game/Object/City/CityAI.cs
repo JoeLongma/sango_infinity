@@ -22,45 +22,58 @@ namespace Sango.Game
                 return false;
             }
 
-            if (city.CurActiveTroopList.Count > 0)
+            if (city.TroopMissionType != MissionType.None)
             {
-                Troop troop = city.CurActiveTroopList[0];
-                if (!troop.DoAI(scenario))
-                    return false;
-                city.CurActiveTroopList.RemoveAt(0);
-                if (city.CurActiveTroopList.Count > 0)
+                if (city.TroopMissionType == MissionType.OccupyCity)
                 {
-                    troop = city.CurActiveTroopList[0];
-                    troop = city.EnsureTroop(troop, scenario, 20);
+                    Troop troop = AIMakeTroop(city, 20, true, scenario);
+                    if (troop != null)
+                    {
+                        troop = city.EnsureTroop(troop, scenario);
+                        city.CurActiveTroop = troop;
 #if SANGO_DEBUG
-                    City targetCity = scenario.citySet.Get(troop.missionTarget);
-                    Sango.Log.Print($"{scenario.GetDateStr()}{city.BelongForce.Name}3势力在{city.Name}由{troop.Leader.Name}率领军队出城 进攻{targetCity.BelongForce?.Name}的{targetCity.Name}!");
+                        City targetCity = scenario.citySet.Get(troop.missionTarget);
+                        Sango.Log.Print($"{scenario.GetDateStr()}{city.BelongForce.Name}3势力在{city.Name}由{troop.Leader.Name}率领军队出城 进攻{targetCity.BelongForce?.Name}的{targetCity.Name}!");
 #endif
+                    }
+                }
+                else if (city.TroopMissionType == MissionType.ProtectCity)
+                {
+                    if (city.CheckEnemiesIfAlive())
+                    {
+                        Troop troop = AIMakeTroop(city, 15, false, scenario);
+                        if (troop != null)
+                        {
+                            troop = city.EnsureTroop(troop, scenario);
+                            city.CurActiveTroop = troop;
+#if SANGO_DEBUG
+                            Sango.Log.Print($"{city.BelongForce.Name}势力在{city.Name}由{troop.Leader.Name}率领军队出城防守!");
+#endif
+                        }
+                    }
+                }
+
+                if (city.CurActiveTroop == null)
+                {
+                    city.TroopMissionType = MissionType.None;
+                    return true;
+                }
+                else
+                {
+                    //city.EnsureTroop(city.CurActiveTroop, scenario);
+                    city.Render?.UpdateRender();
                 }
                 return false;
             }
 
             if (AICanDefense(city, scenario))
             {
-                city.troopTempList.Clear();
-                city.AutoMakeTroop(city.troopTempList, 5, false);
-                if (city.troopTempList.Count <= 0) return true;
-
-                Troop troop = city.troopTempList[0];
-                city.troopTempList.RemoveAt(0);
-                troop = city.EnsureTroop(troop, scenario, 10);
-                troop.missionType = (int)MissionType.ProtectCity;
-                troop.missionTarget = city.Id;
-#if SANGO_DEBUG
-                Sango.Log.Print($"{city.BelongForce.Name}势力在{city.Name}由{troop.Leader.Name}率领军队出城防守!");
-#endif
-                city.CurActiveTroop = troop;
-                city.Render?.UpdateRender();
+                city.TroopMissionType = MissionType.ProtectCity;
+                city.TroopMissionTargetId = city.Id;
                 return false;
             }
             else if (AICanAttack(city, scenario))
             {
-
                 City lastTargetCity = null;
                 Troop activedTroop = scenario.troopsSet.Find(x => x.IsAlive && x.BelongCity == city);
                 if (activedTroop != null)
@@ -73,25 +86,8 @@ namespace Sango.Game
 
                 if (lastTargetCity != null)
                 {
-                    if (city.troops < UnityEngine.Mathf.Min(lastTargetCity.troops, lastTargetCity.allPersons.Count * 5000))
-                        return true;
-
-                    city.AutoMakeTroop(city.CurActiveTroopList, 10, false);
-                    if (city.CurActiveTroopList.Count > 0)
-                    {
-                        for (int i = 0; i < city.CurActiveTroopList.Count; i++)
-                        {
-                            Troop troop = city.CurActiveTroopList[i];
-                            troop.missionType = (int)MissionType.OccupyCity;
-                            troop.missionTarget = lastTargetCity.Id;
-                        }
-
-                        Troop troop1 = city.CurActiveTroopList[0];
-                        troop1 = city.EnsureTroop(troop1, scenario, 20);
-#if SANGO_DEBUG
-                        Sango.Log.Print($"{scenario.GetDateStr()}{city.BelongForce.Name}2势力在{city.Name}由{troop1.Leader.Name}率领军队出城 进攻{lastTargetCity.BelongForce?.Name}的{lastTargetCity.Name}!");
-#endif
-                    }
+                    city.TroopMissionType = MissionType.OccupyCity;
+                    city.TroopMissionTargetId = lastTargetCity.Id;
                     return false;
                 }
 
@@ -108,10 +104,10 @@ namespace Sango.Game
                         else
                         {
                             // 需要兵力充足
-                            if (city.troops > UnityEngine.Mathf.Min(x.troops, x.allPersons.Count * 5000) - 10000)
+                            if (city.troops > x.troops - 5000)
                             {
                                 // 范围大约在
-                                int weight = (int)(1000 * (float)city.virtualFightPower / (float)x.virtualFightPower);
+                                int weight = (int)(500 * (float)city.virtualFightPower / (float)x.virtualFightPower);
                                 int relation = scenario.GetRelation(city.BelongForce, x.BelongForce);
                                 // 8000亲密 6000友好 4000普通 2000中立 0冷漠 -2000敌对 -4000厌恶 -6000仇视 -8000不死不休
                                 // 5 4 3 2 1 0 -1 -2 -3 -4 -5
@@ -132,25 +128,8 @@ namespace Sango.Game
                     {
                         if (GameRandom.Changce(priority, 10000))
                         {
-                            if (city.troops < UnityEngine.Mathf.Min(targetCity.troops, targetCity.allPersons.Count * 5000))
-                                continue;
-
-                            city.AutoMakeTroop(city.CurActiveTroopList, 10, false);
-                            if (city.CurActiveTroopList.Count > 0)
-                            {
-                                for (int j = 0; j < city.CurActiveTroopList.Count; j++)
-                                {
-                                    Troop troop = city.CurActiveTroopList[j];
-                                    troop.missionType = (int)MissionType.OccupyCity;
-                                    troop.missionTarget = targetCity.Id;
-                                }
-
-                                Troop troop1 = city.CurActiveTroopList[0];
-                                troop1 = city.EnsureTroop(troop1, scenario, 20);
-#if SANGO_DEBUG
-                                Sango.Log.Print($"{scenario.GetDateStr()}{city.BelongForce.Name}1势力在{city.Name}由{troop1.Leader.Name}率领军队出城 进攻{targetCity.BelongForce?.Name}的{targetCity.Name}!");
-#endif
-                            }
+                            city.TroopMissionType = MissionType.OccupyCity;
+                            city.TroopMissionTargetId = targetCity.Id;
                             return false;
                         }
                     }
@@ -392,7 +371,7 @@ namespace Sango.Game
         {
             if (city.freePersons.Count <= 2) return true;
 
-            int expectationTroops =(city.totalGainFood * 4);
+            int expectationTroops = (city.totalGainFood * 3);
             if (city.troops >= expectationTroops)
                 return true;
 
@@ -425,12 +404,6 @@ namespace Sango.Game
 
         public static bool AICanDefense(City city, Scenario scenario)
         {
-            //if (troopList.Count == 0 || transferable.food < 10000)
-            //    return false;
-
-            //if (crossbow + spear + halberd + horse < 10000)
-            //    return false;
-
             if (city.IsRoadBlocked())
                 return false;
 
@@ -444,8 +417,6 @@ namespace Sango.Game
 
         public static bool AICanAttack(City city, Scenario scenario)
         {
-            return false;
-
             if (city.troops < 20000)
                 return false;
 
@@ -468,8 +439,9 @@ namespace Sango.Game
             if (city.itemStore.TotalNumber < city.troops * 3 / 2)
                 return false;
 
+            int needFood = (int)(120000 * scenario.Variables.baseFoodCostInCity + 20 * (city.troops - 20000) * scenario.Variables.baseFoodCostInTroop);
             // 粮食检查
-            if (city.food <= 120000 * scenario.Variables.baseFoodCostInCity + 20 * (city.troops - 10000) * scenario.Variables.baseFoodCostInTroop)
+            if (city.food <= needFood)
                 return false;
 
             List<City> enemiesCities = new List<City>();
@@ -622,6 +594,91 @@ namespace Sango.Game
 
             return true;
         }
+
+        public static Troop AIMakeTroop(City city, int minTurn, bool isAttack, Scenario scenario)
+        {
+            if (isAttack)
+            {
+                if (city.freePersons.Count < 3) return null;
+                if (city.troops < 20000) return null;
+                if (city.food < 5000) return null;
+            }
+            else
+            {
+                if (city.troops < 4000) return null;
+                if (city.food < 500) return null;
+            }
+
+            // 所有满足5000兵的部队类型
+            List<TroopType> costEnoughTroopTypes = new List<TroopType>();
+            TroopType.GetCostEnoughTroopTypeList(city, costEnoughTroopTypes, 5000);
+
+            // 去掉剑兵(进攻不允许)
+            costEnoughTroopTypes.RemoveAll(x => x.Id == 1);
+
+            if (costEnoughTroopTypes.Count == 0)
+                return null;
+
+            int maxPersonCount = city.freePersons.Count > 13 ? 3 : (city.freePersons.Count < 6 ? 1 : 2);
+
+            // 优先组建特殊
+            TroopType spType = costEnoughTroopTypes.Find(x => x.validItemId > 0);
+
+            // 尝试移除不够组建的特殊兵种
+            while (spType != null && !spType.CheckCost(city, 5000))
+            {
+                costEnoughTroopTypes.Remove(spType);
+                spType = costEnoughTroopTypes.Find(x => x.validItemId > 0);
+            }
+
+            if (spType == null)
+                spType = costEnoughTroopTypes[GameRandom.Range(0, costEnoughTroopTypes.Count)];
+
+            Person[] people = ForceAI.CounsellorRecommendMakeTroop(city.freePersons, spType, maxPersonCount);
+
+            // 确定兵数
+            int maxTroopNum = people[0].TroopsLimit;
+            if (city.troops < maxTroopNum * 2)
+                maxTroopNum = (city.troops / 2000) * 1000;
+
+            maxTroopNum = city.itemStore.CheckCostMin(spType.costItems, maxTroopNum);
+
+            // 粮食
+            int food = (int)Math.Ceiling(maxTroopNum * scenario.Variables.baseFoodCostInTroop * minTurn);
+            while (city.food < food)
+            {
+                if (isAttack) return null;
+
+                minTurn = minTurn - 4;
+                if (minTurn < 5)
+                    return null;
+
+                food = (int)Math.Ceiling(maxTroopNum * scenario.Variables.baseFoodCostInTroop * minTurn);
+            }
+
+            spType.Cost(city, maxTroopNum);
+            city.troops -= maxTroopNum;
+            city.food -= food;
+            for (int p = 0; p < people.Length; p++)
+                city.freePersons.Remove(people[p]);
+
+            Troop troop = new Troop()
+            {
+                energy = city.energy,
+                morale = city.morale,
+                Leader = people[0],
+                TroopType = spType,
+                troops = people[0].TroopsLimit,
+                food = food,
+                missionType = (int)city.TroopMissionType,
+                missionTarget = city.TroopMissionTargetId,
+            };
+            if (people.Length > 1) troop.Member1 = people[1];
+            if (people.Length > 2) troop.Member1 = people[2];
+            city.Render?.UpdateRender();
+            return troop;
+        }
+
     }
 
 

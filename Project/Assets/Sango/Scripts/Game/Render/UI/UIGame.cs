@@ -186,7 +186,7 @@ namespace Sango.Game.Render.UI
             if (obj is Troop)
             {
                 Troop troop = (Troop)obj;
-                item.name.text = $"[{troop.BelongForce.Name}]<{troop.BelongCity.Name}>{troop.Name}队";
+                item.name.text = $"[{troop.BelongForce.Name}]{troop.Name}队,{troop.Member1?.Name}{troop.Member2?.Name}";
                 item.name.color = troop.BelongForce.Flag.color;
             }
             else if (obj is City)

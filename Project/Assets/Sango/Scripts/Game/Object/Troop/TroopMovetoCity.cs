@@ -4,7 +4,7 @@ using static Sango.Game.TroopAIUtility;
 
 namespace Sango.Game
 {
-    public class TrooprMovetoCity : TroopMissionBehaviour
+    public class TroopMovetoCity : TroopMissionBehaviour
     {
         public override MissionType MissionType { get { return MissionType.MovetoCity; } }
         public override bool IsMissionComplete { get { return !TargetCity.IsSameForce(Troop); } }

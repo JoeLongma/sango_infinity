@@ -33,7 +33,7 @@ namespace Sango.Game
 
         public void Update()
         {
-            value = (byte)(Math.Max(Scenario.Cur.Variables.MaxAbilityLevel, baseValue + (valueExp / Scenario.Cur.Variables.AbilityExpLevelNeed)));
+            value = (byte)(Math.Min(Scenario.Cur.Variables.MaxAbilityLevel, baseValue + (valueExp / Scenario.Cur.Variables.AbilityExpLevelNeed)));
         }
         public void SetExp(ushort exp)
         {

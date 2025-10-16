@@ -10,7 +10,7 @@ namespace Sango.Game
         /// 类型
         /// </summary>
         [JsonProperty] public int kind;
-        
+
         /// <summary>
         /// 描述
         /// </summary>
@@ -29,7 +29,7 @@ namespace Sango.Game
         /// <summary>
         /// 动画
         /// </summary>
-        [JsonProperty] public int [] aniIds;
+        [JsonProperty] public int[] aniIds;
 
         /// <summary>
         /// 是否战斗
@@ -99,7 +99,7 @@ namespace Sango.Game
         /// <summary>
         /// 组建消耗的道具(兵器,战马,兵符等)
         /// </summary>
-        [JsonProperty] public List<int> costItems;
+        [JsonProperty] public int[] costItems;
 
         /// <summary>
         /// 可组建必须的兵符道具Id
@@ -158,6 +158,107 @@ namespace Sango.Game
                 return terrainCost[terrainId];
 
             return terrainCost[0];
+        }
+
+
+        // 获取当前可以组建的兵种
+        public static void CheckActivTroopTypeList(List<Person> checkPersonList, List<TroopType> activeTroopTypes)
+        {
+            if (checkPersonList == null || checkPersonList.Count == 0) return;
+
+            Force force = checkPersonList[0].BelongForce;
+
+            // 确定可组建特殊兵种
+            Scenario.Cur.CommonData.TroopTypes.ForEach(t =>
+            {
+                if (!t.isFight) return;
+
+                // 检查科技
+                if (t.validTechId > 0 && !force.HasTechnique(t.validTechId))
+                    return;
+
+                if (t.validItemId == 0)
+                {
+                    activeTroopTypes.Add(t);
+                    return;
+                }
+
+                // 检查武将限定道具
+                for (int j = 0; j < checkPersonList.Count; j++)
+                {
+                    Person person = checkPersonList[j];
+                    if (person != null && person.HasItem(t.validItemId))
+                    {
+                        activeTroopTypes.Add(t);
+                        return;
+                    }
+                }
+            });
+        }
+
+        //// 获取满足消耗的可组建兵种
+        //public static void GetCostEnoughTroopTypeList(List<Person> checkPersonList, ItemStore itemStore, List<TroopType> costEnoughTroopTypes, int compareCostNum = 1)
+        //{
+        //    List<TroopType> activeTroopTypes = new List<TroopType>();
+        //    CheckActivTroopTypeList(checkPersonList, activeTroopTypes);
+        //    for (int i = 0; i < activeTroopTypes.Count; i++)
+        //    {
+        //        TroopType t = activeTroopTypes[i];
+        //        if (t.costItems == null || t.costItems.Count == 0)
+        //        {
+        //            costEnoughTroopTypes.Add(t);
+        //            return;
+        //        }
+
+        //        // 检查消耗是否满足
+        //        bool enough = true;
+        //        for (int j = 0; j < t.costItems.Count; j += 2)
+        //        {
+        //            int itemTypeId = t.costItems[j];
+        //            int itemNum = t.costItems[j + 1];
+        //            if (itemStore.GetNumber(itemTypeId) < (itemNum * compareCostNum))
+        //            {
+        //                enough = false;
+        //                break;
+        //            }
+        //        }
+
+        //        if (enough)
+        //            costEnoughTroopTypes.Add(t);
+        //    }
+        //}
+
+        public static void GetCostEnoughTroopTypeList(City city, List<TroopType> costEnoughTroopTypes, int compareCostNum = 1)
+        {
+            List<TroopType> activeTroopTypes = new List<TroopType>();
+            CheckActivTroopTypeList(city.freePersons, activeTroopTypes);
+            for (int i = 0; i < activeTroopTypes.Count; i++)
+            {
+                TroopType t = activeTroopTypes[i];
+                if (t.CheckCost(city, compareCostNum))
+                {
+                    costEnoughTroopTypes.Add(t);
+                }
+            }
+        }
+
+        public bool CheckCost(City city, int troops)
+        {
+            if (city.food < costFood * troops) return false;
+            if (city.gold < costGold * troops) return false;
+            if (city.troopPopulation < costPopulation * troops) return false;
+            if (city.BelongForce.TechniquePoint < costTechPoint * troops) return false;
+
+            return city.itemStore.CheckItemEnough(costItems, troops);
+        }
+
+        public void Cost(City city, int troops)
+        {
+            city.food -= costFood * troops;
+            city.gold -= costGold * troops;
+            city.troopPopulation -= costPopulation * troops;
+            city.BelongForce.GainTechniquePoint(-costTechPoint * troops);
+            city.itemStore.Cost(costItems, troops);
         }
     }
 }
