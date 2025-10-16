@@ -108,6 +108,30 @@ namespace Sango.Game
                                 Sango.Log.Error("技能命中配置不正确!!");
                         }
                         break;
+                    case SkillAttackOffsetType.SelfRing:
+                        {
+                            if (atkOffsetPoint.Count > 1)
+                            {
+                                int radius = atkOffsetPoint[1];
+                                if (radius <= 0)
+                                {
+                                    cells.Add(spell);
+                                    return;
+                                }
+                                atker.cell.Ring(radius, (cell) => { cells.Add(cell); });
+                            }
+                            else
+                                Sango.Log.Error("技能命中配置不正确!!");
+                        }
+                        break;
+                    case SkillAttackOffsetType.SpellNeighbors:
+                        {
+                            int dir = atker.cell.Cub.DirectionTo(spell.Cub);
+                            cells.Add(spell);
+                            cells.Add(spell.GetNrighbor(dir + 1));
+                            cells.Add(spell.GetNrighbor(dir - 1));
+                        }
+                        break;
                     default:
                         cells.Add(spell);
                         break;

@@ -160,6 +160,12 @@ namespace Sango.Game
         [JsonProperty]
         public List<SkillInstance> skills;
 
+        // 近战普攻
+        public SkillInstance NormalSkill { get; private set; }
+
+        // 远程普攻
+        public SkillInstance NormalRangeSkill { get; private set; }
+
         /// <summary>
         /// 伤害额外增减
         /// </summary>
@@ -321,20 +327,30 @@ namespace Sango.Game
             });
 
             List<SkillInstance> skillInstances = new List<SkillInstance>();
+            NormalSkill = null;
+            NormalRangeSkill = null;
             // 准备技能
             for (int i = 0; i < TroopType.skills.Count; i++)
             {
                 Skill skill = Scenario.Cur.GetObject<Skill>(TroopType.skills[i]);
                 if (skill != null && skill.CanAddToTroop(this))
                 {
+                    
 
                     SkillInstance ins = null;
                     if (skills != null)
                         ins = skills.Find(x => x.Skill == skill);
-                    if (ins != null)
-                        skillInstances.Add(ins);
-                    else
-                        skillInstances.Add(new SkillInstance() { Skill = skill, CDCount = 0 });
+                    if (ins == null)
+                        ins = new SkillInstance() { Skill = skill, CDCount = 0 };
+
+                    skillInstances.Add(ins);
+                    if (skill.costEnergy == 0)
+                    {
+                        if (skill.isRange)
+                            NormalRangeSkill = ins;
+                        else
+                            NormalSkill = ins;
+                    }
                 }
             }
             skills = skillInstances;

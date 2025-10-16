@@ -9,6 +9,9 @@ namespace Sango.Game
     {
         Customize = 0,
         Ring = 1,
-        DirectionLine = 2
+        DirectionLine = 2,
+        SelfRing = 3,
+        SpellNeighbors = 4, 
+
     }
 }

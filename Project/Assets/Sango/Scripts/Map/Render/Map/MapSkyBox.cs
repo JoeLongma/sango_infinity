@@ -300,7 +300,7 @@ namespace Sango.Render
         }
         public override void UpdateRender()
         {
-            skyMat.mainTexture = curArea.GetTexture();
+            //skyMat.mainTexture = curArea.GetTexture();
         }
 
         public override void Update()

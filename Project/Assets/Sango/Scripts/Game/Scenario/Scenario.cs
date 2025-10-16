@@ -420,6 +420,9 @@ namespace Sango.Game
             Sango.Game.Event.OnGamePause += OnGamePause;
             Sango.Game.Event.OnGameResume += OnGameResume;
 
+            SeasonType cur_season = GameDefine.SeasonInMonth[Info.month - 1];
+            MapRender.Instance.ChangeSeason((int)cur_season);
+
             // 初始化城市距离信息
             int cityCount = citySet.Count;
             cityDistanceMap = new int[cityCount][];
@@ -708,6 +711,7 @@ namespace Sango.Game
             if (cur_season != last_season)
             {
                 OnSeasonStart(this);
+                MapRender.Instance.ChangeSeason((int)cur_season);
                 scenarioEvent.OnSeasonUpdate?.Invoke(this);
                 OnSeasonEnd(this);
             }

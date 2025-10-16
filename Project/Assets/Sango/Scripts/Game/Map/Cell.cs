@@ -118,5 +118,14 @@ namespace Sango.Game
             }
         }
 
+        public Cell GetNrighbor(int dir)
+        {
+            while (dir < 0)
+                dir += 6;
+            while (dir >= 6)
+                dir -= 6;
+            return Neighbors[dir];
+        }
+
     }
 }

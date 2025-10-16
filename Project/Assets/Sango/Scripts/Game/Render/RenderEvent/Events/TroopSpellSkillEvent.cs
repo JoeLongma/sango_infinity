@@ -79,12 +79,22 @@ namespace Sango.Game.Render
                         float hitBack = beAtkTroop.GetAttackBackFactor(skill, Scenario.Cur.Map.Distance(troop.cell, atkCell));
                         if (hitBack > 0)
                         {
-                            int hitBackDmg = (int)System.Math.Ceiling(hitBack * Troop.CalculateSkillDamage(beAtkTroop, troop, null));
-                            troop.ChangeTroops(-hitBackDmg, beAtkTroop);
+                            if(skill.IsRange())
+                            {
+                                int hitBackDmg = (int)System.Math.Ceiling(hitBack * Troop.CalculateSkillDamage(beAtkTroop, troop, beAtkTroop.NormalRangeSkill?.Skill));
+                                troop.ChangeTroops(-hitBackDmg, beAtkTroop);
 #if SANGO_DEBUG
-                            Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 受到 {beAtkTroop.BelongForce.Name}的[{beAtkTroop.Name} - {beAtkTroop.TroopType.Name}]反击伤害:{hitBackDmg}, 目标剩余兵力: {troop.GetTroopsNum()}");
+                                Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 受到 {beAtkTroop.BelongForce.Name}的[{beAtkTroop.Name} - {beAtkTroop.TroopType.Name}]反击伤害:{hitBackDmg}, 目标剩余兵力: {troop.GetTroopsNum()}");
 #endif
-
+                            }
+                            else
+                            {
+                                int hitBackDmg = (int)System.Math.Ceiling(hitBack * Troop.CalculateSkillDamage(beAtkTroop, troop, beAtkTroop.NormalSkill?.Skill));
+                                troop.ChangeTroops(-hitBackDmg, beAtkTroop);
+#if SANGO_DEBUG
+                                Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 受到 {beAtkTroop.BelongForce.Name}的[{beAtkTroop.Name} - {beAtkTroop.TroopType.Name}]反击伤害:{hitBackDmg}, 目标剩余兵力: {troop.GetTroopsNum()}");
+#endif
+                            }
                         }
                     }
                 }
