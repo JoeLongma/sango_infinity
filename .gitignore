@@ -44,3 +44,5 @@
 /Project/Packages/manifest.json
 /Project/Assets/Resources/BillingMode.json
 /Project/Assets/Resources/BillingMode.json.meta
+/Project/SangoInfinity_BurstDebugInformation_DoNotShip/tempburstlibs
+*.apk
