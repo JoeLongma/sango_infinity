@@ -104,6 +104,10 @@ namespace Sango.Game
         {
             Scenario.Cur.Map.RingAction(this, radius, action);
         }
+        public void Spiral(int radius, Action<Cell> action)
+        {
+            Scenario.Cur.Map.SpiralAction(this, radius, action);
+        }
 
         public void DirectionLine(Cell to, int length, Action<Cell> action)
         {

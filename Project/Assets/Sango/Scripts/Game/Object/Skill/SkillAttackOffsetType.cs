@@ -11,7 +11,8 @@ namespace Sango.Game
         Ring = 1,
         DirectionLine = 2,
         SelfRing = 3,
-        SpellNeighbors = 4, 
+        SpellNeighbors = 4,
+        Spiral = 5,
 
     }
 }

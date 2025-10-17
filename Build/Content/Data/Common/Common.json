@@ -2502,7 +2502,7 @@
       "Name": "二段突刺",
       "atk": "35",
       "atkDurability": "0",
-      "costEnergy": "20",
+      "costEnergy": "25",
       "isRange": false,
       "spellRanges": [
         1
@@ -2540,7 +2540,7 @@
       "Name": "横扫",
       "atk": "30",
       "atkDurability": "0",
-      "costEnergy": "15",
+      "costEnergy": "20",
       "isRange": false,
       "spellRanges": [
         1
@@ -2560,7 +2560,7 @@
       "Name": "旋风",
       "atk": "33",
       "atkDurability": "0",
-      "costEnergy": "20",
+      "costEnergy": "25",
       "isRange": false,
       "spellRanges": [
         1
@@ -2598,7 +2598,7 @@
       "Name": "贯箭",
       "atk": "20",
       "atkDurability": "15",
-      "costEnergy": "15",
+      "costEnergy": "20",
       "isRange": true,
       "spellRanges": [
         2
@@ -2625,7 +2625,7 @@
         2
       ],
       "atkOffsetPoint": [
-        1,
+        5,
         1
       ],
       "canDamageTroop": true,
@@ -2640,7 +2640,7 @@
       "Name": "突击",
       "atk": "30",
       "atkDurability": "0",
-      "costEnergy": "20",
+      "costEnergy": "15",
       "isRange": false,
       "spellRanges": [
         1

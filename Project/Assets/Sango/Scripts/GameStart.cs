@@ -4,6 +4,9 @@ using Sango.Game;
 using Sango.Tools;
 using UnityEngine;
 using System;
+using UnityEngine.Networking;
+using System.Collections;
+using System.IO.Compression;
 
 /// <summary>
 /// 该文件由X框架自动生成
@@ -15,6 +18,35 @@ public class GameStart : MonoBehaviour
     public bool Debug = false;
     void Awake()
     {
+        Screen.sleepTimeout = UnityEngine.SleepTimeout.NeverSleep;
+        Path.Init();
+        StartCoroutine(GameInit());
+    }
+
+    IEnumerator GameInit()
+    {
+        if (!Directory.Exists(Path.ContentRootPath))
+        {
+            string path = System.IO.Path.Combine(Application.streamingAssetsPath, "Build.zip");
+            string uri = new System.Uri(path).AbsoluteUri;
+            UnityWebRequest request = UnityWebRequest.Get(uri);
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                string zipSavePath = System.IO.Path.Combine(Application.persistentDataPath, "Build.zip");
+                if(File.Exists(zipSavePath))
+                {
+                    File.Delete(zipSavePath);
+                }
+                File.WriteAllBytes(zipSavePath, request.downloadHandler.data);
+                ZipFile.ExtractToDirectory(zipSavePath, Application.persistentDataPath);
+            }
+            else
+            {
+                UnityEngine.Debug.LogError(request.error);
+            }
+        }
 
 #if UNITY_STANDALONE_WIN && !UNITY_EDITOR
         string[] args = System.Environment.GetCommandLineArgs();
@@ -60,7 +92,6 @@ public class GameStart : MonoBehaviour
         Game.Instance.Init(this, Platform.PlatformName.Webgl);
 #endif
     }
-
 
 #if UNITY_EDITOR
     void OnEditorPause(UnityEditor.PauseState state)

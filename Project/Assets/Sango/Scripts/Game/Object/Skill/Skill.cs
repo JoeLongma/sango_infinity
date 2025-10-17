@@ -108,6 +108,7 @@ namespace Sango.Game
                                 Sango.Log.Error("技能命中配置不正确!!");
                         }
                         break;
+                        //3
                     case SkillAttackOffsetType.SelfRing:
                         {
                             if (atkOffsetPoint.Count > 1)
@@ -124,12 +125,30 @@ namespace Sango.Game
                                 Sango.Log.Error("技能命中配置不正确!!");
                         }
                         break;
+                        //4
                     case SkillAttackOffsetType.SpellNeighbors:
                         {
                             int dir = atker.cell.Cub.DirectionTo(spell.Cub);
                             cells.Add(spell);
-                            cells.Add(spell.GetNrighbor(dir + 1));
-                            cells.Add(spell.GetNrighbor(dir - 1));
+                            cells.Add(atker.cell.GetNrighbor(dir + 1));
+                            cells.Add(atker.cell.GetNrighbor(dir - 1));
+                        }
+                        break;
+                        // 5
+                    case SkillAttackOffsetType.Spiral:
+                        {
+                            if (atkOffsetPoint.Count > 1)
+                            {
+                                int radius = atkOffsetPoint[1];
+                                if (radius <= 0)
+                                {
+                                    cells.Add(spell);
+                                    return;
+                                }
+                                spell.Spiral(radius, (cell) => { cells.Add(cell); });
+                            }
+                            else
+                                Sango.Log.Error("技能命中配置不正确!!");
                         }
                         break;
                     default:
@@ -153,6 +172,15 @@ namespace Sango.Game
             return true;
         }
 
+        public bool CanSpeellToHere(Troop who, Cell where)
+        {
+            if(canDamageTroop && where.troop != null && where.troop.IsEnemy(who))
+                return true;
+            if (canDamageBuilding && where.building != null && where.building.IsEnemy(who))
+                return true;
+            return false;
+        }
+        
         public bool IsRange()
         {
             return isRange;

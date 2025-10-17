@@ -63,7 +63,7 @@ namespace Sango.Game.Render
             {
                 Cell atkCell = Troop.tempCellList[i];
                 Troop beAtkTroop = atkCell.troop;
-                if (beAtkTroop != null && skill.canDamageTroop)
+                if (beAtkTroop != null && skill.canDamageTroop && (troop.IsEnemy(beAtkTroop) || skill.canDamageTeam ))
                 {
                     int damage = Troop.CalculateSkillDamage(troop, beAtkTroop, skill);
                     if (damage < 0)

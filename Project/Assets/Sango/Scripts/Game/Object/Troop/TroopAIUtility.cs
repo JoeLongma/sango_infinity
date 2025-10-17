@@ -72,25 +72,6 @@ namespace Sango.Game
                     if (needUpdateMoverange)
                     {
                         scenario.Map.GetMoveRange(troop, troop.MoveRange);
-                        //float time = UnityEngine.Time.realtimeSinceStartup;
-                        //for (int i1 = 0; i1 < 100; i1++)
-                        //{
-                        //    troop.MoveRange.Clear();
-                        //    scenario.Map.GetMoveRange(troop, troop.MoveRange);
-                        //}
-
-                        //UnityEngine.Debug.LogError("1-->" + (UnityEngine.Time.realtimeSinceStartup - time));
-                        //time = UnityEngine.Time.realtimeSinceStartup;
-
-                        //for (int i1 = 0; i1 < 100; i1++)
-                        //{
-                        //    troop.MoveRange.Clear();
-                        //    scenario.Map.GetMoveRange2(troop, troop.MoveRange);
-                        //}
-
-                        //UnityEngine.Debug.LogError("2-->" + (UnityEngine.Time.realtimeSinceStartup - time));
-
-
                         needUpdateMoverange = false;
 #if SANGO_DEBUG_AI
                         GameAIDebug.Instance.ShowMoveRange(troop.MoveRange, troop);
@@ -109,6 +90,9 @@ namespace Sango.Game
                                 for (int k = 0; k < spellRangeCells.Count; k++)
                                 {
                                     Cell spellCell = spellRangeCells[k];
+                                    if (!skill.CanSpeellToHere(troop, spellCell))
+                                        continue;
+
                                     attackCells.Clear();
                                     tempTargets.Clear();
                                     int atk_priority = 0;
@@ -323,20 +307,20 @@ namespace Sango.Game
         public static int SkillStatusPriority(Troop troop, Skill skill, Cell target, Cell movetoCell, Cell spellCell)
         {
             if (target.IsEmpty()) return 0;
-            int rangeFactor = skill.isRange ? 150 : 100;
             if (target.troop != null && skill.canDamageTroop)
             {
                 if (troop.IsEnemy(target.troop))
                 {
-                    return (skill.atk + 10) * (troop.Attack - target.troop.Defence + 200) * rangeFactor / 100;
+                    return (skill.atk + (skill.isRange ? 15 : 0) * 150 / Math.Max(15, skill.costEnergy)) * (troop.Attack - target.troop.Defence + 200);
                 }
                 else if (skill.canDamageTeam && spellCell != target)
                 {
-                    return -(skill.atk + 20) * (troop.Attack - target.troop.Defence + 200) * rangeFactor / 100;
+                    return -(skill.atk + (skill.isRange ? 15 : 0) * 150 / Math.Max(15, skill.costEnergy)) * (troop.Attack - target.troop.Defence + 200);
                 }
             }
             else if (target.building != null && skill.canDamageBuilding)
             {
+                int rangeFactor = skill.isRange ? 150 : 100;
                 //TODO: 对建筑的攻击评分
                 if (troop.IsEnemy(target.building))
                 {
