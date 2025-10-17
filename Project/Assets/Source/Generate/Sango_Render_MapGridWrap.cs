@@ -471,9 +471,6 @@ public class Sango_Render_MapGridWrap
 			}
 			else if (count == 2)
 			{
-				Sango.Render.MapGrid obj = (Sango.Render.MapGrid)ToLua.CheckObject<Sango.Render.MapGrid>(L, 1);
-				Sango.Tools.Rect arg0 = StackTraits<Sango.Tools.Rect>.Check(L, 2);
-				obj.Update(arg0);
 				return 0;
 			}
 			else

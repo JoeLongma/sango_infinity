@@ -1,11 +1,8 @@
 ﻿
 using LuaInterface;
+using Sango.Loader;
 using System.Collections.Generic;
 using UnityEngine;
-using Sango;
-using Sango.Game;
-using Sango.Loader;
-using System.Runtime.Remoting.Messaging;
 
 namespace Sango
 {

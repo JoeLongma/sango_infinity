@@ -426,10 +426,10 @@ namespace Sango.Render
             if (mapModels != null)
                 mapModels.Update(ViewRectCache);
 
-//#if UNITY_EDITOR
+#if SANGO_DEBUG
             if (mapGrid != null)
                 mapGrid.Update(ViewRectCache);
-//#endif
+#endif
 
             if (mapSkyBox != null)
                 mapSkyBox.Update();

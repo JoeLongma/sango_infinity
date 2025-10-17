@@ -53,6 +53,15 @@ namespace Sango
 #endif
             ContentRootPath = destDir + "/Content";
             ModRootPath = destDir + "/Mods";
+
+#else
+
+#if UNITY_EDITOR
+            string destDir = System.IO.File.ReadAllText(settingSavePath);
+            ContentRootPath = destDir + "/Content";
+            ModRootPath = destDir + "/Mods";
+#endif
+
 #endif
             ContentRootPath.Replace("\\", "/");
             ModRootPath.Replace("\\", "/");

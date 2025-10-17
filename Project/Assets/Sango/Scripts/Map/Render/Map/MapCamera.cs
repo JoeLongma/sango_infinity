@@ -298,17 +298,18 @@ namespace Sango.Render
 
         Ray ray;
         bool isMouseMoving = false;
+        bool isMouseRotate = false;
         Vector3 oldMousePos;
         Vector3 newMosuePos;
 
         private void RotateCamera()
         {
-            if (Input.GetMouseButton(1) && !IsOverUI())
+            if (Input.GetMouseButton(1) && !IsOverUI() && !isMouseMoving)
             {
 
                 if (Input.GetMouseButtonDown(1))
                 {
-                    isMouseMoving = false;
+                    isMouseRotate = false;
                     newMosuePos = Input.mousePosition;
                     oldMousePos = Input.mousePosition;
                 }
@@ -318,7 +319,7 @@ namespace Sango.Render
                     {
                         return;
                     }
-                    isMouseMoving = true;
+                    isMouseRotate = true;
 
                     newMosuePos = Input.mousePosition;
                     Vector3 dis = newMosuePos - oldMousePos;
@@ -331,9 +332,9 @@ namespace Sango.Render
             }
             else if (Input.GetMouseButtonUp(1))
             {
-                if (isMouseMoving)
+                if (isMouseRotate)
                 {
-                    isMouseMoving = false;
+                    isMouseRotate = false;
                     return;
                 }
             }
@@ -363,6 +364,11 @@ namespace Sango.Render
             ZoomCamera();
             RotateCamera();
             MouseDragWorld();
+#else
+            MoveCameraKeyBoard();
+            ZoomCameraMobile();
+            RotateCameraMobile();
+            MouseDragWorldMobile();
 #endif
             if (changed)
             {
@@ -378,7 +384,9 @@ namespace Sango.Render
         bool isPressedUI = false;
         private void MouseDragWorld()
         {
-            if (!Input.GetKey(KeyCode.LeftControl) && /*Input.GetKey(KeyCode.Space) &&*/ Input.GetMouseButton(0) && !isPressedUI)
+
+
+            if (!Input.GetKey(KeyCode.LeftControl) && /*Input.GetKey(KeyCode.Space) &&*/ Input.GetMouseButton(0) && !isPressedUI && !isMouseRotate)
             {
 
                 if (Input.GetMouseButtonDown(0))
@@ -460,5 +468,120 @@ namespace Sango.Render
                 //}
             }
         }
+
+        int mobileControlType = 0;
+        int moveFingerId = -1;
+        int rotateFingerId1 = -1;
+        int rotateFingerId2 = -1;
+        int zoomFingerId1 = -1;
+        int zoomFingerId2 = -1;
+        int zoomFingerId3 = -1;
+
+        public void ZoomCameraMobile()
+        {
+            if (Input.touchCount == 3)
+            {
+                Touch touch = Input.GetTouch(2);
+                Touch touch1 = Input.GetTouch(1);
+                Touch touch0 = Input.GetTouch(0);
+                if ((touch.phase == TouchPhase.Began || touch.fingerId != zoomFingerId3 || touch0.fingerId != zoomFingerId1 || touch1.fingerId != zoomFingerId2) && !IsOverUI())
+                {
+                    mobileControlType = 2;
+                    zoomFingerId1 = touch0.fingerId;
+                    zoomFingerId2 = touch1.fingerId;
+                    zoomFingerId3 = touch.fingerId;
+                }
+                else if (touch.fingerId == zoomFingerId3)
+                {
+                    if (touch.phase == TouchPhase.Moved)
+                    {
+                        isMouseRotate = true;
+                        ZoomCamera(touch.deltaPosition.y / 500f);
+                    }
+                    else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+                    {
+                        mobileControlType = 0;
+                        zoomFingerId1 = -1;
+                        zoomFingerId2 = -1;
+                        zoomFingerId3 = -1;
+                        return;
+                    }
+                }
+            }
+        }
+
+        public void RotateCameraMobile()
+        {
+            if (Input.touchCount == 2)
+            {
+                Touch touch = Input.GetTouch(1);
+                Touch touch0 = Input.GetTouch(0);
+                if ((touch.phase == TouchPhase.Began || touch.fingerId != rotateFingerId2 || touch0.fingerId != rotateFingerId1) && !IsOverUI())
+                {
+                    mobileControlType = 2;
+                    rotateFingerId1 = touch0.fingerId;
+                    rotateFingerId2 = touch.fingerId;
+                }
+                else if (touch.fingerId == rotateFingerId2)
+                {
+                    if (touch.phase == TouchPhase.Moved)
+                    {
+                        isMouseRotate = true;
+                        RotateCamera(touch.deltaPosition);
+                    }
+                    else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+                    {
+                        mobileControlType = 0;
+                        rotateFingerId1 = -1;
+                        rotateFingerId2 = -1;
+                        return;
+                    }
+                }
+            }
+        }
+        public void MouseDragWorldMobile()
+        {
+            if (Input.touchCount == 1)
+            {
+                Touch touch = Input.GetTouch(0);
+                if ((touch.phase == TouchPhase.Began || touch.fingerId != moveFingerId) && !IsOverUI())
+                {
+                    mobileControlType = 1;
+                    moveFingerId = touch.fingerId;
+                    ray = Camera.main.ScreenPointToRay(touch.position);
+                    float dis;
+
+                    if (viewPlane.Raycast(ray, out dis))
+                    {
+                        oldDragPos = ray.GetPoint(dis);
+                    }
+                }
+                else if (touch.fingerId == moveFingerId)
+                {
+                    if (touch.phase == TouchPhase.Moved)
+                    {
+                        isMouseMoving = true;
+
+                        ray = Camera.main.ScreenPointToRay(touch.position);
+                        float dis;
+
+                        if (viewPlane.Raycast(ray, out dis))
+                        {
+                            Vector3 offset = oldDragPos - ray.GetPoint(dis);
+                            lookAt.position += offset;
+                            position += offset;
+                            NeedUpdateCamera();
+                        }
+                    }
+                    else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+                    {
+                        mobileControlType = 0;
+                        moveFingerId = -1;
+                        return;
+                    }
+                }
+            }
+        }
+
     }
 }
