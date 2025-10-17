@@ -479,37 +479,38 @@ namespace Sango.Render
 
         public void ZoomCameraMobile()
         {
-            if (Input.touchCount == 3)
-            {
-                Touch touch = Input.GetTouch(2);
-                Touch touch1 = Input.GetTouch(1);
-                Touch touch0 = Input.GetTouch(0);
-                if ((touch.phase == TouchPhase.Began || touch.fingerId != zoomFingerId3 || touch0.fingerId != zoomFingerId1 || touch1.fingerId != zoomFingerId2) && !IsOverUI())
-                {
-                    mobileControlType = 2;
-                    zoomFingerId1 = touch0.fingerId;
-                    zoomFingerId2 = touch1.fingerId;
-                    zoomFingerId3 = touch.fingerId;
-                }
-                else if (touch.fingerId == zoomFingerId3)
-                {
-                    if (touch.phase == TouchPhase.Moved)
-                    {
-                        isMouseRotate = true;
-                        ZoomCamera(touch.deltaPosition.y / 500f);
-                    }
-                    else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
-                    {
-                        mobileControlType = 0;
-                        zoomFingerId1 = -1;
-                        zoomFingerId2 = -1;
-                        zoomFingerId3 = -1;
-                        return;
-                    }
-                }
-            }
+            //if (Input.touchCount == 3)
+            //{
+            //    Touch touch = Input.GetTouch(2);
+            //    Touch touch1 = Input.GetTouch(1);
+            //    Touch touch0 = Input.GetTouch(0);
+            //    if ((touch.phase == TouchPhase.Began || touch.fingerId != zoomFingerId3 || touch0.fingerId != zoomFingerId1 || touch1.fingerId != zoomFingerId2) && !IsOverUI())
+            //    {
+            //        mobileControlType = 2;
+            //        zoomFingerId1 = touch0.fingerId;
+            //        zoomFingerId2 = touch1.fingerId;
+            //        zoomFingerId3 = touch.fingerId;
+            //    }
+            //    else if (touch.fingerId == zoomFingerId3)
+            //    {
+            //        if (touch.phase == TouchPhase.Moved)
+            //        {
+            //            isMouseRotate = true;
+            //            ZoomCamera(touch.deltaPosition.y / 500f);
+            //        }
+            //        else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+            //        {
+            //            mobileControlType = 0;
+            //            zoomFingerId1 = -1;
+            //            zoomFingerId2 = -1;
+            //            zoomFingerId3 = -1;
+            //            return;
+            //        }
+            //    }
+            //}
         }
 
+        // 两只手指一起动则为镜头旋转, 一只指头动,另一只指头不动则为镜头缩放
         public void RotateCameraMobile()
         {
             if (Input.touchCount == 2)
@@ -524,10 +525,18 @@ namespace Sango.Render
                 }
                 else if (touch.fingerId == rotateFingerId2)
                 {
-                    if (touch.phase == TouchPhase.Moved)
+                    if (touch0.phase == TouchPhase.Moved && touch.phase == TouchPhase.Moved)
                     {
                         isMouseRotate = true;
                         RotateCamera(touch.deltaPosition);
+                    }
+                    else if (touch0.phase == TouchPhase.Stationary && touch.phase == TouchPhase.Moved)
+                    {
+                        ZoomCamera(touch.deltaPosition.y / 500f);
+                    }
+                    else if (touch0.phase == TouchPhase.Moved && touch.phase == TouchPhase.Stationary)
+                    {
+                        ZoomCamera(touch0.deltaPosition.y / 500f);
                     }
                     else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
                     {
