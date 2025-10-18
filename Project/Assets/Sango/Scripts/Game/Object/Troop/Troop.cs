@@ -226,6 +226,7 @@ namespace Sango.Game
 
         public override void Init(Scenario scenario)
         {
+            ForEachPerson(x => x.BelongTroop = this);
             BelongCity.activedTroops.Add(this);
             CalculateAttribute(scenario);
             Render = new TroopRender(this);
@@ -335,7 +336,7 @@ namespace Sango.Game
                 Skill skill = Scenario.Cur.GetObject<Skill>(TroopType.skills[i]);
                 if (skill != null && skill.CanAddToTroop(this))
                 {
-                    
+
 
                     SkillInstance ins = null;
                     if (skills != null)

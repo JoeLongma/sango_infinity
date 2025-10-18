@@ -624,7 +624,7 @@ namespace Sango.Game
 
             if (durability < DurabilityLimit)
             {
-                durability += Leader?.BaseBuildAbility / 3 ?? 50;
+                durability += Leader?.BaseBuildAbility * 2 ?? 50;
                 if (durability > DurabilityLimit)
                     durability = DurabilityLimit;
             }

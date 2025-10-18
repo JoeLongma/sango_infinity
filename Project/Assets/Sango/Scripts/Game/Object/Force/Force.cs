@@ -258,7 +258,8 @@ namespace Sango.Game
         /// </summary>
         private void AIPrepare(Scenario scenario)
         {
-            AICommandList.Add(ForceAI.AIDiplomacy);
+            // 暂时屏蔽外交
+            //AICommandList.Add(ForceAI.AIDiplomacy);
             AICommandList.Add(ForceAI.AICaptives);
             AICommandList.Add(ForceAI.AITechniques);
 

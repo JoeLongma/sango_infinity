@@ -429,7 +429,7 @@ namespace Sango.Game
             if (city.troops < 20000)
                 return false;
 
-            if (city.morale < 80 || city.security < 80)
+            if (city.morale < 60 || city.security < 60)
                 return false;
 
             if (city.freePersons.Count < 6)
@@ -445,7 +445,7 @@ namespace Sango.Game
                 return false;
 
             // 兵装检查
-            if (city.itemStore.TotalNumber < Math.Min(60000, city.troops * 3 / 2))
+            if (city.itemStore.TotalNumber < Math.Min(20000, city.troops * 3 / 2))
                 return false;
 
             int needFood = (int)(120000 * scenario.Variables.baseFoodCostInCity + 20 * (city.troops - 20000) * scenario.Variables.baseFoodCostInTroop);
