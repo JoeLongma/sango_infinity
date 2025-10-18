@@ -24,10 +24,10 @@ namespace Sango.Game
 
             if (city.TroopMissionType != MissionType.None)
             {
-                if (city.TroopMissionType == MissionType.OccupyCity)
+                if (city.TroopMissionType == MissionType.TroopOccupyCity)
                 {
                     City targetCity = scenario.citySet.Get(city.TroopMissionTargetId);
-                    if(targetCity.BelongForce != null || (targetCity.BelongForce == null && city.TroopsCount < 1))
+                    if (targetCity.BelongForce != null || (targetCity.BelongForce == null && city.TroopsCount < 1))
                     {
                         // 白城只去一直部队
 
@@ -43,7 +43,7 @@ namespace Sango.Game
                         }
                     }
                 }
-                else if (city.TroopMissionType == MissionType.ProtectCity)
+                else if (city.TroopMissionType == MissionType.TroopProtectCity)
                 {
                     if (city.CheckEnemiesIfAlive())
                     {
@@ -77,7 +77,7 @@ namespace Sango.Game
 
             if (AICanDefense(city, scenario))
             {
-                city.TroopMissionType = MissionType.ProtectCity;
+                city.TroopMissionType = MissionType.TroopProtectCity;
                 city.TroopMissionTargetId = city.Id;
                 return false;
             }
@@ -87,7 +87,7 @@ namespace Sango.Game
                 Troop activedTroop = scenario.troopsSet.Find(x => x.IsAlive && x.BelongCity == city);
                 if (activedTroop != null)
                 {
-                    if (activedTroop.missionType == (int)MissionType.OccupyCity)
+                    if (activedTroop.missionType == (int)MissionType.TroopOccupyCity)
                     {
                         lastTargetCity = scenario.citySet.Get(activedTroop.missionTarget);
                     }
@@ -95,7 +95,7 @@ namespace Sango.Game
 
                 if (lastTargetCity != null)
                 {
-                    city.TroopMissionType = MissionType.OccupyCity;
+                    city.TroopMissionType = MissionType.TroopOccupyCity;
                     city.TroopMissionTargetId = lastTargetCity.Id;
                     return false;
                 }
@@ -113,10 +113,10 @@ namespace Sango.Game
                         else
                         {
                             // 需要兵力充足
-                            if (city.troops > x.troops - 5000)
+                            if (city.troops > 30000 || city.troops > x.troops - 5000)
                             {
                                 // 范围大约在
-                                int weight = (int)(500 * (float)city.virtualFightPower / (float)x.virtualFightPower);
+                                int weight = (int)(2500 * (float)city.virtualFightPower / (float)x.virtualFightPower);
                                 int relation = scenario.GetRelation(city.BelongForce, x.BelongForce);
                                 // 8000亲密 6000友好 4000普通 2000中立 0冷漠 -2000敌对 -4000厌恶 -6000仇视 -8000不死不休
                                 // 5 4 3 2 1 0 -1 -2 -3 -4 -5
@@ -137,7 +137,7 @@ namespace Sango.Game
                     {
                         if (GameRandom.Changce(priority, 10000))
                         {
-                            city.TroopMissionType = MissionType.OccupyCity;
+                            city.TroopMissionType = MissionType.TroopOccupyCity;
                             city.TroopMissionTargetId = targetCity.Id;
                             return false;
                         }
@@ -189,7 +189,105 @@ namespace Sango.Game
 
         public static bool AIBuilding(City city, Scenario scenario)
         {
-            AIBuldIntriore(city, scenario);
+            AIBuildIntriore(city, scenario);
+            AIBuildMilitaryBuilding(city, scenario);
+            return true;
+        }
+
+        public static bool AIBuildMilitaryBuilding(City city, Scenario scenario)
+        {
+            if (city.freePersons.Count < 1)
+                return true;
+
+            if (city.gold < 2000)
+                return true;
+
+            if (city.troops < 10000)
+                return true;
+
+            if (city.food < 10000)
+                return true;
+
+            // 最大允许两只建设队伍
+            int buildMax = 1;
+            for (int i = 0; i < city.allPersons.Count; i++)
+            {
+                Person person = city.allPersons[i];
+                Troop troop = person.BelongTroop;
+                if (troop != null)
+                {
+                    if (troop.missionType == (int)MissionType.TroopBuildBuilding)
+                    {
+                        buildMax--;
+                        if (buildMax == 0)
+                            return true;
+                    }
+                }
+            }
+
+            for (int i = 0; i < city.defenceCellList.Count; i++)
+            {
+                Cell dest = city.defenceCellList[i];
+                if (dest.building == null)
+                {
+                    bool alreadyBuild = false;
+                    for (int j = 0; j < city.allPersons.Count; j++)
+                    {
+                        Person person = city.allPersons[j];
+                        if (person.BelongTroop != null)
+                        {
+                            if (person.BelongTroop.missionType == (int)MissionType.TroopBuildBuilding && person.BelongTroop.missionTargetCell == dest)
+                            {
+                                alreadyBuild = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (alreadyBuild)
+                        continue;
+                    BuildingType buildingType = scenario.GetObject<BuildingType>(13);
+
+                    TroopType troopType = scenario.GetObject<TroopType>(1);
+
+                    // 组建修建队伍
+                    Person[] builders = ForceAI.CounsellorRecommendBuild(city.freePersons, buildingType);
+                    if (builders == null || builders.Length == 0)
+                        return true;
+
+                    int maxTroopNum = 3000;
+                    int food = (int)(maxTroopNum * scenario.Variables.baseFoodCostInTroop * 20);
+                    int carrayGold = buildingType.cost;
+
+                    city.troops -= maxTroopNum;
+                    city.food -= food;
+                    city.gold -= carrayGold;
+                    for (int p = 0; p < builders.Length; p++)
+                    {
+                        Person person = builders[p];
+                        if (person != null)
+                        {
+                            city.freePersons.Remove(person);
+                        }
+                    }
+
+                    Troop troop = scenario.CreateTroop();
+                    troop.energy = city.energy;
+                    troop.morale = city.morale;
+                    troop.Leader = builders[0];
+                    troop.TroopType = troopType;
+                    troop.troops = maxTroopNum;
+                    troop.food = food;
+                    troop.gold = carrayGold;
+                    troop.missionType = (int)MissionType.TroopBuildBuilding;
+                    troop.missionTarget = buildingType.Id;
+                    troop.missionTargetCell = dest;
+                    if (builders.Length > 1) troop.Member1 = builders[1];
+                    if (builders.Length > 2) troop.Member1 = builders[2];
+                    city.Render?.UpdateRender();
+                    troop = city.EnsureTroop(troop, scenario);
+                    city.CurActiveTroop = troop;
+                }
+            }
             return true;
         }
 
@@ -259,7 +357,7 @@ namespace Sango.Game
             },
         };
 
-        public static bool AIBuldIntriore(City city, Scenario scenario)
+        public static bool AIBuildIntriore(City city, Scenario scenario)
         {
             if (city.allIntriorBuildings.Count >= city.InsideSlot)
                 return true;
@@ -361,7 +459,7 @@ namespace Sango.Game
                         buildAbility += person.BaseBuildAbility;
                     }
 
-                    buildAbility = GameUtility.Method_BuildAbility(buildAbility);
+                    buildAbility = GameUtility.Method_PersonBuildAbility(buildAbility);
                     int turnCount = buildingType.durabilityLimit % buildAbility == 0 ? 0 : 1;
                     int buildCount = Math.Min(Scenario.Cur.Variables.BuildMaxTurn, buildingType.durabilityLimit / buildAbility + turnCount);
 
@@ -448,7 +546,10 @@ namespace Sango.Game
             if (city.itemStore.TotalNumber < Math.Min(20000, city.troops * 3 / 2))
                 return false;
 
-            int needFood = (int)(120000 * scenario.Variables.baseFoodCostInCity + 20 * (city.troops - 20000) * scenario.Variables.baseFoodCostInTroop);
+            int cityTroopNeedFood = (int)(scenario.Variables.baseFoodCostInCity * (city.troops - 20000) * 9);
+            int troopNeedFood = (int)(20000 * 20 * scenario.Variables.baseFoodCostInTroop);
+            int needFood = troopNeedFood + cityTroopNeedFood;
+
             // 粮食检查
             if (city.food <= needFood)
                 return false;
@@ -672,18 +773,15 @@ namespace Sango.Game
             for (int p = 0; p < people.Length; p++)
                 city.freePersons.Remove(people[p]);
 
-            Troop troop = new Troop()
-            {
-                energy = city.energy,
-                morale = city.morale,
-                Leader = people[0],
-                TroopType = spType,
-                troops = people[0].TroopsLimit,
-                food = food,
-                missionType = (int)city.TroopMissionType,
-                missionTarget = city.TroopMissionTargetId,
-            };
-
+            Troop troop = scenario.CreateTroop();
+            troop.energy = city.energy;
+            troop.morale = city.morale;
+            troop.Leader = people[0];
+            troop.TroopType = spType;
+            troop.troops = people[0].TroopsLimit;
+            troop.food = food;
+            troop.missionType = (int)city.TroopMissionType;
+            troop.missionTarget = city.TroopMissionTargetId;
             if (people.Length > 1) troop.Member1 = people[1];
             if (people.Length > 2) troop.Member1 = people[2];
             city.Render?.UpdateRender();

@@ -64,7 +64,7 @@ namespace Sango.Game
                     Person person = Builders[i];
                     totalValue += person.BaseBuildAbility;
                 }
-                totalValue = GameUtility.Method_BuildAbility(totalValue);
+                totalValue = GameUtility.Method_PersonBuildAbility(totalValue);
                 durability += totalValue;
                 if (durability >= BuildingType.durabilityLimit)
                 {
@@ -79,6 +79,46 @@ namespace Sango.Game
             if (Render != null)
                 Render.UpdateRender();
             return base.OnTurnStart(scenario);
+        }
+
+        public void BuildDurability(int num, Troop atk)
+        {
+            base.ChangeDurability(num, atk);
+            if (num > 0 && durability > DurabilityLimit)
+            {
+                durability = DurabilityLimit;
+                if (!isComplte)
+                {
+                    isComplte = true;
+                    Scenario scenario = Scenario.Cur;
+                    ScenarioVariables variables = scenario.Variables;
+                    int jobId = (int)CityJobType.Build;
+                    int meritGain = variables.jobMaxPersonCount[jobId];
+                    int techniquePointGain = variables.jobTechniquePoint[jobId];
+
+#if SANGO_DEBUG
+                    StringBuilder stringBuilder = new StringBuilder();
+#endif
+                    atk.ForEachPerson(person => {
+                        person.merit += meritGain;
+                        person.GainExp(meritGain);
+#if SANGO_DEBUG
+                        stringBuilder.Append(person.Name);
+                        stringBuilder.Append(" ");
+#endif
+                    });
+
+#if SANGO_DEBUG
+                    Sango.Log.Print($"[{BelongCity.Name}]{stringBuilder}完成{Name}建造!!");
+#endif
+                    scenario.Event.OnCityJobGainTechniquePoint?.Invoke(BelongCity, jobId, Builders.objects.ToArray(),
+                       techniquePointGain, (x) => { techniquePointGain = x; });
+
+                    BelongForce.GainTechniquePoint(techniquePointGain);
+                }
+            }
+
+            Render?.UpdateRender();
         }
 
         public virtual void OnBuildComplate()

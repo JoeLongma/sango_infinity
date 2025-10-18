@@ -18,6 +18,7 @@ namespace Sango.Game
         [JsonProperty] public string Name { get; internal set; }
         [JsonProperty] public string ContentDir { get; internal set; }
         [JsonProperty] public CellSet CellSet { get; internal set; }
+
         public HexWorld HexWorld { get; internal set; }
         public string FileName { get; internal set; }
 
@@ -47,7 +48,8 @@ namespace Sango.Game
                     for (int y = 0; y < Height; ++y)
                     {
                         int terrainType = reader.ReadByte();
-                        CellSet.SetTerrainType(x, y, terrainType);
+                        int terrainState = reader.ReadInt32();
+                        CellSet.SetTerrainTypeAndState(x, y, terrainType, terrainState);
                     }
                 }
 

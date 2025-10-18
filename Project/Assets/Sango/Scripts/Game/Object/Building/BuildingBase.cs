@@ -141,7 +141,9 @@ namespace Sango.Game
                 if (Render != null)
                     Render.ShowDamage(num, 13);
             }
+
             durability = durability + num;
+
             bool isAlive = durability > 0;
             if (!isAlive)
             {

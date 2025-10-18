@@ -18,7 +18,7 @@ namespace Sango.Game.Render.Model
         {
             if (flag != null)
                 flag.Init(troop);
-
+            SetAniShow(0);
             UpdateTroop(troop);
         }
 
@@ -26,7 +26,6 @@ namespace Sango.Game.Render.Model
         {
             if (troopsRender != null)
                 troopsRender.SetShowPercent(Mathf.Clamp01(0.1f + (float)troop.troops / 10000.0f));
-
         }
 
         public void SetAniShow(int name)

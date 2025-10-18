@@ -465,7 +465,7 @@ namespace Sango.Game
                 if (check2 != null) buildAbility += check2.BaseBuildAbility;
                 if (check3 != null) buildAbility += check3.BaseBuildAbility;
 
-                buildAbility = GameUtility.Method_BuildAbility(buildAbility);
+                buildAbility = GameUtility.Method_PersonBuildAbility(buildAbility);
 
                 int turnCount = buildingType.durabilityLimit % buildAbility == 0 ? 0 : 1;
                 int buildCount = Math.Min(Scenario.Cur.Variables.BuildMaxTurn, buildingType.durabilityLimit / buildAbility + turnCount);

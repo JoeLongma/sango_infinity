@@ -62,6 +62,19 @@ namespace Sango.Game
             c.moveAble = c.TerrainType.moveable;
         }
 
+        public void SetTerrainTypeAndState(int x, int y, int terrainType, int terrainState)
+        {
+            Cell c = Cells[x][y];
+            c.terrainType = terrainType;
+            c.TerrainType = Scenario.Cur.CommonData.TerrainTypes.Get(c.terrainType);
+            if (c.TerrainType == null)
+                c.TerrainType = Scenario.Cur.CommonData.TerrainTypes[0];
+            //c.Fertility = c.TerrainType.Fertility;
+            //c.Prosperity = c.TerrainType.Prosperity;
+            c.moveAble = c.TerrainType.moveable;
+            c.terrainState = terrainState;
+        }
+
         public void Init(Map map)
         {
             for (ushort x = 0; x < width; x++)

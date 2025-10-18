@@ -3,15 +3,19 @@
     public enum MissionType : int
     {
         None = 0,
-        ReturnCity,
-        MovetoCity,
-        DestroyTroop,
-        DestroyBuilding,
-        OccupyCity,
-        BanishTroop,
-        ProtectBuilding,
-        ProtectTroop,
-        ProtectCity,
+        TroopReturnCity,
+        TroopMovetoCity,
+        TroopDestroyTroop,
+        TroopDestroyBuilding,
+        TroopOccupyCity,
+        TroopHarassCity,
+        TroopBanishTroop,
+        TroopProtectBuilding,
+        TroopProtectTroop,
+        TroopProtectCity,
+        TroopBuildBuilding,
+
+
         PersonBuild,
         PersonWork,
         PersonInTroop,

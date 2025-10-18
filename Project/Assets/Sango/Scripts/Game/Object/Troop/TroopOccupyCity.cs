@@ -13,7 +13,7 @@ namespace Sango.Game
         List<Cell> tempCells = new List<Cell>(256);
         PriorityActionData priorityActionData;
 
-        public override MissionType MissionType { get { return MissionType.OccupyCity; } }
+        public override MissionType MissionType { get { return MissionType.TroopOccupyCity; } }
 
         public override bool IsMissionComplete
         {
@@ -32,18 +32,18 @@ namespace Sango.Game
             {
                 if (TargetCity == null )
                 {
-                    Troop.missionType = (int)MissionType.ReturnCity;
+                    Troop.missionType = (int)MissionType.TroopReturnCity;
                     Troop.missionTarget = Troop.BelongCity.Id;
                 }
                 else if(!TargetCity.IsSameForce(Troop))
                 {
                     // 被友军拿取,保护友军城池,直到消灭敌人
-                    Troop.missionType = (int)MissionType.ProtectCity;
+                    Troop.missionType = (int)MissionType.TroopProtectCity;
                     Troop.missionTarget = Troop.BelongCity.Id;
                 }
                 else
                 {
-                    Troop.missionType = (int)MissionType.MovetoCity;
+                    Troop.missionType = (int)MissionType.TroopMovetoCity;
                 }
                 Troop.NeedPrepareMission();
             }

@@ -10,6 +10,7 @@ namespace Sango.Game
     {
         public Vector2Int coords;
         public int terrainType;
+        public int terrainState;
 
         public TerrainType TerrainType { get; set; }
         public Hexagon.Hex Cub { get; set; }// { get { return Hexagon.Coord.OffsetToCube(x, y); } }
@@ -129,6 +130,12 @@ namespace Sango.Game
             while (dir >= 6)
                 dir -= 6;
             return Neighbors[dir];
+        }
+
+        public bool HasGridState(MapGrid.GridState state)
+        {
+            int stateValue = (1 << (int)state);
+            return (terrainState & stateValue) == stateValue;
         }
 
     }

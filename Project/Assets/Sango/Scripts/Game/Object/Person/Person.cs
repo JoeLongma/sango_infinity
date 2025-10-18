@@ -752,6 +752,9 @@ namespace Sango.Game
                 {
                     Exp = Level.exp - Exp;
                     Level = Level.Next;
+#if SANGO_DEBUG
+                     Sango.Log.Print($"@个人@{Name}升级到{Level.Id}级");
+#endif
                     Scenario.Cur.Event.OnPersonLevelUp?.Invoke(this);
                 }
                 else

@@ -4,7 +4,7 @@ namespace Sango.Game
 {
     public class TroopReturnCity : TroopMissionBehaviour
     {
-        public override MissionType MissionType { get { return MissionType.ReturnCity; } }
+        public override MissionType MissionType { get { return MissionType.TroopReturnCity; } }
         public override bool IsMissionComplete { get {
                 return TargetCity != Troop.BelongCity;
             } }

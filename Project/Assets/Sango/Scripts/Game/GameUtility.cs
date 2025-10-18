@@ -110,7 +110,7 @@ namespace Sango.Game
             return (num * num);
         }
 
-        public static int Method_BuildAbility(int v)
+        public static int Method_PersonBuildAbility(int v)
         {
             return 2 * v;
         }
@@ -152,6 +152,11 @@ namespace Sango.Game
             for (int i = 1; i < buildingNum; ++i)
                 percent += (int)(Math.Pow(100, 0.5f / buildingNum) * 100f);
             return (v * 15 / 10 + 1500) * percent / 1000;
+        }
+
+        public static int Method_TroopBuildAbility(Troop troop)
+        {
+            return (int)(troop.BuildPower * Math.Min(1f, (float)troop.troops / 1000) + 300 * (1f - Math.Pow(1.0 - (Math.Max(troop.troops, 5000.0) / 5000.0), 1.451)));
         }
     }
 }

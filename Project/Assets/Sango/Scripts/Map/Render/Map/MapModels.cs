@@ -141,7 +141,6 @@ namespace Sango.Render
 
             foreach (IMapManageObject o in invalidList)
                 RemoveStatic(o);
-
             writer.Write(staticObjects.Count);
             for (int i = 0; i < staticObjects.Count; ++i) {
                 IMapManageObject obj = staticObjects[i];

@@ -311,6 +311,17 @@ namespace UnityEngine.UI
             }
         }
 
+        public void Clear()
+        {
+            for (int i = mList.Count; i > 0;)
+            {
+                Entry ent = mList[--i];
+                mList.RemoveAt(i);
+                mUnused.Add(ent);
+                ent.label.gameObject.SetActive(false);
+            }
+        }
+
         void UpdateEditor()
         {
             for (int i = mList.Count; i > 0;)

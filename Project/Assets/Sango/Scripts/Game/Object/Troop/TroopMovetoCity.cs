@@ -6,7 +6,7 @@ namespace Sango.Game
 {
     public class TroopMovetoCity : TroopMissionBehaviour
     {
-        public override MissionType MissionType { get { return MissionType.MovetoCity; } }
+        public override MissionType MissionType { get { return MissionType.TroopMovetoCity; } }
         public override bool IsMissionComplete { get { return !TargetCity.IsSameForce(Troop); } }
         public override void Prepare(Troop troop, Scenario scenario)
         {
@@ -16,7 +16,7 @@ namespace Sango.Game
             // 任务完成后,如果城池被友军拿取则回到创建城池,否则将进入己方目标城池
             if (IsMissionComplete)
             {
-                Troop.missionType = (int)MissionType.ReturnCity;
+                Troop.missionType = (int)MissionType.TroopReturnCity;
                 Troop.missionTarget = Troop.BelongCity.Id;
                 Troop.NeedPrepareMission();
             }

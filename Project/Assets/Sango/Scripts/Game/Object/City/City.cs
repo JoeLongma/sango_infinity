@@ -280,6 +280,8 @@ namespace Sango.Game
         /// </summary> 
         public List<System.Func<City, Scenario, bool>> AICommandList = new List<System.Func<City, Scenario, bool>>();
 
+        public List<Cell> defenceCellList = new List<Cell>();
+
         public List<Cell> GetRoadToNeighbor(City city)
         {
             List<Cell> list;
@@ -383,6 +385,14 @@ namespace Sango.Game
 
             effectCells.Clear();
             scenario.Map.GetDirectSpiral(CenterCell, BuildingType.radius + 1, BuildingType.radius + 10, effectCells);
+
+            for(int i = 0; i < effectCells.Count; i++)
+            {
+                Cell cell = effectCells[i];
+                if(cell.HasGridState(Sango.Render.MapGrid.GridState.Defence))
+                    defenceCellList.Add(cell);
+            }
+
 
             foreach (Person person in CaptiveList)
             {
@@ -512,8 +522,9 @@ namespace Sango.Game
 
             int harvest = GameRandom.Random(totalGainFood, 0.05f);
             food += harvest;
+#if SANGO_DEBUG
             Sango.Log.Print($"城市：{Name}, 收获粮食：{harvest}, 现有粮食: {food}");
-
+#endif
             if (Render != null)
                 Render.UpdateRender();
 
@@ -600,7 +611,7 @@ namespace Sango.Game
                 allOutterBuildings.Remove(building);
             }
 
-            buildingCountMap[building.Id] = buildingCountMap[building.Id] - 1;
+            buildingCountMap[building.BuildingType.Id] = buildingCountMap[building.BuildingType.Id] - 1;
             this.CalculateHarvest();
         }
 
@@ -1033,10 +1044,10 @@ namespace Sango.Game
             building.Init(scenario);
             building.Builders = null;
             building.isComplte = false;
-            building.durability = builder.BuildPower;
+            building.durability = GameUtility.Method_TroopBuildAbility(builder);
 
             Sango.Log.Print($"[{BelongForce.Name}]在<{Name}>由{builder.Name}开始修建: {building.Name}");
-
+            building.Render.UpdateRender();
             return building;
         }
 

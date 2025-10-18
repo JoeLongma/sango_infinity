@@ -29,7 +29,6 @@ public class Sango_Render_MapGrid_GridStateWrap
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_Moveable(IntPtr L)
 	{
-		ToLua.Push(L, Sango.Render.MapGrid.GridState.Moveable);
 		return 1;
 	}
 

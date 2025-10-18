@@ -1028,5 +1028,10 @@ namespace Sango.Game
         {
             return $"{Info.year}年{Info.month}月{Info.day}日";
         }
+
+        public Troop CreateTroop()
+        {
+            return new Troop();
+        }
     }
 }

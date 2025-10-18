@@ -8,7 +8,7 @@ namespace Sango.Game
 {
     public class TroopProtectBuilding : TroopMissionBehaviour
     {
-        public override MissionType MissionType { get { return MissionType.ProtectBuilding; } }
+        public override MissionType MissionType { get { return MissionType.TroopProtectBuilding; } }
         public override bool IsMissionComplete => throw new NotImplementedException();
 
         public override bool DoAI(Troop troop, Scenario scenario)

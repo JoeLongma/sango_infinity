@@ -19,6 +19,8 @@ namespace Sango.Game.Render.UI
         {
             name.text = troop.Name;
             headIcon.sprite = GameRenderHelper.LoadHeadIcon(troop.Leader.headIconID);
+            aniText.Clear();
+            skillText.Clear();
             UpdateState(troop);
         }
 

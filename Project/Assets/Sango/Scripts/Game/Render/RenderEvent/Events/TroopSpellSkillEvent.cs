@@ -71,7 +71,12 @@ namespace Sango.Game.Render
                         damage = 0;
                     }
                     beAtkTroop.ChangeTroops(-damage, troop);
-                     
+                    int ep = damage / 100;
+                    if (!beAtkTroop.IsAlive) ep += 50;
+                    troop.ForEachPerson(p => {
+                        p.GainExp(ep);
+                        p.merit += ep;
+                    }); 
 #if SANGO_DEBUG
                     Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 使用<{skill.Name}> 攻击 {beAtkTroop.BelongForce.Name}的[{beAtkTroop.Name} - {beAtkTroop.TroopType.Name}], 造成伤害:{damage}, 目标剩余兵力: {beAtkTroop.GetTroopsNum()}");
 #endif
@@ -88,6 +93,12 @@ namespace Sango.Game.Render
 #if SANGO_DEBUG
                                 Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 受到 {beAtkTroop.BelongForce.Name}的[{beAtkTroop.Name} - {beAtkTroop.TroopType.Name}]反击伤害:{hitBackDmg}, 目标剩余兵力: {troop.GetTroopsNum()}");
 #endif
+                                ep = hitBackDmg / 100;
+                                if (!troop.IsAlive) ep += 50;
+                                beAtkTroop.ForEachPerson(p => {
+                                    p.GainExp(ep);
+                                    p.merit += ep;
+                                });
                             }
                             else
                             {
@@ -96,6 +107,13 @@ namespace Sango.Game.Render
 #if SANGO_DEBUG
                                 Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 受到 {beAtkTroop.BelongForce.Name}的[{beAtkTroop.Name} - {beAtkTroop.TroopType.Name}]反击伤害:{hitBackDmg}, 目标剩余兵力: {troop.GetTroopsNum()}");
 #endif
+                                ep = hitBackDmg / 100;
+                                if (!troop.IsAlive) ep += 50;
+                                beAtkTroop.ForEachPerson(p => {
+                                    p.GainExp(ep);
+                                    p.merit += ep;
+                                });
+
                             }
                         }
                     }
@@ -108,12 +126,19 @@ namespace Sango.Game.Render
 #if SANGO_DEBUG
                     Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 使用<{skill.Name}> 攻击 {beAtkBuildingBase.BelongForce?.Name}的 [{beAtkBuildingBase.Name}], 造成伤害:{damage}, 目标剩余耐久: {beAtkBuildingBase.durability}");
 #endif
-
-                    if(beAtkBuildingBase is City)
+                    int ep = damage / 10;
+                    if (beAtkBuildingBase is City)
                     {
                         City city = (City)beAtkBuildingBase;
                         if (city.BelongForce == null || city.troops <= 0)
                         {
+                            ep += 100;
+                            troop.ForEachPerson(p => {
+                                int ep = damage / 100;
+                                p.GainExp(ep);
+                                p.merit += ep;
+                            });
+
                             Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 攻破城池: <{beAtkBuildingBase.Name}>");
                             city.OnFall(troop);
                             return;
@@ -122,6 +147,12 @@ namespace Sango.Game.Render
 
                     if (beAtkBuildingBase.ChangeDurability(-damage, troop))
                     {
+                        ep += 100;
+                        troop.ForEachPerson(p => {
+                            int ep = damage / 100;
+                            p.GainExp(ep);
+                            p.merit += ep;
+                        });
 #if SANGO_DEBUG
 
                         Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 攻破城池: <{beAtkBuildingBase.Name}>");
@@ -129,6 +160,12 @@ namespace Sango.Game.Render
                     }
                     else
                     {
+                        troop.ForEachPerson(p => {
+                            int ep = damage / 100;
+                            p.GainExp(ep);
+                            p.merit += ep;
+                        });
+
                         // 城池反击
                         if (targetBuilding == beAtkBuildingBase)
                         {
@@ -152,9 +189,7 @@ namespace Sango.Game.Render
             }
             troop.morale -= skill.costEnergy;
             if(troop.morale < 0)
-            {
                 troop.morale = 0;
-            }
             troop.Render.UpdateRender();
             isAction = true;
         }

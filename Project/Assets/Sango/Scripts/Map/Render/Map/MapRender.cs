@@ -1,12 +1,9 @@
-﻿using Sango.Data;
+﻿using LuaInterface;
+using Sango.Game;
+using Sango.Loader;
 using System;
 using System.IO;
 using UnityEngine;
-using Sango;
-using LuaInterface;
-using System.Collections.Generic;
-using Sango.Game;
-using Sango.Loader;
 
 namespace Sango.Render
 {
@@ -16,7 +13,7 @@ namespace Sango.Render
         // 2022/10/20 add to 4
         // 2025/3/8 add to 5
         // 2025/3/14 add to 6
-        public const int VERSION = 6;
+        public const int VERSION = 7;
         static internal string[] SeasonNames = { "Spring", "Summer", "Autumn", "Winter" };
 
         public int mapWidth;

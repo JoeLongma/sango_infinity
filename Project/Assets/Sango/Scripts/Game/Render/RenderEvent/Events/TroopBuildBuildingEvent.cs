@@ -1,0 +1,86 @@
+﻿using Sango.Render;
+using UnityEngine;
+
+
+namespace Sango.Game.Render
+{
+    public class TroopBuildBuildingEvent : RenderEventBase
+    {
+        public Troop troop;
+        public BuildingType buildingType;
+        public Cell targetCell;
+        private bool isAction = false;
+        private float time = 0;
+        public override void Enter(Scenario scenario)
+        {
+            isAction = false;
+            time = 0;
+            if (IsVisible())
+            {
+                troop.Render.SetSmokeShow(true);
+            }
+        }
+
+        public override void Exit(Scenario scenario)
+        {
+            if (IsVisible())
+            {
+                troop.Render.SetSmokeShow(false);
+            }
+        }
+
+        public override bool IsVisible()
+        {
+            return troop.Render.IsVisible();
+        }
+
+        public override bool Update(Scenario scenario, float deltaTime)
+        {
+            if (!IsVisible())
+            {
+                Action();
+                IsDone = true;
+                return IsDone;
+            }
+
+            if (time <= 0f)
+            {
+                troop.Render.FaceTo(targetCell.Position);
+                troop.Render.SetAniShow(1);
+            }
+            if (time > 1f)
+                Action();
+            if (time > 2.5f)
+            {
+                troop.Render.SetAniShow(0);
+                IsDone = true;
+            }
+            time += deltaTime;
+            return IsDone;
+        }
+
+
+        public void Action()
+        {
+            if (isAction) return;
+            if (buildingType == null)
+            {
+                BuildingBase building = targetCell.building;
+                if (building != null && !building.IsEnemy(troop))
+                    building.ChangeDurability(GameUtility.Method_TroopBuildAbility(troop), troop);
+            }
+            else
+            {
+                BuildingBase building = targetCell.building;
+                if (building != null && !building.isComplte)
+                    building.ChangeDurability(GameUtility.Method_TroopBuildAbility(troop), troop);
+                else
+                    troop.BelongCity.BuildBuilding(targetCell, troop, buildingType);
+            }
+
+            troop.Render.UpdateRender();
+            isAction = true;
+        }
+
+    }
+}

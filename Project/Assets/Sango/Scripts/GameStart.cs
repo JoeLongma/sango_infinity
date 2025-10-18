@@ -18,6 +18,17 @@ public class GameStart : MonoBehaviour
     public bool Debug = false;
     void Awake()
     {
+#if UNITY_STANDALONE_WIN && !UNITY_EDITOR
+        string[] args = System.Environment.GetCommandLineArgs();
+        foreach (string arg in args)
+        {
+            if(arg.Equals("-console"))
+            {
+                ServerConsole.ShowConsole();
+            }
+        }
+#endif
+
         Screen.sleepTimeout = UnityEngine.SleepTimeout.NeverSleep;
         Path.Init();
         StartCoroutine(GameInit());
@@ -25,6 +36,7 @@ public class GameStart : MonoBehaviour
 
     IEnumerator GameInit()
     {
+#if UNITY_ANDROID || UNITY_IPHONE
         if (!Directory.Exists(Path.ContentRootPath))
         {
             string path = System.IO.Path.Combine(Application.streamingAssetsPath, "Build.zip");
@@ -35,26 +47,15 @@ public class GameStart : MonoBehaviour
             if (request.result == UnityWebRequest.Result.Success)
             {
                 string zipSavePath = System.IO.Path.Combine(Application.persistentDataPath, "Build.zip");
-                if(File.Exists(zipSavePath))
-                {
+                if (File.Exists(zipSavePath))
                     File.Delete(zipSavePath);
-                }
+
                 File.WriteAllBytes(zipSavePath, request.downloadHandler.data);
                 ZipFile.ExtractToDirectory(zipSavePath, Application.persistentDataPath);
             }
             else
             {
                 UnityEngine.Debug.LogError(request.error);
-            }
-        }
-
-#if UNITY_STANDALONE_WIN && !UNITY_EDITOR
-        string[] args = System.Environment.GetCommandLineArgs();
-        foreach (string arg in args)
-        {
-            if(arg.Equals("-console"))
-            {
-                ServerConsole.ShowConsole();
             }
         }
 #endif
@@ -91,6 +92,7 @@ public class GameStart : MonoBehaviour
 #elif UNITY_WEBGL
         Game.Instance.Init(this, Platform.PlatformName.Webgl);
 #endif
+        yield return null;
     }
 
 #if UNITY_EDITOR

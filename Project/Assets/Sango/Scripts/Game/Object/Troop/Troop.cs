@@ -155,6 +155,13 @@ namespace Sango.Game
         [JsonProperty] public int missionTarget;
 
         /// <summary>
+        /// 任务地点
+        /// </summary>
+        [JsonProperty]
+        [JsonConverter(typeof(XY2CellConverter))]
+        public Cell missionTargetCell;
+
+        /// <summary>
         /// 当前技能
         /// </summary>
         [JsonProperty]
@@ -374,8 +381,9 @@ namespace Sango.Game
                 + Glamour * Variables.fight_troop_attack_glamour_factor
                 ) / 10000 * TroopType.atk) / 100;
 
+
             // 建设能力 = 政治 * 67% + 50;
-            BuildPower = Politics * 6700 / 10000 + 50;
+            BuildPower = Politics * 2 / 3 + 50;
 
             // 事件可二次修改属性
             scenario.Event.OnTroopCalculateAttribute?.Invoke(this, scenario);
@@ -664,7 +672,7 @@ namespace Sango.Game
         internal static List<Cell> spellRangeCells = new List<Cell>(256);
         internal bool isMoving = false;
         IRenderEventBase moveRenderEvent = null;
-        IRenderEventBase skillRenderEvent = null;
+        IRenderEventBase actionRenderEvent = null;
 
         public bool MoveTo(Cell destCell)
         {
@@ -919,11 +927,11 @@ namespace Sango.Game
 
         public bool SpellSkill(Skill skill, Cell spellCell)
         {
-            if (skillRenderEvent != null)
+            if (actionRenderEvent != null)
             {
-                if (skillRenderEvent.IsDone)
+                if (actionRenderEvent.IsDone)
                 {
-                    skillRenderEvent = null;
+                    actionRenderEvent = null;
                     return true;
                 }
                 else
@@ -936,11 +944,37 @@ namespace Sango.Game
                 skill = skill,
                 spellCell = spellCell,
             };
-            skillRenderEvent = @event;
+            actionRenderEvent = @event;
             RenderEvent.Instance.Add(@event);
 
             return false;
         }
+
+        public bool BuildBuilding(Cell dest, BuildingType buildingType)
+        {
+            if (actionRenderEvent != null)
+            {
+                if (actionRenderEvent.IsDone)
+                {
+                    actionRenderEvent = null;
+                    return true;
+                }
+                else
+                    return false;
+            }
+
+            TroopBuildBuildingEvent @event = new TroopBuildBuildingEvent()
+            {
+                troop = this,
+                buildingType = buildingType,
+                targetCell = dest,
+            };
+            actionRenderEvent = @event;
+            RenderEvent.Instance.Add(@event);
+
+            return false;
+        }
+
         Cell tryToDest;
         public bool TryMoveTo(Cell destCell)
         {
@@ -1196,6 +1230,9 @@ namespace Sango.Game
             });
             base.Clear();
             IsAlive = false;
+            missionTarget = 0;
+            missionTargetCell = null;
+            missionType = 0;
             ActionOver = true;
             Render.Clear();
             if (cell != null && cell.troop == this)
@@ -1273,46 +1310,14 @@ namespace Sango.Game
             {
                 if (missionType == 0)
                 {
-                    missionType = (int)MissionType.ReturnCity;
+                    missionType = (int)MissionType.TroopReturnCity;
                     missionTarget = BelongCity.Id;
                     NeedPrepareMission();
                 }
 
                 if (this.troopMissionBehaviour == null || (int)troopMissionBehaviour.MissionType != missionType)
                 {
-                    switch (missionType)
-                    {
-                        case (int)MissionType.DestroyTroop:
-                            troopMissionBehaviour = new TroopDestroyTroop();
-                            break;
-                        case (int)MissionType.DestroyBuilding:
-                            troopMissionBehaviour = new TroopDestroyBuilding();
-                            break;
-                        case (int)MissionType.OccupyCity:
-                            troopMissionBehaviour = new TroopOccupyCity();
-                            break;
-                        case (int)MissionType.BanishTroop:
-                            troopMissionBehaviour = new TroopBanishTroop();
-                            break;
-                        case (int)MissionType.ProtectBuilding:
-                            troopMissionBehaviour = new TroopProtectBuilding();
-                            break;
-                        case (int)MissionType.ProtectTroop:
-                            troopMissionBehaviour = new TroopProtectTroop();
-                            break;
-                        case (int)MissionType.ProtectCity:
-                            troopMissionBehaviour = new TroopProtectCity();
-                            break;
-                        case (int)MissionType.MovetoCity:
-                            troopMissionBehaviour = new TroopMovetoCity();
-                            break;
-                        case (int)MissionType.ReturnCity:
-                            troopMissionBehaviour = new TroopReturnCity();
-                            break;
-                        default:
-                            troopMissionBehaviour = new TroopReturnCity();
-                            break;
-                    }
+                    troopMissionBehaviour = TroopMissionBehaviour.Create(missionType);
                     isMissionPrepared = false;
                     troopMissionBehaviour.Prepare(this, Scenario.Cur);
                     isMissionPrepared = true;

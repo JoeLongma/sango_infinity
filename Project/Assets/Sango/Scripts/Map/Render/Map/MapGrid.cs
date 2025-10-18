@@ -23,9 +23,11 @@ namespace Sango.Render
         private GridData[][] gridDatas;
         public enum GridState : int
         {
-            Moveable = 0,
+            None = 0,
+            Defence = 1,
+            Interior = 2,
+            Thief = 3,
         }
-
 
         public struct San11GridData
         {
@@ -77,7 +79,7 @@ namespace Sango.Render
         public class GridData
         {
             public byte terrainType;
-
+            public int terrainState;
 
 #if SANGO_DEBUG
             [NoToLua]
@@ -96,28 +98,33 @@ namespace Sango.Render
                 //    dir = 6
                 //};
             }
-            //public void SetGridState(GridState state, bool b)
-            //{
-            //    int stateValue = (1 << (int)state);
-            //    if (b) {
-            //        if ((terrainState & stateValue) == stateValue)
-            //            return;
-            //        terrainState |= (1 << (int)state);
-            //    }
-            //    else {
-            //        if ((terrainState & stateValue) != stateValue)
-            //            return;
-            //        terrainState ^= (1 << (int)state);
-            //    }
-            //}
-            //public bool HasGridState(GridState state)
-            //{
-            //    int stateValue = (1 << (int)state);
-            //    return (terrainState & stateValue) == stateValue;
-            //}
+            public void SetGridState(GridState state, bool b)
+            {
+                int stateValue = (1 << (int)state);
+                if (b)
+                {
+                    if ((terrainState & stateValue) == stateValue)
+                        return;
+                    terrainState |= (1 << (int)state);
+                }
+                else
+                {
+                    if ((terrainState & stateValue) != stateValue)
+                        return;
+                    terrainState ^= (1 << (int)state);
+                }
+            }
+            public bool HasGridState(GridState state)
+            {
+                int stateValue = (1 << (int)state);
+                return (terrainState & stateValue) == stateValue;
+            }
+
             public void OnLoad(int versionCode, BinaryReader reader)
             {
                 terrainType = reader.ReadByte();
+                if(versionCode >= 7)
+                    terrainState = reader.ReadInt32();
 
                 if (versionCode < 5)
                 {
@@ -127,13 +134,19 @@ namespace Sango.Render
                         San11GridData sanData = new San11GridData();
                         sanData.OnLoad(versionCode, reader);
                         terrainType = (byte)(sanData.tType + 1);
+                        if (sanData.defence > 0)
+                            SetGridState(GridState.Defence, true);
+                        if (sanData.thief > 0)
+                            SetGridState(GridState.Thief, true);
+                        if (sanData.interior > 0)
+                            SetGridState(GridState.Interior, true);
                     }
                 }
             }
             public void OnSave(BinaryWriter writer)
             {
                 writer.Write(terrainType);
-                //writer.Write(terrainState);
+                writer.Write(terrainState);
                 //san11GridData.OnSave(writer);
             }
         }
@@ -302,11 +315,11 @@ namespace Sango.Render
             int scaleLength = gridDatas.Length * scale;
             for (int x = 0; x < scaleLength; ++x)
             {
-                GridData[] yTable = gridDatas[x/2];
+                GridData[] yTable = gridDatas[x / 2];
                 int y_scaleLength = yTable.Length * scale;
                 for (int y = 0; y < y_scaleLength; ++y)
                 {
-                    GridData data = yTable[y/2];
+                    GridData data = yTable[y / 2];
                     data.OnSave(writer);
                 }
             }

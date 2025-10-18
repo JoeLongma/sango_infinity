@@ -8,7 +8,7 @@ namespace Sango.Game
 {
     public class TroopDestroyTroop : TroopMissionBehaviour
     {
-        public override MissionType MissionType { get { return MissionType.DestroyTroop; } }
+        public override MissionType MissionType { get { return MissionType.TroopDestroyTroop; } }
 
         public override bool IsMissionComplete
         {
