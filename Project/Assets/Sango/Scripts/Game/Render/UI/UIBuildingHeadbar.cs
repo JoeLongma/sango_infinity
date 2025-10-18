@@ -5,27 +5,25 @@ namespace Sango.Game.Render.UI
 {
     public class UIBuildingHeadbar : UGUIWindow
     {
-        public Image headIcon;
         public Text name;
-        public Image state;
-        public Image food;
-        public Image energy;
-        public Image angry;
-        public Text number;
-
-        public void Init(Troop troop)
+        public Image durability;
+        public AnimationText aniText;
+        public void Init(Building building)
         {
-            name.text = troop.Name;
-            headIcon.sprite = GameRenderHelper.LoadHeadIcon(troop.Leader.headIconID);
-            UpdateState(troop);
+            name.text = building.Name;
+            aniText.Clear();
+            UpdateState(building);
         }
 
-        public void UpdateState(Troop troop)
+        public void UpdateState(Building building)
         {
-            state.enabled = false;
-            energy.fillAmount = (float)troop.morale / 100.0f;
-            angry.fillAmount = 0;
-            number.text = troop.troops.ToString();
+            durability.fillAmount = (float)building.durability / building.DurabilityLimit;
         }
+
+        public void ShowDamage(int damage, int damageType = 0)
+        {
+            UITools.ShowDamage(aniText, damage, damageType);
+        }
+
     }
 }

@@ -7,6 +7,7 @@ namespace Sango.Game.Render.Model
         public FlagRender flag;
         public TroopsRender troopsRender;
         public Animation animation;
+        public ParticleSystem smoke;
 
         private void Awake()
         {

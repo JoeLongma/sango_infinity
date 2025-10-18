@@ -10,7 +10,6 @@ namespace Sango.Game
         [JsonProperty] public string desc;
         [JsonProperty] public byte kind;
         [JsonProperty] public string icon;
-        [JsonProperty] public int model;
         [JsonProperty] public int durabilityLimit;
         [JsonProperty] public int buildNumLimit;
         [JsonProperty] public int goldGain;
@@ -19,9 +18,15 @@ namespace Sango.Game
         [JsonProperty] public int cost;
         [JsonProperty] public byte radius;
         [JsonProperty] public bool isIntrior;
+        [JsonProperty] public string model;
+        [JsonProperty] public string modelBroken;
 
         /// <summary>
         /// 反击攻击力
+        /// </summary>
+        [JsonProperty] public int atkBack;
+        /// <summary>
+        /// 攻击力
         /// </summary>
         [JsonProperty] public int atk;
 

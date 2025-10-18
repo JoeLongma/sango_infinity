@@ -1728,6 +1728,16 @@ namespace Sango.Game
             return atk;
         }
 
+        public override int GetAttackBack()
+        {
+            ScenarioVariables Variables = Scenario.Cur.Variables;
+            // 根据太守数值来计算基础伤害
+            int atk = Math.Max(BuildingType.atkBack, (Leader?.Strength ?? 50 * 5000 + Leader?.Command ?? 50 * 5000) / 10000);
+
+            return atk;
+        }
+
+
         /// <summary>
         /// 获取城池的防御力
         /// </summary>

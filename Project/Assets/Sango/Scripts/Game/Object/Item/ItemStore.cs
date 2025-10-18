@@ -130,6 +130,17 @@ namespace Sango.Game
             }
         }
 
+        public void Gain(int[] cost, int number)
+        {
+            if (cost == null || cost.Length == 0) return;
+            for (int i = 0; i < cost.Length; i += 2)
+            {
+                int itemTypeId = cost[i];
+                int costN = cost[i + 1] * number;
+                Add(itemTypeId, costN);
+            }
+        }
+
         public int CheckCostMin(int[] cost, int number)
         {
             if (cost == null || cost.Length == 0) return number;

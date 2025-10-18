@@ -600,6 +600,53 @@ namespace Sango.Game
             return damage;
         }
 
+        public static int CalculateSkillDamage(BuildingBase attacker, Troop target, int atk)
+        {
+
+            ScenarioVariables Variables = Scenario.Cur.Variables;
+
+            //基础伤害
+            float base_atk = atk;
+            int base_troops = attacker.GetSkillMethodAvaliabledTroops();
+
+            float difficultyDamageFactor = 1;
+            if (attacker.BelongForce != null && attacker.BelongForce.IsPlayer)
+                difficultyDamageFactor = Variables.DifficultyDamageFactor;
+
+            int damage = (int)(
+                 (
+
+                 (Math.Max(0, (int)((Math.Pow(base_atk, 2) - Math.Pow(Math.Max(40, target.Defence), 2)) / 300)) +
+                 Math.Max(0, (base_troops - target.troops) / Variables.fight_base_troops_need) + 50)
+
+                 * 10 * ((int)(
+
+                 (((int)(base_troops * 0.01) + 300) * Math.Pow((base_atk + 50), 2)) /
+                 (((int)(base_troops * 0.01) + 300) * Math.Pow((base_atk + 50), 2) * 0.01 +
+                 ((int)(target.troops * 0.01) + 300) * Math.Pow((target.Defence + 50), 2) * 0.01)
+
+                 - 50)
+
+                 + 50)
+
+                 * Math.Min(Math.Pow(Math.Max(1, base_troops / 4), 0.5), 40)
+
+                 * Variables.fight_damage_magic_number /* * 太鼓台系数*/
+
+                 + base_troops / Variables.fight_base_troop_count
+
+                 )
+
+                // 难度系数,仅对玩家生效
+                * difficultyDamageFactor
+
+                 // 额外增益 (科技系数等)
+                 //* Math.Max(0, (1 + attacker.DamageTroopExtraFactor))
+                 /* * 难度系数*/);
+
+            return damage;
+        }
+
         // 暴击判断
         public static bool CalculateSkillCriticalBoost(Troop attacker, Troop defender, Skill skill, out float p)
         {
@@ -1194,6 +1241,9 @@ namespace Sango.Game
             if (city.troops > city.TroopsLimit)
                 city.troops = city.TroopsLimit;
 
+            // 返还兵装
+            city.itemStore.Gain(TroopType.costItems, troops);
+
             city.woundedTroops += woundedTroops;
             // 设置了,
             IsAlive = false;
@@ -1205,6 +1255,7 @@ namespace Sango.Game
                 person.ActionOver = true;
             });
 
+            city.Render.UpdateRender();
             Render.Clear();
             ActionOver = true;
             if (city == BelongCity)

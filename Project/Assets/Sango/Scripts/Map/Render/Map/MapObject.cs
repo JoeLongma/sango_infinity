@@ -376,6 +376,16 @@ namespace Sango.Render
             OnModelLoaded(modelObj, null, false);
         }
 
+        public void ChangeModel(string newAsset)
+        {
+            ClearModels();
+            modelAsset = newAsset;
+            if (visible)
+            {
+                ReLoadModels();
+            }
+        }
+
         public void ReLoadModels()
         {
             if (loadedModel != null || isLoading)
@@ -383,7 +393,7 @@ namespace Sango.Render
                 return;
             }
 
-            if(!string.IsNullOrEmpty(modelAsset))
+            if (!string.IsNullOrEmpty(modelAsset))
             {
                 GameObject obj = PoolManager.Get(modelAsset);
                 if (obj != null)

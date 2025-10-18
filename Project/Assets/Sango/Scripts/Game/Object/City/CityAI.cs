@@ -196,6 +196,9 @@ namespace Sango.Game
 
         public static bool AIBuildMilitaryBuilding(City city, Scenario scenario)
         {
+            if (city.allIntriorBuildings.Count < city.InsideSlot)
+                return true;
+
             if (city.freePersons.Count < 1)
                 return true;
 
@@ -213,10 +216,10 @@ namespace Sango.Game
             for (int i = 0; i < city.allPersons.Count; i++)
             {
                 Person person = city.allPersons[i];
-                Troop troop = person.BelongTroop;
-                if (troop != null)
+                Troop checkTroop = person.BelongTroop;
+                if (checkTroop != null)
                 {
-                    if (troop.missionType == (int)MissionType.TroopBuildBuilding)
+                    if (checkTroop.missionType == (int)MissionType.TroopBuildBuilding)
                     {
                         buildMax--;
                         if (buildMax == 0)
@@ -225,69 +228,64 @@ namespace Sango.Game
                 }
             }
 
-            for (int i = 0; i < city.defenceCellList.Count; i++)
+            Cell dest = city.defenceCellList[GameRandom.Range(0, city.defenceCellList.Count)];
+            if (dest.building != null) return true;
+            bool alreadyBuild = false;
+            for (int j = 0; j < city.allPersons.Count; j++)
             {
-                Cell dest = city.defenceCellList[i];
-                if (dest.building == null)
+                Person person = city.allPersons[j];
+                if (person.BelongTroop != null)
                 {
-                    bool alreadyBuild = false;
-                    for (int j = 0; j < city.allPersons.Count; j++)
+                    if (person.BelongTroop.missionType == (int)MissionType.TroopBuildBuilding && person.BelongTroop.missionTargetCell == dest)
                     {
-                        Person person = city.allPersons[j];
-                        if (person.BelongTroop != null)
-                        {
-                            if (person.BelongTroop.missionType == (int)MissionType.TroopBuildBuilding && person.BelongTroop.missionTargetCell == dest)
-                            {
-                                alreadyBuild = true;
-                                break;
-                            }
-                        }
+                        alreadyBuild = true;
+                        break;
                     }
-                    if (alreadyBuild)
-                        continue;
-                    BuildingType buildingType = scenario.GetObject<BuildingType>(13);
-
-                    TroopType troopType = scenario.GetObject<TroopType>(1);
-
-                    // 组建修建队伍
-                    Person[] builders = ForceAI.CounsellorRecommendBuild(city.freePersons, buildingType);
-                    if (builders == null || builders.Length == 0)
-                        return true;
-
-                    int maxTroopNum = 3000;
-                    int food = (int)(maxTroopNum * scenario.Variables.baseFoodCostInTroop * 20);
-                    int carrayGold = buildingType.cost;
-
-                    city.troops -= maxTroopNum;
-                    city.food -= food;
-                    city.gold -= carrayGold;
-                    for (int p = 0; p < builders.Length; p++)
-                    {
-                        Person person = builders[p];
-                        if (person != null)
-                        {
-                            city.freePersons.Remove(person);
-                        }
-                    }
-
-                    Troop troop = scenario.CreateTroop();
-                    troop.energy = city.energy;
-                    troop.morale = city.morale;
-                    troop.Leader = builders[0];
-                    troop.TroopType = troopType;
-                    troop.troops = maxTroopNum;
-                    troop.food = food;
-                    troop.gold = carrayGold;
-                    troop.missionType = (int)MissionType.TroopBuildBuilding;
-                    troop.missionTarget = buildingType.Id;
-                    troop.missionTargetCell = dest;
-                    if (builders.Length > 1) troop.Member1 = builders[1];
-                    if (builders.Length > 2) troop.Member1 = builders[2];
-                    city.Render?.UpdateRender();
-                    troop = city.EnsureTroop(troop, scenario);
-                    city.CurActiveTroop = troop;
                 }
             }
+            if (alreadyBuild) return true;
+
+            BuildingType buildingType = scenario.GetObject<BuildingType>(13);
+
+            TroopType troopType = scenario.GetObject<TroopType>(1);
+
+            // 组建修建队伍
+            Person[] builders = ForceAI.CounsellorRecommendBuild(city.freePersons, buildingType);
+            if (builders == null || builders.Length == 0)
+                return true;
+
+            int maxTroopNum = 3000;
+            int food = (int)(maxTroopNum * scenario.Variables.baseFoodCostInTroop * 20);
+            int carrayGold = buildingType.cost;
+
+            city.troops -= maxTroopNum;
+            city.food -= food;
+            city.gold -= carrayGold;
+            for (int p = 0; p < builders.Length; p++)
+            {
+                Person person = builders[p];
+                if (person != null)
+                {
+                    city.freePersons.Remove(person);
+                }
+            }
+
+            Troop troop = scenario.CreateTroop();
+            troop.energy = city.energy;
+            troop.morale = city.morale;
+            troop.Leader = builders[0];
+            troop.TroopType = troopType;
+            troop.troops = maxTroopNum;
+            troop.food = food;
+            troop.gold = carrayGold;
+            troop.missionType = (int)MissionType.TroopBuildBuilding;
+            troop.missionTarget = buildingType.Id;
+            troop.missionTargetCell = dest;
+            if (builders.Length > 1) troop.Member1 = builders[1];
+            if (builders.Length > 2) troop.Member1 = builders[2];
+            city.Render?.UpdateRender();
+            troop = city.EnsureTroop(troop, scenario);
+            city.CurActiveTroop = troop;
             return true;
         }
 

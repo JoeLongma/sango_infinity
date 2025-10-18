@@ -143,18 +143,35 @@ namespace Sango.Game
             }
 
             durability = durability + num;
-
-            bool isAlive = durability > 0;
-            if (!isAlive)
+            if (num > 0 && durability >= DurabilityLimit)
             {
-                durability = 0;
-                OnFall(atk);
-                return true;
+                durability = DurabilityLimit;
+                if (!isComplte)
+                {
+                    isComplte = true;
+                    OnComplate(atk);
+                }
             }
+            else
+            {
+                bool isAlive = durability > 0;
+                if (!isAlive)
+                {
+                    durability = 0;
+                    Render?.UpdateRender();
+                    OnFall(atk);
+                    return true;
+                }
+            }
+            Render?.UpdateRender();
             return false;
         }
 
         public virtual void OnFall(Troop atk)
+        {
+
+        }
+        public virtual void OnComplate(Troop atk)
         {
 
         }
@@ -179,6 +196,7 @@ namespace Sango.Game
         //}
 
         public virtual int GetAttack() { return BuildingType.atk; }
+        public virtual int GetAttackBack() { return BuildingType.atkBack; }
         public virtual int GetDefence() { return 50; }
         public float GetAttackBackFactor(Skill skill, int distance)
         {

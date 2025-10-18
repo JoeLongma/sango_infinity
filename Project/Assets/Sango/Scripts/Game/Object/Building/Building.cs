@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Sango.Game.Render;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Sango.Game
@@ -40,7 +41,7 @@ namespace Sango.Game
 
         public override void Init(Scenario scenario)
         {
-             BelongCity?.OnBuildingCreate(this);
+            BelongCity?.OnBuildingCreate(this);
 
             if (!BuildingType.isIntrior)
             {
@@ -76,49 +77,61 @@ namespace Sango.Game
                     BelongCity.OnBuildingComplete(this, builder);
                 }
             }
+
+            // 暂时写死
+            if (isComplte && BuildingType.Id == 13)
+            {
+                List<Cell> atkCells = new List<Cell>();
+                scenario.Map.GetSpiral(x, y, 2, atkCells);
+                for (int i = 1; i < atkCells.Count; i++)
+                {
+                    Cell cell = atkCells[i];
+                    if (cell.troop != null && IsEnemy(cell.troop))
+                    {
+                        BuildingAttackEvent @event = new BuildingAttackEvent()
+                        {
+                            building = this,
+                            targetCell = cell,
+                        };
+                        RenderEvent.Instance.Add(@event);
+                    }
+                }
+            }
             if (Render != null)
                 Render.UpdateRender();
             return base.OnTurnStart(scenario);
         }
 
-        public void BuildDurability(int num, Troop atk)
+        public override void OnComplate(Troop atk)
         {
-            base.ChangeDurability(num, atk);
-            if (num > 0 && durability > DurabilityLimit)
+            Scenario scenario = Scenario.Cur;
+            ScenarioVariables variables = scenario.Variables;
+            int jobId = (int)CityJobType.Build;
+            int meritGain = variables.jobMaxPersonCount[jobId];
+            int techniquePointGain = variables.jobTechniquePoint[jobId];
+
+#if SANGO_DEBUG
+            StringBuilder stringBuilder = new StringBuilder();
+#endif
+            atk.ForEachPerson(person =>
             {
-                durability = DurabilityLimit;
-                if (!isComplte)
-                {
-                    isComplte = true;
-                    Scenario scenario = Scenario.Cur;
-                    ScenarioVariables variables = scenario.Variables;
-                    int jobId = (int)CityJobType.Build;
-                    int meritGain = variables.jobMaxPersonCount[jobId];
-                    int techniquePointGain = variables.jobTechniquePoint[jobId];
+                person.merit += meritGain;
+                person.GainExp(meritGain);
+#if SANGO_DEBUG
+                stringBuilder.Append(person.Name);
+                stringBuilder.Append(" ");
+#endif
+            });
 
 #if SANGO_DEBUG
-                    StringBuilder stringBuilder = new StringBuilder();
+            Sango.Log.Print($"[{BelongCity.Name}]{stringBuilder}完成{Name}建造!!");
 #endif
-                    atk.ForEachPerson(person => {
-                        person.merit += meritGain;
-                        person.GainExp(meritGain);
-#if SANGO_DEBUG
-                        stringBuilder.Append(person.Name);
-                        stringBuilder.Append(" ");
-#endif
-                    });
+            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(BelongCity, jobId, Builders.objects.ToArray(),
+               techniquePointGain, (x) => { techniquePointGain = x; });
 
-#if SANGO_DEBUG
-                    Sango.Log.Print($"[{BelongCity.Name}]{stringBuilder}完成{Name}建造!!");
-#endif
-                    scenario.Event.OnCityJobGainTechniquePoint?.Invoke(BelongCity, jobId, Builders.objects.ToArray(),
-                       techniquePointGain, (x) => { techniquePointGain = x; });
+            BelongForce.GainTechniquePoint(techniquePointGain);
+            Render.UpdateRender();
 
-                    BelongForce.GainTechniquePoint(techniquePointGain);
-                }
-            }
-
-            Render?.UpdateRender();
         }
 
         public virtual void OnBuildComplate()
@@ -224,6 +237,10 @@ namespace Sango.Game
             }
         }
 
+        public override int GetSkillMethodAvaliabledTroops()
+        {
+            return 4000 + 4000 * durability / DurabilityLimit;
+        }
         public override void OnFall(Troop atk)
         {
             BelongCity?.OnBuildingDestroy(this);

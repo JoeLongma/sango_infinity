@@ -1785,7 +1785,8 @@
       "Name": "都市",
       "kind": 1,
       "durabilityLimit": 0,
-      "atk": 50,
+      "atkBack": 50,
+      "atk": 0,
       "damageBounds": 0.7,
       "isIntrior": false,
       "insideOnly": false,
@@ -1795,15 +1796,15 @@
       "populationGain": 0.0,
       "cost": 0,
       "radius": 1,
-      "desc": "生产资金、兵粮的据点",
-      "model": 30
+      "desc": "生产资金、兵粮的据点"
     },
     {
       "Id": 2,
       "Name": "关所",
       "kind": 2,
       "durabilityLimit": 0,
-      "atk": 40,
+      "atkBack": 40,
+      "atk": 0,
       "damageBounds": 0.6,
       "isIntrior": false,
       "insideOnly": false,
@@ -1813,15 +1814,15 @@
       "populationGain": 0.0,
       "cost": 0,
       "radius": 0,
-      "desc": "防御力优越的据点",
-      "model": 30
+      "desc": "防御力优越的据点"
     },
     {
       "Id": 3,
       "Name": "码头",
       "kind": 3,
       "durabilityLimit": 0,
-      "atk": 40,
+      "atkBack": 40,
+      "atk": 0,
       "damageBounds": 0.8,
       "isIntrior": false,
       "insideOnly": false,
@@ -1832,14 +1833,14 @@
       "cost": 0,
       "radius": 0,
       "desc": "每回合对位于周围２区格内的敌方部队执行弓箭攻击",
-      "icon": "ui://game/4845_7_15",
-      "model": 30
+      "icon": "ui://game/4845_7_15"
     },
     {
       "Id": 4,
       "Name": "农田",
       "kind": 4,
       "durabilityLimit": 500,
+      "atkBack": 0,
       "atk": 0,
       "damageBounds": 1.0,
       "isIntrior": true,
@@ -1851,14 +1852,14 @@
       "cost": 600,
       "radius": 0,
       "desc": "强化位于周围２区格内己方部队之防御，并减轻其兵粮消费",
-      "icon": "ui://game/4845_7_12",
-      "model": 30
+      "icon": "ui://game/4845_7_12"
     },
     {
       "Id": 5,
       "Name": "市场",
       "kind": 5,
       "durabilityLimit": 500,
+      "atkBack": 0,
       "atk": 0,
       "damageBounds": 1.0,
       "isIntrior": true,
@@ -1870,14 +1871,14 @@
       "cost": 600,
       "radius": 0,
       "desc": "每回合对位于周围２区格内的敌方部队执行弓箭攻击",
-      "icon": "ui://game/4845_7_15",
-      "model": 30
+      "icon": "ui://game/4845_7_15"
     },
     {
       "Id": 6,
       "Name": "村庄",
       "kind": 6,
       "durabilityLimit": 500,
+      "atkBack": 0,
       "atk": 0,
       "damageBounds": 1.0,
       "isIntrior": true,
@@ -1889,14 +1890,14 @@
       "cost": 800,
       "radius": 0,
       "desc": "强化位于周围４区格内己方部队之防御，并减轻其兵粮消费",
-      "icon": "ui://game/4845_7_14",
-      "model": 30
+      "icon": "ui://game/4845_7_14"
     },
     {
       "Id": 7,
       "Name": "兵营",
       "kind": 7,
       "durabilityLimit": 1000,
+      "atkBack": 0,
       "atk": 0,
       "damageBounds": 1.0,
       "isIntrior": true,
@@ -1908,14 +1909,14 @@
       "cost": 1000,
       "radius": 0,
       "desc": "每回合对位于周围２区格内的敌方部队执行弓箭攻击",
-      "icon": "ui://game/4845_7_15",
-      "model": 30
+      "icon": "ui://game/4845_7_15"
     },
     {
       "Id": 8,
       "Name": "铁匠铺",
       "kind": 8,
       "durabilityLimit": 1000,
+      "atkBack": 0,
       "atk": 0,
       "damageBounds": 1.0,
       "isIntrior": true,
@@ -1927,14 +1928,14 @@
       "cost": 1000,
       "radius": 0,
       "desc": "每回合对位于周围２区格内的敌方部队执行弓箭攻击",
-      "icon": "ui://game/4845_7_15",
-      "model": 30
+      "icon": "ui://game/4845_7_15"
     },
     {
       "Id": 9,
       "Name": "工坊",
       "kind": 9,
       "durabilityLimit": 1000,
+      "atkBack": 0,
       "atk": 0,
       "damageBounds": 1.0,
       "isIntrior": true,
@@ -1946,14 +1947,14 @@
       "cost": 1000,
       "radius": 0,
       "desc": "每回合对位于周围２区格内的敌方部队执行弓箭攻击",
-      "icon": "ui://game/4845_7_15",
-      "model": 30
+      "icon": "ui://game/4845_7_15"
     },
     {
       "Id": 10,
       "Name": "造船厂",
       "kind": 10,
       "durabilityLimit": 1000,
+      "atkBack": 0,
       "atk": 0,
       "damageBounds": 1.0,
       "isIntrior": true,
@@ -1965,14 +1966,14 @@
       "cost": 1000,
       "radius": 0,
       "desc": "每回合对位于周围２区格内的敌方部队执行弓箭攻击",
-      "icon": "ui://game/4845_7_15",
-      "model": 30
+      "icon": "ui://game/4845_7_15"
     },
     {
       "Id": 11,
       "Name": "马厩",
       "kind": 11,
       "durabilityLimit": 800,
+      "atkBack": 0,
       "atk": 0,
       "damageBounds": 1.0,
       "isIntrior": true,
@@ -1984,14 +1985,14 @@
       "cost": 1000,
       "radius": 0,
       "desc": "每回合对位于周围２区格内的敌方部队执行弓箭攻击",
-      "icon": "ui://game/4845_7_15",
-      "model": 30
+      "icon": "ui://game/4845_7_15"
     },
     {
       "Id": 12,
       "Name": "巡查局",
       "kind": 12,
       "durabilityLimit": 800,
+      "atkBack": 0,
       "atk": 0,
       "damageBounds": 1.0,
       "isIntrior": true,
@@ -2003,15 +2004,57 @@
       "cost": 1000,
       "radius": 0,
       "desc": "每回合对位于周围２区格内的敌方部队执行弓箭攻击",
-      "icon": "ui://game/4845_7_15",
-      "model": 30
+      "icon": "ui://game/4845_7_15"
     },
     {
       "Id": 13,
       "Name": "箭塔",
       "kind": 13,
+      "durabilityLimit": 1000,
+      "atkBack": 0,
+      "atk": 20,
+      "damageBounds": 1.2,
+      "isIntrior": false,
+      "insideOnly": false,
+      "buildNumLimit": 1,
+      "goldGain": 0,
+      "foodGain": 0,
+      "populationGain": 0.0,
+      "cost": 800,
+      "radius": 0,
+      "desc": "每回合对位于周围２区格内的敌方部队执行弓箭攻击",
+      "icon": "ui://game/4845_7_15",
+      "model": "Assets/Model/Prefab/4487.prefab",
+      "modelBroken": "Assets/Model/Prefab/4447.prefab"
+    },
+    {
+      "Id": 14,
+      "Name": "连弩塔",
+      "kind": 14,
+      "durabilityLimit": 1000,
+      "atkBack": 0,
+      "atk": 30,
+      "damageBounds": 1.1,
+      "isIntrior": false,
+      "insideOnly": false,
+      "buildNumLimit": 1,
+      "goldGain": 0,
+      "foodGain": 0,
+      "populationGain": 0.0,
+      "cost": 800,
+      "radius": 0,
+      "desc": "每回合对位于周围２区格内的敌方部队执行弓箭攻击",
+      "icon": "ui://game/4845_7_15",
+      "model": "Assets/Model/Prefab/4487.prefab",
+      "modelBroken": "Assets/Model/Prefab/4447.prefab"
+    },
+    {
+      "Id": 15,
+      "Name": "堡垒",
+      "kind": 15,
       "durabilityLimit": 1500,
-      "atk": 0,
+      "atkBack": 0,
+      "atk": 10,
       "damageBounds": 1.0,
       "isIntrior": false,
       "insideOnly": false,
@@ -2023,7 +2066,8 @@
       "radius": 0,
       "desc": "每回合对位于周围２区格内的敌方部队执行弓箭攻击",
       "icon": "ui://game/4845_7_15",
-      "model": 30
+      "model": "Assets/Model/Prefab/4308.prefab",
+      "modelBroken": "Assets/Model/Prefab/4298.prefab"
     }
   ],
   "Techniques": [
@@ -5161,12 +5205,7 @@
         4
       ],
       "desc": "普通运输队",
-      "model": "Assets/Model/Prefab/Troops1.prefab",
-      "aniIds": [
-        13,
-        14,
-        15
-      ]
+      "model": "Assets/Model/Prefab/Troops6.prefab"
     },
     {
       "Id": 7,
@@ -5215,12 +5254,7 @@
         4
       ],
       "desc": "木牛流马运输",
-      "model": "Assets/Model/Prefab/Troops1.prefab",
-      "aniIds": [
-        13,
-        14,
-        15
-      ]
+      "model": "Assets/Model/Prefab/Troops7.prefab"
     },
     {
       "Id": 8,

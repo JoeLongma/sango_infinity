@@ -31,13 +31,6 @@ namespace Sango.Game.Render
             MapObject.modelLoadedCallback = OnModelLoaded;
             MapObject.onModelVisibleChange = OnModelVisibleChange;
             MapRender.Instance.AddStatic(MapObject);
-
-
-            //GameObject obj = GameObject.Instantiate(Resources.Load<GameObject>("CityName")) as GameObject;
-            //obj.transform.SetParent(MapObject.transform, false);
-            //obj.transform.localPosition = new Vector3(0, 20, 0);
-            //UnityEngine.UI.Text text = obj.GetComponent<UnityEngine.UI.Text>();
-            //textInfo = text;
             UpdateInfo();
         }
 
@@ -110,18 +103,6 @@ namespace Sango.Game.Render
 
         public void UpdateInfo()
         {
-            //if (City.BelongForce != null)
-            //{
-            //    textInfo.color = City.BelongForce.Flag.color;
-            //}
-            //else
-            //{
-            //    textInfo.color = Color.white;
-            //}
-            //string cityInfo = $"{City.BelongForce?.Name}.{City.Name}[耐:{City.durability}](人:{City.allPersons.Count} 闲:{City.freePersons.Count})\n[商:{City.commerce},农:{City.agriculture},治:{City.security},建:{City.allBuildings.Count}/{City.CityLevelType.insideSlot + City.CityLevelType.outsideSlot}]\n[兵:{City.troops}]\n<金:{City.gold}+{City.totalGainGold}>\n<粮:{City.food}+{City.totalGainFood}>";
-            //if (City.IsBorderCity)
-            //    cityInfo = $"*{cityInfo}";
-            //textInfo.text = cityInfo;
             if (HeadBar != null)
             {
                 if (HeadBar.HasScript())
@@ -161,7 +142,7 @@ namespace Sango.Game.Render
             base.Clear();
         }
 
-           public override void ShowDamage(int damage, int damageType)
+        public override void ShowDamage(int damage, int damageType)
         {
             if (HeadBar != null)
             {

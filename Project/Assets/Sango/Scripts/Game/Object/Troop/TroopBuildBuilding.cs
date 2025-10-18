@@ -37,7 +37,7 @@ namespace Sango.Game
                 Troop.NeedPrepareMission();
             }
 
-            if (FinalCell == null || !FinalCell.IsEmpty())
+            if (FinalCell == null || (!FinalCell.IsEmpty() && FinalCell.troop != Troop))
             {
                 scenario.Map.GetMoveRange(troop, troop.MoveRange);
 #if SANGO_DEBUG_AI

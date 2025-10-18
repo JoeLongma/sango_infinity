@@ -64,6 +64,33 @@ namespace Sango.Game.Render
 
         }
 
+        public void Init(Building building)
+        {
+            Renderer renderer = GetComponentInChildren<Renderer>(true);
+            Material outlineMat = renderer.materials[0];
+            Material baseMat = renderer.materials[1];
+
+            if (renderer.materials.Length > 2)
+            {
+                Material TextMat = renderer.materials[2];
+                TextMat.SetTexture("_MainTex", TextFactory.Instance.GetTexture("", 40));
+            }
+
+            Vector2 textScale = new Vector2(flagW / flagTexWidth, flagH / flagTexHeight);
+            outlineMat.SetTextureScale("_MainTex", textScale);
+            baseMat.SetTextureScale("_MainTex", textScale);
+            int final_flag_id = flagId + building.BelongForce.Flag.Id % 6;
+
+            int x = final_flag_id % xCount;
+            int y = final_flag_id / xCount;
+
+            baseMat.SetColor("_Color", building.BelongForce.Flag.color);
+
+            Vector2 textOffset = new Vector2(x * (flagW / flagTexWidth) - 0.003f, -y * (flagH / flagTexHeight));
+            outlineMat.SetTextureOffset("_MainTex", textOffset);
+            baseMat.SetTextureOffset("_MainTex", textOffset);
+        }
+
         [ContextMenu("test")]
         public void Test()
         {
