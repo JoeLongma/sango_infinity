@@ -25,7 +25,7 @@ namespace Sango.Game
             public Cell spellCell;
             public Cell[] atkCells;
             public SangoObject[] targets;
-
+            public bool moveFinish = false;
         }
 
         public static bool TargetEquals(List<SangoObject> objects, SangoObject[] targets)

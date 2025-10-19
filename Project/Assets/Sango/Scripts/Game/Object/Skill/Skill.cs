@@ -24,6 +24,11 @@ namespace Sango.Game
         [JsonProperty] public int needAblilityLevel;
 
         [JsonProperty] public List<int> atkOffsetPoint;
+
+        [JsonProperty] public int[] offsetAction;
+        [JsonProperty] public int blockFactor;
+        [JsonProperty] public int[] skillEffects;
+
         //TODO:技能效果配置
 
         public void GetSpellRange(Troop atker, Cell where, List<Cell> cells)
@@ -157,6 +162,8 @@ namespace Sango.Game
                 }
             }
         }
+
+
 
         public bool CanAddToTroop(Troop troop)
         {

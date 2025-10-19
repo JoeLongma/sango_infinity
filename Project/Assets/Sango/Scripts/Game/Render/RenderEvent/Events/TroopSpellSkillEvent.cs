@@ -1,4 +1,5 @@
 ﻿using Sango.Render;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -53,17 +54,18 @@ namespace Sango.Game.Render
         public void Action()
         {
             if (isAction) return;
-         
+
             Troop targetTroop = spellCell.troop;
             BuildingBase targetBuilding = spellCell.building;
             //TODO: 释放技能
             Troop.tempCellList.Clear();
             skill.GetAttackCells(troop, spellCell, Troop.tempCellList);
+            int targetDamage = 0;
             for (int i = 0; i < Troop.tempCellList.Count; i++)
             {
                 Cell atkCell = Troop.tempCellList[i];
                 Troop beAtkTroop = atkCell.troop;
-                if (beAtkTroop != null && skill.canDamageTroop && (troop.IsEnemy(beAtkTroop) || skill.canDamageTeam ))
+                if (beAtkTroop != null && skill.canDamageTroop && (troop.IsEnemy(beAtkTroop) || skill.canDamageTeam))
                 {
                     int damage = Troop.CalculateSkillDamage(troop, beAtkTroop, skill);
                     if (damage < 0)
@@ -73,20 +75,22 @@ namespace Sango.Game.Render
                     beAtkTroop.ChangeTroops(-damage, troop);
                     int ep = damage / 100;
                     if (!beAtkTroop.IsAlive) ep += 50;
-                    troop.ForEachPerson(p => {
+                    troop.ForEachPerson(p =>
+                    {
                         p.GainExp(ep);
                         p.merit += ep;
-                    }); 
+                    });
 #if SANGO_DEBUG
                     Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 使用<{skill.Name}> 攻击 {beAtkTroop.BelongForce.Name}的[{beAtkTroop.Name} - {beAtkTroop.TroopType.Name}], 造成伤害:{damage}, 目标剩余兵力: {beAtkTroop.GetTroopsNum()}");
 #endif
                     // 反击
                     if (beAtkTroop.IsAlive && targetTroop == beAtkTroop)
                     {
+                        targetDamage = damage;
                         float hitBack = beAtkTroop.GetAttackBackFactor(skill, Scenario.Cur.Map.Distance(troop.cell, atkCell));
                         if (hitBack > 0)
                         {
-                            if(skill.IsRange())
+                            if (skill.IsRange())
                             {
                                 int hitBackDmg = (int)System.Math.Ceiling(hitBack * Troop.CalculateSkillDamage(beAtkTroop, troop, beAtkTroop.NormalRangeSkill?.Skill));
                                 troop.ChangeTroops(-hitBackDmg, beAtkTroop);
@@ -95,7 +99,8 @@ namespace Sango.Game.Render
 #endif
                                 ep = hitBackDmg / 100;
                                 if (!troop.IsAlive) ep += 50;
-                                beAtkTroop.ForEachPerson(p => {
+                                beAtkTroop.ForEachPerson(p =>
+                                {
                                     p.GainExp(ep);
                                     p.merit += ep;
                                 });
@@ -109,7 +114,8 @@ namespace Sango.Game.Render
 #endif
                                 ep = hitBackDmg / 100;
                                 if (!troop.IsAlive) ep += 50;
-                                beAtkTroop.ForEachPerson(p => {
+                                beAtkTroop.ForEachPerson(p =>
+                                {
                                     p.GainExp(ep);
                                     p.merit += ep;
                                 });
@@ -120,7 +126,7 @@ namespace Sango.Game.Render
                 }
 
                 BuildingBase beAtkBuildingBase = atkCell.building;
-                if (beAtkBuildingBase != null && skill.canDamageBuilding)
+                if (beAtkBuildingBase != null && skill.canDamageBuilding && (troop.IsEnemy(beAtkBuildingBase) || skill.canDamageTeam))
                 {
                     int damage = Troop.CalculateSkillDamage(troop, beAtkBuildingBase, skill);
 #if SANGO_DEBUG
@@ -133,7 +139,8 @@ namespace Sango.Game.Render
                         if (city.BelongForce == null || city.troops <= 0)
                         {
                             ep += 100;
-                            troop.ForEachPerson(p => {
+                            troop.ForEachPerson(p =>
+                            {
                                 int ep = damage / 100;
                                 p.GainExp(ep);
                                 p.merit += ep;
@@ -148,7 +155,8 @@ namespace Sango.Game.Render
                     if (beAtkBuildingBase.ChangeDurability(-damage, troop))
                     {
                         ep += 100;
-                        troop.ForEachPerson(p => {
+                        troop.ForEachPerson(p =>
+                        {
                             int ep = damage / 100;
                             p.GainExp(ep);
                             p.merit += ep;
@@ -160,7 +168,8 @@ namespace Sango.Game.Render
                     }
                     else
                     {
-                        troop.ForEachPerson(p => {
+                        troop.ForEachPerson(p =>
+                        {
                             int ep = damage / 100;
                             p.GainExp(ep);
                             p.merit += ep;
@@ -187,10 +196,147 @@ namespace Sango.Game.Render
                 }
 
             }
-            troop.morale -= skill.costEnergy;
-            if(troop.morale < 0)
-                troop.morale = 0;
-            troop.Render.UpdateRender();
+
+            if (targetTroop != null && skill.offsetAction != null && skill.offsetAction.Length > 1)
+            {
+                List<Cell> checkList = new List<Cell>();
+                int dir = troop.cell.DirectionTo(targetTroop.cell);
+                for (int k = 0; k < skill.offsetAction.Length; k += 2)
+                {
+                    int offsetType = skill.offsetAction[k];
+                    int offsetLength = skill.offsetAction[k + 1];
+                    int targetDir = dir;
+                    int absOffsetLength = Mathf.Abs(offsetLength);
+                    if (offsetLength < 0)
+                        targetDir -= 3;
+                    checkList.Clear();
+                    switch (offsetType)
+                    {
+                        case (int)SkillCellOffsetType.Master:
+                            {
+                                if (troop.IsAlive)
+                                {
+                                    troop.cell.GetDirectionLine(targetDir, absOffsetLength, checkList);
+                                    for (int i = 0; i < checkList.Count; i++)
+                                    {
+                                        Cell c = checkList[i];
+                                        if (c.CanStay(troop))
+                                            troop.UpdateCell(c, troop.cell, true);
+                                        else
+                                            break;
+                                    }
+                                }
+                            }
+                            break;
+                        case (int)SkillCellOffsetType.Target:
+                            {
+                                if (targetTroop.IsAlive)
+                                {
+                                    targetTroop.cell.GetDirectionLine(targetDir, absOffsetLength, checkList);
+                                    for (int i = 0; i < checkList.Count; i++)
+                                    {
+                                        Cell c = checkList[i];
+                                        if (c.CanStay(targetTroop))
+                                            targetTroop.UpdateCell(c, targetTroop.cell, true);
+                                        else
+                                            break;
+                                    }
+                                }
+                            }
+                            break;
+                        case (int)SkillCellOffsetType.MasterBlock:
+                            {
+                                if (troop.IsAlive)
+                                {
+                                    troop.cell.GetDirectionLine(targetDir, absOffsetLength, checkList);
+                                    for (int i = 0; i < checkList.Count; i++)
+                                    {
+                                        Cell c = checkList[i];
+                                        if (c.CanStay(troop))
+                                            troop.UpdateCell(c, troop.cell, true);
+                                        else
+                                        {
+                                            if (skill.blockFactor > 0 && c.troop != null && c.troop.IsEnemy(troop))
+                                            {
+                                                int blockDmg = targetDamage * skill.blockFactor / 100;
+                                                c.troop.ChangeTroops(-blockDmg, troop);
+                                                int ep = blockDmg / 100;
+                                                if (!c.troop.IsAlive) ep += 50;
+                                                troop.ForEachPerson(p =>
+                                                {
+                                                    p.GainExp(ep);
+                                                    p.merit += ep;
+                                                });
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+                        case (int)SkillCellOffsetType.TargetBlock:
+                            {
+                                if (targetTroop.IsAlive)
+                                {
+                                    targetTroop.cell.GetDirectionLine(targetDir, absOffsetLength, checkList);
+                                    for (int i = 0; i < checkList.Count; i++)
+                                    {
+                                        Cell c = checkList[i];
+                                        if (c.CanStay(troop))
+                                            targetTroop.UpdateCell(c, targetTroop.cell, true);
+                                        else
+                                        {
+                                            if (skill.blockFactor > 0 && c.troop != null && c.troop.IsEnemy(troop))
+                                            {
+                                                int blockDmg = targetDamage * skill.blockFactor / 100;
+                                                c.troop.ChangeTroops(-blockDmg, troop);
+                                                int ep = blockDmg / 100;
+                                                if (!c.troop.IsAlive) ep += 50;
+                                                troop.ForEachPerson(p =>
+                                                {
+                                                    p.GainExp(ep);
+                                                    p.merit += ep;
+                                                });
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+                        case (int)SkillCellOffsetType.MasterJustCheckEnd:
+                            {
+                                if (troop.IsAlive)
+                                {
+                                    troop.cell.GetDirectionLine(targetDir, absOffsetLength, checkList);
+                                    if (checkList.Count == 0)
+                                    {
+                                        int cc = 123;
+                                        cc++;
+                                    }
+                                    for (int i = checkList.Count - 1; i >= 0; i--)
+                                    {
+                                        Cell c = checkList[i];
+                                        if (c.CanStay(troop))
+                                        {
+                                            troop.UpdateCell(c, troop.cell, true);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+
+            if (troop.IsAlive)
+            {
+                troop.morale -= skill.costEnergy;
+                if (troop.morale < 0)
+                    troop.morale = 0;
+                troop.Render.UpdateRender();
+            }
             isAction = true;
         }
 

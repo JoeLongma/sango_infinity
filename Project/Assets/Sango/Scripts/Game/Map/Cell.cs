@@ -33,7 +33,7 @@ namespace Sango.Game
 
         public Cell()
         {
-           
+
         }
 
         public Cell(ushort x, ushort y)
@@ -113,14 +113,56 @@ namespace Sango.Game
         public void DirectionLine(Cell to, int length, Action<Cell> action)
         {
             int dir = Cub.DirectionTo(to.Cub);
+            if (length < 0)
+            {
+                dir += 3;
+                while (dir > 5)
+                    dir -= 6;
+            }
             Hex start = Cub;
-            for(int i = 0; i < length; ++i)
+            int absLength = Math.Abs(length);
+            for (int i = 0; i < absLength; ++i)
             {
                 start = start.Neighbor(dir);
                 Cell cell = Scenario.Cur.Map.GetCell(start);
                 if (cell != null && action != null)
                     action(cell);
             }
+        }
+
+        public void GetDirectionLine(int dir, int length, List<Cell> action)
+        {
+            Cell dest = this;
+            for (int i = 0; i < length; ++i)
+            {
+                dest = dest.GetNrighbor(dir);
+                if (dest != null && action != null)
+                    action.Add(dest);
+            }
+        }
+
+        public void DirectionLine(int dir, int length, Action<Cell> action)
+        {
+            Cell dest = this;
+            for (int i = 0; i < length; ++i)
+            {
+                dest = dest.GetNrighbor(dir);
+                if (dest != null && action != null)
+                    action(dest);
+            }
+        }
+
+        public Cell DirectionLineValidEnd(int dir, int length)
+        {
+            Cell dest = this;
+            for (int i = 0; i < length; ++i)
+                dest = dest.GetNrighbor(dir);
+            return dest;
+        }
+
+        public int DirectionTo(Cell to)
+        {
+            return Cub.DirectionTo(to.Cub);
         }
 
         public Cell GetNrighbor(int dir)

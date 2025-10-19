@@ -29,7 +29,11 @@ namespace Sango.Game
         /// 攻击力
         /// </summary>
         [JsonProperty] public int atk;
-
+        /// <summary>
+        /// 攻击范围
+        /// </summary>
+        [JsonProperty] public int atkRange;
+        
         /// <summary>
         /// 被伤害倍率
         /// </summary>

@@ -93,8 +93,10 @@ namespace Sango.Game
             // 获取目标城市周围的敌人
             if (priorityActionData != null)
             {
-                if (!troop.MoveTo(priorityActionData.movetoCell))
+                if (!priorityActionData.moveFinish && !troop.MoveTo(priorityActionData.movetoCell))
                     return false;
+                if (!priorityActionData.moveFinish)
+                    priorityActionData.moveFinish = true;
                 if (!troop.SpellSkill(priorityActionData.skill, priorityActionData.spellCell))
                     return false;
                 return true;

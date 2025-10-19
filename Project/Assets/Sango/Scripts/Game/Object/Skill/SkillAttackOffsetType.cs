@@ -1,10 +1,6 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
-using UnityEngine;
-
-namespace Sango.Game
+﻿namespace Sango.Game
 {
-    
+
     public enum SkillAttackOffsetType : int
     {
         Customize = 0,

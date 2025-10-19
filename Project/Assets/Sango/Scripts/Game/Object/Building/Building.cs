@@ -79,10 +79,10 @@ namespace Sango.Game
             }
 
             // 暂时写死
-            if (isComplte && BuildingType.Id == 13)
+            if (isComplte && BuildingType.atkRange > 0)
             {
                 List<Cell> atkCells = new List<Cell>();
-                scenario.Map.GetSpiral(x, y, 2, atkCells);
+                scenario.Map.GetSpiral(x, y, BuildingType.atkRange, atkCells);
                 for (int i = 1; i < atkCells.Count; i++)
                 {
                     Cell cell = atkCells[i];

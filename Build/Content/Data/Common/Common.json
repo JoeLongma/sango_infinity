@@ -1787,6 +1787,7 @@
       "durabilityLimit": 0,
       "atkBack": 50,
       "atk": 0,
+      "atkRange": 3,
       "damageBounds": 0.7,
       "isIntrior": false,
       "insideOnly": false,
@@ -1805,6 +1806,7 @@
       "durabilityLimit": 0,
       "atkBack": 40,
       "atk": 0,
+      "atkRange": 3,
       "damageBounds": 0.6,
       "isIntrior": false,
       "insideOnly": false,
@@ -1823,6 +1825,7 @@
       "durabilityLimit": 0,
       "atkBack": 40,
       "atk": 0,
+      "atkRange": 3,
       "damageBounds": 0.8,
       "isIntrior": false,
       "insideOnly": false,
@@ -1842,6 +1845,7 @@
       "durabilityLimit": 500,
       "atkBack": 0,
       "atk": 0,
+      "atkRange": 0,
       "damageBounds": 1.0,
       "isIntrior": true,
       "insideOnly": false,
@@ -1861,6 +1865,7 @@
       "durabilityLimit": 500,
       "atkBack": 0,
       "atk": 0,
+      "atkRange": 0,
       "damageBounds": 1.0,
       "isIntrior": true,
       "insideOnly": false,
@@ -1880,6 +1885,7 @@
       "durabilityLimit": 500,
       "atkBack": 0,
       "atk": 0,
+      "atkRange": 0,
       "damageBounds": 1.0,
       "isIntrior": true,
       "insideOnly": false,
@@ -1899,6 +1905,7 @@
       "durabilityLimit": 1000,
       "atkBack": 0,
       "atk": 0,
+      "atkRange": 0,
       "damageBounds": 1.0,
       "isIntrior": true,
       "insideOnly": false,
@@ -1918,6 +1925,7 @@
       "durabilityLimit": 1000,
       "atkBack": 0,
       "atk": 0,
+      "atkRange": 0,
       "damageBounds": 1.0,
       "isIntrior": true,
       "insideOnly": false,
@@ -1937,6 +1945,7 @@
       "durabilityLimit": 1000,
       "atkBack": 0,
       "atk": 0,
+      "atkRange": 0,
       "damageBounds": 1.0,
       "isIntrior": true,
       "insideOnly": false,
@@ -1956,6 +1965,7 @@
       "durabilityLimit": 1000,
       "atkBack": 0,
       "atk": 0,
+      "atkRange": 0,
       "damageBounds": 1.0,
       "isIntrior": true,
       "insideOnly": false,
@@ -1975,6 +1985,7 @@
       "durabilityLimit": 800,
       "atkBack": 0,
       "atk": 0,
+      "atkRange": 0,
       "damageBounds": 1.0,
       "isIntrior": true,
       "insideOnly": false,
@@ -1994,6 +2005,7 @@
       "durabilityLimit": 800,
       "atkBack": 0,
       "atk": 0,
+      "atkRange": 0,
       "damageBounds": 1.0,
       "isIntrior": true,
       "insideOnly": false,
@@ -2013,6 +2025,7 @@
       "durabilityLimit": 1000,
       "atkBack": 0,
       "atk": 20,
+      "atkRange": 2,
       "damageBounds": 1.2,
       "isIntrior": false,
       "insideOnly": false,
@@ -2034,6 +2047,7 @@
       "durabilityLimit": 1000,
       "atkBack": 0,
       "atk": 30,
+      "atkRange": 2,
       "damageBounds": 1.1,
       "isIntrior": false,
       "insideOnly": false,
@@ -2053,8 +2067,9 @@
       "Name": "堡垒",
       "kind": 15,
       "durabilityLimit": 1500,
-      "atkBack": 0,
-      "atk": 10,
+      "atkBack": 20,
+      "atk": 0,
+      "atkRange": 0,
       "damageBounds": 1.0,
       "isIntrior": false,
       "insideOnly": false,
@@ -2468,6 +2483,393 @@
       "needTech": 35
     }
   ],
+  "SkillEffects": [
+    {
+      "Id": "1",
+      "Name": "近战普攻",
+      "atk": "10",
+      "atkDurability": "15",
+      "costEnergy": "0",
+      "isRange": false,
+      "spellRanges": [
+        1
+      ],
+      "canDamageTroop": true,
+      "canDamageMachine": true,
+      "canDamageBoat": true,
+      "canDamageBuilding": true,
+      "canDamageTeam": false,
+      "level": "1"
+    },
+    {
+      "Id": "2",
+      "Name": "远程普攻",
+      "atk": "0",
+      "atkDurability": "5",
+      "costEnergy": "0",
+      "isRange": true,
+      "spellRanges": [
+        2
+      ],
+      "canDamageTroop": true,
+      "canDamageMachine": true,
+      "canDamageBoat": true,
+      "canDamageBuilding": true,
+      "canDamageTeam": false,
+      "level": "2"
+    },
+    {
+      "Id": "3",
+      "Name": "突刺",
+      "atk": "25",
+      "atkDurability": "0",
+      "costEnergy": "15",
+      "isRange": false,
+      "spellRanges": [
+        1
+      ],
+      "targetOffset": 1,
+      "blockFactor": 0.3,
+      "canDamageTroop": true,
+      "canDamageMachine": true,
+      "canDamageBoat": false,
+      "canDamageBuilding": false,
+      "canDamageTeam": false,
+      "level": "1"
+    },
+    {
+      "Id": "4",
+      "Name": "螺旋突刺",
+      "atk": "30",
+      "atkDurability": "0",
+      "costEnergy": "20",
+      "isRange": false,
+      "spellRanges": [
+        1
+      ],
+      "canDamageTroop": true,
+      "canDamageMachine": true,
+      "canDamageBoat": false,
+      "canDamageBuilding": false,
+      "canDamageTeam": false,
+      "level": "2"
+    },
+    {
+      "Id": "5",
+      "Name": "二段突刺",
+      "atk": "35",
+      "atkDurability": "0",
+      "costEnergy": "25",
+      "isRange": false,
+      "spellRanges": [
+        1
+      ],
+      "targetOffset": 2,
+      "blockFactor": 0.5,
+      "canDamageTroop": true,
+      "canDamageMachine": true,
+      "canDamageBoat": false,
+      "canDamageBuilding": false,
+      "canDamageTeam": false,
+      "level": "3"
+    },
+    {
+      "Id": "6",
+      "Name": "熊手",
+      "atk": "25",
+      "atkDurability": "0",
+      "costEnergy": "15",
+      "isRange": false,
+      "spellRanges": [
+        1
+      ],
+      "selfOffset": -1,
+      "targetOffset": -1,
+      "canDamageTroop": true,
+      "canDamageMachine": true,
+      "canDamageBoat": false,
+      "canDamageBuilding": false,
+      "canDamageTeam": false,
+      "level": "1"
+    },
+    {
+      "Id": "7",
+      "Name": "横扫",
+      "atk": "30",
+      "atkDurability": "0",
+      "costEnergy": "20",
+      "isRange": false,
+      "spellRanges": [
+        1
+      ],
+      "atkOffsetPoint": [
+        4
+      ],
+      "canDamageTroop": true,
+      "canDamageMachine": true,
+      "canDamageBoat": false,
+      "canDamageBuilding": false,
+      "canDamageTeam": false,
+      "level": "2"
+    },
+    {
+      "Id": "8",
+      "Name": "旋风",
+      "atk": "33",
+      "atkDurability": "0",
+      "costEnergy": "25",
+      "isRange": false,
+      "spellRanges": [
+        1
+      ],
+      "atkOffsetPoint": [
+        3,
+        1
+      ],
+      "canDamageTroop": true,
+      "canDamageMachine": true,
+      "canDamageBoat": false,
+      "canDamageBuilding": false,
+      "canDamageTeam": false,
+      "level": "3"
+    },
+    {
+      "Id": "9",
+      "Name": "火矢",
+      "atk": "10",
+      "atkDurability": "15",
+      "costEnergy": "15",
+      "isRange": true,
+      "spellRanges": [
+        2
+      ],
+      "canDamageTroop": true,
+      "canDamageMachine": true,
+      "canDamageBoat": true,
+      "canDamageBuilding": true,
+      "canDamageTeam": false,
+      "level": "1"
+    },
+    {
+      "Id": "10",
+      "Name": "贯箭",
+      "atk": "20",
+      "atkDurability": "15",
+      "costEnergy": "20",
+      "isRange": true,
+      "spellRanges": [
+        2
+      ],
+      "atkOffsetPoint": [
+        2,
+        4
+      ],
+      "canDamageTroop": true,
+      "canDamageMachine": true,
+      "canDamageBoat": true,
+      "canDamageBuilding": true,
+      "canDamageTeam": false,
+      "level": "2"
+    },
+    {
+      "Id": "11",
+      "Name": "乱射",
+      "atk": "25",
+      "atkDurability": "15",
+      "costEnergy": "25",
+      "isRange": true,
+      "spellRanges": [
+        2
+      ],
+      "atkOffsetPoint": [
+        5,
+        1
+      ],
+      "canDamageTroop": true,
+      "canDamageMachine": true,
+      "canDamageBoat": true,
+      "canDamageBuilding": true,
+      "canDamageTeam": false,
+      "level": "3"
+    },
+    {
+      "Id": "12",
+      "Name": "突击",
+      "atk": "30",
+      "atkDurability": "0",
+      "costEnergy": "15",
+      "isRange": false,
+      "spellRanges": [
+        1
+      ],
+      "selfOffset": 1,
+      "targetOffset": 1,
+      "canDamageTroop": true,
+      "canDamageMachine": true,
+      "canDamageBoat": false,
+      "canDamageBuilding": false,
+      "canDamageTeam": false,
+      "level": "1"
+    },
+    {
+      "Id": "13",
+      "Name": "突破",
+      "atk": "35",
+      "atkDurability": "0",
+      "costEnergy": "20",
+      "isRange": false,
+      "spellRanges": [
+        1
+      ],
+      "selfOffset": 2,
+      "canDamageTroop": true,
+      "canDamageMachine": true,
+      "canDamageBoat": false,
+      "canDamageBuilding": false,
+      "canDamageTeam": false,
+      "level": "2"
+    },
+    {
+      "Id": "14",
+      "Name": "突进",
+      "atk": "40",
+      "atkDurability": "0",
+      "costEnergy": "25",
+      "isRange": false,
+      "spellRanges": [
+        1
+      ],
+      "selfOffset": 2,
+      "targetOffset": 2,
+      "canDamageTroop": true,
+      "canDamageMachine": true,
+      "canDamageBoat": false,
+      "canDamageBuilding": false,
+      "canDamageTeam": false,
+      "level": "3"
+    },
+    {
+      "Id": "15",
+      "Name": "火矢",
+      "atk": "15",
+      "atkDurability": "20",
+      "costEnergy": "15",
+      "isRange": true,
+      "spellRanges": [
+        2
+      ],
+      "canDamageTroop": true,
+      "canDamageMachine": true,
+      "canDamageBoat": true,
+      "canDamageBuilding": true,
+      "canDamageTeam": false,
+      "level": "0"
+    },
+    {
+      "Id": "16",
+      "Name": "破碎",
+      "atk": "0",
+      "atkDurability": "120",
+      "costEnergy": "10",
+      "isRange": false,
+      "spellRanges": [
+        1
+      ],
+      "canDamageTroop": true,
+      "canDamageMachine": false,
+      "canDamageBoat": false,
+      "canDamageBuilding": true,
+      "canDamageTeam": false,
+      "level": "0"
+    },
+    {
+      "Id": "17",
+      "Name": "放射",
+      "atk": "20",
+      "atkDurability": "150",
+      "costEnergy": "15",
+      "isRange": true,
+      "spellRanges": [
+        1
+      ],
+      "canDamageTroop": true,
+      "canDamageMachine": true,
+      "canDamageBoat": false,
+      "canDamageBuilding": true,
+      "canDamageTeam": false,
+      "level": "0"
+    },
+    {
+      "Id": "18",
+      "Name": "投石",
+      "atk": "20",
+      "atkDurability": "80",
+      "costEnergy": "20",
+      "isRange": true,
+      "spellRanges": [
+        2,
+        3
+      ],
+      "canDamageTroop": true,
+      "canDamageMachine": true,
+      "canDamageBoat": true,
+      "canDamageBuilding": true,
+      "canDamageTeam": false,
+      "level": "0"
+    },
+    {
+      "Id": "19",
+      "Name": "火矢",
+      "atk": "15",
+      "atkDurability": "15",
+      "costEnergy": "15",
+      "isRange": true,
+      "spellRanges": [
+        2
+      ],
+      "canDamageTroop": true,
+      "canDamageMachine": true,
+      "canDamageBoat": true,
+      "canDamageBuilding": true,
+      "canDamageTeam": false,
+      "level": "1"
+    },
+    {
+      "Id": "20",
+      "Name": "猛撞",
+      "atk": "25",
+      "atkDurability": "0",
+      "costEnergy": "15",
+      "isRange": false,
+      "spellRanges": [
+        1
+      ],
+      "canDamageTroop": true,
+      "canDamageMachine": false,
+      "canDamageBoat": true,
+      "canDamageBuilding": false,
+      "canDamageTeam": false,
+      "level": "2"
+    },
+    {
+      "Id": "21",
+      "Name": "投石",
+      "atk": "35",
+      "atkDurability": "80",
+      "costEnergy": "20",
+      "isRange": true,
+      "spellRanges": [
+        2,
+        3
+      ],
+      "canDamageTroop": true,
+      "canDamageMachine": true,
+      "canDamageBoat": true,
+      "canDamageBuilding": true,
+      "canDamageTeam": false,
+      "level": "3"
+    }
+  ],
   "Skills": [
     {
       "Id": "1",
@@ -2513,10 +2915,11 @@
       "spellRanges": [
         1
       ],
-      "atkOffsetPoint": [
-        2,
-        2
+      "offsetAction": [
+        4,
+        1
       ],
+      "blockFactor": 30,
       "canDamageTroop": true,
       "canDamageMachine": true,
       "canDamageBoat": false,
@@ -2551,10 +2954,11 @@
       "spellRanges": [
         1
       ],
-      "atkOffsetPoint": [
-        2,
-        3
+      "offsetAction": [
+        4,
+        2
       ],
+      "blockFactor": 50,
       "canDamageTroop": true,
       "canDamageMachine": true,
       "canDamageBoat": false,
@@ -2571,6 +2975,12 @@
       "isRange": false,
       "spellRanges": [
         1
+      ],
+      "offsetAction": [
+        1,
+        -1,
+        2,
+        -1
       ],
       "canDamageTroop": true,
       "canDamageMachine": true,
@@ -2689,6 +3099,12 @@
       "spellRanges": [
         1
       ],
+      "offsetAction": [
+        2,
+        1,
+        1,
+        1
+      ],
       "canDamageTroop": true,
       "canDamageMachine": true,
       "canDamageBoat": false,
@@ -2706,6 +3122,10 @@
       "spellRanges": [
         1
       ],
+      "offsetAction": [
+        5,
+        2
+      ],
       "canDamageTroop": true,
       "canDamageMachine": true,
       "canDamageBoat": false,
@@ -2722,6 +3142,12 @@
       "isRange": false,
       "spellRanges": [
         1
+      ],
+      "offsetAction": [
+        2,
+        2,
+        1,
+        2
       ],
       "canDamageTroop": true,
       "canDamageMachine": true,
@@ -2855,34 +3281,34 @@
   "Flags": [
     {
       "Id": 1,
-      "Name": "河北",
+      "Name": "曹操",
       "color": [
         74,
-        187,
-        74
+        27,
+        240
       ]
     },
     {
       "Id": 2,
-      "Name": "中原",
+      "Name": "刘备",
       "color": [
-        120,
-        70,
+        10,
+        240,
         26
       ]
     },
     {
       "Id": 3,
-      "Name": "西凉",
+      "Name": "孙坚",
       "color": [
-        164,
-        149,
-        108
+        220,
+        0,
+        0
       ]
     },
     {
       "Id": 4,
-      "Name": "江东",
+      "Name": "马腾",
       "color": [
         161,
         98,
@@ -2891,7 +3317,7 @@
     },
     {
       "Id": 5,
-      "Name": "巴蜀",
+      "Name": "刘焉",
       "color": [
         172,
         28,
@@ -2900,7 +3326,7 @@
     },
     {
       "Id": 6,
-      "Name": "南蛮",
+      "Name": "董卓",
       "color": [
         35,
         120,
@@ -2909,14 +3335,16 @@
     },
     {
       "Id": 7,
+      "Name": "刘表",
       "color": [
-        250,
-        0,
-        0
+        164,
+        131,
+        135
       ]
     },
     {
       "Id": 8,
+      "Name": "袁绍",
       "color": [
         175,
         134,
@@ -2925,6 +3353,7 @@
     },
     {
       "Id": 9,
+      "Name": "袁术",
       "color": [
         36,
         95,
@@ -2933,6 +3362,7 @@
     },
     {
       "Id": 10,
+      "Name": "张鲁",
       "color": [
         123,
         36,
@@ -2941,6 +3371,7 @@
     },
     {
       "Id": 11,
+      "Name": "吕布",
       "color": [
         254,
         255,
@@ -2949,6 +3380,7 @@
     },
     {
       "Id": 12,
+      "Name": "公孙瓒",
       "color": [
         255,
         128,
@@ -2957,6 +3389,7 @@
     },
     {
       "Id": 13,
+      "Name": "公孙度",
       "color": [
         127,
         115,
@@ -2965,6 +3398,7 @@
     },
     {
       "Id": 14,
+      "Name": "刘虞",
       "color": [
         39,
         146,
@@ -2973,6 +3407,7 @@
     },
     {
       "Id": 15,
+      "Name": "韩馥",
       "color": [
         100,
         0,
@@ -2981,14 +3416,16 @@
     },
     {
       "Id": 16,
+      "Name": "司马懿",
       "color": [
-        220,
-        0,
-        0
+        164,
+        149,
+        108
       ]
     },
     {
       "Id": 17,
+      "Name": "孔融",
       "color": [
         221,
         147,
@@ -2997,6 +3434,7 @@
     },
     {
       "Id": 18,
+      "Name": "刘岱",
       "color": [
         109,
         98,
@@ -3005,6 +3443,7 @@
     },
     {
       "Id": 19,
+      "Name": "陶谦",
       "color": [
         143,
         81,
@@ -3013,6 +3452,7 @@
     },
     {
       "Id": 20,
+      "Name": "孔胄",
       "color": [
         255,
         179,
@@ -3021,6 +3461,7 @@
     },
     {
       "Id": 21,
+      "Name": "韩遂",
       "color": [
         223,
         95,
@@ -3029,6 +3470,7 @@
     },
     {
       "Id": 22,
+      "Name": "王朗",
       "color": [
         178,
         92,
@@ -3037,6 +3479,7 @@
     },
     {
       "Id": 23,
+      "Name": "严白虎",
       "color": [
         98,
         65,
@@ -3045,6 +3488,7 @@
     },
     {
       "Id": 24,
+      "Name": "刘繇",
       "color": [
         11,
         120,
@@ -3053,6 +3497,7 @@
     },
     {
       "Id": 25,
+      "Name": "张绣",
       "color": [
         16,
         129,
@@ -3061,6 +3506,7 @@
     },
     {
       "Id": 26,
+      "Name": "孟获",
       "color": [
         45,
         46,
@@ -3069,6 +3515,7 @@
     },
     {
       "Id": 27,
+      "Name": "雍闿",
       "color": [
         18,
         117,
@@ -3077,6 +3524,7 @@
     },
     {
       "Id": 28,
+      "Name": "张角",
       "color": [
         132,
         142,
@@ -3085,6 +3533,7 @@
     },
     {
       "Id": 29,
+      "Name": "何进",
       "color": [
         164,
         175,
@@ -3093,6 +3542,7 @@
     },
     {
       "Id": 30,
+      "Name": "丁原",
       "color": [
         223,
         161,
@@ -3101,6 +3551,7 @@
     },
     {
       "Id": 31,
+      "Name": "韩玄",
       "color": [
         192,
         157,
@@ -3109,6 +3560,7 @@
     },
     {
       "Id": 32,
+      "Name": "金旋",
       "color": [
         243,
         189,
@@ -3117,6 +3569,7 @@
     },
     {
       "Id": 33,
+      "Name": "赵范",
       "color": [
         157,
         242,
@@ -3125,6 +3578,7 @@
     },
     {
       "Id": 34,
+      "Name": "刘度",
       "color": [
         229,
         119,
@@ -3133,6 +3587,7 @@
     },
     {
       "Id": 35,
+      "Name": "锺会",
       "color": [
         65,
         199,
@@ -3141,6 +3596,7 @@
     },
     {
       "Id": 36,
+      "Name": "邓艾",
       "color": [
         221,
         93,
@@ -3149,6 +3605,7 @@
     },
     {
       "Id": 37,
+      "Name": "毌丘俭",
       "color": [
         80,
         139,
@@ -3157,6 +3614,7 @@
     },
     {
       "Id": 38,
+      "Name": "羌族头目",
       "color": [
         231,
         184,
@@ -3165,6 +3623,7 @@
     },
     {
       "Id": 39,
+      "Name": "山越头目",
       "color": [
         174,
         99,
@@ -3173,6 +3632,7 @@
     },
     {
       "Id": 40,
+      "Name": "乌丸头目",
       "color": [
         206,
         117,
@@ -3181,6 +3641,7 @@
     },
     {
       "Id": 41,
+      "Name": "南蛮头目",
       "color": [
         115,
         208,
@@ -3189,6 +3650,7 @@
     },
     {
       "Id": 42,
+      "Name": "贼将",
       "color": [
         223,
         138,

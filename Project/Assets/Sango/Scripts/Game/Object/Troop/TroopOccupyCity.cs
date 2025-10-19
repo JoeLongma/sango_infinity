@@ -30,12 +30,12 @@ namespace Sango.Game
             // 任务完成后,如果城池被友军拿取则回到创建城池,否则将进入己方目标城池
             if (IsMissionComplete)
             {
-                if (TargetCity == null )
+                if (TargetCity == null)
                 {
                     Troop.missionType = (int)MissionType.TroopReturnCity;
                     Troop.missionTarget = Troop.BelongCity.Id;
                 }
-                else if(!TargetCity.IsSameForce(Troop))
+                else if (!TargetCity.IsSameForce(Troop))
                 {
                     // 被友军拿取,保护友军城池,直到消灭敌人
                     Troop.missionType = (int)MissionType.TroopProtectCity;
@@ -110,9 +110,10 @@ namespace Sango.Game
 
             if (priorityActionData != null)
             {
-                if (!troop.MoveTo(priorityActionData.movetoCell))
+                if (!priorityActionData.moveFinish && !troop.MoveTo(priorityActionData.movetoCell))
                     return false;
-
+                if (!priorityActionData.moveFinish)
+                    priorityActionData.moveFinish = true;
                 if (!troop.SpellSkill(priorityActionData.skill, priorityActionData.spellCell))
                     return false;
                 return true;
