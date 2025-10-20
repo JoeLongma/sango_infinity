@@ -30,6 +30,8 @@ namespace Sango.Game.Render.UI
         public GameObject pauseObj;
         public GameObject resumeObj;
 
+        private float deltaTime = 0.0f;
+
         public GameObject GetObject(int index)
         {
             if (pool.Count == 0)
@@ -76,6 +78,7 @@ namespace Sango.Game.Render.UI
             itemType = typeof(Troop);
             needUpdateItem = true;
 
+            InvokeRepeating("UpdateFPS", 1f, 1f);
             //loopScrollRect.totalCount = totalCount;
             //loopScrollRect.RefillCells();
         }
@@ -187,7 +190,7 @@ namespace Sango.Game.Render.UI
             {
                 Troop troop = (Troop)obj;
 
-                if(troop.BelongForce == null)
+                if (troop.BelongForce == null)
                 {
                     int dd = 33;
                     dd++;
@@ -240,11 +243,19 @@ namespace Sango.Game.Render.UI
 
         public void OnLoad()
         {
-            
+
+        }
+
+        void UpdateFPS()
+        {
+            float FPS = 1f / deltaTime;
+
         }
 
         public void Update()
         {
+            deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
+
             if (needUpdateItem)
             {
                 needUpdateItem = false;
