@@ -59,7 +59,6 @@ namespace Sango.Render
                 light_direction[i] = new Vector3((float)reader.ReadSingle(), (float)reader.ReadSingle(), (float)reader.ReadSingle());
                 light_color[i] = new Color((float)reader.ReadSingle(), (float)reader.ReadSingle(), (float)reader.ReadSingle());
                 light_intensity[i] = reader.ReadSingle();
-                light_intensity[i] = 1.3f;
                 shadow_color[i] = new Color((float)reader.ReadSingle(), (float)reader.ReadSingle(), (float)reader.ReadSingle());
                 shadow_strength[i] = reader.ReadSingle();
             }

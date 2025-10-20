@@ -5,9 +5,9 @@ Properties {
 	_MainTex ("Base (RGB) Trans (A)", 2D) = "white" {}
 	_BeginHeight("Start", Float) = 0
 	_EndHeight("End", Float) = 0
-	_MixBegin("mixBegin", float) = 800//和天空盒混合距离
-	_MixEnd("mixEnd", float) = 800//和天空盒混合距离
-	_MixPower("mixPower", float) = 7.5//和天空盒混合强度
+	_MixBegin("mixBegin", float) = 800//鍜屽ぉ绌虹洅娣峰悎璺濈
+	_MixEnd("mixEnd", float) = 800//鍜屽ぉ绌虹洅娣峰悎璺濈
+	_MixPower("mixPower", float) = 7.5//鍜屽ぉ绌虹洅娣峰悎寮哄害
 }
 
 SubShader {

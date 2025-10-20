@@ -293,6 +293,29 @@ namespace Sango
             }
         }
 
+        public void UpdateHeight()
+        {
+            if (_matrixes == null) return;
+
+            Vector3 nowPosition = transform.position;
+            Vector3 srcScale = transform.lossyScale * totalScale;
+
+            for (int i = 0; i < showCount; i++)
+            {
+                var mx = _matrixes[i];
+                Transform node = aniNode[i];
+                Vector3 targetPos = node.position;
+                float height;
+                if (!MapRender.QueryHeight(targetPos, out height))
+                {
+                    return;
+                }
+                targetPos.y = height;
+                mx.SetTRS(targetPos, Quaternion.identity, srcScale * meshScale);
+                _matrixes[i] = mx;
+            }
+        }
+
         void Update()
         {
             if (mesh == null || test == true)

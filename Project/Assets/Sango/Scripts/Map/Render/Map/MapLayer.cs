@@ -145,6 +145,23 @@ namespace Sango.Render
                     material.shader = Shader.Find("Sango/terrain_urp");
                 }
             }
+
+            internal void OnSaveTexture(BinaryWriter writer, int i)
+            {
+                if (string.IsNullOrEmpty(diffuseTexName[i]))
+                    writer.Write("");
+                else
+                    writer.Write(diffuseTexName[i]);
+                if (string.IsNullOrEmpty(normalTexName[i]))
+                    writer.Write("");
+                else
+                    writer.Write(normalTexName[i]);
+                if (string.IsNullOrEmpty(maskTexName[i]))
+                    writer.Write("");
+                else
+                    writer.Write(maskTexName[i]);
+            }
+
             internal void OnSave(BinaryWriter writer)
             {
                 writer.Write(isLit);
@@ -152,18 +169,7 @@ namespace Sango.Render
                 writer.Write(textureScale.y);
                 for (int i = 0; i < diffuseTexName.Length; i++)
                 {
-                    if (string.IsNullOrEmpty(diffuseTexName[i]))
-                        writer.Write("");
-                    else
-                        writer.Write(diffuseTexName[i]);
-                    if (string.IsNullOrEmpty(normalTexName[i]))
-                        writer.Write("");
-                    else
-                        writer.Write(normalTexName[i]);
-                    if (string.IsNullOrEmpty(maskTexName[i]))
-                        writer.Write("");
-                    else
-                        writer.Write(maskTexName[i]);
+                    OnSaveTexture(writer, i);
                 }
             }
             internal void OnLoad(int versionCode, BinaryReader reader)
@@ -233,6 +239,24 @@ namespace Sango.Render
                             material.SetTextureScale("_MaskMap", textureScale);
                         }
                     }
+                }
+
+                if(versionCode < 7)
+                {
+                    string temp = diffuseTexName[0];
+                    diffuseTexName[0] = diffuseTexName[1];
+                    diffuseTexName[1] = diffuseTexName[2];
+                    diffuseTexName[2] = temp;
+
+                    temp = normalTexName[0];
+                    normalTexName[0] = normalTexName[1];
+                    normalTexName[1] = normalTexName[2];
+                    normalTexName[2] = temp;
+
+                    temp = maskTexName[0];
+                    maskTexName[0] = maskTexName[1];
+                    maskTexName[1] = maskTexName[2];
+                    maskTexName[2] = temp;
                 }
             }
         }

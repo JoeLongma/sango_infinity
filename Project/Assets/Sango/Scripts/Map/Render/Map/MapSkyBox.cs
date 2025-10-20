@@ -7,12 +7,12 @@ namespace Sango.Render
 
     public class MapSkyBox : MapProperty
     {
-        public float sky_radius_len = 250;
+        public float sky_radius_len = 200;
         public float sky_height = 80;
         public float sky_offset = -2.9f;
         public string sky_material_shader = "Sango/skybox";
-        public float sky_blend_start = -230f;
-        public float sky_blend_end = -210f;
+        public float sky_blend_start = -215f;
+        public float sky_blend_end = -170f;
         public float sky_mix_begin = 700f;
         public float sky_mix_end = 900f;
         public float sky_mix_power = 7.5f;
@@ -33,7 +33,8 @@ namespace Sango.Render
                 if (names == null || names.Length != 4)
                     return;
                 seasonTextureNames = names;
-                for (int i = 0; i < seasonTextureNames.Length; ++i) {
+                for (int i = 0; i < seasonTextureNames.Length; ++i)
+                {
                     string seasonName = MapRender.SeasonNames[i];
 
                     Texture tex = skyBox.map.CreateTexture($"Sky/{seasonName}/{seasonTextureNames[i]}");
@@ -69,7 +70,8 @@ namespace Sango.Render
 
             internal void OnSave(BinaryWriter writer)
             {
-                for (int i = 0; i < 4; ++i) {
+                for (int i = 0; i < 4; ++i)
+                {
                     if (!string.IsNullOrEmpty(seasonTextureNames[i]))
                         writer.Write(seasonTextureNames[i]);
                     else
@@ -81,10 +83,12 @@ namespace Sango.Render
             {
                 if (versionCode < 2) return;
 
-                for (int i = 0; i < 4; ++i) {
+                for (int i = 0; i < 4; ++i)
+                {
                     seasonTextureNames[i] = reader.ReadString();
                     string seasonName = MapRender.SeasonNames[i];
-                    if (!string.IsNullOrEmpty(seasonTextureNames[i])) {
+                    if (!string.IsNullOrEmpty(seasonTextureNames[i]))
+                    {
 
                         Texture tex = skyBox.map.CreateTexture($"Sky/{seasonName}/{seasonTextureNames[i]}");
                         seasonTextures[i] = tex;
@@ -135,14 +139,16 @@ namespace Sango.Render
             writer.Write(sky_blend_end);
 
             writer.Write(allAreas.Count);
-            for (int i = 0; i < allAreas.Count; i++) {
+            for (int i = 0; i < allAreas.Count; i++)
+            {
                 SkyArea area = allAreas[i];
                 writer.Write(area.bounds.x);
                 writer.Write(area.bounds.y);
                 writer.Write(area.bounds.width);
                 writer.Write(area.bounds.height);
 
-                for (int j = 0; j < 4; j++) {
+                for (int j = 0; j < 4; j++)
+                {
                     string s = area.seasonTextureNames[j];
                     if (!string.IsNullOrEmpty(s))
                         writer.Write(s);
@@ -157,13 +163,15 @@ namespace Sango.Render
             curArea = null;
             allAreas.Clear();
             // 版本1的加载
-            if (versionCode == 1) {
+            if (versionCode == 1)
+            {
 
                 blendStart = reader.ReadSingle();
                 blendEnd = reader.ReadSingle();
                 int length = reader.ReadInt32();
                 //string[] texNames = new string[length];
-                for (int i = 0; i < length; ++i) {
+                for (int i = 0; i < length; ++i)
+                {
                     //texNames[i] = reader.ReadString();
                     reader.ReadString();
                 }
@@ -171,11 +179,13 @@ namespace Sango.Render
                 //textrueIndex = reader.ReadInt32();
                 reader.ReadInt32();
             }
-            else {
+            else
+            {
                 blendStart = reader.ReadSingle();
                 blendEnd = reader.ReadSingle();
                 int length = reader.ReadInt32();
-                for (int i = 0; i < length; ++i) {
+                for (int i = 0; i < length; ++i)
+                {
                     float x = reader.ReadSingle();
                     float y = reader.ReadSingle();
                     float w = reader.ReadSingle();
@@ -229,12 +239,15 @@ namespace Sango.Render
             _CreateMaterial();
 
             skyTrans.localScale = new Vector3(sky_radius_len, sky_height, sky_radius_len);
-            for (int i = 0; i < skyMeshes.Length; i++) {
+            for (int i = 0; i < skyMeshes.Length; i++)
+            {
 
                 Mesh mesh = new Mesh();
-                for (int j = 0; j < 17; ++j) {
+                for (int j = 0; j < 17; ++j)
+                {
                     Vector3 pos = Quaternion.Euler(0, 90.0f * j / 16.0f, 0) * Vector3.forward * 5;
-                    for (int k = 0; k < 5; ++k) {
+                    for (int k = 0; k < 5; ++k)
+                    {
                         pos.y = k * height;
                         vertex[j * 5 + k] = pos;
                         uv[j * 5 + k] = new Vector2(j / 16.0f, (4 * height - (float)pos.y) * -0.25f);
@@ -242,8 +255,10 @@ namespace Sango.Render
                 }
 
                 int tIndex = 0;
-                for (int j = 0; j < 16; ++j) {
-                    for (int k = 0; k < 4; ++k) {
+                for (int j = 0; j < 16; ++j)
+                {
+                    for (int k = 0; k < 4; ++k)
+                    {
                         //k,k+1,(j+1)*5
                         indexs[tIndex++] = (j * 5) + k;
                         indexs[tIndex++] = (j * 5) + k + 1;
@@ -294,13 +309,15 @@ namespace Sango.Render
         }
         public void SetVisible(bool b)
         {
-            if (skyTrans != null) {
+            if (skyTrans != null)
+            {
                 skyTrans.gameObject.SetActive(b);
             }
         }
         public override void UpdateRender()
         {
-            //skyMat.mainTexture = curArea.GetTexture();
+            if (skyMat != null && curArea != null)
+                skyMat.mainTexture = curArea.GetTexture();
         }
 
         public override void Update()
@@ -314,11 +331,14 @@ namespace Sango.Render
             if (curArea != null && curArea.bounds.Contains(point))
                 return;
 
-            for (int i = allAreas.Count - 1; i >= 0; i--) {
+            for (int i = allAreas.Count - 1; i >= 0; i--)
+            {
                 SkyArea area = allAreas[i];
                 if (area == curArea) continue;
-                if (area.bounds.Contains(point)) {
-                    if (area != curArea) {
+                if (area.bounds.Contains(point))
+                {
+                    if (area != curArea)
+                    {
                         curArea = area;
                         UpdateRender();
                         return;

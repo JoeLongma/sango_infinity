@@ -44,6 +44,12 @@ namespace Sango.Game.Render
                 BuildingModel.Init(Building);
             }
 
+            if (HeadBar != null)
+            {
+                PoolManager.Recycle(HeadBar.gameObject);
+                HeadBar = null;
+            }
+
             GameObject headBar = PoolManager.Create(GameRenderHelper.BuildingHeadbarRes);
             if (headBar != null)
             {

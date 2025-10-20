@@ -188,12 +188,22 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 	Light mainLight = GetMainLight(i.shadowCoord);
 	float3 lightDirection = mainLight.direction;
 	half3 ambient = SampleSH(i.normal).rgb;
+
+    #if SANGO_AMBIENT_NO_LIGHT
+	//阴影数据
+	half shadow = mainLight.shadowAttenuation;
+	// 计算漫反射颜色
+	half NdotL = saturate(dot(lightDirection, i.normal));
+	half3 directDiffuse = lerp(0, ((mainLight.color.rgb)), saturate(NdotL+0.6)) + ambient;
+	half3 diffuse = directDiffuse * _MainTex_var.rgb;
+	#else
 	//阴影数据
 	half shadow = mainLight.shadowAttenuation;
 	// 计算漫反射颜色
 	half NdotL = saturate(dot(lightDirection, i.normal));
 	half3 directDiffuse = lerp(_ShadowColor.rgb, ((mainLight.color.rgb)), NdotL) * shadow + ambient;
-	half3 diffuse = directDiffuse *_MainTex_var.rgb;
+	half3 diffuse = directDiffuse * _MainTex_var.rgb;
+	#endif
 
 	// 计算BASE遮罩
 	#if SANGO_BASE_COLOR
@@ -294,7 +304,7 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 	finalRGBA.a = finalRGBA.a * saturate(pow( i.posObject.y - _BlendHeight, _BlendPower));
 	#endif
 
-	#if SANGO_FOG && FOG_EXP
+	#if SANGO_FOG 
 		float2 screenPos= i.screenPos .xy / i.screenPos .w;
 		float depth = SAMPLE_TEXTURE2D_X(_CameraDepthTexture, sampler_CameraDepthTexture, screenPos).r;
 		float depthValue = LinearEyeDepth(depth, _ZBufferParams);

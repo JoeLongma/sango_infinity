@@ -21,6 +21,8 @@ namespace Sango.Game.Render.Model
                 flag.Init(troop);
             SetAniShow(0);
             UpdateTroop(troop);
+            if (troopsRender != null)
+                troopsRender.UpdateHeight();
         }
 
         public void UpdateTroop(Troop troop)

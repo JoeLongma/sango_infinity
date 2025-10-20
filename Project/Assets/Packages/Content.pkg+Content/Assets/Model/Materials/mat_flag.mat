@@ -21,13 +21,13 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: mat_flag
-  m_Shader: {fileID: 4800000, guid: 24a571e9815b6f8409b27103f0f3e0dc, type: 3}
+  m_Shader: {fileID: 4800000, guid: a0bc63e1bdc97424c85e175f299d7fc4, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2901
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
