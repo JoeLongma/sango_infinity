@@ -232,6 +232,17 @@ namespace Sango.Game.Render.UI
             }
         }
 
+        public void OnSave()
+        {
+            string savePath = Path.SaveRootPath + "/Save/scenario_1.json";
+            Scenario.Cur.Save(savePath);
+        }
+
+        public void OnLoad()
+        {
+            
+        }
+
         public void Update()
         {
             if (needUpdateItem)

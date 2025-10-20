@@ -70,7 +70,7 @@ namespace Sango.Game
         /// <summary>
         /// 部队名
         /// </summary>
-        public override string Name => Leader.Name;
+        public override string Name => Leader?.Name;
 
         /// <summary>
         /// 所在格子

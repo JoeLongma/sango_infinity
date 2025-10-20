@@ -36,28 +36,19 @@ public class GameStart : MonoBehaviour
 
     IEnumerator GameInit()
     {
-#if UNITY_ANDROID || UNITY_IPHONE
-        if (!Directory.Exists(Path.ContentRootPath))
+#if (UNITY_ANDROID || UNITY_IPHONE) && !UNITY_EDITOR
+
+        bool appVersionNew = Sango.Platform.CheckAppVersion();
+        if (!appVersionNew)
         {
-            string path = System.IO.Path.Combine(Application.streamingAssetsPath, "Build.zip");
-            string uri = new System.Uri(path).AbsoluteUri;
-            UnityWebRequest request = UnityWebRequest.Get(uri);
-            yield return request.SendWebRequest();
+            if (Directory.Exists(Path.ContentRootPath))
+                Directory.Delete(Path.ContentRootPath);
+            if (Directory.Exists(Path.ModRootPath))
+                Directory.Delete(Path.ModRootPath);
 
-            if (request.result == UnityWebRequest.Result.Success)
-            {
-                string zipSavePath = System.IO.Path.Combine(Application.persistentDataPath, "Build.zip");
-                if (File.Exists(zipSavePath))
-                    File.Delete(zipSavePath);
-
-                File.WriteAllBytes(zipSavePath, request.downloadHandler.data);
-                ZipFile.ExtractToDirectory(zipSavePath, Application.persistentDataPath);
-            }
-            else
-            {
-                UnityEngine.Debug.LogError(request.error);
-            }
+            yield return Platform.ExtractContentAndModZipFile();
         }
+        Sango.Platform.SaveAppVersion();
 #endif
 
         DontDestroyOnLoad(gameObject);
@@ -92,6 +83,7 @@ public class GameStart : MonoBehaviour
 #elif UNITY_WEBGL
         Game.Instance.Init(this, Platform.PlatformName.Webgl);
 #endif
+
         yield return null;
     }
 

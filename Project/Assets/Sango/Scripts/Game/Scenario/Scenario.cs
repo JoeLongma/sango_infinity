@@ -734,10 +734,10 @@ namespace Sango.Game
 
             if (!IsAlive)
                 return;
-#if SANGO_DEBUG
+//#if SANGO_DEBUG
             if (PauseTrunCount == Info.turnCount)
                 return;
-#endif
+//#endif
             if (!TurnStart())
                 return;
 
@@ -1032,6 +1032,19 @@ namespace Sango.Game
         public Troop CreateTroop()
         {
             return new Troop();
+        }
+
+        public void Save(string path)
+        {
+            Sango.Directory.Create(path, false);
+            JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings();
+            jsonSerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+            jsonSerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+            JsonSerializer serializer = JsonSerializer.CreateDefault(jsonSerializerSettings);
+            using (StreamWriter writer = System.IO.File.CreateText(path))
+            {
+                serializer.Serialize(writer, this);
+            }
         }
     }
 }

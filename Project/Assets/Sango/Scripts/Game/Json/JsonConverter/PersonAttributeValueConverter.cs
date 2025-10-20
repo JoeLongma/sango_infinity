@@ -12,7 +12,7 @@ namespace Sango.Game
             PersonAttributeValue dest = value as PersonAttributeValue;
             writer.WriteStartArray();
             writer.WriteValue(dest.baseValue);
-            writer.WriteValue(dest.changeType.Id);
+            writer.WriteValue(dest.changeType?.Id ?? 0);
             writer.WriteValue(dest.valueExp);
             writer.WriteValue(dest.valueFacter);
             writer.WriteValue(dest.value);

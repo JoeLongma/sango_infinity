@@ -10,7 +10,7 @@ namespace Sango.Game
     {
         public override SangoObjectType ObjectType { get { return SangoObjectType.Building; } }
 
-        public override string Name { get { return BuildingType.Name; } }
+        public override string Name { get { return BuildingType?.Name; } }
 
         [JsonConverter(typeof(SangoObjectListIDConverter<Person>))]
         [JsonProperty]
@@ -36,7 +36,7 @@ namespace Sango.Game
         public override void OnScenarioPrepare(Scenario scenario)
         {
             base.OnScenarioPrepare(scenario);
-            Init(scenario);
+            //Init(scenario);
         }
 
         public override void Init(Scenario scenario)

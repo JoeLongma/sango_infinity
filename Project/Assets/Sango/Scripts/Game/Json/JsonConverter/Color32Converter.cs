@@ -8,7 +8,13 @@ namespace Sango.Game
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            base.WriteJson(writer, value, serializer);
+            Color32 dest = (Color32)value;
+            writer.WriteStartArray();
+            writer.WriteValue(dest.r);
+            writer.WriteValue(dest.g);
+            writer.WriteValue(dest.b);
+            writer.WriteValue(dest.a);
+            writer.WriteEndArray();
         }
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {

@@ -51,6 +51,7 @@ namespace Sango
                 destDir = pathInfo.Parent.FullName;
             }
 #endif
+            SaveRootPath = destDir;
             ContentRootPath = destDir + "/Content";
             ModRootPath = destDir + "/Mods";
 

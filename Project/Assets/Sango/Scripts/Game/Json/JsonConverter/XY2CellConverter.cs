@@ -51,21 +51,37 @@ namespace Sango.Game
         }
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer, JsonProperty property, object target)
         {
-            //while (reader.Read())
+            Cell dest = (Cell)existingValue;
+            bool xReaded = false;
+            int x = 0, y = 0;
+            while (reader.Read())
             {
-                int x = serializer.Deserialize<int>(reader);
-                int y = serializer.Deserialize<int>(reader);
-
-                DelaySetCellValue.Add(new DelaySetCellValue
+                if (reader.TokenType == JsonToken.EndArray)
                 {
-                    x = x,
-                    y = y,
-                    target = target,
-                    property = property,
-                });
-                return null;
+                    DelaySetCellValue.Add(new DelaySetCellValue
+                    {
+                        x = x,
+                        y = y,
+                        target = target,
+                        property = property,
+                    });
+                    return null;
+                }
+                else if (reader.TokenType == JsonToken.Integer)
+                {
+                    int v = serializer.Deserialize<int>(reader);
+                    if(!xReaded)
+                    {
+                        x = v;
+                        xReaded = true;
+                    }
+                    else
+                    {
+                        y = v;
+                    }
+                }
             }
-            //return null;
+            return null;
         }
     }
 }

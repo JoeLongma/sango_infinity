@@ -27,7 +27,7 @@ namespace Sango.Game
                     T v = serializer.Deserialize<T>(reader);
                     if(dest.Contains(v.Id))
                     {
-                        Sango.Log.Error($"数据ID重复 id:{v.Id} ");
+                        dest[v.Id] = v;
                     }
                     else
                     {
