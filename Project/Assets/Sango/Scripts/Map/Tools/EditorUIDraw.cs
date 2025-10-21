@@ -206,9 +206,9 @@ namespace Sango.Tools
                         };
                         area.SetTextrueNames(new string[]
                         {
+                            string.Format("4794山_{0}", y*3+x),
                             string.Format("4796山_{0}", y*3+x),
                             string.Format("4797山_{0}", y*3+x),
-                            string.Format("4794山_{0}", y*3+x),
                             string.Format("4798山_{0}", y*3+x),
                         });
 

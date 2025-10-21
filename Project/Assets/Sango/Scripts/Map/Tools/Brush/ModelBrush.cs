@@ -1,9 +1,7 @@
 using Sango.Game;
-using Sango.Loader;
 using Sango.Render;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Xml;
 using UnityEngine;
 
@@ -249,7 +247,10 @@ namespace Sango.Tools
             mapObj.modelId = modelConfig.Id;
             mapObj.modelAsset = modelConfig.model;
             mapObj.position = model.transform.position;
-            mapObj.rotation = model.transform.rotation.eulerAngles;
+            if(randomDir)
+                mapObj.rotation = new Vector3(0,UnityEngine.Random.Range(0, 360f),0);
+            else
+                mapObj.rotation = model.transform.rotation.eulerAngles;
             mapObj.scale = model.transform.localScale;
             mapObj.coords = editor.map.mapGrid.PositionToCoords(model.transform.position.x, model.transform.position.z);
 
@@ -315,7 +316,7 @@ namespace Sango.Tools
             }
 
             anchorByGrid = GUILayout.Toggle(anchorByGrid, "贴合格子中心");
-
+            randomDir = GUILayout.Toggle(randomDir, "随机方向");
             if (isShowModelConfig)
             {
 
@@ -398,6 +399,7 @@ namespace Sango.Tools
             model = PoolManager.Create(modelConfig.model);
             if (model != null)
             {
+                model.transform.parent = null;
                 model.SetActive(true);
             }
         }
@@ -487,6 +489,7 @@ namespace Sango.Tools
                         {
                             Modify(hit.point, editor);
                             lastCenter = hit.point;
+                            currentObjectType = -1;
                         }
                         DrawGizmos(hit.point);
                     }

@@ -31,6 +31,10 @@ namespace Sango.Game.Render.UI
         public GameObject pauseObj;
         public GameObject resumeObj;
 
+        public GameObject [] fpaObj;
+
+        int destSaveTurn = -1;
+        bool needSave = false;
         private float deltaTime = 0.0f;
 
         public GameObject GetObject(int index)
@@ -67,6 +71,14 @@ namespace Sango.Game.Render.UI
 
         void Start()
         {
+#if UNITY_STANDALONE_WIN
+            foreach(GameObject obj in fpaObj)
+            {
+                if(obj != null)
+                    obj.SetActive(false);
+            }
+#endif
+
             Scenario.Cur.Event.OnTroopCreated += OnTroopChange;
             Scenario.Cur.Event.OnTroopDestroyed += OnTroopChange;
             Scenario.Cur.Event.OnForceStart += OnForceStart;
@@ -237,11 +249,24 @@ namespace Sango.Game.Render.UI
             }
         }
 
-        public void OnSave()
+        void Save()
         {
             int count = Scenario.all_scenario_list.Count;
             string savePath = Path.ContentRootPath + $"/Scenario/scenario_save_{count}.json";
             Scenario.Cur.Save(savePath);
+        }
+
+        public void OnSave()
+        {
+            if(Sango.Game.Scenario.Cur.PauseTrunCount == Sango.Game.Scenario.Cur.Info.turnCount)
+            {
+                Save();
+            }
+            else
+            {
+                needSave = true;
+                OnBtnNextTurn();
+            }
         }
 
         public void OnLoad()
@@ -267,6 +292,15 @@ namespace Sango.Game.Render.UI
 
         public void Update()
         {
+            if(needSave)
+            {
+                if (Sango.Game.Scenario.Cur.PauseTrunCount == Sango.Game.Scenario.Cur.Info.turnCount)
+                {
+                    Save();
+                    needSave = false;
+                }
+            }
+
             deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
 
             if (needUpdateItem)
