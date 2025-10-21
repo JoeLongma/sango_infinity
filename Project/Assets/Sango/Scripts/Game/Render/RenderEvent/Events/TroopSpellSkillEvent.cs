@@ -145,8 +145,9 @@ namespace Sango.Game.Render
                                 p.GainExp(ep);
                                 p.merit += ep;
                             });
-
+#if SANGO_DEBUG
                             Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 攻破城池: <{beAtkBuildingBase.Name}>");
+#endif
                             city.OnFall(troop);
                             return;
                         }
@@ -256,12 +257,13 @@ namespace Sango.Game.Render
                                             troop.UpdateCell(c, troop.cell, true);
                                         else
                                         {
-                                            if (skill.blockFactor > 0 && c.troop != null && c.troop.IsEnemy(troop))
+                                            Troop blockTroop = c.troop;
+                                            if (skill.blockFactor > 0 && blockTroop != null && blockTroop.IsEnemy(troop))
                                             {
                                                 int blockDmg = targetDamage * skill.blockFactor / 100;
-                                                c.troop.ChangeTroops(-blockDmg, troop);
+                                                blockTroop.ChangeTroops(-blockDmg, troop);
                                                 int ep = blockDmg / 100;
-                                                if (!c.troop.IsAlive) ep += 50;
+                                                if (!blockTroop.IsAlive) ep += 50;
                                                 troop.ForEachPerson(p =>
                                                 {
                                                     p.GainExp(ep);
@@ -286,12 +288,13 @@ namespace Sango.Game.Render
                                             targetTroop.UpdateCell(c, targetTroop.cell, true);
                                         else
                                         {
-                                            if (skill.blockFactor > 0 && c.troop != null && c.troop.IsEnemy(troop))
+                                            Troop blockTroop = c.troop;
+                                            if (skill.blockFactor > 0 && blockTroop != null && blockTroop.IsEnemy(troop))
                                             {
                                                 int blockDmg = targetDamage * skill.blockFactor / 100;
-                                                c.troop.ChangeTroops(-blockDmg, troop);
+                                                blockTroop.ChangeTroops(-blockDmg, troop);
                                                 int ep = blockDmg / 100;
-                                                if (!c.troop.IsAlive) ep += 50;
+                                                if (!blockTroop.IsAlive) ep += 50;
                                                 troop.ForEachPerson(p =>
                                                 {
                                                     p.GainExp(ep);

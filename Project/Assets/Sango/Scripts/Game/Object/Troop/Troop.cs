@@ -954,7 +954,9 @@ namespace Sango.Game
             IsAlive = troops > 0;
             if (!IsAlive)
             {
+#if SANGO_DEBUG
                 Sango.Log.Print($"{BelongForce.Name}的[{Name} 部队 溃灭!!");
+#endif
                 // 移除
                 Clear();
             }
@@ -1260,15 +1262,18 @@ namespace Sango.Game
             ActionOver = true;
             if (city == BelongCity)
             {
+#if SANGO_DEBUG
                 Sango.Log.Print($"{BelongForce.Name}的[{Name}]部队回到{city.BelongForce?.Name}的城池:<{city.Name}>");
+#endif
                 return;
             }
             ForEachPerson((person) =>
             {
                 person.ChangeCity(city);
             });
-
+#if SANGO_DEBUG
             Sango.Log.Print($"{BelongForce.Name}的[{Name}]部队进入{city.BelongForce?.Name}的城池:<{city.Name}>");
+#endif
         }
 
         public override void Clear()

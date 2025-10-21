@@ -77,6 +77,15 @@ namespace Sango.Game
             }
         }
 
+        public override void ForEach(Action<SangoObject> action)
+        {
+            foreach (T obj in objects.Values)
+            {
+                if (obj != null)
+                    action(obj);
+            }
+        }
+
         public override T Find(Predicate<T> match)
         {
             foreach (T obj in objects.Values)

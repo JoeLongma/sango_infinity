@@ -254,6 +254,13 @@ namespace Sango.Game.Render.UI
             int count = Scenario.all_scenario_list.Count;
             string savePath = Path.ContentRootPath + $"/Scenario/scenario_save_{count}.json";
             Scenario.Cur.Save(savePath);
+
+            WindowEvent windowEvent = new WindowEvent()
+            {
+                windowName = "window_dialog",
+                arg1 = "保存成功!!!"
+            };
+            RenderEvent.Instance.Add(windowEvent);
         }
 
         public void OnSave()

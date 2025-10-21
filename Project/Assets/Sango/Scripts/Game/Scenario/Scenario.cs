@@ -26,16 +26,28 @@ namespace Sango.Game
 
         [JsonConverter(typeof(SangoObjectSetConverter<Force>))]
         [JsonProperty] public SangoObjectSet<Force> forceSet = new SangoObjectSet<Force>();
+
         [JsonConverter(typeof(SangoObjectSetConverter<Corps>))]
         [JsonProperty] public SangoObjectSet<Corps> corpsSet = new SangoObjectSet<Corps>();
+
         [JsonConverter(typeof(SangoObjectSetConverter<City>))]
         [JsonProperty] public SangoObjectSet<City> citySet = new SangoObjectSet<City>();
+
+        [JsonConverter(typeof(SangoObjectSetConverter<Gate>))]
+        [JsonProperty] public SangoObjectSet<Gate> gateSet = new SangoObjectSet<Gate>();
+
+        [JsonConverter(typeof(SangoObjectSetConverter<Port>))]
+        [JsonProperty] public SangoObjectSet<Port> portSet = new SangoObjectSet<Port>();
+
         [JsonConverter(typeof(SangoObjectSetConverter<Person>))]
         [JsonProperty] public SangoObjectSet<Person> personSet = new SangoObjectSet<Person>();
+
         [JsonConverter(typeof(SangoObjectSetConverter<Troop>))]
         [JsonProperty] public SangoObjectSet<Troop> troopsSet = new SangoObjectSet<Troop>();
+
         [JsonConverter(typeof(SangoObjectSetConverter<Building>))]
         [JsonProperty] public SangoObjectSet<Building> buildingSet = new SangoObjectSet<Building>();
+
         [JsonConverter(typeof(SangoObjectSetConverter<Fire>))]
         [JsonProperty] public SangoObjectSet<Fire> fireSet = new SangoObjectSet<Fire>();
 
@@ -103,9 +115,11 @@ namespace Sango.Game
             LoadInfo();
         }
 
+        List<IDatabase> prepareList = new List<IDatabase>();
+        List<IDatabase> eventReciveList = new List<IDatabase>();
+
         public Scenario()
         {
-
         }
 
         public Database<T> GetDatabase<T>() where T : SangoObject, new()
@@ -126,6 +140,14 @@ namespace Sango.Game
             else if (tType == typeof(City))
             {
                 return citySet as Database<T>;
+            }
+            else if (tType == typeof(Port))
+            {
+                return portSet as Database<T>;
+            }
+            else if (tType == typeof(Gate))
+            {
+                return gateSet as Database<T>;
             }
             else if (tType == typeof(Building))
             {
@@ -315,6 +337,21 @@ namespace Sango.Game
 
             Map.Load(Info.mapType);
 
+            prepareList.Add(forceSet);
+            prepareList.Add(corpsSet);
+            prepareList.Add(citySet);
+            prepareList.Add(gateSet);
+            prepareList.Add(portSet);
+            prepareList.Add(personSet);
+            prepareList.Add(buildingSet);
+            prepareList.Add(troopsSet);
+
+            eventReciveList.Add(personSet);
+            eventReciveList.Add(citySet);
+            eventReciveList.Add(gateSet);
+            eventReciveList.Add(portSet);
+            eventReciveList.Add(troopsSet);
+            eventReciveList.Add(forceSet);
         }
 
         public void LoadWorld()
@@ -453,35 +490,10 @@ namespace Sango.Game
                 }
             }
 
-            forceSet.ForEach(o =>
+            for (int i = 0; i < prepareList.Count; ++i)
             {
-                o.Init(this);
-            });
-
-            corpsSet.ForEach(o =>
-            {
-                o.Init(this);
-            });
-
-            citySet.ForEach(o =>
-            {
-                o.Init(this);
-            });
-
-            personSet.ForEach(o =>
-            {
-                o.Init(this);
-            });
-
-            buildingSet.ForEach(o =>
-            {
-                o.Init(this);
-            });
-
-            troopsSet.ForEach(o =>
-            {
-                o.Init(this);
-            });
+                prepareList[i].ForEach(o => { o.Init(this); });
+            }
 
             if (RelationMap == null)
             {
@@ -510,36 +522,10 @@ namespace Sango.Game
         {
             Event.OnPrepare?.Invoke(this);
 
-            forceSet.ForEach(o =>
+            for (int i = 0; i < prepareList.Count; ++i)
             {
-                o.OnScenarioPrepare(this);
-            });
-
-            corpsSet.ForEach(o =>
-            {
-                o.OnScenarioPrepare(this);
-            });
-
-            citySet.ForEach(o =>
-            {
-                o.OnScenarioPrepare(this);
-            });
-
-            personSet.ForEach(o =>
-            {
-                o.OnScenarioPrepare(this);
-            });
-
-            buildingSet.ForEach(o =>
-            {
-                o.OnScenarioPrepare(this);
-            });
-
-            troopsSet.ForEach(o =>
-            {
-                o.OnScenarioPrepare(this);
-            });
-
+                prepareList[i].ForEach(o => { o.OnScenarioPrepare(this); });
+            }
             //MapRender.Instance.Update();
         }
 
@@ -767,39 +753,19 @@ namespace Sango.Game
 
         public override bool OnDayStart(Scenario scenario)
         {
-            scenario.personSet.ForEach(p =>
+            for (int i = 0; i < eventReciveList.Count; ++i)
             {
-                if (p.IsAlive)
-                {
-                    p.OnDayStart(this);
-                }
-            });
-            scenario.citySet.ForEach(p =>
-            {
-                if (p.IsAlive)
-                {
-                    p.OnDayStart(this);
-                }
-            });
+                eventReciveList[i].ForEach(o => { if (o.IsAlive) o.OnDayStart(this); });
+            }
             return base.OnDayStart(scenario);
         }
 
         public override bool OnDayEnd(Scenario scenario)
         {
-            scenario.personSet.ForEach(p =>
+            for (int i = 0; i < eventReciveList.Count; ++i)
             {
-                if (p.IsAlive)
-                {
-                    p.OnDayEnd(this);
-                }
-            });
-            scenario.citySet.ForEach(p =>
-            {
-                if (p.IsAlive)
-                {
-                    p.OnDayEnd(this);
-                }
-            });
+                eventReciveList[i].ForEach(o => { if (o.IsAlive) o.OnDayEnd(this); });
+            }
             return base.OnDayEnd(scenario);
         }
 
@@ -817,153 +783,50 @@ namespace Sango.Game
                     }
                 }
             }
-
-            scenario.personSet.ForEach(p =>
+            for (int i = 0; i < eventReciveList.Count; ++i)
             {
-                if (p.IsAlive)
-                {
-                    p.OnMonthStart(this);
-                }
-            });
-            scenario.citySet.ForEach(p =>
-            {
-                if (p.IsAlive)
-                {
-                    p.OnMonthStart(this);
-                }
-            });
-            scenario.forceSet.ForEach(p =>
-            {
-                if (p.IsAlive)
-                {
-                    p.OnMonthStart(this);
-                }
-            });
+                eventReciveList[i].ForEach(o => { if (o.IsAlive) o.OnMonthStart(this); });
+            }
             return base.OnMonthStart(scenario);
         }
         public override bool OnMonthEnd(Scenario scenario)
         {
-            scenario.personSet.ForEach(p =>
+            for (int i = 0; i < eventReciveList.Count; ++i)
             {
-                if (p.IsAlive)
-                {
-                    p.OnMonthEnd(this);
-                }
-            });
-            scenario.citySet.ForEach(p =>
-            {
-                if (p.IsAlive)
-                {
-                    p.OnMonthEnd(this);
-                }
-            });
-            scenario.forceSet.ForEach(p =>
-            {
-                if (p.IsAlive)
-                {
-                    p.OnMonthEnd(this);
-                }
-            });
+                eventReciveList[i].ForEach(o => { if (o.IsAlive) o.OnMonthEnd(this); });
+            }
             return base.OnMonthEnd(scenario);
         }
         public override bool OnYearStart(Scenario scenario)
         {
-            scenario.personSet.ForEach(p =>
+            for (int i = 0; i < eventReciveList.Count; ++i)
             {
-                if (p.IsAlive)
-                {
-                    p.OnYearStart(this);
-                }
-            });
-            scenario.citySet.ForEach(p =>
-            {
-                if (p.IsAlive)
-                {
-                    p.OnYearStart(this);
-                }
-            });
-            scenario.forceSet.ForEach(p =>
-            {
-                if (p.IsAlive)
-                {
-                    p.OnYearStart(this);
-                }
-            });
+                eventReciveList[i].ForEach(o => { if (o.IsAlive) o.OnYearStart(this); });
+            }
             return base.OnYearStart(scenario);
         }
         public override bool OnYearEnd(Scenario scenario)
         {
-            scenario.personSet.ForEach(p =>
+            for (int i = 0; i < eventReciveList.Count; ++i)
             {
-                if (p.IsAlive)
-                {
-                    p.OnYearEnd(this);
-                }
-            });
-            scenario.citySet.ForEach(p =>
-            {
-                if (p.IsAlive)
-                {
-                    p.OnYearEnd(this);
-                }
-            });
-            scenario.forceSet.ForEach(p =>
-            {
-                if (p.IsAlive)
-                {
-                    p.OnYearEnd(this);
-                }
-            });
+                eventReciveList[i].ForEach(o => { if (o.IsAlive) o.OnYearEnd(this); });
+            }
             return base.OnYearEnd(scenario);
         }
         public override bool OnSeasonStart(Scenario scenario)
         {
-            scenario.personSet.ForEach(p =>
+            for (int i = 0; i < eventReciveList.Count; ++i)
             {
-                if (p.IsAlive)
-                {
-                    p.OnSeasonStart(this);
-                }
-            });
-            scenario.citySet.ForEach(p =>
-            {
-                if (p.IsAlive)
-                {
-                    p.OnSeasonStart(this);
-                }
-            });
-            scenario.forceSet.ForEach(p =>
-            {
-                if (p.IsAlive)
-                {
-                    p.OnSeasonStart(this);
-                }
-            });
+                eventReciveList[i].ForEach(o => { if (o.IsAlive) o.OnSeasonStart(this); });
+            }
             return base.OnSeasonStart(scenario);
         }
         public override bool OnSeasonEnd(Scenario scenario)
         {
-            scenario.personSet.ForEach(p =>
+            for (int i = 0; i < eventReciveList.Count; ++i)
             {
-                if (p.IsAlive)
-                {
-                    p.OnSeasonEnd(this);
-                }
-            });
-            scenario.citySet.ForEach(p =>
-            {
-                if (p.IsAlive)
-                {
-                    p.OnSeasonEnd(this);
-                }
-            });
-            scenario.forceSet.ForEach(p =>
-            {
-                if (p.IsAlive)
-                {
-                    p.OnSeasonEnd(this);
-                }
-            });
+                eventReciveList[i].ForEach(o => { if (o.IsAlive) o.OnSeasonEnd(this); });
+            }
             return base.OnSeasonEnd(scenario);
         }
 

@@ -207,7 +207,7 @@ namespace Sango.Game
 
         public List<Building> villageList = new List<Building>();
 
-        List<Cell> cell_list = new List<Cell>();
+        protected List<Cell> cell_list = new List<Cell>();
 
         public int totalGainFood = 0;
         public int totalGainGold = 0;
@@ -237,8 +237,8 @@ namespace Sango.Game
         //public int model_wall;
         //public int model_city;
         internal int virtualFightPower;
-        bool isUpdatedFightPower;
-        bool boderLineChecked = false;
+        internal bool isUpdatedFightPower;
+        internal bool boderLineChecked = false;
 
         /// <summary>
         /// 所有武将
@@ -402,8 +402,6 @@ namespace Sango.Game
 
             Render = new CityRender(this);
         }
-
-
 
         public override void Init(Scenario scenario)
         {

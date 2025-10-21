@@ -2,7 +2,7 @@
 
 namespace Sango.Game.Render.Model
 {
-    public class CityModel : BuildingBaseModel
+    public class PortModel : BuildingBaseModel
     {
         public void Init(Building building)
         {

@@ -16,6 +16,27 @@ namespace Sango.Game
                         return false;
                 }
             }
+
+            for (int i = 0; i < scenario.portSet.Count; ++i)
+            {
+                var c = scenario.portSet[i];
+                if (c != null && c.IsAlive && c.BelongCorps == corps && !c.ActionOver)
+                {
+                    if (!c.DoAI(scenario))
+                        return false;
+                }
+            }
+
+            for (int i = 0; i < scenario.gateSet.Count; ++i)
+            {
+                var c = scenario.gateSet[i];
+                if (c != null && c.IsAlive && c.BelongCorps == corps && !c.ActionOver)
+                {
+                    if (!c.DoAI(scenario))
+                        return false;
+                }
+            }
+
             return true;
         }
 

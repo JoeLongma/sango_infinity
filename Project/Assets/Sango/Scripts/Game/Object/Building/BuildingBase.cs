@@ -74,8 +74,13 @@ namespace Sango.Game
             //BelongForce = scenario.forceSet.Get(_belongForceId);
             //BelongCorps = scenario.corpsSet.Get(_belongCorpsId);
             //BuildingType = scenario.CommonData.BuildingTypes.Get(_buildingTypeId);
+            OnPrepareRender();
         }
 
+        public virtual void OnPrepareRender()
+        {
+
+        }
 
         public bool IsAlliance(BuildingBase other)
         {

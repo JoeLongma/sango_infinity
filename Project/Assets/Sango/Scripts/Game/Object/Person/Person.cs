@@ -576,7 +576,9 @@ namespace Sango.Game
             dest.trsformingPesonList.Add(this);
             SetMission(MissionType.PersonTransform, dest, Scenario.Cur.GetCityDistance(BelongCity, dest));
             BelongCity?.freePersons.Remove(this);
+#if SANGO_DEBUG
             Sango.Log.Print($"*{BelongForce?.Name}的{Name}从{BelongCity.Name}向{dest.Name}转移*");
+#endif
         }
 
         public Corps ChangeCorps(Corps corps)
@@ -600,8 +602,9 @@ namespace Sango.Game
             if (BelongCity != city)
             {
                 last = BelongCity;
+#if SANGO_DEBUG
                 Sango.Log.Print($"*{BelongForce?.Name}的{Name}从{BelongCity.Name}向{city.Name}转移* 移动完成!!");
-
+#endif
                 if (!IsWild)
                 {
                     BelongCity.allPersons.Remove(this);

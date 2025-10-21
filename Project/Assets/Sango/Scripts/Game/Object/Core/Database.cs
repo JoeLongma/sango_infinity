@@ -7,7 +7,7 @@ namespace Sango.Game
 {
     public interface IDatabase
     {
-
+        abstract void ForEach(Action<SangoObject> action);
     }
 
     public abstract class Database<T> : IDatabase, IStringDataObject, IAarryDataObject where T : SangoObject, new()
@@ -151,6 +151,11 @@ namespace Sango.Game
         public virtual IEnumerator GetEnumerator()
         {
             yield return null;
+        }
+
+        public virtual void ForEach(Action<SangoObject> action)
+        {
+           
         }
     }
 }
