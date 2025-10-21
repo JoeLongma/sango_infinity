@@ -7,7 +7,10 @@ public class Sango_Render_MapGrid_GridStateWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginEnum(typeof(Sango.Render.MapGrid.GridState));
-		L.RegVar("Moveable", new LuaCSFunction(get_Moveable), null);
+		L.RegVar("None", new LuaCSFunction(get_None), null);
+		L.RegVar("Defence", new LuaCSFunction(get_Defence), null);
+		L.RegVar("Interior", new LuaCSFunction(get_Interior), null);
+		L.RegVar("Thief", new LuaCSFunction(get_Thief), null);
 		L.RegFunction("IntToEnum", new LuaCSFunction(IntToEnum));
 		L.EndEnum();
 		TypeTraits<Sango.Render.MapGrid.GridState>.Check = CheckType;
@@ -27,8 +30,30 @@ public class Sango_Render_MapGrid_GridStateWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_Moveable(IntPtr L)
+	static int get_None(IntPtr L)
 	{
+		ToLua.Push(L, Sango.Render.MapGrid.GridState.None);
+		return 1;
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Defence(IntPtr L)
+	{
+		ToLua.Push(L, Sango.Render.MapGrid.GridState.Defence);
+		return 1;
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Interior(IntPtr L)
+	{
+		ToLua.Push(L, Sango.Render.MapGrid.GridState.Interior);
+		return 1;
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Thief(IntPtr L)
+	{
+		ToLua.Push(L, Sango.Render.MapGrid.GridState.Thief);
 		return 1;
 	}
 

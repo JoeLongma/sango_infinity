@@ -9,6 +9,7 @@ public class Sango_Render_MapCameraWrap
 		L.BeginClass(typeof(Sango.Render.MapCamera), typeof(Sango.Render.MapProperty));
 		L.RegFunction("GetViewRect", new LuaCSFunction(GetViewRect));
 		L.RegFunction("Init", new LuaCSFunction(Init));
+		L.RegFunction("MoveCameraTo", new LuaCSFunction(MoveCameraTo));
 		L.RegFunction("Clear", new LuaCSFunction(Clear));
 		L.RegFunction("GetCenterTransform", new LuaCSFunction(GetCenterTransform));
 		L.RegFunction("MoveCamera", new LuaCSFunction(MoveCamera));
@@ -19,11 +20,15 @@ public class Sango_Render_MapCameraWrap
 		L.RegFunction("NeedUpdateCamera", new LuaCSFunction(NeedUpdateCamera));
 		L.RegFunction("UpdateRender", new LuaCSFunction(UpdateRender));
 		L.RegFunction("Update", new LuaCSFunction(Update));
+		L.RegFunction("ZoomCameraMobile", new LuaCSFunction(ZoomCameraMobile));
+		L.RegFunction("RotateCameraMobile", new LuaCSFunction(RotateCameraMobile));
+		L.RegFunction("MouseDragWorldMobile", new LuaCSFunction(MouseDragWorldMobile));
 		L.RegFunction("New", new LuaCSFunction(_CreateSango_Render_MapCamera));
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
 		L.RegVar("fov", new LuaCSFunction(get_fov), new LuaCSFunction(set_fov));
 		L.RegVar("near_clip", new LuaCSFunction(get_near_clip), new LuaCSFunction(set_near_clip));
 		L.RegVar("far_clip", new LuaCSFunction(get_far_clip), new LuaCSFunction(set_far_clip));
+		L.RegVar("cameraDistanceFactor", new LuaCSFunction(get_cameraDistanceFactor), new LuaCSFunction(set_cameraDistanceFactor));
 		L.RegVar("look_position", new LuaCSFunction(get_look_position), new LuaCSFunction(set_look_position));
 		L.RegVar("limitDistance", new LuaCSFunction(get_limitDistance), new LuaCSFunction(set_limitDistance));
 		L.RegVar("limitAngle", new LuaCSFunction(get_limitAngle), new LuaCSFunction(set_limitAngle));
@@ -98,6 +103,23 @@ public class Sango_Render_MapCameraWrap
 			ToLua.CheckArgsCount(L, 1);
 			Sango.Render.MapCamera obj = (Sango.Render.MapCamera)ToLua.CheckObject<Sango.Render.MapCamera>(L, 1);
 			obj.Init();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int MoveCameraTo(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Render.MapCamera obj = (Sango.Render.MapCamera)ToLua.CheckObject<Sango.Render.MapCamera>(L, 1);
+			UnityEngine.Vector3 arg0 = ToLua.ToVector3(L, 2);
+			obj.MoveCameraTo(arg0);
 			return 0;
 		}
 		catch (Exception e)
@@ -274,6 +296,54 @@ public class Sango_Render_MapCameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ZoomCameraMobile(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			Sango.Render.MapCamera obj = (Sango.Render.MapCamera)ToLua.CheckObject<Sango.Render.MapCamera>(L, 1);
+			obj.ZoomCameraMobile();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int RotateCameraMobile(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			Sango.Render.MapCamera obj = (Sango.Render.MapCamera)ToLua.CheckObject<Sango.Render.MapCamera>(L, 1);
+			obj.RotateCameraMobile();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int MouseDragWorldMobile(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			Sango.Render.MapCamera obj = (Sango.Render.MapCamera)ToLua.CheckObject<Sango.Render.MapCamera>(L, 1);
+			obj.MouseDragWorldMobile();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_fov(IntPtr L)
 	{
 		object o = null;
@@ -327,6 +397,25 @@ public class Sango_Render_MapCameraWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index far_clip on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_cameraDistanceFactor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapCamera obj = (Sango.Render.MapCamera)o;
+			float ret = obj.cameraDistanceFactor;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index cameraDistanceFactor on a nil value");
 		}
 	}
 
@@ -612,6 +701,25 @@ public class Sango_Render_MapCameraWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index far_clip on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_cameraDistanceFactor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapCamera obj = (Sango.Render.MapCamera)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.cameraDistanceFactor = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index cameraDistanceFactor on a nil value");
 		}
 	}
 

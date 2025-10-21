@@ -8,32 +8,44 @@ namespace Sango.Game
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            writer.WriteStartArray();
+            writer.WriteStartObject();
             SangoObjectList<T> dest = value as SangoObjectList<T>;
             dest.ForEach(x =>
             {
+                writer.WritePropertyName(x.Id.ToString());
                 serializer.Serialize(writer, x);
             });
-            writer.WriteEndArray();
+            writer.WriteEndObject();
         }
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             if (existingValue == null)
                 existingValue = Create(objectType);
-            SangoObjectSet<T> dest = existingValue as SangoObjectSet<T>;
+            SangoObjectList<T> dest = existingValue as SangoObjectList<T>;
+            string lastPropertyName = null;
             while (reader.Read())
             {
-                if (reader.TokenType == JsonToken.StartObject)
+                if (reader.TokenType == JsonToken.PropertyName)
                 {
-                    T v = serializer.Deserialize<T>(reader);
-                    if (v.Id < dest.objects.Length)
-                        dest.objects[v.Id] = v;
-                    else
-                    {
-                        Sango.Log.Error($"数据ID超出区间[0 - {dest.objects.Length - 1}]范围 id:{v.Id}, ");
-                    }
+                    lastPropertyName = reader.Value.ToString();
                 }
-                else if (reader.TokenType == JsonToken.EndArray)
+                else if (reader.TokenType == JsonToken.StartObject)
+                {
+                    if (!string.IsNullOrEmpty(lastPropertyName))
+                    {
+                        int Id = int.Parse(lastPropertyName);
+                        T exsist = dest.Get(Id);
+                        if (exsist != null)
+                        {
+                            serializer.Populate(reader, exsist);
+                            continue;
+                        }
+                    }
+
+                    T v = serializer.Deserialize<T>(reader);
+                    dest.Add(v);
+                }
+                else if (reader.TokenType == JsonToken.EndObject)
                 {
                     return dest;
                 }

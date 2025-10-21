@@ -20,6 +20,7 @@ public class Sango_Game_ScenarioInfoWrap
 		L.RegVar("mapType", new LuaCSFunction(get_mapType), new LuaCSFunction(set_mapType));
 		L.RegVar("turnCount", new LuaCSFunction(get_turnCount), new LuaCSFunction(set_turnCount));
 		L.RegVar("priority", new LuaCSFunction(get_priority), new LuaCSFunction(set_priority));
+		L.RegVar("isSave", new LuaCSFunction(get_isSave), new LuaCSFunction(set_isSave));
 		L.EndClass();
 	}
 
@@ -257,6 +258,25 @@ public class Sango_Game_ScenarioInfoWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_isSave(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioInfo obj = (Sango.Game.ScenarioInfo)o;
+			bool ret = obj.isSave;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index isSave on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_id(IntPtr L)
 	{
 		object o = null;
@@ -462,6 +482,25 @@ public class Sango_Game_ScenarioInfoWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index priority on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_isSave(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioInfo obj = (Sango.Game.ScenarioInfo)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.isSave = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index isSave on a nil value");
 		}
 	}
 }

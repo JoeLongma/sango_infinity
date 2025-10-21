@@ -9,6 +9,12 @@ public class Sango_PlatformWrap
 		L.BeginStaticLibs("Platform");
 		L.RegFunction("Init", new LuaCSFunction(Init));
 		L.RegFunction("GetPlatformName", new LuaCSFunction(GetPlatformName));
+		L.RegFunction("CheckAppVersion", new LuaCSFunction(CheckAppVersion));
+		L.RegFunction("SaveAppVersion", new LuaCSFunction(SaveAppVersion));
+		L.RegFunction("ExtractContentAndModZipFile", new LuaCSFunction(ExtractContentAndModZipFile));
+		L.RegVar("VersionFile", new LuaCSFunction(get_VersionFile), null);
+		L.RegVar("ContentZipFile", new LuaCSFunction(get_ContentZipFile), null);
+		L.RegVar("ModZipFile", new LuaCSFunction(get_ModZipFile), null);
 		L.RegVar("targetPlatform", new LuaCSFunction(get_targetPlatform), new LuaCSFunction(set_targetPlatform));
 		L.RegVar("JaveClassName", new LuaCSFunction(get_JaveClassName), new LuaCSFunction(set_JaveClassName));
 		L.RegVar("JaveUtilityClassName", new LuaCSFunction(get_JaveUtilityClassName), new LuaCSFunction(set_JaveUtilityClassName));
@@ -41,6 +47,95 @@ public class Sango_PlatformWrap
 			ToLua.CheckArgsCount(L, 0);
 			string o = Sango.Platform.GetPlatformName();
 			LuaDLL.lua_pushstring(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int CheckAppVersion(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			bool o = Sango.Platform.CheckAppVersion();
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SaveAppVersion(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			Sango.Platform.SaveAppVersion();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ExtractContentAndModZipFile(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			System.Collections.IEnumerator o = Sango.Platform.ExtractContentAndModZipFile();
+			ToLua.Push(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_VersionFile(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, Sango.Platform.VersionFile);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_ContentZipFile(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, Sango.Platform.ContentZipFile);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_ModZipFile(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, Sango.Platform.ModZipFile);
 			return 1;
 		}
 		catch (Exception e)

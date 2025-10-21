@@ -22,6 +22,7 @@ public class Sango_Render_MapModelsWrap
 		L.RegFunction("UpdateRender", new LuaCSFunction(UpdateRender));
 		L.RegFunction("EditorShow", new LuaCSFunction(EditorShow));
 		L.RegFunction("Update", new LuaCSFunction(Update));
+		L.RegFunction("UpdateImmediate", new LuaCSFunction(UpdateImmediate));
 		L.RegFunction("New", new LuaCSFunction(_CreateSango_Render_MapModels));
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
 		L.RegVar("dynamicObjects", new LuaCSFunction(get_dynamicObjects), new LuaCSFunction(set_dynamicObjects));
@@ -324,6 +325,22 @@ public class Sango_Render_MapModelsWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: Sango.Render.MapModels.Update");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UpdateImmediate(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			Sango.Render.MapModels obj = (Sango.Render.MapModels)ToLua.CheckObject<Sango.Render.MapModels>(L, 1);
+			obj.UpdateImmediate();
+			return 0;
 		}
 		catch (Exception e)
 		{

@@ -37,6 +37,16 @@ public class Sango_Game_ScenarioEventWrap
 		L.RegVar("OnTroopAIEnd", new LuaCSFunction(get_OnTroopAIEnd), new LuaCSFunction(set_OnTroopAIEnd));
 		L.RegVar("OnTroopLeaveCell", new LuaCSFunction(get_OnTroopLeaveCell), new LuaCSFunction(set_OnTroopLeaveCell));
 		L.RegVar("OnTroopEnterCell", new LuaCSFunction(get_OnTroopEnterCell), new LuaCSFunction(set_OnTroopEnterCell));
+		L.RegVar("OnTroopCreated", new LuaCSFunction(get_OnTroopCreated), new LuaCSFunction(set_OnTroopCreated));
+		L.RegVar("OnTroopDestroyed", new LuaCSFunction(get_OnTroopDestroyed), new LuaCSFunction(set_OnTroopDestroyed));
+		L.RegVar("OnTroopCalculateAttribute", new LuaCSFunction(get_OnTroopCalculateAttribute), new LuaCSFunction(set_OnTroopCalculateAttribute));
+		L.RegVar("OnCityFall", new LuaCSFunction(get_OnCityFall), new LuaCSFunction(set_OnCityFall));
+		L.RegVar("OnCityCheckJobCost", new LuaCSFunction(get_OnCityCheckJobCost), new LuaCSFunction(set_OnCityCheckJobCost));
+		L.RegVar("OnCityJobResult", new LuaCSFunction(get_OnCityJobResult), new LuaCSFunction(set_OnCityJobResult));
+		L.RegVar("OnCityJobGainTechniquePoint", new LuaCSFunction(get_OnCityJobGainTechniquePoint), new LuaCSFunction(set_OnCityJobGainTechniquePoint));
+		L.RegVar("OnCityJobSearchingWild", new LuaCSFunction(get_OnCityJobSearchingWild), new LuaCSFunction(set_OnCityJobSearchingWild));
+		L.RegVar("OnTroopCalculateMaxTroops", new LuaCSFunction(get_OnTroopCalculateMaxTroops), new LuaCSFunction(set_OnTroopCalculateMaxTroops));
+		L.RegVar("OnPersonLevelUp", new LuaCSFunction(get_OnPersonLevelUp), new LuaCSFunction(set_OnPersonLevelUp));
 		L.RegVar("Event", new LuaCSFunction(get_Event), null);
 		L.EndClass();
 	}
@@ -594,6 +604,196 @@ public class Sango_Game_ScenarioEventWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnTroopEnterCell on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_OnTroopCreated(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioEvent obj = (Sango.Game.ScenarioEvent)o;
+			Sango.EventBase.EventDelegate<Sango.Game.Troop,Sango.Game.Scenario> ret = obj.OnTroopCreated;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnTroopCreated on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_OnTroopDestroyed(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioEvent obj = (Sango.Game.ScenarioEvent)o;
+			Sango.EventBase.EventDelegate<Sango.Game.Troop,Sango.Game.Scenario> ret = obj.OnTroopDestroyed;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnTroopDestroyed on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_OnTroopCalculateAttribute(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioEvent obj = (Sango.Game.ScenarioEvent)o;
+			Sango.EventBase.EventDelegate<Sango.Game.Troop,Sango.Game.Scenario> ret = obj.OnTroopCalculateAttribute;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnTroopCalculateAttribute on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_OnCityFall(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioEvent obj = (Sango.Game.ScenarioEvent)o;
+			Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,Sango.Game.Scenario> ret = obj.OnCityFall;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnCityFall on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_OnCityCheckJobCost(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioEvent obj = (Sango.Game.ScenarioEvent)o;
+			Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>> ret = obj.OnCityCheckJobCost;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnCityCheckJobCost on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_OnCityJobResult(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioEvent obj = (Sango.Game.ScenarioEvent)o;
+			Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>> ret = obj.OnCityJobResult;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnCityJobResult on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_OnCityJobGainTechniquePoint(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioEvent obj = (Sango.Game.ScenarioEvent)o;
+			Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>> ret = obj.OnCityJobGainTechniquePoint;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnCityJobGainTechniquePoint on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_OnCityJobSearchingWild(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioEvent obj = (Sango.Game.ScenarioEvent)o;
+			Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person,int,System.Action<int>> ret = obj.OnCityJobSearchingWild;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnCityJobSearchingWild on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_OnTroopCalculateMaxTroops(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioEvent obj = (Sango.Game.ScenarioEvent)o;
+			Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,int,System.Action<int>> ret = obj.OnTroopCalculateMaxTroops;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnTroopCalculateMaxTroops on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_OnPersonLevelUp(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioEvent obj = (Sango.Game.ScenarioEvent)o;
+			Sango.EventBase.EventDelegate<Sango.Game.Person> ret = obj.OnPersonLevelUp;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnPersonLevelUp on a nil value");
 		}
 	}
 
@@ -1308,6 +1508,256 @@ public class Sango_Game_ScenarioEventWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnTroopEnterCell on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_OnTroopCreated(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioEvent obj = (Sango.Game.ScenarioEvent)o;
+			Sango.EventBase.EventDelegate<Sango.Game.Troop,Sango.Game.Scenario> arg0 = (Sango.EventBase.EventDelegate<Sango.Game.Troop,Sango.Game.Scenario>)ToLua.CheckDelegate<Sango.EventBase.EventDelegate<Sango.Game.Troop,Sango.Game.Scenario>>(L, 2);
+
+			if (!object.ReferenceEquals(obj.OnTroopCreated, arg0))
+			{
+				if (obj.OnTroopCreated != null) obj.OnTroopCreated.SubRef();
+				obj.OnTroopCreated = arg0;
+			}
+
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnTroopCreated on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_OnTroopDestroyed(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioEvent obj = (Sango.Game.ScenarioEvent)o;
+			Sango.EventBase.EventDelegate<Sango.Game.Troop,Sango.Game.Scenario> arg0 = (Sango.EventBase.EventDelegate<Sango.Game.Troop,Sango.Game.Scenario>)ToLua.CheckDelegate<Sango.EventBase.EventDelegate<Sango.Game.Troop,Sango.Game.Scenario>>(L, 2);
+
+			if (!object.ReferenceEquals(obj.OnTroopDestroyed, arg0))
+			{
+				if (obj.OnTroopDestroyed != null) obj.OnTroopDestroyed.SubRef();
+				obj.OnTroopDestroyed = arg0;
+			}
+
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnTroopDestroyed on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_OnTroopCalculateAttribute(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioEvent obj = (Sango.Game.ScenarioEvent)o;
+			Sango.EventBase.EventDelegate<Sango.Game.Troop,Sango.Game.Scenario> arg0 = (Sango.EventBase.EventDelegate<Sango.Game.Troop,Sango.Game.Scenario>)ToLua.CheckDelegate<Sango.EventBase.EventDelegate<Sango.Game.Troop,Sango.Game.Scenario>>(L, 2);
+
+			if (!object.ReferenceEquals(obj.OnTroopCalculateAttribute, arg0))
+			{
+				if (obj.OnTroopCalculateAttribute != null) obj.OnTroopCalculateAttribute.SubRef();
+				obj.OnTroopCalculateAttribute = arg0;
+			}
+
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnTroopCalculateAttribute on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_OnCityFall(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioEvent obj = (Sango.Game.ScenarioEvent)o;
+			Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,Sango.Game.Scenario> arg0 = (Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,Sango.Game.Scenario>)ToLua.CheckDelegate<Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,Sango.Game.Scenario>>(L, 2);
+
+			if (!object.ReferenceEquals(obj.OnCityFall, arg0))
+			{
+				if (obj.OnCityFall != null) obj.OnCityFall.SubRef();
+				obj.OnCityFall = arg0;
+			}
+
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnCityFall on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_OnCityCheckJobCost(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioEvent obj = (Sango.Game.ScenarioEvent)o;
+			Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>> arg0 = (Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>>)ToLua.CheckDelegate<Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>>>(L, 2);
+
+			if (!object.ReferenceEquals(obj.OnCityCheckJobCost, arg0))
+			{
+				if (obj.OnCityCheckJobCost != null) obj.OnCityCheckJobCost.SubRef();
+				obj.OnCityCheckJobCost = arg0;
+			}
+
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnCityCheckJobCost on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_OnCityJobResult(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioEvent obj = (Sango.Game.ScenarioEvent)o;
+			Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>> arg0 = (Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>>)ToLua.CheckDelegate<Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>>>(L, 2);
+
+			if (!object.ReferenceEquals(obj.OnCityJobResult, arg0))
+			{
+				if (obj.OnCityJobResult != null) obj.OnCityJobResult.SubRef();
+				obj.OnCityJobResult = arg0;
+			}
+
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnCityJobResult on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_OnCityJobGainTechniquePoint(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioEvent obj = (Sango.Game.ScenarioEvent)o;
+			Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>> arg0 = (Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>>)ToLua.CheckDelegate<Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>>>(L, 2);
+
+			if (!object.ReferenceEquals(obj.OnCityJobGainTechniquePoint, arg0))
+			{
+				if (obj.OnCityJobGainTechniquePoint != null) obj.OnCityJobGainTechniquePoint.SubRef();
+				obj.OnCityJobGainTechniquePoint = arg0;
+			}
+
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnCityJobGainTechniquePoint on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_OnCityJobSearchingWild(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioEvent obj = (Sango.Game.ScenarioEvent)o;
+			Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person,int,System.Action<int>> arg0 = (Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person,int,System.Action<int>>)ToLua.CheckDelegate<Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person,int,System.Action<int>>>(L, 2);
+
+			if (!object.ReferenceEquals(obj.OnCityJobSearchingWild, arg0))
+			{
+				if (obj.OnCityJobSearchingWild != null) obj.OnCityJobSearchingWild.SubRef();
+				obj.OnCityJobSearchingWild = arg0;
+			}
+
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnCityJobSearchingWild on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_OnTroopCalculateMaxTroops(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioEvent obj = (Sango.Game.ScenarioEvent)o;
+			Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,int,System.Action<int>> arg0 = (Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,int,System.Action<int>>)ToLua.CheckDelegate<Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,int,System.Action<int>>>(L, 2);
+
+			if (!object.ReferenceEquals(obj.OnTroopCalculateMaxTroops, arg0))
+			{
+				if (obj.OnTroopCalculateMaxTroops != null) obj.OnTroopCalculateMaxTroops.SubRef();
+				obj.OnTroopCalculateMaxTroops = arg0;
+			}
+
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnTroopCalculateMaxTroops on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_OnPersonLevelUp(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioEvent obj = (Sango.Game.ScenarioEvent)o;
+			Sango.EventBase.EventDelegate<Sango.Game.Person> arg0 = (Sango.EventBase.EventDelegate<Sango.Game.Person>)ToLua.CheckDelegate<Sango.EventBase.EventDelegate<Sango.Game.Person>>(L, 2);
+
+			if (!object.ReferenceEquals(obj.OnPersonLevelUp, arg0))
+			{
+				if (obj.OnPersonLevelUp != null) obj.OnPersonLevelUp.SubRef();
+				obj.OnPersonLevelUp = arg0;
+			}
+
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnPersonLevelUp on a nil value");
 		}
 	}
 }

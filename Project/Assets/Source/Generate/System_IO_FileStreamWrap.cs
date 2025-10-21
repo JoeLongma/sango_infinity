@@ -134,6 +134,31 @@ public class System_IO_FileStreamWrap
 				ToLua.PushObject(L, obj);
 				return 1;
 			}
+			else if (count == 6 && TypeChecker.CheckTypes<System.Security.AccessControl.FileSystemRights, System.IO.FileShare, int, System.IO.FileOptions>(L, 3))
+			{
+				string arg0 = ToLua.CheckString(L, 1);
+				System.IO.FileMode arg1 = (System.IO.FileMode)ToLua.CheckObject(L, 2, TypeTraits<System.IO.FileMode>.type);
+				System.Security.AccessControl.FileSystemRights arg2 = (System.Security.AccessControl.FileSystemRights)ToLua.ToObject(L, 3);
+				System.IO.FileShare arg3 = (System.IO.FileShare)ToLua.ToObject(L, 4);
+				int arg4 = (int)LuaDLL.lua_tointeger(L, 5);
+				System.IO.FileOptions arg5 = (System.IO.FileOptions)ToLua.ToObject(L, 6);
+				System.IO.FileStream obj = new System.IO.FileStream(arg0, arg1, arg2, arg3, arg4, arg5);
+				ToLua.PushObject(L, obj);
+				return 1;
+			}
+			else if (count == 7)
+			{
+				string arg0 = ToLua.CheckString(L, 1);
+				System.IO.FileMode arg1 = (System.IO.FileMode)ToLua.CheckObject(L, 2, TypeTraits<System.IO.FileMode>.type);
+				System.Security.AccessControl.FileSystemRights arg2 = (System.Security.AccessControl.FileSystemRights)ToLua.CheckObject(L, 3, TypeTraits<System.Security.AccessControl.FileSystemRights>.type);
+				System.IO.FileShare arg3 = (System.IO.FileShare)ToLua.CheckObject(L, 4, TypeTraits<System.IO.FileShare>.type);
+				int arg4 = (int)LuaDLL.luaL_checkinteger(L, 5);
+				System.IO.FileOptions arg5 = (System.IO.FileOptions)ToLua.CheckObject(L, 6, TypeTraits<System.IO.FileOptions>.type);
+				System.Security.AccessControl.FileSecurity arg6 = (System.Security.AccessControl.FileSecurity)ToLua.CheckObject<System.Security.AccessControl.FileSecurity>(L, 7);
+				System.IO.FileStream obj = new System.IO.FileStream(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+				ToLua.PushObject(L, obj);
+				return 1;
+			}
 			else
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: System.IO.FileStream.New");
@@ -407,6 +432,8 @@ public class System_IO_FileStreamWrap
 		{
 			ToLua.CheckArgsCount(L, 1);
 			System.IO.FileStream obj = (System.IO.FileStream)ToLua.CheckObject<System.IO.FileStream>(L, 1);
+			System.Security.AccessControl.FileSecurity o = obj.GetAccessControl();
+			ToLua.PushSealed(L, o);
 			return 1;
 		}
 		catch (Exception e)
@@ -422,6 +449,8 @@ public class System_IO_FileStreamWrap
 		{
 			ToLua.CheckArgsCount(L, 2);
 			System.IO.FileStream obj = (System.IO.FileStream)ToLua.CheckObject<System.IO.FileStream>(L, 1);
+			System.Security.AccessControl.FileSecurity arg0 = (System.Security.AccessControl.FileSecurity)ToLua.CheckObject<System.Security.AccessControl.FileSecurity>(L, 2);
+			obj.SetAccessControl(arg0);
 			return 0;
 		}
 		catch (Exception e)

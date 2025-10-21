@@ -15,13 +15,13 @@ public class Sango_Tools_MapEditorWrap
 		L.RegFunction("Update", new LuaCSFunction(Update));
 		L.RegFunction("ForceCameraToGameObject", new LuaCSFunction(ForceCameraToGameObject));
 		L.RegFunction("ForceCameraToPosition", new LuaCSFunction(ForceCameraToPosition));
-		L.RegFunction("FindTexture", new LuaCSFunction(FindTexture));
 		L.RegFunction("__eq", new LuaCSFunction(op_Equality));
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
 		L.RegVar("map", new LuaCSFunction(get_map), new LuaCSFunction(set_map));
 		L.RegVar("IsEditOn", new LuaCSFunction(get_IsEditOn), new LuaCSFunction(set_IsEditOn));
 		L.RegVar("WorkContent", new LuaCSFunction(get_WorkContent), new LuaCSFunction(set_WorkContent));
 		L.RegVar("DefaultContentName", new LuaCSFunction(get_DefaultContentName), null);
+		L.RegVar("SelectedCoord", new LuaCSFunction(get_SelectedCoord), new LuaCSFunction(set_SelectedCoord));
 		L.RegVar("vertexMapData", new LuaCSFunction(get_vertexMapData), null);
 		L.RegVar("mapData", new LuaCSFunction(get_mapData), null);
 		L.EndClass();
@@ -182,37 +182,6 @@ public class Sango_Tools_MapEditorWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int FindTexture(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 2)
-			{
-				Sango.Tools.MapEditor obj = (Sango.Tools.MapEditor)ToLua.CheckObject<Sango.Tools.MapEditor>(L, 1);
-				string arg0 = ToLua.CheckString(L, 2);
-				return 1;
-			}
-			else if (count == 3)
-			{
-				Sango.Tools.MapEditor obj = (Sango.Tools.MapEditor)ToLua.CheckObject<Sango.Tools.MapEditor>(L, 1);
-				string arg0 = ToLua.CheckString(L, 2);
-				string arg1 = ToLua.CheckString(L, 3);
-				return 1;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to method: Sango.Tools.MapEditor.FindTexture");
-			}
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int op_Equality(IntPtr L)
 	{
 		try
@@ -298,6 +267,20 @@ public class Sango_Tools_MapEditorWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index DefaultContentName on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_SelectedCoord(IntPtr L)
+	{
+		try
+		{
+			ToLua.PushValue(L, Sango.Tools.MapEditor.SelectedCoord);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
 		}
 	}
 
@@ -390,6 +373,22 @@ public class Sango_Tools_MapEditorWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index WorkContent on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_SelectedCoord(IntPtr L)
+	{
+		try
+		{
+			Sango.Hexagon.Coord arg0 = StackTraits<Sango.Hexagon.Coord>.Check(L, 2);
+			Sango.Tools.MapEditor.SelectedCoord = arg0;
+			Sango.Tools.MapEditor.SelectedCoord = arg0;
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
 		}
 	}
 }

@@ -37,8 +37,8 @@ public class Sango_Render_MapDataWrap
 		L.RegVar("color_map", new LuaCSFunction(get_color_map), new LuaCSFunction(set_color_map));
 		L.RegVar("vertex_width", new LuaCSFunction(get_vertex_width), null);
 		L.RegVar("vertex_height", new LuaCSFunction(get_vertex_height), null);
-		L.RegVar("wrold_width", new LuaCSFunction(get_wrold_width), null);
-		L.RegVar("wrold_height", new LuaCSFunction(get_wrold_height), null);
+		L.RegVar("world_width", new LuaCSFunction(get_world_width), null);
+		L.RegVar("world_height", new LuaCSFunction(get_world_height), null);
 		L.RegVar("bounds", new LuaCSFunction(get_bounds), new LuaCSFunction(set_bounds));
 		L.EndClass();
 	}
@@ -630,7 +630,7 @@ public class Sango_Render_MapDataWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_wrold_width(IntPtr L)
+	static int get_world_width(IntPtr L)
 	{
 		object o = null;
 
@@ -644,12 +644,12 @@ public class Sango_Render_MapDataWrap
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index wrold_width on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index world_width on a nil value");
 		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_wrold_height(IntPtr L)
+	static int get_world_height(IntPtr L)
 	{
 		object o = null;
 
@@ -663,7 +663,7 @@ public class Sango_Render_MapDataWrap
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index wrold_height on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index world_height on a nil value");
 		}
 	}
 

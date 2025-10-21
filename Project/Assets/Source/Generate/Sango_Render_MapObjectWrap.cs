@@ -17,6 +17,7 @@ public class Sango_Render_MapObjectWrap
 		L.RegFunction("OnPointerExit", new LuaCSFunction(OnPointerExit));
 		L.RegFunction("SetOutlineShow", new LuaCSFunction(SetOutlineShow));
 		L.RegFunction("CreateModel", new LuaCSFunction(CreateModel));
+		L.RegFunction("ChangeModel", new LuaCSFunction(ChangeModel));
 		L.RegFunction("ReLoadModels", new LuaCSFunction(ReLoadModels));
 		L.RegFunction("ClearModels", new LuaCSFunction(ClearModels));
 		L.RegFunction("ReCheckVisible", new LuaCSFunction(ReCheckVisible));
@@ -33,6 +34,7 @@ public class Sango_Render_MapObjectWrap
 		L.RegVar("onModelVisibleChange", new LuaCSFunction(get_onModelVisibleChange), new LuaCSFunction(set_onModelVisibleChange));
 		L.RegVar("onClick", new LuaCSFunction(get_onClick), new LuaCSFunction(set_onClick));
 		L.RegVar("loadedModel", new LuaCSFunction(get_loadedModel), new LuaCSFunction(set_loadedModel));
+		L.RegVar("editorShow", new LuaCSFunction(get_editorShow), new LuaCSFunction(set_editorShow));
 		L.RegVar("manager", new LuaCSFunction(get_manager), new LuaCSFunction(set_manager));
 		L.RegVar("remainInView", new LuaCSFunction(get_remainInView), new LuaCSFunction(set_remainInView));
 		L.RegVar("bounds", new LuaCSFunction(get_bounds), new LuaCSFunction(set_bounds));
@@ -293,6 +295,23 @@ public class Sango_Render_MapObjectWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: Sango.Render.MapObject.CreateModel");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ChangeModel(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Render.MapObject obj = (Sango.Render.MapObject)ToLua.CheckObject<Sango.Render.MapObject>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.ChangeModel(arg0);
+			return 0;
 		}
 		catch (Exception e)
 		{
@@ -588,6 +607,25 @@ public class Sango_Render_MapObjectWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index loadedModel on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_editorShow(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapObject obj = (Sango.Render.MapObject)o;
+			bool ret = obj.editorShow;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index editorShow on a nil value");
 		}
 	}
 
@@ -1005,6 +1043,25 @@ public class Sango_Render_MapObjectWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index loadedModel on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_editorShow(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapObject obj = (Sango.Render.MapObject)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.editorShow = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index editorShow on a nil value");
 		}
 	}
 

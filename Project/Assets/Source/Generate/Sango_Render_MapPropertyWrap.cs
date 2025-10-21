@@ -11,6 +11,7 @@ public class Sango_Render_MapPropertyWrap
 		L.RegFunction("UpdateRender", new LuaCSFunction(UpdateRender));
 		L.RegFunction("Init", new LuaCSFunction(Init));
 		L.RegFunction("Update", new LuaCSFunction(Update));
+		L.RegFunction("UpdateImmediate", new LuaCSFunction(UpdateImmediate));
 		L.RegFunction("Clear", new LuaCSFunction(Clear));
 		L.RegFunction("New", new LuaCSFunction(_CreateSango_Render_MapProperty));
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
@@ -100,6 +101,22 @@ public class Sango_Render_MapPropertyWrap
 			ToLua.CheckArgsCount(L, 1);
 			Sango.Render.MapProperty obj = (Sango.Render.MapProperty)ToLua.CheckObject<Sango.Render.MapProperty>(L, 1);
 			obj.Update();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UpdateImmediate(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			Sango.Render.MapProperty obj = (Sango.Render.MapProperty)ToLua.CheckObject<Sango.Render.MapProperty>(L, 1);
+			obj.UpdateImmediate();
 			return 0;
 		}
 		catch (Exception e)

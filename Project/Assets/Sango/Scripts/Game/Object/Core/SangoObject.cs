@@ -25,15 +25,15 @@ namespace Sango.Game
         public virtual SangoObjectType ObjectType { get { return SangoObjectType.Unknown; } }
 
         private int _Id = -1;
-        [JsonProperty]
+        [JsonProperty(Order = -99)]
         public int Id { get { return _Id; } set { _Id = value; } }
 
-        [JsonProperty]
+        [JsonProperty(Order = -98)]
         public virtual string Name { get; set; }
         public virtual string Tag { get; set; }
         public virtual bool IsAlive { get; set; }
         public virtual bool ActionOver { get; set; }
-      
+
 
         public SangoObject()
         {

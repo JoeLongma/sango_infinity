@@ -7,6 +7,8 @@ using System;
 using UnityEngine.Networking;
 using System.Collections;
 using System.IO.Compression;
+using System.IO;
+using Newtonsoft.Json;
 
 /// <summary>
 /// 该文件由X框架自动生成
@@ -30,7 +32,7 @@ public class GameStart : MonoBehaviour
 #endif
 
         Screen.sleepTimeout = UnityEngine.SleepTimeout.NeverSleep;
-        Path.Init();
+        Sango.Path.Init();
         StartCoroutine(GameInit());
     }
 

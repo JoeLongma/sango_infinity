@@ -12,6 +12,7 @@ public class Sango_BillboardUIWrap
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
 		L.RegVar("initScale", new LuaCSFunction(get_initScale), new LuaCSFunction(set_initScale));
 		L.RegVar("scaleFactor", new LuaCSFunction(get_scaleFactor), new LuaCSFunction(set_scaleFactor));
+		L.RegVar("offsetFactor", new LuaCSFunction(get_offsetFactor), new LuaCSFunction(set_offsetFactor));
 		L.EndClass();
 	}
 
@@ -88,6 +89,25 @@ public class Sango_BillboardUIWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_offsetFactor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.BillboardUI obj = (Sango.BillboardUI)o;
+			UnityEngine.Vector3 ret = obj.offsetFactor;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index offsetFactor on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_initScale(IntPtr L)
 	{
 		object o = null;
@@ -122,6 +142,25 @@ public class Sango_BillboardUIWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index scaleFactor on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_offsetFactor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.BillboardUI obj = (Sango.BillboardUI)o;
+			UnityEngine.Vector3 arg0 = ToLua.ToVector3(L, 2);
+			obj.offsetFactor = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index offsetFactor on a nil value");
 		}
 	}
 }

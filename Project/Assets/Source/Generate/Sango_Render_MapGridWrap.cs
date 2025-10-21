@@ -28,13 +28,12 @@ public class Sango_Render_MapGridWrap
 		L.RegFunction("GetGridHeight", new LuaCSFunction(GetGridHeight));
 		L.RegFunction("CoordsToPosition", new LuaCSFunction(CoordsToPosition));
 		L.RegFunction("PositionToCoords", new LuaCSFunction(PositionToCoords));
-		L.RegFunction("Update", new LuaCSFunction(Update));
 		L.RegFunction("New", new LuaCSFunction(_CreateSango_Render_MapGrid));
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
 		L.RegVar("hexWorld", new LuaCSFunction(get_hexWorld), new LuaCSFunction(set_hexWorld));
-		L.RegVar("bouns", new LuaCSFunction(get_bouns), new LuaCSFunction(set_bouns));
+		L.RegVar("bounds", new LuaCSFunction(get_bounds), new LuaCSFunction(set_bounds));
 		L.RegVar("gridSize", new LuaCSFunction(get_gridSize), new LuaCSFunction(set_gridSize));
-		L.RegVar("gridVertexCuont", new LuaCSFunction(get_gridVertexCuont), new LuaCSFunction(set_gridVertexCuont));
+		L.RegVar("gridVertexCount", new LuaCSFunction(get_gridVertexCount), new LuaCSFunction(set_gridVertexCount));
 		L.RegVar("gridTexture", new LuaCSFunction(get_gridTexture), new LuaCSFunction(set_gridTexture));
 		L.RegVar("gridTextureName", new LuaCSFunction(get_gridTextureName), new LuaCSFunction(set_gridTextureName));
 		L.RegVar("GridMaskTexture", new LuaCSFunction(get_GridMaskTexture), new LuaCSFunction(set_GridMaskTexture));
@@ -457,34 +456,6 @@ public class Sango_Render_MapGridWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Update(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 1)
-			{
-				Sango.Render.MapGrid obj = (Sango.Render.MapGrid)ToLua.CheckObject<Sango.Render.MapGrid>(L, 1);
-				obj.Update();
-				return 0;
-			}
-			else if (count == 2)
-			{
-				return 0;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to method: Sango.Render.MapGrid.Update");
-			}
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_hexWorld(IntPtr L)
 	{
 		object o = null;
@@ -504,7 +475,7 @@ public class Sango_Render_MapGridWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_bouns(IntPtr L)
+	static int get_bounds(IntPtr L)
 	{
 		object o = null;
 
@@ -518,7 +489,7 @@ public class Sango_Render_MapGridWrap
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index bouns on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index bounds on a nil value");
 		}
 	}
 
@@ -542,7 +513,7 @@ public class Sango_Render_MapGridWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_gridVertexCuont(IntPtr L)
+	static int get_gridVertexCount(IntPtr L)
 	{
 		object o = null;
 
@@ -556,7 +527,7 @@ public class Sango_Render_MapGridWrap
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index gridVertexCuont on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index gridVertexCount on a nil value");
 		}
 	}
 
@@ -656,7 +627,7 @@ public class Sango_Render_MapGridWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_bouns(IntPtr L)
+	static int set_bounds(IntPtr L)
 	{
 		object o = null;
 
@@ -670,7 +641,7 @@ public class Sango_Render_MapGridWrap
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index bouns on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index bounds on a nil value");
 		}
 	}
 
@@ -694,7 +665,7 @@ public class Sango_Render_MapGridWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_gridVertexCuont(IntPtr L)
+	static int set_gridVertexCount(IntPtr L)
 	{
 		object o = null;
 
@@ -708,7 +679,7 @@ public class Sango_Render_MapGridWrap
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index gridVertexCuont on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index gridVertexCount on a nil value");
 		}
 	}
 

@@ -20,6 +20,8 @@ public class Sango_Game_ForceWrap
 		L.RegFunction("ForEachCorps", new LuaCSFunction(ForEachCorps));
 		L.RegFunction("ForEachBuilding", new LuaCSFunction(ForEachBuilding));
 		L.RegFunction("ForEachTroop", new LuaCSFunction(ForEachTroop));
+		L.RegFunction("GainTechniquePoint", new LuaCSFunction(GainTechniquePoint));
+		L.RegFunction("HasTechnique", new LuaCSFunction(HasTechnique));
 		L.RegFunction("New", new LuaCSFunction(_CreateSango_Game_Force));
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
 		L.RegVar("Governor", new LuaCSFunction(get_Governor), new LuaCSFunction(set_Governor));
@@ -36,7 +38,7 @@ public class Sango_Game_ForceWrap
 		L.RegVar("IsPlayer", new LuaCSFunction(get_IsPlayer), new LuaCSFunction(set_IsPlayer));
 		L.RegVar("Name", new LuaCSFunction(get_Name), null);
 		L.RegVar("Flag", new LuaCSFunction(get_Flag), new LuaCSFunction(set_Flag));
-		L.RegVar("TechniquePoint", new LuaCSFunction(get_TechniquePoint), new LuaCSFunction(set_TechniquePoint));
+		L.RegVar("TechniquePoint", new LuaCSFunction(get_TechniquePoint), null);
 		L.RegVar("PolicyType", new LuaCSFunction(get_PolicyType), new LuaCSFunction(set_PolicyType));
 		L.RegVar("ResearchTechnique", new LuaCSFunction(get_ResearchTechnique), new LuaCSFunction(set_ResearchTechnique));
 		L.RegVar("PersonCount", new LuaCSFunction(get_PersonCount), new LuaCSFunction(set_PersonCount));
@@ -306,6 +308,41 @@ public class Sango_Game_ForceWrap
 			System.Action<Sango.Game.Troop> arg0 = (System.Action<Sango.Game.Troop>)ToLua.CheckDelegate<System.Action<Sango.Game.Troop>>(L, 2);
 			obj.ForEachTroop(arg0);
 			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GainTechniquePoint(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Game.Force obj = (Sango.Game.Force)ToLua.CheckObject<Sango.Game.Force>(L, 1);
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			obj.GainTechniquePoint(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int HasTechnique(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Game.Force obj = (Sango.Game.Force)ToLua.CheckObject<Sango.Game.Force>(L, 1);
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			bool o = obj.HasTechnique(arg0);
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
 		}
 		catch (Exception e)
 		{
@@ -899,21 +936,6 @@ public class Sango_Game_ForceWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Flag on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_TechniquePoint(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index TechniquePoint on a nil value");
 		}
 	}
 

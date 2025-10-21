@@ -237,7 +237,8 @@ namespace Sango.Game.Render.UI
 
         public void OnSave()
         {
-            string savePath = Path.SaveRootPath + "/Save/scenario_1.json";
+            int count = Scenario.all_scenario_list.Count;
+            string savePath = Path.ContentRootPath + $"/Scenario/scenario_save_{count}.json";
             Scenario.Cur.Save(savePath);
         }
 

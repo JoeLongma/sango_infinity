@@ -19,10 +19,10 @@ namespace Sango.Game
         public override SangoObjectType ObjectType { get { return SangoObjectType.Scenario; } }
 
         #region Data
-        [JsonProperty] public ScenarioInfo Info { get; internal set; }
-        [JsonProperty] public ScenarioCommonData CommonData { internal set; get; }
-        [JsonProperty] public ScenarioVariables Variables { internal set; get; }
-        [JsonProperty] public Map Map { internal set; get; }
+        [JsonProperty(Order = -97)] public ScenarioInfo Info { get; internal set; }
+        [JsonProperty(Order = -96)] public ScenarioCommonData CommonData { internal set; get; }
+        [JsonProperty(Order = -95)] public ScenarioVariables Variables { internal set; get; }
+        [JsonProperty(Order = -94)] public Map Map { internal set; get; }
 
         [JsonConverter(typeof(SangoObjectSetConverter<Force>))]
         [JsonProperty] public SangoObjectSet<Force> forceSet = new SangoObjectSet<Force>();
@@ -301,12 +301,15 @@ namespace Sango.Game
             //fs.Close();
             FilePath = path;
 
-            if (CommonData == null)
-                CommonData = GameData.Instance.LoadCommonData();
-            if (Variables == null)
-                Variables = new ScenarioVariables();
-            if (Map == null)
-                Map = new Map();
+            if (!Info.isSave)
+            {
+                if (CommonData == null)
+                    CommonData = GameData.Instance.LoadCommonData();
+                if (Variables == null)
+                    Variables = new ScenarioVariables();
+                if (Map == null)
+                    Map = new Map();
+            }
 
             JsonConvert.PopulateObject(File.ReadAllText(FilePath), this);
 
@@ -734,10 +737,10 @@ namespace Sango.Game
 
             if (!IsAlive)
                 return;
-//#if SANGO_DEBUG
+            //#if SANGO_DEBUG
             if (PauseTrunCount == Info.turnCount)
                 return;
-//#endif
+            //#endif
             if (!TurnStart())
                 return;
 
@@ -1036,6 +1039,7 @@ namespace Sango.Game
 
         public void Save(string path)
         {
+            Info.isSave = true;
             Sango.Directory.Create(path, false);
             JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings();
             jsonSerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;

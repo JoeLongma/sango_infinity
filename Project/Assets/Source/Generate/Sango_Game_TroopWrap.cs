@@ -11,6 +11,9 @@ public class Sango_Game_TroopWrap
 		L.RegFunction("Run", new LuaCSFunction(Run));
 		L.RegFunction("OnScenarioPrepare", new LuaCSFunction(OnScenarioPrepare));
 		L.RegFunction("OnTurnStart", new LuaCSFunction(OnTurnStart));
+		L.RegFunction("IsWithOutFood", new LuaCSFunction(IsWithOutFood));
+		L.RegFunction("ForEachMember", new LuaCSFunction(ForEachMember));
+		L.RegFunction("ForEachPerson", new LuaCSFunction(ForEachPerson));
 		L.RegFunction("CalculateAttribute", new LuaCSFunction(CalculateAttribute));
 		L.RegFunction("MoveCost", new LuaCSFunction(MoveCost));
 		L.RegFunction("IsAlliance", new LuaCSFunction(IsAlliance));
@@ -21,36 +24,32 @@ public class Sango_Game_TroopWrap
 		L.RegFunction("CalculateSkillDamage", new LuaCSFunction(CalculateSkillDamage));
 		L.RegFunction("CalculateSkillCriticalBoost", new LuaCSFunction(CalculateSkillCriticalBoost));
 		L.RegFunction("CalculateRestrainBoost", new LuaCSFunction(CalculateRestrainBoost));
-		L.RegFunction("CalculateTroopsLevelBoost", new LuaCSFunction(CalculateTroopsLevelBoost));
+		L.RegFunction("CheckTroopTypeLevel", new LuaCSFunction(CheckTroopTypeLevel));
+		L.RegFunction("TroopsLevelBoost", new LuaCSFunction(TroopsLevelBoost));
 		L.RegFunction("MoveTo", new LuaCSFunction(MoveTo));
 		L.RegFunction("TryMoveToSpell", new LuaCSFunction(TryMoveToSpell));
 		L.RegFunction("ChangeFood", new LuaCSFunction(ChangeFood));
 		L.RegFunction("ChangeTroops", new LuaCSFunction(ChangeTroops));
 		L.RegFunction("GetTroopsNum", new LuaCSFunction(GetTroopsNum));
 		L.RegFunction("SpellSkill", new LuaCSFunction(SpellSkill));
+		L.RegFunction("BuildBuilding", new LuaCSFunction(BuildBuilding));
 		L.RegFunction("TryMoveTo", new LuaCSFunction(TryMoveTo));
 		L.RegFunction("TryCloseTo", new LuaCSFunction(TryCloseTo));
 		L.RegFunction("TryMoveToCity", new LuaCSFunction(TryMoveToCity));
 		L.RegFunction("UpdateCell", new LuaCSFunction(UpdateCell));
 		L.RegFunction("EnterCity", new LuaCSFunction(EnterCity));
 		L.RegFunction("Clear", new LuaCSFunction(Clear));
+		L.RegFunction("RemovePerson", new LuaCSFunction(RemovePerson));
 		L.RegFunction("JoinToForce", new LuaCSFunction(JoinToForce));
+		L.RegFunction("OnPersonChangeCity", new LuaCSFunction(OnPersonChangeCity));
 		L.RegFunction("SetMission", new LuaCSFunction(SetMission));
 		L.RegFunction("NeedPrepareMission", new LuaCSFunction(NeedPrepareMission));
 		L.RegFunction("DoAI", new LuaCSFunction(DoAI));
 		L.RegFunction("AIPrepare", new LuaCSFunction(AIPrepare));
-		L.RegFunction("ChangeCity", new LuaCSFunction(ChangeCity));
 		L.RegFunction("New", new LuaCSFunction(_CreateSango_Game_Troop));
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
-		L.RegVar("BelongForce", new LuaCSFunction(get_BelongForce), new LuaCSFunction(set_BelongForce));
-		L.RegVar("BelongCorps", new LuaCSFunction(get_BelongCorps), new LuaCSFunction(set_BelongCorps));
-		L.RegVar("BelongCity", new LuaCSFunction(get_BelongCity), new LuaCSFunction(set_BelongCity));
-		L.RegVar("Leader", new LuaCSFunction(get_Leader), new LuaCSFunction(set_Leader));
-		L.RegVar("MemberList", new LuaCSFunction(get_MemberList), new LuaCSFunction(set_MemberList));
-		L.RegVar("TroopType", new LuaCSFunction(get_TroopType), new LuaCSFunction(set_TroopType));
-		L.RegVar("CaptiveList", new LuaCSFunction(get_CaptiveList), new LuaCSFunction(set_CaptiveList));
-		L.RegVar("x", new LuaCSFunction(get_x), new LuaCSFunction(set_x));
-		L.RegVar("y", new LuaCSFunction(get_y), new LuaCSFunction(set_y));
+		L.RegVar("captiveList", new LuaCSFunction(get_captiveList), new LuaCSFunction(set_captiveList));
+		L.RegVar("cell", new LuaCSFunction(get_cell), new LuaCSFunction(set_cell));
 		L.RegVar("troops", new LuaCSFunction(get_troops), new LuaCSFunction(set_troops));
 		L.RegVar("woundedTroops", new LuaCSFunction(get_woundedTroops), new LuaCSFunction(set_woundedTroops));
 		L.RegVar("energy", new LuaCSFunction(get_energy), new LuaCSFunction(set_energy));
@@ -61,24 +60,41 @@ public class Sango_Game_TroopWrap
 		L.RegVar("itemStore", new LuaCSFunction(get_itemStore), new LuaCSFunction(set_itemStore));
 		L.RegVar("missionType", new LuaCSFunction(get_missionType), new LuaCSFunction(set_missionType));
 		L.RegVar("missionTarget", new LuaCSFunction(get_missionTarget), new LuaCSFunction(set_missionTarget));
+		L.RegVar("missionTargetCell", new LuaCSFunction(get_missionTargetCell), new LuaCSFunction(set_missionTargetCell));
 		L.RegVar("skills", new LuaCSFunction(get_skills), new LuaCSFunction(set_skills));
-		L.RegVar("actionPower", new LuaCSFunction(get_actionPower), new LuaCSFunction(set_actionPower));
-		L.RegVar("cell", new LuaCSFunction(get_cell), new LuaCSFunction(set_cell));
+		L.RegVar("foodCost", new LuaCSFunction(get_foodCost), new LuaCSFunction(set_foodCost));
 		L.RegVar("MoveRange", new LuaCSFunction(get_MoveRange), new LuaCSFunction(set_MoveRange));
 		L.RegVar("ObjectType", new LuaCSFunction(get_ObjectType), null);
 		L.RegVar("AIFinished", new LuaCSFunction(get_AIFinished), new LuaCSFunction(set_AIFinished));
 		L.RegVar("AIPrepared", new LuaCSFunction(get_AIPrepared), new LuaCSFunction(set_AIPrepared));
+		L.RegVar("BelongForce", new LuaCSFunction(get_BelongForce), null);
+		L.RegVar("BelongCorps", new LuaCSFunction(get_BelongCorps), null);
+		L.RegVar("BelongCity", new LuaCSFunction(get_BelongCity), null);
+		L.RegVar("Leader", new LuaCSFunction(get_Leader), new LuaCSFunction(set_Leader));
+		L.RegVar("Member1", new LuaCSFunction(get_Member1), new LuaCSFunction(set_Member1));
+		L.RegVar("Member2", new LuaCSFunction(get_Member2), new LuaCSFunction(set_Member2));
+		L.RegVar("TroopType", new LuaCSFunction(get_TroopType), new LuaCSFunction(set_TroopType));
+		L.RegVar("TroopTypeLv", new LuaCSFunction(get_TroopTypeLv), null);
 		L.RegVar("Name", new LuaCSFunction(get_Name), null);
+		L.RegVar("x", new LuaCSFunction(get_x), null);
+		L.RegVar("y", new LuaCSFunction(get_y), null);
 		L.RegVar("MaxTroops", new LuaCSFunction(get_MaxTroops), null);
 		L.RegVar("IsFull", new LuaCSFunction(get_IsFull), null);
 		L.RegVar("MoveAbility", new LuaCSFunction(get_MoveAbility), null);
-		L.RegVar("isOver", new LuaCSFunction(get_isOver), new LuaCSFunction(set_isOver));
+		L.RegVar("ActionOver", new LuaCSFunction(get_ActionOver), new LuaCSFunction(set_ActionOver));
+		L.RegVar("NormalSkill", new LuaCSFunction(get_NormalSkill), null);
+		L.RegVar("NormalRangeSkill", new LuaCSFunction(get_NormalRangeSkill), null);
+		L.RegVar("DamageTroopExtraFactor", new LuaCSFunction(get_DamageTroopExtraFactor), null);
+		L.RegVar("DamageBuildingExtraFactor", new LuaCSFunction(get_DamageBuildingExtraFactor), null);
 		L.RegVar("SpearLv", new LuaCSFunction(get_SpearLv), null);
 		L.RegVar("HalberdLv", new LuaCSFunction(get_HalberdLv), null);
 		L.RegVar("CrossbowLv", new LuaCSFunction(get_CrossbowLv), null);
 		L.RegVar("HorseLv", new LuaCSFunction(get_HorseLv), null);
 		L.RegVar("WaterLv", new LuaCSFunction(get_WaterLv), null);
 		L.RegVar("MachineLv", new LuaCSFunction(get_MachineLv), null);
+		L.RegVar("Attack", new LuaCSFunction(get_Attack), new LuaCSFunction(set_Attack));
+		L.RegVar("Defence", new LuaCSFunction(get_Defence), new LuaCSFunction(set_Defence));
+		L.RegVar("BuildPower", new LuaCSFunction(get_BuildPower), null);
 		L.RegVar("Command", new LuaCSFunction(get_Command), null);
 		L.RegVar("Strength", new LuaCSFunction(get_Strength), null);
 		L.RegVar("Intelligence", new LuaCSFunction(get_Intelligence), null);
@@ -202,12 +218,65 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int CalculateAttribute(IntPtr L)
+	static int IsWithOutFood(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
+			int o = obj.IsWithOutFood();
+			LuaDLL.lua_pushinteger(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ForEachMember(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
+			System.Action<Sango.Game.Person> arg0 = (System.Action<Sango.Game.Person>)ToLua.CheckDelegate<System.Action<Sango.Game.Person>>(L, 2);
+			obj.ForEachMember(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ForEachPerson(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
+			System.Action<Sango.Game.Person> arg0 = (System.Action<Sango.Game.Person>)ToLua.CheckDelegate<System.Action<Sango.Game.Person>>(L, 2);
+			obj.ForEachPerson(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int CalculateAttribute(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
+			Sango.Game.Scenario arg0 = (Sango.Game.Scenario)ToLua.CheckObject<Sango.Game.Scenario>(L, 2);
+			obj.CalculateAttribute(arg0);
 			return 0;
 		}
 		catch (Exception e)
@@ -421,7 +490,16 @@ public class Sango_Game_TroopWrap
 		{
 			int count = LuaDLL.lua_gettop(L);
 
-			if (count == 3 && TypeChecker.CheckTypes<Sango.Game.Troop, Sango.Game.Troop, Sango.Game.Skill>(L, 1))
+			if (count == 3 && TypeChecker.CheckTypes<Sango.Game.BuildingBase, Sango.Game.Troop, int>(L, 1))
+			{
+				Sango.Game.BuildingBase arg0 = (Sango.Game.BuildingBase)ToLua.ToObject(L, 1);
+				Sango.Game.Troop arg1 = (Sango.Game.Troop)ToLua.ToObject(L, 2);
+				int arg2 = (int)LuaDLL.lua_tointeger(L, 3);
+				int o = Sango.Game.Troop.CalculateSkillDamage(arg0, arg1, arg2);
+				LuaDLL.lua_pushinteger(L, o);
+				return 1;
+			}
+			else if (count == 3 && TypeChecker.CheckTypes<Sango.Game.Troop, Sango.Game.Troop, Sango.Game.Skill>(L, 1))
 			{
 				Sango.Game.Troop arg0 = (Sango.Game.Troop)ToLua.ToObject(L, 1);
 				Sango.Game.Troop arg1 = (Sango.Game.Troop)ToLua.ToObject(L, 2);
@@ -505,8 +583,10 @@ public class Sango_Game_TroopWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 2);
-			Sango.Game.TroopType arg0 = (Sango.Game.TroopType)ToLua.CheckObject<Sango.Game.TroopType>(L, 1);
-			Sango.Game.TroopType arg1 = (Sango.Game.TroopType)ToLua.CheckObject<Sango.Game.TroopType>(L, 2);
+			Sango.Game.Troop arg0 = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
+			Sango.Game.Troop arg1 = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 2);
+			float o = Sango.Game.Troop.CalculateRestrainBoost(arg0, arg1);
+			LuaDLL.lua_pushnumber(L, o);
 			return 1;
 		}
 		catch (Exception e)
@@ -516,13 +596,33 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int CalculateTroopsLevelBoost(IntPtr L)
+	static int CheckTroopTypeLevel(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 2);
-			Sango.Game.Troop arg0 = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
-			Sango.Game.TroopType arg1 = (Sango.Game.TroopType)ToLua.CheckObject<Sango.Game.TroopType>(L, 2);
+			Sango.Game.TroopType arg0 = (Sango.Game.TroopType)ToLua.CheckObject<Sango.Game.TroopType>(L, 1);
+			Sango.Game.Person arg1 = (Sango.Game.Person)ToLua.CheckObject<Sango.Game.Person>(L, 2);
+			int o = Sango.Game.Troop.CheckTroopTypeLevel(arg0, arg1);
+			LuaDLL.lua_pushinteger(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int TroopsLevelBoost(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			int o = obj.TroopsLevelBoost(arg0);
+			LuaDLL.lua_pushinteger(L, o);
 			return 1;
 		}
 		catch (Exception e)
@@ -642,6 +742,25 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int BuildBuilding(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
+			Sango.Game.Cell arg0 = (Sango.Game.Cell)ToLua.CheckObject<Sango.Game.Cell>(L, 2);
+			Sango.Game.BuildingType arg1 = (Sango.Game.BuildingType)ToLua.CheckObject<Sango.Game.BuildingType>(L, 3);
+			bool o = obj.BuildBuilding(arg0, arg1);
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int TryMoveTo(IntPtr L)
 	{
 		try
@@ -748,6 +867,39 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int RemovePerson(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 2)
+			{
+				Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
+				Sango.Game.Person arg0 = (Sango.Game.Person)ToLua.CheckObject<Sango.Game.Person>(L, 2);
+				obj.RemovePerson(arg0);
+				return 0;
+			}
+			else if (count == 3)
+			{
+				Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
+				Sango.Game.Person arg0 = (Sango.Game.Person)ToLua.CheckObject<Sango.Game.Person>(L, 2);
+				bool arg1 = LuaDLL.luaL_checkboolean(L, 3);
+				obj.RemovePerson(arg0, arg1);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: Sango.Game.Troop.RemovePerson");
+			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int JoinToForce(IntPtr L)
 	{
 		try
@@ -758,6 +910,25 @@ public class Sango_Game_TroopWrap
 			bool o = obj.JoinToForce(arg0);
 			LuaDLL.lua_pushboolean(L, o);
 			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OnPersonChangeCity(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 4);
+			Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
+			Sango.Game.Person arg0 = (Sango.Game.Person)ToLua.CheckObject<Sango.Game.Person>(L, 2);
+			Sango.Game.City arg1 = (Sango.Game.City)ToLua.CheckObject<Sango.Game.City>(L, 3);
+			Sango.Game.City arg2 = (Sango.Game.City)ToLua.CheckObject<Sango.Game.City>(L, 4);
+			obj.OnPersonChangeCity(arg0, arg1, arg2);
+			return 0;
 		}
 		catch (Exception e)
 		{
@@ -835,135 +1006,7 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int ChangeCity(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 2);
-			Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
-			Sango.Game.City arg0 = (Sango.Game.City)ToLua.CheckObject<Sango.Game.City>(L, 2);
-			return 1;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_BelongForce(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			Sango.Game.Force ret = obj.BelongForce;
-			ToLua.PushObject(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index BelongForce on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_BelongCorps(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			Sango.Game.Corps ret = obj.BelongCorps;
-			ToLua.PushObject(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index BelongCorps on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_BelongCity(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			Sango.Game.City ret = obj.BelongCity;
-			ToLua.PushObject(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index BelongCity on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_Leader(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			Sango.Game.Person ret = obj.Leader;
-			ToLua.PushObject(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Leader on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_MemberList(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index MemberList on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_TroopType(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			Sango.Game.TroopType ret = obj.TroopType;
-			ToLua.PushObject(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index TroopType on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_CaptiveList(IntPtr L)
+	static int get_captiveList(IntPtr L)
 	{
 		object o = null;
 
@@ -977,12 +1020,12 @@ public class Sango_Game_TroopWrap
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index CaptiveList on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index captiveList on a nil value");
 		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_x(IntPtr L)
+	static int get_cell(IntPtr L)
 	{
 		object o = null;
 
@@ -990,32 +1033,13 @@ public class Sango_Game_TroopWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			int ret = obj.x;
-			LuaDLL.lua_pushinteger(L, ret);
+			Sango.Game.Cell ret = obj.cell;
+			ToLua.PushObject(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index x on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_y(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			int ret = obj.y;
-			LuaDLL.lua_pushinteger(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index y on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index cell on a nil value");
 		}
 	}
 
@@ -1210,6 +1234,25 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_missionTargetCell(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			Sango.Game.Cell ret = obj.missionTargetCell;
+			ToLua.PushObject(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index missionTargetCell on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_skills(IntPtr L)
 	{
 		object o = null;
@@ -1218,6 +1261,8 @@ public class Sango_Game_TroopWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			System.Collections.Generic.List<Sango.Game.SkillInstance> ret = obj.skills;
+			ToLua.PushSealed(L, ret);
 			return 1;
 		}
 		catch(Exception e)
@@ -1227,7 +1272,7 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_actionPower(IntPtr L)
+	static int get_foodCost(IntPtr L)
 	{
 		object o = null;
 
@@ -1235,30 +1280,13 @@ public class Sango_Game_TroopWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int ret = obj.foodCost;
+			LuaDLL.lua_pushinteger(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index actionPower on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_cell(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			Sango.Game.Cell ret = obj.cell;
-			ToLua.PushObject(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index cell on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index foodCost on a nil value");
 		}
 	}
 
@@ -1339,6 +1367,158 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_BelongForce(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			Sango.Game.Force ret = obj.BelongForce;
+			ToLua.PushObject(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index BelongForce on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_BelongCorps(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			Sango.Game.Corps ret = obj.BelongCorps;
+			ToLua.PushObject(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index BelongCorps on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_BelongCity(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			Sango.Game.City ret = obj.BelongCity;
+			ToLua.PushObject(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index BelongCity on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Leader(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			Sango.Game.Person ret = obj.Leader;
+			ToLua.PushObject(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Leader on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Member1(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			Sango.Game.Person ret = obj.Member1;
+			ToLua.PushObject(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Member1 on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Member2(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			Sango.Game.Person ret = obj.Member2;
+			ToLua.PushObject(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Member2 on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_TroopType(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			Sango.Game.TroopType ret = obj.TroopType;
+			ToLua.PushObject(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index TroopType on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_TroopTypeLv(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int ret = obj.TroopTypeLv;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index TroopTypeLv on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_Name(IntPtr L)
 	{
 		object o = null;
@@ -1354,6 +1534,44 @@ public class Sango_Game_TroopWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Name on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_x(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int ret = obj.x;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index x on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_y(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int ret = obj.y;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index y on a nil value");
 		}
 	}
 
@@ -1415,7 +1633,7 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_isOver(IntPtr L)
+	static int get_ActionOver(IntPtr L)
 	{
 		object o = null;
 
@@ -1423,11 +1641,89 @@ public class Sango_Game_TroopWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			bool ret = obj.ActionOver;
+			LuaDLL.lua_pushboolean(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index isOver on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index ActionOver on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_NormalSkill(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			Sango.Game.SkillInstance ret = obj.NormalSkill;
+			ToLua.PushObject(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index NormalSkill on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_NormalRangeSkill(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			Sango.Game.SkillInstance ret = obj.NormalRangeSkill;
+			ToLua.PushObject(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index NormalRangeSkill on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_DamageTroopExtraFactor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			float ret = obj.DamageTroopExtraFactor;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index DamageTroopExtraFactor on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_DamageBuildingExtraFactor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			float ret = obj.DamageBuildingExtraFactor;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index DamageBuildingExtraFactor on a nil value");
 		}
 	}
 
@@ -1542,6 +1838,63 @@ public class Sango_Game_TroopWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index MachineLv on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Attack(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int ret = obj.Attack;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Attack on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Defence(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int ret = obj.Defence;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Defence on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_BuildPower(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int ret = obj.BuildPower;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index BuildPower on a nil value");
 		}
 	}
 
@@ -1679,114 +2032,7 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_BelongForce(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			Sango.Game.Force arg0 = (Sango.Game.Force)ToLua.CheckObject<Sango.Game.Force>(L, 2);
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index BelongForce on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_BelongCorps(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index BelongCorps on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_BelongCity(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index BelongCity on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_Leader(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			Sango.Game.Person arg0 = (Sango.Game.Person)ToLua.CheckObject<Sango.Game.Person>(L, 2);
-			obj.Leader = arg0;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Leader on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_MemberList(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index MemberList on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_TroopType(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			Sango.Game.TroopType arg0 = (Sango.Game.TroopType)ToLua.CheckObject<Sango.Game.TroopType>(L, 2);
-			obj.TroopType = arg0;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index TroopType on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_CaptiveList(IntPtr L)
+	static int set_captiveList(IntPtr L)
 	{
 		object o = null;
 
@@ -1800,12 +2046,12 @@ public class Sango_Game_TroopWrap
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index CaptiveList on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index captiveList on a nil value");
 		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_x(IntPtr L)
+	static int set_cell(IntPtr L)
 	{
 		object o = null;
 
@@ -1813,30 +2059,13 @@ public class Sango_Game_TroopWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			Sango.Game.Cell arg0 = (Sango.Game.Cell)ToLua.CheckObject<Sango.Game.Cell>(L, 2);
+			obj.cell = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index x on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_y(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index y on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index cell on a nil value");
 		}
 	}
 
@@ -2031,6 +2260,25 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_missionTargetCell(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			Sango.Game.Cell arg0 = (Sango.Game.Cell)ToLua.CheckObject<Sango.Game.Cell>(L, 2);
+			obj.missionTargetCell = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index missionTargetCell on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_skills(IntPtr L)
 	{
 		object o = null;
@@ -2039,7 +2287,8 @@ public class Sango_Game_TroopWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			System.Collections.Generic.List<Sango.Game.Skill> arg0 = (System.Collections.Generic.List<Sango.Game.Skill>)ToLua.CheckObject(L, 2, TypeTraits<System.Collections.Generic.List<Sango.Game.Skill>>.type);
+			System.Collections.Generic.List<Sango.Game.SkillInstance> arg0 = (System.Collections.Generic.List<Sango.Game.SkillInstance>)ToLua.CheckObject(L, 2, TypeTraits<System.Collections.Generic.List<Sango.Game.SkillInstance>>.type);
+			obj.skills = arg0;
 			return 0;
 		}
 		catch(Exception e)
@@ -2049,7 +2298,7 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_actionPower(IntPtr L)
+	static int set_foodCost(IntPtr L)
 	{
 		object o = null;
 
@@ -2057,31 +2306,13 @@ public class Sango_Game_TroopWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			byte arg0 = (byte)LuaDLL.luaL_checkinteger(L, 2);
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			obj.foodCost = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index actionPower on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_cell(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			Sango.Game.Cell arg0 = (Sango.Game.Cell)ToLua.CheckObject<Sango.Game.Cell>(L, 2);
-			obj.cell = arg0;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index cell on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index foodCost on a nil value");
 		}
 	}
 
@@ -2143,7 +2374,83 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_isOver(IntPtr L)
+	static int set_Leader(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			Sango.Game.Person arg0 = (Sango.Game.Person)ToLua.CheckObject<Sango.Game.Person>(L, 2);
+			obj.Leader = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Leader on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_Member1(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			Sango.Game.Person arg0 = (Sango.Game.Person)ToLua.CheckObject<Sango.Game.Person>(L, 2);
+			obj.Member1 = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Member1 on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_Member2(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			Sango.Game.Person arg0 = (Sango.Game.Person)ToLua.CheckObject<Sango.Game.Person>(L, 2);
+			obj.Member2 = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Member2 on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_TroopType(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			Sango.Game.TroopType arg0 = (Sango.Game.TroopType)ToLua.CheckObject<Sango.Game.TroopType>(L, 2);
+			obj.TroopType = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index TroopType on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_ActionOver(IntPtr L)
 	{
 		object o = null;
 
@@ -2152,11 +2459,50 @@ public class Sango_Game_TroopWrap
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)o;
 			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.ActionOver = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index isOver on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index ActionOver on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_Attack(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			obj.Attack = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Attack on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_Defence(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			obj.Defence = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Defence on a nil value");
 		}
 	}
 }

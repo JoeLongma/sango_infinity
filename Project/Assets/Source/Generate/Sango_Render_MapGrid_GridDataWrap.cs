@@ -7,11 +7,14 @@ public class Sango_Render_MapGrid_GridDataWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(Sango.Render.MapGrid.GridData), typeof(System.Object));
+		L.RegFunction("SetGridState", new LuaCSFunction(SetGridState));
+		L.RegFunction("HasGridState", new LuaCSFunction(HasGridState));
 		L.RegFunction("OnLoad", new LuaCSFunction(OnLoad));
 		L.RegFunction("OnSave", new LuaCSFunction(OnSave));
 		L.RegFunction("New", new LuaCSFunction(_CreateSango_Render_MapGrid_GridData));
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
 		L.RegVar("terrainType", new LuaCSFunction(get_terrainType), new LuaCSFunction(set_terrainType));
+		L.RegVar("terrainState", new LuaCSFunction(get_terrainState), new LuaCSFunction(set_terrainState));
 		L.EndClass();
 	}
 
@@ -32,6 +35,42 @@ public class Sango_Render_MapGrid_GridDataWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: Sango.Render.MapGrid.GridData.New");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetGridState(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			Sango.Render.MapGrid.GridData obj = (Sango.Render.MapGrid.GridData)ToLua.CheckObject<Sango.Render.MapGrid.GridData>(L, 1);
+			Sango.Render.MapGrid.GridState arg0 = (Sango.Render.MapGrid.GridState)ToLua.CheckObject(L, 2, TypeTraits<Sango.Render.MapGrid.GridState>.type);
+			bool arg1 = LuaDLL.luaL_checkboolean(L, 3);
+			obj.SetGridState(arg0, arg1);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int HasGridState(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Render.MapGrid.GridData obj = (Sango.Render.MapGrid.GridData)ToLua.CheckObject<Sango.Render.MapGrid.GridData>(L, 1);
+			Sango.Render.MapGrid.GridState arg0 = (Sango.Render.MapGrid.GridState)ToLua.CheckObject(L, 2, TypeTraits<Sango.Render.MapGrid.GridState>.type);
+			bool o = obj.HasGridState(arg0);
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
 		}
 		catch (Exception e)
 		{
@@ -94,6 +133,25 @@ public class Sango_Render_MapGrid_GridDataWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_terrainState(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapGrid.GridData obj = (Sango.Render.MapGrid.GridData)o;
+			int ret = obj.terrainState;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index terrainState on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_terrainType(IntPtr L)
 	{
 		object o = null;
@@ -109,6 +167,25 @@ public class Sango_Render_MapGrid_GridDataWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index terrainType on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_terrainState(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapGrid.GridData obj = (Sango.Render.MapGrid.GridData)o;
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			obj.terrainState = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index terrainState on a nil value");
 		}
 	}
 }

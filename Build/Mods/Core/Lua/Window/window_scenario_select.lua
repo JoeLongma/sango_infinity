@@ -23,6 +23,9 @@ function Window_Scenario_Select:Awake()
         local scenario = scenarioList[i - 1];
         local scenarioInfo = scenario.Info
         local str = string.format("%d年%d月%d日  %s", scenarioInfo.year, scenarioInfo.month, scenarioInfo.day, scenarioInfo.name);
+        if scenarioInfo.isSave then
+            str = "(存档)"..str;
+        end
         infoText.text = str;
         self.mItemList[i] = { newItem, scenario };
         local btn = Sango.UnityTools.GetComponent(newItem, "item", Window.TypeOfUIButton)

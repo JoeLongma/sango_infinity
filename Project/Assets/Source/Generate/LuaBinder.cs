@@ -373,6 +373,11 @@ public static class LuaBinder
 		L.RegFunction("EventDelegate_Sango_Game_City_Sango_Game_Scenario", new LuaCSFunction(Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Scenario));
 		L.RegFunction("EventDelegate_Sango_Game_Troop_Sango_Game_Scenario", new LuaCSFunction(Sango_EventBase_EventDelegate_Sango_Game_Troop_Sango_Game_Scenario));
 		L.RegFunction("EventDelegate_Sango_Game_Cell_Sango_Game_Cell", new LuaCSFunction(Sango_EventBase_EventDelegate_Sango_Game_Cell_Sango_Game_Cell));
+		L.RegFunction("EventDelegate_Sango_Game_City_Sango_Game_Troop_Sango_Game_Scenario", new LuaCSFunction(Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_Sango_Game_Scenario));
+		L.RegFunction("EventDelegate_Sango_Game_City_int_Sango_Game_Persons_int_System_Action_int", new LuaCSFunction(Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Persons_int_System_Action_int));
+		L.RegFunction("EventDelegate_Sango_Game_City_int_Sango_Game_Person_int_System_Action_int", new LuaCSFunction(Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Person_int_System_Action_int));
+		L.RegFunction("EventDelegate_Sango_Game_City_Sango_Game_Troop_int_System_Action_int", new LuaCSFunction(Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_int_System_Action_int));
+		L.RegFunction("EventDelegate_Sango_Game_Person", new LuaCSFunction(Sango_EventBase_EventDelegate_Sango_Game_Person));
 		L.EndModule();
 		L.EndModule();
 		L.EndModule();
@@ -2362,6 +2367,156 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateTraits<Sango.EventBase.EventDelegate<Sango.Game.Cell,Sango.Game.Cell>>.Create(func, self);
+				ToLua.Push(L, arg1);
+				func.Dispose();
+				self.Dispose();
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_Sango_Game_Scenario(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,Sango.Game.Scenario>>.Create(func);
+				ToLua.Push(L, arg1);
+				func.Dispose();
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,Sango.Game.Scenario>>.Create(func, self);
+				ToLua.Push(L, arg1);
+				func.Dispose();
+				self.Dispose();
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Persons_int_System_Action_int(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>>>.Create(func);
+				ToLua.Push(L, arg1);
+				func.Dispose();
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>>>.Create(func, self);
+				ToLua.Push(L, arg1);
+				func.Dispose();
+				self.Dispose();
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Person_int_System_Action_int(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person,int,System.Action<int>>>.Create(func);
+				ToLua.Push(L, arg1);
+				func.Dispose();
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person,int,System.Action<int>>>.Create(func, self);
+				ToLua.Push(L, arg1);
+				func.Dispose();
+				self.Dispose();
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_int_System_Action_int(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,int,System.Action<int>>>.Create(func);
+				ToLua.Push(L, arg1);
+				func.Dispose();
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,int,System.Action<int>>>.Create(func, self);
+				ToLua.Push(L, arg1);
+				func.Dispose();
+				self.Dispose();
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Sango_EventBase_EventDelegate_Sango_Game_Person(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<Sango.EventBase.EventDelegate<Sango.Game.Person>>.Create(func);
+				ToLua.Push(L, arg1);
+				func.Dispose();
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<Sango.EventBase.EventDelegate<Sango.Game.Person>>.Create(func, self);
 				ToLua.Push(L, arg1);
 				func.Dispose();
 				self.Dispose();

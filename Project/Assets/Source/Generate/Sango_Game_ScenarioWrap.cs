@@ -45,18 +45,11 @@ public class Sango_Game_ScenarioWrap
 		L.RegFunction("NextTurn", new LuaCSFunction(NextTurn));
 		L.RegFunction("GetRelation", new LuaCSFunction(GetRelation));
 		L.RegFunction("AddRelation", new LuaCSFunction(AddRelation));
+		L.RegFunction("GetDateStr", new LuaCSFunction(GetDateStr));
+		L.RegFunction("CreateTroop", new LuaCSFunction(CreateTroop));
+		L.RegFunction("Save", new LuaCSFunction(Save));
 		L.RegFunction("New", new LuaCSFunction(_CreateSango_Game_Scenario));
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
-		L.RegVar("MAX_DATA_COUNT", new LuaCSFunction(get_MAX_DATA_COUNT), null);
-		L.RegVar("MAX_DATA_COUNT_8096", new LuaCSFunction(get_MAX_DATA_COUNT_8096), null);
-		L.RegVar("MAX_DATA_COUNT_2048", new LuaCSFunction(get_MAX_DATA_COUNT_2048), null);
-		L.RegVar("MAX_DATA_COUNT_1024", new LuaCSFunction(get_MAX_DATA_COUNT_1024), null);
-		L.RegVar("MAX_DATA_COUNT_512", new LuaCSFunction(get_MAX_DATA_COUNT_512), null);
-		L.RegVar("MAX_DATA_COUNT_256", new LuaCSFunction(get_MAX_DATA_COUNT_256), null);
-		L.RegVar("MAX_DATA_COUNT_128", new LuaCSFunction(get_MAX_DATA_COUNT_128), null);
-		L.RegVar("MAX_DATA_COUNT_64", new LuaCSFunction(get_MAX_DATA_COUNT_64), null);
-		L.RegVar("MAX_DATA_COUNT_32", new LuaCSFunction(get_MAX_DATA_COUNT_32), null);
-		L.RegVar("MAX_DATA_COUNT_16", new LuaCSFunction(get_MAX_DATA_COUNT_16), null);
 		L.RegVar("forceSet", new LuaCSFunction(get_forceSet), new LuaCSFunction(set_forceSet));
 		L.RegVar("corpsSet", new LuaCSFunction(get_corpsSet), new LuaCSFunction(set_corpsSet));
 		L.RegVar("citySet", new LuaCSFunction(get_citySet), new LuaCSFunction(set_citySet));
@@ -933,10 +926,14 @@ public class Sango_Game_ScenarioWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_MAX_DATA_COUNT(IntPtr L)
+	static int GetDateStr(IntPtr L)
 	{
 		try
 		{
+			ToLua.CheckArgsCount(L, 1);
+			Sango.Game.Scenario obj = (Sango.Game.Scenario)ToLua.CheckObject<Sango.Game.Scenario>(L, 1);
+			string o = obj.GetDateStr();
+			LuaDLL.lua_pushstring(L, o);
 			return 1;
 		}
 		catch (Exception e)
@@ -946,10 +943,14 @@ public class Sango_Game_ScenarioWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_MAX_DATA_COUNT_8096(IntPtr L)
+	static int CreateTroop(IntPtr L)
 	{
 		try
 		{
+			ToLua.CheckArgsCount(L, 1);
+			Sango.Game.Scenario obj = (Sango.Game.Scenario)ToLua.CheckObject<Sango.Game.Scenario>(L, 1);
+			Sango.Game.Troop o = obj.CreateTroop();
+			ToLua.PushObject(L, o);
 			return 1;
 		}
 		catch (Exception e)
@@ -959,102 +960,15 @@ public class Sango_Game_ScenarioWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_MAX_DATA_COUNT_2048(IntPtr L)
+	static int Save(IntPtr L)
 	{
 		try
 		{
-			return 1;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_MAX_DATA_COUNT_1024(IntPtr L)
-	{
-		try
-		{
-			return 1;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_MAX_DATA_COUNT_512(IntPtr L)
-	{
-		try
-		{
-			return 1;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_MAX_DATA_COUNT_256(IntPtr L)
-	{
-		try
-		{
-			return 1;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_MAX_DATA_COUNT_128(IntPtr L)
-	{
-		try
-		{
-			return 1;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_MAX_DATA_COUNT_64(IntPtr L)
-	{
-		try
-		{
-			return 1;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_MAX_DATA_COUNT_32(IntPtr L)
-	{
-		try
-		{
-			return 1;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_MAX_DATA_COUNT_16(IntPtr L)
-	{
-		try
-		{
-			return 1;
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Game.Scenario obj = (Sango.Game.Scenario)ToLua.CheckObject<Sango.Game.Scenario>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.Save(arg0);
+			return 0;
 		}
 		catch (Exception e)
 		{

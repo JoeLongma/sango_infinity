@@ -100,6 +100,11 @@ public class DelegateFactory
 		dict.Add(typeof(Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Scenario>), factory.Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Scenario);
 		dict.Add(typeof(Sango.EventBase.EventDelegate<Sango.Game.Troop,Sango.Game.Scenario>), factory.Sango_EventBase_EventDelegate_Sango_Game_Troop_Sango_Game_Scenario);
 		dict.Add(typeof(Sango.EventBase.EventDelegate<Sango.Game.Cell,Sango.Game.Cell>), factory.Sango_EventBase_EventDelegate_Sango_Game_Cell_Sango_Game_Cell);
+		dict.Add(typeof(Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,Sango.Game.Scenario>), factory.Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_Sango_Game_Scenario);
+		dict.Add(typeof(Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>>), factory.Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Persons_int_System_Action_int);
+		dict.Add(typeof(Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person,int,System.Action<int>>), factory.Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Person_int_System_Action_int);
+		dict.Add(typeof(Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,int,System.Action<int>>), factory.Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_int_System_Action_int);
+		dict.Add(typeof(Sango.EventBase.EventDelegate<Sango.Game.Person>), factory.Sango_EventBase_EventDelegate_Sango_Game_Person);
 
 		DelegateTraits<System.Action>.Init(factory.System_Action);
 		DelegateTraits<UnityEngine.Events.UnityAction>.Init(factory.UnityEngine_Events_UnityAction);
@@ -184,6 +189,11 @@ public class DelegateFactory
 		DelegateTraits<Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Scenario>>.Init(factory.Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Scenario);
 		DelegateTraits<Sango.EventBase.EventDelegate<Sango.Game.Troop,Sango.Game.Scenario>>.Init(factory.Sango_EventBase_EventDelegate_Sango_Game_Troop_Sango_Game_Scenario);
 		DelegateTraits<Sango.EventBase.EventDelegate<Sango.Game.Cell,Sango.Game.Cell>>.Init(factory.Sango_EventBase_EventDelegate_Sango_Game_Cell_Sango_Game_Cell);
+		DelegateTraits<Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,Sango.Game.Scenario>>.Init(factory.Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_Sango_Game_Scenario);
+		DelegateTraits<Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>>>.Init(factory.Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Persons_int_System_Action_int);
+		DelegateTraits<Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person,int,System.Action<int>>>.Init(factory.Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Person_int_System_Action_int);
+		DelegateTraits<Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,int,System.Action<int>>>.Init(factory.Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_int_System_Action_int);
+		DelegateTraits<Sango.EventBase.EventDelegate<Sango.Game.Person>>.Init(factory.Sango_EventBase_EventDelegate_Sango_Game_Person);
 
 		TypeTraits<System.Action>.Init(factory.Check_System_Action);
 		TypeTraits<UnityEngine.Events.UnityAction>.Init(factory.Check_UnityEngine_Events_UnityAction);
@@ -268,6 +278,11 @@ public class DelegateFactory
 		TypeTraits<Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Scenario>>.Init(factory.Check_Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Scenario);
 		TypeTraits<Sango.EventBase.EventDelegate<Sango.Game.Troop,Sango.Game.Scenario>>.Init(factory.Check_Sango_EventBase_EventDelegate_Sango_Game_Troop_Sango_Game_Scenario);
 		TypeTraits<Sango.EventBase.EventDelegate<Sango.Game.Cell,Sango.Game.Cell>>.Init(factory.Check_Sango_EventBase_EventDelegate_Sango_Game_Cell_Sango_Game_Cell);
+		TypeTraits<Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,Sango.Game.Scenario>>.Init(factory.Check_Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_Sango_Game_Scenario);
+		TypeTraits<Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>>>.Init(factory.Check_Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Persons_int_System_Action_int);
+		TypeTraits<Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person,int,System.Action<int>>>.Init(factory.Check_Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Person_int_System_Action_int);
+		TypeTraits<Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,int,System.Action<int>>>.Init(factory.Check_Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_int_System_Action_int);
+		TypeTraits<Sango.EventBase.EventDelegate<Sango.Game.Person>>.Init(factory.Check_Sango_EventBase_EventDelegate_Sango_Game_Person);
 
 		StackTraits<System.Action>.Push = factory.Push_System_Action;
 		StackTraits<UnityEngine.Events.UnityAction>.Push = factory.Push_UnityEngine_Events_UnityAction;
@@ -352,6 +367,11 @@ public class DelegateFactory
 		StackTraits<Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Scenario>>.Push = factory.Push_Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Scenario;
 		StackTraits<Sango.EventBase.EventDelegate<Sango.Game.Troop,Sango.Game.Scenario>>.Push = factory.Push_Sango_EventBase_EventDelegate_Sango_Game_Troop_Sango_Game_Scenario;
 		StackTraits<Sango.EventBase.EventDelegate<Sango.Game.Cell,Sango.Game.Cell>>.Push = factory.Push_Sango_EventBase_EventDelegate_Sango_Game_Cell_Sango_Game_Cell;
+		StackTraits<Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,Sango.Game.Scenario>>.Push = factory.Push_Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_Sango_Game_Scenario;
+		StackTraits<Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>>>.Push = factory.Push_Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Persons_int_System_Action_int;
+		StackTraits<Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person,int,System.Action<int>>>.Push = factory.Push_Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Person_int_System_Action_int;
+		StackTraits<Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,int,System.Action<int>>>.Push = factory.Push_Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_int_System_Action_int;
+		StackTraits<Sango.EventBase.EventDelegate<Sango.Game.Person>>.Push = factory.Push_Sango_EventBase_EventDelegate_Sango_Game_Person;
 	}
     
     public static Delegate CreateDelegate(Type t, LuaFunction func = null)
@@ -5265,6 +5285,317 @@ public class DelegateFactory
 	}
 
 	void Push_Sango_EventBase_EventDelegate_Sango_Game_Cell_Sango_Game_Cell(IntPtr L, Sango.EventBase.EventDelegate<Sango.Game.Cell,Sango.Game.Cell> o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_Sango_Game_Scenario_Event : LuaDelegate
+	{
+		public Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_Sango_Game_Scenario_Event(LuaFunction func) : base(func) { }
+		public Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_Sango_Game_Scenario_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(Sango.Game.City param0, Sango.Game.Troop param1, Sango.Game.Scenario param2)
+		{
+			func.BeginPCall();
+			func.PushObject(param0);
+			func.PushObject(param1);
+			func.PushObject(param2);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(Sango.Game.City param0, Sango.Game.Troop param1, Sango.Game.Scenario param2)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushObject(param0);
+			func.PushObject(param1);
+			func.PushObject(param2);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,Sango.Game.Scenario> Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_Sango_Game_Scenario(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,Sango.Game.Scenario> fn = delegate(Sango.Game.City param0, Sango.Game.Troop param1, Sango.Game.Scenario param2) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_Sango_Game_Scenario_Event target = new Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_Sango_Game_Scenario_Event(func);
+			Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,Sango.Game.Scenario> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_Sango_Game_Scenario_Event target = new Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_Sango_Game_Scenario_Event(func, self);
+			Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,Sango.Game.Scenario> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_Sango_Game_Scenario(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType<Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,Sango.Game.Scenario>>(L, pos);
+	}
+
+	void Push_Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_Sango_Game_Scenario(IntPtr L, Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,Sango.Game.Scenario> o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Persons_int_System_Action_int_Event : LuaDelegate
+	{
+		public Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Persons_int_System_Action_int_Event(LuaFunction func) : base(func) { }
+		public Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Persons_int_System_Action_int_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(Sango.Game.City param0, int param1, Sango.Game.Person[] param2, int param3, System.Action<int> param4)
+		{
+			func.BeginPCall();
+			func.PushObject(param0);
+			func.Push(param1);
+			func.Push(param2);
+			func.Push(param3);
+			func.Push(param4);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(Sango.Game.City param0, int param1, Sango.Game.Person[] param2, int param3, System.Action<int> param4)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushObject(param0);
+			func.Push(param1);
+			func.Push(param2);
+			func.Push(param3);
+			func.Push(param4);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>> Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Persons_int_System_Action_int(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>> fn = delegate(Sango.Game.City param0, int param1, Sango.Game.Person[] param2, int param3, System.Action<int> param4) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Persons_int_System_Action_int_Event target = new Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Persons_int_System_Action_int_Event(func);
+			Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Persons_int_System_Action_int_Event target = new Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Persons_int_System_Action_int_Event(func, self);
+			Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Persons_int_System_Action_int(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType<Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>>>(L, pos);
+	}
+
+	void Push_Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Persons_int_System_Action_int(IntPtr L, Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person[],int,System.Action<int>> o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Person_int_System_Action_int_Event : LuaDelegate
+	{
+		public Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Person_int_System_Action_int_Event(LuaFunction func) : base(func) { }
+		public Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Person_int_System_Action_int_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(Sango.Game.City param0, int param1, Sango.Game.Person param2, int param3, System.Action<int> param4)
+		{
+			func.BeginPCall();
+			func.PushObject(param0);
+			func.Push(param1);
+			func.PushObject(param2);
+			func.Push(param3);
+			func.Push(param4);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(Sango.Game.City param0, int param1, Sango.Game.Person param2, int param3, System.Action<int> param4)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushObject(param0);
+			func.Push(param1);
+			func.PushObject(param2);
+			func.Push(param3);
+			func.Push(param4);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person,int,System.Action<int>> Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Person_int_System_Action_int(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person,int,System.Action<int>> fn = delegate(Sango.Game.City param0, int param1, Sango.Game.Person param2, int param3, System.Action<int> param4) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Person_int_System_Action_int_Event target = new Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Person_int_System_Action_int_Event(func);
+			Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person,int,System.Action<int>> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Person_int_System_Action_int_Event target = new Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Person_int_System_Action_int_Event(func, self);
+			Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person,int,System.Action<int>> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Person_int_System_Action_int(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType<Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person,int,System.Action<int>>>(L, pos);
+	}
+
+	void Push_Sango_EventBase_EventDelegate_Sango_Game_City_int_Sango_Game_Person_int_System_Action_int(IntPtr L, Sango.EventBase.EventDelegate<Sango.Game.City,int,Sango.Game.Person,int,System.Action<int>> o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_int_System_Action_int_Event : LuaDelegate
+	{
+		public Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_int_System_Action_int_Event(LuaFunction func) : base(func) { }
+		public Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_int_System_Action_int_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(Sango.Game.City param0, Sango.Game.Troop param1, int param2, System.Action<int> param3)
+		{
+			func.BeginPCall();
+			func.PushObject(param0);
+			func.PushObject(param1);
+			func.Push(param2);
+			func.Push(param3);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(Sango.Game.City param0, Sango.Game.Troop param1, int param2, System.Action<int> param3)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushObject(param0);
+			func.PushObject(param1);
+			func.Push(param2);
+			func.Push(param3);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,int,System.Action<int>> Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_int_System_Action_int(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,int,System.Action<int>> fn = delegate(Sango.Game.City param0, Sango.Game.Troop param1, int param2, System.Action<int> param3) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_int_System_Action_int_Event target = new Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_int_System_Action_int_Event(func);
+			Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,int,System.Action<int>> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_int_System_Action_int_Event target = new Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_int_System_Action_int_Event(func, self);
+			Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,int,System.Action<int>> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_int_System_Action_int(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType<Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,int,System.Action<int>>>(L, pos);
+	}
+
+	void Push_Sango_EventBase_EventDelegate_Sango_Game_City_Sango_Game_Troop_int_System_Action_int(IntPtr L, Sango.EventBase.EventDelegate<Sango.Game.City,Sango.Game.Troop,int,System.Action<int>> o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class Sango_EventBase_EventDelegate_Sango_Game_Person_Event : LuaDelegate
+	{
+		public Sango_EventBase_EventDelegate_Sango_Game_Person_Event(LuaFunction func) : base(func) { }
+		public Sango_EventBase_EventDelegate_Sango_Game_Person_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(Sango.Game.Person param0)
+		{
+			func.BeginPCall();
+			func.PushObject(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(Sango.Game.Person param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushObject(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public Sango.EventBase.EventDelegate<Sango.Game.Person> Sango_EventBase_EventDelegate_Sango_Game_Person(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			Sango.EventBase.EventDelegate<Sango.Game.Person> fn = delegate(Sango.Game.Person param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			Sango_EventBase_EventDelegate_Sango_Game_Person_Event target = new Sango_EventBase_EventDelegate_Sango_Game_Person_Event(func);
+			Sango.EventBase.EventDelegate<Sango.Game.Person> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			Sango_EventBase_EventDelegate_Sango_Game_Person_Event target = new Sango_EventBase_EventDelegate_Sango_Game_Person_Event(func, self);
+			Sango.EventBase.EventDelegate<Sango.Game.Person> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_Sango_EventBase_EventDelegate_Sango_Game_Person(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType<Sango.EventBase.EventDelegate<Sango.Game.Person>>(L, pos);
+	}
+
+	void Push_Sango_EventBase_EventDelegate_Sango_Game_Person(IntPtr L, Sango.EventBase.EventDelegate<Sango.Game.Person> o)
 	{
 		ToLua.Push(L, o);
 	}

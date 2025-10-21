@@ -12,6 +12,7 @@ public class Sango_Render_MapTerrainWrap
 		L.RegFunction("UpdateRender", new LuaCSFunction(UpdateRender));
 		L.RegFunction("Rebuild", new LuaCSFunction(Rebuild));
 		L.RegFunction("Update", new LuaCSFunction(Update));
+		L.RegFunction("UpdateImmediate", new LuaCSFunction(UpdateImmediate));
 		L.RegFunction("New", new LuaCSFunction(_CreateSango_Render_MapTerrain));
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
 		L.RegVar("cellSize", new LuaCSFunction(get_cellSize), new LuaCSFunction(set_cellSize));
@@ -116,6 +117,22 @@ public class Sango_Render_MapTerrainWrap
 			ToLua.CheckArgsCount(L, 1);
 			Sango.Render.MapTerrain obj = (Sango.Render.MapTerrain)ToLua.CheckObject<Sango.Render.MapTerrain>(L, 1);
 			obj.Update();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UpdateImmediate(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			Sango.Render.MapTerrain obj = (Sango.Render.MapTerrain)ToLua.CheckObject<Sango.Render.MapTerrain>(L, 1);
+			obj.UpdateImmediate();
 			return 0;
 		}
 		catch (Exception e)

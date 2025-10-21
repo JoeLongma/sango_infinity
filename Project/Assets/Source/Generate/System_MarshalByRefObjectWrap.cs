@@ -22,6 +22,8 @@ public class System_MarshalByRefObjectWrap
 			ToLua.CheckArgsCount(L, 2);
 			System.MarshalByRefObject obj = (System.MarshalByRefObject)ToLua.CheckObject<System.MarshalByRefObject>(L, 1);
 			System.Type arg0 = ToLua.CheckMonoType(L, 2);
+			System.Runtime.Remoting.ObjRef o = obj.CreateObjRef(arg0);
+			ToLua.PushObject(L, o);
 			return 1;
 		}
 		catch (Exception e)

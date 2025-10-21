@@ -7,6 +7,8 @@ public class Sango_Game_Render_TroopMoveEventWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(Sango.Game.Render.TroopMoveEvent), typeof(Sango.Game.Render.RenderEventBase));
+		L.RegFunction("Enter", new LuaCSFunction(Enter));
+		L.RegFunction("Exit", new LuaCSFunction(Exit));
 		L.RegFunction("IsVisible", new LuaCSFunction(IsVisible));
 		L.RegFunction("Update", new LuaCSFunction(Update));
 		L.RegFunction("New", new LuaCSFunction(_CreateSango_Game_Render_TroopMoveEvent));
@@ -35,6 +37,40 @@ public class Sango_Game_Render_TroopMoveEventWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: Sango.Game.Render.TroopMoveEvent.New");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Enter(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Game.Render.TroopMoveEvent obj = (Sango.Game.Render.TroopMoveEvent)ToLua.CheckObject<Sango.Game.Render.TroopMoveEvent>(L, 1);
+			Sango.Game.Scenario arg0 = (Sango.Game.Scenario)ToLua.CheckObject<Sango.Game.Scenario>(L, 2);
+			obj.Enter(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Exit(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Game.Render.TroopMoveEvent obj = (Sango.Game.Render.TroopMoveEvent)ToLua.CheckObject<Sango.Game.Render.TroopMoveEvent>(L, 1);
+			Sango.Game.Scenario arg0 = (Sango.Game.Scenario)ToLua.CheckObject<Sango.Game.Scenario>(L, 2);
+			obj.Exit(arg0);
+			return 0;
 		}
 		catch (Exception e)
 		{

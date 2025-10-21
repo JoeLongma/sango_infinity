@@ -10,6 +10,7 @@ public class Sango_PoolManagerWrap
 		L.RegFunction("Get", new LuaCSFunction(Get));
 		L.RegFunction("Add", new LuaCSFunction(Add));
 		L.RegFunction("Recycle", new LuaCSFunction(Recycle));
+		L.RegFunction("Create", new LuaCSFunction(Create));
 		L.RegFunction("New", new LuaCSFunction(_CreateSango_PoolManager));
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
 		L.EndClass();
@@ -96,11 +97,27 @@ public class Sango_PoolManagerWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
-			object arg0 = ToLua.ToVarObject(L, 1);
-			UnityEngine.GameObject arg1 = (UnityEngine.GameObject)ToLua.CheckObject<UnityEngine.GameObject>(L, 2);
-			bool o = Sango.PoolManager.Recycle(arg1);
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.CheckObject<UnityEngine.GameObject>(L, 1);
+			bool o = Sango.PoolManager.Recycle(arg0);
 			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Create(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string arg0 = ToLua.CheckString(L, 1);
+			UnityEngine.GameObject o = Sango.PoolManager.Create(arg0);
+			ToLua.PushSealed(L, o);
 			return 1;
 		}
 		catch (Exception e)
