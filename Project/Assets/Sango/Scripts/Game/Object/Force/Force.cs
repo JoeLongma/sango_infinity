@@ -361,6 +361,26 @@ namespace Sango.Game
                 }
             }
 
+            for (int i = 0; i < scenario.portSet.Count; ++i)
+            {
+                var c = scenario.portSet[i];
+                if (c != null && c.IsAlive && c.BelongForce == this)
+                {
+                    c.OnTurnStart(scenario);
+                    buildingBaseList.Enqueue(c);
+                }
+            }
+
+            for (int i = 0; i < scenario.gateSet.Count; ++i)
+            {
+                var c = scenario.gateSet[i];
+                if (c != null && c.IsAlive && c.BelongForce == this)
+                {
+                    c.OnTurnStart(scenario);
+                    buildingBaseList.Enqueue(c);
+                }
+            }
+
             for (int i = 0; i < scenario.troopsSet.Count; ++i)
             {
                 var c = scenario.troopsSet[i];

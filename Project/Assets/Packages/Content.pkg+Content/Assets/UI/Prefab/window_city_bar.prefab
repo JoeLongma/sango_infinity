@@ -1166,7 +1166,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &-2764854377414352855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1195,9 +1195,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: {fileID: 5974698298865323121}
+  durability: {fileID: 3592806023919246132}
+  aniText: {fileID: 2343281066448395730}
   state: {fileID: 6533400359583840899}
   food: {fileID: 3891438836095054353}
-  durability: {fileID: 3592806023919246132}
   number: {fileID: 6930222270662210776}
   info: {fileID: 2202850055759797409}
-  aniText: {fileID: 2343281066448395730}

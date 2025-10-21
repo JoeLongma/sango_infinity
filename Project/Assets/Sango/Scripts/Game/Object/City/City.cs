@@ -77,11 +77,6 @@ namespace Sango.Game
         [JsonProperty] public byte hasBusiness;
 
         /// <summary>
-        /// 模型
-        /// </summary>
-        [JsonProperty] public int model;
-
-        /// <summary>
         /// 当前兵力
         /// </summary>
         [JsonProperty] public int troops;
@@ -399,12 +394,16 @@ namespace Sango.Game
                 if (person.BelongForce != null)
                     person.BelongForce.CaptiveList.Add(person);
             }
+        }
 
+        public override void OnPrepareRender()
+        {
             Render = new CityRender(this);
         }
 
         public override void Init(Scenario scenario)
         {
+            base.Init(scenario);
             if (BuildingType.Id == 1)
             {
                 UpdateActiveTroopTypes();

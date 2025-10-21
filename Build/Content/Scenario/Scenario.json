@@ -45550,13 +45550,13 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         2
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_1.prefab"
     },
     "2": {
       "Id": 2,
@@ -45606,15 +45606,15 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         1,
         3,
         4
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_2.prefab"
     },
     "3": {
       "Id": 3,
@@ -45664,15 +45664,15 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         2,
         4,
         6
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_1.prefab"
     },
     "4": {
       "Id": 4,
@@ -45722,8 +45722,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         2,
@@ -45731,7 +45731,7 @@
         5,
         7
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_2.prefab"
     },
     "5": {
       "Id": 5,
@@ -45781,8 +45781,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         4,
@@ -45790,7 +45790,7 @@
         8,
         12
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_1.prefab"
     },
     "6": {
       "Id": 6,
@@ -45840,14 +45840,14 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         3,
         7
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_2.prefab"
     },
     "7": {
       "Id": 7,
@@ -45897,8 +45897,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         4,
@@ -45907,7 +45907,7 @@
         12,
         13
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_1.prefab"
     },
     "8": {
       "Id": 8,
@@ -45957,14 +45957,14 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         5,
         9
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_2.prefab"
     },
     "9": {
       "Id": 9,
@@ -46014,15 +46014,15 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         8,
         10,
         11
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_1.prefab"
     },
     "10": {
       "Id": 10,
@@ -46072,8 +46072,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         9,
@@ -46081,7 +46081,7 @@
         12,
         13
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_2.prefab"
     },
     "11": {
       "Id": 11,
@@ -46131,8 +46131,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         9,
@@ -46141,7 +46141,7 @@
         23,
         26
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_1.prefab"
     },
     "12": {
       "Id": 12,
@@ -46191,8 +46191,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         5,
@@ -46200,7 +46200,7 @@
         10,
         13
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_2.prefab"
     },
     "13": {
       "Id": 13,
@@ -46250,8 +46250,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         7,
@@ -46261,7 +46261,7 @@
         16,
         17
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_1.prefab"
     },
     "14": {
       "Id": 14,
@@ -46311,8 +46311,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         13,
@@ -46320,7 +46320,7 @@
         16,
         17
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_2.prefab"
     },
     "15": {
       "Id": 15,
@@ -46370,15 +46370,15 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         11,
         14,
         29
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_1.prefab"
     },
     "16": {
       "Id": 16,
@@ -46428,8 +46428,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         13,
@@ -46437,7 +46437,7 @@
         17,
         18
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_2.prefab"
     },
     "17": {
       "Id": 17,
@@ -46487,8 +46487,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         14,
@@ -46498,7 +46498,7 @@
         29,
         13
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_1.prefab"
     },
     "18": {
       "Id": 18,
@@ -46548,8 +46548,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         16,
@@ -46557,7 +46557,7 @@
         20,
         37
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_2.prefab"
     },
     "19": {
       "Id": 19,
@@ -46607,15 +46607,15 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         17,
         29,
         37
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_1.prefab"
     },
     "20": {
       "Id": 20,
@@ -46665,15 +46665,15 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         18,
         21,
         22
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_2.prefab"
     },
     "21": {
       "Id": 21,
@@ -46723,15 +46723,15 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         20,
         22,
         37
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_1.prefab"
     },
     "22": {
       "Id": 22,
@@ -46781,14 +46781,14 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         20,
         21
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_2.prefab"
     },
     "23": {
       "Id": 23,
@@ -46838,8 +46838,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         11,
@@ -46847,7 +46847,7 @@
         26,
         27
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_1.prefab"
     },
     "24": {
       "Id": 24,
@@ -46897,14 +46897,14 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         23,
         25
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_2.prefab"
     },
     "25": {
       "Id": 25,
@@ -46954,13 +46954,13 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         24
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_1.prefab"
     },
     "26": {
       "Id": 26,
@@ -47010,8 +47010,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         11,
@@ -47019,7 +47019,7 @@
         27,
         28
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_2.prefab"
     },
     "27": {
       "Id": 27,
@@ -47069,8 +47069,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         23,
@@ -47079,7 +47079,7 @@
         31,
         32
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_1.prefab"
     },
     "28": {
       "Id": 28,
@@ -47129,8 +47129,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         26,
@@ -47139,7 +47139,7 @@
         31,
         32
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_2.prefab"
     },
     "29": {
       "Id": 29,
@@ -47189,8 +47189,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         15,
@@ -47198,7 +47198,7 @@
         19,
         30
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_1.prefab"
     },
     "30": {
       "Id": 30,
@@ -47248,15 +47248,15 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         28,
         29,
         31
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_2.prefab"
     },
     "31": {
       "Id": 31,
@@ -47306,8 +47306,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         27,
@@ -47317,7 +47317,7 @@
         33,
         36
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_1.prefab"
     },
     "32": {
       "Id": 32,
@@ -47367,8 +47367,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         27,
@@ -47377,7 +47377,7 @@
         33,
         34
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_2.prefab"
     },
     "33": {
       "Id": 33,
@@ -47427,8 +47427,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         31,
@@ -47436,7 +47436,7 @@
         35,
         36
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_1.prefab"
     },
     "34": {
       "Id": 34,
@@ -47486,14 +47486,14 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         32,
         35
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_2.prefab"
     },
     "35": {
       "Id": 35,
@@ -47543,14 +47543,14 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         33,
         34
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_1.prefab"
     },
     "36": {
       "Id": 36,
@@ -47600,15 +47600,15 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         31,
         33,
         39
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_2.prefab"
     },
     "37": {
       "Id": 37,
@@ -47658,8 +47658,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         18,
@@ -47667,7 +47667,7 @@
         21,
         38
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_1.prefab"
     },
     "38": {
       "Id": 38,
@@ -47717,15 +47717,15 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         37,
         39,
         40
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_2.prefab"
     },
     "39": {
       "Id": 39,
@@ -47775,8 +47775,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         36,
@@ -47784,7 +47784,7 @@
         40,
         41
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_1.prefab"
     },
     "40": {
       "Id": 40,
@@ -47834,15 +47834,15 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         38,
         39,
         41
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_2.prefab"
     },
     "41": {
       "Id": 41,
@@ -47892,15 +47892,15 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         40,
         42,
         39
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_1.prefab"
     },
     "42": {
       "Id": 42,
@@ -47950,13 +47950,13 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         41
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_city_2.prefab"
     }
   },
   "gateSet": {
@@ -47973,9 +47973,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 400,
       "baseGainFood": 5000,
       "durabilityLimit": 4000,
@@ -47985,12 +47985,12 @@
       "y": 85,
       "rot": 1.57079637,
       "heightOffset": 0.0,
-      "troops": 22000,
+      "troops": 2000,
       "woundedTroops": 0,
       "population": 100000,
       "troopPopulation": 30000,
-      "gold": 4800,
-      "food": 48000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -48009,13 +48009,13 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         2
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_gate_lv2.prefab"
     },
     "2": {
       "Id": 2,
@@ -48030,9 +48030,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 500,
       "baseGainFood": 6000,
       "durabilityLimit": 6000,
@@ -48042,12 +48042,12 @@
       "y": 105,
       "rot": 1.57079637,
       "heightOffset": 0.0,
-      "troops": 30000,
+      "troops": 2000,
       "woundedTroops": 0,
       "population": 100001,
       "troopPopulation": 30000,
-      "gold": 6000,
-      "food": 60000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -48066,15 +48066,15 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         1,
         3,
         4
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_gate_lv2.prefab"
     },
     "3": {
       "Id": 3,
@@ -48089,9 +48089,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 500,
       "baseGainFood": 5000,
       "durabilityLimit": 3500,
@@ -48101,12 +48101,12 @@
       "y": 105,
       "rot": 1.57079637,
       "heightOffset": 0.0,
-      "troops": 24000,
+      "troops": 2000,
       "woundedTroops": 0,
       "population": 100002,
       "troopPopulation": 30000,
-      "gold": 4800,
-      "food": 48000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -48125,15 +48125,15 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         2,
         4,
         6
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_gate_lv2.prefab"
     },
     "4": {
       "Id": 4,
@@ -48148,9 +48148,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 400,
       "baseGainFood": 6000,
       "durabilityLimit": 3500,
@@ -48160,12 +48160,12 @@
       "y": 106,
       "rot": 1.57079637,
       "heightOffset": 0.0,
-      "troops": 30000,
+      "troops": 2000,
       "woundedTroops": 0,
       "population": 100003,
       "troopPopulation": 30000,
-      "gold": 6000,
-      "food": 60000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -48184,8 +48184,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         2,
@@ -48193,7 +48193,7 @@
         5,
         7
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_gate_lv2.prefab"
     },
     "5": {
       "Id": 5,
@@ -48208,9 +48208,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 400,
       "baseGainFood": 6000,
       "durabilityLimit": 3500,
@@ -48220,12 +48220,12 @@
       "y": 114,
       "rot": 1.57079637,
       "heightOffset": 0.0,
-      "troops": 0,
+      "troops": 2000,
       "woundedTroops": 0,
       "population": 100004,
       "troopPopulation": 30000,
-      "gold": 0,
-      "food": 0,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -48244,8 +48244,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         4,
@@ -48253,7 +48253,7 @@
         8,
         12
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_gate_lv2.prefab"
     },
     "6": {
       "Id": 6,
@@ -48268,9 +48268,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 500,
       "baseGainFood": 4000,
       "durabilityLimit": 4000,
@@ -48280,12 +48280,12 @@
       "y": 111,
       "rot": 0.0,
       "heightOffset": 0.0,
-      "troops": 20000,
+      "troops": 2000,
       "woundedTroops": 0,
       "population": 100005,
       "troopPopulation": 30000,
-      "gold": 4800,
-      "food": 48000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -48304,14 +48304,14 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         3,
         7
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_gate_lv2.prefab"
     },
     "7": {
       "Id": 7,
@@ -48326,9 +48326,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 600,
       "baseGainFood": 7000,
       "durabilityLimit": 4000,
@@ -48338,12 +48338,12 @@
       "y": 125,
       "rot": 0.0,
       "heightOffset": 0.0,
-      "troops": 22000,
+      "troops": 2000,
       "woundedTroops": 0,
       "population": 100006,
       "troopPopulation": 30000,
-      "gold": 4800,
-      "food": 48000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -48362,8 +48362,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         4,
@@ -48372,7 +48372,7 @@
         12,
         13
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_gate_lv2.prefab"
     },
     "8": {
       "Id": 8,
@@ -48387,9 +48387,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 400,
       "baseGainFood": 7000,
       "durabilityLimit": 3500,
@@ -48399,12 +48399,12 @@
       "y": 130,
       "rot": 0.0,
       "heightOffset": 0.0,
-      "troops": 20000,
+      "troops": 2000,
       "woundedTroops": 0,
       "population": 100007,
       "troopPopulation": 30000,
-      "gold": 4800,
-      "food": 48000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -48423,14 +48423,14 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         5,
         9
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_gate_lv2.prefab"
     },
     "9": {
       "Id": 9,
@@ -48445,9 +48445,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 500,
       "baseGainFood": 8000,
       "durabilityLimit": 3500,
@@ -48457,12 +48457,12 @@
       "y": 147,
       "rot": 1.57079637,
       "heightOffset": 0.0,
-      "troops": 26000,
+      "troops": 2000,
       "woundedTroops": 0,
       "population": 100008,
       "troopPopulation": 30000,
-      "gold": 5600,
-      "food": 56000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -48481,15 +48481,15 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         8,
         10,
         11
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_gate_lv2.prefab"
     },
     "10": {
       "Id": 10,
@@ -48504,9 +48504,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 300,
       "baseGainFood": 6000,
       "durabilityLimit": 4000,
@@ -48516,12 +48516,12 @@
       "y": 153,
       "rot": 0.0,
       "heightOffset": 0.0,
-      "troops": 24000,
+      "troops": 2000,
       "woundedTroops": 0,
       "population": 100009,
       "troopPopulation": 30000,
-      "gold": 4800,
-      "food": 48000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -48540,8 +48540,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         9,
@@ -48549,7 +48549,7 @@
         12,
         13
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_gate_lv2.prefab"
     }
   },
   "portSet": {
@@ -48565,9 +48565,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 400,
       "baseGainFood": 5000,
       "durabilityLimit": 2000,
@@ -48577,12 +48577,12 @@
       "y": 56,
       "rot": 3.14159274,
       "heightOffset": 8.7,
-      "troops": 22000,
+      "troops": 1000,
       "woundedTroops": 0,
-      "population": 100000,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 4800,
-      "food": 48000,
+      "gold": 200,
+      "food": 2000,
       "itemStore": [
         2,
         5000,
@@ -48601,13 +48601,13 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         2
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "2": {
       "Id": 2,
@@ -48621,9 +48621,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 500,
       "baseGainFood": 6000,
       "durabilityLimit": 2000,
@@ -48633,184 +48633,9 @@
       "y": 85,
       "rot": 3.14159274,
       "heightOffset": 8.7,
-      "troops": 30000,
-      "woundedTroops": 0,
-      "population": 100001,
-      "troopPopulation": 30000,
-      "gold": 6000,
-      "food": 60000,
-      "itemStore": [
-        2,
-        5000,
-        3,
-        5000,
-        4,
-        5000,
-        5,
-        5000
-      ],
-      "event": 0,
-      "specialty": 0,
-      "actionFlag": 0,
-      "StateId": 1,
-      "commerce": 0,
-      "agriculture": 0,
-      "popularSupport": 100,
-      "security": 90,
-      "energy": 100,
-      "morale": 100,
-      "hasBusiness": 0,
-      "NeighborList": [
-        1,
-        3,
-        4
-      ],
-      "model": 31
-    },
-    "3": {
-      "Id": 3,
-      "Name": "西河港",
-      "Leader": 0,
-      "BuildingType": 3,
-      "BelongForce": 21,
-      "BelongCorps": 21,
-      "CityLevelType": 1,
-      "troopsLimit": 50000,
-      "storeLimit": 500000,
-      "goldLimit": 20000,
-      "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
-      "baseGainGold": 500,
-      "baseGainFood": 5000,
-      "durabilityLimit": 2000,
-      "commerceLimit": 200,
-      "agricultureLimit": 200,
-      "x": 91,
-      "y": 77,
-      "rot": 4.712389,
-      "heightOffset": 8.7,
-      "troops": 24000,
-      "woundedTroops": 0,
-      "population": 100002,
-      "troopPopulation": 30000,
-      "gold": 4800,
-      "food": 48000,
-      "itemStore": [
-        2,
-        5000,
-        3,
-        5000,
-        4,
-        5000,
-        5,
-        5000
-      ],
-      "event": 0,
-      "specialty": 0,
-      "actionFlag": 0,
-      "StateId": 1,
-      "commerce": 0,
-      "agriculture": 0,
-      "popularSupport": 100,
-      "security": 90,
-      "energy": 100,
-      "morale": 100,
-      "hasBusiness": 0,
-      "NeighborList": [
-        2,
-        4,
-        6
-      ],
-      "model": 31
-    },
-    "4": {
-      "Id": 4,
-      "Name": "白马港",
-      "Leader": 0,
-      "BuildingType": 3,
-      "BelongForce": 15,
-      "BelongCorps": 15,
-      "CityLevelType": 1,
-      "troopsLimit": 50000,
-      "storeLimit": 500000,
-      "goldLimit": 20000,
-      "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
-      "baseGainGold": 400,
-      "baseGainFood": 6000,
-      "durabilityLimit": 2000,
-      "commerceLimit": 200,
-      "agricultureLimit": 200,
-      "x": 138,
-      "y": 91,
-      "rot": 3.14159274,
-      "heightOffset": 8.7,
-      "troops": 30000,
-      "woundedTroops": 0,
-      "population": 100003,
-      "troopPopulation": 30000,
-      "gold": 6000,
-      "food": 60000,
-      "itemStore": [
-        2,
-        5000,
-        3,
-        5000,
-        4,
-        5000,
-        5,
-        5000
-      ],
-      "event": 0,
-      "specialty": 0,
-      "actionFlag": 0,
-      "StateId": 2,
-      "commerce": 0,
-      "agriculture": 0,
-      "popularSupport": 100,
-      "security": 90,
-      "energy": 100,
-      "morale": 100,
-      "hasBusiness": 0,
-      "NeighborList": [
-        2,
-        3,
-        5,
-        7
-      ],
-      "model": 31
-    },
-    "5": {
-      "Id": 5,
-      "Name": "昌阳港",
-      "Leader": 0,
-      "BuildingType": 3,
-      "BelongForce": 17,
-      "BelongCorps": 17,
-      "CityLevelType": 1,
-      "troopsLimit": 50000,
-      "storeLimit": 500000,
-      "goldLimit": 20000,
-      "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
-      "baseGainGold": 400,
-      "baseGainFood": 6000,
-      "durabilityLimit": 2000,
-      "commerceLimit": 200,
-      "agricultureLimit": 200,
-      "x": 204,
-      "y": 76,
-      "rot": 1.57079637,
-      "heightOffset": 8.7,
       "troops": 0,
       "woundedTroops": 0,
-      "population": 100004,
+      "population": 5000,
       "troopPopulation": 30000,
       "gold": 0,
       "food": 0,
@@ -48827,13 +48652,188 @@
       "event": 0,
       "specialty": 0,
       "actionFlag": 0,
+      "StateId": 1,
+      "commerce": 0,
+      "agriculture": 0,
+      "popularSupport": 100,
+      "security": 90,
+      "energy": 80,
+      "morale": 80,
+      "hasBusiness": 0,
+      "NeighborList": [
+        1,
+        3,
+        4
+      ],
+      "model": "Assets/Model/Prefab/p_port.prefab"
+    },
+    "3": {
+      "Id": 3,
+      "Name": "西河港",
+      "Leader": 0,
+      "BuildingType": 3,
+      "BelongForce": 21,
+      "BelongCorps": 21,
+      "CityLevelType": 1,
+      "troopsLimit": 50000,
+      "storeLimit": 500000,
+      "goldLimit": 20000,
+      "foodLimit": 200000,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
+      "baseGainGold": 500,
+      "baseGainFood": 5000,
+      "durabilityLimit": 2000,
+      "commerceLimit": 200,
+      "agricultureLimit": 200,
+      "x": 91,
+      "y": 77,
+      "rot": 4.712389,
+      "heightOffset": 8.7,
+      "troops": 2000,
+      "woundedTroops": 0,
+      "population": 5000,
+      "troopPopulation": 30000,
+      "gold": 200,
+      "food": 2000,
+      "itemStore": [
+        2,
+        5000,
+        3,
+        5000,
+        4,
+        5000,
+        5,
+        5000
+      ],
+      "event": 0,
+      "specialty": 0,
+      "actionFlag": 0,
+      "StateId": 1,
+      "commerce": 0,
+      "agriculture": 0,
+      "popularSupport": 100,
+      "security": 90,
+      "energy": 80,
+      "morale": 80,
+      "hasBusiness": 0,
+      "NeighborList": [
+        2,
+        4,
+        6
+      ],
+      "model": "Assets/Model/Prefab/p_port.prefab"
+    },
+    "4": {
+      "Id": 4,
+      "Name": "白马港",
+      "Leader": 0,
+      "BuildingType": 3,
+      "BelongForce": 15,
+      "BelongCorps": 15,
+      "CityLevelType": 1,
+      "troopsLimit": 50000,
+      "storeLimit": 500000,
+      "goldLimit": 20000,
+      "foodLimit": 200000,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
+      "baseGainGold": 400,
+      "baseGainFood": 6000,
+      "durabilityLimit": 2000,
+      "commerceLimit": 200,
+      "agricultureLimit": 200,
+      "x": 138,
+      "y": 91,
+      "rot": 3.14159274,
+      "heightOffset": 8.7,
+      "troops": 2000,
+      "woundedTroops": 0,
+      "population": 5000,
+      "troopPopulation": 30000,
+      "gold": 400,
+      "food": 4000,
+      "itemStore": [
+        2,
+        5000,
+        3,
+        5000,
+        4,
+        5000,
+        5,
+        5000
+      ],
+      "event": 0,
+      "specialty": 0,
+      "actionFlag": 0,
       "StateId": 2,
       "commerce": 0,
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
+      "hasBusiness": 0,
+      "NeighborList": [
+        2,
+        3,
+        5,
+        7
+      ],
+      "model": "Assets/Model/Prefab/p_port.prefab"
+    },
+    "5": {
+      "Id": 5,
+      "Name": "昌阳港",
+      "Leader": 0,
+      "BuildingType": 3,
+      "BelongForce": 17,
+      "BelongCorps": 17,
+      "CityLevelType": 1,
+      "troopsLimit": 50000,
+      "storeLimit": 500000,
+      "goldLimit": 20000,
+      "foodLimit": 200000,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
+      "baseGainGold": 400,
+      "baseGainFood": 6000,
+      "durabilityLimit": 2000,
+      "commerceLimit": 200,
+      "agricultureLimit": 200,
+      "x": 204,
+      "y": 76,
+      "rot": 1.57079637,
+      "heightOffset": 8.7,
+      "troops": 1000,
+      "woundedTroops": 0,
+      "population": 5000,
+      "troopPopulation": 30000,
+      "gold": 200,
+      "food": 2000,
+      "itemStore": [
+        2,
+        5000,
+        3,
+        5000,
+        4,
+        5000,
+        5,
+        5000
+      ],
+      "event": 0,
+      "specialty": 0,
+      "actionFlag": 0,
+      "StateId": 2,
+      "commerce": 0,
+      "agriculture": 0,
+      "popularSupport": 100,
+      "security": 90,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         4,
@@ -48841,7 +48841,7 @@
         8,
         12
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "6": {
       "Id": 6,
@@ -48855,9 +48855,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 500,
       "baseGainFood": 4000,
       "durabilityLimit": 2000,
@@ -48867,12 +48867,12 @@
       "y": 82,
       "rot": 4.712389,
       "heightOffset": 8.7,
-      "troops": 20000,
+      "troops": 2000,
       "woundedTroops": 0,
-      "population": 100005,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 4800,
-      "food": 48000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -48891,14 +48891,14 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         3,
         7
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "7": {
       "Id": 7,
@@ -48912,9 +48912,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 600,
       "baseGainFood": 7000,
       "durabilityLimit": 2000,
@@ -48924,12 +48924,12 @@
       "y": 106,
       "rot": 3.14159274,
       "heightOffset": 8.7,
-      "troops": 22000,
+      "troops": 1000,
       "woundedTroops": 0,
-      "population": 100006,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 4800,
-      "food": 48000,
+      "gold": 200,
+      "food": 2000,
       "itemStore": [
         2,
         5000,
@@ -48948,8 +48948,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         4,
@@ -48958,7 +48958,7 @@
         12,
         13
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "8": {
       "Id": 8,
@@ -48972,9 +48972,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 400,
       "baseGainFood": 7000,
       "durabilityLimit": 2000,
@@ -48984,12 +48984,12 @@
       "y": 115,
       "rot": 3.14159274,
       "heightOffset": 8.7,
-      "troops": 20000,
+      "troops": 2000,
       "woundedTroops": 0,
-      "population": 100007,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 4800,
-      "food": 48000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -49008,14 +49008,14 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         5,
         9
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "9": {
       "Id": 9,
@@ -49029,9 +49029,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 500,
       "baseGainFood": 8000,
       "durabilityLimit": 2000,
@@ -49041,12 +49041,12 @@
       "y": 138,
       "rot": 0.0,
       "heightOffset": 8.7,
-      "troops": 26000,
+      "troops": 2000,
       "woundedTroops": 0,
-      "population": 100008,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 5600,
-      "food": 56000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -49065,15 +49065,15 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         8,
         10,
         11
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "10": {
       "Id": 10,
@@ -49087,9 +49087,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 300,
       "baseGainFood": 6000,
       "durabilityLimit": 2000,
@@ -49099,12 +49099,12 @@
       "y": 94,
       "rot": 0.0,
       "heightOffset": 8.7,
-      "troops": 24000,
+      "troops": 2000,
       "woundedTroops": 0,
-      "population": 100009,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 4800,
-      "food": 48000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -49123,8 +49123,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         9,
@@ -49132,7 +49132,7 @@
         12,
         13
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "11": {
       "Id": 11,
@@ -49146,9 +49146,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 400,
       "baseGainFood": 6000,
       "durabilityLimit": 2000,
@@ -49158,12 +49158,12 @@
       "y": 100,
       "rot": 0.0,
       "heightOffset": 8.7,
-      "troops": 24000,
+      "troops": 2000,
       "woundedTroops": 0,
-      "population": 100010,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 5200,
-      "food": 52000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -49182,8 +49182,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         9,
@@ -49192,7 +49192,7 @@
         23,
         26
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "12": {
       "Id": 12,
@@ -49206,9 +49206,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 600,
       "baseGainFood": 4000,
       "durabilityLimit": 2000,
@@ -49218,12 +49218,12 @@
       "y": 98,
       "rot": 0.0,
       "heightOffset": 8.7,
-      "troops": 30000,
+      "troops": 2000,
       "woundedTroops": 0,
-      "population": 100011,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 6000,
-      "food": 60000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -49242,8 +49242,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         5,
@@ -49251,7 +49251,7 @@
         10,
         13
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "13": {
       "Id": 13,
@@ -49265,9 +49265,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 500,
       "baseGainFood": 5000,
       "durabilityLimit": 2000,
@@ -49277,12 +49277,12 @@
       "y": 93,
       "rot": 4.712389,
       "heightOffset": 8.7,
-      "troops": 22000,
+      "troops": 2000,
       "woundedTroops": 0,
-      "population": 100012,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 4800,
-      "food": 48000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -49301,8 +49301,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         7,
@@ -49312,7 +49312,7 @@
         16,
         17
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "14": {
       "Id": 14,
@@ -49326,9 +49326,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 600,
       "baseGainFood": 5000,
       "durabilityLimit": 2000,
@@ -49338,12 +49338,12 @@
       "y": 102,
       "rot": 0.0,
       "heightOffset": 8.7,
-      "troops": 28000,
+      "troops": 1000,
       "woundedTroops": 0,
-      "population": 100013,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 5600,
-      "food": 56000,
+      "gold": 200,
+      "food": 2000,
       "itemStore": [
         2,
         5000,
@@ -49362,8 +49362,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         13,
@@ -49371,7 +49371,7 @@
         16,
         17
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "15": {
       "Id": 15,
@@ -49385,9 +49385,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 500,
       "baseGainFood": 6000,
       "durabilityLimit": 2000,
@@ -49397,12 +49397,12 @@
       "y": 83,
       "rot": 1.57079637,
       "heightOffset": 8.7,
-      "troops": 24000,
+      "troops": 2000,
       "woundedTroops": 0,
-      "population": 100014,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 4800,
-      "food": 48000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -49421,15 +49421,15 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         11,
         14,
         29
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "16": {
       "Id": 16,
@@ -49443,9 +49443,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 700,
       "baseGainFood": 4000,
       "durabilityLimit": 2000,
@@ -49455,12 +49455,12 @@
       "y": 133,
       "rot": 3.14159274,
       "heightOffset": 8.7,
-      "troops": 18000,
+      "troops": 0,
       "woundedTroops": 0,
-      "population": 100015,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 5200,
-      "food": 52000,
+      "gold": 0,
+      "food": 0,
       "itemStore": [
         2,
         5000,
@@ -49479,8 +49479,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         13,
@@ -49488,7 +49488,7 @@
         17,
         18
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "17": {
       "Id": 17,
@@ -49502,9 +49502,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 500,
       "baseGainFood": 5000,
       "durabilityLimit": 2000,
@@ -49514,12 +49514,12 @@
       "y": 137,
       "rot": 4.712389,
       "heightOffset": 8.7,
-      "troops": 24000,
+      "troops": 2000,
       "woundedTroops": 0,
-      "population": 100016,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 4800,
-      "food": 48000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -49538,8 +49538,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         14,
@@ -49549,7 +49549,7 @@
         29,
         13
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "18": {
       "Id": 18,
@@ -49563,9 +49563,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 600,
       "baseGainFood": 5000,
       "durabilityLimit": 2000,
@@ -49575,12 +49575,12 @@
       "y": 150,
       "rot": 0.0,
       "heightOffset": 8.7,
-      "troops": 24000,
+      "troops": 2000,
       "woundedTroops": 0,
-      "population": 100017,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 6000,
-      "food": 60000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -49599,8 +49599,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         16,
@@ -49608,7 +49608,7 @@
         20,
         37
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "19": {
       "Id": 19,
@@ -49622,9 +49622,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 300,
       "baseGainFood": 6000,
       "durabilityLimit": 2000,
@@ -49634,12 +49634,12 @@
       "y": 129,
       "rot": 1.57079637,
       "heightOffset": 8.7,
-      "troops": 0,
+      "troops": 2000,
       "woundedTroops": 0,
-      "population": 100018,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 0,
-      "food": 0,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -49658,15 +49658,15 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         17,
         29,
         37
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "20": {
       "Id": 20,
@@ -49680,9 +49680,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 400,
       "baseGainFood": 5000,
       "durabilityLimit": 2000,
@@ -49692,12 +49692,12 @@
       "y": 146,
       "rot": 0.0,
       "heightOffset": 8.7,
-      "troops": 30000,
+      "troops": 2000,
       "woundedTroops": 0,
-      "population": 100019,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 6000,
-      "food": 60000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -49716,15 +49716,15 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         18,
         21,
         22
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "21": {
       "Id": 21,
@@ -49738,9 +49738,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 400,
       "baseGainFood": 6000,
       "durabilityLimit": 2000,
@@ -49750,12 +49750,12 @@
       "y": 150,
       "rot": 3.14159274,
       "heightOffset": 8.7,
-      "troops": 24000,
+      "troops": 2000,
       "woundedTroops": 0,
-      "population": 100020,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 4800,
-      "food": 48000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -49774,15 +49774,15 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         20,
         22,
         37
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "22": {
       "Id": 22,
@@ -49796,9 +49796,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 500,
       "baseGainFood": 7000,
       "durabilityLimit": 2000,
@@ -49808,12 +49808,12 @@
       "y": 157,
       "rot": 0.0,
       "heightOffset": 8.7,
-      "troops": 26000,
+      "troops": 2000,
       "woundedTroops": 0,
-      "population": 100021,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 5200,
-      "food": 52000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -49832,14 +49832,14 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         20,
         21
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "23": {
       "Id": 23,
@@ -49853,9 +49853,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 500,
       "baseGainFood": 8000,
       "durabilityLimit": 2000,
@@ -49865,12 +49865,12 @@
       "y": 165,
       "rot": 4.712389,
       "heightOffset": 8.7,
-      "troops": 20000,
+      "troops": 2000,
       "woundedTroops": 0,
-      "population": 100022,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 4800,
-      "food": 48000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -49889,8 +49889,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         11,
@@ -49898,7 +49898,7 @@
         26,
         27
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "24": {
       "Id": 24,
@@ -49912,9 +49912,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 400,
       "baseGainFood": 7000,
       "durabilityLimit": 2000,
@@ -49924,12 +49924,12 @@
       "y": 170,
       "rot": 4.712389,
       "heightOffset": 8.7,
-      "troops": 20000,
+      "troops": 2000,
       "woundedTroops": 0,
-      "population": 100023,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 4400,
-      "food": 44000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -49948,14 +49948,14 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         23,
         25
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "25": {
       "Id": 25,
@@ -49969,9 +49969,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 500,
       "baseGainFood": 6000,
       "durabilityLimit": 2000,
@@ -49981,12 +49981,12 @@
       "y": 195,
       "rot": 4.712389,
       "heightOffset": 8.7,
-      "troops": 20000,
+      "troops": 2000,
       "woundedTroops": 0,
-      "population": 100024,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 4400,
-      "food": 44000,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -50005,13 +50005,13 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         24
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "26": {
       "Id": 26,
@@ -50025,9 +50025,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 400,
       "baseGainFood": 6000,
       "durabilityLimit": 2000,
@@ -50037,12 +50037,12 @@
       "y": 151,
       "rot": 3.14159274,
       "heightOffset": 8.7,
-      "troops": 28000,
+      "troops": 0,
       "woundedTroops": 0,
-      "population": 100025,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 6000,
-      "food": 60000,
+      "gold": 0,
+      "food": 0,
       "itemStore": [
         2,
         5000,
@@ -50061,8 +50061,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         11,
@@ -50070,7 +50070,7 @@
         27,
         28
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "27": {
       "Id": 27,
@@ -50084,9 +50084,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 400,
       "baseGainFood": 6000,
       "durabilityLimit": 2000,
@@ -50096,12 +50096,12 @@
       "y": 137,
       "rot": 3.14159274,
       "heightOffset": 8.7,
-      "troops": 20000,
+      "troops": 0,
       "woundedTroops": 0,
-      "population": 100026,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 5600,
-      "food": 56000,
+      "gold": 0,
+      "food": 0,
       "itemStore": [
         2,
         5000,
@@ -50120,8 +50120,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         23,
@@ -50130,7 +50130,7 @@
         31,
         32
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "28": {
       "Id": 28,
@@ -50144,9 +50144,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 500,
       "baseGainFood": 5000,
       "durabilityLimit": 2000,
@@ -50156,12 +50156,12 @@
       "y": 138,
       "rot": 0.0,
       "heightOffset": 8.7,
-      "troops": 0,
+      "troops": 2000,
       "woundedTroops": 0,
-      "population": 100027,
+      "population": 5000,
       "troopPopulation": 30000,
-      "gold": 0,
-      "food": 0,
+      "gold": 400,
+      "food": 4000,
       "itemStore": [
         2,
         5000,
@@ -50180,8 +50180,8 @@
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         26,
@@ -50190,7 +50190,7 @@
         31,
         32
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     },
     "29": {
       "Id": 29,
@@ -50204,9 +50204,9 @@
       "storeLimit": 500000,
       "goldLimit": 20000,
       "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
       "baseGainGold": 400,
       "baseGainFood": 6000,
       "durabilityLimit": 2000,
@@ -50216,9 +50216,363 @@
       "y": 161,
       "rot": 1.57079637,
       "heightOffset": 8.7,
+      "troops": 2000,
+      "woundedTroops": 0,
+      "population": 5000,
+      "troopPopulation": 30000,
+      "gold": 400,
+      "food": 4000,
+      "itemStore": [
+        2,
+        5000,
+        3,
+        5000,
+        4,
+        5000,
+        5,
+        5000
+      ],
+      "event": 0,
+      "specialty": 0,
+      "actionFlag": 0,
+      "StateId": 9,
+      "commerce": 0,
+      "agriculture": 0,
+      "popularSupport": 100,
+      "security": 90,
+      "energy": 80,
+      "morale": 80,
+      "hasBusiness": 0,
+      "NeighborList": [
+        15,
+        17,
+        19,
+        30
+      ],
+      "model": "Assets/Model/Prefab/p_port.prefab"
+    },
+    "30": {
+      "Id": 30,
+      "Name": "汉津港",
+      "Leader": 0,
+      "BuildingType": 3,
+      "BelongForce": 2,
+      "BelongCorps": 2,
+      "CityLevelType": 2,
+      "troopsLimit": 50000,
+      "storeLimit": 500000,
+      "goldLimit": 20000,
+      "foodLimit": 200000,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
+      "baseGainGold": 600,
+      "baseGainFood": 7000,
+      "durabilityLimit": 2000,
+      "commerceLimit": 200,
+      "agricultureLimit": 200,
+      "x": 117,
+      "y": 153,
+      "rot": 0.0,
+      "heightOffset": 8.7,
+      "troops": 2000,
+      "woundedTroops": 0,
+      "population": 5000,
+      "troopPopulation": 30000,
+      "gold": 400,
+      "food": 4000,
+      "itemStore": [
+        2,
+        5000,
+        3,
+        5000,
+        4,
+        5000,
+        5,
+        5000
+      ],
+      "event": 0,
+      "specialty": 0,
+      "actionFlag": 0,
+      "StateId": 9,
+      "commerce": 0,
+      "agriculture": 0,
+      "popularSupport": 100,
+      "security": 90,
+      "energy": 80,
+      "morale": 80,
+      "hasBusiness": 0,
+      "NeighborList": [
+        28,
+        29,
+        31
+      ],
+      "model": "Assets/Model/Prefab/p_port.prefab"
+    },
+    "31": {
+      "Id": 31,
+      "Name": "江津港",
+      "Leader": 0,
+      "BuildingType": 3,
+      "BelongForce": 2,
+      "BelongCorps": 2,
+      "CityLevelType": 1,
+      "troopsLimit": 50000,
+      "storeLimit": 500000,
+      "goldLimit": 20000,
+      "foodLimit": 200000,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
+      "baseGainGold": 500,
+      "baseGainFood": 7000,
+      "durabilityLimit": 2000,
+      "commerceLimit": 200,
+      "agricultureLimit": 200,
+      "x": 101,
+      "y": 165,
+      "rot": 4.712389,
+      "heightOffset": 8.7,
+      "troops": 2000,
+      "woundedTroops": 0,
+      "population": 5000,
+      "troopPopulation": 30000,
+      "gold": 400,
+      "food": 4000,
+      "itemStore": [
+        2,
+        5000,
+        3,
+        5000,
+        4,
+        5000,
+        5,
+        5000
+      ],
+      "event": 0,
+      "specialty": 0,
+      "actionFlag": 0,
+      "StateId": 9,
+      "commerce": 0,
+      "agriculture": 0,
+      "popularSupport": 100,
+      "security": 90,
+      "energy": 80,
+      "morale": 80,
+      "hasBusiness": 0,
+      "NeighborList": [
+        27,
+        28,
+        30,
+        32,
+        33,
+        36
+      ],
+      "model": "Assets/Model/Prefab/p_port.prefab"
+    },
+    "32": {
+      "Id": 32,
+      "Name": "罗县港",
+      "Leader": 0,
+      "BuildingType": 3,
+      "BelongForce": 30,
+      "BelongCorps": 30,
+      "CityLevelType": 1,
+      "troopsLimit": 50000,
+      "storeLimit": 500000,
+      "goldLimit": 20000,
+      "foodLimit": 200000,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
+      "baseGainGold": 500,
+      "baseGainFood": 4000,
+      "durabilityLimit": 2000,
+      "commerceLimit": 200,
+      "agricultureLimit": 200,
+      "x": 128,
+      "y": 176,
+      "rot": 4.712389,
+      "heightOffset": 8.7,
+      "troops": 2000,
+      "woundedTroops": 0,
+      "population": 5000,
+      "troopPopulation": 30000,
+      "gold": 400,
+      "food": 4000,
+      "itemStore": [
+        2,
+        5000,
+        3,
+        5000,
+        4,
+        5000,
+        5,
+        5000
+      ],
+      "event": 0,
+      "specialty": 0,
+      "actionFlag": 0,
+      "StateId": 10,
+      "commerce": 0,
+      "agriculture": 0,
+      "popularSupport": 100,
+      "security": 90,
+      "energy": 80,
+      "morale": 80,
+      "hasBusiness": 0,
+      "NeighborList": [
+        27,
+        28,
+        31,
+        33,
+        34
+      ],
+      "model": "Assets/Model/Prefab/p_port.prefab"
+    },
+    "33": {
+      "Id": 33,
+      "Name": "洞庭港",
+      "Leader": 0,
+      "BuildingType": 3,
+      "BelongForce": 31,
+      "BelongCorps": 31,
+      "CityLevelType": 1,
+      "troopsLimit": 50000,
+      "storeLimit": 500000,
+      "goldLimit": 20000,
+      "foodLimit": 200000,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
+      "baseGainGold": 400,
+      "baseGainFood": 5000,
+      "durabilityLimit": 2000,
+      "commerceLimit": 200,
+      "agricultureLimit": 200,
+      "x": 107,
+      "y": 183,
+      "rot": 1.57079637,
+      "heightOffset": 8.7,
+      "troops": 2000,
+      "woundedTroops": 0,
+      "population": 5000,
+      "troopPopulation": 30000,
+      "gold": 400,
+      "food": 4000,
+      "itemStore": [
+        2,
+        5000,
+        3,
+        5000,
+        4,
+        5000,
+        5,
+        5000
+      ],
+      "event": 0,
+      "specialty": 0,
+      "actionFlag": 0,
+      "StateId": 10,
+      "commerce": 0,
+      "agriculture": 0,
+      "popularSupport": 100,
+      "security": 90,
+      "energy": 80,
+      "morale": 80,
+      "hasBusiness": 0,
+      "NeighborList": [
+        31,
+        32,
+        35,
+        36
+      ],
+      "model": "Assets/Model/Prefab/p_port.prefab"
+    },
+    "34": {
+      "Id": 34,
+      "Name": "公安港",
+      "Leader": 0,
+      "BuildingType": 3,
+      "BelongForce": 31,
+      "BelongCorps": 31,
+      "CityLevelType": 1,
+      "troopsLimit": 50000,
+      "storeLimit": 500000,
+      "goldLimit": 20000,
+      "foodLimit": 200000,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
+      "baseGainGold": 300,
+      "baseGainFood": 6000,
+      "durabilityLimit": 2000,
+      "commerceLimit": 200,
+      "agricultureLimit": 200,
+      "x": 102,
+      "y": 174,
+      "rot": 0.0,
+      "heightOffset": 8.7,
+      "troops": 2000,
+      "woundedTroops": 0,
+      "population": 5000,
+      "troopPopulation": 30000,
+      "gold": 400,
+      "food": 4000,
+      "itemStore": [
+        2,
+        5000,
+        3,
+        5000,
+        4,
+        5000,
+        5,
+        5000
+      ],
+      "event": 0,
+      "specialty": 0,
+      "actionFlag": 0,
+      "StateId": 10,
+      "commerce": 0,
+      "agriculture": 0,
+      "popularSupport": 100,
+      "security": 90,
+      "energy": 80,
+      "morale": 80,
+      "hasBusiness": 0,
+      "NeighborList": [
+        32,
+        35
+      ],
+      "model": "Assets/Model/Prefab/p_port.prefab"
+    },
+    "35": {
+      "Id": 35,
+      "Name": "巫县港",
+      "Leader": 0,
+      "BuildingType": 3,
+      "BelongForce": 0,
+      "BelongCorps": 0,
+      "CityLevelType": 1,
+      "troopsLimit": 50000,
+      "storeLimit": 500000,
+      "goldLimit": 20000,
+      "foodLimit": 200000,
+      "insideSlot": 0,
+      "outsideSlot": 0,
+      "villageSlot": 0,
+      "baseGainGold": 400,
+      "baseGainFood": 5000,
+      "durabilityLimit": 2000,
+      "commerceLimit": 200,
+      "agricultureLimit": 200,
+      "x": 82,
+      "y": 158,
+      "rot": 3.14159274,
+      "heightOffset": 8.7,
       "troops": 0,
       "woundedTroops": 0,
-      "population": 100028,
+      "population": 5000,
       "troopPopulation": 30000,
       "gold": 0,
       "food": 0,
@@ -50235,373 +50589,19 @@
       "event": 0,
       "specialty": 0,
       "actionFlag": 0,
-      "StateId": 9,
-      "commerce": 0,
-      "agriculture": 0,
-      "popularSupport": 100,
-      "security": 90,
-      "energy": 100,
-      "morale": 100,
-      "hasBusiness": 0,
-      "NeighborList": [
-        15,
-        17,
-        19,
-        30
-      ],
-      "model": 31
-    },
-    "30": {
-      "Id": 30,
-      "Name": "汉津港",
-      "Leader": 0,
-      "BuildingType": 3,
-      "BelongForce": 2,
-      "BelongCorps": 2,
-      "CityLevelType": 2,
-      "troopsLimit": 50000,
-      "storeLimit": 500000,
-      "goldLimit": 20000,
-      "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
-      "baseGainGold": 600,
-      "baseGainFood": 7000,
-      "durabilityLimit": 2000,
-      "commerceLimit": 200,
-      "agricultureLimit": 200,
-      "x": 117,
-      "y": 153,
-      "rot": 0.0,
-      "heightOffset": 8.7,
-      "troops": 24000,
-      "woundedTroops": 0,
-      "population": 100029,
-      "troopPopulation": 30000,
-      "gold": 5200,
-      "food": 52000,
-      "itemStore": [
-        2,
-        5000,
-        3,
-        5000,
-        4,
-        5000,
-        5,
-        5000
-      ],
-      "event": 0,
-      "specialty": 0,
-      "actionFlag": 0,
-      "StateId": 9,
-      "commerce": 0,
-      "agriculture": 0,
-      "popularSupport": 100,
-      "security": 90,
-      "energy": 100,
-      "morale": 100,
-      "hasBusiness": 0,
-      "NeighborList": [
-        28,
-        29,
-        31
-      ],
-      "model": 31
-    },
-    "31": {
-      "Id": 31,
-      "Name": "江津港",
-      "Leader": 0,
-      "BuildingType": 3,
-      "BelongForce": 2,
-      "BelongCorps": 2,
-      "CityLevelType": 1,
-      "troopsLimit": 50000,
-      "storeLimit": 500000,
-      "goldLimit": 20000,
-      "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
-      "baseGainGold": 500,
-      "baseGainFood": 7000,
-      "durabilityLimit": 2000,
-      "commerceLimit": 200,
-      "agricultureLimit": 200,
-      "x": 101,
-      "y": 165,
-      "rot": 4.712389,
-      "heightOffset": 8.7,
-      "troops": 20000,
-      "woundedTroops": 0,
-      "population": 100030,
-      "troopPopulation": 30000,
-      "gold": 5600,
-      "food": 56000,
-      "itemStore": [
-        2,
-        5000,
-        3,
-        5000,
-        4,
-        5000,
-        5,
-        5000
-      ],
-      "event": 0,
-      "specialty": 0,
-      "actionFlag": 0,
-      "StateId": 9,
-      "commerce": 0,
-      "agriculture": 0,
-      "popularSupport": 100,
-      "security": 90,
-      "energy": 100,
-      "morale": 100,
-      "hasBusiness": 0,
-      "NeighborList": [
-        27,
-        28,
-        30,
-        32,
-        33,
-        36
-      ],
-      "model": 31
-    },
-    "32": {
-      "Id": 32,
-      "Name": "罗县港",
-      "Leader": 0,
-      "BuildingType": 3,
-      "BelongForce": 30,
-      "BelongCorps": 30,
-      "CityLevelType": 1,
-      "troopsLimit": 50000,
-      "storeLimit": 500000,
-      "goldLimit": 20000,
-      "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
-      "baseGainGold": 500,
-      "baseGainFood": 4000,
-      "durabilityLimit": 2000,
-      "commerceLimit": 200,
-      "agricultureLimit": 200,
-      "x": 128,
-      "y": 176,
-      "rot": 4.712389,
-      "heightOffset": 8.7,
-      "troops": 22000,
-      "woundedTroops": 0,
-      "population": 100031,
-      "troopPopulation": 30000,
-      "gold": 4800,
-      "food": 48000,
-      "itemStore": [
-        2,
-        5000,
-        3,
-        5000,
-        4,
-        5000,
-        5,
-        5000
-      ],
-      "event": 0,
-      "specialty": 0,
-      "actionFlag": 0,
       "StateId": 10,
       "commerce": 0,
       "agriculture": 0,
       "popularSupport": 100,
       "security": 90,
-      "energy": 100,
-      "morale": 100,
-      "hasBusiness": 0,
-      "NeighborList": [
-        27,
-        28,
-        31,
-        33,
-        34
-      ],
-      "model": 31
-    },
-    "33": {
-      "Id": 33,
-      "Name": "洞庭港",
-      "Leader": 0,
-      "BuildingType": 3,
-      "BelongForce": 31,
-      "BelongCorps": 31,
-      "CityLevelType": 1,
-      "troopsLimit": 50000,
-      "storeLimit": 500000,
-      "goldLimit": 20000,
-      "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
-      "baseGainGold": 400,
-      "baseGainFood": 5000,
-      "durabilityLimit": 2000,
-      "commerceLimit": 200,
-      "agricultureLimit": 200,
-      "x": 107,
-      "y": 183,
-      "rot": 1.57079637,
-      "heightOffset": 8.7,
-      "troops": 20000,
-      "woundedTroops": 0,
-      "population": 100032,
-      "troopPopulation": 30000,
-      "gold": 4800,
-      "food": 48000,
-      "itemStore": [
-        2,
-        5000,
-        3,
-        5000,
-        4,
-        5000,
-        5,
-        5000
-      ],
-      "event": 0,
-      "specialty": 0,
-      "actionFlag": 0,
-      "StateId": 10,
-      "commerce": 0,
-      "agriculture": 0,
-      "popularSupport": 100,
-      "security": 90,
-      "energy": 100,
-      "morale": 100,
-      "hasBusiness": 0,
-      "NeighborList": [
-        31,
-        32,
-        35,
-        36
-      ],
-      "model": 31
-    },
-    "34": {
-      "Id": 34,
-      "Name": "公安港",
-      "Leader": 0,
-      "BuildingType": 3,
-      "BelongForce": 31,
-      "BelongCorps": 31,
-      "CityLevelType": 1,
-      "troopsLimit": 50000,
-      "storeLimit": 500000,
-      "goldLimit": 20000,
-      "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
-      "baseGainGold": 300,
-      "baseGainFood": 6000,
-      "durabilityLimit": 2000,
-      "commerceLimit": 200,
-      "agricultureLimit": 200,
-      "x": 102,
-      "y": 174,
-      "rot": 0.0,
-      "heightOffset": 8.7,
-      "troops": 24000,
-      "woundedTroops": 0,
-      "population": 100033,
-      "troopPopulation": 30000,
-      "gold": 4800,
-      "food": 48000,
-      "itemStore": [
-        2,
-        5000,
-        3,
-        5000,
-        4,
-        5000,
-        5,
-        5000
-      ],
-      "event": 0,
-      "specialty": 0,
-      "actionFlag": 0,
-      "StateId": 10,
-      "commerce": 0,
-      "agriculture": 0,
-      "popularSupport": 100,
-      "security": 90,
-      "energy": 100,
-      "morale": 100,
-      "hasBusiness": 0,
-      "NeighborList": [
-        32,
-        35
-      ],
-      "model": 31
-    },
-    "35": {
-      "Id": 35,
-      "Name": "巫县港",
-      "Leader": 0,
-      "BuildingType": 3,
-      "BelongForce": 0,
-      "BelongCorps": 0,
-      "CityLevelType": 1,
-      "troopsLimit": 50000,
-      "storeLimit": 500000,
-      "goldLimit": 20000,
-      "foodLimit": 200000,
-      "insideSlot": 12,
-      "outsideSlot": 10,
-      "villageSlot": 3,
-      "baseGainGold": 400,
-      "baseGainFood": 5000,
-      "durabilityLimit": 2000,
-      "commerceLimit": 200,
-      "agricultureLimit": 200,
-      "x": 82,
-      "y": 158,
-      "rot": 3.14159274,
-      "heightOffset": 8.7,
-      "troops": 24000,
-      "woundedTroops": 0,
-      "population": 100034,
-      "troopPopulation": 30000,
-      "gold": 4800,
-      "food": 48000,
-      "itemStore": [
-        2,
-        5000,
-        3,
-        5000,
-        4,
-        5000,
-        5,
-        5000
-      ],
-      "event": 0,
-      "specialty": 0,
-      "actionFlag": 0,
-      "StateId": 10,
-      "commerce": 0,
-      "agriculture": 0,
-      "popularSupport": 100,
-      "security": 90,
-      "energy": 100,
-      "morale": 100,
+      "energy": 80,
+      "morale": 80,
       "hasBusiness": 0,
       "NeighborList": [
         33,
         34
       ],
-      "model": 31
+      "model": "Assets/Model/Prefab/p_port.prefab"
     }
   }
 }

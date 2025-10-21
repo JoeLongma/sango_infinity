@@ -578,38 +578,6 @@
     },
     "18": {
       "Id": 18,
-      "Name": "关所",
-      "foodDeposit": 1000,
-      "fertility": [
-        1.0,
-        2.0
-      ],
-      "goldDeposit": 10,
-      "prosperity": [
-        10.0,
-        10.0
-      ],
-      "foodRate": [
-        0.8,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "foodRegainDays": 0,
-      "fireDamageRate": 1.0,
-      "canBuild": false,
-      "viewThrough": false,
-      "moveable": true,
-      "canAmbush": true,
-      "baseCost": 1,
-      "color": [
-        109,
-        98,
-        23
-      ]
-    },
-    "19": {
-      "Id": 19,
       "Name": "港",
       "foodDeposit": 1000,
       "fertility": [
@@ -638,6 +606,38 @@
         143,
         81,
         71
+      ]
+    },
+    "19": {
+      "Id": 19,
+      "Name": "关所",
+      "foodDeposit": 1000,
+      "fertility": [
+        1.0,
+        2.0
+      ],
+      "goldDeposit": 10,
+      "prosperity": [
+        10.0,
+        10.0
+      ],
+      "foodRate": [
+        0.8,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "foodRegainDays": 0,
+      "fireDamageRate": 1.0,
+      "canBuild": false,
+      "viewThrough": false,
+      "moveable": true,
+      "canAmbush": true,
+      "baseCost": 1,
+      "color": [
+        109,
+        98,
+        23
       ]
     },
     "20": {

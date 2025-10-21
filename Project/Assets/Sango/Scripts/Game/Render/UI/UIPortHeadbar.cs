@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
 {
-    public class UICityHeadbar : UIBuildingBaseHeadbar
+    public class UIPortHeadbar : UICityHeadbar
     {
         public Image state;
         public Image food;

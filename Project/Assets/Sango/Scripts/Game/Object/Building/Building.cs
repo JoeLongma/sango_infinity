@@ -26,12 +26,6 @@ namespace Sango.Game
 
         public int cellHarvestTotalFood = 0;
         public int cellHarvestTotalGold = 0;
-        /// <summary>
-        /// 所属城池
-        /// </summary>
-        [JsonConverter(typeof(Id2ObjConverter<City>))]
-        [JsonProperty]
-        public City BelongCity;
 
         public override void OnScenarioPrepare(Scenario scenario)
         {
@@ -39,10 +33,15 @@ namespace Sango.Game
             //Init(scenario);
         }
 
+        public override void OnPrepareRender()
+        {
+            if (!BuildingType.isIntrior && Render == null)
+                Render = new BuildingRender(this);
+        }
+
         public override void Init(Scenario scenario)
         {
             BelongCity?.OnBuildingCreate(this);
-
             if (!BuildingType.isIntrior)
             {
                 //UnityEngine.Debug.LogError($"{BelongCity.Name}-><{x},{y}>");
@@ -51,8 +50,9 @@ namespace Sango.Game
                 effectCells = new System.Collections.Generic.List<Cell>();
                 scenario.Map.GetDirectSpiral(CenterCell, BuildingType.radius, effectCells);
                 //CalculateHarvest();
-                Render = new BuildingRender(this);
+              
             }
+            OnPrepareRender();
         }
 
         public override bool OnTurnStart(Scenario scenario)

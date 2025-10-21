@@ -21,6 +21,13 @@ namespace Sango.Game
         public Corps BelongCorps;
 
         /// <summary>
+        /// 所属城池
+        /// </summary>
+        [JsonConverter(typeof(Id2ObjConverter<City>))]
+        [JsonProperty]
+        public City BelongCity;
+
+        /// <summary>
         /// 建筑类型
         /// </summary>
         [JsonConverter(typeof(Id2ObjConverter<BuildingType>))]
@@ -49,6 +56,9 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public float heightOffset;
 
+        [JsonProperty]
+        public string model;
+
         /// <summary>
         /// 是否建造完成
         /// </summary>
@@ -74,6 +84,11 @@ namespace Sango.Game
             //BelongForce = scenario.forceSet.Get(_belongForceId);
             //BelongCorps = scenario.corpsSet.Get(_belongCorpsId);
             //BuildingType = scenario.CommonData.BuildingTypes.Get(_buildingTypeId);
+        }
+
+        public override void Init(Scenario scenario)
+        {
+            base.Init(scenario);
             OnPrepareRender();
         }
 
