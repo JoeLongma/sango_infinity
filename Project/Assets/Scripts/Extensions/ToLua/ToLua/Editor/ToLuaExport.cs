@@ -662,7 +662,7 @@ public static class ToLuaExport
 
     public static bool IsMemberFilter(MemberInfo mi)
     {
-        if (mi.MemberType == MemberTypes.Method)
+        if (mi.MemberType == MemberTypes.Method || mi.MemberType == MemberTypes.Constructor)
         {
             MethodBase mb1 = (MethodBase)mi;
             ParameterInfo[] infos = mb1.GetParameters();

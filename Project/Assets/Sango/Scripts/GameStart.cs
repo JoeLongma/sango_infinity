@@ -1,14 +1,8 @@
 using LuaInterface;
 using Sango;
 using Sango.Game;
-using Sango.Tools;
-using UnityEngine;
-using System;
-using UnityEngine.Networking;
 using System.Collections;
-using System.IO.Compression;
-using System.IO;
-using Newtonsoft.Json;
+using UnityEngine;
 
 /// <summary>
 /// 该文件由X框架自动生成
@@ -20,6 +14,12 @@ public class GameStart : MonoBehaviour
     public bool Debug = false;
     void Awake()
     {
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+        Application.targetFrameRate = 0;
+#else
+        Application.targetFrameRate = 30;
+#endif
+
 #if UNITY_STANDALONE_WIN && !UNITY_EDITOR
         string[] args = System.Environment.GetCommandLineArgs();
         foreach (string arg in args)

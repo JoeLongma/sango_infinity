@@ -64,7 +64,7 @@ public static class LuaBuilder
             }
         }
 
-        ToLuaExport.memberFilter = filterList;
+        ToLuaExport.memberFilter.AddRange(filterList);
 
 
         // 导出类

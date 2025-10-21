@@ -11,6 +11,7 @@ namespace Sango.Game.Render.UI
     {
         public Text forceText;
         public Text dateText;
+        public Text fpsText;
 
         public bool gridShow = true;
         public bool troopListShow = false;
@@ -106,9 +107,10 @@ namespace Sango.Game.Render.UI
             forceText.text = force.Name;
         }
 
+        string [] seasonText = new string[]{ "(秋)","(春)","(夏)","(冬)"};
         public void OnDayUpdate(Scenario scenario)
         {
-            dateText.text = scenario.GetDateStr();
+            dateText.text = scenario.GetDateStr() + seasonText[(int)scenario.CurSeason];
         }
 
         public void OnBtnPause()
@@ -247,10 +249,20 @@ namespace Sango.Game.Render.UI
 
         }
 
+        public void OnHighFPS()
+        {
+            Application.targetFrameRate = 60;
+        }
+
+        public void OnLowFPS()
+        {
+            Application.targetFrameRate = 30;
+        }
+
         void UpdateFPS()
         {
             float FPS = 1f / deltaTime;
-
+            fpsText.text = $"FPS:{Math.Floor(FPS)}";
         }
 
         public void Update()

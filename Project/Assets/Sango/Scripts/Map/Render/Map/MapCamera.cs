@@ -566,6 +566,18 @@ namespace Sango.Render
                 }
                 else if (touch.fingerId == moveFingerId)
                 {
+                    if(mobileControlType != 1)
+                    {
+                        mobileControlType = 1;
+                        ray = Camera.main.ScreenPointToRay(touch.position);
+                        float dis;
+
+                        if (viewPlane.Raycast(ray, out dis))
+                        {
+                            oldDragPos = ray.GetPoint(dis);
+                        }
+                    }
+
                     if (touch.phase == TouchPhase.Moved)
                     {
                         isMouseMoving = true;

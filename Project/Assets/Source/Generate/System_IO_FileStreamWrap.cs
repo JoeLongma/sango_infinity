@@ -20,8 +20,6 @@ public class System_IO_FileStreamWrap
 		L.RegFunction("Flush", new LuaCSFunction(Flush));
 		L.RegFunction("Lock", new LuaCSFunction(Lock));
 		L.RegFunction("Unlock", new LuaCSFunction(Unlock));
-		L.RegFunction("GetAccessControl", new LuaCSFunction(GetAccessControl));
-		L.RegFunction("SetAccessControl", new LuaCSFunction(SetAccessControl));
 		L.RegFunction("FlushAsync", new LuaCSFunction(FlushAsync));
 		L.RegFunction("ReadAsync", new LuaCSFunction(ReadAsync));
 		L.RegFunction("WriteAsync", new LuaCSFunction(WriteAsync));
@@ -110,52 +108,27 @@ public class System_IO_FileStreamWrap
 				ToLua.PushObject(L, obj);
 				return 1;
 			}
-			else if (count == 6 && TypeChecker.CheckTypes<System.IO.FileAccess, System.IO.FileShare, int, bool>(L, 3))
+			else if (count == 6 && TypeChecker.CheckTypes<bool>(L, 6))
 			{
 				string arg0 = ToLua.CheckString(L, 1);
 				System.IO.FileMode arg1 = (System.IO.FileMode)ToLua.CheckObject(L, 2, TypeTraits<System.IO.FileMode>.type);
-				System.IO.FileAccess arg2 = (System.IO.FileAccess)ToLua.ToObject(L, 3);
-				System.IO.FileShare arg3 = (System.IO.FileShare)ToLua.ToObject(L, 4);
-				int arg4 = (int)LuaDLL.lua_tointeger(L, 5);
+				System.IO.FileAccess arg2 = (System.IO.FileAccess)ToLua.CheckObject(L, 3, TypeTraits<System.IO.FileAccess>.type);
+				System.IO.FileShare arg3 = (System.IO.FileShare)ToLua.CheckObject(L, 4, TypeTraits<System.IO.FileShare>.type);
+				int arg4 = (int)LuaDLL.luaL_checkinteger(L, 5);
 				bool arg5 = LuaDLL.lua_toboolean(L, 6);
 				System.IO.FileStream obj = new System.IO.FileStream(arg0, arg1, arg2, arg3, arg4, arg5);
 				ToLua.PushObject(L, obj);
 				return 1;
 			}
-			else if (count == 6 && TypeChecker.CheckTypes<System.IO.FileAccess, System.IO.FileShare, int, System.IO.FileOptions>(L, 3))
+			else if (count == 6 && TypeChecker.CheckTypes<System.IO.FileOptions>(L, 6))
 			{
 				string arg0 = ToLua.CheckString(L, 1);
 				System.IO.FileMode arg1 = (System.IO.FileMode)ToLua.CheckObject(L, 2, TypeTraits<System.IO.FileMode>.type);
-				System.IO.FileAccess arg2 = (System.IO.FileAccess)ToLua.ToObject(L, 3);
-				System.IO.FileShare arg3 = (System.IO.FileShare)ToLua.ToObject(L, 4);
-				int arg4 = (int)LuaDLL.lua_tointeger(L, 5);
-				System.IO.FileOptions arg5 = (System.IO.FileOptions)ToLua.ToObject(L, 6);
-				System.IO.FileStream obj = new System.IO.FileStream(arg0, arg1, arg2, arg3, arg4, arg5);
-				ToLua.PushObject(L, obj);
-				return 1;
-			}
-			else if (count == 6 && TypeChecker.CheckTypes<System.Security.AccessControl.FileSystemRights, System.IO.FileShare, int, System.IO.FileOptions>(L, 3))
-			{
-				string arg0 = ToLua.CheckString(L, 1);
-				System.IO.FileMode arg1 = (System.IO.FileMode)ToLua.CheckObject(L, 2, TypeTraits<System.IO.FileMode>.type);
-				System.Security.AccessControl.FileSystemRights arg2 = (System.Security.AccessControl.FileSystemRights)ToLua.ToObject(L, 3);
-				System.IO.FileShare arg3 = (System.IO.FileShare)ToLua.ToObject(L, 4);
-				int arg4 = (int)LuaDLL.lua_tointeger(L, 5);
-				System.IO.FileOptions arg5 = (System.IO.FileOptions)ToLua.ToObject(L, 6);
-				System.IO.FileStream obj = new System.IO.FileStream(arg0, arg1, arg2, arg3, arg4, arg5);
-				ToLua.PushObject(L, obj);
-				return 1;
-			}
-			else if (count == 7)
-			{
-				string arg0 = ToLua.CheckString(L, 1);
-				System.IO.FileMode arg1 = (System.IO.FileMode)ToLua.CheckObject(L, 2, TypeTraits<System.IO.FileMode>.type);
-				System.Security.AccessControl.FileSystemRights arg2 = (System.Security.AccessControl.FileSystemRights)ToLua.CheckObject(L, 3, TypeTraits<System.Security.AccessControl.FileSystemRights>.type);
+				System.IO.FileAccess arg2 = (System.IO.FileAccess)ToLua.CheckObject(L, 3, TypeTraits<System.IO.FileAccess>.type);
 				System.IO.FileShare arg3 = (System.IO.FileShare)ToLua.CheckObject(L, 4, TypeTraits<System.IO.FileShare>.type);
 				int arg4 = (int)LuaDLL.luaL_checkinteger(L, 5);
-				System.IO.FileOptions arg5 = (System.IO.FileOptions)ToLua.CheckObject(L, 6, TypeTraits<System.IO.FileOptions>.type);
-				System.Security.AccessControl.FileSecurity arg6 = (System.Security.AccessControl.FileSecurity)ToLua.CheckObject<System.Security.AccessControl.FileSecurity>(L, 7);
-				System.IO.FileStream obj = new System.IO.FileStream(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+				System.IO.FileOptions arg5 = (System.IO.FileOptions)ToLua.ToObject(L, 6);
+				System.IO.FileStream obj = new System.IO.FileStream(arg0, arg1, arg2, arg3, arg4, arg5);
 				ToLua.PushObject(L, obj);
 				return 1;
 			}
@@ -417,40 +390,6 @@ public class System_IO_FileStreamWrap
 			long arg0 = LuaDLL.tolua_checkint64(L, 2);
 			long arg1 = LuaDLL.tolua_checkint64(L, 3);
 			obj.Unlock(arg0, arg1);
-			return 0;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int GetAccessControl(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			System.IO.FileStream obj = (System.IO.FileStream)ToLua.CheckObject<System.IO.FileStream>(L, 1);
-			System.Security.AccessControl.FileSecurity o = obj.GetAccessControl();
-			ToLua.PushSealed(L, o);
-			return 1;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int SetAccessControl(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 2);
-			System.IO.FileStream obj = (System.IO.FileStream)ToLua.CheckObject<System.IO.FileStream>(L, 1);
-			System.Security.AccessControl.FileSecurity arg0 = (System.Security.AccessControl.FileSecurity)ToLua.CheckObject<System.Security.AccessControl.FileSecurity>(L, 2);
-			obj.SetAccessControl(arg0);
 			return 0;
 		}
 		catch (Exception e)

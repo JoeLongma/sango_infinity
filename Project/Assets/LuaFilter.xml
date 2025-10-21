@@ -3,10 +3,20 @@
 	<!-- 需要剔除的属性填写在这里,解决可能由于平台或者发布时有属性不存在导致发布报错 -->
 	<!-- Core -->
 	<filter>System.TimeSpan</filter>
-
+	<filter>System.MarshalByRefObject</filter>
+	<filter>Runtime.Remoting</filter>
+	<filter>AccessControl.FileSystemRights</filter>
+	<filter>System.Security</filter>
+	<filter>Security.AccessControl</filter>
+	<filter>MarshalByRefObject.CreateObjRef</filter>
+	<filter>FileStream.GetAccessControl</filter>
+	<filter>FileStream.SetAccessControl</filter>
+	<filter>AccessControl</filter>
+	<filter>FileSystemRights</filter>
+	
 	<filter>Span`1</filter>
 	<filter>ReadOnlySpan`1</filter>
-
+	
 	<!-- Unity -->
 	<filter>RenderBuffer.GetNativeRenderBufferPtr</filter>
 	<filter>Motion.averageDuration</filter>
