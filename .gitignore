@@ -50,3 +50,5 @@
 /Project/Assets/StreamingAssets
 /Project/Assets/StreamingAssets.meta
 /无限三国_BurstDebugInformation_DoNotShip/tempburstlibs
+*.exe
+/Build/无限三国_Data
