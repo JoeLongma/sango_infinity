@@ -360,27 +360,7 @@ namespace Sango.Game
                     buildingBaseList.Enqueue(c);
                 }
             }
-
-            for (int i = 0; i < scenario.portSet.Count; ++i)
-            {
-                var c = scenario.portSet[i];
-                if (c != null && c.IsAlive && c.BelongForce == this)
-                {
-                    c.OnTurnStart(scenario);
-                    buildingBaseList.Enqueue(c);
-                }
-            }
-
-            for (int i = 0; i < scenario.gateSet.Count; ++i)
-            {
-                var c = scenario.gateSet[i];
-                if (c != null && c.IsAlive && c.BelongForce == this)
-                {
-                    c.OnTurnStart(scenario);
-                    buildingBaseList.Enqueue(c);
-                }
-            }
-
+            
             for (int i = 0; i < scenario.troopsSet.Count; ++i)
             {
                 var c = scenario.troopsSet[i];
@@ -453,7 +433,33 @@ namespace Sango.Game
             for (int i = 0; i < scenario.citySet.Count; ++i)
             {
                 var c = scenario.citySet[i];
-                if (c != null && c.IsAlive && c.BelongForce == this)
+                if (c != null && c.IsAlive && c.BelongForce == this && c.IsCity())
+                {
+                    action(c);
+                }
+            }
+        }
+
+        public void ForEachGate(System.Action<City> action)
+        {
+            Scenario scenario = Scenario.Cur;
+            for (int i = 0; i < scenario.citySet.Count; ++i)
+            {
+                var c = scenario.citySet[i];
+                if (c != null && c.IsAlive && c.BelongForce == this && c.IsGate())
+                {
+                    action(c);
+                }
+            }
+        }
+
+        public void ForEachPort(System.Action<City> action)
+        {
+            Scenario scenario = Scenario.Cur;
+            for (int i = 0; i < scenario.citySet.Count; ++i)
+            {
+                var c = scenario.citySet[i];
+                if (c != null && c.IsAlive && c.BelongForce == this && c.IsPort())
                 {
                     action(c);
                 }

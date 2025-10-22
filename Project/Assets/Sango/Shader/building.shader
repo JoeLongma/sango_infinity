@@ -16,6 +16,7 @@ Shader "Sango/building_urp" {
 				}
 				Blend SrcAlpha OneMinusSrcAlpha
 				HLSLPROGRAM
+				#define SANGO_BASE_COLOR 1
 				#define SANGO_FOG 1
 				#define SANGO_ALPHA_TEST 1
 				#define SANGO_TERRAIN_TYPE 1

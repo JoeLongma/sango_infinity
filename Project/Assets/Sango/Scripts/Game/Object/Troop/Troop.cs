@@ -957,6 +957,8 @@ namespace Sango.Game
 #if SANGO_DEBUG
                 Sango.Log.Print($"{BelongForce.Name}的[{Name} 部队 溃灭!!");
 #endif
+                OnDestroy(atk);
+
                 // 移除
                 Clear();
             }
@@ -967,6 +969,28 @@ namespace Sango.Game
             }
 
             return IsAlive;
+        }
+
+        public void OnDestroy(SangoObject atk)
+        {
+            for (int i = 0; i < captiveList.Count; i++)
+            {
+                Person person = captiveList[i];
+                if (person.IsWild)
+                {
+                    person.BelongCity = BelongCity;
+                    BelongCity.wildPersons.Add(person);
+                    person.SetMission(MissionType.PersonReturn, BelongCity, 1);
+                }
+                else
+                {
+                    person.BelongForce.Governor.BelongCity.allPersons.Add(person);
+                    person.BelongCorps = person.BelongForce.Governor.BelongCorps;
+                    person.BelongCity = person.BelongForce.Governor.BelongCity;
+                    person.BelongCity.allPersons.Add(person);
+                    person.SetMission(MissionType.PersonReturn, person.BelongCity, 1);
+                }
+            }
         }
 
         public int GetTroopsNum()

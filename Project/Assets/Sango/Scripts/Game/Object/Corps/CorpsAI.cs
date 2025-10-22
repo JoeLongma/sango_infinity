@@ -16,27 +16,6 @@ namespace Sango.Game
                         return false;
                 }
             }
-
-            for (int i = 0; i < scenario.portSet.Count; ++i)
-            {
-                var c = scenario.portSet[i];
-                if (c != null && c.IsAlive && c.BelongCorps == corps && !c.ActionOver)
-                {
-                    if (!c.DoAI(scenario))
-                        return false;
-                }
-            }
-
-            for (int i = 0; i < scenario.gateSet.Count; ++i)
-            {
-                var c = scenario.gateSet[i];
-                if (c != null && c.IsAlive && c.BelongCorps == corps && !c.ActionOver)
-                {
-                    if (!c.DoAI(scenario))
-                        return false;
-                }
-            }
-
             return true;
         }
 
@@ -47,7 +26,7 @@ namespace Sango.Game
             for (int i = 0; i < scenario.citySet.Count; ++i)
             {
                 var c = scenario.citySet[i];
-                if (c != null && c.IsAlive && c.BelongCorps == corps)
+                if (c != null && c.IsAlive && c.BelongCorps == corps && c.IsCity())
                 {
                     City kCity = c;
                     if (kCity.PersonHole < 0 && kCity.freePersons.Count > 0)
@@ -79,7 +58,7 @@ namespace Sango.Game
             for (int i = 0; i < scenario.citySet.Count; ++i)
             {
                 var c = scenario.citySet[i];
-                if (c != null && c.IsAlive && c.BelongCorps == corps)
+                if (c != null && c.IsAlive && c.BelongCorps == corps && c.IsCity())
                 {
                     City kCity = c;
                     if (canTransforPersons.Count <= 0)
@@ -105,7 +84,7 @@ namespace Sango.Game
             for (int i = 0; i < scenario.citySet.Count; ++i)
             {
                 var c = scenario.citySet[i];
-                if (c != null && c.IsAlive && c.BelongCorps == corps)
+                if (c != null && c.IsAlive && c.BelongCorps == corps && c.IsCity())
                 {
                     City kCity = c;
                     if (canTransforPersons.Count <= 0)

@@ -304,61 +304,6 @@ namespace Sango.Game
             });
         }
 
-        //public bool CreateTroop(int troopTypeId)
-        //{
-        //    TroopType troopType = Scenario.Cur.CommonData.TroopTypes.Get(troopTypeId);
-        //    return CreateTroop(troopType);
-        //}
-
-        //public bool CreateTroop(TroopType troopType)
-        //{
-        //    if (troopType == null) return false;
-        //    //if (!activedTroopType.Contains(troopType))
-        //    //    return false;
-
-        //    if (troopType.costFood > 0 || troopType.costGold > 0 || troopType.costPopulation > 0)
-        //    {
-        //        if (food < troopType.costFood)
-        //            return false;
-        //        if (gold < troopType.costGold)
-        //            return false;
-        //        if (troopPopulation < troopType.costPopulation)
-        //            return false;
-        //    }
-
-        //    //if (troopType.costItems != null && troopType.costItems.Length > 0)
-        //    //{
-        //    //    for (int i = 0; i < troopType.costItems.Length; ++i)
-        //    //    {
-        //    //        Item it = troopType.costItems[i];
-        //    //        if (store.GetItemNumber(it.Id) < it.Num)
-        //    //            return false;
-        //    //    }
-        //    //}
-
-        //    Troop troop = new Troop()
-        //    {
-        //        troops = troopType.costPopulation,
-        //        energy = 100,
-        //        morale = 100,
-        //    };
-        //    troop.TroopType = troopType;
-
-        //    Scenario.Cur.troopSet.Add(troop);
-        //    TroopList.Add(troop);
-        //    food -= troopType.costFood;
-        //    gold -= troopType.costGold;
-        //    troopPopulation -= troopType.costPopulation;
-
-        //    //for (int i = 0; i < troopType.costItems.Length; ++i)
-        //    //{
-        //    //    Item it = troopType.costItems[i];
-        //    //    store.Remove(it);
-        //    //}
-        //    Sango.Log.Warning($"{BelongForce.Name}势力在{Name}组建部队:{troopType.Name}");
-        //    return true;
-        //}
-
         public override void OnScenarioPrepare(Scenario scenario)
         {
             //x *= 2;
@@ -831,6 +776,27 @@ namespace Sango.Game
 
         public override void OnFall(Troop atk)
         {
+            // 城倒,俘虏逃
+            for (int i = 0; i < CaptiveList.Count; i++)
+            {
+                Person person = CaptiveList[i];
+                if (person.IsWild)
+                {
+                    person.BelongCity = this;
+                    BelongCity.wildPersons.Add(person);
+                }
+                else
+                {
+                    person.BelongForce.Governor.BelongCity.allPersons.Add(person);
+                    person.BelongCorps = person.BelongForce.Governor.BelongCorps;
+                    person.BelongCity = person.BelongForce.Governor.BelongCity;
+                    person.BelongCity.allPersons.Add(person);
+                    person.SetMission(MissionType.PersonReturn, person.BelongCity, 1);
+                }
+            }
+
+            CaptiveList.Clear();
+
             // 白城
             if (BelongCorps == null)
             {
@@ -889,6 +855,7 @@ namespace Sango.Game
                     }
                     else
                     {
+                        person.ClearMission();
                         person.LeaveToWild();
                     }
                 }

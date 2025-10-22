@@ -1,4 +1,5 @@
 ﻿using Sango.Mod;
+using Sango.Render;
 using Sango.Tools;
 using System.Collections;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace Sango.Game
         }
         public override void Shutdown() 
         {
+            MapRender.Instance.Clear();
             Sango.Log.Print("游戏关闭");
             Event.OnGameShutdown?.Invoke();
         }

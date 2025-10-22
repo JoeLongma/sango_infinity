@@ -25,6 +25,7 @@ namespace Sango.Render
             texture = new Texture[4] { Texture2D.whiteTexture,
                 Texture2D.whiteTexture, Texture2D.whiteTexture, Texture2D.whiteTexture };
             //baseTextrueName = null;
+            Shader.SetGlobalTexture("_BaseTex", Texture2D.whiteTexture);
         }
         internal override void OnSave(BinaryWriter writer)
         {

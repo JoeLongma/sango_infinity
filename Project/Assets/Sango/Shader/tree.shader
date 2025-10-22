@@ -4,6 +4,7 @@ Shader "Sango/tree_urp" {
 		_MainTex("MainTex", 2D) = "white" {}
 		_Color("Color", Color) = (1,1,1,1)
 		_OutlineWidth("width", float) = 0.0001
+		_BaseColorIntensity("BaseColorFactor", float) = 0.7
 		}
 		SubShader{
 			Tags { "RenderPipeline" = "UniversalPipeline" "Queue" = "Transparent" "RenderType" = "TransparentCutout" }
@@ -17,6 +18,7 @@ Shader "Sango/tree_urp" {
 				Cull off
 				Blend SrcAlpha OneMinusSrcAlpha
 				HLSLPROGRAM
+				#define SANGO_BASE_COLOR 1
 				#define SANGO_COLOR 1
 				#define SANGO_FOG 1
 				#define SANGO_ALPHA_TEST 1

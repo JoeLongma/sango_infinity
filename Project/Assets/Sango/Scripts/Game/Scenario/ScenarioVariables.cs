@@ -9,6 +9,18 @@ namespace Sango.Game
     public class ScenarioVariables
     {
         /// <summary>
+        /// 关卡开始索引
+        /// </summary>
+        [JsonProperty]
+        public int GateBeginIndex;
+
+        /// <summary>
+        /// 港口开始索引
+        /// </summary>
+        [JsonProperty]
+        public int PortBeginIndex;
+
+        /// <summary>
         /// 真实年龄开关
         /// </summary>
         [JsonProperty] public bool AgeEnabled = true;
@@ -289,6 +301,8 @@ namespace Sango.Game
         /// 队伍溃败时候的抓捕率(百分比)
         /// </summary>
         [JsonProperty] public int captureChangceWhenTroopFall = 5;
+
+
 
         public float DifficultyDamageFactor
         {

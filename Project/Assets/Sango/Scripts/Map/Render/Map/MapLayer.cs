@@ -45,8 +45,8 @@ namespace Sango.Render
 
                     Texture tex = layer.map.CreateTexture($"Terrain/{seasonName}/{diffuseTexName[i]}");
                     diffuse[i] = tex;
-                    textureScale = new Vector2(layer.map.mapData.vertex_width * 32 / tex.width,
-                                  -layer.map.mapData.vertex_height * 32 / tex.height);
+                    textureScale = new Vector2(layer.map.mapData.vertex_width * 64 / tex.width,
+                                  -layer.map.mapData.vertex_height * 64 / tex.height);
                     if (i == layer.curSeason)
                     {
                         material.SetTexture("_MainTex", tex);
@@ -71,7 +71,7 @@ namespace Sango.Render
             public void UpdateDiffuse(int index, Texture tex, bool updateScale = true)
             {
                 diffuse[index] = tex;
-                textureScale = new Vector2(32768 / tex.width, -32768 / tex.height);
+                textureScale = new Vector2(32768 * 2 / tex.width, -32768 * 2 / tex.height);
                 if (index == layer.curSeason)
                     UpdateMaterial(layer.curSeason);
             }
@@ -80,7 +80,7 @@ namespace Sango.Render
             {
                 diffuseTexName[index] = texName;
                 diffuse[index] = tex;
-                textureScale = new Vector2(32768 / tex.width, -32768 / tex.height);
+                textureScale = new Vector2(32768 * 2 / tex.width, -32768 * 2 / tex.height);
                 if (index == layer.curSeason)
                     UpdateMaterial(layer.curSeason);
             }
@@ -207,8 +207,8 @@ namespace Sango.Render
 
                         Texture tex = layer.map.CreateTexture($"Terrain/{seasonName}/{diffuseTexName[i]}");
                         diffuse[i] = tex;
-                        textureScale = new Vector2(layer.map.mapData.vertex_width * 32 / tex.width,
-                                      -layer.map.mapData.vertex_height * 32 / tex.height);
+                        textureScale = new Vector2(layer.map.mapData.vertex_width * 64 / tex.width,
+                                      -layer.map.mapData.vertex_height * 64 / tex.height);
                         if (i == layer.curSeason)
                         {
                             material.SetTexture("_MainTex", tex);
@@ -241,7 +241,7 @@ namespace Sango.Render
                     }
                 }
 
-                if(versionCode < 7)
+                if (versionCode < 7)
                 {
                     string temp = diffuseTexName[0];
                     diffuseTexName[0] = diffuseTexName[1];

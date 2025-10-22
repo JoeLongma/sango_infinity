@@ -69,7 +69,7 @@ namespace Sango.Game
             for (int i = 0; i < scenario.citySet.Count; ++i)
             {
                 var c = scenario.citySet[i];
-                if (c != null && c.BelongCorps == this)
+                if (c != null && c.BelongCorps == this && c.IsCity())
                 {
                     cityCount++;
                     if (c.IsBorderCity)
@@ -99,7 +99,7 @@ namespace Sango.Game
             for (int i = 0; i < scenario.citySet.Count; ++i)
             {
                 var c = scenario.citySet[i];
-                if (c != null && c.BelongCorps == this)
+                if (c != null && c.BelongCorps == this && c.IsCity())
                 {
                     if (c.IsBorderCity)
                     {
@@ -223,7 +223,33 @@ namespace Sango.Game
             for (int i = 0; i < scenario.citySet.Count; ++i)
             {
                 var c = scenario.citySet[i];
-                if (c != null && c.IsAlive && c.BelongCorps == this)
+                if (c != null && c.IsAlive && c.BelongCorps == this && c.IsCity())
+                {
+                    action(c);
+                }
+            }
+        }
+
+        public void ForEachPort(System.Action<City> action)
+        {
+            Scenario scenario = Scenario.Cur;
+            for (int i = 0; i < scenario.citySet.Count; ++i)
+            {
+                var c = scenario.citySet[i];
+                if (c != null && c.IsAlive && c.BelongCorps == this && c.IsPort())
+                {
+                    action(c);
+                }
+            }
+        }
+
+        public void ForEachGate(System.Action<City> action)
+        {
+            Scenario scenario = Scenario.Cur;
+            for (int i = 0; i < scenario.citySet.Count; ++i)
+            {
+                var c = scenario.citySet[i];
+                if (c != null && c.IsAlive && c.BelongCorps == this && c.IsGate())
                 {
                     action(c);
                 }

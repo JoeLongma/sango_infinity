@@ -308,7 +308,7 @@ namespace Sango.Tools
         };
         private string[] toolbarSeason = new string[]
         {
-            "春", "夏", "秋", "冬"
+            "秋", "春", "夏", "冬"
         };
         bool viewIs311Camera = true;
         void DrawToolbarWindow(int windowID, EditorWindow window)

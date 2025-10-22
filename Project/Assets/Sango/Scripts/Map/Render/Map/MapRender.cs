@@ -21,7 +21,7 @@ namespace Sango.Render
         public OnMapLoadedCall OnMapLoaded;
         public delegate void OnSeasonChange(int curSeason);
         public Material terrainOutlineMat;
-        float _outlineWidth = 1.85f;
+        float _outlineWidth = 3.5f;
         bool _outlineShow = true;
 
         public float showLimitLength = 1200;
@@ -275,13 +275,13 @@ namespace Sango.Render
             if (mapGrid != null)
                 mapGrid.Clear();
 
-            if(mapRoot != null)
+            if (mapRoot != null)
             {
                 GameObject.Destroy(mapRoot);
                 mapRoot = null;
                 modelRoot = null;
                 terrainRoot = null;
-            }    
+            }
         }
 
         public void LoadMap(string filename)
@@ -388,7 +388,7 @@ namespace Sango.Render
             if (!textureName.EndsWith(extensions))
                 destPath = destPath + extensions;
             Texture texture = ObjectLoader.LoadObject<Texture>(destPath);
-            if(texture == null)
+            if (texture == null)
             {
                 destPath = $"Assets/Map/{DefaultContentName}/{textureName}{extensions}";
                 texture = ObjectLoader.LoadObject<Texture>(destPath);
@@ -413,9 +413,9 @@ namespace Sango.Render
                 }
             }
 
-//#if SANGO_DEBUG
-//            ViewRectCache = new Tools.Rect(0, 0, mapData.wrold_width, mapData.wrold_height);
-//#endif
+            //#if SANGO_DEBUG
+            //            ViewRectCache = new Tools.Rect(0, 0, mapData.wrold_width, mapData.wrold_height);
+            //#endif
 
             if (mapTerrain != null)
                 mapTerrain.Update();
@@ -571,5 +571,6 @@ namespace Sango.Render
         {
             mapCamera.MoveCameraTo(pos);
         }
+
     }
 }

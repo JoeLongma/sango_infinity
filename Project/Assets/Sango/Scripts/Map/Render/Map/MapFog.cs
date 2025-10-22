@@ -103,5 +103,12 @@ namespace Sango.Render
                 Shader.SetGlobalColor("_FogColor", fog_color[curSeason]);
             }
         }
+
+        public override void Clear()
+        {
+            base.Clear();
+            Shader.SetGlobalFloat("_MixPower", 0);
+        }
+
     }
 }

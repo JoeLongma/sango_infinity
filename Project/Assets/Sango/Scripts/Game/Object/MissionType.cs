@@ -20,6 +20,8 @@
         PersonBuild,
         PersonWork,
         PersonInTroop,
+        PersonInCityCaptive,
+        PersonInTroopCaptive,
 
         /// <summary>
         /// 移动

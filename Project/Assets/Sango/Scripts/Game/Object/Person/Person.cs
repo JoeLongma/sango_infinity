@@ -446,11 +446,14 @@ namespace Sango.Game
                 if (!IsWild)
                 {
                     beFinded = true;
-                    BelongCity.allPersons.Add(this);
 
-                    if(BelongForce != BelongCity.BelongForce || BelongCorps != BelongCity.BelongCorps)
+                    if(missionType != (int)MissionType.PersonInCityCaptive && missionType != (int)MissionType.PersonInTroopCaptive)
                     {
-                        Sango.Log.Error($"[{Id}]{Name}归属force:{BelongForce.Name} corps:{BelongCorps.Name}, 但在city[{BelongCity.Id}] force:{BelongCity.BelongForce.Name} corps:{BelongCity.BelongCorps.Name}");
+                        BelongCity.allPersons.Add(this);
+                        if (BelongForce != BelongCity.BelongForce || BelongCorps != BelongCity.BelongCorps)
+                        {
+                            Sango.Log.Error($"[{Id}]{Name}归属force:{BelongForce.Name} corps:{BelongCorps.Name}, 但在city[{BelongCity.Id}] force:{BelongCity.BelongForce.Name} corps:{BelongCity.BelongCorps.Name}");
+                        }
                     }
                 }
                 else
@@ -716,6 +719,7 @@ namespace Sango.Game
 
         public Person BeCaptive(City city)
         {
+            SetMission(MissionType.PersonInCityCaptive, city, 999);
             city.CaptiveList.Add(this);
             this.BelongForce.CaptiveList.Add(this);
             return this;
@@ -723,6 +727,7 @@ namespace Sango.Game
 
         public Person BeCaptive(Troop troop)
         {
+            SetMission(MissionType.PersonInTroopCaptive, troop, 999);
             troop.captiveList.Add(this);
             this.BelongForce.CaptiveList.Add(this);
             return this;
@@ -742,7 +747,7 @@ namespace Sango.Game
                     Exp = Level.exp - Exp;
                     Level = Level.Next;
 #if SANGO_DEBUG
-                     Sango.Log.Print($"@个人@{Name}升级到{Level.Id}级");
+                    Sango.Log.Print($"@个人@{Name}升级到{Level.Id}级");
 #endif
                     Scenario.Cur.Event.OnPersonLevelUp?.Invoke(this);
                 }

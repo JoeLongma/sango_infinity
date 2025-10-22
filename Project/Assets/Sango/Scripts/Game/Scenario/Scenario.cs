@@ -1,14 +1,12 @@
-﻿using Sango.Game.Render;
+﻿using Newtonsoft.Json;
+using Sango.Game.Render;
 using Sango.Render;
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.IO;
 using System.Threading;
-using System.Xml;
 using UnityEngine;
 using Task = System.Threading.Tasks.Task;
-using System.IO;
-using UnityEngine.Rendering;
 
 namespace Sango.Game
 {
@@ -30,14 +28,9 @@ namespace Sango.Game
         [JsonConverter(typeof(SangoObjectSetConverter<Corps>))]
         [JsonProperty] public SangoObjectSet<Corps> corpsSet = new SangoObjectSet<Corps>();
 
-        [JsonConverter(typeof(SangoObjectSetConverter<City>))]
+        // 这个特殊点,会判断Variables的关卡和港口索引来创建不同的类型
+        [JsonConverter(typeof(SangoObjectSetCityConverter))]
         [JsonProperty] public SangoObjectSet<City> citySet = new SangoObjectSet<City>();
-
-        [JsonConverter(typeof(SangoObjectSetConverter<Gate>))]
-        [JsonProperty] public SangoObjectSet<Gate> gateSet = new SangoObjectSet<Gate>();
-
-        [JsonConverter(typeof(SangoObjectSetConverter<Port>))]
-        [JsonProperty] public SangoObjectSet<Port> portSet = new SangoObjectSet<Port>();
 
         [JsonConverter(typeof(SangoObjectSetConverter<Person>))]
         [JsonProperty] public SangoObjectSet<Person> personSet = new SangoObjectSet<Person>();
@@ -143,11 +136,11 @@ namespace Sango.Game
             }
             else if (tType == typeof(Port))
             {
-                return portSet as Database<T>;
+                return citySet as Database<T>;
             }
             else if (tType == typeof(Gate))
             {
-                return gateSet as Database<T>;
+                return citySet as Database<T>;
             }
             else if (tType == typeof(Building))
             {
@@ -340,16 +333,12 @@ namespace Sango.Game
             prepareList.Add(forceSet);
             prepareList.Add(corpsSet);
             prepareList.Add(citySet);
-            prepareList.Add(gateSet);
-            prepareList.Add(portSet);
             prepareList.Add(personSet);
             prepareList.Add(buildingSet);
             prepareList.Add(troopsSet);
 
             eventReciveList.Add(personSet);
             eventReciveList.Add(citySet);
-            eventReciveList.Add(gateSet);
-            eventReciveList.Add(portSet);
             eventReciveList.Add(troopsSet);
             eventReciveList.Add(forceSet);
         }

@@ -78,6 +78,23 @@ namespace Sango.Game
         /// </summary>
         public List<Cell> effectCells;// = new List<Cell>();
 
+        public bool IsCity()
+        {
+            return BuildingType.kind == (int)BuildingKindType.City;
+        }
+        public bool IsPort()
+        {
+            return BuildingType.kind == (int)BuildingKindType.Port;
+        }
+        public bool IsGate()
+        {
+            return BuildingType.kind == (int)BuildingKindType.Gate;
+        }
+        public bool IsIntorBuilding()
+        {
+            return BuildingType.isIntrior;
+        }
+
         public override void OnScenarioPrepare(Scenario scenario)
         {
             effectCells = new List<Cell>();

@@ -67,6 +67,7 @@ namespace Sango.Game.Render
             else
             {
                 newPos.y = MapRender.QueryHeight(newPos);
+                troop.Render.SetForward(dir);
                 troop.Render.SetPosition(newPos);
                 return IsDone;
             }
