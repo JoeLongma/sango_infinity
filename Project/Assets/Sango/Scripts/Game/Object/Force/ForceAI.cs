@@ -493,7 +493,7 @@ namespace Sango.Game
                 if (check2 != null) buildAbility += check2.BaseSecurityAbility;
                 if (check3 != null) buildAbility += check3.BaseSecurityAbility;
 
-                buildAbility = GameUtility.Method_SecurityAbility(buildAbility);
+                buildAbility = GameUtility.Method_SecurityAbility(buildAbility, 1);
 
                 if (buildAbility > maxValue[0])
                 {
@@ -566,7 +566,7 @@ namespace Sango.Game
                 if (check2 != null) buildAbility += check2.BaseTrainTroopAbility;
                 if (check3 != null) buildAbility += check3.BaseTrainTroopAbility;
 
-                buildAbility = GameUtility.Method_TrainTroop(buildAbility);
+                buildAbility = GameUtility.Method_TrainTroop(buildAbility, 1);
 
                 if (buildAbility > maxValue[0])
                 {

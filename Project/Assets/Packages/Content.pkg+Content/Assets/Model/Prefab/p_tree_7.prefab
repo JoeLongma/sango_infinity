@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8410647666438215938}
   - component: {fileID: 6660736033478844488}
   - component: {fileID: 7875117897629402332}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8991625012096641114}
   - component: {fileID: 2114432172896693315}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: p_tree_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}

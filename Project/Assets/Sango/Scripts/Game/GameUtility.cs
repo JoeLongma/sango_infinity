@@ -115,9 +115,12 @@ namespace Sango.Game
             return 2 * v;
         }
 
-        public static int Method_SecurityAbility(int v)
+        public static int Method_SecurityAbility(int v, int buildingTotalLevel)
         {
-            return Math.Max(1, (int)(Math.Pow(v, 0.5)) - 5);
+            int percent = 0;
+            for (int i = 1; i <= buildingTotalLevel; ++i)
+                percent += (int)(Math.Pow(v, 0.5f / i));
+            return Math.Max(1, percent - 10);
         }
 
         public static int Method_FarmingAbility(int v)
@@ -131,26 +134,30 @@ namespace Sango.Game
         }
 
         // 这里传入的v是放大了10倍的
-        public static int Method_RecuritTroop(int v, int buildingNum)
+        public static int Method_RecuritTroop(int v, int buildingTotalLevel)
         {
-            int percent = 1000;
-            for (int i = 1; i < buildingNum; ++i)
-                percent += (int)(Math.Pow(100, 0.5f / buildingNum) * 100f);
+            int percent = 0;
+            for (int i = 1; i <= buildingTotalLevel; ++i)
+                percent += (int)(Math.Pow(100, 0.5f / i) * 60);
 
             return ((int)(v * 8.567f / 10f - 1) + 1500) * percent / 1000;
         }
 
-        public static int Method_TrainTroop(int v)
+        public static int Method_TrainTroop(int v, int buildingTotalLevel)
         {
-            return Math.Max(1, (int)(Math.Pow(v, 0.5)) * 2 - 10);
+            int percent = 0;
+            for (int i = 1; i <= buildingTotalLevel; ++i)
+                percent += (int)(Math.Pow(v, 0.5f / i));
+            return Math.Max(1, percent - 3);
         }
 
         // 这里传入的v是放大了10倍的
-        public static int Method_CreateItems(int v, int buildingNum)
+        public static int Method_CreateItems(int v, int buildingTotalLevel)
         {
-            int percent = 1000;
-            for (int i = 1; i < buildingNum; ++i)
-                percent += (int)(Math.Pow(100, 0.5f / buildingNum) * 100f);
+            int percent = 0;
+            for (int i = 1; i <= buildingTotalLevel; ++i)
+                percent += (int)(Math.Pow(100, 0.5f / i) * 50);
+
             return (v * 15 / 10 + 1500) * percent / 1000;
         }
 

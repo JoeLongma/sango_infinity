@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 259678192912605572}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: p_gate_lv1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 858705122928464092}
   - component: {fileID: 2539349171800353174}
   - component: {fileID: 1303843490927774978}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}

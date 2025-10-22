@@ -98,6 +98,11 @@ TEXTURE2D(_RangeMask);
 TEXTURE2D(_DarkMask);
 #endif
 
+#if SANGO_TEXT
+TEXTURE2D(_TextTex);
+float _TextFactor;
+#endif
+
 TEXTURE2D_X_FLOAT(_CameraDepthTexture);
 SAMPLER(sampler_CameraDepthTexture);
 
@@ -128,6 +133,9 @@ struct SangoVertexOutput
 #if SANGO_BLEND_HEIGHT
 	float3 posObject	: TEXCOORD4;
 #endif
+#if SANGO_TEXT
+	float2 ouv : TEXCOORD5;
+#endif
 };
 
 float2 SangoWaterTransofromUV(SangoVertexOutput i)
@@ -154,7 +162,9 @@ SangoVertexOutput sango_vert(SangoVertexInput v)
 {
 	SangoVertexOutput o = (SangoVertexOutput)0;
 	o.uv = TRANSFORM_TEX(v.uv,_MainTex);
-
+#if SANGO_TEXT
+	o.ouv = v.uv;
+#endif
 	VertexNormalInputs vertexNormalInput = GetVertexNormalInputs(v.normal);
 	o.normal = vertexNormalInput.normalWS;
 
@@ -297,8 +307,10 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 		half4 finalRGBA = half4(diffuse,  saturate(i.vertColor.a));
 	#endif
 
-
-
+	#if SANGO_TEXT
+		half4 col = SAMPLE_TEXTURE2D(_TextTex, smp, i.ouv);
+		finalRGBA.rgb = lerp(finalRGBA.rgb, col.rgb,  col.a);
+	#endif
 
 	#if SANGO_BLEND_HEIGHT
 	finalRGBA.a = finalRGBA.a * saturate(pow( i.posObject.y - _BlendHeight, _BlendPower));

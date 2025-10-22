@@ -119,7 +119,7 @@ namespace Sango.Render
                 buildingLayer = LayerMask.NameToLayer("Building");
             GameObject modelObj = new GameObject(name);
             modelObj.transform.SetParent(MapRender.modelRoot);
-            modelObj.layer = buildingLayer;
+            //modelObj.layer = buildingLayer;
             return modelObj.AddComponent<MapObject>();
         }
 
@@ -139,7 +139,7 @@ namespace Sango.Render
                 buildingLayer = LayerMask.NameToLayer("Building");
             GameObject modelObj = new GameObject(name);
             modelObj.transform.SetParent(MapRender.modelRoot);
-            modelObj.layer = buildingLayer;
+            //modelObj.layer = buildingLayer;
             modelObj.transform.position = pos;
             modelObj.transform.rotation = Quaternion.Euler(rot);
             modelObj.transform.localScale = scale;
@@ -298,7 +298,7 @@ namespace Sango.Render
                 model.transform.localPosition = Vector3.zero;
                 model.transform.localRotation = Quaternion.identity;
                 // model.transform.localScale = Vector3.one;
-                UnityTools.SetLayer(model, gameObject.layer);
+                //UnityTools.SetLayer(model, gameObject.layer);
 
                 //if (MapRender.Instance != null)
                 //{

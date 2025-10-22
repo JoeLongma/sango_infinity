@@ -10,13 +10,13 @@ namespace Sango
         public Vector3 initScale = new Vector3(-1f, 1f, 1f);
         public Vector2 scaleFactor = Vector2.one;
         public Vector3 offsetFactor = new Vector3(0f, 0f, 0f);
+        public Vector3 cacheOffset = new Vector3(0f, 0f, 0f);
         private Transform cacheTrans;
         float tempFactor;
-        Vector3 cacheOffset;
+
         private void Start()
         {
             CatchMainCamera();
-            cacheOffset = transform.localPosition;
             tempFactor = -1;
         }
 

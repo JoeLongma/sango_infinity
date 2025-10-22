@@ -142,9 +142,9 @@ namespace Sango.Render
 
         void InitMat()
         {
-            terrainOutlineMat = new Material(Shader.Find("Sango/outline_urp"));
-            terrainOutlineMat.renderQueue = 2500;
-            terrainOutlineMat.SetFloat("_OutlineWidth", _outlineWidth);
+            //terrainOutlineMat = new Material(Shader.Find("Sango/outline_urp"));
+            //terrainOutlineMat.renderQueue = 2500;
+            //terrainOutlineMat.SetFloat("_OutlineWidth", _outlineWidth);
         }
 
         public void NewMap(int w, int h)

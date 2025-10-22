@@ -95,10 +95,9 @@ namespace Sango.Render
                 mf.sharedMesh = tempMesh;
                 MeshRenderer renderer = go.AddComponent<MeshRenderer>();
                 if (i < maxLayer - 1 && map.outLineShow) {
-                    Material[] mats = new Material[2]
+                    Material[] mats = new Material[1]
                       {
-                        layerData.material,
-                        map.terrainOutlineMat
+                        layerData.material
                       };
                     renderer.sharedMaterials = mats;
                 }

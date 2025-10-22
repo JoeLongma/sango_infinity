@@ -21,13 +21,13 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: mat_gate_port
-  m_Shader: {fileID: 4800000, guid: 24a571e9815b6f8409b27103f0f3e0dc, type: 3}
+  m_Shader: {fileID: 4800000, guid: ee1f335cffcafb043bb17d55046b293d, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2450
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -108,7 +108,7 @@ Material:
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
-    - _OutlineWidth: 0.0001
+    - _OutlineWidth: 3.5
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1

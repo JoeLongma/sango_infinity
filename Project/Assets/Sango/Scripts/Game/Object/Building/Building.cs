@@ -269,7 +269,6 @@ namespace Sango.Game
 
         public void Destroy()
         {
-
             Scenario.Cur.buildingSet.Remove(this);
 
             if (Builders != null)

@@ -265,6 +265,7 @@ namespace Sango.Game
         public static bool AIBuilding(City city, Scenario scenario)
         {
             AIBuildIntriore(city, scenario);
+            AIBuildingLevelUp(city, scenario);
             AIBuildMilitaryBuilding(city, scenario);
             return true;
         }
@@ -448,7 +449,6 @@ namespace Sango.Game
                 AIBuildingTemplate(0, city, scenario);
             }
 
-            AIBuildingLevelUp(city, scenario);
             return true;
         }
 
@@ -462,8 +462,17 @@ namespace Sango.Game
                 return true;
 
             Dictionary<int, int> buildingCountMap = new Dictionary<int, int>();
-            foreach (int buildingTypeId in city.buildingCountMap.Keys)
-                buildingCountMap[buildingTypeId] = city.buildingCountMap[buildingTypeId];
+            foreach (Building building in city.allIntriorBuildings)
+            {
+                if(buildingCountMap.ContainsKey(building.BuildingType.kind))
+                {
+                    buildingCountMap[building.BuildingType.kind] = buildingCountMap[building.BuildingType.kind] + 1;
+                }
+                else
+                {
+                    buildingCountMap[building.BuildingType.kind] = 1;
+                }
+            }
 
             int[] building_list = CityBuildingTemplate[templateId];
             int[] buildingFlag = new int[building_list.Length];
@@ -471,15 +480,15 @@ namespace Sango.Game
             // 先排除确定的建筑
             for (int i = 0; i < city.InsideSlot; i++)
             {
-                int buildTypeId = building_list[i];
-                if (buildTypeId > 0)
+                int buildKindId = building_list[i];
+                if (buildKindId > 0)
                 {
-                    if (buildingCountMap.TryGetValue(buildTypeId, out int num))
+                    if (buildingCountMap.TryGetValue(buildKindId, out int num))
                     {
                         if (num > 0)
                         {
-                            buildingCountMap[buildTypeId] = num - 1;
-                            buildingFlag[i] = buildTypeId;
+                            buildingCountMap[buildKindId] = num - 1;
+                            buildingFlag[i] = buildKindId;
                         }
                     }
                 }
@@ -492,13 +501,13 @@ namespace Sango.Game
                 if (buildTypeId == 0)
                 {
                     bool findAny = false;
-                    foreach (int buildingTypeId in buildingCountMap.Keys)
+                    foreach (int buildKindId in buildingCountMap.Keys)
                     {
-                        int num = buildingCountMap[buildingTypeId];
+                        int num = buildingCountMap[buildKindId];
                         if (num > 0)
                         {
-                            buildingCountMap[buildingTypeId] = num - 1;
-                            buildingFlag[i] = buildingTypeId;
+                            buildingCountMap[buildKindId] = num - 1;
+                            buildingFlag[i] = buildKindId;
                             findAny = true;
                             break;
                         }
@@ -515,8 +524,8 @@ namespace Sango.Game
                 if (exsistId > 0)
                     continue;
 
-                int buildTypeId = building_list[i];
-                BuildingType buildingType = scenario.GetObject<BuildingType>(buildTypeId);
+                int buildKindId = building_list[i];
+                BuildingType buildingType = scenario.GetObject<BuildingType>(buildKindId);
                 if (buildingType == null || buildingType.Id == 0)
                 {
                     buildingType = scenario.GetObject<BuildingType>(GameRandom.Range((int)BuildingKindType.Market, (int)BuildingKindType.PatrolBureau));
@@ -616,7 +625,7 @@ namespace Sango.Game
             if (city.troops >= expectationTroops)
                 return true;
 
-            int barracksNum = city.GetIntriorBuildingComplateNumber((int)BuildingKindType.Barracks);
+            int barracksNum = city.GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.Barracks);
             if (barracksNum <= 0) return true;
 
             Person[] people = ForceAI.CounsellorRecommendRecuritTroop(city.freePersons);
@@ -733,7 +742,7 @@ namespace Sango.Game
             if (city.freePersons.Count < 2 || city.gold < 400)
                 return true;
 
-            int barracksNum = city.GetIntriorBuildingComplateNumber((int)BuildingKindType.PatrolBureau);
+            int barracksNum = city.GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.PatrolBureau);
             if (barracksNum <= 0) return true;
 
             if (GameRandom.Changce((90 - city.security) * 3 / 2))
@@ -752,7 +761,7 @@ namespace Sango.Game
             if (city.freePersons.Count < 2)
                 return true;
 
-            int barracksNum = city.GetIntriorBuildingComplateNumber((int)BuildingKindType.PatrolBureau);
+            int barracksNum = city.GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.PatrolBureau);
             if (barracksNum <= 0) return true;
 
             if (city.morale < 50)
@@ -784,8 +793,8 @@ namespace Sango.Game
 
             if (city.itemStore.TotalNumber >= city.StoreLimit - 1000) return true;
 
-            int BlacksmithShopnum = city.GetIntriorBuildingComplateNumber((int)BuildingKindType.BlacksmithShop);
-            int StableNum = city.GetIntriorBuildingComplateNumber((int)BuildingKindType.Stable);
+            int BlacksmithShopnum = city.GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.BlacksmithShop);
+            int StableNum = city.GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.Stable);
             if (BlacksmithShopnum <= 0 && StableNum <= 0)
                 return true;
 

@@ -10,20 +10,21 @@ namespace Sango.Game.Render
         public float flagTexWidth = 256;
         public float flagTexHeight = 256;
         public int flagId = 40;
-
+        public bool needText = true;
         public void Init(Force force)
         {
             Renderer renderer = GetComponentInChildren<Renderer>(true);
-            Material outlineMat = renderer.materials[0];
-            Material baseMat = renderer.materials[1];
-            if (renderer.materials.Length > 2)
+            Material baseMat = renderer.material;
+            if (needText)
             {
-                Material TextMat = renderer.materials[2];
-                TextMat.SetTexture("_MainTex", TextFactory.Instance.GetTexture(force.Name.Substring(0, 1), 40));
+                baseMat.SetTexture("_TextTex", TextFactory.Instance.GetTexture(force.Name.Substring(0, 1), 40));
+            }
+            else
+            {
+                baseMat.SetTexture("_TextTex", Texture2D.blackTexture);
             }
 
             Vector2 textScale = new Vector2(flagW / flagTexWidth, flagH / flagTexHeight);
-            outlineMat.SetTextureScale("_MainTex", textScale);
             baseMat.SetTextureScale("_MainTex", textScale);
 
             int final_flag_id = flagId + force.Flag.Id % 6;
@@ -31,7 +32,6 @@ namespace Sango.Game.Render
             int x = final_flag_id % xCount;
             int y = final_flag_id / xCount;
             Vector2 textOffset = new Vector2(x * (flagW / flagTexWidth) - 0.003f, -y * (flagH / flagTexHeight));
-            outlineMat.SetTextureOffset("_MainTex", textOffset);
             baseMat.SetTextureOffset("_MainTex", textOffset);
             baseMat.SetColor("_Color", force.Flag.color);
         }
@@ -39,17 +39,18 @@ namespace Sango.Game.Render
         public void Init(Troop troop)
         {
             Renderer renderer = GetComponentInChildren<Renderer>(true);
-            Material outlineMat = renderer.materials[0];
-            Material baseMat = renderer.materials[1];
+            Material baseMat = renderer.material;
 
-            if (renderer.materials.Length > 2)
+            if (needText)
             {
-                Material TextMat = renderer.materials[2];
-                TextMat.SetTexture("_MainTex", TextFactory.Instance.GetTexture(troop.Name.Substring(0, 1), 40));
+                baseMat.SetTexture("_TextTex", TextFactory.Instance.GetTexture(troop.Name.Substring(0, 1), 40));
+            }
+            else
+            {
+                baseMat.SetTexture("_TextTex", Texture2D.blackTexture);
             }
 
             Vector2 textScale = new Vector2(flagW / flagTexWidth, flagH / flagTexHeight);
-            outlineMat.SetTextureScale("_MainTex", textScale);
             baseMat.SetTextureScale("_MainTex", textScale);
             int final_flag_id = flagId + troop.BelongForce.Flag.Id % 6;
 
@@ -59,7 +60,6 @@ namespace Sango.Game.Render
             baseMat.SetColor("_Color", troop.BelongForce.Flag.color);
 
             Vector2 textOffset = new Vector2(x * (flagW / flagTexWidth) - 0.003f, -y * (flagH / flagTexHeight));
-            outlineMat.SetTextureOffset("_MainTex", textOffset);
             baseMat.SetTextureOffset("_MainTex", textOffset);
 
         }
@@ -67,17 +67,12 @@ namespace Sango.Game.Render
         public void Init(Building building)
         {
             Renderer renderer = GetComponentInChildren<Renderer>(true);
-            Material outlineMat = renderer.materials[0];
-            Material baseMat = renderer.materials[1];
+            Material baseMat = renderer.material;
 
-            if (renderer.materials.Length > 2)
-            {
-                Material TextMat = renderer.materials[2];
-                TextMat.SetTexture("_MainTex", TextFactory.Instance.GetTexture("", 40));
-            }
+
+            baseMat.SetTexture("_TextTex", Texture2D.blackTexture);
 
             Vector2 textScale = new Vector2(flagW / flagTexWidth, flagH / flagTexHeight);
-            outlineMat.SetTextureScale("_MainTex", textScale);
             baseMat.SetTextureScale("_MainTex", textScale);
             int final_flag_id = flagId + building.BelongForce.Flag.Id % 6;
 
@@ -87,7 +82,6 @@ namespace Sango.Game.Render
             baseMat.SetColor("_Color", building.BelongForce.Flag.color);
 
             Vector2 textOffset = new Vector2(x * (flagW / flagTexWidth) - 0.003f, -y * (flagH / flagTexHeight));
-            outlineMat.SetTextureOffset("_MainTex", textOffset);
             baseMat.SetTextureOffset("_MainTex", textOffset);
         }
 

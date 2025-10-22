@@ -14,8 +14,7 @@ Shader "Sango/troops_urp" {
 		SubShader{
 			Tags { "RenderPipeline" = "UniversalPipeline" "Queue" = "Transparent" "RenderType" = "TransparentCutout" }
 			LOD 300
-
-
+			
 			//ZWrite Off
 			Lighting Off
 			Pass {

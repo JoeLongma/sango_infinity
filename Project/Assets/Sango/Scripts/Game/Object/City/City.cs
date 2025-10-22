@@ -264,7 +264,7 @@ namespace Sango.Game
         /// 所有内政设施
         /// </summary>
         public SangoObjectList<Building> allIntriorBuildings = new SangoObjectList<Building>();
-        public Dictionary<int, int> buildingCountMap = new Dictionary<int, int>();
+        public Dictionary<int, int> buildingLevelCountMap = new Dictionary<int, int>();
 
         /// <summary>
         /// AI指令集
@@ -316,7 +316,7 @@ namespace Sango.Game
             innerSlot = new int[InsideSlot];
             if (durability <= 0)
                 durability = DurabilityLimit;
-            buildingCountMap.Clear();
+            buildingLevelCountMap.Clear();
             // 地格占用
             effectCells = new System.Collections.Generic.List<Cell>();
             scenario.Map.GetSpiral(x, y, BuildingType.radius, cell_list);
@@ -534,14 +534,14 @@ namespace Sango.Game
             }
 
             // 统计建筑数量
-            if (buildingCountMap.TryGetValue(building.BuildingType.Id, out int c))
+            if (buildingLevelCountMap.TryGetValue(building.BuildingType.kind, out int totalLevel))
             {
-                c++;
-                buildingCountMap[building.BuildingType.Id] = c;
+                totalLevel += building.BuildingType.level;
+                buildingLevelCountMap[building.BuildingType.kind] = totalLevel;
             }
             else
             {
-                buildingCountMap.Add(building.BuildingType.Id, 1);
+                buildingLevelCountMap.Add(building.BuildingType.kind, building.BuildingType.level);
             }
         }
 
@@ -557,8 +557,7 @@ namespace Sango.Game
             {
                 allOutterBuildings.Remove(building);
             }
-
-            buildingCountMap[building.BuildingType.Id] = buildingCountMap[building.BuildingType.Id] - 1;
+            buildingLevelCountMap[building.BuildingType.kind] = buildingLevelCountMap[building.BuildingType.kind] - building.BuildingType.level;
             this.CalculateHarvest();
         }
 
@@ -876,7 +875,7 @@ namespace Sango.Game
                 }
                 else
                 {
-                    building.Destroy();
+                    building.OnFall(atk);
                 }
             }
 
@@ -889,7 +888,7 @@ namespace Sango.Game
                 }
                 else
                 {
-                    building.Destroy();
+                    building.OnFall(atk);
                 }
             }
 
@@ -1242,6 +1241,9 @@ namespace Sango.Game
 
             Scenario scenario = Scenario.Cur;
 
+            int barracksLv = GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.PatrolBureau);
+            if (barracksLv == 0) return false;
+
             ScenarioVariables variables = scenario.Variables;
             int jobId = (int)CityJobType.Inspection;
 
@@ -1279,7 +1281,7 @@ namespace Sango.Game
             }
 
             // 最终数值
-            totalValue = GameUtility.Method_SecurityAbility(totalValue);
+            totalValue = GameUtility.Method_SecurityAbility(totalValue, barracksLv);
 
             // 
             scenario.Event.OnCityJobResult?.Invoke(this, jobId, personList,
@@ -1310,6 +1312,9 @@ namespace Sango.Game
             if (personList == null || personList.Length == 0) return false;
             if (morale >= 100) return false;
             Scenario scenario = Scenario.Cur;
+
+            int barracksLv = GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.Barracks);
+            if (barracksLv == 0) return false;
 
             ScenarioVariables variables = scenario.Variables;
             int jobId = (int)CityJobType.TrainTroop;
@@ -1347,7 +1352,7 @@ namespace Sango.Game
             }
 
             // 最终数值
-            totalValue = GameUtility.Method_TrainTroop(totalValue);
+            totalValue = GameUtility.Method_TrainTroop(totalValue, barracksLv);
 
             scenario.Event.OnCityJobResult?.Invoke(this, jobId, personList,
                  totalValue, (x) => { totalValue = x; });
@@ -1492,7 +1497,7 @@ namespace Sango.Game
         /// <returns></returns>
         public bool JobRecuritTroop(Person[] personList)
         {
-            int barracksNum = GetIntriorBuildingComplateNumber((int)BuildingKindType.Barracks);
+            int barracksNum = GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.Barracks);
             if (barracksNum <= 0) return true;
             return JobRecuritTroop(personList, barracksNum);
         }
@@ -1611,7 +1616,7 @@ namespace Sango.Game
         /// <param name="personList"></param>
         /// <param name="itemType"></param>
         /// <returns></returns>
-        public bool JobCreateItems(Person[] personList, ItemType itemType, int buildingNum)
+        public bool JobCreateItems(Person[] personList, ItemType itemType, int buildingTotalLevel)
         {
             if (personList == null || personList.Length == 0 || itemType == null) return false;
             if (itemStore.TotalNumber >= StoreLimit) return false;
@@ -1676,7 +1681,7 @@ namespace Sango.Game
                 }
             }
 
-            totalValue = GameUtility.Method_CreateItems(totalValue, buildingNum);
+            totalValue = GameUtility.Method_CreateItems(totalValue, buildingTotalLevel);
 
             scenario.Event.OnCityJobResult?.Invoke(this, jobId, personList,
                  totalValue, (x) => { totalValue = x; });
@@ -1904,19 +1909,34 @@ namespace Sango.Game
             if (IsBorderCity)
             {
                 AICommandList.Add(CityAI.AIAttack);
-                AICommandList.Add(CityAI.AIIntrior);
-                AICommandList.Add(CityAI.AICreateItems);
-                AICommandList.Add(CityAI.AIRecuritTroop);
+                if (scenario.Info.day == 10)
+                {
+                    AICommandList.Add(CityAI.AIRecuritTroop);
+                    AICommandList.Add(CityAI.AICreateItems);
+                    AICommandList.Add(CityAI.AIIntrior);
+                }
+                else if (scenario.Info.day == 20)
+                {
+                    AICommandList.Add(CityAI.AIIntrior);
+                    AICommandList.Add(CityAI.AIRecuritTroop);
+                    AICommandList.Add(CityAI.AICreateItems);
+                }
+                else
+                {
+                    AICommandList.Add(CityAI.AICreateItems);
+                    AICommandList.Add(CityAI.AIRecuritTroop);
+                    AICommandList.Add(CityAI.AIIntrior);
+                }
             }
             else
             {
                 // 物资输送
                 AICommandList.Add(CityAI.AITransfrom);
-                AICommandList.Add(CityAI.AIIntrior);
                 if (troops < itemStore.TotalNumber)
                     AICommandList.Add(CityAI.AIRecuritTroop);
                 else
                     AICommandList.Add(CityAI.AICreateItems);
+                AICommandList.Add(CityAI.AIIntrior);
             }
 
             scenario.Event.OnCityAIPrepare?.Invoke(this, scenario);
@@ -2006,23 +2026,36 @@ namespace Sango.Game
         /// <summary>
         /// 获取已建造完成的建筑类型数量
         /// </summary>
-        /// <param name="buildingTypeId"></param>
+        /// <param name="buildingKindId"></param>
         /// <returns></returns>
-        public int GetIntriorBuildingComplateNumber(int buildingTypeId)
+        public int GetIntriorBuildingComplateNumber(int buildingKindId)
         {
             int complateNum = 0;
-            if (buildingCountMap.TryGetValue(buildingTypeId, out int num))
+            for (int i = 0; i < allIntriorBuildings.Count; i++)
             {
-                if (num > 0)
+                Building building = allIntriorBuildings[i];
+                if (building.BuildingType.kind == buildingKindId && building.isComplte)
                 {
-                    for (int i = 0; i < allIntriorBuildings.Count; i++)
-                    {
-                        Building building = allIntriorBuildings[i];
-                        if (building.BuildingType.Id == buildingTypeId && building.isComplte)
-                        {
-                            complateNum++;
-                        }
-                    }
+                    complateNum++;
+                }
+            }
+            return complateNum;
+        }
+
+        /// <summary>
+        /// 获取已建造完成的建筑类型数量
+        /// </summary>
+        /// <param name="buildingTypeId"></param>
+        /// <returns></returns>
+        public int GetIntriorBuildingComplateTotalLevel(int buildingKindId)
+        {
+            int complateNum = 0;
+            for (int i = 0; i < allIntriorBuildings.Count; i++)
+            {
+                Building building = allIntriorBuildings[i];
+                if (building.BuildingType.kind == buildingKindId && building.isComplte)
+                {
+                    complateNum += building.BuildingType.level;
                 }
             }
             return complateNum;

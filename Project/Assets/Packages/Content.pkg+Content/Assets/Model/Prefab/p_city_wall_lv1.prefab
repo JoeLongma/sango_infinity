@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 461602377591180225}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: p_city_wall_lv1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 1015496673411037849}
   - component: {fileID: 2792490722251719635}
   - component: {fileID: 1721872203072431943}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}

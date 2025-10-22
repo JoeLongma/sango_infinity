@@ -313,6 +313,8 @@ namespace Sango.Game.Render.UI
 
             deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
 
+            if (!troopListShow) return;
+
             if (needUpdateItem)
             {
                 needUpdateItem = false;

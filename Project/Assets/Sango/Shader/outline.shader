@@ -1,7 +1,7 @@
 
 Shader "Sango/outline_urp" {
 	Properties{
-		_MainTex("MainTex", 2D) = "white" {}
+		[MainTexture] _BaseMap("MainTex", 2D) = "white" {}
 		_OutlineWidth("width", float) = 0.004//定义一个变量
 	}
 		SubShader{
@@ -14,7 +14,7 @@ Shader "Sango/outline_urp" {
 					"LightMode" = "UniversalForward"
 				}
 				Fog { Mode Off }
-				ZWrite Off
+				ZWrite On
 				Cull Front
 				Blend SrcAlpha OneMinusSrcAlpha
 				HLSLPROGRAM
@@ -45,15 +45,16 @@ Shader "Sango/outline_urp" {
 
 				CBUFFER_START(UnityPerMaterial)
 				float _OutlineWidth;
-				float4 _MainTex_ST; 
-				CBUFFER_END
+				float4 _BaseMap_ST;
 				float _Power;
 				float _MixBegin;
 				float _MixPower;
 				float _MixEnd;
+				CBUFFER_END
+
 				TEXTURE2D_X_FLOAT(_CameraDepthTexture);
 				SAMPLER(sampler_CameraDepthTexture);
-				TEXTURE2D(_MainTex);
+				TEXTURE2D(_BaseMap);
 				#define smp SamplerState_Linear_Repeat
 				SAMPLER(smp);
 
@@ -67,7 +68,7 @@ Shader "Sango/outline_urp" {
 					v.vertex.xyz += normalize(v.normal.xyz) * camDist * 0.6;
 					
 					//v.vertex.xyz += normalize(v.vertex.xyz) * _OutlineWidth;
-					o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+					o.uv = TRANSFORM_TEX(v.uv, _BaseMap);
 
 					o.pos = TransformObjectToHClip(v.vertex.xyz);
 					o.screenPos = ComputeScreenPos(o.pos);
@@ -81,7 +82,7 @@ Shader "Sango/outline_urp" {
 					float depth = SAMPLE_TEXTURE2D_X(_CameraDepthTexture, sampler_CameraDepthTexture, screenPos).r;
 					float depthValue = Linear01Depth(depth, _ZBufferParams);
 					float linear01Depth = pow(saturate((depthValue * 3500 - _MixBegin) / (_MixEnd - _MixBegin)), _MixPower);
-					half4 _MainTex_var = SAMPLE_TEXTURE2D(_MainTex, smp, i.uv);
+					half4 _MainTex_var = SAMPLE_TEXTURE2D(_BaseMap, smp, i.uv);
 
 					clip(_MainTex_var.a - 0.5);
 

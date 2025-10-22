@@ -67,8 +67,13 @@ namespace Sango.Game.Render
             if (headBar != null)
             {
                 headBar.transform.SetParent(obj.transform, false);
-                headBar.transform.localPosition = new Vector3(0, 25, 0);
-
+                headBar.transform.localPosition = Vector3.zero;
+                BillboardUI billboardUI = headBar.GetComponent<BillboardUI>();
+                if (billboardUI != null)
+                {
+                    billboardUI.cacheOffset = new Vector3(0, 25, 0);
+                    billboardUI.Update();
+                }
                 UGUIWindow uGUIWindow = headBar.GetComponent<UGUIWindow>();
                 if (uGUIWindow != null)
                 {
