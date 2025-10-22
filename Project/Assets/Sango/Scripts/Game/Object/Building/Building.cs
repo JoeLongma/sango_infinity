@@ -50,7 +50,7 @@ namespace Sango.Game
                 effectCells = new System.Collections.Generic.List<Cell>();
                 scenario.Map.GetDirectSpiral(CenterCell, BuildingType.radius, effectCells);
                 //CalculateHarvest();
-              
+
             }
             OnPrepareRender();
         }
@@ -77,6 +77,28 @@ namespace Sango.Game
                     BelongCity.OnBuildingComplete(this, builder);
                 }
             }
+            else if (isUpgrading && Builders != null)
+            {
+                int totalValue = 0;
+                for (int i = 0; i < Builders.Count; i++)
+                {
+                    Person person = Builders[i];
+                    totalValue += person.BaseBuildAbility;
+                }
+                totalValue = GameUtility.Method_PersonBuildAbility(totalValue);
+                durability += totalValue;
+                if (durability >= BuildingType.durabilityLimit)
+                {
+                    durability = BuildingType.durabilityLimit;
+                    isUpgrading = false;
+                    //CalculateHarvest();
+                    SangoObjectList<Person> builder = Builders;
+                    OnUpgradeComplate();
+                    BelongCity.OnBuildingUpgradeComplete(this, builder);
+                }
+
+            }
+
 
             // 暂时写死
             if (isComplte && BuildingType.atkRange > 0)
@@ -158,6 +180,42 @@ namespace Sango.Game
             }
 #if SANGO_DEBUG
             Sango.Log.Print($"[{BelongCity.Name}]{stringBuilder}完成{Name}建造!!");
+#endif
+            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(BelongCity, jobId, Builders.objects.ToArray(),
+               techniquePointGain, (x) => { techniquePointGain = x; });
+
+            BelongForce.GainTechniquePoint(techniquePointGain);
+
+            Builders = null;
+        }
+
+        public void OnUpgradeComplate()
+        {
+            Scenario scenario = Scenario.Cur;
+            ScenarioVariables variables = scenario.Variables;
+            int jobId = (int)CityJobType.Build;
+            int meritGain = variables.jobMaxPersonCount[jobId];
+            int techniquePointGain = variables.jobTechniquePoint[jobId];
+
+            BuildingType nextBuildingType = scenario.GetObject<BuildingType>(BuildingType.nextId);
+            BuildingType = nextBuildingType;
+
+#if SANGO_DEBUG
+            StringBuilder stringBuilder = new StringBuilder();
+#endif
+            for (int i = 0; i < Builders.Count; i++)
+            {
+                Person person = Builders[i];
+                person.merit += meritGain;
+                person.GainExp(meritGain);
+#if SANGO_DEBUG
+                stringBuilder.Append(person.Name);
+                stringBuilder.Append(" ");
+#endif
+                person.ClearMission();
+            }
+#if SANGO_DEBUG
+            Sango.Log.Print($"[{BelongCity.Name}]{stringBuilder}完成{Name}升级!!");
 #endif
             scenario.Event.OnCityJobGainTechniquePoint?.Invoke(BelongCity, jobId, Builders.objects.ToArray(),
                techniquePointGain, (x) => { techniquePointGain = x; });

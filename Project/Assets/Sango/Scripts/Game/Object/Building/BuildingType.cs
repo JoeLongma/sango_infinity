@@ -9,6 +9,7 @@ namespace Sango.Game
     {
         [JsonProperty] public string desc;
         [JsonProperty] public byte kind;
+        [JsonProperty] public int nextId;
         [JsonProperty] public string icon;
         [JsonProperty] public int durabilityLimit;
         [JsonProperty] public int buildNumLimit;

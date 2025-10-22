@@ -511,7 +511,12 @@ namespace Sango.Game
             return base.OnDayStart(scenario);
         }
 
-        public void OnBuildingComplete(Building building, SangoObjectList<Person> builder)
+        public virtual void OnBuildingComplete(Building building, SangoObjectList<Person> builder)
+        {
+            this.CalculateHarvest();
+        }
+
+        public virtual void OnBuildingUpgradeComplete(Building building, SangoObjectList<Person> builder)
         {
             this.CalculateHarvest();
         }
@@ -1055,6 +1060,40 @@ namespace Sango.Game
 
 #if SANGO_DEBUG
             Sango.Log.Print($"@内政@[{BelongForce.Name}]在<{Name}>由{stringBuilder}开始修建: {building.Name}");
+#endif
+            return building;
+        }
+
+        public Building UpgradeBuilding(Building building, Person[] builders, BuildingType upgradeBuildingType)
+        {
+            building.isUpgrading = true;
+            building.durability = 1;
+
+            Scenario scenario = Scenario.Cur;
+#if SANGO_DEBUG
+            StringBuilder stringBuilder = new StringBuilder();
+#endif
+            // TODO: 获取高度
+            // ------
+            SangoObjectList<Person> sangoObjectList = new SangoObjectList<Person>();
+            foreach (Person person in builders)
+            {
+                if (person == null) continue;
+#if SANGO_DEBUG
+                stringBuilder.Append(person.Name);
+                stringBuilder.Append(" ");
+#endif
+                person.SetMission(MissionType.PersonBuild, building, 0);
+                person.ActionOver = true;
+                freePersons.Remove(person);
+                sangoObjectList.Add(person);
+            }
+
+            building.Builders = sangoObjectList;
+            gold -= upgradeBuildingType.cost;
+
+#if SANGO_DEBUG
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]在<{Name}>由{stringBuilder}开始升级建筑: {building.Name}");
 #endif
             return building;
         }

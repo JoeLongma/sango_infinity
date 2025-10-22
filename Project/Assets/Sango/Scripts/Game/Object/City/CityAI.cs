@@ -320,7 +320,7 @@ namespace Sango.Game
             }
             if (alreadyBuild) return true;
 
-            BuildingType buildingType = scenario.GetObject<BuildingType>(13);
+            BuildingType buildingType = scenario.GetObject<BuildingType>(31);
 
             TroopType troopType = scenario.GetObject<TroopType>(1);
 
@@ -441,18 +441,26 @@ namespace Sango.Game
             if (city.IsBorderCity)
             {
                 // 优先建造军事
-                return AIBuildingTemplate(1, city, scenario);
+                AIBuildingTemplate(1, city, scenario);
             }
             else
             {
-                return AIBuildingTemplate(0, city, scenario);
-
+                AIBuildingTemplate(0, city, scenario);
             }
+
+            AIBuildingLevelUp(city, scenario);
+            return true;
         }
 
         // 进是确定有空槽位和空闲武将才能执行
         public static bool AIBuildingTemplate(int templateId, City city, Scenario scenario)
         {
+            if (city.gold < 500)
+                return true;
+
+            if (city.freePersons.Count <= 0)
+                return true;
+
             Dictionary<int, int> buildingCountMap = new Dictionary<int, int>();
             foreach (int buildingTypeId in city.buildingCountMap.Keys)
                 buildingCountMap[buildingTypeId] = city.buildingCountMap[buildingTypeId];
@@ -514,7 +522,7 @@ namespace Sango.Game
                     buildingType = scenario.GetObject<BuildingType>(GameRandom.Range((int)BuildingKindType.Market, (int)BuildingKindType.PatrolBureau));
                 }
 
-                if (city.gold < buildingType.cost + 200)
+                if (city.gold < buildingType.cost)
                     return true;
 
                 int index = city.GetEmptySlot();
@@ -544,6 +552,59 @@ namespace Sango.Game
                 }
             }
 
+            return true;
+        }
+
+        public static bool AIBuildingLevelUp(City city, Scenario scenario)
+        {
+            if (city.gold < 500)
+                return true;
+
+            if (city.freePersons.Count <= 0)
+                return true;
+
+            // 需要全部建造完毕
+            for (int i = 0; i < city.innerSlot.Length; ++i)
+            {
+                int buildingId = city.innerSlot[i];
+                if (buildingId <= 0) return true;
+            }
+
+            for (int i = 0; i < city.innerSlot.Length; ++i)
+            {
+                int buildingId = city.innerSlot[i];
+                if (buildingId <= 0) return true;
+                Building building = scenario.GetObject<Building>(buildingId);
+                if (building.isComplte && !building.isUpgrading && building.BuildingType.nextId > 0)
+                {
+                    BuildingType nextBuildingType = scenario.GetObject<BuildingType>(building.BuildingType.nextId);
+                    int cost = nextBuildingType.cost;
+                    if (city.gold < nextBuildingType.cost)
+                        return true;
+
+                    Person[] people = ForceAI.CounsellorRecommendBuild(city.freePersons, nextBuildingType);
+                    if (people != null)
+                    {
+                        int buildAbility = 0;
+                        for (int k = 0; k < people.Length; k++)
+                        {
+                            Person person = people[k];
+                            if (person == null) continue;
+                            buildAbility += person.BaseBuildAbility;
+                        }
+
+                        buildAbility = GameUtility.Method_PersonBuildAbility(buildAbility);
+                        int turnCount = nextBuildingType.durabilityLimit % buildAbility == 0 ? 0 : 1;
+                        int buildCount = Math.Min(Scenario.Cur.Variables.BuildMaxTurn, nextBuildingType.durabilityLimit / buildAbility + turnCount);
+                        if (buildCount <= 6)
+                        {
+                            city.UpgradeBuilding(building, people, nextBuildingType);
+                        }
+                        return true;
+                    }
+
+                }
+            }
             return true;
         }
 
