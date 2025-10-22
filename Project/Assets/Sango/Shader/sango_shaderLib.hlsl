@@ -308,10 +308,8 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 		float2 screenPos= i.screenPos .xy / i.screenPos .w;
 		float depth = SAMPLE_TEXTURE2D_X(_CameraDepthTexture, sampler_CameraDepthTexture, screenPos).r;
 		float depthValue = LinearEyeDepth(depth, _ZBufferParams);
-		float linear01Depth = lerp(0, pow(saturate((depthValue - _MixBegin) / (_MixEnd - _MixBegin)), _MixPower), _MixPower);
-		if (_FogColor.a <= 0)
-			_FogColor.a = 1;
-		finalRGBA = lerp(finalRGBA,  float4(linear01Depth, linear01Depth, 0, 1), linear01Depth);
+		float linear01Depth = pow(saturate((depthValue - _MixBegin) / (_MixEnd - _MixBegin)), _MixPower);
+		finalRGBA = lerp(finalRGBA, _FogColor, linear01Depth * _FogColor.a);
 		//finalRGBA = float4(depthValue,depthValue,depthValue,1);
 	#endif
 

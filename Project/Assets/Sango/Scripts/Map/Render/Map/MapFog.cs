@@ -107,7 +107,7 @@ namespace Sango.Render
         public override void Clear()
         {
             base.Clear();
-            Shader.SetGlobalFloat("_MixPower", 0);
+            Shader.SetGlobalColor("_FogColor", Color.clear);
         }
 
     }
