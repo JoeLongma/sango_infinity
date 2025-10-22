@@ -1242,6 +1242,10 @@ namespace Sango.Game
             city.troops += troops;
             if (city.troops > city.TroopsLimit)
                 city.troops = city.TroopsLimit;
+            if (city.gold > city.GoldLimit)
+                city.gold = city.GoldLimit;
+            if (city.food > city.FoodLimit)
+                city.food = city.FoodLimit;
 
             // 返还兵装
             city.itemStore.Gain(TroopType.costItems, troops);
@@ -1267,10 +1271,24 @@ namespace Sango.Game
 #endif
                 return;
             }
-            ForEachPerson((person) =>
+
+            if (TroopType.isFight)
             {
-                person.ChangeCity(city);
-            });
+                ForEachPerson((person) =>
+                {
+                    person.ChangeCity(city);
+                });
+            }
+            else
+            {
+                // 运输武将返回所属城市
+                ForEachPerson((person) =>
+                {
+                    person.SetMission(MissionType.PersonReturn, person.BelongCity, 1);
+                });
+            }
+
+
 #if SANGO_DEBUG
             Sango.Log.Print($"{BelongForce.Name}的[{Name}]部队进入{city.BelongForce?.Name}的城池:<{city.Name}>");
 #endif

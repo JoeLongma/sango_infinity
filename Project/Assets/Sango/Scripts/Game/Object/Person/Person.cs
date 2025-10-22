@@ -460,12 +460,6 @@ namespace Sango.Game
             if (Father != null)
                 Father.sonList.Add(this);
 
-            // 关联武将转移信息
-            if (this.missionType == (int)MissionType.PersonTransform)
-            {
-                City city = scenario.citySet.Get(missionTarget);
-                city.trsformingPesonList.Add(this);
-            }
             //else if (this.missionType == (int)MissionType.PersonBuild)
             //{
             //    Building building = scenario.buildingSet.Get(missionTarget);
@@ -506,21 +500,11 @@ namespace Sango.Game
                     break;
                 case (int)MissionType.PersonTransform:
                     {
-                        City dest = scenario.citySet.Get(missionTarget);
-                        if (BelongCorps != null && !this.IsSameForce(dest))
+                        missionCounter--;
+                        if (missionCounter <= 0)
                         {
-                            SetMission(MissionType.PersonReturn, BelongCity, 1);
-                            dest.OnPersonTransformEnd(this);
-                        }
-                        else
-                        {
-                            missionCounter--;
-                            if (missionCounter <= 0)
-                            {
-                                ClearMission();
-                                ChangeCity(dest);
-                                dest.OnPersonTransformEnd(this);
-                            }
+                            ClearMission();
+                            BelongCity.OnPersonTransformEnd(this);
                         }
                     }
                     break;
@@ -573,9 +557,11 @@ namespace Sango.Game
 
         public void TransformToCity(City dest)
         {
-            dest.trsformingPesonList.Add(this);
-            SetMission(MissionType.PersonTransform, dest, Scenario.Cur.GetCityDistance(BelongCity, dest));
-            BelongCity?.freePersons.Remove(this);
+            dest.allPersons.Add(this);
+            SetMission(MissionType.PersonTransform, BelongCity, Scenario.Cur.GetCityDistance(BelongCity, dest));
+            BelongCity?.Remove(this);
+            BelongCity = dest;
+            ActionOver = true;
 #if SANGO_DEBUG
             Sango.Log.Print($"*{BelongForce?.Name}的{Name}从{BelongCity.Name}向{dest.Name}转移*");
 #endif

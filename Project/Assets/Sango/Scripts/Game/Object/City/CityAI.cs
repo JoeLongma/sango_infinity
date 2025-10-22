@@ -184,6 +184,81 @@ namespace Sango.Game
 
         public static bool AITransfrom(City city, Scenario scenario)
         {
+            if (city.IsBorderCity) return true;
+
+            if (city.freePersons.Count == 0) return true;
+
+            if (city.troops < 20000 || city.food < 20000 || city.itemStore.TotalNumber < 20000)
+            {
+                return true;
+            }
+
+            // 找到更近的圈层
+            List<City> list = new List<City>();
+            for (int i = 0; i < city.NeighborList.Count; i++)
+            {
+                City neighbor = city.NeighborList[i];
+                if (neighbor.borderLine < city.BorderLine)
+                {
+                    list.Add(neighbor);
+                }
+            }
+
+            if (list.Count == 0) return true;
+            City target = list[0];
+            for (int i = 1; i < list.Count; i++)
+            {
+                City neighbor = list[i];
+                if (neighbor.troops < target.troops)
+                    target = neighbor;
+            }
+
+            TroopType troopType = scenario.GetObject<TroopType>(6);
+
+            //运输比例
+            int part = 70;
+
+            Person[] persons = ForceAI.CounsellorRecommendTransportTroop(city.freePersons);
+            Person leader = persons[0];
+            city.freePersons.Remove(leader);
+
+            Troop troop = scenario.CreateTroop();
+            troop.energy = city.energy;
+            troop.morale = city.morale;
+            troop.Leader = leader;
+            troop.TroopType = troopType;
+            if (target.troops < target.TroopsLimit)
+            {
+                int left = target.TroopsLimit - target.troops;
+                int troops = Math.Min(left, city.troops * part / 100);
+                city.troops -= troops;
+                troop.troops = troops;
+            }
+            if (target.gold < target.GoldLimit)
+            {
+                int left = target.GoldLimit - target.gold;
+                int gold = Math.Min(left, city.gold * part / 100);
+                city.gold -= gold;
+                troop.gold = gold;
+            }
+            if (target.food < target.FoodLimit)
+            {
+                int left = target.FoodLimit - target.food;
+                int food = Math.Min(left, city.food * part / 100);
+                city.food -= food;
+                troop.food = food;
+            }
+            troop.missionType = (int)MissionType.TroopTransformGoodsToCity;
+            troop.missionTarget = target.Id;
+            troop.Member1 = null;
+            troop.Member2 = null;
+            troop.itemStore = city.itemStore.Split(part);
+            city.Render?.UpdateRender();
+            troop = city.EnsureTroop(troop, scenario);
+            city.CurActiveTroop = troop;
+#if SANGO_DEBUG
+            Sango.Log.Print($"{scenario.GetDateStr()}{city.BelongForce.Name}势力在{city.Name}由{troop.Leader.Name}率领运输队出城 向{target.BelongForce?.Name}的{target.Name}运输物资!");
+#endif
             return true;
         }
 

@@ -787,5 +787,16 @@ namespace Sango.Game
 
             return checkPersons;
         }
+
+        /// <summary>
+        /// 军师运输队伍推荐
+        /// </summary>
+        public static Person[] CounsellorRecommendTransportTroop(List<Person> personList)
+        {
+            return CounsellorRecommend1Person(personList, (ref int[] maxValue, Person check1) =>
+            {
+                return true;
+            });
+        }
     }
 }

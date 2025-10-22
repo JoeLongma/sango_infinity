@@ -83,18 +83,18 @@ namespace Sango.Game
             if (BorderCityCount == 0)
                 return;
 
-            int noDoderSeat = 3;
-            int avarageTotalSeat = personCount - cityCount * noDoderSeat;
+            int noBoderSeat = 3;
+            int avarageTotalSeat = personCount - cityCount * noBoderSeat;
             if (avarageTotalSeat <= 0)
             {
-                noDoderSeat = 1;
-                avarageTotalSeat = personCount - cityCount * noDoderSeat;
+                noBoderSeat = 1;
+                avarageTotalSeat = personCount - cityCount * noBoderSeat;
                 if (avarageTotalSeat <= 0)
                 {
                     avarageTotalSeat = personCount;
                 }
             }
-            int boderSeat = avarageTotalSeat / BorderCityCount + noDoderSeat;
+            int boderSeat = avarageTotalSeat / BorderCityCount + noBoderSeat;
 
             for (int i = 0; i < scenario.citySet.Count; ++i)
             {
@@ -103,11 +103,11 @@ namespace Sango.Game
                 {
                     if (c.IsBorderCity)
                     {
-                        c.PersonHole = boderSeat - c.allPersons.Count + c.trsformingPesonList.Count;
+                        c.PersonHole = boderSeat - c.allPersons.Count;
                     }
                     else
                     {
-                        c.PersonHole = noDoderSeat - c.allPersons.Count + c.trsformingPesonList.Count;
+                        c.PersonHole = noBoderSeat - c.allPersons.Count;
                     }
                 }
             }

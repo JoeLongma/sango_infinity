@@ -31,7 +31,7 @@ namespace Sango.Game.Render.UI
         public GameObject pauseObj;
         public GameObject resumeObj;
 
-        public GameObject [] fpaObj;
+        public GameObject[] fpaObj;
 
         int destSaveTurn = -1;
         bool needSave = false;
@@ -72,9 +72,9 @@ namespace Sango.Game.Render.UI
         void Start()
         {
 #if UNITY_STANDALONE_WIN
-            foreach(GameObject obj in fpaObj)
+            foreach (GameObject obj in fpaObj)
             {
-                if(obj != null)
+                if (obj != null)
                     obj.SetActive(false);
             }
 #endif
@@ -119,7 +119,7 @@ namespace Sango.Game.Render.UI
             forceText.text = force.Name;
         }
 
-        string [] seasonText = new string[]{ "(秋)","(春)","(夏)","(冬)"};
+        string[] seasonText = new string[] { "(秋)", "(春)", "(夏)", "(冬)" };
         public void OnDayUpdate(Scenario scenario)
         {
             dateText.text = scenario.GetDateStr() + seasonText[(int)scenario.CurSeason];
@@ -209,8 +209,11 @@ namespace Sango.Game.Render.UI
                     int dd = 33;
                     dd++;
                 }
+                if (troop.TroopType.isFight)
+                    item.name.text = $"[{troop.BelongForce.Name}]{troop.Name}队,{troop.Member1?.Name}{troop.Member2?.Name}";
+                else
+                    item.name.text = $"**[{troop.BelongForce.Name}]{troop.Name}运输队,{troop.Member1?.Name}{troop.Member2?.Name}";
 
-                item.name.text = $"[{troop.BelongForce.Name}]{troop.Name}队,{troop.Member1?.Name}{troop.Member2?.Name}";
                 item.name.color = troop.BelongForce.Flag.color;
             }
             else if (obj is City)
@@ -265,7 +268,7 @@ namespace Sango.Game.Render.UI
 
         public void OnSave()
         {
-            if(Sango.Game.Scenario.Cur.PauseTrunCount == Sango.Game.Scenario.Cur.Info.turnCount)
+            if (Sango.Game.Scenario.Cur.PauseTrunCount == Sango.Game.Scenario.Cur.Info.turnCount)
             {
                 Save();
             }
@@ -299,7 +302,7 @@ namespace Sango.Game.Render.UI
 
         public void Update()
         {
-            if(needSave)
+            if (needSave)
             {
                 if (Sango.Game.Scenario.Cur.PauseTrunCount == Sango.Game.Scenario.Cur.Info.turnCount)
                 {

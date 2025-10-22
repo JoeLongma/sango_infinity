@@ -254,10 +254,6 @@ namespace Sango.Game
 
         public List<TroopType> activedTroopType = new List<TroopType>();
         int fightPower = 0;
-        /// <summary>
-        /// 正在转移到此城市的武将
-        /// </summary>
-        public List<Person> trsformingPesonList = new List<Person>();
 
         /// <summary>
         /// 
@@ -292,7 +288,11 @@ namespace Sango.Game
 
         public int FightPower => fightPower;
         public Person Add(Person person) { allPersons.Add(person); return person; }
-        public Person Remove(Person person) { allPersons.Remove(person); return person; }
+        public Person Remove(Person person)
+        {
+            allPersons.Remove(person); freePersons.Remove(person);
+            return person;
+        }
 
         public void UpdateActiveTroopTypes()
         {
@@ -381,10 +381,10 @@ namespace Sango.Game
             effectCells.Clear();
             scenario.Map.GetDirectSpiral(CenterCell, BuildingType.radius + 1, BuildingType.radius + 10, effectCells);
 
-            for(int i = 0; i < effectCells.Count; i++)
+            for (int i = 0; i < effectCells.Count; i++)
             {
                 Cell cell = effectCells[i];
-                if(cell.HasGridState(Sango.Render.MapGrid.GridState.Defence))
+                if (cell.HasGridState(Sango.Render.MapGrid.GridState.Defence))
                     defenceCellList.Add(cell);
             }
 
@@ -853,13 +853,6 @@ namespace Sango.Game
                     escapeCity = BelongForce.Governor.BelongCity;
             }
 
-            // 处理正在转移的人
-            foreach (Person person in trsformingPesonList)
-            {
-                person.SetMission(MissionType.PersonReturn, person.BelongCity, 1);
-            }
-            trsformingPesonList.Clear();
-
             // 基础抓捕率
             int cacaptureChangce = escapeCity != null ? Scenario.Cur.Variables.captureChangceWhenCityFall : Scenario.Cur.Variables.captureChangceWhenLastCityFall;
 
@@ -881,8 +874,8 @@ namespace Sango.Game
             {
                 Person person = allPersons[i];
 
-                // 没有执行任务的才能被捕获
-                if (person.IsFree && GameRandom.Changce(cacaptureChangce))
+                // 没有执行任务的才能被捕获,暂时不能抓捕主公
+                if (person.IsFree && person != person.BelongForce.Governor && GameRandom.Changce(cacaptureChangce))
                 {
                     captiveList.Add(person);
                 }
@@ -1019,7 +1012,7 @@ namespace Sango.Game
         }
         public void OnPersonTransformEnd(Person person)
         {
-            trsformingPesonList.Remove(person);
+
         }
 
         public Building BuildBuilding(Cell buildCenter, Troop builder, BuildingType buildingType)
@@ -1914,8 +1907,10 @@ namespace Sango.Game
                 // 物资输送
                 AICommandList.Add(CityAI.AITransfrom);
                 AICommandList.Add(CityAI.AIIntrior);
-                AICommandList.Add(CityAI.AICreateItems);
-                AICommandList.Add(CityAI.AIRecuritTroop);
+                if (troops < itemStore.TotalNumber)
+                    AICommandList.Add(CityAI.AIRecuritTroop);
+                else
+                    AICommandList.Add(CityAI.AICreateItems);
             }
 
             scenario.Event.OnCityAIPrepare?.Invoke(this, scenario);

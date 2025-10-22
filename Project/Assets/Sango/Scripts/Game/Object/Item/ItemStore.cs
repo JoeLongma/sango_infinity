@@ -68,6 +68,17 @@ namespace Sango.Game
             return number;
         }
 
+
+        public void Add(ItemStore itemStore)
+        {
+            foreach (int itemTypeId in itemStore.Items.Keys)
+            {
+                int number = itemStore.Items[itemTypeId];
+                if (number > 0)
+                    Add(itemTypeId, number);
+            }
+        }
+
         public int Remove(int itemTypeId)
         {
             if (Items.TryGetValue(itemTypeId, out int has))
@@ -152,6 +163,40 @@ namespace Sango.Game
                 number = Math.Min(number, have);
             }
             return number;
+        }
+
+        /// <summary>
+        /// 分割一部分, part: 1到100的整数
+        /// </summary>
+        /// <param name="part"></param>
+        /// <returns></returns>
+        public ItemStore Split(int part)
+        {
+            ItemStore itemStore = new ItemStore();
+            if (part <= 0) return itemStore;
+            if (part > 100) part = 100;
+            foreach (int itemTypeId in Items.Keys)
+            {
+                int number = Items[itemTypeId];
+                if (number > 0)
+                {
+                    int partNum = number * part / 100;
+                    itemStore.Add(itemTypeId, partNum);
+                  
+                }
+            }
+
+            foreach (int itemTypeId in itemStore.Items.Keys)
+            {
+                int number = Items[itemTypeId];
+                if (number > 0)
+                {
+                    Items[itemTypeId] = Items[itemTypeId] - number;
+                    TotalNumber -= number;
+                }
+            }
+
+            return itemStore;
         }
 
     }
