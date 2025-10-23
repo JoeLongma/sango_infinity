@@ -5,10 +5,6 @@ namespace Sango.Game.Render.UI
 {
     public class UIGateHeadbar : UICityHeadbar
     {
-        public Image state;
-        public Image food;
-        public Text number;
-        public Text info;
         public override void UpdateState(BuildingBase building)
         {
             base.UpdateState(building);

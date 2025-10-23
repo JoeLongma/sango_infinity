@@ -10,7 +10,7 @@ namespace Sango.Render
 {
     public class MapTerrain : MapProperty
     {
-        public int cellSize = 128;
+        public int cellSize = 64;
         public MapCell[] terrainCells;
 
         public MapTerrain(MapRender map) : base(map)
@@ -75,11 +75,6 @@ namespace Sango.Render
 
         public void Rebuild()
         {
-
-            int lod = 0;
-
-            float duration;
-            float start = Time.realtimeSinceStartup; // 执行复杂操作...
             for (int i = 0; i < terrainCells.Length; i++)
             {
                 MapCell cell = terrainCells[i];

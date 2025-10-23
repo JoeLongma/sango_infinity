@@ -106,6 +106,9 @@ namespace Sango.Game
         }
         public bool IsZOC(Troop troops, Cell cell)
         {
+            if (cell.building != null && !cell.building.IsEnemy(troops))
+                return false;
+
             for (int i = 0; i < 6; i++)
             {
                 Cell next = GetNeighbor(cell, i);

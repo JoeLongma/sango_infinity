@@ -117,6 +117,7 @@ namespace Sango.Game
                             {
                                 // 范围大约在
                                 int weight = (int)(2500 * (float)city.virtualFightPower / (float)x.virtualFightPower);
+                                weight = weight * x.DurabilityLimit / x.durability;
                                 int relation = scenario.GetRelation(city.BelongForce, x.BelongForce);
                                 // 8000亲密 6000友好 4000普通 2000中立 0冷漠 -2000敌对 -4000厌恶 -6000仇视 -8000不死不休
                                 // 5 4 3 2 1 0 -1 -2 -3 -4 -5
@@ -659,7 +660,7 @@ namespace Sango.Game
 
             City.EnemyInfo enemyInfo;
             // 兵临城下且敌军存活
-            if (city.IsEnemiesRound(6) && city.CheckEnemiesIfAlive(out enemyInfo))
+            if (city.IsEnemiesRound(10) && city.CheckEnemiesIfAlive(out enemyInfo))
                 return true;
 
             return false;

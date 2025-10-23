@@ -348,7 +348,7 @@ namespace Sango.Render
                 }
 
 
-                if (!r.enabled)
+                if (r.enabled != visible)
                     r.enabled = visible;
                 //meshRenderer[layer].gameObject.SetActive(true);
             }
