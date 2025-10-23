@@ -15,7 +15,12 @@ namespace Sango.Render
         public MeshCollider[] meshCollider;
         public Mesh[] lodMesh;
         public GameObject gameObject;
+
+#if UNITY_ANDROID || UNITY_IPHONE
+        public int lod = 1;
+#else
         public int lod = 0;
+#endif
 
         int[] xIndexCache;
         int[] yIndexCache;
@@ -23,7 +28,7 @@ namespace Sango.Render
 
         LayerMeshData lmdCache;
 
-        int threadBeginLayer = 0;
+        internal int threadBeginLayer = 0;
         bool threadLoadDone = false;
 
         static Color color_white = Color.white;
@@ -36,7 +41,6 @@ namespace Sango.Render
         {
             startCoords = new Vector2Int(x, y);
             quadBounds = new Vector2Int(w, h);
-
             position = new Vector3(startCoords.y * map.mapData.quadSize, 0, startCoords.x * map.mapData.quadSize);
             this.bounds = new Sango.Tools.Rect(0, 0, quadBounds.x * map.mapData.quadSize, quadBounds.y * map.mapData.quadSize);
         }
@@ -53,10 +57,12 @@ namespace Sango.Render
         public override void Init()
         {
             int maxLayer = map.mapLayer.layerDatas.Length;
-            if (gameObject != null) {
+            if (gameObject != null)
+            {
                 if (mesh.Length == maxLayer)
                     return;
-                else {
+                else
+                {
                     GameObject.Destroy(gameObject);
                 }
             }
@@ -79,12 +85,14 @@ namespace Sango.Render
             yIndexCache = new int[_vertex_y_max];
             diffyIndexCache = new bool[_vertex_y_max];
 
-            for (int i = 0; i < maxLayer; ++i) {
+            for (int i = 0; i < maxLayer; ++i)
+            {
 
                 MapLayer.LayerData layerData = map.mapLayer.layerDatas[i];
 
                 Mesh tempMesh = new Mesh();
                 tempMesh.MarkDynamic();
+                tempMesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
                 mesh[i] = tempMesh;
 
                 GameObject go = new GameObject("Layer - " + i);
@@ -94,14 +102,16 @@ namespace Sango.Render
                 MeshFilter mf = go.AddComponent<MeshFilter>();
                 mf.sharedMesh = tempMesh;
                 MeshRenderer renderer = go.AddComponent<MeshRenderer>();
-                if (i < maxLayer - 1 && map.outLineShow) {
+                if (i < maxLayer - 1 && map.outLineShow)
+                {
                     Material[] mats = new Material[1]
                       {
                         layerData.material
                       };
                     renderer.sharedMaterials = mats;
                 }
-                else {
+                else
+                {
                     renderer.sharedMaterial = layerData.material;
                 }
                 meshRenderer[i] = renderer;
@@ -127,7 +137,8 @@ namespace Sango.Render
         public void PrepareDatas()
         {
             Init();
-            if (lmdCache == null) {
+            if (lmdCache == null)
+            {
                 int _vertex_x_max = quadBounds.x + 1;
                 int _vertex_y_max = quadBounds.y + 1;
                 int maxCount = _vertex_x_max * _vertex_y_max;
@@ -141,7 +152,8 @@ namespace Sango.Render
 
             threadLoadStart = false;
             int maxLayer = map.mapLayer.layerDatas.Length;
-            for (int i = 0; i < maxLayer; ++i) {
+            for (int i = 0; i < maxLayer; ++i)
+            {
                 if (mesh[i] == null) continue;
                 threadBeginLayer = i;
                 _PrepareDatas();
@@ -187,7 +199,8 @@ namespace Sango.Render
             }
             set
             {
-                if (_visible != value) {
+                if (_visible != value)
+                {
                     _visible = value;
                     _visibleChanged = true;
                 }
@@ -204,19 +217,25 @@ namespace Sango.Render
         public void EditorShow(bool b) { }
         public void SetOutlineShow(Material material)
         {
-            if (material == null) {
-                for (int i = 0; i < meshRenderer.Length; ++i) {
+            if (material == null)
+            {
+                for (int i = 0; i < meshRenderer.Length; ++i)
+                {
                     MeshRenderer r = (MeshRenderer)meshRenderer[i];
-                    if (i < meshRenderer.Length - 1) {
+                    if (i < meshRenderer.Length - 1)
+                    {
                         MapLayer.LayerData layerData = map.mapLayer.layerDatas[i];
                         r.sharedMaterial = layerData.material;
                     }
                 }
             }
-            else {
-                for (int i = 0; i < meshRenderer.Length; ++i) {
+            else
+            {
+                for (int i = 0; i < meshRenderer.Length; ++i)
+                {
                     MeshRenderer r = (MeshRenderer)meshRenderer[i];
-                    if (i < meshRenderer.Length - 1) {
+                    if (i < meshRenderer.Length - 1)
+                    {
                         MapLayer.LayerData layerData = map.mapLayer.layerDatas[i];
                         r.sharedMaterials = new Material[2]{
                             layerData.material,
@@ -230,7 +249,8 @@ namespace Sango.Render
 
         public void AsyncPrepareDatas()
         {
-            if (lmdCache == null) {
+            if (lmdCache == null)
+            {
                 int _vertex_x_max = quadBounds.x + 1;
                 int _vertex_y_max = quadBounds.y + 1;
                 int maxCount = _vertex_x_max * _vertex_y_max;
@@ -295,9 +315,11 @@ namespace Sango.Render
 
         void OnLoadDone()
         {
-            for (int i = 0; i < mesh.Length; ++i) {
+            for (int i = 0; i < mesh.Length; ++i)
+            {
                 MeshRenderer r = meshRenderer[i];
-                if (r != null && r.enabled != visible) {
+                if (r != null && r.enabled != visible)
+                {
                     r.enabled = visible;
                 }
             }
@@ -310,15 +332,18 @@ namespace Sango.Render
             MeshRenderer r = meshRenderer[layer];
             if (r == null) return;
 
-            if (lmd.IsValid()) {
+            if (lmd.IsValid())
+            {
                 lmd.UpdateMesh(mesh[layer]);
 
-                if (meshCollider[layer] == null) {
+                if (meshCollider[layer] == null)
+                {
                     MeshCollider co = meshRenderer[layer].gameObject.AddComponent<MeshCollider>();
                     co.sharedMesh = mesh[layer];
                     meshCollider[layer] = co;
                 }
-                else {
+                else
+                {
                     meshCollider[layer].sharedMesh = mesh[layer];
                 }
 
@@ -327,7 +352,8 @@ namespace Sango.Render
                     r.enabled = visible;
                 //meshRenderer[layer].gameObject.SetActive(true);
             }
-            else {
+            else
+            {
                 //GameObject.DestroyImmediate(mesh[layer]);
                 //GameObject.Destroy(r.gameObject);
                 //mesh[layer] = null;
@@ -344,20 +370,24 @@ namespace Sango.Render
         void AddVertex(ref MapData.VertexData vtex, int x, int y, int layer, int lowestLayer, bool layerIsWater)
         {
             // color
-            if (vtex.textureIndex == layer || layer == lowestLayer || (layerIsWater && vtex.water > 0)) {
+            if (vtex.textureIndex == layer || layer == lowestLayer || (layerIsWater && vtex.water > 0))
+            {
                 lmdCache.colorCache.Add(color_white);
             }
-            else {
+            else
+            {
                 lmdCache.colorCache.Add(color_black);
             }
             lmdCache.uvCache.Add(map.mapData.VertexUV(vtex, x, y));
 
-            if (layerIsWater) {
+            if (layerIsWater)
+            {
                 lmdCache.vertexCache.Add(map.mapData.VertexWaterPosition(vtex, x, y) - position);
                 lmdCache.normalCache.Add(Vector3.up);
 
             }
-            else {
+            else
+            {
                 lmdCache.vertexCache.Add(map.mapData.VertexPosition(vtex, x, y) - position);
                 lmdCache.normalCache.Add(map.mapData.VertexNormal(vtex, x, y));
             }
@@ -382,12 +412,14 @@ namespace Sango.Render
             MapData.VertexData[][] vertexMap = map.mapData.vertexDatas;
             int maxIndex = 0;
 
-            for (int x = startCoords.x; x < x_end; x += lodL) {
+            for (int x = startCoords.x; x < x_end; x += lodL)
+            {
                 xIndexCache[0] = yIndexCache[0];
                 xIndexCache[1] = 0;
                 Array.Clear(diffyIndexCache, 0, yIndexCache.Length);
 
-                for (int y = startCoords.y; y < y_end; y += lodL) {
+                for (int y = startCoords.y; y < y_end; y += lodL)
+                {
 
                     int xL = x + lodL;
                     int yL = y + lodL;
@@ -399,7 +431,8 @@ namespace Sango.Render
                     int normalY = y - startCoords.y;
 
                     if ((!layerIsWater && start0.textureIndex != bLayer && start1.textureIndex != bLayer && start2.textureIndex != bLayer && start3.textureIndex != bLayer) ||
-                        (layerIsWater && start0.water == 0 && start1.water == 0 && start2.water == 0 && start3.water == 0)) {
+                        (layerIsWater && start0.water == 0 && start1.water == 0 && start2.water == 0 && start3.water == 0))
+                    {
                         xIndexCache[0] = 0;
                         xIndexCache[1] = 0;
                         continue;
@@ -408,32 +441,41 @@ namespace Sango.Render
                     int lowestLayer = layerIsWater ? 0 : Math.Min(Math.Min(Math.Min(start0.textureIndex, start1.textureIndex), start2.textureIndex), start3.textureIndex);
 
                     int index0 = xIndexCache[0];
-                    if (index0 == 0) {
+                    if (index0 == 0)
+                    {
                         index0 = yIndexCache[normalY];
-                        if (index0 == 0) {
+                        if (index0 == 0)
+                        {
                             AddVertex(ref start0, x, y, layer, lowestLayer, layerIsWater);
                             index0 = maxIndex++;
                         }
-                        else {
-                            if (lowestLayer == layer) {
+                        else
+                        {
+                            if (lowestLayer == layer)
+                            {
                                 lmdCache.colorCache.Change(index0, color_white);
                             }
                         }
                     }
-                    else {
-                        if (lowestLayer == layer) {
+                    else
+                    {
+                        if (lowestLayer == layer)
+                        {
                             lmdCache.colorCache.Change(index0, color_white);
                         }
                     }
 
 
                     int index1 = xIndexCache[1];
-                    if (index1 == 0) {
+                    if (index1 == 0)
+                    {
                         AddVertex(ref start1, xL, y, layer, lowestLayer, layerIsWater);
                         index1 = maxIndex++;
                     }
-                    else {
-                        if (lowestLayer == layer) {
+                    else
+                    {
+                        if (lowestLayer == layer)
+                        {
                             lmdCache.colorCache.Change(index1, color_white);
                         }
                     }
@@ -446,12 +488,15 @@ namespace Sango.Render
 
 
                     int index3 = yIndexCache[normalY + lodL];
-                    if (index3 == 0) {
+                    if (index3 == 0)
+                    {
                         AddVertex(ref start3, x, yL, layer, lowestLayer, layerIsWater);
                         index3 = maxIndex++;
                     }
-                    else {
-                        if (lowestLayer == layer) {
+                    else
+                    {
+                        if (lowestLayer == layer)
+                        {
                             lmdCache.colorCache.Change(index3, color_white);
                         }
                     }
@@ -468,7 +513,8 @@ namespace Sango.Render
                     lmdCache.triangleCache.Add(index0);
                 }
 
-                for (int k = 0; k < diffyIndexCache.Length; ++k) {
+                for (int k = 0; k < diffyIndexCache.Length; ++k)
+                {
                     if (!diffyIndexCache[k])
                         yIndexCache[k] = 0;
                 }
@@ -477,23 +523,30 @@ namespace Sango.Render
 
         public override void Update()
         {
-            if (Tools.MapEditor.IsEditOn) {
+            if (Tools.MapEditor.IsEditOn)
+            {
                 _visible = true;
                 _visibleChanged = true;
             }
 
-            if (_visibleChanged) {
+            if (_visibleChanged)
+            {
                 _visibleChanged = false;
-                if (IsValid()) {
-                    for (int i = 0; i < mesh.Length; ++i) {
+                if (IsValid())
+                {
+                    for (int i = 0; i < mesh.Length; ++i)
+                    {
                         MeshRenderer r = meshRenderer[i];
-                        if (r != null && r.enabled != _visible) {
+                        if (r != null && r.enabled != _visible)
+                        {
                             r.enabled = _visible;
                         }
                     }
                 }
-                else {
-                    if (_visible && !IsInThreadLoad()) {
+                else
+                {
+                    if (_visible && !IsInThreadLoad())
+                    {
                         Init();
                         AsyncPrepareDatas();
                     }
@@ -501,8 +554,10 @@ namespace Sango.Render
             }
 
             if (!threadLoadStart) return;
-            if (true == threadLoadDone) {
-                if (threadBeginLayer < mesh.Length) {
+            if (true == threadLoadDone)
+            {
+                if (threadBeginLayer < mesh.Length)
+                {
 
                     OnAsyncPrepareDatasDone(threadBeginLayer, lmdCache);
                     threadBeginLayer++;
@@ -510,7 +565,8 @@ namespace Sango.Render
                     if (threadBeginLayer < mesh.Length)
                         AsyncPrepareDatas();
                 }
-                else {
+                else
+                {
                     threadLoadDone = false;
                     threadLoadStart = false;
                     OnLoadDone();

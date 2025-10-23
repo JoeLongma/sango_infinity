@@ -318,7 +318,6 @@ public class Sango_Render_MapModelsWrap
 			{
 				Sango.Render.MapModels obj = (Sango.Render.MapModels)ToLua.CheckObject<Sango.Render.MapModels>(L, 1);
 				Sango.Tools.Rect arg0 = StackTraits<Sango.Tools.Rect>.Check(L, 2);
-				obj.Update(arg0);
 				return 0;
 			}
 			else

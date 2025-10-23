@@ -21,6 +21,11 @@ Shader "Sango/building_color_urp" {
 				Cull Front
 				Blend SrcAlpha OneMinusSrcAlpha
 				HLSLPROGRAM
+				#define SANGO_BASE_COLOR 1
+				#define SANGO_FOG 1
+				#define SANGO_ALPHA_TEST 1
+				#define SANGO_TERRAIN_TYPE 1
+				#define SANGO_COLOR 1
 				#include "sango_outlineLib.hlsl"
 				//#pragma multi_compile_fwdbase
 				//#pragma multi_compile_fog

@@ -57,6 +57,7 @@ Shader "Sango/building_urp" {
 				#pragma target 3.0
 				#pragma vertex sango_vert
 				#pragma fragment sango_frag
+				#pragma multi_compile_instancing
 
 				ENDHLSL
 			}

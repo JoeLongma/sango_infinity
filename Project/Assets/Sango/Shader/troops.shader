@@ -60,18 +60,18 @@ Shader "Sango/troops_urp" {
 
 				struct VertexInput
 				{
+					UNITY_VERTEX_INPUT_INSTANCE_ID
 					float4 vertex : POSITION;
 					float2 uv0 : TEXCOORD0;
-					UNITY_VERTEX_INPUT_INSTANCE_ID
 				};
 
 				struct VertexOutput
 				{
+					UNITY_VERTEX_INPUT_INSTANCE_ID
 					float4 pos : SV_POSITION;
 					float2 uv0 : TEXCOORD0;
 					float3 dir : TEXCOORD1;
 					float4 shadowCoord : TEXCOORD2;
-					UNITY_VERTEX_INPUT_INSTANCE_ID
 					//LIGHTING_COORDS(3, 4)
 						//float3 posWorld		: TEXCOORD5;
 						//float3 NtoV : TEXCOORD6;

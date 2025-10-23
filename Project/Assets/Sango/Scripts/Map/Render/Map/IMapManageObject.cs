@@ -16,6 +16,7 @@ namespace Sango.Render
         bool isStatic { get; set; }
         bool selectable { get; set; }
         bool remainInView { get; set; }
+
         Vector3 position { get; set; }
         Vector3 rotation { get; set; }
         Vector3 forward { get; set; }
@@ -30,6 +31,7 @@ namespace Sango.Render
         void SetParent(Transform parent);
         void SetParent(Transform parent, bool worldPositionStays);
         void Destroy();
+
         GameObject GetGameObject();
     }
 }

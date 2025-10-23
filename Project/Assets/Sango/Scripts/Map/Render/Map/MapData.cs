@@ -2,13 +2,13 @@
 using System;
 using System.IO;
 using UnityEngine;
-using Sango;
-using static Sango.Render.MapGrid;
 
 namespace Sango.Render
 {
     public class MapData : MapProperty
     {
+        //public NativeArray<MapData.VertexData> vertexMap;
+
         public static Vector2Int[] NeighborVertex = new Vector2Int[] {
             new Vector2Int(1, 0),
             new Vector2Int(1, 1),
@@ -76,11 +76,11 @@ namespace Sango.Render
             int x_scale_length = ((vertexDatas.Length - 1) * scale + 1);
             for (int x = 0; x < x_scale_length; x++)
             {
-                VertexData[] yTable = vertexDatas[x/2];
+                VertexData[] yTable = vertexDatas[x / 2];
                 int y_scale_length = ((yTable.Length - 1) * scale + 1);
                 for (int y = 0; y < y_scale_length; y++)
                 {
-                    VertexData data = yTable[y/2];
+                    VertexData data = yTable[y / 2];
                     writer.Write(data.height);
                     writer.Write(data.textureIndex);
                     writer.Write(data.water);
@@ -91,13 +91,15 @@ namespace Sango.Render
 
         internal override void OnLoad(int versionCode, BinaryReader reader)
         {
-            if(versionCode <= 2) {
+            if (versionCode <= 2)
+            {
                 quadSize = 5;
             }
-            else {
+            else
+            {
                 quadSize = (int)reader.ReadInt32();
             }
-           
+
             for (int x = 0; x < vertexDatas.Length; x++)
             {
                 VertexData[] yTable = vertexDatas[x];
@@ -117,6 +119,17 @@ namespace Sango.Render
                     yTable[y] = data;
                 }
             }
+
+            //vertexMap = new NativeArray<MapData.VertexData>(vertex_x_max * vertex_y_max, Allocator.Persistent);
+            //for (int y = 0; y < map.mapData.vertexDatas.Length; y++)
+            //{
+            //    MapData.VertexData[] vertexDatas = map.mapData.vertexDatas[y];
+            //    for (int x = 0; x < vertexDatas.Length; x++)
+            //    {
+            //        vertexMap[x + y * vertex_x_max] = vertexDatas[x];
+            //    }
+            //}
+
             UpdateRender();
         }
 
@@ -493,9 +506,9 @@ namespace Sango.Render
                 Create(value.x, value.y);
             }
         }
-        Vector2 MapUVPiece;
-        int vertex_x_max;
-        int vertex_y_max;
+        public Vector2 MapUVPiece;
+        public int vertex_x_max;
+        public int vertex_y_max;
         public void Create(int w, int h, byte initHeight)
         {
             if (w % 4 != 0 || h % 4 != 0)
@@ -600,7 +613,7 @@ namespace Sango.Render
 
                     if (rx < vertex_x_max)
                     {
-                         d = vertexDatas[rx][dy];
+                        d = vertexDatas[rx][dy];
                         if (d.water > 0)
                         {
                             return new Vector3(y * quadSize, d.water * 0.5f, x * quadSize);

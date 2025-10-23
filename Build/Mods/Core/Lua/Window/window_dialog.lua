@@ -23,6 +23,8 @@ function Window_Dialog:InitEvent(event, content)
 end
 
 function Window_Dialog:OnButton_ok()
-    self.mEvent.IsDone = true;
-    self.mEvent = nil;
+    if self.mEvent ~= nil then
+        self.mEvent.IsDone = true;
+        self.mEvent = nil;
+    end
 end

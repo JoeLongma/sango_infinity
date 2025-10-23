@@ -46,11 +46,12 @@ Shader "Sango/outline_urp" {
 				CBUFFER_START(UnityPerMaterial)
 				float _OutlineWidth;
 				float4 _BaseMap_ST;
+				CBUFFER_END
+
 				float _Power;
 				float _MixBegin;
 				float _MixPower;
 				float _MixEnd;
-				CBUFFER_END
 
 				TEXTURE2D_X_FLOAT(_CameraDepthTexture);
 				SAMPLER(sampler_CameraDepthTexture);

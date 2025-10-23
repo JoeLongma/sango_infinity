@@ -9,6 +9,7 @@
            
 CBUFFER_START(UnityPerMaterial)
 float4 _MainTex_ST;
+float _OutlineWidth;
 
 #if SANGO_WATER | SANGO_TERRAIN
 half _Alpha;
@@ -27,6 +28,10 @@ float _BlendPower;
 
 #if SANGO_COLOR
 half4 _Color;
+#endif
+
+#if SANGO_BASE_COLOR || SANGO_BASE_COLOR_ADD
+float _BaseColorIntensity;
 #endif
 
 CBUFFER_END
@@ -86,9 +91,8 @@ SAMPLER(smp_point_clamp);
 #endif
 
 
-#if SANGO_BASE_COLOR
+#if SANGO_BASE_COLOR || SANGO_BASE_COLOR_ADD
 TEXTURE2D(_BaseTex);
-float _BaseColorIntensity;
 #endif
 
 #if SANGO_GRID_COLOR
@@ -115,6 +119,7 @@ SAMPLER(smpPoint);
 
 struct SangoVertexInput
 {
+	UNITY_VERTEX_INPUT_INSTANCE_ID
 	float4 vertex : POSITION;
 	float3 normal : NORMAL;
 	float4 vertColor : COLOR;
@@ -123,6 +128,7 @@ struct SangoVertexInput
 
 struct SangoVertexOutput
 {
+	UNITY_VERTEX_INPUT_INSTANCE_ID
 	float4 pos : SV_POSITION;
 	float4 vertColor : COLOR;
 	float3 normal : NORMAL;
@@ -160,6 +166,8 @@ float2 SangoWaterTransofromUV(SangoVertexOutput i)
 
 SangoVertexOutput sango_vert(SangoVertexInput v) 
 {
+	UNITY_SETUP_INSTANCE_ID(v);
+
 	SangoVertexOutput o = (SangoVertexOutput)0;
 	o.uv = TRANSFORM_TEX(v.uv,_MainTex);
 #if SANGO_TEXT
@@ -180,11 +188,14 @@ SangoVertexOutput sango_vert(SangoVertexInput v)
 
 	o.shadowCoord = GetShadowCoord(vertexInput);
 	o.screenPos = ComputeScreenPos(o.pos);
+	UNITY_TRANSFER_INSTANCE_ID(v, o);
 	return o;
 }
 
 float4 sango_frag(SangoVertexOutput i) : COLOR
 {
+	UNITY_SETUP_INSTANCE_ID(i);
+
 	#if SANGO_WATER
 	i.uv = SangoWaterTransofromUV(i);
 	#endif
@@ -222,8 +233,15 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 	half3 baseDiffuse = lerp(diffuse, baseColor.rgb*diffuse,  _BaseColorIntensity);
 	diffuse = baseDiffuse;
 	#endif
-
 	
+	#if SANGO_BASE_COLOR_ADD
+	float2 baseUV = float2(i.posWorld.z / (_MapWidth), 1 - i.posWorld.x / (_MapHeight));
+	half4 baseColor = SAMPLE_TEXTURE2D(_BaseTex, smp, baseUV);
+	half gray = 0.299 * diffuse.r + 0.587 * diffuse.g + 0.114 * diffuse.b;
+	half3 baseDiffuse = lerp(diffuse, gray * baseColor.rgb , _BaseColorIntensity);
+	diffuse = baseDiffuse;
+	#endif
+
 
 	#if SANGO_TERRAIN_TYPE
 #if defined(SANGO_EDITOR)

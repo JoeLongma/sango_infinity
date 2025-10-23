@@ -19,6 +19,9 @@ namespace Sango.Render
             public Texture[] mask = new Texture[4];
             public Material material;
             public Vector2 textureScale = Vector2.one;
+            //public Mesh combineMesh;
+
+
             public LayerData(MapLayer layer)
             {
                 this.layer = layer;
@@ -26,6 +29,9 @@ namespace Sango.Render
                 normal = new Texture[4] { Texture2D.whiteTexture, Texture2D.whiteTexture, Texture2D.whiteTexture, Texture2D.whiteTexture };
                 mask = new Texture[4] { Texture2D.blackTexture, Texture2D.blackTexture, Texture2D.blackTexture, Texture2D.blackTexture };
                 material = new Material(Shader.Find("Sango/terrain_urp"));
+                //combineMesh = new Mesh();
+                //combineMesh.MarkDynamic();
+                //combineMesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
             }
 
             public LayerData(MapLayer layer, Material mat)
@@ -35,6 +41,9 @@ namespace Sango.Render
                 normal = new Texture[4] { Texture2D.whiteTexture, Texture2D.whiteTexture, Texture2D.whiteTexture, Texture2D.whiteTexture };
                 mask = new Texture[4] { Texture2D.blackTexture, Texture2D.blackTexture, Texture2D.blackTexture, Texture2D.blackTexture };
                 material = mat;
+                //combineMesh = new Mesh();
+                //combineMesh.MarkDynamic();
+                //combineMesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
             }
 
             public void AutoLoadDiffuse()

@@ -22,6 +22,12 @@ Shader "Sango/flag_urp" {
 				Cull Front
 				Blend SrcAlpha OneMinusSrcAlpha
 				HLSLPROGRAM
+				#define SANGO_FOG 1
+				#define SANGO_ALPHA_TEST 1
+				#define SANGO_TERRAIN_TYPE 1
+				#define SANGO_COLOR 1
+				#define SANGO_AMBIENT_NO_LIGHT 1
+				#define SANGO_TEXT 1
 				#include "sango_outlineLib.hlsl"
 				//#pragma multi_compile_fwdbase
 				//#pragma multi_compile_fog
@@ -33,6 +39,8 @@ Shader "Sango/flag_urp" {
 				#pragma target 3.0
 				#pragma vertex outline_vert
 				#pragma fragment outline_frag
+				#pragma multi_compile_instancing
+
 				ENDHLSL
 			}
 
@@ -61,6 +69,7 @@ Shader "Sango/flag_urp" {
 				#pragma target 3.0
 				#pragma vertex sango_vert
 				#pragma fragment sango_frag
+				#pragma multi_compile_instancing
 
 				ENDHLSL
 			}

@@ -57,11 +57,12 @@ SubShader {
 			float4 _MainTex_ST;
 			float _EndHeight;
 			float _BeginHeight;
-			CBUFFER_END
-			TEXTURE2D(_MainTex);
 			float _MixBegin;
 			float _MixPower;
 			float _MixEnd;
+			CBUFFER_END
+			TEXTURE2D(_MainTex);
+			
 
 			TEXTURE2D_X_FLOAT(_CameraDepthTexture);
 			SAMPLER(sampler_CameraDepthTexture);

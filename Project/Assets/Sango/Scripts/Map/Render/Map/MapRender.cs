@@ -24,7 +24,7 @@ namespace Sango.Render
         float _outlineWidth = 3.5f;
         bool _outlineShow = true;
 
-        public float showLimitLength = 1200;
+        public float showLimitLength = 870;
         // 数据
         public MapData mapData;
         public MapLayer mapLayer;
@@ -571,6 +571,5 @@ namespace Sango.Render
         {
             mapCamera.MoveCameraTo(pos);
         }
-
     }
 }

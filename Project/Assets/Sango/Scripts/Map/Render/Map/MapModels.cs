@@ -1,9 +1,12 @@
 ﻿using LuaInterface;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using UnityEngine;
 using Sango;
+using UnityEngine.Rendering;
+using Sango.Game;
+using Sango.Loader;
+using Sango.Tools;
 
 namespace Sango.Render
 {
@@ -16,8 +19,106 @@ namespace Sango.Render
         public Sango.Tools.QuadTree2D<IMapManageObject> staticObjectsQuadTree;
         private Tools.Rect curViewRect = new Tools.Rect();
 
+        public class ModelInstanceData
+        {
+            public Matrix4x4[] _matrixes = new Matrix4x4[1];
+            public Mesh mesh;
+            public Material material;
+            public Material[] seasonMaterials = new Material[4];
+            public int showCount;
+            public MaterialPropertyBlock _mpb = new MaterialPropertyBlock();
+            public List<MapObject> drawObject = new List<MapObject>();
+            public UnityEngine.Object @object;
+
+            bool needUpdateMatrixes = false;
+
+            public void Add(MapObject mapObject)
+            {
+                drawObject.Add(mapObject);
+                needUpdateMatrixes = true;
+            }
+
+            public void Remove(MapObject mapObject)
+            {
+                drawObject.Remove(mapObject);
+                needUpdateMatrixes = true;
+            }
+
+            public void UpdateMatrixes()
+            {
+                showCount = drawObject.Count;
+                if (showCount >= _matrixes.Length)
+                {
+                    int destLen = _matrixes.Length;
+                    while (destLen < showCount)
+                        destLen *= 2;
+                    _matrixes = new Matrix4x4[destLen];
+                    for (int i = 0; i < destLen; i++)
+                        _matrixes[i] = new Matrix4x4();
+                }
+
+                for (int i = 0; i < showCount; i++)
+                {
+                    var mx = _matrixes[i];
+                    MapObject mapManageObject = drawObject[i];
+                    Transform node = mapManageObject.transform;
+                    mx.SetTRS(
+                        node.position,
+                        node.rotation,
+                        node.lossyScale
+                        );
+                    _matrixes[i] = mx;
+                }
+            }
+
+            public void UpdateSeason(int season)
+            {
+                Material mat = seasonMaterials[season];
+                if (mat != null)
+                    material = mat;
+            }
+
+            public void DrawMesh()
+            {
+                if (needUpdateMatrixes)
+                {
+                    UpdateMatrixes();
+                    needUpdateMatrixes = false;
+                }
+
+                if (mesh == null || showCount <= 0) return;
+
+                if (SystemInfo.supportsInstancing)
+                {
+                    Graphics.DrawMeshInstanced(mesh, 0, material, _matrixes, showCount, _mpb, ShadowCastingMode.Off, false, 0);
+                }
+                else
+                {
+                    for (int i = 0; i < showCount; i++)
+                    {
+                        Graphics.DrawMesh(mesh, _matrixes[i], material, 0);
+                    }
+                }
+            }
+        }
+
+        public ModelInstanceData[] modelInstanceDatas;
+
+        public void AddInstance(MapObject obj)
+        {
+            ModelInstanceData modelInstanceData = modelInstanceDatas[obj.modelId - 1];
+            modelInstanceData.Add(obj);
+        }
+
+        public void RemoveInstance(MapObject obj)
+        {
+            ModelInstanceData modelInstanceData = modelInstanceDatas[obj.modelId - 1];
+            modelInstanceData.Remove(obj);
+        }
+
         public MapModels(MapRender map) : base(map)
         {
+
         }
 
         public override void Init()
@@ -28,13 +129,40 @@ namespace Sango.Render
 
             // 初始化quadTree
             staticObjectsQuadTree = new Tools.QuadTree2D<IMapManageObject>(bounds, 8);
+
+            modelInstanceDatas = new ModelInstanceData[14];
+            for (int i = 0; i < modelInstanceDatas.Length; i++)
+            {
+                ModelInstanceData instanceData = new ModelInstanceData();
+                modelInstanceDatas[i] = instanceData;
+
+                ModelConfig config = GameData.Instance.ModelConfigs.Get(i + 1);
+                GameObject obj = ObjectLoader.LoadObject<GameObject>(config.model);
+                if (obj != null)
+                {
+                    MeshFilter meshFilter = obj.GetComponentInChildren<MeshFilter>(true);
+                    instanceData.mesh = meshFilter.sharedMesh;
+                    MeshRenderer renderer = obj.GetComponentInChildren<MeshRenderer>(true);
+                    instanceData.material = renderer.sharedMaterial;
+
+                    string name = instanceData.material.name;
+                    string seasonNameFix = name.Remove(name.LastIndexOf("_") + 1);
+                    for (int j = 0; j < 4; j++)
+                    {
+                        string matName = $"Assets/Model/Materials/{seasonNameFix}{MapRender.SeasonNames[j].ToLower()}.mat";
+                        instanceData.seasonMaterials[j] = ObjectLoader.LoadObject<Material>(matName);
+                    }
+                    instanceData.@object = obj;
+                }
+            }
         }
 
         public override void Clear()
         {
             base.Clear();
             ClearAllModels();
-            foreach (IMapManageObject o in dynamicObjects) {
+            foreach (IMapManageObject o in dynamicObjects)
+            {
                 o.visible = false;
             }
             dynamicObjects.Clear();
@@ -42,10 +170,12 @@ namespace Sango.Render
 
         public void SetOutLineShow(Material terrainOutlineMat)
         {
-            foreach (IMapManageObject obj in staticObjects) {
+            foreach (IMapManageObject obj in staticObjects)
+            {
                 obj.SetOutlineShow(terrainOutlineMat);
             }
-            foreach (IMapManageObject obj in dynamicObjects) {
+            foreach (IMapManageObject obj in dynamicObjects)
+            {
                 obj.SetOutlineShow(terrainOutlineMat);
             }
         }
@@ -71,7 +201,8 @@ namespace Sango.Render
 
         public void RemoveStatic(IMapManageObject obj)
         {
-            if (staticObjects.Remove(obj)) {
+            if (staticObjects.Remove(obj))
+            {
                 staticObjectsQuadTree.Remove(obj, obj.worldBounds);
                 //staticObjectMap.Remove(obj.objId);
             }
@@ -79,7 +210,7 @@ namespace Sango.Render
 
         public void Remove(IMapManageObject obj)
         {
-            if(obj.isStatic)
+            if (obj.isStatic)
             {
                 if (staticObjects.Remove(obj))
                 {
@@ -105,7 +236,7 @@ namespace Sango.Render
         public void CreateModel(int id, int objType, int bindId, int modelId, Vector3 position, Vector3 rot, Vector3 scale)
         {
             if (modelId == 0) return;
-            MapObject obj = MapObject.Create(bindId.ToString());
+            MapObject obj = MapObject.Create(modelId.ToString());
             obj.objId = id;
             obj.objType = objType;
             obj.bindId = bindId;
@@ -113,7 +244,10 @@ namespace Sango.Render
             obj.transform.position = position;
             obj.transform.rotation = Quaternion.Euler(rot);
             obj.transform.localScale = scale;
-            obj.bounds = new Sango.Tools.Rect( 0, 0, 32, 32);
+            obj.bounds = new Sango.Tools.Rect(0, 0, 32, 32);
+
+            obj.instanceFlag = !MapEditor.IsEditOn;
+
             //map.LoadModel(obj);
             if (bindId > 0)
                 map.BindModel(obj);
@@ -128,7 +262,8 @@ namespace Sango.Render
 
         public void ClearAllModels()
         {
-            foreach (IMapManageObject o in staticObjects) {
+            foreach (IMapManageObject o in staticObjects)
+            {
                 staticObjectsQuadTree.Remove(o, o.worldBounds);
                 o.visible = false;
             }
@@ -142,7 +277,8 @@ namespace Sango.Render
             foreach (IMapManageObject o in invalidList)
                 RemoveStatic(o);
             writer.Write(staticObjects.Count);
-            for (int i = 0; i < staticObjects.Count; ++i) {
+            for (int i = 0; i < staticObjects.Count; ++i)
+            {
                 IMapManageObject obj = staticObjects[i];
                 writer.Write(obj.objId);
                 writer.Write(obj.objType);
@@ -170,7 +306,8 @@ namespace Sango.Render
             }
 
             int count = reader.ReadInt32();
-            for (int i = 0; i < count; ++i) {
+            for (int i = 0; i < count; ++i)
+            {
                 int objId = reader.ReadInt32();
                 int objType = reader.ReadInt32();
                 int bindId = 0;
@@ -186,12 +323,16 @@ namespace Sango.Render
 
         public override void UpdateRender()
         {
-
+            for (int i = 0; i < modelInstanceDatas.Length; i++)
+            {
+                modelInstanceDatas[i].UpdateSeason(curSeason);
+            }
         }
 
         public void EditorShow(bool b)
         {
-            for (int i = 0; i < staticObjects.Count; ++i) {
+            for (int i = 0; i < staticObjects.Count; ++i)
+            {
                 IMapManageObject obj = staticObjects[i];
                 obj.EditorShow(b);
             }
@@ -212,37 +353,50 @@ namespace Sango.Render
 
             int lastCount = mapManageObjectsCount[manageLastIndex];
             IMapManageObject[] lastList = mapManageObjects[manageLastIndex];
-            for (int i = 0; i < lastCount; i++) {
+            for (int i = 0; i < lastCount; i++)
+            {
                 lastList[i].remainInView = false;
             }
 
             int newIndex = (manageLastIndex + 1) % 2;
             IMapManageObject[] newList = mapManageObjects[newIndex];
 
-            int newCount = staticObjectsQuadTree.Find(rect, ref newList, true);
+            int newCount = staticObjectsQuadTree.Find(rect, ref newList, false);
             mapManageObjectsCount[newIndex] = newCount;
-            for (int i = 0; i < newCount; i++) {
+            for (int i = 0; i < newCount; i++)
+            {
                 newList[i].remainInView = true;
             }
 
-            for (int i = 0; i < lastCount; i++) {
+            for (int i = 0; i < lastCount; i++)
+            {
                 IMapManageObject obj = lastList[i];
-                if (obj.manager != null && !obj.remainInView) {
+                if (obj.manager != null && !obj.remainInView)
+                {
                     obj.visible = false;
                 }
             }
 
-            for (int i = 0; i < newCount; i++) {
+            for (int i = 0; i < newCount; i++)
+            {
                 newList[i].visible = true;
             }
             manageLastIndex = newIndex;
 
-            for (int i = 0; i < dynamicObjects.Count; i++) {
+            for (int i = 0; i < dynamicObjects.Count; i++)
+            {
                 IMapManageObject dynamicObj = dynamicObjects[i];
-                if (dynamicObj != null) {
+                if (dynamicObj != null)
+                {
                     dynamicObj.visible = dynamicObj.Overlaps(rect);
                 }
             }
+
+            for (int i = 0; i < modelInstanceDatas.Length; i++)
+            {
+                modelInstanceDatas[i].DrawMesh();
+            }
+
         }
 
         public override void UpdateImmediate()

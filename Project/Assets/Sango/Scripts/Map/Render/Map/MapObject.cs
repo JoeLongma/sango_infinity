@@ -46,6 +46,11 @@ namespace Sango.Render
         /// </summary>
         public string modelAsset { get; set; }
 
+        /// <summary>
+        ///  实例化标记
+        /// </summary>
+        public bool instanceFlag { get; set; }
+
 
         public GameObject loadedModel;
         private bool isLoading = false;
@@ -112,6 +117,7 @@ namespace Sango.Render
             }
         }
 
+        public bool doNotRadiusCheck { get; set; }
 
         public static MapObject Create(string name)
         {
@@ -388,6 +394,13 @@ namespace Sango.Render
 
         public void ReLoadModels()
         {
+            if(instanceFlag)
+            {
+                manager.mapModels.AddInstance(this);
+                return;
+            }
+
+
             if (loadedModel != null || isLoading)
             {
                 return;
@@ -424,6 +437,12 @@ namespace Sango.Render
 
         public void ClearModels()
         {
+            if (instanceFlag)
+            {
+                manager.mapModels.RemoveInstance(this);
+                return;
+            }
+
             isLoading = false;
             if (loadedModel == null) return;
             PoolManager.Recycle(loadedModel);

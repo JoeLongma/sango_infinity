@@ -18,6 +18,7 @@ namespace Sango.Game
 
         public void Init()
         {
+            Sango.Log.Print("GameData.Init()");
             LoadCommonData();
             LoadModelConfig();
         }
