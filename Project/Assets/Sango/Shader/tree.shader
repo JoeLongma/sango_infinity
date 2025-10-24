@@ -38,6 +38,7 @@ Shader "Sango/tree_urp" {
 				#pragma vertex outline_vert
 				#pragma fragment outline_frag
 				#pragma multi_compile_instancing
+				#pragma multi_compile_fog
 
 				ENDHLSL
 			}
@@ -67,6 +68,7 @@ Shader "Sango/tree_urp" {
 				#pragma vertex sango_vert
 				#pragma fragment sango_frag
 				#pragma multi_compile_instancing
+				#pragma multi_compile_fog
 
 				ENDHLSL
 			}

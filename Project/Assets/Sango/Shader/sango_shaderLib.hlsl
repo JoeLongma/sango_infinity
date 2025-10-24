@@ -15,6 +15,10 @@ float _OutlineWidth;
 half _Alpha;
 #endif
 
+#if defined(FOG_LINEAR) || defined(FOG_EXP) || defined(FOG_EXP2)
+#define APPLY_FOG 1            
+#endif
+
 #if SANGO_WATER
 float _HorizontalAmount;
 float _VerticalAmount;
@@ -334,7 +338,7 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 	finalRGBA.a = finalRGBA.a * saturate(pow( i.posObject.y - _BlendHeight, _BlendPower));
 	#endif
 
-	#if !SANGO_FOG 
+	#if SANGO_FOG && APPLY_FOG
 		float2 screenPos= i.screenPos .xy / i.screenPos .w;
 		float depth = SAMPLE_TEXTURE2D_X(_CameraDepthTexture, sampler_CameraDepthTexture, screenPos).r;
 		float depthValue = LinearEyeDepth(depth, _ZBufferParams);

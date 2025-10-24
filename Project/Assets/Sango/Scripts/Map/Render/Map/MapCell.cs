@@ -536,9 +536,10 @@ namespace Sango.Render
             if (_visibleChanged)
             {
                 _visibleChanged = false;
-                if (IsValid())
+
+                if (meshRenderer != null)
                 {
-                    for (int i = 0; i < mesh.Length; ++i)
+                    for (int i = 0; i < meshRenderer.Length; ++i)
                     {
                         MeshRenderer r = meshRenderer[i];
                         if (r != null && r.enabled != _visible)
@@ -547,7 +548,8 @@ namespace Sango.Render
                         }
                     }
                 }
-                else
+
+                if (!IsValid())
                 {
                     if (_visible && !IsInThreadLoad())
                     {

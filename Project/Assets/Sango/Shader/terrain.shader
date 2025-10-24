@@ -69,6 +69,7 @@ Shader "Sango/terrain_urp" {
 				//#pragma multi_compile LIGHTMAP_OFF LIGHTMAP_ON
 				#pragma multi_compile _ SANGO_EDITOR
 				#pragma multi_compile_instancing
+				#pragma multi_compile_fog
 
 				#pragma skip_variants FOG_EXP FOG_EXP2
 				#pragma exclude_renderers xbox360 ps3 

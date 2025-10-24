@@ -58,6 +58,8 @@ Shader "Sango/building_urp" {
 				#pragma vertex sango_vert
 				#pragma fragment sango_frag
 				#pragma multi_compile_instancing
+				#pragma multi_compile_fog
+
 
 				ENDHLSL
 			}
