@@ -78,6 +78,36 @@ Shader "Sango/terrain_urp" {
 				#pragma fragment sango_frag
 				ENDHLSL
 			}
+
+		//	Pass
+		//		{
+		//			Name "DepthOnly"
+		//			Tags{"LightMode" = "DepthOnly"}
+
+		//			ZWrite On
+		//			ColorMask 0
+		//			Cull[_Cull]
+
+		//			HLSLPROGRAM
+		//			#pragma only_renderers gles gles3 glcore d3d11
+		//			#pragma target 2.0
+
+		//	//--------------------------------------
+		//	// GPU Instancing
+		//	#pragma multi_compile_instancing
+
+		//	#pragma vertex DepthOnlyVertex
+		//	#pragma fragment DepthOnlyFragment
+
+		//	// -------------------------------------
+		//	// Material Keywords
+		//	#pragma shader_feature_local_fragment _ALPHATEST_ON
+		//	#pragma shader_feature_local_fragment _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+
+		//	#include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
+		//	#include "Packages/com.unity.render-pipelines.universal/Shaders/DepthOnlyPass.hlsl"
+		//	ENDHLSL
+		//}
 		}
 
 		Fallback "Sango/sango_urp"

@@ -160,13 +160,13 @@ namespace Sango.Tools
             rect.x += 68;
             rect.height = 24;
             GUI.changed = false;
-            GUI.enabled = false;
+            //GUI.enabled = false;
             Vector2 scale = Tools.EditorUtility.Vector2Field(rect, layerData.textureScale, "缩放", 30);
             if (GUI.changed)
             {
                 layerData.UpdateTextureScale(scale);
             }
-            GUI.enabled = true;
+            //GUI.enabled = true;
             rect.y += 28;
             if (isWaterLayer)
                 GUI.Label(rect, "水面贴图 -> " + layerData.GetDiffuseName(season));

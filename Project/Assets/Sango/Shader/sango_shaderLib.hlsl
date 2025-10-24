@@ -241,9 +241,17 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 	#if SANGO_BASE_COLOR_ADD
 	float2 baseUV = float2(i.posWorld.z / (_MapWidth), 1 - i.posWorld.x / (_MapHeight));
 	half4 baseColor = SAMPLE_TEXTURE2D(_BaseTex, smp, baseUV);
-	half gray = 0.299 * diffuse.r + 0.587 * diffuse.g + 0.114 * diffuse.b;
-	half3 baseDiffuse = lerp(diffuse, gray * baseColor.rgb , _BaseColorIntensity);
+	//half gray = 0.299 * diffuse.r + 0.587 * diffuse.g + 0.114 * diffuse.b;
+	//half3 baseDiffuse = lerp(diffuse, gray * baseColor.rgb , _BaseColorIntensity);
+	//diffuse = baseDiffuse;
+	half3 saveColor = diffuse;
+	diffuse.r = max(baseColor.r, diffuse.r);
+	diffuse.b = max(baseColor.b, diffuse.b);
+	diffuse.g = max(baseColor.g, diffuse.g);
+
+	half3 baseDiffuse = lerp(diffuse, saveColor * diffuse, _BaseColorIntensity);
 	diffuse = baseDiffuse;
+
 	#endif
 
 

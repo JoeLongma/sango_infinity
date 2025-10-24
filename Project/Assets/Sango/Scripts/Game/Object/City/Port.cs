@@ -15,9 +15,9 @@ namespace Sango.Game
             Render = new PortRender(this);
         }
 
-        public override bool OnTurnStart(Scenario scenario)
+        public override bool OnForceTurnStart(Scenario scenario)
         {
-            return base.OnTurnStart(scenario);
+            return base.OnForceTurnStart(scenario);
         }
     }
 }

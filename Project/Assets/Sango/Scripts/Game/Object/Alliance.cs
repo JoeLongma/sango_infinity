@@ -22,7 +22,7 @@ namespace Sango.Game
             return ForceList.Contains(force);
         }
 
-        public override bool OnNewTurn(Scenario scenario)
+        public override bool OnTurnStart(Scenario scenario)
         {
             leftCount--;
             IsAlive = leftCount > 0;
@@ -46,7 +46,7 @@ namespace Sango.Game
 #endif
 
             }
-            return base.OnNewTurn(scenario);
+            return base.OnTurnStart(scenario);
         }
     }
 }

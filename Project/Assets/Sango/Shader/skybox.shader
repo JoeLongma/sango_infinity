@@ -78,6 +78,13 @@ SubShader {
 				float4 posWorld = mul(unity_ObjectToWorld, v.vertex);
 				o.fogCoord.x = posWorld.y;
 				o.screenPos = ComputeScreenPos(o.vertex);
+
+#if UNITY_REVERSED_Z //这个宏是用来判断平台的，有个平台最远裁剪值是1，有的是-1
+				o.vertex.z = o.vertex.w * 0.0001f;
+#else
+				o.vertex.z = o.vertex.w * 0.9999f;
+#endif  
+
 				return o;
 			}
 			
@@ -85,7 +92,7 @@ SubShader {
 			{
 				half4 col = SAMPLE_TEXTURE2D(_MainTex, smp, i.texcoord);
 				//col.rgb = lerp((unity_FogColor).rgb, (col).rgb, saturate(i.fogCoord.x));
-				float heightAlpha = saturate((i.fogCoord.x - _BeginHeight) / (_EndHeight - _BeginHeight));
+				float heightAlpha = pow(saturate((i.fogCoord.x - _BeginHeight) / (_EndHeight - _BeginHeight)), _MixPower);
 				float2 screenPos= i.screenPos .xy / i.screenPos .w;
 				float depth = SAMPLE_TEXTURE2D_X(_CameraDepthTexture, sampler_CameraDepthTexture, screenPos).r;
 				float depthValue = Linear01Depth(depth, _ZBufferParams);

@@ -17,7 +17,7 @@ namespace Sango.Game.Render
             Owener = fire;
             Fire = fire;
 
-            MapObject = MapObject.Create(Fire.Name + "队");
+            MapObject = MapObject.Create("火");
             MapObject.objType = Fire.Id;
             MapObject.modelId = Fire.Id;
             MapObject.modelAsset = GameRenderHelper.FireRes;

@@ -177,9 +177,9 @@ namespace Sango.Game
             return true;
         }
 
-        public virtual bool ChangeDurability(int num, Troop atk)
+        public virtual bool ChangeDurability(int num, SangoObject atk, bool showDamage = true)
         {
-            if (num < 0)
+            if (showDamage && num < 0)
             {
                 if (Render != null)
                     Render.ShowDamage(num, 13);
@@ -210,11 +210,11 @@ namespace Sango.Game
             return false;
         }
 
-        public virtual void OnFall(Troop atk)
+        public virtual void OnFall(SangoObject atk)
         {
 
         }
-        public virtual void OnComplate(Troop atk)
+        public virtual void OnComplate(SangoObject atk)
         {
 
         }

@@ -140,7 +140,7 @@ public class Sango_Game_SangoObjectWrap
 			ToLua.CheckArgsCount(L, 2);
 			Sango.Game.SangoObject obj = (Sango.Game.SangoObject)ToLua.CheckObject<Sango.Game.SangoObject>(L, 1);
 			Sango.Game.Scenario arg0 = (Sango.Game.Scenario)ToLua.CheckObject<Sango.Game.Scenario>(L, 2);
-			bool o = obj.OnNewTurn(arg0);
+			bool o = obj.OnTurnStart(arg0);
 			LuaDLL.lua_pushboolean(L, o);
 			return 1;
 		}
@@ -158,7 +158,7 @@ public class Sango_Game_SangoObjectWrap
 			ToLua.CheckArgsCount(L, 2);
 			Sango.Game.SangoObject obj = (Sango.Game.SangoObject)ToLua.CheckObject<Sango.Game.SangoObject>(L, 1);
 			Sango.Game.Scenario arg0 = (Sango.Game.Scenario)ToLua.CheckObject<Sango.Game.Scenario>(L, 2);
-			bool o = obj.OnTurnStart(arg0);
+			bool o = obj.OnForceTurnStart(arg0);
 			LuaDLL.lua_pushboolean(L, o);
 			return 1;
 		}
@@ -176,7 +176,7 @@ public class Sango_Game_SangoObjectWrap
 			ToLua.CheckArgsCount(L, 2);
 			Sango.Game.SangoObject obj = (Sango.Game.SangoObject)ToLua.CheckObject<Sango.Game.SangoObject>(L, 1);
 			Sango.Game.Scenario arg0 = (Sango.Game.Scenario)ToLua.CheckObject<Sango.Game.Scenario>(L, 2);
-			bool o = obj.OnTurnEnd(arg0);
+			bool o = obj.OnForceTurnEnd(arg0);
 			LuaDLL.lua_pushboolean(L, o);
 			return 1;
 		}

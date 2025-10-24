@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Sango.Game;
+using System.Collections;
 
 namespace Sango
 {
@@ -53,6 +54,10 @@ namespace Sango
         public static EventDelegate OnGamePause;
         public static EventDelegate OnGameResume;
         public static EventDelegate OnGameShutdown;
+
+        public static EventDelegate<Scenario> OnScenarioPrepare;
+        public static EventDelegate<bool> OnCityInfoShowChange;
+
 
     }
 }

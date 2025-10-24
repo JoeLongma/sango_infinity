@@ -3106,6 +3106,9 @@
       "spellRanges": [
         2
       ],
+      "skillEffects": [
+        1
+      ],
       "canDamageTroop": true,
       "canDamageMachine": true,
       "canDamageBoat": true,
@@ -3232,6 +3235,9 @@
       "spellRanges": [
         2
       ],
+      "skillEffects": [
+        1
+      ],
       "canDamageTroop": true,
       "canDamageMachine": true,
       "canDamageBoat": true,
@@ -3300,6 +3306,9 @@
       "isRange": true,
       "spellRanges": [
         2
+      ],
+      "skillEffects": [
+        1
       ],
       "canDamageTroop": true,
       "canDamageMachine": true,

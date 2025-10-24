@@ -361,7 +361,7 @@ namespace Sango.Render
             int newIndex = (manageLastIndex + 1) % 2;
             IMapManageObject[] newList = mapManageObjects[newIndex];
 
-            int newCount = staticObjectsQuadTree.Find(rect, ref newList, false);
+            int newCount = staticObjectsQuadTree.Find(rect, ref newList, true);
             mapManageObjectsCount[newIndex] = newCount;
             for (int i = 0; i < newCount; i++)
             {

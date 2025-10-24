@@ -36,6 +36,7 @@ namespace Sango.Game.Render.UI
         int destSaveTurn = -1;
         bool needSave = false;
         private float deltaTime = 0.0f;
+        bool cityInfoShow = true;
 
         public GameObject GetObject(int index)
         {
@@ -210,9 +211,9 @@ namespace Sango.Game.Render.UI
                     dd++;
                 }
                 if (troop.TroopType.isFight)
-                    item.name.text = $"[{troop.BelongForce.Name}]{troop.Name}队,{troop.Member1?.Name}{troop.Member2?.Name}";
+                    item.name.text = $"[{troop.BelongForce.Name}]<{troop.TroopType.Name}>{troop.Name}队,{troop.Member1?.Name}{troop.Member2?.Name}";
                 else
-                    item.name.text = $"**[{troop.BelongForce.Name}]{troop.Name}运输队,{troop.Member1?.Name}{troop.Member2?.Name}";
+                    item.name.text = $"**[{troop.BelongForce.Name}]<{troop.TroopType.Name}>{troop.Name}运输队,{troop.Member1?.Name}{troop.Member2?.Name}";
 
                 item.name.color = troop.BelongForce.Flag.color;
             }
@@ -282,6 +283,11 @@ namespace Sango.Game.Render.UI
         public void OnLoad()
         {
 
+        }
+        public void OnSwitchCityInfoShow()
+        {
+            cityInfoShow = !cityInfoShow;
+            EventBase.OnCityInfoShowChange?.Invoke(cityInfoShow);
         }
 
         public void OnHighFPS()

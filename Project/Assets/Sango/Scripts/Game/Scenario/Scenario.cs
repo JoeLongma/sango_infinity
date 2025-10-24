@@ -158,6 +158,70 @@ namespace Sango.Game
             {
                 return allianceSet as Database<T>;
             }
+            else if (tType == typeof(TerrainType))
+            {
+                return CommonData.TerrainTypes as Database<T>;
+            }
+            else if (tType == typeof(BuildingType))
+            {
+                return CommonData.BuildingTypes as Database<T>;
+            }
+            else if (tType == typeof(Feature))
+            {
+                return CommonData.Features as Database<T>;
+            }
+            else if (tType == typeof(TroopType))
+            {
+                return CommonData.TroopTypes as Database<T>;
+            }
+            else if (tType == typeof(TroopAnimation))
+            {
+                return CommonData.TroopAnimations as Database<T>;
+            }
+            else if (tType == typeof(AttributeChangeType))
+            {
+                return CommonData.AttributeChangeTypes as Database<T>;
+            }
+            else if (tType == typeof(PersonAttributeType))
+            {
+                return CommonData.PersonAttributeTypes as Database<T>;
+            }
+            else if (tType == typeof(CityLevelType))
+            {
+                return CommonData.CityLevelTypes as Database<T>;
+            }
+            else if (tType == typeof(Flag))
+            {
+                return CommonData.Flags as Database<T>;
+            }
+            else if (tType == typeof(State))
+            {
+                return CommonData.States as Database<T>;
+            }
+            else if (tType == typeof(CityLevelType))
+            {
+                return CommonData.CityLevelTypes as Database<T>;
+            }
+            else if (tType == typeof(Official))
+            {
+                return CommonData.Officials as Database<T>;
+            }
+            else if (tType == typeof(Skill))
+            {
+                return CommonData.Skills as Database<T>;
+            }
+            else if (tType == typeof(PersonLevel))
+            {
+                return CommonData.PersonLevels as Database<T>;
+            }
+            else if (tType == typeof(ItemType))
+            {
+                return CommonData.ItemTypes as Database<T>;
+            }
+            else if (tType == typeof(SkillEffect))
+            {
+                return CommonData.SkillEffects as Database<T>;
+            }
             return null;
         }
 
@@ -259,6 +323,10 @@ namespace Sango.Game
             else if (tType == typeof(ItemType))
             {
                 return CommonData.ItemTypes.Get(id);
+            }
+            else if (tType == typeof(SkillEffect))
+            {
+                return CommonData.SkillEffects.Get(id);
             }
             //else if (tType == typeof(CityLevelType))
             //{
@@ -509,7 +577,7 @@ namespace Sango.Game
         /// </summary>
         public void Prepare()
         {
-            Event.OnPrepare?.Invoke(this);
+            EventBase.OnScenarioPrepare?.Invoke(this);
 
             for (int i = 0; i < prepareList.Count; ++i)
             {
@@ -586,20 +654,23 @@ namespace Sango.Game
             {
                 Person person = personSet[i];
                 if (person != null && person.IsAlive)
-                    person.OnNewTurn(this);
+                    person.OnTurnStart(this);
             }
+
             for (int i = 1; i < allianceSet.Count; i++)
             {
                 Alliance a = allianceSet[i];
                 if (a != null && a.IsAlive)
-                    a.OnNewTurn(this);
+                    a.OnTurnStart(this);
             }
+
             for (int i = 1; i < fireSet.Count; i++)
             {
                 Fire a = fireSet[i];
                 if (a != null && a.IsAlive)
                     a.OnTurnStart(this);
             }
+
             allianceSet.RemoveAll(a => !a.IsAlive);
 
             HasTurnStarted = true;
@@ -614,7 +685,7 @@ namespace Sango.Game
                     return false;
                 else
                 {
-                    CurRunForce.OnTurnEnd(this);
+                    CurRunForce.OnForceTurnEnd(this);
                     scenarioEvent.OnForceEnd?.Invoke(CurRunForce, this);
                     CurRunForce = null;
                 }
@@ -628,7 +699,7 @@ namespace Sango.Game
             if (CurRunForce != null && CurRunForce.IsAlive)
             {
                 Info.curForceId = CurRunForce.Id;
-                CurRunForce.OnTurnStart(this);
+                CurRunForce.OnForceTurnStart(this);
                 scenarioEvent.OnForceStart?.Invoke(CurRunForce, this);
             }
             return false;
@@ -641,7 +712,7 @@ namespace Sango.Game
             {
                 Fire a = fireSet[i];
                 if (a != null && a.IsAlive)
-                    a.OnTurnEnd(this);
+                    a.OnForceTurnEnd(this);
             }
             HasTurnEnded = true;
             Info.turnCount++;

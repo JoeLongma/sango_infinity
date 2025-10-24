@@ -546,16 +546,16 @@ namespace Sango.Game
             this.missionCounter = 0;
         }
 
-        public override bool OnNewTurn(Scenario scenario)
-        {
-            return base.OnNewTurn(scenario);
-        }
         public override bool OnTurnStart(Scenario scenario)
+        {
+            return base.OnTurnStart(scenario);
+        }
+        public override bool OnForceTurnStart(Scenario scenario)
         {
             //TODO:在野角色随机移动
             UpdateMission(scenario);
             ActionOver = !IsFree;
-            return base.OnTurnStart(scenario);
+            return base.OnForceTurnStart(scenario);
         }
 
         public void TransformToCity(City dest)

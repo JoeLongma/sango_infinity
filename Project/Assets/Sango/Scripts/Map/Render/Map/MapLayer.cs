@@ -216,8 +216,8 @@ namespace Sango.Render
 
                         Texture tex = layer.map.CreateTexture($"Terrain/{seasonName}/{diffuseTexName[i]}");
                         diffuse[i] = tex;
-                        textureScale = new Vector2(layer.map.mapData.vertex_width * 64 / tex.width,
-                                      -layer.map.mapData.vertex_height * 64 / tex.height);
+                        textureScale = new Vector2(layer.map.mapData.vertex_width * 32 / tex.width,
+                                      -layer.map.mapData.vertex_height * 32 / tex.height);
                         if (i == layer.curSeason)
                         {
                             material.SetTexture("_MainTex", tex);

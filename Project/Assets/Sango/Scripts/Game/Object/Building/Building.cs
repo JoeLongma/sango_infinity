@@ -55,7 +55,7 @@ namespace Sango.Game
             OnPrepareRender();
         }
 
-        public override bool OnTurnStart(Scenario scenario)
+        public override bool OnForceTurnStart(Scenario scenario)
         {
             if (!isComplte && Builders != null)
             {
@@ -121,11 +121,14 @@ namespace Sango.Game
             }
             if (Render != null)
                 Render.UpdateRender();
-            return base.OnTurnStart(scenario);
+            return base.OnForceTurnStart(scenario);
         }
 
-        public override void OnComplate(Troop atk)
+        public override void OnComplate(SangoObject builder)
         {
+            Troop atk = builder as Troop;
+            if (atk == null) return;
+
             Scenario scenario = Scenario.Cur;
             ScenarioVariables variables = scenario.Variables;
             int jobId = (int)CityJobType.Build;
@@ -298,7 +301,7 @@ namespace Sango.Game
         {
             return 4000 + 4000 * durability / DurabilityLimit;
         }
-        public override void OnFall(Troop atk)
+        public override void OnFall(SangoObject atk)
         {
             BelongCity?.OnBuildingDestroy(this);
             Destroy();

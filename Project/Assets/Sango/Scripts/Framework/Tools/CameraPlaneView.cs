@@ -10,51 +10,51 @@ public class CameraPlaneView : MonoBehaviour
     private static Plane splane = new Plane(Vector3.up, Vector3.zero);
     private static List<Rect> rectList = new List<Rect>();
 #if UNITY_EDITOR
-    //void Update()
-    //{
+    void Update()
+    {
 
 
-    //    Vector3[] corners;
-    //    if (GetPlaneCorners(Vector3.up, Vector3.zero, viewCamera, out corners))
-    //    {
-    //        Debug.DrawLine(corners[0], corners[1], Color.green);    // bottom
-    //        Debug.DrawLine(corners[1], corners[2], Color.green);    // right
-    //        Debug.DrawLine(corners[2], corners[3], Color.green);    // top
-    //        Debug.DrawLine(corners[3], corners[0], Color.green);    // left
+        Vector3[] corners;
+        if (GetPlaneCorners(Vector3.up, Vector3.zero, viewCamera, out corners))
+        {
+            Debug.DrawLine(corners[0], corners[1], Color.green);    // bottom
+            Debug.DrawLine(corners[1], corners[2], Color.green);    // right
+            Debug.DrawLine(corners[2], corners[3], Color.green);    // top
+            Debug.DrawLine(corners[3], corners[0], Color.green);    // left
             
 
-    //    }
+        }
 
-    //    if (CameraPlaneView.GetFarPlaneCorners(ref splane, viewCamera, slimitLen, ref corners))
-    //    {
-    //        Vector3 min = viewCamera.transform.position;
-    //        Vector3 max = min;
-    //        for (int i = 0; i < 2; ++i)
-    //        {
-    //            Vector3 c = corners[i];
-    //            min.x = Mathf.Min(min.x, c.x);
-    //            min.z = Mathf.Min(min.z, c.z);
-    //            max.x = Mathf.Max(max.x, c.x);
-    //            max.z = Mathf.Max(max.z, c.z);
-    //        }
-    //        corners[0] = new Vector3(min.x, 0, min.z);
-    //        corners[1] = new Vector3(min.x, 0, max.z);
-    //        corners[2] = new Vector3(max.x, 0, max.z);
-    //        corners[3] = new Vector3(max.x, 0, min.z);
+        if (CameraPlaneView.GetFarPlaneCorners(ref splane, viewCamera, slimitLen, ref corners))
+        {
+            Vector3 min = viewCamera.transform.position;
+            Vector3 max = min;
+            for (int i = 0; i < 2; ++i)
+            {
+                Vector3 c = corners[i];
+                min.x = Mathf.Min(min.x, c.x);
+                min.z = Mathf.Min(min.z, c.z);
+                max.x = Mathf.Max(max.x, c.x);
+                max.z = Mathf.Max(max.z, c.z);
+            }
+            corners[0] = new Vector3(min.x, 0, min.z);
+            corners[1] = new Vector3(min.x, 0, max.z);
+            corners[2] = new Vector3(max.x, 0, max.z);
+            corners[3] = new Vector3(max.x, 0, min.z);
 
 
-    //        Debug.DrawLine(corners[0], corners[1], Color.red);    // bottom
-    //        Debug.DrawLine(corners[1], corners[2], Color.red);    // right
-    //        Debug.DrawLine(corners[2], corners[3], Color.red);    // top
-    //        Debug.DrawLine(corners[3], corners[0], Color.red);    // left
-    //    }
+            Debug.DrawLine(corners[0], corners[1], Color.red);    // bottom
+            Debug.DrawLine(corners[1], corners[2], Color.red);    // right
+            Debug.DrawLine(corners[2], corners[3], Color.red);    // top
+            Debug.DrawLine(corners[3], corners[0], Color.red);    // left
+        }
 
-    //    foreach (Rect r in rectList)
-    //    {
-    //        DrawRect(r);
-    //    }
+        foreach (Rect r in rectList)
+        {
+            DrawRect(r);
+        }
        
-    //}
+    }
 #endif
 
     public static void DrawRect(Rect r)

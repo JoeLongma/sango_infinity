@@ -165,6 +165,15 @@ namespace Sango.Game
             }
         }
 
+        public bool IsSingleSkill()
+        {
+            return atkOffsetPoint == null || atkOffsetPoint.Count == 0;
+        }
+
+        public bool HasEffect()
+        {
+            return skillEffects == null || skillEffects.Count == 0;
+        }
 
 
         public bool CanAddToTroop(Troop troop)
@@ -512,7 +521,7 @@ namespace Sango.Game
         {
             if(skillEffects == null || skillEffects.Count == 0) return;
 
-           
+            skillEffects.ForEach(s => s.Action(null, troop, spellCell, atkCellList));
 
         }
     }

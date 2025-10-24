@@ -262,7 +262,7 @@ namespace Sango.Game
             foodCost = (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
             //MemberList?.InitCache();// = new SangoObjectList<Person>().FromString(_memberListStr, scenario.personSet);
         }
-        public override bool OnTurnStart(Scenario scenario)
+        public override bool OnForceTurnStart(Scenario scenario)
         {
             ActionOver = false;
             AIFinished = false;
@@ -936,9 +936,9 @@ namespace Sango.Game
             return false;
         }
 
-        public bool ChangeTroops(int num, SangoObject atk)
+        public bool ChangeTroops(int num, SangoObject atk, bool showDamage = true)
         {
-            if (Render != null)
+            if (showDamage && Render != null)
                 Render.ShowDamage(num, 2);
 
             troops = troops + num;
@@ -1244,6 +1244,10 @@ namespace Sango.Game
                 ScenarioEvent.Event.OnTroopLeaveCell?.Invoke(lastCell, destCell);
 
             ScenarioEvent.Event.OnTroopEnterCell?.Invoke(destCell, lastCell);
+
+            if (destCell.fire != null)
+                destCell.fire.BurnTroopFast(this);
+
 #if SANGO_DEBUG
             Sango.Log.Print($"{BelongForce.Name}的[{Name} 部队 移动=> ({destCell.x},{destCell.y})]");
 #endif

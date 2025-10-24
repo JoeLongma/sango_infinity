@@ -49,7 +49,7 @@ namespace Sango.Game
 
         }
 
-        public override bool OnTurnStart(Scenario scenario)
+        public override bool OnForceTurnStart(Scenario scenario)
         {
             AIFinished = false;
             AIPrepared = false;

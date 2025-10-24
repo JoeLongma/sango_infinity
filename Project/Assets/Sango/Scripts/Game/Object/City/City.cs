@@ -561,7 +561,7 @@ namespace Sango.Game
             this.CalculateHarvest();
         }
 
-        public override bool OnTurnStart(Scenario scenario)
+        public override bool OnForceTurnStart(Scenario scenario)
         {
             AIPrepared = false;
             AIFinished = false;
@@ -591,7 +591,7 @@ namespace Sango.Game
 
             return base.OnDayStart(scenario);
         }
-        public override bool OnTurnEnd(Scenario scenario)
+        public override bool OnForceTurnEnd(Scenario scenario)
         {
             CurActiveTroop = null;
             isUpdatedFightPower = false;
@@ -719,9 +719,9 @@ namespace Sango.Game
         //    return building;
         //}
 
-        public override bool ChangeDurability(int num, Troop atk)
+        public override bool ChangeDurability(int num, SangoObject atk, bool showDamage = true)
         {
-            bool rs = base.ChangeDurability(num, atk);
+            bool rs = base.ChangeDurability(num, atk, showDamage);
             if (rs)
             {
                 durability = 1500;
@@ -778,8 +778,11 @@ namespace Sango.Game
             return last;
         }
 
-        public override void OnFall(Troop atk)
+        public override void OnFall(SangoObject atker)
         {
+            Troop atk = atker as Troop;
+            if (atk == null) return;
+
             // 城倒,俘虏逃
             for (int i = 0; i < CaptiveList.Count; i++)
             {

@@ -255,7 +255,7 @@ public class LuaClient : MonoBehaviour
 
     public static LuaTable GetTable(string path)
     {
-        return GetMainState().GetTable(path);
+        return GetMainState().GetTable(path, false);
     }
 
     public LuaLooper GetLooper()

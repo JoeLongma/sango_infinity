@@ -7,15 +7,15 @@ namespace Sango.Render
 
     public class MapSkyBox : MapProperty
     {
-        public float sky_radius_len = 200;
-        public float sky_height = 80;
-        public float sky_offset = -2.9f;
+        public float sky_radius_len = 140;
+        public float sky_height = 70;
+        public float sky_offset = -2f;
         public string sky_material_shader = "Sango/skybox";
-        public float sky_blend_start = -215f;
-        public float sky_blend_end = -170f;
-        public float sky_mix_begin = 700f;
-        public float sky_mix_end = 900f;
-        public float sky_mix_power = 7.5f;
+        public float sky_blend_start = -200f;
+        public float sky_blend_end = -150f;
+        public float sky_mix_begin = 900f;
+        public float sky_mix_end = 3400f;
+        public float sky_mix_power = 18f;
         internal class SkyArea
         {
             public UnityEngine.Rect bounds;

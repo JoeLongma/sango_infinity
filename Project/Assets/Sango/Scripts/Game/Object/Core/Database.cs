@@ -135,7 +135,7 @@ namespace Sango.Game
 
         public virtual void MarkToPrepareOnScenario()
         {
-            Scenario.Cur.Event.OnPrepare += OnScenarioPrepare;
+            EventBase.OnScenarioPrepare += OnScenarioPrepare;
         }
         public virtual void OnScenarioPrepare(Scenario scenario)
         {
@@ -145,7 +145,7 @@ namespace Sango.Game
                 FromArray(arrayDataCache, database);
                 arrayDataCache = null;
             }
-            scenario.Event.OnPrepare -= OnScenarioPrepare;
+            EventBase.OnScenarioPrepare -= OnScenarioPrepare;
         }
 
         public virtual IEnumerator GetEnumerator()

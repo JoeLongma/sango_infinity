@@ -149,13 +149,21 @@ namespace Sango.Game
             {
                 PriorityActionData priorityActionData = checkList[i];
                 int atk_priority = 0;
+                int targetCount = 0;
                 for (int m = 0; m < priorityActionData.atkCells.Length; m++)
                 {
                     Cell atkCell = priorityActionData.atkCells[m];
-                    atk_priority += prioritySkillAtkMethod?.Invoke(troop, priorityActionData.skill, atkCell, priorityActionData.movetoCell, priorityActionData.spellCell) ?? 0;
+                    int p = prioritySkillAtkMethod?.Invoke(troop, priorityActionData.skill, atkCell, priorityActionData.movetoCell, priorityActionData.spellCell) ?? 0;
+                    if (p > 0)
+                        targetCount++;
+                    atk_priority += p;
                     //if (target != null && !atkCell.IsEmpty() && (atkCell.building == target || atkCell.troop == target))
                     //    atk_priority += 10000;
                 }
+
+                if (!priorityActionData.skill.IsSingleSkill() && targetCount < 2)
+                    atk_priority /= 2;
+
                 int def_priority = prioritySkillDefMethod?.Invoke(troop, priorityActionData.skill, priorityActionData.spellCell, priorityActionData.movetoCell, priorityActionData.spellCell) ?? 0;
                 int s_p = atk_priority + def_priority;
                 if (s_p > 0)
@@ -311,11 +319,11 @@ namespace Sango.Game
             {
                 if (troop.IsEnemy(target.troop))
                 {
-                    return (skill.atk + (skill.isRange ? 15 : 0) * 150 / Math.Max(15, skill.costEnergy)) * (troop.Attack - target.troop.Defence + 200);
+                    return (skill.atk + (skill.isRange ? 15 : 0) + (skill.IsSingleSkill() ? 5 : 0) + (skill.HasEffect() ? 5 : 0)) * 150 / Math.Max(10, skill.costEnergy) * (troop.Attack - target.troop.Defence + 200);
                 }
                 else if (skill.canDamageTeam && spellCell != target)
                 {
-                    return -(skill.atk + (skill.isRange ? 15 : 0) * 150 / Math.Max(15, skill.costEnergy)) * (troop.Attack - target.troop.Defence + 200);
+                    return -(skill.atk + (skill.isRange ? 15 : 0) + (skill.IsSingleSkill() ? 5 : 0) + (skill.HasEffect() ? 5 : 0)) * 150 / Math.Max(10, skill.costEnergy) * (troop.Attack - target.troop.Defence + 200);
                 }
             }
             else if (target.building != null && skill.canDamageBuilding)
@@ -324,11 +332,11 @@ namespace Sango.Game
                 //TODO: 对建筑的攻击评分
                 if (troop.IsEnemy(target.building))
                 {
-                    return skill.atkDurability * 4 * rangeFactor;
+                    return (skill.atkDurability + (skill.IsSingleSkill() ? 5 : 0) + (skill.HasEffect() ? 5 : 0)) * 4 * rangeFactor * (skill.IsSingleSkill() ? 15 : 10);
                 }
                 else if (skill.canDamageTeam && spellCell != target)
                 {
-                    return skill.atkDurability * -8 * rangeFactor;
+                    return (skill.atkDurability + (skill.IsSingleSkill() ? 5 : 0) + (skill.HasEffect() ? 5 : 0)) * -8 * rangeFactor * (skill.IsSingleSkill() ? 15 : 10);
                 }
             }
             return 0;

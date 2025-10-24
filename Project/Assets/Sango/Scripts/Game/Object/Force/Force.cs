@@ -266,7 +266,7 @@ namespace Sango.Game
             scenario.Event.OnForceAIPrepare?.Invoke(this, scenario);
         }
 
-        public override bool OnTurnStart(Scenario scenario)
+        public override bool OnForceTurnStart(Scenario scenario)
         {
             buildingBaseList.Clear();
             AIFinished = false;
@@ -284,7 +284,7 @@ namespace Sango.Game
                 if (c != null && c.IsAlive && c.BelongForce == this)
                 {
                     PersonCount++;
-                    c.OnTurnStart(scenario);
+                    c.OnForceTurnStart(scenario);
                 }
             }
 
@@ -293,7 +293,7 @@ namespace Sango.Game
                 var c = scenario.corpsSet[i];
                 if (c != null && c.IsAlive && c.BelongForce == this)
                 {
-                    c.OnTurnStart(scenario);
+                    c.OnForceTurnStart(scenario);
                 }
             }
 
@@ -305,7 +305,7 @@ namespace Sango.Game
                 if (c != null && c.IsAlive && c.BelongForce == this)
                 {
                     CityCount++;
-                    c.OnTurnStart(scenario);
+                    c.OnForceTurnStart(scenario);
                     FightPower += c.FightPower;
                     buildingBaseList.Enqueue(c);
                     c.borderLine = -1;
@@ -356,7 +356,7 @@ namespace Sango.Game
                 var c = scenario.buildingSet[i];
                 if (c != null && c.IsAlive && c.BelongForce == this)
                 {
-                    c.OnTurnStart(scenario);
+                    c.OnForceTurnStart(scenario);
                     buildingBaseList.Enqueue(c);
                 }
             }
@@ -366,21 +366,21 @@ namespace Sango.Game
                 var c = scenario.troopsSet[i];
                 if (c != null && c.IsAlive && c.BelongForce == this)
                 {
-                    c.OnTurnStart(scenario);
+                    c.OnForceTurnStart(scenario);
                 }
             }
 
-            return base.OnTurnStart(scenario);
+            return base.OnForceTurnStart(scenario);
         }
 
-        public override bool OnTurnEnd(Scenario scenario)
+        public override bool OnForceTurnEnd(Scenario scenario)
         {
             for (int i = 0; i < scenario.personSet.Count; ++i)
             {
                 var c = scenario.personSet[i];
                 if (c != null && c.IsAlive && c.BelongForce == this)
                 {
-                    c.OnTurnEnd(scenario);
+                    c.OnForceTurnEnd(scenario);
                 }
             }
 
@@ -389,7 +389,7 @@ namespace Sango.Game
                 var c = scenario.corpsSet[i];
                 if (c != null && c.IsAlive && c.BelongForce == this)
                 {
-                    c.OnTurnEnd(scenario);
+                    c.OnForceTurnEnd(scenario);
                 }
             }
 
@@ -398,7 +398,7 @@ namespace Sango.Game
                 var c = scenario.citySet[i];
                 if (c != null && c.IsAlive && c.BelongForce == this)
                 {
-                    c.OnTurnEnd(scenario);
+                    c.OnForceTurnEnd(scenario);
                 }
             }
 
@@ -407,7 +407,7 @@ namespace Sango.Game
                 var c = scenario.buildingSet[i];
                 if (c != null && c.IsAlive && c.BelongForce == this)
                 {
-                    c.OnTurnEnd(scenario);
+                    c.OnForceTurnEnd(scenario);
                 }
             }
 
@@ -416,11 +416,11 @@ namespace Sango.Game
                 var c = scenario.troopsSet[i];
                 if (c != null && c.IsAlive && c.BelongForce == this)
                 {
-                    c.OnTurnEnd(scenario);
+                    c.OnForceTurnEnd(scenario);
                 }
             }
 
-            return base.OnTurnEnd(scenario);
+            return base.OnForceTurnEnd(scenario);
         }
 
         public override bool OnMonthStart(Scenario scenario)

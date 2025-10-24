@@ -207,7 +207,7 @@ public class Sango_Game_TroopWrap
 			ToLua.CheckArgsCount(L, 2);
 			Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
 			Sango.Game.Scenario arg0 = (Sango.Game.Scenario)ToLua.CheckObject<Sango.Game.Scenario>(L, 2);
-			bool o = obj.OnTurnStart(arg0);
+			bool o = obj.OnForceTurnStart(arg0);
 			LuaDLL.lua_pushboolean(L, o);
 			return 1;
 		}

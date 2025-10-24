@@ -11,9 +11,9 @@ namespace Sango.Render
         Transform transform;
         Camera camera;
 
-        public float fov = 25f;
+        public float fov = 30f;
         public float near_clip = 0.3f;
-        public float far_clip = 3500f;
+        public float far_clip = 950;
         public float cameraDistanceFactor = 1;
 
         public Vector3 look_position = new Vector3(1407, 0, 796);

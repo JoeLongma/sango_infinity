@@ -5,6 +5,7 @@ namespace Sango.Game.Render.UI
 {
     public class UICityHeadbar : UIBuildingBaseHeadbar
     {
+
         public Image state;
         public Image food;
         public Text number;
@@ -21,6 +22,22 @@ namespace Sango.Game.Render.UI
             if (city.IsBorderCity)
                 cityInfo = $"*{cityInfo}";
             info.text = cityInfo;
+        }
+
+        private void OnEnable()
+        {
+            EventBase.OnCityInfoShowChange += OnCityInfoShowChange;
+        }
+
+        private void OnDestroy()
+        {
+            EventBase.OnCityInfoShowChange -= OnCityInfoShowChange;
+        }
+
+        void OnCityInfoShowChange(bool b)
+        {
+            if (info != null)
+                info.enabled = b;
         }
     }
 }
