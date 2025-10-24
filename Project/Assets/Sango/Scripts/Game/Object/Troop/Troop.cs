@@ -60,6 +60,10 @@ namespace Sango.Game
         /// </summary>
         public int TroopTypeLv { get; private set; }
 
+
+        public TroopType WaterTroopType { get; set; }
+
+
         /// <summary>
         /// 俘虏
         /// </summary>
@@ -236,6 +240,7 @@ namespace Sango.Game
             ForEachPerson(x => x.BelongTroop = this);
             BelongCity.activedTroops.Add(this);
             CalculateAttribute(scenario);
+            WaterTroopType = scenario.GetObject<TroopType>(8);
             Render = new TroopRender(this);
             foodCost = (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
         }
@@ -1238,10 +1243,13 @@ namespace Sango.Game
             if (lastCell != null)
                 ScenarioEvent.Event.OnTroopLeaveCell?.Invoke(lastCell, destCell);
 
-            ScenarioEvent.Event.OnTroopEnterCell?.Invoke(cell, lastCell);
+            ScenarioEvent.Event.OnTroopEnterCell?.Invoke(destCell, lastCell);
 #if SANGO_DEBUG
             Sango.Log.Print($"{BelongForce.Name}的[{Name} 部队 移动=> ({destCell.x},{destCell.y})]");
 #endif
+
+            Render.UpdateModelByCell(destCell);
+
             if (isEndMove)
             {
                 destCell.troop = this;
@@ -1473,6 +1481,13 @@ namespace Sango.Game
             //    missionTarget = BelongCity.Id;
             //}
         }
+
+        public void Burn(Cell dest)
+        {
+
+        }
+
+
 
     }
 }

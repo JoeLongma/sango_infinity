@@ -79,9 +79,10 @@ namespace Sango.Game
         {
             for (ushort x = 0; x < width; x++)
             {
+                Cell[] cells = Cells[x];
                 for (ushort y = 0; y < height; y++)
                 {
-                    Cells[x][y].Init(map);
+                    cells[y].Init(map);
                 }
             }
 

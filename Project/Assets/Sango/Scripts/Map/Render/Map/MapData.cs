@@ -673,6 +673,13 @@ namespace Sango.Render
 
         }
 
+        public float GetWaterHeight(int x, int y)
+        {
+            if (x < 0 || x > vertex_width || y < 0 || y > vertex_height)
+                return 0;
+            return vertexDatas[x][y].water * 0.5f;
+        }
+
         public float GetHeight(int x, int y)
         {
             if (x < 0 || x > vertex_width || y < 0 || y > vertex_height)

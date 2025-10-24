@@ -23,6 +23,7 @@
       "fireDamageRate": 1.0,
       "canBuild": true,
       "viewThrough": true,
+      "isWater": false,
       "moveable": false,
       "canAmbush": true,
       "baseCost": 999,
@@ -55,6 +56,7 @@
       "fireDamageRate": 1.0,
       "canBuild": true,
       "viewThrough": true,
+      "isWater": false,
       "moveable": true,
       "canAmbush": true,
       "baseCost": 4,
@@ -87,6 +89,7 @@
       "fireDamageRate": 1.0,
       "canBuild": true,
       "viewThrough": true,
+      "isWater": false,
       "moveable": true,
       "canAmbush": true,
       "baseCost": 4,
@@ -119,6 +122,7 @@
       "fireDamageRate": 1.0,
       "canBuild": true,
       "viewThrough": true,
+      "isWater": false,
       "moveable": true,
       "canAmbush": true,
       "baseCost": 5,
@@ -151,6 +155,7 @@
       "fireDamageRate": 1.0,
       "canBuild": true,
       "viewThrough": true,
+      "isWater": false,
       "moveable": true,
       "canAmbush": true,
       "baseCost": 5,
@@ -183,6 +188,7 @@
       "fireDamageRate": 1.0,
       "canBuild": true,
       "viewThrough": true,
+      "isWater": false,
       "moveable": true,
       "canAmbush": true,
       "baseCost": 4,
@@ -215,6 +221,7 @@
       "fireDamageRate": 1.0,
       "canBuild": true,
       "viewThrough": true,
+      "isWater": false,
       "moveable": true,
       "canAmbush": true,
       "baseCost": 6,
@@ -247,6 +254,7 @@
       "fireDamageRate": 1.0,
       "canBuild": true,
       "viewThrough": true,
+      "isWater": true,
       "moveable": false,
       "canAmbush": true,
       "baseCost": 4,
@@ -279,6 +287,7 @@
       "fireDamageRate": 1.0,
       "canBuild": true,
       "viewThrough": true,
+      "isWater": true,
       "moveable": true,
       "canAmbush": true,
       "baseCost": 4,
@@ -311,6 +320,7 @@
       "fireDamageRate": 1.0,
       "canBuild": true,
       "viewThrough": true,
+      "isWater": true,
       "moveable": true,
       "canAmbush": true,
       "baseCost": 4,
@@ -343,6 +353,7 @@
       "fireDamageRate": 1.0,
       "canBuild": true,
       "viewThrough": true,
+      "isWater": false,
       "moveable": true,
       "canAmbush": true,
       "baseCost": 4,
@@ -375,6 +386,7 @@
       "fireDamageRate": 1.0,
       "canBuild": true,
       "viewThrough": true,
+      "isWater": false,
       "moveable": true,
       "canAmbush": true,
       "baseCost": 2,
@@ -407,6 +419,7 @@
       "fireDamageRate": 1.0,
       "canBuild": true,
       "viewThrough": true,
+      "isWater": false,
       "moveable": true,
       "canAmbush": true,
       "baseCost": 6,
@@ -439,6 +452,7 @@
       "fireDamageRate": 1.0,
       "canBuild": true,
       "viewThrough": true,
+      "isWater": false,
       "moveable": true,
       "canAmbush": true,
       "baseCost": 4,
@@ -471,6 +485,7 @@
       "fireDamageRate": 1.0,
       "canBuild": true,
       "viewThrough": true,
+      "isWater": false,
       "moveable": true,
       "canAmbush": true,
       "baseCost": 4,
@@ -503,6 +518,7 @@
       "fireDamageRate": 1.0,
       "canBuild": true,
       "viewThrough": true,
+      "isWater": false,
       "moveable": false,
       "canAmbush": true,
       "baseCost": 4,
@@ -535,6 +551,7 @@
       "fireDamageRate": 1.0,
       "canBuild": true,
       "viewThrough": true,
+      "isWater": false,
       "moveable": false,
       "canAmbush": true,
       "baseCost": 4,
@@ -567,6 +584,7 @@
       "fireDamageRate": 1.0,
       "canBuild": false,
       "viewThrough": false,
+      "isWater": false,
       "moveable": true,
       "canAmbush": true,
       "baseCost": 1,
@@ -599,6 +617,7 @@
       "fireDamageRate": 1.0,
       "canBuild": false,
       "viewThrough": false,
+      "isWater": false,
       "moveable": true,
       "canAmbush": true,
       "baseCost": 4,
@@ -631,6 +650,7 @@
       "fireDamageRate": 1.0,
       "canBuild": false,
       "viewThrough": false,
+      "isWater": false,
       "moveable": true,
       "canAmbush": true,
       "baseCost": 1,
@@ -663,6 +683,7 @@
       "fireDamageRate": 1.0,
       "canBuild": false,
       "viewThrough": false,
+      "isWater": false,
       "moveable": true,
       "canAmbush": true,
       "baseCost": 4,
@@ -695,6 +716,7 @@
       "fireDamageRate": 1.0,
       "canBuild": false,
       "viewThrough": false,
+      "isWater": false,
       "moveable": false,
       "canAmbush": true,
       "baseCost": 999,
@@ -727,6 +749,7 @@
       "fireDamageRate": 1.0,
       "canBuild": false,
       "viewThrough": false,
+      "isWater": false,
       "moveable": false,
       "canAmbush": true,
       "baseCost": 999,
@@ -759,6 +782,7 @@
       "fireDamageRate": 1.0,
       "canBuild": false,
       "viewThrough": false,
+      "isWater": false,
       "moveable": false,
       "canAmbush": true,
       "baseCost": 999,
@@ -791,6 +815,7 @@
       "fireDamageRate": 1.0,
       "canBuild": false,
       "viewThrough": false,
+      "isWater": false,
       "moveable": false,
       "canAmbush": true,
       "baseCost": 999,
@@ -823,6 +848,7 @@
       "fireDamageRate": 1.0,
       "canBuild": false,
       "viewThrough": false,
+      "isWater": false,
       "moveable": false,
       "canAmbush": true,
       "baseCost": 999,
@@ -855,6 +881,7 @@
       "fireDamageRate": 1.0,
       "canBuild": false,
       "viewThrough": false,
+      "isWater": false,
       "moveable": false,
       "canAmbush": true,
       "baseCost": 999,
@@ -887,6 +914,7 @@
       "fireDamageRate": 1.0,
       "canBuild": false,
       "viewThrough": false,
+      "isWater": false,
       "moveable": false,
       "canAmbush": true,
       "baseCost": 999,
@@ -919,6 +947,7 @@
       "fireDamageRate": 1.0,
       "canBuild": false,
       "viewThrough": false,
+      "isWater": false,
       "moveable": false,
       "canAmbush": true,
       "baseCost": 999,
@@ -951,6 +980,7 @@
       "fireDamageRate": 1.0,
       "canBuild": false,
       "viewThrough": false,
+      "isWater": false,
       "moveable": false,
       "canAmbush": true,
       "baseCost": 999,
@@ -983,6 +1013,7 @@
       "fireDamageRate": 1.0,
       "canBuild": false,
       "viewThrough": false,
+      "isWater": false,
       "moveable": false,
       "canAmbush": true,
       "baseCost": 999,
@@ -1015,6 +1046,7 @@
       "fireDamageRate": 1.0,
       "canBuild": false,
       "viewThrough": false,
+      "isWater": false,
       "moveable": false,
       "canAmbush": true,
       "baseCost": 999,
@@ -6131,6 +6163,162 @@
     },
     "8": {
       "Id": 8,
+      "Name": "走舸",
+      "kind": 6,
+      "skills": [
+        1,
+        19
+      ],
+      "atk": 70,
+      "def": 80,
+      "durabilityDmg": 100,
+      "move": 24,
+      "influenceAbility": 5,
+      "validItemId": 0,
+      "validTechId": 0,
+      "costFood": 0,
+      "costGold": 0,
+      "costPopulation": 0,
+      "costTechPoint": 0,
+      "costExpPoint": 0,
+      "foodCostFactor": 1.0,
+      "isRange": false,
+      "isFight": true,
+      "isSingle": false,
+      "isLand": false,
+      "terrainCost": [
+        99,
+        4,
+        4,
+        5,
+        5,
+        4,
+        6,
+        4,
+        4,
+        4,
+        4,
+        3,
+        6,
+        4,
+        4,
+        4,
+        4,
+        1,
+        1,
+        4,
+        4
+      ],
+      "desc": "标准装备的舰船。",
+      "icon": "ui://game/4845_7_9",
+      "model": "Assets/Model/Prefab/2221.prefab"
+    },
+    "9": {
+      "Id": 9,
+      "Name": "楼船",
+      "kind": 6,
+      "skills": [
+        1,
+        20
+      ],
+      "atk": 80,
+      "def": 100,
+      "durabilityDmg": 100,
+      "move": 26,
+      "influenceAbility": 5,
+      "validItemId": 0,
+      "validTechId": 0,
+      "costFood": 0,
+      "costGold": 0,
+      "costPopulation": 0,
+      "costTechPoint": 0,
+      "costExpPoint": 0,
+      "foodCostFactor": 1.0,
+      "isRange": false,
+      "isFight": true,
+      "isSingle": false,
+      "isLand": false,
+      "terrainCost": [
+        99,
+        4,
+        4,
+        5,
+        5,
+        4,
+        6,
+        4,
+        4,
+        4,
+        4,
+        3,
+        6,
+        4,
+        4,
+        4,
+        4,
+        1,
+        1,
+        4,
+        4
+      ],
+      "desc": "大型船，移动力、装甲都比走舸强化许多",
+      "icon": "ui://game/4845_7_10",
+      "model": "Assets/Model/Prefab/2223.prefab"
+    },
+    "10": {
+      "Id": 10,
+      "Name": "斗舰",
+      "kind": 6,
+      "skills": [
+        1,
+        21
+      ],
+      "atk": 90,
+      "def": 120,
+      "durabilityDmg": 100,
+      "move": 28,
+      "influenceAbility": 5,
+      "validItemId": 0,
+      "validTechId": 0,
+      "costFood": 0,
+      "costGold": 0,
+      "costPopulation": 0,
+      "costTechPoint": 0,
+      "costExpPoint": 0,
+      "foodCostFactor": 1.0,
+      "isRange": false,
+      "isFight": true,
+      "isSingle": false,
+      "isLand": false,
+      "terrainCost": [
+        99,
+        4,
+        4,
+        5,
+        5,
+        4,
+        6,
+        4,
+        4,
+        4,
+        4,
+        3,
+        6,
+        4,
+        4,
+        4,
+        4,
+        1,
+        1,
+        4,
+        4
+      ],
+      "desc": "将楼船强化后的舰船，可执行投石攻击",
+      "icon": "ui://game/4845_7_11",
+      "model": "Assets/Model/Prefab/2225.prefab"
+    },
+    "11": {
+      "Id": 11,
       "Name": "陷阵营",
       "kind": 1,
       "skills": [
@@ -6143,10 +6331,11 @@
       "def": 100,
       "durabilityDmg": 100,
       "validItemId": 8,
-      "validTechId": 0
+      "validTechId": 0,
+      "costGold": 0
     },
-    "9": {
-      "Id": 9,
+    "12": {
+      "Id": 12,
       "Name": "青州兵",
       "kind": 3,
       "skills": [
@@ -6161,8 +6350,8 @@
       "validItemId": 9,
       "validTechId": 0
     },
-    "10": {
-      "Id": 10,
+    "13": {
+      "Id": 13,
       "Name": "白毦兵",
       "kind": 3,
       "skills": [
@@ -6177,8 +6366,8 @@
       "validItemId": 10,
       "validTechId": 0
     },
-    "11": {
-      "Id": 11,
+    "14": {
+      "Id": 14,
       "Name": "虎豹骑",
       "kind": 4,
       "skills": [
@@ -6194,8 +6383,8 @@
       "validItemId": 11,
       "validTechId": 0
     },
-    "12": {
-      "Id": 12,
+    "15": {
+      "Id": 15,
       "Name": "大戟士",
       "kind": 3,
       "skills": [
@@ -6210,8 +6399,8 @@
       "validItemId": 12,
       "validTechId": 0
     },
-    "13": {
-      "Id": 13,
+    "16": {
+      "Id": 16,
       "Name": "虎卫军",
       "kind": 1,
       "skills": [
@@ -6226,8 +6415,8 @@
       "validItemId": 13,
       "validTechId": 0
     },
-    "14": {
-      "Id": 14,
+    "17": {
+      "Id": 17,
       "Name": "白马义从",
       "kind": 4,
       "skills": [
@@ -6243,8 +6432,8 @@
       "validItemId": 14,
       "validTechId": 0
     },
-    "15": {
-      "Id": 15,
+    "18": {
+      "Id": 18,
       "Name": "西凉铁骑‌",
       "kind": 4,
       "skills": [
@@ -6260,8 +6449,8 @@
       "validItemId": 15,
       "validTechId": 0
     },
-    "16": {
-      "Id": 16,
+    "19": {
+      "Id": 19,
       "Name": "藤甲兵",
       "kind": 1,
       "skills": [
@@ -6276,8 +6465,8 @@
       "validItemId": 16,
       "validTechId": 0
     },
-    "17": {
-      "Id": 17,
+    "20": {
+      "Id": 20,
       "Name": "象兵",
       "kind": 4,
       "skills": [
@@ -6293,8 +6482,8 @@
       "validItemId": 17,
       "validTechId": 0
     },
-    "18": {
-      "Id": 18,
+    "21": {
+      "Id": 21,
       "Name": "无当飞军",
       "kind": 2,
       "skills": [
@@ -6310,8 +6499,8 @@
       "validItemId": 18,
       "validTechId": 0
     },
-    "19": {
-      "Id": 19,
+    "22": {
+      "Id": 22,
       "Name": "锦帆军",
       "kind": 2,
       "skills": [

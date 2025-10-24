@@ -543,7 +543,7 @@ public class Sango_Render_MapObjectWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			Sango.Render.MapObject obj = (Sango.Render.MapObject)o;
-			Sango.Render.MapObject.ModelLoadedCallback ret = obj.modelLoadedCallback;
+			Sango.Render.MapObject.ModelLoadedCallback ret = obj.onModelLoadedCallback;
 			ToLua.Push(L, ret);
 			return 1;
 		}
@@ -963,10 +963,10 @@ public class Sango_Render_MapObjectWrap
 			Sango.Render.MapObject obj = (Sango.Render.MapObject)o;
 			Sango.Render.MapObject.ModelLoadedCallback arg0 = (Sango.Render.MapObject.ModelLoadedCallback)ToLua.CheckDelegate<Sango.Render.MapObject.ModelLoadedCallback>(L, 2);
 
-			if (!object.ReferenceEquals(obj.modelLoadedCallback, arg0))
+			if (!object.ReferenceEquals(obj.onModelLoadedCallback, arg0))
 			{
-				if (obj.modelLoadedCallback != null) obj.modelLoadedCallback.SubRef();
-				obj.modelLoadedCallback = arg0;
+				if (obj.onModelLoadedCallback != null) obj.onModelLoadedCallback.SubRef();
+				obj.onModelLoadedCallback = arg0;
 			}
 
 			return 0;

@@ -21,6 +21,7 @@ namespace Sango.Game
         public bool moveable;
         public bool canAmbush;
         public int baseCost;
+        public bool isWater;
 
         [JsonConverter(typeof(Color32Converter))]
         public Color32 color;

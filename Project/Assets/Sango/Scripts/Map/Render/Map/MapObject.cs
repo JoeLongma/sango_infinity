@@ -10,9 +10,11 @@ namespace Sango.Render
         public delegate void ModelLoadedCallback(GameObject obj);
         public delegate void ModelVisibleChange(MapObject obj);
         public delegate void ModelPointCall();
+        public delegate string ModelAssetCheck(int currentModelId, string currentAsset);
 
-        public ModelLoadedCallback modelLoadedCallback;
+        public ModelLoadedCallback onModelLoadedCallback;
         public ModelVisibleChange onModelVisibleChange;
+        public ModelAssetCheck onModelAssetCheck;
         public ModelPointCall onClick;
 
         static int buildingLayer = -1;
@@ -333,7 +335,7 @@ namespace Sango.Render
                 //        }
                 //    }
                 //}
-                modelLoadedCallback?.Invoke(model);
+                onModelLoadedCallback?.Invoke(model);
             }
             loadedModel = model;
             if (dontAsyncCall)
@@ -388,13 +390,13 @@ namespace Sango.Render
             modelAsset = newAsset;
             if (visible)
             {
-                ReLoadModels();
+                ReLoadModels(false);
             }
         }
 
-        public void ReLoadModels()
+        public void ReLoadModels(bool checkAsset = true)
         {
-            if(instanceFlag)
+            if (instanceFlag)
             {
                 manager.mapModels.AddInstance(this);
                 return;
@@ -405,6 +407,9 @@ namespace Sango.Render
             {
                 return;
             }
+
+            if (checkAsset && onModelAssetCheck != null)
+                modelAsset = onModelAssetCheck(modelId, modelAsset);
 
             if (!string.IsNullOrEmpty(modelAsset))
             {

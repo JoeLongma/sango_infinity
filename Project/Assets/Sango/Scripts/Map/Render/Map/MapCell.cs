@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sango.Tools;
+using System;
 using System.Threading;
 using UnityEngine;
 
@@ -354,15 +355,18 @@ namespace Sango.Render
             }
             else
             {
-                //GameObject.DestroyImmediate(mesh[layer]);
-                //GameObject.Destroy(r.gameObject);
-                //mesh[layer] = null;
-                //meshRenderer[layer] = null;
-                //meshCollider[layer] = null;
+                if (!MapEditor.IsEditOn)
+                {
+                    GameObject.DestroyImmediate(mesh[layer]);
+                    GameObject.Destroy(r.gameObject);
+                    mesh[layer] = null;
+                    meshRenderer[layer] = null;
+                    meshCollider[layer] = null;
 
-                //if (r.enabled)
-                //    r.enabled = false;
-                //meshRenderer[layer].gameObject.SetActive(false);
+                    //if (r.enabled)
+                    //    r.enabled = false;
+                    //meshRenderer[layer].gameObject.SetActive(false);
+                }
             }
 
         }

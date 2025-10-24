@@ -38,7 +38,7 @@ namespace Sango.Game.Render.Model
                 troopsRender.SetAniType(name);
 
             }
-            if(name == 1)
+            if (name == 1 && animation != null)
                 animation.Play("troop_atk_1");
         }
 

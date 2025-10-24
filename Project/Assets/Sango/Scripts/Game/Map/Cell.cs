@@ -60,7 +60,10 @@ namespace Sango.Game
         public void Init(Map map)
         {
             Vector3 pos = Scenario.Cur.Map.Coords2Position(x, y);
-            pos.y = MapRender.Instance.mapGrid.GetGridHeight(x, y);
+            if (TerrainType.isWater)
+                pos.y = MapRender.Instance.mapGrid.GetGridWaterHeight(x, y);
+            else
+                pos.y = MapRender.Instance.mapGrid.GetGridHeight(x, y);
             Position = pos;
             for (int i = 0; i < 6; i++)
             {

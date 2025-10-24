@@ -454,6 +454,14 @@ namespace Sango.Render
             int yCount = gridVertexCount * y + (x % 2) * gridVertexCount / 2 + gridVertexCount / 2;
             return map.mapData.GetHeight(xCount, yCount);
         }
+
+        public float GetGridWaterHeight(int x, int y)
+        {
+            int xCount = gridVertexCount * x + gridVertexCount / 2;
+            int yCount = gridVertexCount * y + (x % 2) * gridVertexCount / 2 + gridVertexCount / 2;
+            return map.mapData.GetWaterHeight(xCount, yCount);
+        }
+
         public Vector3 CoordsToPosition(int c, int r)
         {
             return hexWorld.CoordsToPosition(c, r);

@@ -27,8 +27,9 @@ namespace Sango.Game.Render
             MapObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
             MapObject.transform.localScale = Vector3.one;
             MapObject.bounds = new Sango.Tools.Rect(0, 0, 32, 32);
-            MapObject.modelLoadedCallback = OnModelLoaded;
+            MapObject.onModelLoadedCallback = OnModelLoaded;
             MapObject.onModelVisibleChange = OnModelVisibleChange;
+            MapObject.onModelAssetCheck = OnModelAssetCheck;
             MapRender.Instance.AddDynamic(MapObject);
 
             //GameObject obj = GameObject.Instantiate(Resources.Load<GameObject>("TroopName")) as GameObject;
@@ -39,6 +40,19 @@ namespace Sango.Game.Render
             UpdateInfo();
         }
 
+        public string OnModelAssetCheck(int currentModelId, string currentAsset)
+        {
+            if (Troop.cell.TerrainType.isWater)
+            {
+                return Troop.WaterTroopType.model;
+            }
+            else
+            {
+                return Troop.TroopType.model;
+            }
+        }
+
+
         void OnModelLoaded(GameObject obj)
         {
             TroopModel = obj.GetComponent<TroopModel>();
@@ -47,6 +61,13 @@ namespace Sango.Game.Render
                 TroopModel.Init(Troop);
             }
             TroopModel.SetSmokeShow(false);
+
+            if (HeadBar != null)
+            {
+                PoolManager.Recycle(HeadBar.gameObject);
+                HeadBar = null;
+            }
+
             GameObject headBar = PoolManager.Create(GameRenderHelper.TroopHeadbarRes);
             if (headBar != null)
             {
@@ -206,5 +227,19 @@ namespace Sango.Game.Render
                 }
             }
         }
+
+        public void UpdateModelByCell(Cell destCell)
+        {
+            if (!IsVisible()) return;
+            if (Troop.cell.TerrainType.isWater)
+            {
+                MapObject.ChangeModel(Troop.WaterTroopType.model);
+            }
+            else
+            {
+                MapObject.ChangeModel(Troop.TroopType.model);
+            }
+        }
+
     }
 }

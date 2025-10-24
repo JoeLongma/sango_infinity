@@ -869,6 +869,7 @@ namespace Sango.Game
 
             // 去掉剑兵(进攻不允许)
             costEnoughTroopTypes.RemoveAll(x => x.Id == 1);
+            costEnoughTroopTypes.RemoveAll(x => !x.isLand);
 
             if (costEnoughTroopTypes.Count == 0)
                 return null;

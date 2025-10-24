@@ -30,7 +30,7 @@ namespace Sango.Game.Render
             MapObject.transform.rotation = Quaternion.Euler(new Vector3(0, Building.rot, 0));
             MapObject.transform.localScale = Vector3.one;
             MapObject.bounds = new Sango.Tools.Rect(0, 0, 32, 32);
-            MapObject.modelLoadedCallback = OnModelLoaded;
+            MapObject.onModelLoadedCallback = OnModelLoaded;
             MapObject.onModelVisibleChange = OnModelVisibleChange;
             MapRender.Instance.AddStatic(MapObject);
             UpdateInfo();
