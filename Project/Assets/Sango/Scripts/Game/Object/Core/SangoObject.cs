@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Sango.Game
 {
@@ -34,6 +36,8 @@ namespace Sango.Game
         public virtual bool IsAlive { get; set; }
         public virtual bool ActionOver { get; set; }
 
+        //[JsonExtensionData]
+        //public Dictionary<string, JToken> AdditionalData { get; set; }
 
         public SangoObject()
         {

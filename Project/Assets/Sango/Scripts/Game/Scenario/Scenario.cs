@@ -594,7 +594,12 @@ namespace Sango.Game
                 if (a != null && a.IsAlive)
                     a.OnNewTurn(this);
             }
-
+            for (int i = 1; i < fireSet.Count; i++)
+            {
+                Fire a = fireSet[i];
+                if (a != null && a.IsAlive)
+                    a.OnTurnStart(this);
+            }
             allianceSet.RemoveAll(a => !a.IsAlive);
 
             HasTurnStarted = true;
@@ -632,13 +637,12 @@ namespace Sango.Game
         public bool TurnEnd()
         {
             if (HasTurnEnded) return true;
-            forceSet.ForEach(force =>
+            for (int i = 1; i < fireSet.Count; i++)
             {
-                if (force.IsAlive)
-                {
-                    force.OnTurnEnd(this);
-                }
-            });
+                Fire a = fireSet[i];
+                if (a != null && a.IsAlive)
+                    a.OnTurnEnd(this);
+            }
             HasTurnEnded = true;
             Info.turnCount++;
             return true;

@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using Unity.Burst.Intrinsics;
 
 namespace Sango.Game
 {
@@ -9,14 +8,12 @@ namespace Sango.Game
     /// 这个比较特殊,包括继承类
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class SangoObjectSetCityConverter : JsonConverter<SangoObjectSet<City>>
+    public class SangoObjectMapSkillEffectConverter : JsonConverter<SangoObjectMap<SkillEffect>>
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             writer.WriteStartObject();
-            SangoObjectSet<City> dest = value as SangoObjectSet<City>;
-            writer.WritePropertyName("0");
-            serializer.Serialize(writer, dest.Default);
+            SangoObjectMap<SkillEffect> dest = value as SangoObjectMap<SkillEffect>;
             dest.ForEach(x =>
             {
                 writer.WritePropertyName(x.Id.ToString());
@@ -28,7 +25,7 @@ namespace Sango.Game
         {
             if (existingValue == null)
                 existingValue = Create(objectType);
-            SangoObjectSet<City> dest = existingValue as SangoObjectSet<City>;
+            SangoObjectMap<SkillEffect> dest = existingValue as SangoObjectMap<SkillEffect>;
             string lastPropertyName = null;
             while (reader.Read())
             {
@@ -38,10 +35,11 @@ namespace Sango.Game
                 }
                 else if (reader.TokenType == JsonToken.StartObject)
                 {
+
                     if (!string.IsNullOrEmpty(lastPropertyName))
                     {
                         int Id = int.Parse(lastPropertyName);
-                        City exsist = dest.Get(Id);
+                        SkillEffect exsist = dest.Get(Id);
                         if (exsist != null)
                         {
                             serializer.Populate(reader, exsist);
@@ -49,27 +47,13 @@ namespace Sango.Game
                         }
 
                         JObject jo = JObject.Load(reader); // 加载整个 JSON 对象到 JObject 中
-                        if (jo["BuildingType"] != null) // 检查 Name 是否存在
+                        if (jo["effectType"] != null) // 检查 Name 是否存在
                         {
-                            int buildingType = jo["BuildingType"].Value<int>();
-                            if (buildingType == 3)
-                            {
-                                Port v = new Port();
-                                JsonConvert.PopulateObject(jo.ToString(), v);
-                                dest.Add(v);
-                            }
-                            else if (buildingType == 2)
-                            {
-                                Gate v = new Gate();
-                                JsonConvert.PopulateObject(jo.ToString(), v);
-                                dest.Add(v);
-                            }
-                            else
-                            {
-                                City v = new City();
-                                JsonConvert.PopulateObject(jo.ToString(), v);
-                                dest.Add(v);
-                            }
+                            int effectType = jo["effectType"].Value<int>();
+                            SkillEffect skillEffect = SkillEffect.Create(effectType);
+                            JsonConvert.PopulateObject(jo.ToString(), skillEffect); // 根据需要选择反序列化的类或对象类型
+                            dest.Add(skillEffect);
+
                         }
                     }
                 }

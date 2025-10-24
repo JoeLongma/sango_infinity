@@ -11,6 +11,7 @@ namespace Sango.Game
         public static string TroopHeadbarRes = "Assets/UI/Prefab/window_troop_bar.prefab";
         public static string CityHeadbarRes = "Assets/UI/Prefab/window_city_bar.prefab";
         public static string BuildingHeadbarRes = "Assets/UI/Prefab/window_building_bar.prefab";
+        public static string FireRes = "Assets/Effect/Prefab/ef_scene_fire.prefab";
         public static string[] CityResPath = new string[]{
         "Assets/Model/Prefab/p_city_1.prefab",
         "Assets/Model/Prefab/p_city_2.prefab",

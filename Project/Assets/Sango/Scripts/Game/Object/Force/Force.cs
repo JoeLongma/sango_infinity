@@ -419,6 +419,7 @@ namespace Sango.Game
                     c.OnTurnEnd(scenario);
                 }
             }
+
             return base.OnTurnEnd(scenario);
         }
 
