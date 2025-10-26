@@ -73,14 +73,16 @@ namespace Sango.Game
             if (troop == null) return;
 
             int dmg = intelligence * 4;
-            troop.ChangeTroops(-dmg, this, false);
-            FireDamageEvent @event = new FireDamageEvent()
+            if (troop.ChangeTroops(-dmg, this, false))
             {
-                fire = this,
-                targetTroop = troop,
-                damage = -dmg
-            };
-            RenderEvent.Instance.Add(@event);
+                FireDamageEvent @event = new FireDamageEvent()
+                {
+                    fire = this,
+                    targetTroop = troop,
+                    damage = -dmg
+                };
+                RenderEvent.Instance.Add(@event);
+            }
         }
 
         public void BurnTroopFast(Troop troop)

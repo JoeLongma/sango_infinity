@@ -2001,9 +2001,6 @@ public class Sango_Game_TroopWrap
 		try
 		{
 			o = ToLua.ToObject(L, 1);
-			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			Sango.Game.Render.TroopRender ret = obj.Render;
-			ToLua.PushObject(L, ret);
 			return 1;
 		}
 		catch(Exception e)

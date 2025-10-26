@@ -795,7 +795,30 @@ namespace Sango.Game
         {
             return CounsellorRecommend1Person(personList, (ref int[] maxValue, Person check1) =>
             {
-                return true;
+                int buildAbility = check1.MilitaryAbility;
+                if (buildAbility < maxValue[1])
+                {
+                    maxValue[1] = buildAbility;
+                    return true;
+                }
+                return false;
+            });
+        }
+
+        /// <summary>
+        /// 军师交易推荐
+        /// </summary>
+        public static Person[] CounsellorRecommendTrade(List<Person> personList)
+        {
+            return CounsellorRecommend1Person(personList, (ref int[] maxValue, Person check1) =>
+            {
+                int buildAbility = check1.Politics;
+                if (buildAbility > maxValue[0])
+                {
+                    maxValue[0] = buildAbility;
+                    return true;
+                }
+                return false;
             });
         }
     }

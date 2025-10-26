@@ -11,89 +11,25 @@ Shader "Sango/outline_urp" {
 			{
 				Name "OUTLINEPASS"
 				Tags {
-					"LightMode" = "UniversalForward"
+					"LightMode" = "SRPDefaultUnlit"
 				}
 				Fog { Mode Off }
 				ZWrite On
 				Cull Front
 				Blend SrcAlpha OneMinusSrcAlpha
 				HLSLPROGRAM
-				#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
-				#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-				#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-				#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
-				#include "Packages/com.unity.shadergraph/ShaderGraphLibrary/ShaderVariablesFunctions.hlsl"
-
-
-				#pragma vertex vert
-				#pragma fragment frag
-
-				struct VertexInput
-				{
-					float4 vertex : POSITION;
-					float3 normal : NORMAL;
-					float2 uv : TEXCOORD0;
-				};
-
-				struct VertexOutput
-				{
-					float4 pos : SV_POSITION;
-					float4 screenPos : TEXCOORD2;
-					float2 uv : TEXCOORD0;
-
-				};
-
-				CBUFFER_START(UnityPerMaterial)
-				float _OutlineWidth;
-				float4 _BaseMap_ST;
-				CBUFFER_END
-
-				float _Power;
-				float _MixBegin;
-				float _MixPower;
-				float _MixEnd;
-
-				TEXTURE2D_X_FLOAT(_CameraDepthTexture);
-				SAMPLER(sampler_CameraDepthTexture);
-				TEXTURE2D(_BaseMap);
-				#define smp SamplerState_Linear_Repeat
-				SAMPLER(smp);
-
-				VertexOutput vert(VertexInput v)
-				{
-					VertexOutput o;
-
-					float camDist = distance(TransformObjectToWorld(v.vertex.xyz), _WorldSpaceCameraPos) * _OutlineWidth * 0.001;
-					float3 _vertex = v.vertex.xyz;
-					//v.vertex.xyz += normalize(v.vertex.xyz) * camDist ;
-					v.vertex.xyz += normalize(v.normal.xyz) * camDist * 0.6;
-					
-					//v.vertex.xyz += normalize(v.vertex.xyz) * _OutlineWidth;
-					o.uv = TRANSFORM_TEX(v.uv, _BaseMap);
-
-					o.pos = TransformObjectToHClip(v.vertex.xyz);
-					o.screenPos = ComputeScreenPos(o.pos);
-					return o;
-				}
-
-
-				half4 frag(VertexOutput i) : SV_TARGET
-				{
-					float2 screenPos = i.screenPos.xy / i.screenPos.w;
-					float depth = SAMPLE_TEXTURE2D_X(_CameraDepthTexture, sampler_CameraDepthTexture, screenPos).r;
-					float depthValue = Linear01Depth(depth, _ZBufferParams);
-					float linear01Depth = pow(saturate((depthValue * 3500 - _MixBegin) / (_MixEnd - _MixBegin)), _MixPower);
-					half4 _MainTex_var = SAMPLE_TEXTURE2D(_BaseMap, smp, i.uv);
-
-					clip(_MainTex_var.a - 0.5);
-
-					half4 finalRGBA = half4(0,0,0, 0.8 * saturate(1 - linear01Depth));//saturate(1-linear01Depth));
-					//UNITY_APPLY_FOG(i.fogCoord, finalRGBA);
-					return finalRGBA;
-				}
-
+				#include "sango_outlineLib.hlsl"
+				//#pragma multi_compile_fwdbase
+				//#pragma multi_compile_fog
+				#pragma skip_variants SHADOWS_SOFT DIRLIGHTMAP_COMBINED
+				//#pragma multi_compile LIGHTMAP_OFF LIGHTMAP_ON
+				#pragma multi_compile _ SANGO_EDITOR
+				#pragma skip_variants FOG_EXP FOG_EXP2
+				#pragma exclude_renderers xbox360 ps3 
+				#pragma target 3.0
+				#pragma vertex outline_vert
+				#pragma fragment outline_frag
 				ENDHLSL
-
 			}
 		}
 }

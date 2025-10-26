@@ -231,7 +231,7 @@ namespace Sango.Game.Render
         public void UpdateModelByCell(Cell destCell)
         {
             if (!IsVisible()) return;
-            if (Troop.cell.TerrainType.isWater)
+            if (destCell.TerrainType.isWater)
             {
                 MapObject.ChangeModel(Troop.WaterTroopType.model);
             }

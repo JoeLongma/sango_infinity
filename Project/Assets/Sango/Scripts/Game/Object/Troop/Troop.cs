@@ -159,6 +159,16 @@ namespace Sango.Game
         [JsonProperty] public int missionTarget;
 
         /// <summary>
+        /// 任务参数1
+        /// </summary>
+        [JsonProperty] public int missionParamas1;
+
+        /// <summary>
+        /// 任务参数1
+        /// </summary>
+        [JsonProperty] public int missionParamas2;
+
+        /// <summary>
         /// 任务地点
         /// </summary>
         [JsonProperty]
@@ -1308,14 +1318,7 @@ namespace Sango.Game
                 return;
             }
 
-            if (TroopType.isFight)
-            {
-                ForEachPerson((person) =>
-                {
-                    person.ChangeCity(city);
-                });
-            }
-            else
+            if (!TroopType.isFight && missionParamas1 <= 0)
             {
                 // 运输武将返回所属城市
                 ForEachPerson((person) =>
@@ -1323,7 +1326,13 @@ namespace Sango.Game
                     person.SetMission(MissionType.PersonReturn, person.BelongCity, 1);
                 });
             }
-
+            else
+            {
+                ForEachPerson((person) =>
+                {
+                    person.ChangeCity(city);
+                });
+            }
 
 #if SANGO_DEBUG
             Sango.Log.Print($"{BelongForce.Name}的[{Name}]部队进入{city.BelongForce?.Name}的城池:<{city.Name}>");

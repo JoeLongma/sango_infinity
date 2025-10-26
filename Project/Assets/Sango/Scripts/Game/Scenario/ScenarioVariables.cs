@@ -241,25 +241,25 @@ namespace Sango.Game
 
 
         /// <summary>
-        /// 工作花费 {农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马}
+        /// 工作花费 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
         /// </summary>
         [JsonProperty]
-        public int[] jobCost = new int[] { 200, 200, 100, 0, 0, 300, 0, 200, 0, 0, 0, 0 };
+        public int[] jobCost = new int[] { 200, 200, 200, 100, 0, 0, 300, 0, 200, 0, 0, 0, 0, 0 };
         /// <summary>
-        /// 工作人数限制 {农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马}
+        /// 工作人数限制 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
         /// </summary>
         [JsonProperty]
-        public int[] jobMaxPersonCount = new int[] { 3, 3, 3, 3, 1, 3, 1, 3, 3, 3, 3, 3 };
+        public int[] jobMaxPersonCount = new int[] { 3, 3, 3, 3, 3, 1, 3, 1, 3, 3, 3, 3, 3, 1 };
         /// <summary>
-        /// 工作获取的功绩 {农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马}
+        /// 工作获取的功绩 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
         /// </summary>
         [JsonProperty]
-        public int[] jobMeritGain = new int[] { 5, 5, 5, 5, 5, 10, 20, 20, 20, 20, 20, 20 };
+        public int[] jobMeritGain = new int[] { 5, 5, 5, 5, 5, 5, 10, 10, 10, 10, 10, 10, 10, 10 };
         /// <summary>
-        /// 工作获取的技巧点 {农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马}
+        /// 工作获取的技巧点 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
         /// </summary>
         [JsonProperty]
-        public int[] jobTechniquePoint = new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 };
+        public int[] jobTechniquePoint = new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 };
 
         /// <summary>
         /// 建筑最大回合数
@@ -285,7 +285,7 @@ namespace Sango.Game
         /// <summary>
         /// 每月的关系变化率
         /// </summary>
-        [JsonProperty] public ushort relationChangeChangce = 50;
+        [JsonProperty] public ushort relationChangeChance = 50;
 
         /// <summary>
         /// 破城时候的抓捕率(百分比)

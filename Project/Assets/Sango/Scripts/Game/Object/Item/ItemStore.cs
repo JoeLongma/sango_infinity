@@ -103,6 +103,17 @@ namespace Sango.Game
             return 0;
         }
 
+        public int Remove(ItemStore itemStore)
+        {
+            foreach (int itemTypeId in itemStore.Items.Keys)
+            {
+                int number = itemStore.Items[itemTypeId];
+                if (number > 0)
+                    Remove(itemTypeId, number);
+            }
+            return TotalNumber;
+        }
+
         public int GetNumber(int itemTypeId)
         {
             if (Items.TryGetValue(itemTypeId, out int has))
@@ -170,7 +181,7 @@ namespace Sango.Game
         /// </summary>
         /// <param name="part"></param>
         /// <returns></returns>
-        public ItemStore Split(int part)
+        public ItemStore Split(int part, bool keep = false)
         {
             ItemStore itemStore = new ItemStore();
             if (part <= 0) return itemStore;
@@ -182,20 +193,21 @@ namespace Sango.Game
                 {
                     int partNum = number * part / 100;
                     itemStore.Add(itemTypeId, partNum);
-                  
                 }
             }
 
-            foreach (int itemTypeId in itemStore.Items.Keys)
+            if(!keep)
             {
-                int number = Items[itemTypeId];
-                if (number > 0)
+                foreach (int itemTypeId in itemStore.Items.Keys)
                 {
-                    Items[itemTypeId] = Items[itemTypeId] - number;
-                    TotalNumber -= number;
+                    int number = Items[itemTypeId];
+                    if (number > 0)
+                    {
+                        Items[itemTypeId] = Items[itemTypeId] - number;
+                        TotalNumber -= number;
+                    }
                 }
             }
-
             return itemStore;
         }
 

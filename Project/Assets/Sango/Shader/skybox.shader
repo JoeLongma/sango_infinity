@@ -8,6 +8,9 @@ Properties {
 	_MixBegin("mixBegin", float) = 800//和天空盒混合距离
 	_MixEnd("mixEnd", float) = 800//和天空盒混合距离
 	_MixPower("mixPower", float) = 7.5//和天空盒混合强度
+	_Height("height", float) = -0.5//天空盒底部混合起始高度
+	_HeightDis("heightDis", float) = 0.74//混合距离
+	_HeightPower("heightPower", float) = 5.12//混合强
 }
 
 SubShader {
@@ -52,6 +55,8 @@ SubShader {
 				half2 texcoord : TEXCOORD0;
 				float2 fogCoord : TEXCOORD1;
 				float4 screenPos : TEXCOORD2;
+				float3 localPos : TEXCOORD3;
+
 			};
 			CBUFFER_START(UnityPerMaterial)
 			float4 _MainTex_ST;
@@ -60,6 +65,9 @@ SubShader {
 			float _MixBegin;
 			float _MixPower;
 			float _MixEnd;
+			float _Height;
+			float _HeightDis;
+			float _HeightPower;
 			CBUFFER_END
 			TEXTURE2D(_MainTex);
 			
@@ -84,7 +92,7 @@ SubShader {
 #else
 				o.vertex.z = o.vertex.w * 0.9999f;
 #endif  
-
+				o.localPos = v.vertex.xyz;
 				return o;
 			}
 			
@@ -100,7 +108,10 @@ SubShader {
 				float linear01Depth = pow(saturate((depthValue*3500 - _MixBegin) / (_MixEnd - _MixBegin)), _MixPower) ;
 
 				col.a = (linear01Depth) * saturate(heightAlpha);
-				return half4(col.rgb, col.a);
+
+				float aa = saturate(pow(((i.localPos.y - _Height) / _HeightDis), _HeightPower));
+
+				return half4(col.rgb, col.a * aa);
 			}
 		ENDHLSL
 	}

@@ -509,42 +509,82 @@ namespace Sango.Render
             //}
         }
 
+        private Vector2[] touchPos = new Vector2[2];
+        private int[] touchFinger = new int[2];
+
         // 两只手指一起动则为镜头旋转, 一只指头动,另一只指头不动则为镜头缩放
         public void RotateCameraMobile()
         {
             if (Input.touchCount == 2)
             {
-                Touch touch = Input.GetTouch(1);
-                Touch touch0 = Input.GetTouch(0);
-                if ((touch.phase == TouchPhase.Began || touch.fingerId != rotateFingerId2 || touch0.fingerId != rotateFingerId1) && !IsOverUI())
+                Touch touch1 = Input.GetTouch(0);
+                Touch touch2 = Input.GetTouch(1);
+
+                if (touch1.phase == TouchPhase.Began || touch2.phase == TouchPhase.Began)
                 {
+                    touchFinger[0] = touch1.fingerId;
+                    touchPos[0] = touch1.position;
+                    touchFinger[1] = touch2.fingerId;
+                    touchPos[1] = touch2.position;
+                    return;
+                }
+
+                Vector2 touch1Dirction = touch1.position - touchPos[0];
+                Vector2 touch2Dirction = touch2.position - touchPos[1];
+                float dotAngle = Vector2.Dot(touch1Dirction, touch2Dirction);
+                if (dotAngle > 0)
+                {
+                    // rotate
+                    RotateCamera(touch1.deltaPosition);
                     mobileControlType = 2;
-                    rotateFingerId1 = touch0.fingerId;
-                    rotateFingerId2 = touch.fingerId;
                 }
-                else if (touch.fingerId == rotateFingerId2)
+                else
                 {
-                    if (touch0.phase == TouchPhase.Moved && touch.phase == TouchPhase.Moved)
-                    {
-                        isMouseRotate = true;
-                        RotateCamera(touch.deltaPosition);
-                    }
-                    else if (touch0.phase == TouchPhase.Stationary && touch.phase == TouchPhase.Moved)
-                    {
-                        ZoomCamera(touch.deltaPosition.y / 500f);
-                    }
-                    else if (touch0.phase == TouchPhase.Moved && touch.phase == TouchPhase.Stationary)
-                    {
-                        ZoomCamera(touch0.deltaPosition.y / 500f);
-                    }
-                    else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
-                    {
-                        mobileControlType = 0;
-                        rotateFingerId1 = -1;
-                        rotateFingerId2 = -1;
-                        return;
-                    }
+                    float len = (touch1.position - touch2.position).sqrMagnitude;
+                    float srcLen = (touchPos[0] - touchPos[1]).sqrMagnitude;
+                    float delta = Mathf.Max(Mathf.Abs(touch2.deltaPosition.x), Mathf.Abs(touch1.deltaPosition.x));
+                    if (len < srcLen)
+                        delta = -delta;
+                    ZoomCamera(delta / 500f);
+                    mobileControlType = 2;
+
                 }
+                touchPos[0] = touch1.position;
+                touchPos[1] = touch2.position;
+                //touchPos[0] = touch1.position;
+                //touchPos[1] = touch2.position;
+
+                //Touch touch = Input.GetTouch(1);
+                //Touch touch0 = Input.GetTouch(0);
+                //if ((touch.phase == TouchPhase.Began || touch.fingerId != rotateFingerId2 || touch0.fingerId != rotateFingerId1) && !IsOverUI())
+                //{
+                //    mobileControlType = 2;
+                //    rotateFingerId1 = touch0.fingerId;
+                //    rotateFingerId2 = touch.fingerId;
+                //}
+                //else if (touch.fingerId == rotateFingerId2)
+                //{
+                //    if (touch0.phase == TouchPhase.Moved && touch.phase == TouchPhase.Moved)
+                //    {
+                //        isMouseRotate = true;
+                //        RotateCamera(touch.deltaPosition);
+                //    }
+                //    else if (touch0.phase == TouchPhase.Stationary && touch.phase == TouchPhase.Moved)
+                //    {
+                //        ZoomCamera(touch.deltaPosition.y / 500f);
+                //    }
+                //    else if (touch0.phase == TouchPhase.Moved && touch.phase == TouchPhase.Stationary)
+                //    {
+                //        ZoomCamera(touch0.deltaPosition.y / 500f);
+                //    }
+                //    else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+                //    {
+                //        mobileControlType = 0;
+                //        rotateFingerId1 = -1;
+                //        rotateFingerId2 = -1;
+                //        return;
+                //    }
+                //}
             }
         }
         public void MouseDragWorldMobile()
@@ -566,7 +606,7 @@ namespace Sango.Render
                 }
                 else if (touch.fingerId == moveFingerId)
                 {
-                    if(mobileControlType != 1)
+                    if (mobileControlType != 1)
                     {
                         mobileControlType = 1;
                         ray = Camera.main.ScreenPointToRay(touch.position);

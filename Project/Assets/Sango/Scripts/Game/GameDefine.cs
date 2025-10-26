@@ -30,10 +30,12 @@
 
     public enum CityJobType : int
     {
+        Default = 0,
+
         /// <summary>
         /// 农业
         /// </summary>
-        Farming = 0,
+        Farming = 1,
 
         /// <summary>
         /// 商业
@@ -89,6 +91,11 @@
         /// 生产马
         /// </summary>
         CreateHourse,
+
+        /// <summary>
+        /// 交易粮食
+        /// </summary>
+        TradeFood,
 
         MaxJobCount
     }

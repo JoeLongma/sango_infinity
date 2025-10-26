@@ -25,10 +25,10 @@ namespace Sango.Game.Render
 
         public override bool IsVisible()
         {
-            if (targetTroop != null)
+            if (targetTroop != null && targetTroop.IsAlive)
                 return targetTroop.Render.IsVisible();
 
-            if (targetBuilding != null)
+            if (targetBuilding != null && targetBuilding.IsAlive)
                 return targetBuilding.Render.IsVisible();
 
             return false;

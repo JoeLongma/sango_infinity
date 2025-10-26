@@ -13,6 +13,9 @@ namespace Sango.Game.Render.UI
         public Text dateText;
         public Text fpsText;
 
+        public Text frameBtnText;
+        public Text speedBtnText;
+
         public bool gridShow = true;
         public bool troopListShow = false;
         public GameObject troopListObj;
@@ -37,6 +40,8 @@ namespace Sango.Game.Render.UI
         bool needSave = false;
         private float deltaTime = 0.0f;
         bool cityInfoShow = true;
+
+        float gameSpeed = 1;
 
         public GameObject GetObject(int index)
         {
@@ -286,18 +291,27 @@ namespace Sango.Game.Render.UI
         }
         public void OnSwitchCityInfoShow()
         {
-            cityInfoShow = !cityInfoShow;
-            EventBase.OnCityInfoShowChange?.Invoke(cityInfoShow);
+            UICityHeadbar.showIndo = !UICityHeadbar.showIndo;
+            EventBase.OnCityHeadbarShowInfoChange?.Invoke();
         }
 
-        public void OnHighFPS()
+        public void OnSpeedChange()
         {
-            Application.targetFrameRate = 60;
+            gameSpeed = gameSpeed * 2;
+            if (gameSpeed > 8)
+                gameSpeed = 1;
+
+            Time.timeScale = gameSpeed;
+            speedBtnText.text = $"游戏速度:{(int)gameSpeed}倍";
         }
 
         public void OnLowFPS()
         {
-            Application.targetFrameRate = 30;
+            if (Application.targetFrameRate == 30)
+                Application.targetFrameRate = 60;
+            else
+                Application.targetFrameRate = 30;
+            frameBtnText.text = $"切换帧率:{Application.targetFrameRate}";
         }
 
         void UpdateFPS()

@@ -712,7 +712,7 @@ namespace Sango.Game
             {
                 Fire a = fireSet[i];
                 if (a != null && a.IsAlive)
-                    a.OnForceTurnEnd(this);
+                    a.OnTurnEnd(this);
             }
             HasTurnEnded = true;
             Info.turnCount++;
@@ -840,7 +840,7 @@ namespace Sango.Game
             {
                 for (int j = i + 1; j < forceCount; ++j)
                 {
-                    if (GameRandom.Changce(scenario.Variables.relationChangeChangce))
+                    if (GameRandom.Changce(scenario.Variables.relationChangeChance))
                     {
                         RelationMap[i][j] += scenario.Variables.relationChangePerMonth;
                         RelationMap[j][i] += scenario.Variables.relationChangePerMonth;

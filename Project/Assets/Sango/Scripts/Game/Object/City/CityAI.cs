@@ -13,15 +13,6 @@ namespace Sango.Game
             if (city.BelongForce == null)
                 return true;
 
-            if (city.CurActiveTroop != null)
-            {
-                if (!city.CurActiveTroop.DoAI(scenario))
-                    return false;
-
-                city.CurActiveTroop = null;
-                return false;
-            }
-
             if (city.TroopMissionType != MissionType.None)
             {
                 if (city.TroopMissionType == MissionType.TroopOccupyCity)
@@ -263,6 +254,103 @@ namespace Sango.Game
             return true;
         }
 
+        public static bool AITransfromToBelongCity(City city, Scenario scenario)
+        {
+            if (city.BelongCity == null) return true;
+
+            // 寻找最近的附属城市
+            City target = city.BelongCity;
+            if (!target.IsSameForce(city))
+            {
+                target = city.GetNearnestForceCity(city.BelongForce);
+            }
+            if (target == null) return true;
+
+            // 资源不够, 人员进入附属城池
+            if (city.gold <= 1500 && city.food <= 20000)
+            {
+                if (city.freePersons.Count > 0)
+                {
+                    for(int i = city.freePersons.Count - 1; i >= 0; i--)
+                    {
+                        Person x = city.freePersons[i];
+                        x.TransformToCity(target);
+                    }
+                    city.freePersons.Clear();
+                }
+                return true;
+            }
+
+
+            // 资源够运输, 但是兵力不够, 请求兵力输送
+            if (city.troops < 500)
+            {
+                // 有正在运输的部队,不再请求运输队
+                for (int i = 0; i < scenario.troopsSet.Count; ++i)
+                {
+                    var c = scenario.troopsSet[i];
+                    if (c != null && c.IsAlive && c.BelongForce == city.BelongForce)
+                    {
+                        if (!c.TroopType.isFight && c.missionType == (int)MissionType.TroopTransformGoodsToCity && c.missionTarget == city.Id)
+                            return true;
+                    }
+                }
+
+                // 从主城运输兵力过来
+                Troop transport = AIMakeTransportTroop(target, city, 1000, 0, 1000, null, scenario);
+                if (transport != null)
+                {
+                    transport.missionParamas1 = 1;
+                    transport = target.EnsureTroop(transport, scenario);
+                    city.CurActiveTroop = transport;
+                    target.Render?.UpdateRender();
+#if SANGO_DEBUG
+                    Sango.Log.Print($"{scenario.GetDateStr()}{target.BelongForce.Name}势力在{target.Name}由{transport.Leader.Name}率领运输队出城 向{city.BelongForce?.Name}的{city.Name}运输物资!");
+#endif
+                }
+                return true;
+            }
+            Person[] persons;
+            if (city.allPersons.Count == 0)
+            {
+                // 求人
+                persons = ForceAI.CounsellorRecommendTransportTroop(target.freePersons);
+                if(persons == null)
+                {
+                    return true;
+                }
+                Person who = persons[0];
+                if (who != null)
+                    who.TransformToCity(city);
+                return true;
+            }
+            //运输比例
+            int part = 70;
+            int gold = 0, food = 0;
+            if (target.gold < target.GoldLimit)
+            {
+                gold = Math.Min(target.GoldLimit - target.gold, city.gold * part / 100);
+            }
+            if (target.food < target.FoodLimit)
+            {
+                food = Math.Min(target.FoodLimit - target.food, city.food * part / 100);
+            }
+            ItemStore itemStore = city.itemStore.Split(part, true);
+            Troop troop = AIMakeTransportTroop(city, target, 100, gold, food, itemStore, scenario);
+            if (troop != null)
+            {
+                troop = city.EnsureTroop(troop, scenario);
+                troop.missionParamas1 = 1;
+                city.CurActiveTroop = troop;
+                city.Render?.UpdateRender();
+#if SANGO_DEBUG
+                Sango.Log.Print($"{scenario.GetDateStr()}{city.BelongForce.Name}势力在{city.Name}由{troop.Leader.Name}率领运输队出城 向{target.BelongForce?.Name}的{target.Name}运输物资!");
+#endif
+            }
+            return true;
+        }
+
+
         public static bool AIBuilding(City city, Scenario scenario)
         {
             AIBuildIntriore(city, scenario);
@@ -465,7 +553,7 @@ namespace Sango.Game
             Dictionary<int, int> buildingCountMap = new Dictionary<int, int>();
             foreach (Building building in city.allIntriorBuildings)
             {
-                if(buildingCountMap.ContainsKey(building.BuildingType.kind))
+                if (buildingCountMap.ContainsKey(building.BuildingType.kind))
                 {
                     buildingCountMap[building.BuildingType.kind] = buildingCountMap[building.BuildingType.kind] + 1;
                 }
@@ -622,7 +710,7 @@ namespace Sango.Game
         {
             if (city.freePersons.Count <= 2) return true;
 
-            int expectationTroops = (city.totalGainFood * 3);
+            int expectationTroops = (city.food / 2);
             if (city.troops >= expectationTroops)
                 return true;
 
@@ -633,6 +721,32 @@ namespace Sango.Game
             if (people == null) return true;
 
             if (city.JobRecuritTroop(people, barracksNum))
+            {
+
+            }
+            return true;
+        }
+
+
+        /// <summary>
+        /// AI交易粮食
+        /// </summary>
+        /// <param name="city"></param>
+        /// <param name="scenario"></param>
+        /// <returns></returns>
+        public static bool AITradeFood(City city, Scenario scenario)
+        {
+            if (city.freePersons.Count <= 0) return true;
+            if (city.gold <= 2000) return true;
+
+            int expectationFood = (city.troops * 2);
+            if (city.food > expectationFood)
+                return true;
+
+            Person[] people = ForceAI.CounsellorRecommendTrade(city.freePersons);
+            if (people == null) return true;
+
+            if (city.JobTradeFood(people, (city.gold - 2000) * 2 / 3))
             {
 
             }
@@ -930,6 +1044,34 @@ namespace Sango.Game
             if (people.Length > 1) troop.Member1 = people[1];
             if (people.Length > 2) troop.Member1 = people[2];
             city.Render?.UpdateRender();
+            return troop;
+        }
+        public static Troop AIMakeTransportTroop(City city, City target, int troops, int gold, int food, ItemStore itemStore, Scenario scenario)
+        {
+            if (city.freePersons.Count <= 0) return null;
+            TroopType troopType = scenario.GetObject<TroopType>(6);
+            Person[] persons = ForceAI.CounsellorRecommendTransportTroop(city.freePersons);
+            Person leader = persons[0];
+            city.freePersons.Remove(leader);
+
+            Troop troop = scenario.CreateTroop();
+            troop.energy = city.energy;
+            troop.morale = city.morale;
+            troop.Leader = leader;
+            troop.TroopType = troopType;
+            city.troops -= troops;
+            city.gold -= gold;
+            city.food -= food;
+            troop.food = food;
+            troop.gold = gold;
+            troop.troops = troops;
+            troop.itemStore = itemStore;
+            city.itemStore.Remove(itemStore);
+            troop.Member1 = null;
+            troop.Member2 = null;
+            city.Render?.UpdateRender();
+            troop.missionType = (int)MissionType.TroopTransformGoodsToCity;
+            troop.missionTarget = target.Id;
             return troop;
         }
 

@@ -92,12 +92,12 @@ half4 outline_frag(VertexOutput i) : SV_TARGET
 	float2 screenPos = i.screenPos.xy / i.screenPos.w;
 	float depth = SAMPLE_TEXTURE2D_X(_CameraDepthTexture, sampler_CameraDepthTexture, screenPos).r;
 	float depthValue = Linear01Depth(depth, _ZBufferParams);
-	float linear01Depth = pow(saturate((depthValue * 3500 - _MixBegin) / (_MixEnd - _MixBegin)), _MixPower);
+	float linear01Depth = pow(saturate((depthValue * 1500 - _MixBegin) / (_MixEnd - _MixBegin)), _MixPower);
 	half4 _MainTex_var = SAMPLE_TEXTURE2D(_MainTex, smp, i.uv);
 
 	clip(_MainTex_var.a - 0.5);
 
-	half4 finalRGBA = half4(0,0,0, 0.8 * saturate(1 - linear01Depth));//saturate(1-linear01Depth));
+	half4 finalRGBA = half4(0,0,0, 0.6 * saturate(1 - linear01Depth));//saturate(1-linear01Depth));
 	//UNITY_APPLY_FOG(i.fogCoord, finalRGBA);
 	return finalRGBA;
 }

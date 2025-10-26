@@ -121,6 +121,16 @@ namespace Sango.Render
 
         public bool doNotRadiusCheck { get; set; }
 
+        public static MapObject Create()
+        {
+            if (buildingLayer == -1)
+                buildingLayer = LayerMask.NameToLayer("Building");
+            GameObject modelObj = new GameObject();
+            modelObj.transform.SetParent(MapRender.modelRoot);
+            //modelObj.layer = buildingLayer;
+            return modelObj.AddComponent<MapObject>();
+        }
+
         public static MapObject Create(string name)
         {
             if (buildingLayer == -1)

@@ -56,8 +56,7 @@ namespace Sango
         public static EventDelegate OnGameShutdown;
 
         public static EventDelegate<Scenario> OnScenarioPrepare;
-        public static EventDelegate<bool> OnCityInfoShowChange;
-
+        public static EventDelegate OnCityHeadbarShowInfoChange;
 
     }
 }

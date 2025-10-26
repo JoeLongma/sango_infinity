@@ -143,12 +143,21 @@ namespace Sango.Game
             return ((int)(v * 8.567f / 10f - 1) + 1500) * percent / 1000;
         }
 
+        /// 训练值计算公式
         public static int Method_TrainTroop(int v, int buildingTotalLevel)
         {
             int percent = 0;
             for (int i = 1; i <= buildingTotalLevel; ++i)
                 percent += (int)(Math.Pow(v, 0.5f / i));
             return Math.Max(1, percent - 3);
+        }
+
+        // 交易比列计算公式
+        public static int Method_Trade(int v)
+        {
+            int percent = 100;
+            percent += Math.Max(0, v - 70) / 2;
+            return percent;
         }
 
         // 这里传入的v是放大了10倍的

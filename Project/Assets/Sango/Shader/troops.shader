@@ -49,11 +49,17 @@ Shader "Sango/troops_urp" {
 				half4 _MaskColor;
 				float4 _MainTex_ST;
 				CBUFFER_END
-
+				float _EndHeight;
+				float _BeginHeight;
+				float _MixBegin;
+				float _MixPower;
+				float _MixEnd;
+				half4 _FogColor = half4(0, 0, 0, 0);
 
 				TEXTURE2D(_MainTex);
 				TEXTURE2D(_MaskTex);
-
+				TEXTURE2D_X_FLOAT(_CameraDepthTexture);
+				SAMPLER(sampler_CameraDepthTexture);
 				#define smp SamplerState_Linear_Repeat
 				// SAMPLER(sampler_MainTex); 默认采样器
 				SAMPLER(smp);
@@ -72,6 +78,8 @@ Shader "Sango/troops_urp" {
 					float2 uv0 : TEXCOORD0;
 					float3 dir : TEXCOORD1;
 					float4 shadowCoord : TEXCOORD2;
+					float4 screenPos : TEXCOORD3;
+
 					//LIGHTING_COORDS(3, 4)
 						//float3 posWorld		: TEXCOORD5;
 						//float3 NtoV : TEXCOORD6;
@@ -109,6 +117,7 @@ Shader "Sango/troops_urp" {
 
 					 VertexPositionInputs vertexInput = GetVertexPositionInputs(localPos);
 					 o.pos = vertexInput.positionCS;
+					 o.screenPos = ComputeScreenPos(o.pos);
 
 					 //float3 forwardPos = float3(0,0,1);
 					 //float3 localCamForward = mul(unity_WorldToObject,float4(forwardPos, 1));
@@ -164,6 +173,13 @@ Shader "Sango/troops_urp" {
 					//// light
 					//// 雾效处理
 					half4 finalRGBA = half4(diffuse.rgb, _Alpha * _MainTex_var.a);
+
+					float2 screenPos = i.screenPos.xy / i.screenPos.w;
+					float depth = SAMPLE_TEXTURE2D_X(_CameraDepthTexture, sampler_CameraDepthTexture, screenPos).r;
+					float depthValue = LinearEyeDepth(depth, _ZBufferParams);
+					float linear01Depth = pow(saturate((depthValue - _MixBegin) / (_MixEnd - _MixBegin)), _MixPower);
+					finalRGBA = lerp(finalRGBA, _FogColor, linear01Depth * _FogColor.a);
+
 					return finalRGBA;
 				}
 

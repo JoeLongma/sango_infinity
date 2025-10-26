@@ -762,6 +762,36 @@ namespace Sango.Game
             return nearnest;
         }
 
+        public City GetNearnestForceCity(Force force)
+        {
+            for (int i = 0; i < NeighborList.Count; i++)
+            {
+                City city = NeighborList[i];
+                if (city.BelongForce == force)
+                    return city;
+            }
+
+            City nearnest = null;
+            int distance = 100000;
+            if (force != null)
+            {
+                force.ForEachCity(city =>
+                {
+                    if (city != this)
+                    {
+                        int dis = Scenario.Cur.Map.Distance(city.CenterCell, this.CenterCell);
+                        if (dis < distance)
+                        {
+                            distance = dis;
+                            nearnest = city;
+                        }
+                    }
+                });
+            }
+            return nearnest;
+        }
+
+
         public Corps ChangeCorps(Corps other)
         {
             Corps last = null;
@@ -1703,6 +1733,56 @@ namespace Sango.Game
             return true;
         }
 
+        /// <summary>
+        /// 交易粮食
+        /// </summary>
+        /// <param name="personList"></param>
+        /// <returns></returns>
+        public bool JobTradeFood(Person[] personList, int goldNum)
+        {
+            if (personList == null || personList.Length == 0 || goldNum <= 0) return false;
+
+            Scenario scenario = Scenario.Cur;
+
+            if (security < 60) return false;
+            if (troops > food) return false;
+
+            ScenarioVariables variables = scenario.Variables;
+            int jobId = (int)CityJobType.TradeFood;
+
+            int meritGain = variables.jobMaxPersonCount[jobId];
+            int techniquePointGain = variables.jobTechniquePoint[jobId];
+
+            Person person = personList[0];
+            if (person == null) return false;
+
+            person.merit += meritGain;
+            person.GainExp(meritGain);
+            freePersons.Remove(person);
+            person.ActionOver = true;
+
+            int totalValue = GameUtility.Method_Trade(person.Politics);
+
+            scenario.Event.OnCityJobResult?.Invoke(this, jobId, personList,
+                 totalValue, (x) => { totalValue = x; });
+
+            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList,
+                techniquePointGain, (x) => { techniquePointGain = x; });
+            // TODO : 城市粮价
+            totalValue = totalValue * goldNum * 5 / 100;
+
+            if (totalValue + food > foodLimit)
+                totalValue = foodLimit - food;
+
+            food += totalValue;
+            gold -= goldNum;
+            BelongForce.GainTechniquePoint(techniquePointGain);
+#if SANGO_DEBUG
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{person.Name}在<{Name}>花费{goldNum}交易到了{totalValue}粮食, 现有粮食:{food}");
+#endif
+            return true;
+        }
+
         public bool JobRecuritPerson(Person person, Person dest)
         {
             if (dest.BelongCity == person.BelongCity)
@@ -1771,9 +1851,9 @@ namespace Sango.Game
             public int distance;
         }
 
-        const int SAVE_ROUND = 15;
-        List<EnemyInfo> enemies = new List<EnemyInfo>();
-        bool[] enemiesRound = new bool[SAVE_ROUND];
+        protected const int SAVE_ROUND = 15;
+        protected List<EnemyInfo> enemies = new List<EnemyInfo>();
+        protected bool[] enemiesRound = new bool[SAVE_ROUND];
 
         public Troop GetNearestEnemy(Cell checkCell)
         {
@@ -1862,6 +1942,13 @@ namespace Sango.Game
                 AIPrepared = true;
             }
 
+            if (CurActiveTroop != null)
+            {
+                if (!CurActiveTroop.DoAI(scenario))
+                    return false;
+                CurActiveTroop = null;
+            }
+
             while (AICommandList.Count > 0)
             {
                 System.Func<City, Scenario, bool> CurrentCommand = AICommandList[0];
@@ -1877,7 +1964,7 @@ namespace Sango.Game
             return true;
         }
 
-        public void AIPrepare(Scenario scenario)
+        public virtual void AIPrepare(Scenario scenario)
         {
             // 准备敌人信息
             enemies.Clear();
@@ -1911,6 +1998,7 @@ namespace Sango.Game
 
             if (IsBorderCity)
             {
+                AICommandList.Add(CityAI.AITradeFood);
                 AICommandList.Add(CityAI.AIAttack);
                 if (scenario.Info.day == 10)
                 {
@@ -1933,6 +2021,7 @@ namespace Sango.Game
             }
             else
             {
+                AICommandList.Add(CityAI.AITradeFood);
                 // 物资输送
                 AICommandList.Add(CityAI.AITransfrom);
                 if (troops < itemStore.TotalNumber)

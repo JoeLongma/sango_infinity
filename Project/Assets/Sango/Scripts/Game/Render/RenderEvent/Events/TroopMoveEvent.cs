@@ -40,6 +40,12 @@ namespace Sango.Game.Render
             dir.y = 0;
             dir.Normalize();
 
+            if(!troop.IsAlive)
+            {
+                IsDone = true;
+                return IsDone;
+            }
+
             if (!IsVisible())
             {
                 troop.Render.SetForward(dir);
