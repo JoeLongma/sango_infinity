@@ -323,7 +323,9 @@ namespace Sango
 
         public WindowInterface ShowWindow(string windowName)
         {
+#if SANGO_DEBUG
             UnityEngine.Debug.Log($"显示窗口:{windowName}");
+#endif
             WindowInterface win = CreateWindow(windowName);
             if (win != null)
             {
@@ -335,7 +337,9 @@ namespace Sango
 
         public void HideWindow(string windowName)
         {
+#if SANGO_DEBUG
             UnityEngine.Debug.Log($"隐藏窗口:{windowName}");
+#endif
             WindowInfo info;
             if (windowMap.TryGetValue(windowName, out info))
             {

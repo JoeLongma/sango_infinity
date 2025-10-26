@@ -1039,8 +1039,9 @@ namespace Sango.Game
             building.Builders = null;
             building.isComplte = false;
             building.durability = GameUtility.Method_TroopBuildAbility(builder);
-
+#if SANGO_DEBUG
             Sango.Log.Print($"[{BelongForce.Name}]在<{Name}>由{builder.Name}开始修建: {building.Name}");
+#endif
             building.Render.UpdateRender();
             return building;
         }

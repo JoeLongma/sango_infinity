@@ -48,7 +48,9 @@ namespace Sango.Mod
             string path = GetFullPath("Data");
             Directory.EnumFiles(path, "*.json", SearchOption.AllDirectories, (file) =>
             {
+#if SANGO_DEBUG
                 Debugger.Log($"LoadData: {file}");
+#endif
             });
             //Directory.EnumFiles(path, "*.txt", SearchOption.AllDirectories, (file) =>
             //{
@@ -64,7 +66,9 @@ namespace Sango.Mod
             ToLua.push_script_evn(path);
             Directory.EnumFiles(path, "*.lua", SearchOption.AllDirectories, (file) =>
             {
+#if SANGO_DEBUG
                 Debugger.Log($"LoadLua: {file}");
+#endif
                 SangoLuaClient.Require(file);
             });
             ToLua.remove_script_evn();
@@ -74,7 +78,9 @@ namespace Sango.Mod
             string path = GetFullPath("UI");
             Directory.EnumFiles(path, "*.bytes", SearchOption.AllDirectories, (file) =>
             {
+#if SANGO_DEBUG
                 Debugger.Log($"LoadUI: {file}");
+#endif
                 string packageName = System.IO.Path.GetFileNameWithoutExtension(file).Split('_')[0];
                 Window.Instance.AddPackage(file, packageName);
             });
@@ -84,7 +90,9 @@ namespace Sango.Mod
             string path = GetFullPath("Package");
             Directory.EnumFiles(path, "*.pkg", SearchOption.AllDirectories, (file) =>
             {
+#if SANGO_DEBUG
                 Debugger.Log($"LoadPackage: {file}");
+#endif
                 string packageName = System.IO.Path.GetFileNameWithoutExtension(file).Split('_')[0];
                 PackageManager.Instance.AddPackage(packageName, file, true);
             });
@@ -95,7 +103,9 @@ namespace Sango.Mod
             string path = GetFullPath("Scenario");
             Directory.EnumFiles(path, "*.json", SearchOption.AllDirectories, (file) =>
             {
+#if SANGO_DEBUG
                 Debugger.Log($"Find Scenario: {file}");
+#endif
                 Scenario.Add(file);
             });
         }

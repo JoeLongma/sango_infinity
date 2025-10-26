@@ -83,7 +83,7 @@ namespace Sango
             {
                 return tex;
             }
-            tex = new RenderTexture(64, 64, 0, RenderTextureFormat.ARGB4444);
+            tex = new RenderTexture(64, 64, 0, RenderTextureFormat.ARGBHalf);
             tex.filterMode = FilterMode.Point;
             tex.wrapMode = TextureWrapMode.Clamp;
             renderList.Enqueue(new renderData

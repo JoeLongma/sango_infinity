@@ -15,20 +15,26 @@ namespace Sango.Game
             ModManager.Instance.Init();
             StartCoroutine(GameInit());
         }
-        public override void Shutdown() 
+        public override void Shutdown()
         {
             MapRender.Instance.Clear();
+#if SANGO_DEBUG
             Sango.Log.Print("游戏关闭");
+#endif
             Event.OnGameShutdown?.Invoke();
         }
-        public override void Pause() 
+        public override void Pause()
         {
+#if SANGO_DEBUG
             Sango.Log.Print("游戏暂停");
+#endif
             Event.OnGamePause?.Invoke();
         }
-        public override void Resume() 
+        public override void Resume()
         {
+#if SANGO_DEBUG
             Sango.Log.Print("游戏恢复");
+#endif
             Event.OnGameResume?.Invoke();
         }
 
@@ -69,7 +75,7 @@ namespace Sango.Game
 
         public void StartGame(Scenario target)
         {
-           
+
         }
 
         public override void Update()
