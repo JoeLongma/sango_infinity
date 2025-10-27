@@ -6,9 +6,13 @@ namespace Sango.Game.Render.Model
     {
         public FlagRender[] flags;
 
-        private void Awake()
+        protected virtual void Awake()
         {
-            
+            for(int i = 0; i < flags.Length; i++)
+            {
+                UnityTools.SetLayer(flags[i].gameObject, LayerMask.NameToLayer("Flag"));
+            }
+
         }
 
         public void Init(BuildingBase building)

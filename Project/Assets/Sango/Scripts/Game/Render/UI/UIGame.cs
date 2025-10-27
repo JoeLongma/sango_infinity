@@ -355,7 +355,6 @@ namespace Sango.Game.Render.UI
                 }
                 else if (itemType == typeof(City))
                 {
-
                     item_list.Clear();
                     Scenario.Cur.citySet.ForEach(t =>
                     {

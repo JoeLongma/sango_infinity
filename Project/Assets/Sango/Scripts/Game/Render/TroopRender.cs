@@ -19,7 +19,7 @@ namespace Sango.Game.Render
             Owener = troop;
             Troop = troop;
 
-            MapObject = MapObject.Create(Troop.Name + "队");
+            MapObject = MapObject.Create(Troop.Name + "队", "Troops");
             MapObject.objType = Troop.TroopType.Id;
             MapObject.modelId = Troop.TroopType.Id;
             MapObject.modelAsset = Troop.TroopType.model;
@@ -55,6 +55,8 @@ namespace Sango.Game.Render
 
         void OnModelLoaded(GameObject obj)
         {
+            UnityTools.SetLayer(obj, obj.layer);
+
             TroopModel = obj.GetComponent<TroopModel>();
             if (TroopModel != null)
             {

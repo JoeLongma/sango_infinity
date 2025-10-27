@@ -17,6 +17,8 @@ Shader "Sango/troops_urp" {
 			
 			//ZWrite Off
 			Lighting Off
+
+
 			Pass {
 				Name "FORWARD"
 				Tags {
@@ -37,6 +39,7 @@ Shader "Sango/troops_urp" {
 				#pragma vertex vert
 				#pragma fragment frag
 				#pragma multi_compile_instancing
+				#pragma multi_compile_fog
 
 
 				CBUFFER_START(UnityPerMaterial)
@@ -55,6 +58,10 @@ Shader "Sango/troops_urp" {
 				float _MixPower;
 				float _MixEnd;
 				half4 _FogColor = half4(0, 0, 0, 0);
+
+#if defined(FOG_LINEAR) || defined(FOG_EXP) || defined(FOG_EXP2)
+#define APPLY_FOG 1            
+#endif
 
 				TEXTURE2D(_MainTex);
 				TEXTURE2D(_MaskTex);
@@ -174,11 +181,13 @@ Shader "Sango/troops_urp" {
 					//// 雾效处理
 					half4 finalRGBA = half4(diffuse.rgb, _Alpha * _MainTex_var.a);
 
+#if  APPLY_FOG
 					float2 screenPos = i.screenPos.xy / i.screenPos.w;
 					float depth = SAMPLE_TEXTURE2D_X(_CameraDepthTexture, sampler_CameraDepthTexture, screenPos).r;
 					float depthValue = LinearEyeDepth(depth, _ZBufferParams);
 					float linear01Depth = pow(saturate((depthValue - _MixBegin) / (_MixEnd - _MixBegin)), _MixPower);
 					finalRGBA = lerp(finalRGBA, _FogColor, linear01Depth * _FogColor.a);
+#endif
 
 					return finalRGBA;
 				}

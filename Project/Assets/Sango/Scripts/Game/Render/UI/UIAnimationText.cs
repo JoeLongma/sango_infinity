@@ -47,7 +47,7 @@ namespace Sango.Game.Render.UI
             {
                 GameObject aniTextInfo = PoolManager.Create(GameRenderHelper.AnimationTextInfoRes);
                 if (aniTextInfo == null) return null;
-                aniTextInfo.transform.parent = null;
+                aniTextInfo.transform.SetParent(null);
                 src = aniTextInfo.GetComponent<UIAnimationText>();
             }
             src.target = target;

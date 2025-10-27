@@ -289,6 +289,7 @@ namespace Sango.Game
                 if (troops < 500)
                 {
                     Clear();
+                    return true;
                 }
                 else
                 {

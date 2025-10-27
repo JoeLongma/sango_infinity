@@ -24,30 +24,7 @@ Shader "Sango/terrain_urp" {
 			Tags { "RenderPipeline" = "UniversalPipeline" "Queue" = "Transparent" "RenderType" = "TransparentCutout" }
 			LOD 300
 
-			//Pass
-			//{
-			//	Name "OUTLINEPASS"
-			//	Tags {
-			//		"LightMode" = "SRPDefaultUnlit"
-			//	}
-			//	Fog { Mode Off }
-			//	ZWrite On
-			//	Cull Front
-			//	Blend SrcAlpha OneMinusSrcAlpha
-			//	HLSLPROGRAM
-			//	#include "sango_outlineLib.hlsl"
-			//	//#pragma multi_compile_fwdbase
-			//	//#pragma multi_compile_fog
-			//	#pragma skip_variants SHADOWS_SOFT DIRLIGHTMAP_COMBINED
-			//	//#pragma multi_compile LIGHTMAP_OFF LIGHTMAP_ON
-			//	#pragma multi_compile _ SANGO_EDITOR
-			//	#pragma skip_variants FOG_EXP FOG_EXP2
-			//	#pragma exclude_renderers xbox360 ps3 
-			//	#pragma target 3.0
-			//	#pragma vertex outline_vert
-			//	#pragma fragment outline_frag
-			//	ENDHLSL
-			//}
+			
 
 			Pass {
 				Name "FORWARD"

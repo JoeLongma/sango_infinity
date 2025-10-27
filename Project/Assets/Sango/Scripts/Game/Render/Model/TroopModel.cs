@@ -13,6 +13,9 @@ namespace Sango.Game.Render.Model
         {
             if (animation == null)
                 animation = GetComponent<Animation>();
+
+            UnityTools.SetLayer(flag.gameObject, LayerMask.NameToLayer("Flag"));
+
         }
 
         public void Init(Troop troop)
