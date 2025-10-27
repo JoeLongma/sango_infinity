@@ -204,14 +204,14 @@ namespace Sango.Game.Render
             }
         }
 
-        public override void ShowDamage(int damage, int damageType)
+        public override void ShowInfo(int damage, int damageType)
         {
             if (HeadBar != null)
             {
                 UITroopHeadbar uITroopHeadbar = HeadBar as UITroopHeadbar;
                 if (uITroopHeadbar != null)
                 {
-                    uITroopHeadbar.ShowDamage(damage, damageType);
+                    uITroopHeadbar.ShowInfo(damage, damageType);
                 }
             }
         }

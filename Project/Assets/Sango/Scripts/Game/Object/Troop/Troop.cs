@@ -240,7 +240,7 @@ namespace Sango.Game
         /// </summary>
         public int Glamour { get; private set; }
 
-
+        public override ObjectRender GetRender() { return Render; }
         public TroopRender Render { get; private set; }
         bool isMissionPrepared = false;
         public int foodCost = 0;
@@ -300,7 +300,7 @@ namespace Sango.Game
             else
             {
                 foodCost = (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
-                ChangeFood(-foodCost);
+                ChangeFood(-foodCost, false);
             }
 
             if (Render != null)
@@ -567,6 +567,79 @@ namespace Sango.Game
 
             return damage;
         }
+
+        public static int CalculateSkillDamageTroopOnCity(Troop attacker, City target, Skill skill)
+        {
+            ScenarioVariables Variables = Scenario.Cur.Variables;
+
+            float difficultyDamageFactor = 1;
+            if (attacker.BelongForce != null && attacker.BelongForce.IsPlayer)
+                difficultyDamageFactor = Variables.DifficultyDamageFactor;
+
+            float crit_P = 1;
+            if (CalculateSkillCriticalBoost(attacker, target, skill, out crit_P))
+            {
+
+            }
+            int atkBounds = skill != null ? skill.atk : 10;
+            /*
+             *公式来源参考:
+             *https://game.ali213.net/thread-5983352-1-1.html  freedomv20的[数据研究] <三国志11 战斗伤害计算公式>
+             *https://www.bilibili.com/opus/828102349572538433 ryan_knight_12吧 楚狂的 <三国志11伤害到底是怎样算的?>
+             *https://tieba.baidu.com/p/6061024246?pn=1 不懂秃驴爱的 <三国志11：部队的兵力与攻击力数据实测，究竟带多少兵才是最优解>
+             */
+
+            int damage = (int)(
+                (
+
+                (Math.Pow(atkBounds * Variables.fight_base_damage, 0.5) + Math.Max(0, (int)((Math.Pow(attacker.Attack, 2) - Math.Pow(Math.Max(40, target.GetDefence()), 2)) / 300)) +
+                Math.Max(0, (attacker.troops - target.troops) / Variables.fight_base_troops_need) + 50)
+
+                * 10 * ((int)(
+
+                (((int)(attacker.troops * 0.01) + 300) * Math.Pow((attacker.Attack + 50), 2)) /
+                (((int)(attacker.troops * 0.01) + 300) * Math.Pow((attacker.Attack + 50), 2) * 0.01 +
+                ((int)(target.troops * 0.01) + 300) * Math.Pow((target.GetDefence() + 50), 2) * 0.01)
+
+                - 50)
+
+                + 50)
+                // 原有基础上优化Math.Max(1, attacker.troops / 4),1兵打出15伤害同于实际测试
+                * Math.Min(Math.Pow(Math.Max(1, attacker.troops / 4), 0.5), 40)
+
+                * Variables.fight_damage_magic_number /* * 太鼓台系数*/
+
+                + attacker.troops / Variables.fight_base_troop_count
+
+                )
+                //会心系数
+                * crit_P
+                // 额外增益 (科技系数等)
+                * Math.Max(0, (1 + attacker.DamageTroopExtraFactor))
+
+                // 难度系数,仅对玩家生效
+                * difficultyDamageFactor
+                );
+
+
+            ////基础伤害
+            //float base_dmg = Variables.fight_base_damage * (attack_troops_type.atk - defender_troops_type.def);
+
+            ////兵力加成系数
+            //var troops_add = (attacker.troops - Variables.fight_base_troops_need) / Variables.fight_base_troop_count * Variables.fight_base_troop_factor_per_count;
+
+            ////基础减伤
+            //var base_reduce = Variables.fight_base_reduce_percent * target.Command / 100f;
+
+            //var damage = base_dmg * (1 + troops_add) * (1 - base_reduce);
+
+            ////士气矫正后的伤害
+            //damage = damage * (UnityEngine.Mathf.Max(attacker.morale - Variables.fight_morale_decay_below, 0) / (100 - Variables.fight_morale_decay_below) *
+            //Variables.fight_morale_add + (1 - Variables.fight_morale_decay_percent) + UnityEngine.Mathf.Min(UnityEngine.Mathf.Max(attacker.morale, 0), Variables.fight_morale_decay_below) / Variables.fight_morale_decay_below * Variables.fight_morale_decay_percent);
+
+            return damage;
+        }
+
 
         public static int CalculateSkillDamage(BuildingBase attacker, Troop target, Skill skill)
         {
@@ -933,10 +1006,29 @@ namespace Sango.Game
 
         //    return false;
         //}
-
-
-        public bool ChangeFood(int num)
+        public bool ChangeGold(int num, bool showInfo = true)
         {
+            if (num != 0)
+            {
+                Render?.ShowInfo(num, (int)InfoTyoe.Gold);
+            }
+
+            gold += num;
+            if (gold < 0)
+            {
+                gold = 0;
+                return true;
+            }
+            return false;
+        }
+
+        public bool ChangeFood(int num, bool showInfo = true)
+        {
+            if (showInfo && num != 0)
+            {
+                Render?.ShowInfo(num, (int)InfoTyoe.Food);
+            }
+
             food += num;
             if (food < 0)
             {
@@ -949,7 +1041,7 @@ namespace Sango.Game
         public bool ChangeTroops(int num, SangoObject atk, bool showDamage = true)
         {
             if (showDamage && Render != null)
-                Render.ShowDamage(num, 2);
+                Render.ShowInfo(num, (int)InfoTyoe.Troop);
 
             troops = troops + num;
             if (num < 0)
@@ -963,7 +1055,7 @@ namespace Sango.Game
                     divFood += _foodCost;
                 if (GameRandom.Changce(50))
                     divFood += _foodCost;
-                ChangeFood(-divFood);
+                ChangeFood(-divFood, false);
             }
 
             IsAlive = troops > 0;

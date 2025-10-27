@@ -463,6 +463,7 @@ namespace Sango.Game
                 return true;
 
             int harvest = GameRandom.Random(totalGainFood, 0.05f);
+            Render?.ShowInfo(harvest,(int)InfoTyoe.Food);
             food += harvest;
 #if SANGO_DEBUG
             Sango.Log.Print($"城市：{Name}, 收获粮食：{harvest}, 现有粮食: {food}");
@@ -496,6 +497,8 @@ namespace Sango.Game
 
             int inComingGold = GameRandom.Random(totalGainGold, 0.05f);
             inComingGold -= GoldCost(scenario);
+            Render?.ShowInfo(inComingGold, (int)InfoTyoe.Gold);
+
             gold += inComingGold;
             if (gold < 0) gold = 0;
 #if SANGO_DEBUG
@@ -808,6 +811,22 @@ namespace Sango.Game
             return last;
         }
 
+        public bool ChangeTroops(int num, SangoObject atk, bool showDamage = true)
+        {
+            if (showDamage)
+                Render?.ShowInfo(num, (int)InfoTyoe.Troop);
+
+            troops = troops + num;
+            if (troops < 0)
+                troops = 0;
+
+            if (Render != null)
+            {
+                Render.UpdateRender();
+            }
+            return troops > 0;
+        }
+
         public override void OnFall(SangoObject atker)
         {
             Troop atk = atker as Troop;
@@ -1034,11 +1053,13 @@ namespace Sango.Game
 
             // TODO: 获取高度
             // ------
-            scenario.buildingSet.Add(building);
+            scenario.Add(building);
             building.Init(scenario);
             building.Builders = null;
             building.isComplte = false;
-            building.durability = GameUtility.Method_TroopBuildAbility(builder);
+            building.durability = 0;
+            building.ChangeDurability(GameUtility.Method_TroopBuildAbility(builder), null);
+
 #if SANGO_DEBUG
             Sango.Log.Print($"[{BelongForce.Name}]在<{Name}>由{builder.Name}开始修建: {building.Name}");
 #endif
@@ -1195,6 +1216,9 @@ namespace Sango.Game
 #endif
             return true;
         }
+
+
+
 
         /// <summary>
         /// 开发
@@ -1832,7 +1856,7 @@ namespace Sango.Game
             ScenarioVariables Variables = Scenario.Cur.Variables;
 
             // 根据太守数值来计算基础防御
-            int def = Math.Max(50, (Leader?.Intelligence ?? 30 * 3000 + Leader?.Command ?? 30 * 7000) / 10000);
+            int def = Math.Max(50, (Leader?.Intelligence ?? 40 * 3000 + Leader?.Command ?? 40 * 7000) / 10000);
 
             return def;
         }

@@ -225,6 +225,7 @@ namespace Sango.Game
 
         public void Action(Troop troop, Cell spellCell)
         {
+            ScenarioVariables scenarioVariables = Scenario.Cur.Variables;
             Troop targetTroop = spellCell.troop;
             BuildingBase targetBuilding = spellCell.building;
             //TODO: 释放技能
@@ -283,7 +284,22 @@ namespace Sango.Game
                                 Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 受到 {beAtkTroop.BelongForce.Name}的[{beAtkTroop.Name} - {beAtkTroop.TroopType.Name}]反击伤害:{hitBackDmg}, 目标剩余兵力: {troop.GetTroopsNum()}");
 #endif
                                 ep = hitBackDmg / 100;
-                                if (!troop.IsAlive) ep += 50;
+                                if (!troop.IsAlive)
+                                {
+                                    // 获取对方部分钱粮
+                                    int getFood = troop.food * scenarioVariables.defeatTroopCanGainFoodFactor / 100;
+                                    int getGold = troop.gold * scenarioVariables.defeatTroopCanGainGoldFactor / 100;
+                                    if (getFood > 0)
+                                    {
+                                        beAtkTroop.ChangeFood(getFood);
+                                    }
+                                    if (getGold > 0)
+                                    {
+                                        beAtkTroop.ChangeGold(getGold);
+                                    }
+
+                                    ep += 50;
+                                }
                                 beAtkTroop.ForEachPerson(p =>
                                 {
                                     p.GainExp(ep);
@@ -306,7 +322,8 @@ namespace Sango.Game
                     if (beAtkBuildingBase is City)
                     {
                         City city = (City)beAtkBuildingBase;
-                        if (city.BelongForce == null || city.troops <= 0)
+                        int damage_troops = Troop.CalculateSkillDamageTroopOnCity(troop, city, this);
+                        if (!city.ChangeTroops(-damage_troops, troop, city.BelongForce != null))
                         {
                             ep += 100;
                             troop.ForEachPerson(p =>
@@ -334,7 +351,7 @@ namespace Sango.Game
                         });
 #if SANGO_DEBUG
 
-                        Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 攻破城池: <{beAtkBuildingBase.Name}>");
+                        Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 破坏建筑: <{beAtkBuildingBase.Name}>");
 #endif
                     }
                     else
@@ -365,7 +382,6 @@ namespace Sango.Game
                         }
                     }
                 }
-
             }
 
             DoOffset(troop, targetTroop, targetDamage);
@@ -519,7 +535,7 @@ namespace Sango.Game
 
         public void DoEffect(Troop troop, Cell spellCell, List<Cell> atkCellList)
         {
-            if(skillEffects == null || skillEffects.Count == 0) return;
+            if (skillEffects == null || skillEffects.Count == 0) return;
 
             skillEffects.ForEach(s => s.Action(null, troop, spellCell, atkCellList));
 

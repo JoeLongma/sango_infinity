@@ -22,7 +22,7 @@ Font:
     index: 48
     uv:
       serializedVersion: 2
-      x: 0.68359375
+      x: 0.78125
       y: 0.90234375
       width: 0.03125
       height: -0.046875
@@ -38,7 +38,7 @@ Font:
     index: 49
     uv:
       serializedVersion: 2
-      x: 0.71875
+      x: 0.81640625
       y: 0.90234375
       width: 0.03125
       height: -0.046875
@@ -54,7 +54,7 @@ Font:
     index: 50
     uv:
       serializedVersion: 2
-      x: 0.75390625
+      x: 0.8515625
       y: 0.90234375
       width: 0.03125
       height: -0.046875
@@ -70,7 +70,7 @@ Font:
     index: 51
     uv:
       serializedVersion: 2
-      x: 0.7890625
+      x: 0.88671875
       y: 0.90234375
       width: 0.03125
       height: -0.046875
@@ -86,7 +86,7 @@ Font:
     index: 52
     uv:
       serializedVersion: 2
-      x: 0.82421875
+      x: 0.921875
       y: 0.90234375
       width: 0.03125
       height: -0.046875
@@ -102,7 +102,7 @@ Font:
     index: 53
     uv:
       serializedVersion: 2
-      x: 0.859375
+      x: 0.95703125
       y: 0.90234375
       width: 0.03125
       height: -0.046875
@@ -118,8 +118,8 @@ Font:
     index: 54
     uv:
       serializedVersion: 2
-      x: 0.89453125
-      y: 0.90234375
+      x: 0
+      y: 0.8046875
       width: 0.03125
       height: -0.046875
     vert:
@@ -134,8 +134,8 @@ Font:
     index: 55
     uv:
       serializedVersion: 2
-      x: 0.9296875
-      y: 0.90234375
+      x: 0.03515625
+      y: 0.8046875
       width: 0.03125
       height: -0.046875
     vert:
@@ -150,8 +150,8 @@ Font:
     index: 56
     uv:
       serializedVersion: 2
-      x: 0.96484375
-      y: 0.90234375
+      x: 0.0703125
+      y: 0.8046875
       width: 0.03125
       height: -0.046875
     vert:
@@ -166,7 +166,7 @@ Font:
     index: 57
     uv:
       serializedVersion: 2
-      x: 0
+      x: 0.10546875
       y: 0.8046875
       width: 0.03125
       height: -0.046875
@@ -439,6 +439,22 @@ Font:
     uv:
       serializedVersion: 2
       x: 0.5859375
+      y: 0.90234375
+      width: 0.09375
+      height: -0.09375
+    vert:
+      serializedVersion: 2
+      x: 0
+      y: -24
+      width: 24
+      height: 24
+    advance: 24
+    flipped: 0
+  - serializedVersion: 2
+    index: 82
+    uv:
+      serializedVersion: 2
+      x: 0.68359375
       y: 0.90234375
       width: 0.09375
       height: -0.09375

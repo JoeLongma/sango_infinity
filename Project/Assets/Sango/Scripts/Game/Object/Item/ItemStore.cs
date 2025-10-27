@@ -105,6 +105,8 @@ namespace Sango.Game
 
         public int Remove(ItemStore itemStore)
         {
+            if(itemStore == null) return TotalNumber;
+
             foreach (int itemTypeId in itemStore.Items.Keys)
             {
                 int number = itemStore.Items[itemTypeId];

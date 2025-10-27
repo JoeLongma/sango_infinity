@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Sango.Game.Render;
 
 namespace Sango.Game
 {
@@ -35,6 +36,7 @@ namespace Sango.Game
         public virtual string Tag { get; set; }
         public virtual bool IsAlive { get; set; }
         public virtual bool ActionOver { get; set; }
+        public virtual ObjectRender GetRender() { return null; }
 
         //[JsonExtensionData]
         //public Dictionary<string, JToken> AdditionalData { get; set; }
@@ -109,6 +111,7 @@ namespace Sango.Game
             if (forceB == null) return false;
             return forceA.IsAlliance(forceB);
         }
+
 
     }
 }

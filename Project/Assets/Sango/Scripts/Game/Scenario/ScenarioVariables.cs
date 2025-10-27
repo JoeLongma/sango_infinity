@@ -303,6 +303,36 @@ namespace Sango.Game
         [JsonProperty] public int captureChangceWhenTroopFall = 5;
 
 
+        /// <summary>
+        /// 进攻时候留守最低的兵力
+        /// </summary>
+        [JsonProperty] public int minTroopsKeepWhenAttack = 30000;
+
+        /// <summary>
+        /// 进攻时候留守最低的粮食
+        /// </summary>
+        [JsonProperty] public int minFoodKeepWhenAttack = 10000;
+
+        /// <summary>
+        /// 防御时候留守最低的兵力
+        /// </summary>
+        [JsonProperty] public int minTroopsKeepWhenDefence = 6000;
+
+        /// <summary>
+        /// 防御时候留守最低的粮食
+        /// </summary>
+        [JsonProperty] public int minFoodKeepWhenDefence = 1000;
+
+        /// <summary>
+        /// 近战击溃部队缴获的金钱比例(百分比)
+        /// </summary>
+        [JsonProperty] public int defeatTroopCanGainGoldFactor = 60;
+
+        /// <summary>
+        /// 近战击溃部队缴获的粮食比例(百分比)
+        /// </summary>
+        [JsonProperty] public int defeatTroopCanGainFoodFactor = 30;
+
 
         public float DifficultyDamageFactor
         {

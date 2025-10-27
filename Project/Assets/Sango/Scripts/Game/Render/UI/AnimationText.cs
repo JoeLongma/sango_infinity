@@ -28,6 +28,10 @@ namespace UnityEngine.UI
         [System.NonSerialized]
         public float maxTime = 1;
 
+        public delegate void OnAnimationComplate();
+        public bool aniByQueue = false;
+        public OnAnimationComplate onAnimationComplate;
+
         //[System.NonSerialized]
         //private float flip = 1;
 
@@ -41,6 +45,9 @@ namespace UnityEngine.UI
 
         public bool useRandomFlipX = false;
         public bool useRandomFlipY = false;
+
+        public bool flipY = false;
+
 
         protected class Entry
         {
@@ -150,6 +157,15 @@ namespace UnityEngine.UI
                 ne.randomCurveY = new AnimationCurve(new Keyframe[] { new Keyframe(0f, 0f), new Keyframe(0.25f, ry) });
             }
 
+            if(flipY)
+            {
+                ne.flipY = -1;
+            }
+            else
+            {
+                ne.flipY = 1;
+            }
+
             if (useRandomFlipX)
                 ne.flipX = Random.Range(0, 100) > 50 ? -1 : 1;
             else
@@ -211,6 +227,7 @@ namespace UnityEngine.UI
                 //    offsetCurveX = new AnimationCurve(new Keyframe[] { new Keyframe(0f, 0f), new Keyframe(1f, offset) });
                 //}
             }
+            
             if (useRandomY)
             {
                 float ry = Random.Range(yRandomRange.x, yRandomRange.y);
@@ -227,29 +244,14 @@ namespace UnityEngine.UI
             else
                 ne.flipY = 1;
 
-            //if (!string.IsNullOrEmpty(sprName))
-            //{
-            //    if (ne.image == null)
-            //    {
-            //        GameObject go = new GameObject();
-            //        go.transform.SetParent(ne.label.transform);
-            //        go.transform.localPosition = Vector3.zero;
-            //        go.transform.localScale = Vector3.one;
-            //        ne.image = go.AddComponent<Image>();
-            //    }
-            //    ne.image.gameObject.SetActive(true);
-            //    ne.image.transform.localScale = Vector3.one;
-            //    ImageNode.Load<ImageNode>(ne.image, sprName, (x) =>
-            //         {
-            //             x.SetNativeSize();
-            //             x.transform.localPosition = new Vector3(-0.5f * ne.label.preferredWidth - 0.5f * x.preferredWidth, 0, 0);
-
-            //         });
-            //}
-            //else if (ne.image != null)
-            //{
-            //    ne.image.gameObject.SetActive(false);
-            //}
+            if (flipY)
+            {
+                ne.flipY = -1;
+            }
+            else
+            {
+                ne.flipY = 1;
+            }
         }
 
 
@@ -264,7 +266,16 @@ namespace UnityEngine.UI
                 Entry ent = mUnused[mUnused.Count - 1];
                 mUnused.RemoveAt(mUnused.Count - 1);
                 ent.time = 0;
-                ent.label.gameObject.SetActive(true);
+
+                if (aniByQueue)
+                {
+                    ent.label.gameObject.SetActive(mList.Count == 0);
+                }
+                else
+                {
+                    ent.label.gameObject.SetActive(true);
+                }
+
                 ent.label.transform.SetAsLastSibling();
                 mList.Add(ent);
                 return ent;
@@ -279,7 +290,15 @@ namespace UnityEngine.UI
             ne.head_label = go.transform.GetChild(0).GetComponent<Text>();
             ne.label.name = counter.ToString();
             ne.label.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
-            go.SetActive(true);
+
+            if (aniByQueue)
+            {
+                go.SetActive(mList.Count == 0);
+            }
+            else
+            {
+                go.SetActive(true);
+            }
 
 #if UNITY_EDITOR
             go.hideFlags = HideFlags.DontSave;
@@ -343,24 +362,44 @@ namespace UnityEngine.UI
             if (!Application.isPlaying)
                 return;
 #endif
-            //updateByTime(time);
-            //time = time + Time.deltaTime;
-            //if (time >= maxTime)
-            //    enabled = false;
 
-            // Adjust alpha and delete old entries
-            for (int i = mList.Count; i > 0;)
+            if (aniByQueue)
             {
-                Entry ent = mList[--i];
-                ent.time = ent.time + Time.deltaTime;
+                if (mList.Count > 0)
+                {
+                    Entry ent = mList[0];
+                    ent.time = ent.time + Time.deltaTime;
 
-                UpdateEntry(ent, ent.time);
+                    UpdateEntry(ent, ent.time);
 
-                // Delete the entry when needed
-                if (ent.time > maxTime) Delete(ent);
-                else ent.label.enabled = true;
+                    // Delete the entry when needed
+                    if (ent.time > maxTime) Delete(ent);
+                    else ent.label.enabled = true;
+
+                    if (mList.Count == 0)
+                        onAnimationComplate?.Invoke();
+                    else
+                        mList[0].label.gameObject.SetActive(true);
+                }
             }
+            else
+            {
+                // Adjust alpha and delete old entries
+                for (int i = mList.Count; i > 0;)
+                {
+                    Entry ent = mList[--i];
+                    ent.time = ent.time + Time.deltaTime;
 
+                    UpdateEntry(ent, ent.time);
+
+                    // Delete the entry when needed
+                    if (ent.time > maxTime) Delete(ent);
+                    else ent.label.enabled = true;
+
+                    if (mList.Count == 0)
+                        onAnimationComplate?.Invoke();
+                }
+            }
         }
 
         public void UpdateByTime(float t)

@@ -49,12 +49,12 @@ namespace Sango.Game.Render
 
             if (targetTroop != null)
             {
-                targetTroop.Render.ShowDamage(damage, 2);
+                targetTroop.Render.ShowInfo(damage, (int)InfoTyoe.Troop);
             }
 
             if (targetBuilding != null)
             {
-                targetBuilding.Render.ShowDamage(damage, 13);
+                targetBuilding.Render.ShowInfo(damage, (int)InfoTyoe.Durability);
             }
 
             IsDone = true;

@@ -7,6 +7,9 @@ namespace Sango.Game
     public class Fire : SangoObject
     {
         [JsonProperty]
+        public int damage;
+
+        [JsonProperty]
         public int intelligence;
 
         [JsonProperty]
@@ -72,7 +75,7 @@ namespace Sango.Game
         {
             if (troop == null) return;
 
-            int dmg = intelligence * 4;
+            int dmg = damage + intelligence * 2 - troop.Intelligence - troop.Defence;
             if (troop.ChangeTroops(-dmg, this, false))
             {
                 FireDamageEvent @event = new FireDamageEvent()
@@ -106,13 +109,13 @@ namespace Sango.Game
             if (building == null) return;
 
             // 火焰不能决定城池归属
-            int dmg = intelligence * 2;
+            int dmg = damage / 3 + intelligence / 2;
             if (building.durability < dmg)
                 dmg = building.durability - 1;
             if (dmg > 0)
             {
                 building.ChangeDurability(-dmg, this, false);
-                FireDamageEvent @event = new FireDamageEvent()
+                FireDamageEvent @event = new()
                 {
                     fire = this,
                     targetBuilding = building,

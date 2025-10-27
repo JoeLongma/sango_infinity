@@ -50,7 +50,7 @@ invB=0
 outlineThickness=0
 
 # selected chars
-chars=48-57,65-81
+chars=48-57,65-82
 
 # imported icon images
 icon="0.png",48,0,0,0
@@ -63,21 +63,21 @@ icon="6.png",54,0,0,0
 icon="7.png",55,0,0,0
 icon="8.png",56,0,0,0
 icon="9.png",57,0,0,0
-icon="../../AtlasTexture/Troopstate/4845_8_41.png",65,0,0,0
+icon="../../AtlasTexture/Troopstate/4845_8_41.png",65,0,-12,0
 icon="../../AtlasTexture/Troopstate/4845_8_42.png",66,0,0,0
 icon="../../AtlasTexture/Troopstate/4845_8_43.png",67,0,0,0
 icon="../../AtlasTexture/Troopstate/4845_8_44.png",68,0,0,0
 icon="../../AtlasTexture/Troopstate/4845_8_45.png",69,0,0,0
 icon="../../AtlasTexture/Troopstate/4845_8_46.png",70,0,0,0
 icon="../../AtlasTexture/Troopstate/4845_8_47.png",71,0,0,0
+icon="../../AtlasTexture/Troopstate/4845_8_49.png",73,0,0,0
 icon="../../AtlasTexture/Troopstate/4845_8_48.png",72,0,0,0
-icon="../../AtlasTexture/Troopstate/4845_8_49.png",72,0,0,0
-icon="../../AtlasTexture/Troopstate/4845_8_50.png",73,0,0,0
-icon="../../AtlasTexture/Troopstate/4845_8_51.png",74,0,0,0
-icon="../../AtlasTexture/Troopstate/4845_8_52.png",75,0,0,0
-icon="../../AtlasTexture/Troopstate/4845_8_53.png",76,0,0,0
-icon="../../AtlasTexture/Troopstate/4845_8_54.png",77,0,0,0
-icon="../../AtlasTexture/Troopstate/4845_8_55.png",78,0,0,0
-icon="../../AtlasTexture/Troopstate/4845_8_56.png",79,0,0,0
-icon="../../AtlasTexture/Troopstate/4845_8_57.png",80,0,0,0
-icon="../../AtlasTexture/Troopstate/4845_8_58.png",81,0,0,0
+icon="../../AtlasTexture/Troopstate/4845_8_50.png",74,0,0,0
+icon="../../AtlasTexture/Troopstate/4845_8_51.png",75,0,0,0
+icon="../../AtlasTexture/Troopstate/4845_8_52.png",76,0,0,0
+icon="../../AtlasTexture/Troopstate/4845_8_53.png",77,0,0,0
+icon="../../AtlasTexture/Troopstate/4845_8_54.png",78,0,0,0
+icon="../../AtlasTexture/Troopstate/4845_8_55.png",79,0,0,0
+icon="../../AtlasTexture/Troopstate/4845_8_56.png",80,0,0,0
+icon="../../AtlasTexture/Troopstate/4845_8_57.png",81,0,0,0
+icon="../../AtlasTexture/Troopstate/4845_8_58.png",82,0,0,0

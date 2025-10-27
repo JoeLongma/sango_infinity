@@ -13,13 +13,16 @@ namespace Sango.Game.Render.UI
         public Image energy;
         public Image angry;
         public Text number;
-        public AnimationText aniText;
         public AnimationText skillText;
+        public UIAnimationText aniText;
+        public Troop troop;
+
         public void Init(Troop troop)
         {
+            aniText = null;
+            this.troop = troop;
             name.text = troop.Name;
             headIcon.sprite = GameRenderHelper.LoadHeadIcon(troop.Leader.headIconID);
-            aniText.Clear();
             skillText.Clear();
             UpdateState(troop);
         }
@@ -32,9 +35,17 @@ namespace Sango.Game.Render.UI
             number.text = troop.troops.ToString();
         }
 
-        public void ShowDamage(int damage, int damageType = 0)
+        public void ShowInfo(int damage, int damageType = 0)
         {
-            UITools.ShowDamage(aniText, damage, damageType);
+            aniText = UIAnimationText.Show(aniText, troop, damage, damageType);
+            if (aniText != null)
+            {
+                aniText.onAnimationComplate = OnAnimationComplate;
+            }
+        }
+        void OnAnimationComplate()
+        {
+            aniText = null;
         }
 
         public void ShowSkill(Skill skill)

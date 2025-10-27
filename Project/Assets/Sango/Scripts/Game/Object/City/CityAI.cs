@@ -256,6 +256,8 @@ namespace Sango.Game
 
         public static bool AITransfromToBelongCity(City city, Scenario scenario)
         {
+            if (city.IsEnemiesRound()) return true;
+
             if (city.BelongCity == null) return true;
 
             // 寻找最近的附属城市
@@ -266,12 +268,14 @@ namespace Sango.Game
             }
             if (target == null) return true;
 
+            if (target.IsEnemiesRound()) return true;
+
             // 资源不够, 人员进入附属城池
             if (city.gold <= 1500 && city.food <= 20000)
             {
                 if (city.freePersons.Count > 0)
                 {
-                    for(int i = city.freePersons.Count - 1; i >= 0; i--)
+                    for (int i = city.freePersons.Count - 1; i >= 0; i--)
                     {
                         Person x = city.freePersons[i];
                         x.TransformToCity(target);
@@ -315,7 +319,7 @@ namespace Sango.Game
             {
                 // 求人
                 persons = ForceAI.CounsellorRecommendTransportTroop(target.freePersons);
-                if(persons == null)
+                if (persons == null)
                 {
                     return true;
                 }
@@ -774,7 +778,7 @@ namespace Sango.Game
 
             City.EnemyInfo enemyInfo;
             // 兵临城下且敌军存活
-            if (city.IsEnemiesRound(10) && city.CheckEnemiesIfAlive(out enemyInfo))
+            if (city.IsEnemiesRound(6) && city.CheckEnemiesIfAlive(out enemyInfo))
                 return true;
 
             return false;
@@ -968,13 +972,13 @@ namespace Sango.Game
             if (isAttack)
             {
                 if (city.freePersons.Count < 3) return null;
-                if (city.troops < 20000) return null;
-                if (city.food < 5000) return null;
+                if (city.troops < scenario.Variables.minTroopsKeepWhenAttack) return null;
+                if (city.food < scenario.Variables.minFoodKeepWhenAttack) return null;
             }
             else
             {
-                if (city.troops < 4000) return null;
-                if (city.food < 500) return null;
+                if (city.troops < scenario.Variables.minTroopsKeepWhenDefence) return null;
+                if (city.food < scenario.Variables.minTroopsKeepWhenDefence) return null;
             }
 
             // 所有满足5000兵的部队类型
@@ -1037,7 +1041,7 @@ namespace Sango.Game
             troop.morale = city.morale;
             troop.Leader = people[0];
             troop.TroopType = spType;
-            troop.troops = people[0].TroopsLimit;
+            troop.troops = maxTroopNum;
             troop.food = food;
             troop.missionType = (int)city.TroopMissionType;
             troop.missionTarget = city.TroopMissionTargetId;

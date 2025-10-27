@@ -155,14 +155,14 @@ namespace Sango.Game.Render
             base.Clear();
         }
 
-        public override void ShowDamage(int damage, int damageType)
+        public override void ShowInfo(int damage, int damageType)
         {
             if (HeadBar != null)
             {
                 UIBuildingHeadbar uITroopHeadbar = HeadBar as UIBuildingHeadbar;
                 if (uITroopHeadbar != null)
                 {
-                    uITroopHeadbar.ShowDamage(damage, damageType);
+                    uITroopHeadbar.ShowInfo(damage, damageType);
                 }
             }
         }

@@ -101,4 +101,24 @@
     }
 
 
+    public enum InfoTyoe : int
+    {
+        Gold = 0,
+        Spear,
+        Troop,
+        Sword,
+        CrossBow,
+        Food,
+        Hourse,
+        M1,
+        M2,
+        M3,
+        M4,
+        Boat,
+        BigBoat,
+        Morale,
+        Durability,
+        Security
+    }
+
 }

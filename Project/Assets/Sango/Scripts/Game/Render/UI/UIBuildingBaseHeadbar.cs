@@ -7,13 +7,14 @@ namespace Sango.Game.Render.UI
     {
         public Text name;
         public Image durability;
-        public AnimationText aniText;
+        public UIAnimationText aniText;
+        public BuildingBase building;
         public virtual void Init(BuildingBase building)
         {
+            aniText = null;
+            this.building = building;
             if (name != null)
                 name.text = building.Name;
-            if (aniText != null)
-                aniText.Clear();
             UpdateState(building);
         }
 
@@ -23,10 +24,17 @@ namespace Sango.Game.Render.UI
             durability.fillAmount = (float)building.durability / building.DurabilityLimit;
         }
 
-        public virtual void ShowDamage(int damage, int damageType = 13)
+        public virtual void ShowInfo(int damage, int damageType = 13)
         {
-            UITools.ShowDamage(aniText, damage, damageType);
+            aniText = UIAnimationText.Show(aniText, building, damage, damageType);
+            if(aniText != null)
+            {
+                aniText.onAnimationComplate = OnAnimationComplate;
+            }
         }
-
+        void OnAnimationComplate()
+        {
+            aniText = null;
+        }
     }
 }

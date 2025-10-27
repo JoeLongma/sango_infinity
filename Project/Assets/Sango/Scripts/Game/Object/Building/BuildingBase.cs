@@ -79,6 +79,8 @@ namespace Sango.Game
         /// </summary>
         public ObjectRender Render { get; set; }
 
+        public override ObjectRender GetRender() { return Render; }
+
         /// <summary>
         /// 作用范围
         /// </summary>
@@ -179,10 +181,10 @@ namespace Sango.Game
 
         public virtual bool ChangeDurability(int num, SangoObject atk, bool showDamage = true)
         {
-            if (showDamage && num < 0)
+            if (showDamage)
             {
                 if (Render != null)
-                    Render.ShowDamage(num, 13);
+                    Render.ShowInfo(num, (int)InfoTyoe.Durability);
             }
 
             durability = durability + num;

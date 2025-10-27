@@ -17,6 +17,7 @@ namespace Sango.Game
             {
                 Fire fire = new Fire()
                 {
+                    damage = 300,
                     intelligence = troop.Intelligence,
                     cell = spellCell,
                     counter = GameRandom.Range(2, Math.Max(2, troop.Intelligence / 20))
