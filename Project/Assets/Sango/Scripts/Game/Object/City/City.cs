@@ -463,7 +463,7 @@ namespace Sango.Game
                 return true;
 
             int harvest = GameRandom.Random(totalGainFood, 0.05f);
-            Render?.ShowInfo(harvest,(int)InfoTyoe.Food);
+            Render?.ShowInfo(harvest, (int)InfoTyoe.Food);
             food += harvest;
 #if SANGO_DEBUG
             Sango.Log.Print($"城市：{Name}, 收获粮食：{harvest}, 现有粮食: {food}");
@@ -829,6 +829,7 @@ namespace Sango.Game
 
         public override void OnFall(SangoObject atker)
         {
+            ScenarioVariables scenarioVariables = Scenario.Cur.Variables;
             Troop atk = atker as Troop;
             if (atk == null) return;
 
@@ -876,7 +877,7 @@ namespace Sango.Game
             }
 
             // 基础抓捕率
-            int cacaptureChangce = escapeCity != null ? Scenario.Cur.Variables.captureChangceWhenCityFall : Scenario.Cur.Variables.captureChangceWhenLastCityFall;
+            int cacaptureChangce = escapeCity != null ? scenarioVariables.captureChangceWhenCityFall : scenarioVariables.captureChangceWhenLastCityFall;
 
             // 处理俘虏
             List<Person> captiveList = new List<Person>();
@@ -967,6 +968,12 @@ namespace Sango.Game
             }
 
             ChangeCorps(atk.BelongCorps);
+
+            // 处理库存和钱粮,兵力
+            food = food * scenarioVariables.cityFallCanKeepFoodFactor / 100;
+            gold = gold * scenarioVariables.cityFallCanKeepGoldFactor / 100;
+            troops = troops * scenarioVariables.cityFallCanKeepTroopsFactor / 100;
+            itemStore.Split((100 - scenarioVariables.cityFallCanKeepItemFactor) / 100);
 
             if (Render != null)
                 Render.UpdateRender();

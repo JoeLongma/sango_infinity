@@ -25,7 +25,7 @@ namespace Sango.Game
             EnemyInfo enemyInfo;
             isNoEnemyAlive = !TargetCity.CheckEnemiesIfAlive(out enemyInfo);
 
-            if (IsMissionComplete)
+            if (IsMissionComplete || (TargetCity.troops < 2000 && TargetCity == Troop.BelongCity))
             {
                 if (TargetCity.IsEnemy(troop))
                 {

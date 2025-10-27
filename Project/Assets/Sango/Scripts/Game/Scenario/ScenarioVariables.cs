@@ -333,6 +333,28 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public int defeatTroopCanGainFoodFactor = 30;
 
+        /// <summary>
+        /// 城市沦陷可以保留金钱比例(百分比)
+        /// </summary>
+        [JsonProperty] public int cityFallCanKeepGoldFactor = 30;
+
+        /// <summary>
+        /// 城市沦陷可以保留粮食比例(百分比)
+        /// </summary>
+        [JsonProperty] public int cityFallCanKeepFoodFactor = 30;
+
+        /// <summary>
+        /// 城市沦陷可以保留士兵比例(百分比)
+        /// </summary>
+        [JsonProperty] public int cityFallCanKeepTroopsFactor = 10;
+
+        /// <summary>
+        /// 城市沦陷可以保留库存比例(百分比)
+        /// </summary>
+        [JsonProperty] public int cityFallCanKeepItemFactor = 30;
+
+
+
 
         public float DifficultyDamageFactor
         {
