@@ -1,5 +1,4 @@
-﻿using Sango.Game;
-using System.IO;
+﻿using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -296,11 +295,6 @@ namespace Sango.Render
             return (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())/* || FairyGUI.Stage.isTouchOnUI*/;
         }
 
-        bool IsOverUI(int pointerId)
-        {
-            return (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(pointerId))/* || FairyGUI.Stage.isTouchOnUI*/;
-        }
-
         Ray ray;
         bool isMouseMoving = false;
         bool isMouseRotate = false;
@@ -363,24 +357,21 @@ namespace Sango.Render
         public override void Update()
         {
             if (enabled == false) return;
-
-
-
-
-
-
+            if (Sango.Tools.MapEditor.IsEditOn)
+            {
 
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
-            MoveCameraKeyBoard();
-            ZoomCamera();
-            RotateCamera();
-            MouseDragWorld();
+                MoveCameraKeyBoard();
+                ZoomCamera();
+                RotateCamera();
+                MouseDragWorld();
 #else
             MoveCameraKeyBoard();
             ZoomCameraMobile();
             RotateCameraMobile();
             MouseDragWorldMobile();
 #endif
+            }
             if (changed)
             {
                 changed = false;
@@ -393,93 +384,90 @@ namespace Sango.Render
         }
         private Vector3 oldDragPos;
         bool isPressedUI = false;
-        private MapObject SelectMapObject;
-        private Vector3 SelectPoint;
-
-        int RayCastLayer = UnityEngine.LayerMask.GetMask("Map", "Troops", "Building");
-
         private void MouseDragWorld()
         {
-            if (Input.GetKey(KeyCode.LeftControl)) return;
 
-            // 按下
-            if (Input.GetMouseButtonDown(0))
+
+            if (!Input.GetKey(KeyCode.LeftControl) && /*Input.GetKey(KeyCode.Space) &&*/ Input.GetMouseButton(0) && !isPressedUI && !isMouseRotate)
             {
-                if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-                {
-                    isPressedUI = true;
-                    return;
-                }
-                mobileControlType = 1;
-                isMouseMoving = false;
-                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                float dis;
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 4000, RayCastLayer))
-                {
-                    SelectMapObject = hit.collider.GetComponentInParent<MapObject>();
-                    SelectPoint = hit.point;
-                    //if (mapObject != null)
-                    //    GameController.Instance.OnSelectMapObject(mapObject, hit.point);
-                    //else
-                    //    GameController.Instance.OnSelectTerrain(hit.point);
-                }
 
-                if (viewPlane.Raycast(ray, out dis))
+                if (Input.GetMouseButtonDown(0))
                 {
-                    oldDragPos = ray.GetPoint(dis);
+                    isMouseMoving = false;
+
+                    ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    float dis;
+
+                    if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+                        isPressedUI = true;
+
+                    if (viewPlane.Raycast(ray, out dis))
+                    {
+                        oldDragPos = ray.GetPoint(dis);
+                    }
+                }
+                else
+                {
+
+                    if (oldMousePos == Input.mousePosition)
+                    {
+                        return;
+                    }
+
+                    isMouseMoving = true;
+
+                    ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    float dis;
+
+                    if (viewPlane.Raycast(ray, out dis))
+                    {
+                        Vector3 offset = oldDragPos - ray.GetPoint(dis);
+                        lookAt.position += offset;
+                        position += offset;
+                        NeedUpdateCamera();
+                    }
                 }
             }
-            // 移动
-            else if (Input.GetMouseButton(0))
-            {
-                if (mobileControlType != 1) return;
-                if (oldMousePos == Input.mousePosition)
-                {
-                    return;
-                }
-
-                isMouseMoving = true;
-                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                float dis;
-                if (viewPlane.Raycast(ray, out dis))
-                {
-                    Vector3 offset = oldDragPos - ray.GetPoint(dis);
-                    lookAt.position += offset;
-                    position += offset;
-                    NeedUpdateCamera();
-                }
-            }
-            // 弹起
             else if (Input.GetMouseButtonUp(0))
             {
-                if (mobileControlType != 1) return;
-
                 isPressedUI = false;
-
                 if (isMouseMoving)
                 {
                     isMouseMoving = false;
                     return;
                 }
 
-                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 4000, RayCastLayer))
-                {
-                    MapObject @object = hit.collider.GetComponentInParent<MapObject>();
-                    if (@object != null && @object == SelectMapObject)
-                    {
-                        GameController.Instance.OnSelectMapObject(SelectMapObject, hit.point);
-                    }
-                    else
-                    {
-                        GameController.Instance.OnSelectTerrain(hit.point);
-                    }
-                }
+                //if (EventSystem.current.IsPointerOverGameObject())
+                //    return;
 
+                //ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                //RaycastHit hit;
+                //if (Physics.Raycast(ray, out hit, 2000, rayCastLayer)) {
+                //    MapObject mapObjcet = hit.collider.gameObject.GetComponentInParent<MapObject>();
+                //    if (OnClickCall != null) {
+                //        if (mapObjcet != null) {
+                //            Debug.LogError(string.Format("mapObject: {0}, {1}", mapObjcet.type, mapObjcet.id));
 
+                //            OnClickCall.BeginPCall();
+                //            OnClickCall.Push(1);
+                //            OnClickCall.Push(mapObjcet.type);
+                //            OnClickCall.Push(mapObjcet.id);
+                //            OnClickCall.PCall();
+                //            OnClickCall.EndPCall();
+                //        }
+                //        else {
 
+                //            Debug.LogError(string.Format("terrain: {0}, {1}", hit.point.z, hit.point.x));
+
+                //            OnClickCall.BeginPCall();
+                //            OnClickCall.Push(2);
+                //            OnClickCall.Push(hit.point.z);
+                //            OnClickCall.Push(hit.point.x);
+                //            OnClickCall.PCall();
+                //            OnClickCall.EndPCall();
+                //        }
+                //    }
+                //}
             }
         }
 
@@ -607,11 +595,8 @@ namespace Sango.Render
             if (Input.touchCount == 1)
             {
                 Touch touch = Input.GetTouch(0);
-                if ((touch.phase == TouchPhase.Began || touch.fingerId != moveFingerId) && !isPressedUI)
+                if ((touch.phase == TouchPhase.Began || touch.fingerId != moveFingerId) && !IsOverUI())
                 {
-                    if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(touch.fingerId))
-                        isPressedUI = true;
-
                     mobileControlType = 1;
                     moveFingerId = touch.fingerId;
                     ray = Camera.main.ScreenPointToRay(touch.position);
@@ -653,7 +638,6 @@ namespace Sango.Render
                     }
                     else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
                     {
-                        isPressedUI = false;
                         mobileControlType = 0;
                         moveFingerId = -1;
                         return;
@@ -661,7 +645,6 @@ namespace Sango.Render
                 }
             }
         }
-
 
     }
 }

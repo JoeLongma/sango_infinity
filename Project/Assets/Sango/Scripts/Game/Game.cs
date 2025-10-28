@@ -80,6 +80,7 @@ namespace Sango.Game
 
         public override void Update()
         {
+            GameController.Instance.Update();
             base.Update();
             if (Scenario.Cur != null && !Scenario.Cur.useThreadRun)
                 Scenario.Cur.Run();
