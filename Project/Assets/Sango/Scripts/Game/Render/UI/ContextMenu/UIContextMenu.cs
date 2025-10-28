@@ -56,17 +56,22 @@ namespace Sango.Game.Render.UI
         }
 
         public int showDepth = -1;
-        public void Show(Vector2 pos, int depth, List<ContextMenuData> contextMenuDatas)
+        public void Show(Vector2 screenPoint, int depth, List<ContextMenuData> contextMenuDatas)
         {
             showDepth = depth;
             RectTransform root = menuRoot[showDepth];
             if (root != null)
             {
-                root.anchoredPosition = pos;
+                root.gameObject.SetActive(true);
+                UIMenuItem srcObj = menuItem[showDepth];
+                RectTransform rectTransform = srcObj.GetComponent<RectTransform>();
+                if(depth > 0)
+                    screenPoint += new Vector2(rectTransform.sizeDelta.x + 2, 0);
+                root.anchoredPosition = screenPoint;
                 for (int i = 0; i < contextMenuDatas.Count; i++)
                 {
                     ContextMenuData contextMenuData = contextMenuDatas[i];
-                    if (string.IsNullOrEmpty(contextMenuData.title))
+                    if (!string.IsNullOrEmpty(contextMenuData.title))
                     {
                         UIMenuItem obj = CreteNode(showDepth);
                         obj.transform.SetParent(root.transform, false);
@@ -92,12 +97,12 @@ namespace Sango.Game.Render.UI
             {
                 RectTransform rectTransform = menuRoot[showDepth];
                 int childCount = rectTransform.childCount;
-                for (int i = 0; i <= childCount; i++)
+                for (int i = childCount - 1; i >= 0; i--)
                 {
                     Transform trns = rectTransform.GetChild(i);
                     if (trns != null && trns.gameObject.activeSelf)
                     {
-                        UIMenuItem  uIMenuItem = trns.GetComponent<UIMenuItem>();
+                        UIMenuItem uIMenuItem = trns.GetComponent<UIMenuItem>();
                         if (uIMenuItem != null)
                         {
                             Recycle(showDepth, uIMenuItem);
@@ -116,7 +121,7 @@ namespace Sango.Game.Render.UI
 
         public bool Close(int toDepth)
         {
-            while (showDepth > toDepth)
+            while (showDepth >= toDepth)
                 Close();
 
             return showDepth < 0;

@@ -299,8 +299,8 @@ namespace Sango.Game
             activedTroopType.Clear();
             Scenario.Cur.CommonData.TroopTypes.ForEach(x =>
             {
-                if (x.activeCondition == null || (x.activeCondition != null && x.activeCondition.Check(null)))
-                    activedTroopType.Add(x);
+                //if (x.activeCondition == null || (x.activeCondition != null && x.activeCondition.Check(null)))
+                //    activedTroopType.Add(x);
             });
         }
 

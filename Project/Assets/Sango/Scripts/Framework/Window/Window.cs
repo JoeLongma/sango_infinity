@@ -335,6 +335,14 @@ namespace Sango
             return win;
         }
 
+        public WindowInterface GetWindow(string windowName)
+        {
+            WindowInfo info;
+            if (windowMap.TryGetValue(windowName, out info))
+                return info.instance;
+            return null;
+        }
+
         public void HideWindow(string windowName)
         {
 #if SANGO_DEBUG

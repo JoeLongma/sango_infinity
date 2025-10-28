@@ -1,6 +1,5 @@
 using Sango;
 using Sango.Game;
-using Sango.Game.Condition;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -86,7 +85,6 @@ public static class XMLExportTools
         typeof(Bounds),
         typeof(Sango.Tools.Rect),
         typeof(Color32),
-        typeof(Condition)
     };
 
     static string loaderDir = UnityEngine.Application.dataPath + "/Sango/Loader";

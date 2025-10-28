@@ -1,5 +1,4 @@
-﻿using Sango.Game.Card;
-using Sango.Game;
+﻿using Sango.Game;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -27,9 +26,6 @@ namespace Sango.Game
         public static EventDelegate<Scenario, float> OnScenarioTick;
 
         public static EventDelegate<string, Window.WindowInterface> OnWindowCreate;
-
-        public static CoEventDelegate<Scenario, TroopsData[]> OnSelectBattle;
-
 
     }
 }

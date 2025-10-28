@@ -15,11 +15,44 @@ namespace Sango.Game.Render.UI
         {
             if (action == null)
             {
+
                 RectTransform rect = item.GetComponent<RectTransform>();
-                ContextMenu.Show(this, rect.anchoredPosition + new Vector2(rect.sizeDelta.x, rect.sizeDelta.y));
+                Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(null, rect.position);
+                ContextMenu.Show(this, screenPos);
                 return;
             }
             action.Invoke(this);
+        }
+
+        public void Add(string title, int order, object custom, Action<ContextMenuData> action)
+        {
+            ContextMenuData contextMenuData = new()
+            {
+                title = title,
+                order = order,
+                depth = depth + 1,
+                customData = custom,
+                action = action
+            };
+
+            ContextMenu.Add(contextMenuData);
+        }
+
+        public void Add(string title, int order, object custom)
+        {
+            Add(title, order, custom, null);
+        }
+        public void Add(string title, int order)
+        {
+            Add(title, order, null, null);
+        }
+        public void Add(string title)
+        {
+            Add(title, -1, null, null);
+        }
+        public void AddLine()
+        {
+            Add(null, -1, null, null);
         }
     }
 }

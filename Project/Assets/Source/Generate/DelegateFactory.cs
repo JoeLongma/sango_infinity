@@ -89,7 +89,6 @@ public class DelegateFactory
 		dict.Add(typeof(Sango.EventBase.EventDelegate<Sango.Game.Scenario>), factory.Sango_EventBase_EventDelegate_Sango_Game_Scenario);
 		dict.Add(typeof(Sango.EventBase.EventDelegate<Sango.Game.Scenario,float>), factory.Sango_EventBase_EventDelegate_Sango_Game_Scenario_float);
 		dict.Add(typeof(Sango.EventBase.EventDelegate<string,Sango.Window.WindowInterface>), factory.Sango_EventBase_EventDelegate_string_Sango_Window_WindowInterface);
-		dict.Add(typeof(Sango.EventBase.CoEventDelegate<Sango.Game.Scenario,Sango.Game.Card.TroopsData[]>), factory.Sango_EventBase_CoEventDelegate_Sango_Game_Scenario_Sango_Game_Card_TroopsDatas);
 		dict.Add(typeof(System.Action<Sango.Game.City>), factory.System_Action_Sango_Game_City);
 		dict.Add(typeof(System.Action<Sango.Game.Person>), factory.System_Action_Sango_Game_Person);
 		dict.Add(typeof(System.Action<Sango.Game.Corps>), factory.System_Action_Sango_Game_Corps);
@@ -178,7 +177,6 @@ public class DelegateFactory
 		DelegateTraits<Sango.EventBase.EventDelegate<Sango.Game.Scenario>>.Init(factory.Sango_EventBase_EventDelegate_Sango_Game_Scenario);
 		DelegateTraits<Sango.EventBase.EventDelegate<Sango.Game.Scenario,float>>.Init(factory.Sango_EventBase_EventDelegate_Sango_Game_Scenario_float);
 		DelegateTraits<Sango.EventBase.EventDelegate<string,Sango.Window.WindowInterface>>.Init(factory.Sango_EventBase_EventDelegate_string_Sango_Window_WindowInterface);
-		DelegateTraits<Sango.EventBase.CoEventDelegate<Sango.Game.Scenario,Sango.Game.Card.TroopsData[]>>.Init(factory.Sango_EventBase_CoEventDelegate_Sango_Game_Scenario_Sango_Game_Card_TroopsDatas);
 		DelegateTraits<System.Action<Sango.Game.City>>.Init(factory.System_Action_Sango_Game_City);
 		DelegateTraits<System.Action<Sango.Game.Person>>.Init(factory.System_Action_Sango_Game_Person);
 		DelegateTraits<System.Action<Sango.Game.Corps>>.Init(factory.System_Action_Sango_Game_Corps);
@@ -267,7 +265,6 @@ public class DelegateFactory
 		TypeTraits<Sango.EventBase.EventDelegate<Sango.Game.Scenario>>.Init(factory.Check_Sango_EventBase_EventDelegate_Sango_Game_Scenario);
 		TypeTraits<Sango.EventBase.EventDelegate<Sango.Game.Scenario,float>>.Init(factory.Check_Sango_EventBase_EventDelegate_Sango_Game_Scenario_float);
 		TypeTraits<Sango.EventBase.EventDelegate<string,Sango.Window.WindowInterface>>.Init(factory.Check_Sango_EventBase_EventDelegate_string_Sango_Window_WindowInterface);
-		TypeTraits<Sango.EventBase.CoEventDelegate<Sango.Game.Scenario,Sango.Game.Card.TroopsData[]>>.Init(factory.Check_Sango_EventBase_CoEventDelegate_Sango_Game_Scenario_Sango_Game_Card_TroopsDatas);
 		TypeTraits<System.Action<Sango.Game.City>>.Init(factory.Check_System_Action_Sango_Game_City);
 		TypeTraits<System.Action<Sango.Game.Person>>.Init(factory.Check_System_Action_Sango_Game_Person);
 		TypeTraits<System.Action<Sango.Game.Corps>>.Init(factory.Check_System_Action_Sango_Game_Corps);
@@ -356,7 +353,6 @@ public class DelegateFactory
 		StackTraits<Sango.EventBase.EventDelegate<Sango.Game.Scenario>>.Push = factory.Push_Sango_EventBase_EventDelegate_Sango_Game_Scenario;
 		StackTraits<Sango.EventBase.EventDelegate<Sango.Game.Scenario,float>>.Push = factory.Push_Sango_EventBase_EventDelegate_Sango_Game_Scenario_float;
 		StackTraits<Sango.EventBase.EventDelegate<string,Sango.Window.WindowInterface>>.Push = factory.Push_Sango_EventBase_EventDelegate_string_Sango_Window_WindowInterface;
-		StackTraits<Sango.EventBase.CoEventDelegate<Sango.Game.Scenario,Sango.Game.Card.TroopsData[]>>.Push = factory.Push_Sango_EventBase_CoEventDelegate_Sango_Game_Scenario_Sango_Game_Card_TroopsDatas;
 		StackTraits<System.Action<Sango.Game.City>>.Push = factory.Push_System_Action_Sango_Game_City;
 		StackTraits<System.Action<Sango.Game.Person>>.Push = factory.Push_System_Action_Sango_Game_Person;
 		StackTraits<System.Action<Sango.Game.Corps>>.Push = factory.Push_System_Action_Sango_Game_Corps;
@@ -4642,69 +4638,6 @@ public class DelegateFactory
 	}
 
 	void Push_Sango_EventBase_EventDelegate_string_Sango_Window_WindowInterface(IntPtr L, Sango.EventBase.EventDelegate<string,Sango.Window.WindowInterface> o)
-	{
-		ToLua.Push(L, o);
-	}
-
-	class Sango_EventBase_CoEventDelegate_Sango_Game_Scenario_Sango_Game_Card_TroopsDatas_Event : LuaDelegate
-	{
-		public Sango_EventBase_CoEventDelegate_Sango_Game_Scenario_Sango_Game_Card_TroopsDatas_Event(LuaFunction func) : base(func) { }
-		public Sango_EventBase_CoEventDelegate_Sango_Game_Scenario_Sango_Game_Card_TroopsDatas_Event(LuaFunction func, LuaTable self) : base(func, self) { }
-
-		public System.Collections.IEnumerator Call(Sango.Game.Scenario param0, Sango.Game.Card.TroopsData[] param1)
-		{
-			func.BeginPCall();
-			func.PushObject(param0);
-			func.Push(param1);
-			func.PCall();
-			System.Collections.IEnumerator ret = (System.Collections.IEnumerator)func.CheckObject(TypeTraits<System.Collections.IEnumerator>.type);
-			func.EndPCall();
-			return ret;
-		}
-
-		public System.Collections.IEnumerator CallWithSelf(Sango.Game.Scenario param0, Sango.Game.Card.TroopsData[] param1)
-		{
-			func.BeginPCall();
-			func.Push(self);
-			func.PushObject(param0);
-			func.Push(param1);
-			func.PCall();
-			System.Collections.IEnumerator ret = (System.Collections.IEnumerator)func.CheckObject(TypeTraits<System.Collections.IEnumerator>.type);
-			func.EndPCall();
-			return ret;
-		}
-	}
-
-	public Sango.EventBase.CoEventDelegate<Sango.Game.Scenario,Sango.Game.Card.TroopsData[]> Sango_EventBase_CoEventDelegate_Sango_Game_Scenario_Sango_Game_Card_TroopsDatas(LuaFunction func, LuaTable self, bool flag)
-	{
-		if (func == null)
-		{
-			Sango.EventBase.CoEventDelegate<Sango.Game.Scenario,Sango.Game.Card.TroopsData[]> fn = delegate(Sango.Game.Scenario param0, Sango.Game.Card.TroopsData[] param1) { return null; };
-			return fn;
-		}
-
-		if(!flag)
-		{
-			Sango_EventBase_CoEventDelegate_Sango_Game_Scenario_Sango_Game_Card_TroopsDatas_Event target = new Sango_EventBase_CoEventDelegate_Sango_Game_Scenario_Sango_Game_Card_TroopsDatas_Event(func);
-			Sango.EventBase.CoEventDelegate<Sango.Game.Scenario,Sango.Game.Card.TroopsData[]> d = target.Call;
-			target.method = d.Method;
-			return d;
-		}
-		else
-		{
-			Sango_EventBase_CoEventDelegate_Sango_Game_Scenario_Sango_Game_Card_TroopsDatas_Event target = new Sango_EventBase_CoEventDelegate_Sango_Game_Scenario_Sango_Game_Card_TroopsDatas_Event(func, self);
-			Sango.EventBase.CoEventDelegate<Sango.Game.Scenario,Sango.Game.Card.TroopsData[]> d = target.CallWithSelf;
-			target.method = d.Method;
-			return d;
-		}
-	}
-
-	bool Check_Sango_EventBase_CoEventDelegate_Sango_Game_Scenario_Sango_Game_Card_TroopsDatas(IntPtr L, int pos)
-	{
-		return TypeChecker.CheckDelegateType<Sango.EventBase.CoEventDelegate<Sango.Game.Scenario,Sango.Game.Card.TroopsData[]>>(L, pos);
-	}
-
-	void Push_Sango_EventBase_CoEventDelegate_Sango_Game_Scenario_Sango_Game_Card_TroopsDatas(IntPtr L, Sango.EventBase.CoEventDelegate<Sango.Game.Scenario,Sango.Game.Card.TroopsData[]> o)
 	{
 		ToLua.Push(L, o);
 	}

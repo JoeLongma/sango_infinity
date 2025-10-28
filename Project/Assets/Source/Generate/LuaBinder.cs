@@ -2209,15 +2209,11 @@ public static class LuaBinder
 
 			if (count == 1)
 			{
-				Delegate arg1 = DelegateTraits<Sango.EventBase.CoEventDelegate<Sango.Game.Scenario,Sango.Game.Card.TroopsData[]>>.Create(func);
-				ToLua.Push(L, arg1);
 				func.Dispose();
 			}
 			else
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateTraits<Sango.EventBase.CoEventDelegate<Sango.Game.Scenario,Sango.Game.Card.TroopsData[]>>.Create(func, self);
-				ToLua.Push(L, arg1);
 				func.Dispose();
 				self.Dispose();
 			}

@@ -207,7 +207,6 @@ public class Sango_Game_EventWrap
 	{
 		try
 		{
-			ToLua.Push(L, Sango.Game.Event.OnSelectBattle);
 			return 1;
 		}
 		catch (Exception e)
@@ -463,15 +462,7 @@ public class Sango_Game_EventWrap
 	{
 		try
 		{
-			Sango.EventBase.CoEventDelegate<Sango.Game.Scenario,Sango.Game.Card.TroopsData[]> arg0 = (Sango.EventBase.CoEventDelegate<Sango.Game.Scenario,Sango.Game.Card.TroopsData[]>)ToLua.CheckDelegate<Sango.EventBase.CoEventDelegate<Sango.Game.Scenario,Sango.Game.Card.TroopsData[]>>(L, 2);
-			Sango.Game.Event.OnSelectBattle = arg0;
-
-			if (!object.ReferenceEquals(Sango.Game.Event.OnSelectBattle, arg0))
-			{
-				if (Sango.Game.Event.OnSelectBattle != null) Sango.Game.Event.OnSelectBattle.SubRef();
-				Sango.Game.Event.OnSelectBattle = arg0;
-			}
-
+		
 			return 0;
 		}
 		catch (Exception e)

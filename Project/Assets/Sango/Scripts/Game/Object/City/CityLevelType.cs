@@ -86,7 +86,7 @@ namespace Sango.Game
         [JsonProperty] public int durabilityLimitAdd;
 
         //TODO:升级所需的额外条件
-        [JsonProperty] public Condition.Condition levelUpCondition;
+        //[JsonProperty] public Condition.Condition levelUpCondition;
 
     }
 }

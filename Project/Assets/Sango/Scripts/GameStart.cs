@@ -12,6 +12,8 @@ public class GameStart : MonoBehaviour
 {
     [NoToLua]
     public bool Debug = false;
+    public Camera uiCamera;
+
     void Awake()
     {
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
@@ -70,7 +72,7 @@ public class GameStart : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.pauseStateChanged += OnEditorPause;
 #endif
-
+        Game.Instance.UICamera = uiCamera;
         /// <summary>
         /// 目标平台
         /// </summary>

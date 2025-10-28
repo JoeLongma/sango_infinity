@@ -119,7 +119,7 @@ namespace Sango.Game
         /// <summary>
         /// 可组建条件(兵符,特定城市等)
         /// </summary>
-        [JsonProperty] public Condition.Condition activeCondition;
+        //[JsonProperty] public Condition.Condition activeCondition;
 
         /// <summary>
         /// 粮食消耗倍率

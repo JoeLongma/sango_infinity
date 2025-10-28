@@ -183,6 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Debug: 0
+  uiCamera: {fileID: 1702651287}
 --- !u!4 &138966664
 Transform:
   m_ObjectHideFlags: 0

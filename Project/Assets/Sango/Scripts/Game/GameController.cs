@@ -1,10 +1,8 @@
 ﻿using Sango.Game.Render.UI;
 using Sango.Render;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace Sango.Game
 {
@@ -44,7 +42,26 @@ namespace Sango.Game
 
         public void OnContextMenuShow(ContextMenuData contextMenuData)
         {
-            //ContextMenu.Show()
+            if (contextMenuData.depth == -1)
+            {
+                contextMenuData.Add("开发");
+                contextMenuData.Add("军事");
+                contextMenuData.Add("政治");
+                contextMenuData.AddLine();
+                contextMenuData.Add("合批");
+                contextMenuData.Add("发发发");
+                contextMenuData.Add("啊啊啊啊");
+            }
+            else if(contextMenuData.depth == 0)
+            {
+                contextMenuData.Add("煩煩煩");
+                contextMenuData.Add("哈哈哈");
+            }
+            else if (contextMenuData.depth == 1)
+            {
+                contextMenuData.Add("急急急");
+                contextMenuData.Add("酷酷酷是");
+            }
         }
 
         public void OnInputClick()
@@ -54,12 +71,12 @@ namespace Sango.Game
 
         public void OnInputCancel()
         {
-
+            //Sango.Game.Render.UI.ContextMenu.Close();
         }
 
         public void OnInputMapObjectOverEnter(MapObject mapObject)
         {
-            
+
         }
         public void OnInputMapObjectOverExit(MapObject mapObject)
         {
@@ -68,7 +85,16 @@ namespace Sango.Game
 
         public void OnSelectMapObject(MapObject mapObject, Vector3 selectPoint)
         {
-            Sango.Log.Error(mapObject.gameObject.name);
+            Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(Camera.main, selectPoint);
+            Player.PlayerCommand.Instance.Push(new Player.ShowContextMenu()
+            {
+                screenPos = screenPos
+
+            }); ;
+
+            //Sango.Log.Error(mapObject.gameObject.name);
+            //Sango.Game.Render.UI.ContextMenu.Close();
+            //Sango.Game.Render.UI.ContextMenu.Show(screenPos);
         }
 
         public void OnSelectTerrain(Vector3 point)
@@ -76,15 +102,14 @@ namespace Sango.Game
 
         }
 
-        bool IsOverUI()
+        public bool IsOverUI()
         {
             return (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())/* || FairyGUI.Stage.isTouchOnUI*/;
         }
-        bool IsOverUI(int fingerId)
+        public bool IsOverUI(int fingerId)
         {
             return (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(fingerId))/* || FairyGUI.Stage.isTouchOnUI*/;
         }
-
 
         private MapObject mouseOverMapObject;
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
@@ -97,8 +122,27 @@ namespace Sango.Game
         private Ray ray;
         private RaycastHit hit;
         private int rayCastLayer = LayerMask.GetMask("Map", "Building", "Troops");
+
+        public MapObject CheckMouseIsOnMapObject(out Vector3 hitPiont)
+        {
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, 2000, rayCastLayer))
+            {
+                MapObject mapObjcet = hit.collider.gameObject.GetComponentInParent<MapObject>();
+                if (mapObjcet != null)
+                {
+                    hitPiont = hit.point;
+                    return mapObjcet;
+                }
+            }
+            hitPiont = Vector3.zero;
+            return null;
+        }
+
         public void Update()
         {
+            Player.PlayerCommand.Instance.Update();
+
             if (!Enabled) return;
 
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
@@ -148,7 +192,7 @@ namespace Sango.Game
                     controlType = ControlType.Zoom;
             }
 
-            if (mouseOverMapObject != null && Input.GetMouseButtonUp(0))
+            if (mouseOverMapObject != null && Input.GetMouseButtonUp(0) && !touchMoveFlag[0])
             {
                 OnSelectMapObject(mouseOverMapObject, hit.point);
                 controlType = ControlType.None;
