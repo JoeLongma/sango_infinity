@@ -8,6 +8,7 @@ namespace Sango.Game
 {
     public class GameController : Singletion<GameController>
     {
+        public bool Enabled { get; set; }
         enum ControlType : int
         {
             None = 0,
@@ -82,6 +83,8 @@ namespace Sango.Game
         private int rayCastLayer = LayerMask.GetMask("Map", "Building", "Troops");
         public void Update()
         {
+            if(!Enabled) return;
+
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 2000, rayCastLayer))

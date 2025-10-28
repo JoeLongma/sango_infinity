@@ -614,6 +614,8 @@ namespace Sango.Game
                 }
             }
 
+            GameController.Instance.Enabled = true;
+
             IsAlive = true;
             if (useThreadRun)
             {

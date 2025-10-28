@@ -4,6 +4,7 @@ using Sango.Loader;
 using System;
 using System.IO;
 using UnityEngine;
+using static Sango.Render.MapData;
 
 namespace Sango.Render
 {
@@ -518,39 +519,107 @@ namespace Sango.Render
             mapGrid.ApplyRangMask();
         }
 
-        public static float QueryHeight(Vector3 pos)
-        {
-            Vector3 begin = pos;
-            begin.y = 500;
-            Ray ray = new Ray(begin, Vector3.down);
-            RaycastHit raycastHit;
-            if (Physics.Raycast(ray, out raycastHit, 1000, LayerMask.GetMask("Map"), QueryTriggerInteraction.Ignore))
-                return raycastHit.point.y;
-            else return 0;
-        }
-
         public void OffsetCamera(Vector3 offset)
         {
             mapCamera.OffsetCamera(offset);
         }
 
-        public static bool QueryHeight(Vector3 pos, out float height)
+        public static float QueryHeight(Vector3 pos)
         {
-            Vector3 begin = pos;
-            begin.y = 500;
-            Ray ray = new Ray(begin, Vector3.down);
-            RaycastHit raycastHit;
-            if (Physics.Raycast(ray, out raycastHit, 1000, LayerMask.GetMask("Map"), QueryTriggerInteraction.Ignore))
+            VertexData[][] vertexDatas = Instance.mapData.vertexDatas;
+            int quadSize = Instance.mapData.quadSize;
+            int startX = (int)pos.z / quadSize;
+            int startY = (int)pos.x / quadSize;
+
+            float deltaX = pos.z - startX * quadSize;
+            float deltaY = pos.x - startX * quadSize;
+            float halfQuadSize = quadSize / 2.0f;
+
+            if (deltaX < halfQuadSize && deltaY < halfQuadSize || deltaX > halfQuadSize && deltaY > halfQuadSize || deltaX < halfQuadSize && deltaY > halfQuadSize)
             {
-                height = raycastHit.point.y;
-                return true;
+                VertexData ver0 = vertexDatas[startX][startY];
+                VertexData ver2 = vertexDatas[startX + 1][startY + 1];
+                VertexData ver3 = vertexDatas[startX][startY + 1];
+                if (PlaneLineIntersection.GetIntersectionWithXPerpendicularLine(ver0.position,
+                    ver2.position, ver3.position, pos + Vector3.up * 100, Vector3.down, out Vector3 point))
+                {
+                    return point.y;
+                }
             }
             else
             {
-                height = 0;
-                return false;
+                VertexData ver0 = vertexDatas[startX][startY];
+                VertexData ver1 = vertexDatas[startX + 1][startY];
+                VertexData ver2 = vertexDatas[startX + 1][startY + 1];
+                if (PlaneLineIntersection.GetIntersectionWithXPerpendicularLine(ver1.position,
+                   ver2.position, ver0.position, pos + Vector3.up * 100, Vector3.down, out Vector3 point))
+
+                {
+                    return point.y;
+                }
+
             }
+            return 0;
         }
+
+        public static bool QueryHeight(Vector3 pos, out float height)
+        {
+            VertexData[][] vertexDatas = Instance.mapData.vertexDatas;
+            int quadSize = Instance.mapData.quadSize;
+            int startX = (int)pos.z / quadSize;
+            int startY = (int)pos.x / quadSize;
+
+            float deltaX = pos.z - startX * quadSize;
+            float deltaY = pos.x - startX * quadSize;
+            float halfQuadSize = quadSize / 2.0f;
+
+            if (deltaX < halfQuadSize && deltaY < halfQuadSize || deltaX > halfQuadSize && deltaY > halfQuadSize || deltaX < halfQuadSize && deltaY > halfQuadSize)
+            {
+                VertexData ver0 = vertexDatas[startX][startY];
+                VertexData ver2 = vertexDatas[startX + 1][startY + 1];
+                VertexData ver3 = vertexDatas[startX][startY + 1];
+                if (PlaneLineIntersection.GetIntersectionWithXPerpendicularLine(ver0.position,
+                    ver2.position, ver3.position, pos + Vector3.up * 100, Vector3.down, out Vector3 point))
+                {
+                    height = point.y;
+                    return true;
+                }
+            }
+            else
+            {
+                VertexData ver0 = vertexDatas[startX][startY];
+                VertexData ver1 = vertexDatas[startX + 1][startY];
+                VertexData ver2 = vertexDatas[startX + 1][startY + 1];
+                if (PlaneLineIntersection.GetIntersectionWithXPerpendicularLine(ver1.position,
+                   ver2.position, ver0.position, pos + Vector3.up * 100, Vector3.down, out Vector3 point))
+
+                {
+                    height = point.y;
+                    return true;
+                }
+
+            }
+            height = 0;
+            return false;
+        }
+
+        //public static bool QueryHeight(Vector3 pos, out float height)
+        //{
+        //    Vector3 begin = pos;
+        //    begin.y = 500;
+        //    Ray ray = new Ray(begin, Vector3.down);
+        //    RaycastHit raycastHit;
+        //    if (Physics.Raycast(ray, out raycastHit, 1000, LayerMask.GetMask("Map"), QueryTriggerInteraction.Ignore))
+        //    {
+        //        height = raycastHit.point.y;
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        height = 0;
+        //        return false;
+        //    }
+        //}
 
         public void ZoomCamera(float delta)
         {

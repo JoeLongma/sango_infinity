@@ -382,18 +382,18 @@ namespace Sango.Render
             {
                 lmdCache.colorCache.Add(color_black);
             }
-            lmdCache.uvCache.Add(map.mapData.VertexUV(vtex, x, y));
+            lmdCache.uvCache.Add(vtex.uv);
 
             if (layerIsWater)
             {
-                lmdCache.vertexCache.Add(map.mapData.VertexWaterPosition(vtex, x, y) - position);
+                lmdCache.vertexCache.Add(vtex.waterPosition - position);
                 lmdCache.normalCache.Add(Vector3.up);
 
             }
             else
             {
-                lmdCache.vertexCache.Add(map.mapData.VertexPosition(vtex, x, y) - position);
-                lmdCache.normalCache.Add(map.mapData.VertexNormal(vtex, x, y));
+                lmdCache.vertexCache.Add(vtex.position - position);
+                lmdCache.normalCache.Add(vtex.normal);
             }
         }
 

@@ -1,6 +1,8 @@
 ﻿using Sango.Data;
 using System;
 using System.IO;
+using Unity.Collections;
+using Unity.Jobs;
 using UnityEngine;
 
 namespace Sango.Render
@@ -8,7 +10,7 @@ namespace Sango.Render
     public class MapData : MapProperty
     {
         //public NativeArray<MapData.VertexData> vertexMap;
-
+        bool isClear = false;
         public static Vector2Int[] NeighborVertex = new Vector2Int[] {
             new Vector2Int(1, 0),
             new Vector2Int(1, 1),
@@ -17,13 +19,19 @@ namespace Sango.Render
             new Vector2Int(-1, -1),
             new Vector2Int(0, -1),
         };
-
+        NativeArray<VertexData> nativeVertexDatas;
         public struct VertexData
         {
             public byte height;
             public byte textureIndex;
             public byte water;
             public byte waterIndex;
+
+            public Vector3 position;
+            public Vector3 waterPosition;
+            public Vector2 uv;
+            public Vector3 normal;
+
         }
         private Vector2Int _bounds;
         public int quadSize = 5;
@@ -38,10 +46,14 @@ namespace Sango.Render
         {
             base.Init();
             Create(map.mapWidth, map.mapHeight);
+            isClear = false;
         }
 
         public override void Clear()
         {
+            if (isClear) return;
+            nativeVertexDatas.Dispose();
+            isClear = true;
             base.Clear();
             vertexDatas = null;
         }
@@ -100,6 +112,19 @@ namespace Sango.Render
                 quadSize = (int)reader.ReadInt32();
             }
 
+            float time = Time.realtimeSinceStartup;
+
+            int maxVertexCount = vertex_x_max * vertex_y_max;
+
+            nativeVertexDatas = new NativeArray<VertexData>(maxVertexCount, Allocator.Persistent);
+            NativeArray<VertexData> nativeVertexDatasTemp = new NativeArray<VertexData>(maxVertexCount, Allocator.Persistent);
+
+            NativeArray<Vector2Int> neighborVertexArray = new NativeArray<Vector2Int>(6, Allocator.Persistent);
+            for (int i = 0; i < 6; i++)
+            {
+                neighborVertexArray[i] = NeighborVertex[i];
+            }
+
             for (int x = 0; x < vertexDatas.Length; x++)
             {
                 VertexData[] yTable = vertexDatas[x];
@@ -111,24 +136,84 @@ namespace Sango.Render
                         textureIndex = reader.ReadByte(),
                         water = reader.ReadByte(),
                     };
+
                     //TODO: 测试完删除
                     //data.height = 0;
                     //TODO: 测试完删除
                     //data.textureIndex = 0;
-
-                    yTable[y] = data;
+                    //yTable[y] = data;
+                    nativeVertexDatas[x * vertex_x_max + y] = data;
                 }
             }
 
-            //vertexMap = new NativeArray<MapData.VertexData>(vertex_x_max * vertex_y_max, Allocator.Persistent);
-            //for (int y = 0; y < map.mapData.vertexDatas.Length; y++)
+            Sango.Map.Render.MapDataJob mapDataJob = new()
+            {
+                Input = nativeVertexDatas,
+                NeighborVertexs = neighborVertexArray,
+                Output = nativeVertexDatasTemp,
+                MapUVPiece = MapUVPiece,
+                vertex_x_max = vertex_x_max,
+                vertex_y_max = vertex_y_max,
+                quadSize = quadSize
+            };
+
+            JobHandle jobHandle = mapDataJob.Schedule(maxVertexCount, 10);
+            jobHandle.Complete();
+
+            Sango.Map.Render.MapDataNormalJob mapDataJob_normal = new()
+            {
+                Input = nativeVertexDatasTemp,
+                NeighborVertexs = neighborVertexArray,
+                Output = nativeVertexDatas,
+                MapUVPiece = MapUVPiece,
+                vertex_x_max = vertex_x_max,
+                vertex_y_max = vertex_y_max,
+                quadSize = quadSize
+            };
+
+            jobHandle = mapDataJob_normal.Schedule(maxVertexCount, 10);
+            jobHandle.Complete();
+
+            for (int x = 0; x < vertexDatas.Length; x++)
+            {
+                VertexData[] yTable = vertexDatas[x];
+                for (int y = 0; y < yTable.Length; y++)
+                {
+                    int index = x * vertex_x_max + y;
+                    yTable[y] = nativeVertexDatas[index];
+                }
+            }
+
+            nativeVertexDatasTemp.Dispose();
+            neighborVertexArray.Dispose();
+
+            //for (int x = 0; x < vertexDatas.Length; x++)
             //{
-            //    MapData.VertexData[] vertexDatas = map.mapData.vertexDatas[y];
-            //    for (int x = 0; x < vertexDatas.Length; x++)
+            //    VertexData[] yTable = vertexDatas[x];
+            //    for (int y = 0; y < yTable.Length; y++)
             //    {
-            //        vertexMap[x + y * vertex_x_max] = vertexDatas[x];
+            //        VertexData data = yTable[y];
+
+            //        data.position = VertexPosition(data, x, y);
+            //        data.uv = VertexUV(data, x, y);
+            //        data.waterPosition = VertexWaterPosition(data, x, y);
+            //        yTable[y] = data;
             //    }
             //}
+
+            //for (int x = 0; x < vertexDatas.Length; x++)
+            //{
+            //    VertexData[] yTable = vertexDatas[x];
+            //    for (int y = 0; y < yTable.Length; y++)
+            //    {
+            //        VertexData data = yTable[y];
+            //        data.normal = VertexNormal(data, x, y);
+            //        yTable[y] = data;
+            //    }
+            //}
+
+            time = Time.realtimeSinceStartup - time;
+            Debug.LogError("job 花费:" + time);
 
             UpdateRender();
         }
@@ -634,7 +719,7 @@ namespace Sango.Render
         }
         public Vector3 VertexNormal(VertexData data, int x, int y)
         {
-            Vector3 vdPos = VertexPosition(data, x, y);
+            Vector3 vdPos = data.position;
             Vector3 normal = Vector3.zero;
 
             for (int z = 0; z < 6; z++)
@@ -654,10 +739,10 @@ namespace Sango.Render
                     neighbor_next_x >= 0 && neighbor_next_x < vertex_x_max && neighbor_next_y >= 0 && neighbor_next_y < vertex_y_max)
                 {
                     VertexData n_z = vertexDatas[neighbor_z_x][neighbor_z_y];
-                    Vector3 pos_z = VertexPosition(n_z, neighbor_z_x, neighbor_z_y);
+                    Vector3 pos_z = n_z.position;
 
                     VertexData n_next = vertexDatas[neighbor_next_x][neighbor_next_y];
-                    Vector3 pos_n_next = VertexPosition(n_next, neighbor_next_x, neighbor_next_y);
+                    Vector3 pos_n_next = n_next.position;
 
                     normal += Vector3.Cross(pos_z - vdPos, pos_n_next - vdPos);
                 }

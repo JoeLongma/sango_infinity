@@ -330,7 +330,7 @@ namespace Sango.Tools
         {
             float centerY = center.y;
             center.y = 0;
-            Vector3 vPos = editor.map.mapData.VertexPosition(vertexData, x, y);
+            Vector3 vPos = vertexData.position;
             vPos.y = 0;
             float distance = Vector3.Distance(vPos, center);
             if (distance <= size)
