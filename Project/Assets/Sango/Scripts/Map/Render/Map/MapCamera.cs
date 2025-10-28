@@ -254,6 +254,32 @@ namespace Sango.Render
             lookRotate = new Vector3(xl, look_rotate.y + angleX, lookRotate.z);
         }
 
+        public void MoveCameraKeyBoard(bool [] keyFlags)
+        {
+            if (keyFlags[0])//(Input.GetAxis("Horizontal")<0)
+            {
+                position += -transform.right * keyBoardMoveSpeed;
+            }
+            if (keyFlags[1])
+            {
+                position += transform.right * keyBoardMoveSpeed;
+            }
+            if (keyFlags[2])
+            {
+                Vector3 forward = transform.forward;
+                forward.y = 0;
+                forward.Normalize();
+                position += forward * keyBoardMoveSpeed;
+            }
+            if (keyFlags[3])
+            {
+                Vector3 forward = transform.forward;
+                forward.y = 0;
+                forward.Normalize();
+                position += forward * -keyBoardMoveSpeed;
+            }
+        }
+
         private void MoveCameraKeyBoard()
         {
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))//(Input.GetAxis("Horizontal")<0)

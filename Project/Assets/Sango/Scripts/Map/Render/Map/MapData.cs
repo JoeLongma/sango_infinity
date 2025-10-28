@@ -112,7 +112,7 @@ namespace Sango.Render
                 quadSize = (int)reader.ReadInt32();
             }
 
-            float time = Time.realtimeSinceStartup;
+            //float time = Time.realtimeSinceStartup;
 
             int maxVertexCount = vertex_x_max * vertex_y_max;
 
@@ -137,10 +137,6 @@ namespace Sango.Render
                         water = reader.ReadByte(),
                     };
 
-                    //TODO: 测试完删除
-                    //data.height = 0;
-                    //TODO: 测试完删除
-                    //data.textureIndex = 0;
                     //yTable[y] = data;
                     nativeVertexDatas[x * vertex_x_max + y] = data;
                 }
@@ -212,8 +208,8 @@ namespace Sango.Render
             //    }
             //}
 
-            time = Time.realtimeSinceStartup - time;
-            Debug.LogError("job 花费:" + time);
+            //time = Time.realtimeSinceStartup - time;
+            //Debug.LogError("job 花费:" + time);
 
             UpdateRender();
         }

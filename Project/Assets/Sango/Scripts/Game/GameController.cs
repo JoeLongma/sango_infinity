@@ -1,4 +1,6 @@
-﻿using Sango.Render;
+﻿using Sango.Game.Render.UI;
+using Sango.Render;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -35,6 +37,16 @@ namespace Sango.Game
 
         private Plane viewPlane = new Plane(Vector3.up, Vector3.zero);
 
+        public GameController()
+        {
+            EventBase.OnContextMenuShow += OnContextMenuShow;
+        }
+
+        public void OnContextMenuShow(ContextMenuData contextMenuData)
+        {
+            //ContextMenu.Show()
+        }
+
         public void OnInputClick()
         {
 
@@ -47,7 +59,7 @@ namespace Sango.Game
 
         public void OnInputMapObjectOverEnter(MapObject mapObject)
         {
-
+            
         }
         public void OnInputMapObjectOverExit(MapObject mapObject)
         {
@@ -75,7 +87,11 @@ namespace Sango.Game
 
 
         private MapObject mouseOverMapObject;
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
         private Vector3[] touchPos = new Vector3[2];
+#else
+        private Vector2[] touchPos = new Vector2[2];
+#endif
         private bool[] touchMoveFlag = new bool[2];
         private Vector3[] dragePos = new Vector3[2];
         private Ray ray;
@@ -83,9 +99,11 @@ namespace Sango.Game
         private int rayCastLayer = LayerMask.GetMask("Map", "Building", "Troops");
         public void Update()
         {
-            if(!Enabled) return;
+            if (!Enabled) return;
 
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
+            MoveCameraKeyBoard();
+
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 2000, rayCastLayer))
             {
@@ -138,23 +156,54 @@ namespace Sango.Game
             }
 
 #else
-            for (int i = 0; i < Input.touchCount; i ++)
+            for (int i = 0; i < Input.touchCount; i++)
             {
                 Touch touch = Input.GetTouch(i);
-                if(touch.phase == TouchPhase.Began)
+                if (touch.phase == TouchPhase.Began)
                 {
-                    if(Input.touchCount == 1)
+                    if (Input.touchCount == 1)
                     {
+                        // 选存点击到的物体
+                        ray = Camera.main.ScreenPointToRay(touch.position);
+                        if (Physics.Raycast(ray, out hit, 2000, rayCastLayer))
+                        {
+                            MapObject mapObjcet = hit.collider.gameObject.GetComponentInParent<MapObject>();
+                            if (mapObjcet != mouseOverMapObject)
+                            {
+                                if (mouseOverMapObject != null)
+                                    OnInputMapObjectOverExit(mouseOverMapObject);
+                                if (mapObjcet != null)
+                                    OnInputMapObjectOverEnter(mapObjcet);
+                                mouseOverMapObject = mapObjcet;
+                                controlType = ControlType.None;
+                                return;
+                            }
+                        }
+
                         touchPos[0] = touch.position;
                         controlType = ControlType.Move;
+
+                        float dis;
+                        if (viewPlane.Raycast(ray, out dis))
+                            dragePos[0] = ray.GetPoint(dis);
+
                         break;
                     }
-                    else if(Input.touchCount == 2)
+                    else if (Input.touchCount == 2)
                     {
                         touchPos[0] = Input.GetTouch(0).position;
                         touchPos[0] = Input.GetTouch(1).position;
                         controlType = ControlType.RotateAndZoom;
                         break;
+                    }
+                }
+                else if (touch.phase == TouchPhase.Canceled)
+                {
+                    if (Input.touchCount == 1 && mouseOverMapObject != null)
+                    {
+                        OnSelectMapObject(mouseOverMapObject, hit.point);
+                        controlType = ControlType.None;
+                        return;
                     }
                 }
             }
@@ -180,6 +229,7 @@ namespace Sango.Game
 
         public void OnInputMove()
         {
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
             if (Input.GetMouseButton(0))
             {
                 if (touchPos[0] == Input.mousePosition)
@@ -220,9 +270,41 @@ namespace Sango.Game
                     }
                 }
             }
+#else
+            for (int i = 0; i < Input.touchCount; i++)
+            {
+                Touch touch = Input.GetTouch(i);
+                if (touch.phase == TouchPhase.Canceled)
+                {
+                    if (Input.touchCount == 1)
+                    {
+                        touchPos[0] = touch.position;
+                        controlType = ControlType.Move;
+                        break;
+                    }
+                }
+                else if (touch.phase == TouchPhase.Moved)
+                {
+                    if (touchPos[0].Equals(touch.position))
+                        return;
+
+                    touchMoveFlag[0] = true;
+                    touchPos[0] = touch.position;
+
+                    float dis;
+                    if (viewPlane.Raycast(ray, out dis))
+                    {
+                        Vector3 newDragPos = ray.GetPoint(dis);
+                        Vector3 offset = dragePos[0] - newDragPos;
+                        MapRender.Instance.OffsetCamera(offset);
+                    }
+                }
+            }
+#endif
         }
         public void OnInputRotate()
         {
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
             if (Input.GetMouseButton(1))
             {
                 if (touchPos[1] == Input.mousePosition)
@@ -243,41 +325,85 @@ namespace Sango.Game
                 }
                 OnInputCancel();
             }
+#else
+
+
+
+
+#endif
         }
         public void OnInputZoom()
         {
             float offset = Input.GetAxis("Mouse ScrollWheel");
             MapRender.Instance.ZoomCamera(offset);
         }
+
+
         public void OnInputZoomAndRotate()
         {
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
 
+#else
+            for (int i = 0; i < Input.touchCount; i++)
+            {
+                Touch touch = Input.GetTouch(i);
+                if (touch.phase == TouchPhase.Canceled)
+                {
+                    controlType = ControlType.None;
+                    return;
+                }
+            }
+
+            Touch touch1 = Input.GetTouch(0);
+            Touch touch2 = Input.GetTouch(1);
+
+            Vector2 touch1Dirction = touch1.position - touchPos[0];
+            Vector2 touch2Dirction = touch2.position - touchPos[1];
+            float dotAngle = Vector2.Dot(touch1Dirction, touch2Dirction);
+            if (dotAngle > 0)
+            {
+                // rotate
+                MapRender.Instance.RotateCamera(touch1.deltaPosition);
+            }
+            else
+            {
+                float len = (touch1.position - touch2.position).sqrMagnitude;
+                float srcLen = (touchPos[0] - touchPos[1]).sqrMagnitude;
+                float delta = Mathf.Max(Mathf.Abs(touch2.deltaPosition.x), Mathf.Abs(touch1.deltaPosition.x));
+                if (len < srcLen)
+                    delta = -delta;
+                MapRender.Instance.ZoomCamera(delta / 500f);
+            }
+            touchPos[0] = touch1.position;
+            touchPos[1] = touch2.position;
+#endif
         }
 
+        bool[] keyFlags = new bool[4];
         private void MoveCameraKeyBoard()
         {
-            //if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))//(Input.GetAxis("Horizontal")<0)
-            //{
-            //    position += -transform.right * keyBoardMoveSpeed;
-            //}
-            //if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-            //{
-            //    position += transform.right * keyBoardMoveSpeed;
-            //}
-            //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-            //{
-            //    Vector3 forward = transform.forward;
-            //    forward.y = 0;
-            //    forward.Normalize();
-            //    position += forward * keyBoardMoveSpeed;
-            //}
-            //if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-            //{
-            //    Vector3 forward = transform.forward;
-            //    forward.y = 0;
-            //    forward.Normalize();
-            //    position += forward * -keyBoardMoveSpeed;
-            //}
+            Array.Clear(keyFlags, 0, 4);
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))//(Input.GetAxis("Horizontal")<0)
+            {
+                keyFlags[0] = true;
+            }
+
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            {
+                keyFlags[1] = true;
+            }
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            {
+                keyFlags[2] = true;
+
+            }
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            {
+                keyFlags[3] = true;
+            }
+
+            MapRender.Instance.MoveCameraKeyBoard(keyFlags);
+
         }
     }
 

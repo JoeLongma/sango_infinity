@@ -640,5 +640,10 @@ namespace Sango.Render
         {
             mapCamera.MoveCameraTo(pos);
         }
+
+        public void MoveCameraKeyBoard(bool[] keyFlags)
+        {
+            mapCamera.MoveCameraKeyBoard(keyFlags);
+        }
     }
 }

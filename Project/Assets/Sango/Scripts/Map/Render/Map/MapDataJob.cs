@@ -140,40 +140,6 @@ namespace Sango.Map.Render
             }
             return new Vector3(y * quadSize, data.water * 0.5f, x * quadSize);
         }
-        public Vector3 VertexNormal(VertexData data, int x, int y)
-        {
-            Vector3 vdPos = data.position;
-            Vector3 normal = Vector3.zero;
-
-            for (int z = 0; z < 6; z++)
-            {
-                int next = z + 1;
-                if (next == 6)
-                    next = 0;
-
-                Vector2Int neighbor_z = NeighborVertexs[z];
-                int neighbor_z_x = neighbor_z.x + x;
-                int neighbor_z_y = neighbor_z.y + y;
-                Vector2Int neighbor_next = NeighborVertexs[next];
-                int neighbor_next_x = neighbor_next.x + x;
-                int neighbor_next_y = neighbor_next.y + y;
-
-                if (neighbor_z_x >= 0 && neighbor_z_x < vertex_x_max && neighbor_z_y >= 0 && neighbor_z_y < vertex_y_max &&
-                    neighbor_next_x >= 0 && neighbor_next_x < vertex_x_max && neighbor_next_y >= 0 && neighbor_next_y < vertex_y_max)
-                {
-                    VertexData n_z = Input[XY2Index(neighbor_z_x, neighbor_z_y)];
-                    Vector3 pos_z = n_z.position;
-
-                    VertexData n_next = Input[XY2Index(neighbor_next_x, neighbor_next_y)];
-                    Vector3 pos_n_next = n_next.position;
-
-                    normal += Vector3.Cross(pos_z - vdPos, pos_n_next - vdPos);
-                }
-            }
-            normal.Normalize();
-            return normal;
-        }
-
     }
 
     [BurstCompile]
@@ -213,94 +179,79 @@ namespace Sango.Map.Render
             data.normal = VertexNormal(data, x, y);
             Output[index] = data;
         }
+        public Vector3 VertexNormal(VertexData data, int x, int y)
+        {
+            Vector3 vdPos = data.position;
+            Vector3 normal = Vector3.zero;
 
-        public Vector2 VertexUV(VertexData data, int x, int y)
-        {
-            return new Vector2(x * MapUVPiece.x, y * MapUVPiece.y);
-        }
-        public Vector3 VertexPosition(VertexData data, int x, int y)
-        {
-            return new Vector3(y * quadSize, data.height * 0.5f, x * quadSize);
-        }
-        public Vector3 VertexWaterPosition(VertexData data, int x, int y)
-        {
-            if (data.water == 0)
+            for (int z = 0; z < 6; z++)
             {
-                int lx = x - 1;
-                if (lx > 0)
+                int next = z + 1;
+                if (next == 6)
+                    next = 0;
+
+                Vector2Int neighbor_z = NeighborVertexs[z];
+                int neighbor_z_x = neighbor_z.x + x;
+                int neighbor_z_y = neighbor_z.y + y;
+                Vector2Int neighbor_next = NeighborVertexs[next];
+                int neighbor_next_x = neighbor_next.x + x;
+                int neighbor_next_y = neighbor_next.y + y;
+
+                if (neighbor_z_x >= 0 && neighbor_z_x < vertex_x_max && neighbor_z_y >= 0 && neighbor_z_y < vertex_y_max &&
+                    neighbor_next_x >= 0 && neighbor_next_x < vertex_x_max && neighbor_next_y >= 0 && neighbor_next_y < vertex_y_max)
                 {
-                    VertexData d = Input[XY2Index(lx, y)];
-                    if (d.water > 0)
-                    {
-                        return new Vector3(y * quadSize, d.water * 0.5f, x * quadSize);
-                    }
-                }
-                int uy = y - 1;
-                if (uy > 0)
-                {
-                    VertexData d = Input[XY2Index(x, uy)];
-                    if (d.water > 0)
-                    {
-                        return new Vector3(y * quadSize, d.water * 0.5f, x * quadSize);
-                    }
+                    VertexData n_z = Input[XY2Index(neighbor_z_x, neighbor_z_y)];
+                    Vector3 pos_z = n_z.position;
 
-                    if (lx > 0)
-                    {
-                        d = Input[XY2Index(lx, uy)];
-                        if (d.water > 0)
-                        {
-                            return new Vector3(y * quadSize, d.water * 0.5f, x * quadSize);
-                        }
-                    }
+                    VertexData n_next = Input[XY2Index(neighbor_next_x, neighbor_next_y)];
+                    Vector3 pos_n_next = n_next.position;
 
-                }
-                int rx = x + 1;
-                if (rx < vertex_x_max)
-                {
-                    VertexData d = Input[XY2Index(rx, y)];
-                    if (d.water > 0)
-                    {
-                        return new Vector3(y * quadSize, d.water * 0.5f, x * quadSize);
-                    }
-
-                    if (uy > 0)
-                    {
-                        d = Input[XY2Index(rx, uy)];
-                        if (d.water > 0)
-                        {
-                            return new Vector3(y * quadSize, d.water * 0.5f, x * quadSize);
-                        }
-                    }
-                }
-                int dy = y + 1;
-                if (dy < vertex_y_max)
-                {
-                    VertexData d = Input[XY2Index(x, dy)];
-                    if (d.water > 0)
-                    {
-                        return new Vector3(y * quadSize, d.water * 0.5f, x * quadSize);
-                    }
-
-                    if (rx < vertex_x_max)
-                    {
-                        d = Input[XY2Index(rx, dy)];
-                        if (d.water > 0)
-                        {
-                            return new Vector3(y * quadSize, d.water * 0.5f, x * quadSize);
-                        }
-                    }
-
-                    if (lx > 0)
-                    {
-                        d = Input[XY2Index(lx, dy)];
-                        if (d.water > 0)
-                        {
-                            return new Vector3(y * quadSize, d.water * 0.5f, x * quadSize);
-                        }
-                    }
+                    normal += Vector3.Cross(pos_z - vdPos, pos_n_next - vdPos);
                 }
             }
-            return new Vector3(y * quadSize, data.water * 0.5f, x * quadSize);
+            normal.Normalize();
+            return normal;
+        }
+
+    }
+
+
+    [BurstCompile]
+    public struct MapCellCreateLayer : IJobParallelFor
+    {
+        [ReadOnly]
+        public NativeArray<VertexData> Input;
+
+        [ReadOnly]
+        public NativeArray<Vector2Int> NeighborVertexs;
+
+        [WriteOnly]
+        public NativeArray<VertexData> Output;
+
+        [ReadOnly]
+        public Vector2 MapUVPiece;
+
+        [ReadOnly]
+        public int vertex_x_max;
+
+        [ReadOnly]
+        public int vertex_y_max;
+
+        [ReadOnly]
+        public int quadSize;
+
+        int XY2Index(int x, int y)
+        {
+            return x * vertex_x_max + y;
+        }
+
+        public void Execute(int index)
+        {
+            int x = index / vertex_x_max;
+            int y = index % vertex_x_max;
+            VertexData data = Input[index];
+            data.normal = VertexNormal(data, x, y);
+            Output[index] = data;
         }
         public Vector3 VertexNormal(VertexData data, int x, int y)
         {
@@ -337,4 +288,6 @@ namespace Sango.Map.Render
         }
 
     }
+
+
 }

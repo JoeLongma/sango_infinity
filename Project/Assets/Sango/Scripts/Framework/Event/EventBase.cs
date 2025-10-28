@@ -1,4 +1,5 @@
 ﻿using Sango.Game;
+using Sango.Game.Render.UI;
 using System.Collections;
 
 namespace Sango
@@ -57,6 +58,9 @@ namespace Sango
 
         public static EventDelegate<Scenario> OnScenarioPrepare;
         public static EventDelegate OnCityHeadbarShowInfoChange;
+
+
+        public static EventDelegate<ContextMenuData> OnContextMenuShow;
 
     }
 }
