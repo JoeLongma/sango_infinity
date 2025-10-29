@@ -1,4 +1,5 @@
 ﻿using Sango.Game;
+using Sango.Game.Render.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -26,6 +27,7 @@ namespace Sango.Game
         public static EventDelegate<Scenario, float> OnScenarioTick;
 
         public static EventDelegate<string, Window.WindowInterface> OnWindowCreate;
-
+        public static EventDelegate OnCityHeadbarShowInfoChange;
+        public static EventDelegate<ContextMenuData> OnContextMenuShow;
     }
 }

@@ -292,7 +292,7 @@ namespace Sango.Game.Render.UI
         public void OnSwitchCityInfoShow()
         {
             UICityHeadbar.showIndo = !UICityHeadbar.showIndo;
-            EventBase.OnCityHeadbarShowInfoChange?.Invoke();
+            Event.OnCityHeadbarShowInfoChange?.Invoke();
         }
 
         public void OnSpeedChange()

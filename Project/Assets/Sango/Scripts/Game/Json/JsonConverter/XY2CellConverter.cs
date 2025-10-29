@@ -26,12 +26,12 @@ namespace Sango.Game
                         setValue.property.ValueProvider.SetValue(setValue.target, value);
                 }
                 delaySetValues_List.Clear();
-                EventBase.OnScenarioPrepare -= OnScenarioPrepare;
+                Event.OnScenarioPrepare -= OnScenarioPrepare;
             }
             public static void Add(DelaySetCellValue setValue)
             {
                 if (delaySetValues_List.Count == 0)
-                    EventBase.OnScenarioPrepare += OnScenarioPrepare;
+                    Event.OnScenarioPrepare += OnScenarioPrepare;
                 delaySetValues_List.Add(setValue);
             }
         }

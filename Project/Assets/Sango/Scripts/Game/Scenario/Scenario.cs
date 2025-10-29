@@ -577,7 +577,7 @@ namespace Sango.Game
         /// </summary>
         public void Prepare()
         {
-            EventBase.OnScenarioPrepare?.Invoke(this);
+            Sango.Game.Event.OnScenarioPrepare?.Invoke(this);
 
             for (int i = 0; i < prepareList.Count; ++i)
             {

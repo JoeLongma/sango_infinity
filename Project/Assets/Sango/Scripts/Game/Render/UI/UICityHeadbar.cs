@@ -27,11 +27,11 @@ namespace Sango.Game.Render.UI
 
         public void OnEnable()
         {
-            EventBase.OnCityHeadbarShowInfoChange += OnCityHeadbarShowInfoChange;
+            Event.OnCityHeadbarShowInfoChange += OnCityHeadbarShowInfoChange;
         }
         public void OnDisable()
         {
-            EventBase.OnCityHeadbarShowInfoChange -= OnCityHeadbarShowInfoChange;
+            Event.OnCityHeadbarShowInfoChange -= OnCityHeadbarShowInfoChange;
         }
 
         void OnCityHeadbarShowInfoChange()

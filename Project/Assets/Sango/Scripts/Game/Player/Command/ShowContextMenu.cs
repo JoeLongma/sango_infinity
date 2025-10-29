@@ -41,7 +41,7 @@ namespace Sango.Game.Player
             else if (Input.GetMouseButtonUp(0))
             {
                 if (GameController.Instance.IsOverUI()) return;
-                MapObject mapObject = GameController.Instance.CheckMouseIsOnMapObject(out Vector3 hitPoint);
+                MapObject mapObject = GameController.Instance.CheckMouseIsOnMapObject(Input.mousePosition, out Vector3 hitPoint);
                 if (mapObject == null)
                 {
                     PlayerCommand.Instance.Done();
