@@ -524,15 +524,19 @@ namespace Sango.Render
             mapCamera.OffsetCamera(offset);
         }
 
-        public static float QueryHeight(Vector3 pos)
+        public static bool Raycast(Ray ray, out Vector3 hitPoint)
+        {
+            return Raycast(ray.origin, ray.direction, out hitPoint);
+        }
+        public static bool Raycast(Vector3 origin, Vector3 direction, out Vector3 hitPoint)
         {
             VertexData[][] vertexDatas = Instance.mapData.vertexDatas;
             int quadSize = Instance.mapData.quadSize;
-            int startX = (int)pos.z / quadSize;
-            int startY = (int)pos.x / quadSize;
+            int startX = (int)origin.z / quadSize;
+            int startY = (int)origin.x / quadSize;
 
-            float deltaX = pos.z - startX * quadSize;
-            float deltaY = pos.x - startX * quadSize;
+            float deltaX = origin.z - startX * quadSize;
+            float deltaY = origin.x - startX * quadSize;
             float halfQuadSize = quadSize / 2.0f;
 
             if (deltaX < halfQuadSize && deltaY < halfQuadSize || deltaX > halfQuadSize && deltaY > halfQuadSize || deltaX < halfQuadSize && deltaY > halfQuadSize)
@@ -541,9 +545,9 @@ namespace Sango.Render
                 VertexData ver2 = vertexDatas[startX + 1][startY + 1];
                 VertexData ver3 = vertexDatas[startX][startY + 1];
                 if (PlaneLineIntersection.GetIntersectionWithXPerpendicularLine(ver0.position,
-                    ver2.position, ver3.position, pos + Vector3.up * 100, Vector3.down, out Vector3 point))
+                    ver2.position, ver3.position, direction, Vector3.down, out hitPoint))
                 {
-                    return point.y;
+                    return true;
                 }
             }
             else
@@ -552,74 +556,32 @@ namespace Sango.Render
                 VertexData ver1 = vertexDatas[startX + 1][startY];
                 VertexData ver2 = vertexDatas[startX + 1][startY + 1];
                 if (PlaneLineIntersection.GetIntersectionWithXPerpendicularLine(ver1.position,
-                   ver2.position, ver0.position, pos + Vector3.up * 100, Vector3.down, out Vector3 point))
+                   ver2.position, ver0.position, direction, Vector3.down, out hitPoint))
 
                 {
-                    return point.y;
+                    return true;
                 }
-
             }
+            return false;
+        }
+
+        public static float QueryHeight(Vector3 pos)
+        {
+            if (Raycast(pos, pos + Vector3.up * 100, out Vector3 hitPoint))
+                return hitPoint.y;
             return 0;
         }
 
         public static bool QueryHeight(Vector3 pos, out float height)
         {
-            VertexData[][] vertexDatas = Instance.mapData.vertexDatas;
-            int quadSize = Instance.mapData.quadSize;
-            int startX = (int)pos.z / quadSize;
-            int startY = (int)pos.x / quadSize;
-
-            float deltaX = pos.z - startX * quadSize;
-            float deltaY = pos.x - startX * quadSize;
-            float halfQuadSize = quadSize / 2.0f;
-
-            if (deltaX < halfQuadSize && deltaY < halfQuadSize || deltaX > halfQuadSize && deltaY > halfQuadSize || deltaX < halfQuadSize && deltaY > halfQuadSize)
+            if (Raycast(pos, pos + Vector3.up * 100, out Vector3 hitPoint))
             {
-                VertexData ver0 = vertexDatas[startX][startY];
-                VertexData ver2 = vertexDatas[startX + 1][startY + 1];
-                VertexData ver3 = vertexDatas[startX][startY + 1];
-                if (PlaneLineIntersection.GetIntersectionWithXPerpendicularLine(ver0.position,
-                    ver2.position, ver3.position, pos + Vector3.up * 100, Vector3.down, out Vector3 point))
-                {
-                    height = point.y;
-                    return true;
-                }
-            }
-            else
-            {
-                VertexData ver0 = vertexDatas[startX][startY];
-                VertexData ver1 = vertexDatas[startX + 1][startY];
-                VertexData ver2 = vertexDatas[startX + 1][startY + 1];
-                if (PlaneLineIntersection.GetIntersectionWithXPerpendicularLine(ver1.position,
-                   ver2.position, ver0.position, pos + Vector3.up * 100, Vector3.down, out Vector3 point))
-
-                {
-                    height = point.y;
-                    return true;
-                }
-
+                height = hitPoint.y;
+                return true;
             }
             height = 0;
             return false;
         }
-
-        //public static bool QueryHeight(Vector3 pos, out float height)
-        //{
-        //    Vector3 begin = pos;
-        //    begin.y = 500;
-        //    Ray ray = new Ray(begin, Vector3.down);
-        //    RaycastHit raycastHit;
-        //    if (Physics.Raycast(ray, out raycastHit, 1000, LayerMask.GetMask("Map"), QueryTriggerInteraction.Ignore))
-        //    {
-        //        height = raycastHit.point.y;
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        height = 0;
-        //        return false;
-        //    }
-        //}
 
         public void ZoomCamera(float delta)
         {
