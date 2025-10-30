@@ -10,7 +10,6 @@ namespace Sango.Render
     public class MapData : MapProperty
     {
         //public NativeArray<MapData.VertexData> vertexMap;
-        bool isClear = false;
         public static Vector2Int[] NeighborVertex = new Vector2Int[] {
             new Vector2Int(1, 0),
             new Vector2Int(1, 1),
@@ -20,6 +19,7 @@ namespace Sango.Render
             new Vector2Int(0, -1),
         };
         NativeArray<VertexData> nativeVertexDatas;
+        bool needDisposeNativeVertexDatas;
         public struct VertexData
         {
             public byte height;
@@ -46,14 +46,15 @@ namespace Sango.Render
         {
             base.Init();
             Create(map.mapWidth, map.mapHeight);
-            isClear = false;
         }
 
         public override void Clear()
         {
-            if (isClear) return;
-            nativeVertexDatas.Dispose();
-            isClear = true;
+            if (needDisposeNativeVertexDatas)
+            {
+                needDisposeNativeVertexDatas = false;
+                nativeVertexDatas.Dispose();
+            }
             base.Clear();
             vertexDatas = null;
         }
@@ -117,6 +118,7 @@ namespace Sango.Render
             int maxVertexCount = vertex_x_max * vertex_y_max;
 
             nativeVertexDatas = new NativeArray<VertexData>(maxVertexCount, Allocator.Persistent);
+            needDisposeNativeVertexDatas = true;
             NativeArray<VertexData> nativeVertexDatasTemp = new NativeArray<VertexData>(maxVertexCount, Allocator.Persistent);
 
             NativeArray<Vector2Int> neighborVertexArray = new NativeArray<Vector2Int>(6, Allocator.Persistent);

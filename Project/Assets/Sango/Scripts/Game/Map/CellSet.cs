@@ -62,11 +62,12 @@ namespace Sango.Game
             c.moveAble = c.TerrainType.moveable;
         }
 
-        public void SetTerrainTypeAndState(int x, int y, int terrainType, int terrainState)
+        public void SetTerrainTypeAndState(int x, int y, int terrainType, int terrainState, int areaId)
         {
             Cell c = Cells[x][y];
             c.terrainType = terrainType;
             c.TerrainType = Scenario.Cur.CommonData.TerrainTypes.Get(c.terrainType);
+            c.areaId = areaId;
             if (c.TerrainType == null)
                 c.TerrainType = Scenario.Cur.CommonData.TerrainTypes[0];
             //c.Fertility = c.TerrainType.Fertility;

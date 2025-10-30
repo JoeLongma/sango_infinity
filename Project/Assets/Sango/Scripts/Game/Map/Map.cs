@@ -49,7 +49,8 @@ namespace Sango.Game
                     {
                         int terrainType = reader.ReadByte();
                         int terrainState = reader.ReadInt32();
-                        CellSet.SetTerrainTypeAndState(x, y, terrainType, terrainState);
+                        int areaId = reader.ReadUInt16();
+                        CellSet.SetTerrainTypeAndState(x, y, terrainType, terrainState, areaId);
                     }
                 }
 

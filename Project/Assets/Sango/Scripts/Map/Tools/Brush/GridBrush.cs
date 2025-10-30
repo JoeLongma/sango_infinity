@@ -17,7 +17,7 @@ namespace Sango.Tools
         public enum BrushType : int
         {
             TerrainType,
-            //Area,
+            Area,
             //Trap,
             //Dir,
             //Interior,
@@ -34,7 +34,7 @@ namespace Sango.Tools
         private string[] toolbarTitle = new string[] {
             "无",
             "类型",
-            //"区域",
+            "区域",
             ////"lpB",
             //"陷阱",
             //"方向",
@@ -49,7 +49,7 @@ namespace Sango.Tools
         public BrushType brushType = BrushType.Unknown;
         public string[] terrainTypeTexNames = new string[] {
             "editor_terrain_type",
-            //"editor_area_type",
+            "editor_area_type",
             //"editor_trap_type",
             //"editor_dir_type",
             //"editor_interior_type",
@@ -60,7 +60,7 @@ namespace Sango.Tools
         };
         public Texture[] terrainTypeTexes = new Texture[] {
             Texture2D.whiteTexture,
-            //Texture2D.whiteTexture,
+            Texture2D.whiteTexture,
             //Texture2D.whiteTexture,
             //Texture2D.whiteTexture,
             //Texture2D.whiteTexture,
@@ -70,10 +70,14 @@ namespace Sango.Tools
             //Texture2D.whiteTexture,
         };
         public Texture2D terrainTypeTex;
-
         public Texture2D terrainTypeMaskTex;
         public int terrainTypeMaskCol = 4;
         public int terrainTypeMaskRow = 8;
+
+        public Texture2D terrainAreaTex;
+        public int terrainAreaMaskCol = 4;
+        public int terrainAreaMaskRow = 8;
+
         public bool showTerrainType = false;
         private bool showGrid = true;
         internal UnityEngine.Rect maskWindowRect = new UnityEngine.Rect(20, 20, 256, 256);
@@ -151,7 +155,7 @@ namespace Sango.Tools
                 int yStart = (terrainTypeMaskCol - 1 - i / terrainTypeMaskCol) * texture2D.width;
 
                 for (int x = 0; x < texture2D.width; ++x)
-                    for(int y = 0; y < texture2D.height; ++y)
+                    for (int y = 0; y < texture2D.height; ++y)
                     {
                         terrainTypeTex.SetPixel(xStart + x, yStart + y, pixels[x + y * texture2D.width]);
                     }
@@ -161,21 +165,85 @@ namespace Sango.Tools
             }
             RenderTexture.ReleaseTemporary(renderTexture);
             terrainTypeTex.Apply();
-            Shader.SetGlobalTexture("_TerrainTypeTex", terrainTypeTex);
+            terrainTypeTexes[0] = terrainTypeTex;
+
+            UpdateTerrainMaskTex(brushType);
+            //Shader.SetGlobalTexture("_TerrainTypeTex", terrainTypeTex);
             image[1].texture = terrainTypeTex;
-            GameObject.Destroy(texCreator);
+            //GameObject.Destroy(texCreator);
+
+            yield return CreateAreaTexture();
+        }
+
+        IEnumerator CreateAreaTexture()
+        {
+            int celSize = 64;
+            GameObject texCreator = GameObject.Instantiate(Resources.Load("TerrainArea")) as GameObject;
+            UnityEngine.UI.Text text = texCreator.GetComponentInChildren<UnityEngine.UI.Text>();
+            UnityEngine.UI.RawImage[] image = texCreator.GetComponentsInChildren<UnityEngine.UI.RawImage>(true);
+            Camera cam = texCreator.GetComponent<Camera>();
+            RenderTexture renderTexture = RenderTexture.GetTemporary(celSize, celSize, 24, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default, 8);
+            int count = 2048 / 64;
+            int terrainTypeMaskCol = count;
+            int terrainTypeMaskRow = count;
+            count = count * count;
+            terrainAreaTex = new Texture2D(terrainTypeMaskCol * celSize, terrainTypeMaskCol * celSize);
+            terrainTypeMaskRow = terrainTypeMaskCol;
+            Texture gridTex = Resources.Load<Texture>("layer_grid");
+            for (int i = 0; i < count; ++i)
+            {
+                text.text = $"{i}";
+                text.color = UnityEngine.Color.white;
+                image[0].color = new UnityEngine.Color(UnityEngine.Random.Range(0, 1f), UnityEngine.Random.Range(0, 1f), UnityEngine.Random.Range(0, 1f));
+                image[0].texture = gridTex;
+                cam.enabled = true;
+                cam.targetTexture = renderTexture;
+                cam.Render();
+                yield return new WaitForEndOfFrame();
+                yield return new WaitForEndOfFrame();
+                cam.enabled = false;
+                cam.targetTexture = null;
+                RenderTexture.active = renderTexture;
+                Texture2D texture2D = new Texture2D(celSize, celSize);
+                texture2D.ReadPixels(new UnityEngine.Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
+                texture2D.Apply(); // 应用更改
+                RenderTexture.active = null; // 重置RenderTexture.active以避免潜在问题
+                UnityEngine.Color[] pixels = texture2D.GetPixels();
+
+                int xStart = i % terrainTypeMaskCol * texture2D.width;
+                int yStart = (terrainTypeMaskCol - 1 - i / terrainTypeMaskCol) * texture2D.width;
+
+                for (int x = 0; x < texture2D.width; ++x)
+                    for (int y = 0; y < texture2D.height; ++y)
+                    {
+                        terrainAreaTex.SetPixel(xStart + x, yStart + y, pixels[x + y * texture2D.width]);
+                    }
+
+                GameObject.DestroyImmediate(texture2D);
+
+            }
+            RenderTexture.ReleaseTemporary(renderTexture);
+            terrainAreaTex.Apply();
+            terrainTypeTexes[1] = terrainAreaTex;
+            //Shader.SetGlobalTexture("_TerrainTypeTex", terrainTypeTex);
+            image[1].texture = terrainAreaTex;
+            //GameObject.Destroy(texCreator);
+
+            UpdateTerrainMaskTex(brushType);
+
             yield return null;
         }
+
 
         public override void OnEnter()
         {
             Shader.SetGlobalFloat("_terrainTypeAlpha", 1);
-            for (int i = 0; i < terrainTypeTexNames.Length; ++i)
-            {
-                terrainTypeTexes[i] = editor.map.CreateTexture("Editor/" + terrainTypeTexNames[i]);
-                if (i == (int)brushType)
-                    UpdateTerrainMaskTex();
-            }
+            //for (int i = 0; i < terrainTypeTexNames.Length; ++i)
+            //{
+            //    terrainTypeTexes[i] = editor.map.CreateTexture("Editor/" + terrainTypeTexNames[i]);
+            //    if (i == (int)brushType)
+            //        UpdateTerrainMaskTex();
+            //}
         }
         public UnityEngine.Color TypeIndexToColor(int index)
         {
@@ -198,14 +266,14 @@ namespace Sango.Tools
             y = terrainTypeMaskTex.height - y - 1;
             terrainTypeMaskTex.SetPixel(x, y, c);
         }
-        public byte GetGridDataProterty(BrushType brushType, MapGrid.GridData data)
+        public int GetGridDataProterty(BrushType brushType, MapGrid.GridData data)
         {
             switch (brushType)
             {
                 case BrushType.TerrainType:
                     return data.terrainType;
-                    //case BrushType.Area:
-                    //    return data.areaId;
+                case BrushType.Area:
+                    return data.areaId;
                     //case BrushType.Trap:
                     //    return data.trap;
                     //case BrushType.Dir:
@@ -230,9 +298,9 @@ namespace Sango.Tools
                 case BrushType.TerrainType:
                     data.terrainType = value;
                     break;
-                    //case BrushType.Area:
-                    //    data.areaId = value;
-                    //    break;
+                case BrushType.Area:
+                    data.areaId = value;
+                    break;
                     //case BrushType.Trap:
                     //    data.trap = value;
                     //    break;
@@ -275,16 +343,16 @@ namespace Sango.Tools
             {
                 case BrushType.TerrainType:
                     {
-                        //terrainTypeMaskCol = 4;
-                        //terrainTypeMaskRow = 8;
+                        terrainTypeMaskCol = 8;
+                        terrainTypeMaskRow = 8;
                     }
                     break;
-                    //case BrushType.Area:
-                    //    {
-                    //        terrainTypeMaskCol = 16;
-                    //        terrainTypeMaskRow = 16;
-                    //    }
-                    //    break;
+                case BrushType.Area:
+                    {
+                        terrainTypeMaskCol = 32;
+                        terrainTypeMaskRow = 32;
+                    }
+                    break;
                     //case BrushType.Dir:
                     //    {
                     //        terrainTypeMaskCol = 4;
@@ -308,8 +376,7 @@ namespace Sango.Tools
                     //    }
                     //    break;
             }
-            //Shader.SetGlobalTexture("_TerrainTypeTex", terrainTypeTexes[(int)b]);
-            Shader.SetGlobalTexture("_TerrainTypeTex", terrainTypeTex);
+            Shader.SetGlobalTexture("_TerrainTypeTex", terrainTypeTexes[(int)b]);
 
             Shader.SetGlobalFloat("_terrainTypeMaskCol", terrainTypeMaskCol);
             Shader.SetGlobalFloat("_terrainTypeMaskRow", terrainTypeMaskRow);
@@ -353,25 +420,25 @@ namespace Sango.Tools
                 editor.map.mapGrid.ApplyRangMask();
             }
         }
-        //void Load311GridData()
-        //{
-        //    string[] path = WindowDialog.OpenFileDialog("地格文件(*.SHEX)|*.SHEX\0");
-        //    if (path != null)
-        //    {
-        //        string fName = path[0];
-        //        editor.map.mapGrid.LoadFrom311GridData(fName);
-        //        UpdateTerrainMaskTex();
-        //    }
-        //}
+        void Load311GridData()
+        {
+            string[] path = WindowDialog.OpenFileDialog("地格文件(*.SHEX)|*.SHEX\0");
+            if (path != null)
+            {
+                string fName = path[0];
+                editor.map.mapGrid.LoadFrom311GridData(fName);
+                UpdateTerrainMaskTex();
+            }
+        }
 
-        //void SaveTo311GridData()
-        //{
-        //    string path = WindowDialog.SaveFileDialog("4791.SHEX", "地格文件(*.SHEX)|*.SHEX\0");
-        //    if (path != null)
-        //    {
-        //        editor.map.mapGrid.SaveTo311GridData(path);
-        //    }
-        //}
+        void SaveTo311GridData()
+        {
+            string path = WindowDialog.SaveFileDialog("4791.SHEX", "地格文件(*.SHEX)|*.SHEX\0");
+            if (path != null)
+            {
+                editor.map.mapGrid.SaveTo311GridData(path);
+            }
+        }
 
         public override void OnGUI()
         {
@@ -383,21 +450,22 @@ namespace Sango.Tools
                 OnBrushSizeChange();
             }
 
-            //int _opacity = EditorUtility.IntField(opacity, "笔刷值");
-            //if (_opacity != opacity) {
-            //    opacity = _opacity;
-            //}
+            int _opacity = EditorUtility.IntField(opacity, "笔刷值");
+            if (_opacity != opacity)
+            {
+                opacity = _opacity;
+            }
 
-            //GUILayout.BeginHorizontal();
-            //if (GUILayout.Button("加载311地格数据"))
-            //{
-            //    Load311GridData();
-            //}
-            //if (GUILayout.Button("保存为311地格数据"))
-            //{
-            //    SaveTo311GridData();
-            //}
-            //GUILayout.EndHorizontal();
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("加载311地格数据"))
+            {
+                Load311GridData();
+            }
+            if (GUILayout.Button("保存为311地格数据"))
+            {
+                SaveTo311GridData();
+            }
+            GUILayout.EndHorizontal();
 
 
             UnityEngine.Color lastColor = GUI.backgroundColor;
@@ -449,10 +517,11 @@ namespace Sango.Tools
                 //    break;
                 //case BrushType.Area:
                 //    {
-                //        //int state = GUILayout.SelectionGrid(opacity, moveStateTitle);
-                //        //if (state != opacity) {
-                //        //    moveState = state;
-                //        //}
+                //        int state = GUILayout.SelectionGrid(opacity, moveStateTitle);
+                //        if (state != opacity)
+                //        {
+                //            moveState = state;
+                //        }
                 //    }
                 //    break;
                 case BrushType.TerrainType:

@@ -14,7 +14,8 @@ namespace Sango.Render
         // 2022/10/20 add to 4
         // 2025/3/8 add to 5
         // 2025/3/14 add to 6
-        public const int VERSION = 7;
+        // 2025/10/30 add to 8
+        public const int VERSION = 8;
         static internal string[] SeasonNames = { "Autumn", "Spring", "Summer", "Winter" };
 
         public int mapWidth;

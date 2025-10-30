@@ -11,6 +11,7 @@ namespace Sango.Game
         public Vector2Int coords;
         public int terrainType;
         public int terrainState;
+        public int areaId;
 
         public TerrainType TerrainType { get; set; }
         public Hexagon.Hex Cub { get; set; }// { get { return Hexagon.Coord.OffsetToCube(x, y); } }

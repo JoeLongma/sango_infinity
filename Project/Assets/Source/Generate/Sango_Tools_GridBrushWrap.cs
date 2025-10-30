@@ -145,7 +145,7 @@ public class Sango_Tools_GridBrushWrap
 			Sango.Tools.GridBrush obj = (Sango.Tools.GridBrush)ToLua.CheckObject<Sango.Tools.GridBrush>(L, 1);
 			Sango.Tools.GridBrush.BrushType arg0 = (Sango.Tools.GridBrush.BrushType)ToLua.CheckObject(L, 2, TypeTraits<Sango.Tools.GridBrush.BrushType>.type);
 			Sango.Render.MapGrid.GridData arg1 = (Sango.Render.MapGrid.GridData)ToLua.CheckObject<Sango.Render.MapGrid.GridData>(L, 3);
-			byte o = obj.GetGridDataProterty(arg0, arg1);
+			int o = obj.GetGridDataProterty(arg0, arg1);
 			LuaDLL.lua_pushinteger(L, o);
 			return 1;
 		}

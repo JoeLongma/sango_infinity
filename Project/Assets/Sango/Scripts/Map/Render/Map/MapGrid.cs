@@ -80,6 +80,7 @@ namespace Sango.Render
         {
             public byte terrainType;
             public int terrainState;
+            public ushort areaId;
 
 #if SANGO_DEBUG
             [NoToLua]
@@ -89,7 +90,10 @@ namespace Sango.Render
 #endif
 
             //public int terrainState;
-            //public San11GridData san11GridData;
+#if UNITY_EDITOR
+            [NoToLua]
+            public San11GridData san11GridData;
+#endif
             public GridData()
             {
                 //san11GridData = new San11GridData()
@@ -123,8 +127,10 @@ namespace Sango.Render
             public void OnLoad(int versionCode, BinaryReader reader)
             {
                 terrainType = reader.ReadByte();
-                if(versionCode >= 7)
+                if (versionCode >= 7)
                     terrainState = reader.ReadInt32();
+                if (versionCode >= 8)
+                    areaId = reader.ReadUInt16();
 
                 if (versionCode < 5)
                 {
@@ -134,12 +140,16 @@ namespace Sango.Render
                         San11GridData sanData = new San11GridData();
                         sanData.OnLoad(versionCode, reader);
                         terrainType = (byte)(sanData.tType + 1);
+                        areaId = (ushort)(sanData.areaId + 1);
                         if (sanData.defence > 0)
                             SetGridState(GridState.Defence, true);
                         if (sanData.thief > 0)
                             SetGridState(GridState.Thief, true);
                         if (sanData.interior > 0)
                             SetGridState(GridState.Interior, true);
+#if UNITY_EDITOR
+                        san11GridData = sanData;
+#endif
                     }
                 }
             }
@@ -147,6 +157,7 @@ namespace Sango.Render
             {
                 writer.Write(terrainType);
                 writer.Write(terrainState);
+                writer.Write(areaId);
                 //san11GridData.OnSave(writer);
             }
         }
@@ -270,26 +281,52 @@ namespace Sango.Render
         //        data.san11GridData.OnLoad(0, binr);
         //    }
         //}
-        //public void SaveTo311GridData(string filename)
-        //{
-        //    FileStream fs = new FileStream(filename, FileMode.Create, FileAccess.ReadWrite);
-        //    BinaryWriter binr = new BinaryWriter(fs);
-        //    //SHEX0008
-        //    binr.Write('S');
-        //    binr.Write('H');
-        //    binr.Write('E');
-        //    binr.Write('X');
-        //    binr.Write('0');
-        //    binr.Write('0');
-        //    binr.Write('0');
-        //    binr.Write('8');
-        //    for (int i = 0; i < 40000; ++i) {
-        //        int y = i % 200;
-        //        int x = i / 200;
-        //        GridData data = gridDatas[x + 28][y + 28];
-        //        data.san11GridData.OnSave(binr);
-        //    }
-        //}
+        public void SaveTo311GridData(string filename)
+        {
+            FileStream fs = new FileStream(filename, FileMode.Create, FileAccess.ReadWrite);
+            BinaryWriter binr = new BinaryWriter(fs);
+            //SHEX0008
+            binr.Write('S');
+            binr.Write('H');
+            binr.Write('E');
+            binr.Write('X');
+            binr.Write('0');
+            binr.Write('0');
+            binr.Write('0');
+            binr.Write('8');
+            for (int i = 0; i < 40000; ++i)
+            {
+                int y = i % 200;
+                int x = i / 200;
+                GridData data = gridDatas[x + 28][y + 28];
+                data.san11GridData.OnSave(binr);
+            }
+        }
+
+        public void LoadFrom311GridData(string filename)
+        {
+            FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
+            BinaryReader binr = new BinaryReader(fs);
+            binr.ReadBytes(8);
+            for (int i = 0; i < 40000; ++i)
+            {
+                int y = i % 200;
+                int x = i / 200;
+                GridData data = gridDatas[x + 28][y + 28];
+                San11GridData sanData = new San11GridData();
+                sanData.OnLoad(0, binr);
+
+                //data.terrainType = (byte)(sanData.tType + 1);
+                data.areaId = (ushort)(sanData.areaId + 1);
+                //if (sanData.defence > 0)
+                //    data.SetGridState(GridState.Defence, true);
+                //if (sanData.thief > 0)
+                //    data.SetGridState(GridState.Thief, true);
+                //if (sanData.interior > 0)
+                //    data.SetGridState(GridState.Interior, true);
+            }
+        }
+
         internal override void OnSave(BinaryWriter writer)
         {
             writer.Write(gridSize);
