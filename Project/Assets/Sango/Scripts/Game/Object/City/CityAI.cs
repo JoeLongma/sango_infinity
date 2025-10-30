@@ -127,7 +127,7 @@ namespace Sango.Game
                     City targetCity = priorityQueue.Higher(out priority);
                     if (targetCity != null)
                     {
-                        if (GameRandom.Changce(priority, 10000))
+                        if (GameRandom.Chance(priority, 10000))
                         {
                             city.TroopMissionType = MissionType.TroopOccupyCity;
                             city.TroopMissionTargetId = targetCity.Id;
@@ -826,7 +826,7 @@ namespace Sango.Game
             if (enemiesCities.Count == 0)
                 return false;
 
-            if (GameRandom.Changce(90))
+            if (GameRandom.Chance(90))
                 return false;
 
             return true;
@@ -864,7 +864,7 @@ namespace Sango.Game
             int barracksNum = city.GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.PatrolBureau);
             if (barracksNum <= 0) return true;
 
-            if (GameRandom.Changce((90 - city.security) * 3 / 2))
+            if (GameRandom.Chance((90 - city.security) * 3 / 2))
             {
                 Person[] people = ForceAI.CounsellorRecommendDevelop(city.freePersons);
                 if (people == null) return true;
@@ -893,7 +893,7 @@ namespace Sango.Game
             }
             else
             {
-                if (GameRandom.Changce((95 - city.morale) * 3 / 2))
+                if (GameRandom.Chance((95 - city.morale) * 3 / 2))
                 {
                     Person[] people = ForceAI.CounsellorRecommendTrainTroop(city.freePersons);
                     if (people == null) return true;

@@ -217,7 +217,7 @@ namespace Sango.Game
             if (!AIPrepared)
             {
                 AIPrepare(scenario);
-                scenario.Event.OnForceAIStart?.Invoke(this, scenario);
+                GameEvent.OnForceAIStart?.Invoke(this, scenario);
                 AIPrepared = true;
             }
 
@@ -230,7 +230,7 @@ namespace Sango.Game
                 AICommandList.RemoveAt(0);
             }
 
-            scenario.Event.OnForceAIEnd?.Invoke(this, scenario);
+            GameEvent.OnForceAIEnd?.Invoke(this, scenario);
             AIFinished = true;
             return true;
         }
@@ -263,7 +263,7 @@ namespace Sango.Game
             AICommandList.Add(ForceAI.AICaptives);
             AICommandList.Add(ForceAI.AITechniques);
 
-            scenario.Event.OnForceAIPrepare?.Invoke(this, scenario);
+            GameEvent.OnForceAIPrepare?.Invoke(this, scenario);
         }
 
         public override bool OnForceTurnStart(Scenario scenario)

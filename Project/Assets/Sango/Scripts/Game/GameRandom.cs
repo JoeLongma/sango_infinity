@@ -35,12 +35,12 @@ namespace Sango.Game
         /// </summary>
         /// <param name="percent"></param>
         /// <returns></returns>
-        public static bool Changce(int chance)
+        public static bool Chance(int chance)
         {
-            return Changce(chance, 100);
+            return Chance(chance, 100);
         }
 
-        public static bool Changce(int chance, int root)
+        public static bool Chance(int chance, int root)
         {
             if (chance <= 0) return false;
             else if (chance >= root) return true;

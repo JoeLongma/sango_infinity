@@ -1,5 +1,6 @@
 ﻿using Sango.Loader;
 using System.Text;
+using Unity.VisualScripting;
 using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
@@ -48,9 +49,26 @@ namespace Sango.Game.Render.UI
             aniText = null;
         }
 
-        public void ShowSkill(Skill skill)
+        public void ShowSkill(Skill skill, bool isFail, bool isCritical)
         {
-            skillText.Create(skill.Name, 1);
+            if (isFail)
+            {
+                skillText.flipY = true;
+                skillText.Create(skill.Name, UnityEngine.Color.gray, 0.4f);
+            }
+            else
+            {
+                if (isCritical)
+                {
+                    skillText.flipY = false;
+                    skillText.Create(skill.Name+"(暴击)", UnityEngine.Color.red, 1f);
+                }
+                else
+                {
+                    skillText.flipY = false;
+                    skillText.Create(skill.Name, UnityEngine.Color.cyan, 0.6f);
+                }
+            }
         }
     }
 }

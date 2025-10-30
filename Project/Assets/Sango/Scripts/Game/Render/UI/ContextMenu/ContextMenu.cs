@@ -22,7 +22,7 @@ namespace Sango.Game.Render.UI
 
             List<ContextMenuData> contextMenuDatas = ContenDatas[depth];
             contextMenuDatas.Clear();
-            Event.OnContextMenuShow?.Invoke(itemData);
+            GameEvent.OnContextMenuShow?.Invoke(itemData);
             if (contextMenuDatas.Count == 0)
                 return;
 

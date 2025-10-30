@@ -353,8 +353,30 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public int cityFallCanKeepItemFactor = 30;
 
+        /// <summary>
+        /// 每级兵种适应力对技能释放成功率的加成(百分比) 需要>=A级适应力(2)
+        /// </summary>
+        [JsonProperty] public int skillSuccessRateAddByAbility = 5;
 
+        /// <summary>
+        /// 每级兵种适应力对技能暴击率的加成(百分比) 需要>C级适应力(1)
+        /// </summary>
+        [JsonProperty] public int skillCriticalRateAddByAbility = 1;
 
+        /// <summary>
+        /// 每级兵种适应力对技能暴击率的加成(百分比) 需要>C级适应力(1)
+        /// </summary>
+        [JsonProperty] public int baseSkillCriticalRate = 5;
+
+        /// <summary>
+        /// 武力对暴击的加成值x (武力-60) * x / 10  大于60武力,每10点武力能加成x, 只取整数部分
+        /// </summary>
+        [JsonProperty] public int skillCriticalRateAddByStength = 1;
+
+        /// <summary>
+        /// 暴击倍率(百分比)
+        /// </summary>
+        [JsonProperty] public int skillCriticalFactor = 150;
 
         public float DifficultyDamageFactor
         {

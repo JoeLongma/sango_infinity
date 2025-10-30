@@ -63,6 +63,8 @@ namespace Sango.Game
 
         public TroopType WaterTroopType { get; set; }
 
+        public int WaterTroopTypeLv { get; private set; }
+
 
         /// <summary>
         /// 俘虏
@@ -348,6 +350,7 @@ namespace Sango.Game
                 Politics = Math.Max(Politics, p.Politics);
                 Glamour = Math.Max(Glamour, p.Glamour);
                 TroopTypeLv = Math.Max(TroopTypeLv, CheckTroopTypeLevel(TroopType, p));
+                WaterTroopTypeLv = Math.Max(WaterTroopTypeLv, p.WaterLv);
             });
 
             List<SkillInstance> skillInstances = new List<SkillInstance>();
@@ -402,7 +405,7 @@ namespace Sango.Game
             BuildPower = Politics * 2 / 3 + 50;
 
             // 事件可二次修改属性
-            scenario.Event.OnTroopCalculateAttribute?.Invoke(this, scenario);
+            GameEvent.OnTroopCalculateAttribute?.Invoke(this, scenario);
 
         }
 
@@ -474,11 +477,6 @@ namespace Sango.Game
             if (attacker.BelongForce != null && attacker.BelongForce.IsPlayer)
                 difficultyDamageFactor = Variables.DifficultyDamageFactor;
 
-            float crit_P = 1;
-            if (CalculateSkillCriticalBoost(attacker, target, skill, out crit_P))
-            {
-
-            }
             int atkBounds = skill != null ? skill.atk : 10;
             /*
              *公式来源参考:
@@ -512,8 +510,7 @@ namespace Sango.Game
                 )
                 //兵种相克系数
                 * CalculateRestrainBoost(attacker, target)
-                //会心系数
-                * crit_P
+               
                 // 额外增益 (科技系数等)
                 * Math.Max(0, (1 + attacker.DamageTroopExtraFactor))
 
@@ -550,15 +547,7 @@ namespace Sango.Game
             if (attacker.BelongForce != null && attacker.BelongForce.IsPlayer)
                 difficultyDamageFactor = Variables.DifficultyDamageFactor;
 
-            float crit_P = 1;
-            if (CalculateSkillCriticalBoost(attacker, target, skill, out crit_P))
-            {
-
-            }
-
             int damage = (int)(Math.Pow(attacker.troops, 0.5f) * attacker.Attack * Math.Pow((1f / 1500f), 0.5f) * (1 + (float)skill.atkDurability / 25f) * buildingType.damageBounds
-                // 会心 
-                * crit_P
                 // 额外增益 (科技系数等)
                 * Math.Max(0, (1 + attacker.DamageBuildingExtraFactor))
                 * attack_troops_type.durabilityDmg / 100
@@ -577,11 +566,6 @@ namespace Sango.Game
             if (attacker.BelongForce != null && attacker.BelongForce.IsPlayer)
                 difficultyDamageFactor = Variables.DifficultyDamageFactor;
 
-            float crit_P = 1;
-            if (CalculateSkillCriticalBoost(attacker, target, skill, out crit_P))
-            {
-
-            }
             int atkBounds = skill != null ? skill.atk : 10;
             /*
              *公式来源参考:
@@ -613,8 +597,7 @@ namespace Sango.Game
                 + attacker.troops / Variables.fight_base_troop_count
 
                 )
-                //会心系数
-                * crit_P
+               
                 // 额外增益 (科技系数等)
                 * Math.Max(0, (1 + attacker.DamageTroopExtraFactor))
 
@@ -1052,9 +1035,9 @@ namespace Sango.Game
                 int _foodCost = (int)System.Math.Ceiling(Scenario.Cur.Variables.baseFoodCostInTroop * absNum * TroopType.foodCostFactor) / 2;
                 int divFood = 0;
                 // 有概率保留部分
-                if (GameRandom.Changce(80))
+                if (GameRandom.Chance(80))
                     divFood += _foodCost;
-                if (GameRandom.Changce(50))
+                if (GameRandom.Chance(50))
                     divFood += _foodCost;
                 ChangeFood(-divFood, false);
             }
@@ -1119,15 +1102,44 @@ namespace Sango.Game
                     return false;
             }
 
-            TroopSpellSkillEvent @event = new TroopSpellSkillEvent()
+            if (!skill.CheckSuccess(this, spellCell))
             {
-                troop = this,
-                skill = skill,
-                spellCell = spellCell,
-            };
-            actionRenderEvent = @event;
-            RenderEvent.Instance.Add(@event);
-
+                int criticalFactor = skill.CheckCritical(this, spellCell);
+                if(criticalFactor > 100)
+                {
+                    TroopSpellSkillCriticalEvent @event = new TroopSpellSkillCriticalEvent()
+                    {
+                        troop = this,
+                        skill = skill,
+                        spellCell = spellCell,
+                        criticalFactor = criticalFactor 
+                    };
+                    actionRenderEvent = @event;
+                    RenderEvent.Instance.Add(@event);
+                }
+                else
+                {
+                    TroopSpellSkillEvent @event = new TroopSpellSkillEvent()
+                    {
+                        troop = this,
+                        skill = skill,
+                        spellCell = spellCell,
+                    };
+                    actionRenderEvent = @event;
+                    RenderEvent.Instance.Add(@event);
+                }
+            }
+            else
+            {
+                TroopSpellSkillFailEvent @event = new TroopSpellSkillFailEvent()
+                {
+                    troop = this,
+                    skill = skill,
+                    spellCell = spellCell,
+                };
+                actionRenderEvent = @event;
+                RenderEvent.Instance.Add(@event);
+            }
             return false;
         }
 
@@ -1344,9 +1356,9 @@ namespace Sango.Game
         {
             //TODO: 地格更新,需要处理一些事件
             if (lastCell != null)
-                ScenarioEvent.Event.OnTroopLeaveCell?.Invoke(lastCell, destCell);
+                GameEvent.OnTroopLeaveCell?.Invoke(lastCell, destCell);
 
-            ScenarioEvent.Event.OnTroopEnterCell?.Invoke(destCell, lastCell);
+            GameEvent.OnTroopEnterCell?.Invoke(destCell, lastCell);
 
             if (destCell.fire != null)
                 destCell.fire.BurnTroopFast(this);
@@ -1552,7 +1564,7 @@ namespace Sango.Game
             {
                 AIPrepare(scenario);
                 AIPrepared = true;
-                scenario.Event.OnTroopAIStart?.Invoke(this, scenario);
+                GameEvent.OnTroopAIStart?.Invoke(this, scenario);
             }
 
             TroopMissionBehaviour temp = TroopMissionBehaviour;
@@ -1569,7 +1581,7 @@ namespace Sango.Game
             if (!TroopMissionBehaviour.DoAI(this, scenario))
                 return false;
 
-            scenario.Event.OnTroopAIEnd?.Invoke(this, scenario);
+            GameEvent.OnTroopAIEnd?.Invoke(this, scenario);
             AIFinished = true;
             ActionOver = true;
             return true;

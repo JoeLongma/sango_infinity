@@ -64,7 +64,7 @@ namespace Sango.Game
 
         public void Update()
         {
-            value = ((baseValue * changeType.GetAgeFactor(master.Age)) / 10000 + Math.Min(Scenario.Cur.Variables.MaxAttributeGet, (valueExp / Scenario.Cur.Variables.AbilityExpLevelNeed))) * valueFacter / 10000;
+            value = ((baseValue * changeType.GetAgeFactor(master.Age)) / 10000 + Math.Min(Scenario.Cur.Variables.MaxAttributeGet, (valueExp / Scenario.Cur.Variables.AttributeExpLevelNeed))) * valueFacter / 10000;
         }
         public void SetExp(int exp)
         {

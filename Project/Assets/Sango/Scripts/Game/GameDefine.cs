@@ -120,5 +120,4 @@
         Durability,
         Security
     }
-
 }

@@ -85,11 +85,11 @@ namespace Sango.Game.Render.UI
             }
 #endif
 
-            Scenario.Cur.Event.OnTroopCreated += OnTroopChange;
-            Scenario.Cur.Event.OnTroopDestroyed += OnTroopChange;
-            Scenario.Cur.Event.OnForceStart += OnForceStart;
-            Scenario.Cur.Event.OnDayUpdate += OnDayUpdate;
-            Scenario.Cur.Event.OnCityFall += OnCityFall;
+            GameEvent.OnTroopCreated += OnTroopChange;
+            GameEvent.OnTroopDestroyed += OnTroopChange;
+            GameEvent.OnForceStart += OnForceStart;
+            GameEvent.OnDayUpdate += OnDayUpdate;
+            GameEvent.OnCityFall += OnCityFall;
 
             loopScrollRect.prefabSource = this;
             loopScrollRect.dataSource = this;
@@ -102,7 +102,7 @@ namespace Sango.Game.Render.UI
             //loopScrollRect.RefillCells();
         }
 
-        public void OnCityFall(City city, Troop atker, Scenario scenario)
+        public void OnCityFall(City city, Troop atker)
         {
             if (itemType == typeof(City))
             {
@@ -292,7 +292,7 @@ namespace Sango.Game.Render.UI
         public void OnSwitchCityInfoShow()
         {
             UICityHeadbar.showIndo = !UICityHeadbar.showIndo;
-            Event.OnCityHeadbarShowInfoChange?.Invoke();
+            GameEvent.OnCityHeadbarShowInfoChange?.Invoke();
         }
 
         public void OnSpeedChange()

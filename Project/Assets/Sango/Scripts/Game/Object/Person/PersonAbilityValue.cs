@@ -3,8 +3,11 @@ using System;
 
 namespace Sango.Game
 {
+    /// <summary>
+    /// 角色兵种适应力
+    /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-
+    
     public class PersonAbilityValue : IAarryDataObject
     {
         public int baseValue;

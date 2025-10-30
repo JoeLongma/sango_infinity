@@ -1302,9 +1302,6 @@ public class Sango_Game_ScenarioWrap
 		try
 		{
 			o = ToLua.ToObject(L, 1);
-			Sango.Game.Scenario obj = (Sango.Game.Scenario)o;
-			Sango.Game.ScenarioEvent ret = obj.Event;
-			ToLua.PushObject(L, ret);
 			return 1;
 		}
 		catch(Exception e)

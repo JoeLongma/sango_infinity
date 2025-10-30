@@ -23,21 +23,21 @@ namespace Sango.Game
 #if SANGO_DEBUG
             Sango.Log.Print("游戏关闭");
 #endif
-            Event.OnGameShutdown?.Invoke();
+            GameEvent.OnGameShutdown?.Invoke();
         }
         public override void Pause()
         {
 #if SANGO_DEBUG
             Sango.Log.Print("游戏暂停");
 #endif
-            Event.OnGamePause?.Invoke();
+            GameEvent.OnGamePause?.Invoke();
         }
         public override void Resume()
         {
 #if SANGO_DEBUG
             Sango.Log.Print("游戏恢复");
 #endif
-            Event.OnGameResume?.Invoke();
+            GameEvent.OnGameResume?.Invoke();
         }
 
         IEnumerator GameInit()
@@ -47,7 +47,7 @@ namespace Sango.Game
             yield return null;
             ModManager.Instance.InitMods();
             GameData.Instance.Init();
-            Event.OnGameInit?.Invoke();
+            GameEvent.OnGameInit?.Invoke();
             GameState.Instance.ChangeState((int)GameState.State.GAME_START_MENU);
             Window.Instance.ShowWindow("window_start");
             Window.Instance.HideWindow("window_loading");

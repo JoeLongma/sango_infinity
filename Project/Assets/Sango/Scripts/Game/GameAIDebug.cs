@@ -26,7 +26,7 @@ namespace Sango.Game
         public void Init()
         {
             if (!Enabled) return;
-            Scenario.Cur.Event.OnTroopAIStart += OnTroopAIStart;
+            GameEvent.OnTroopAIStart += OnTroopAIStart;
         }
         public bool waitForAIPrepare = false;
         public bool waitForTargetDirectPath = false;

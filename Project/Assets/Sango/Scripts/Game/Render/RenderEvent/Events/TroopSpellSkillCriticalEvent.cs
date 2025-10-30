@@ -1,10 +1,16 @@
-﻿namespace Sango.Game.Render
+﻿using Sango.Render;
+using System.Collections.Generic;
+using UnityEngine;
+
+
+namespace Sango.Game.Render
 {
-    public class TroopSpellSkillEvent : RenderEventBase
+    public class TroopSpellSkillCriticalEvent : RenderEventBase
     {
         public Troop troop;
         public Skill skill;
         public Cell spellCell;
+        public int criticalFactor;
         private bool isAction = false;
         private float time = 0;
         public override void Enter(Scenario scenario)
@@ -49,7 +55,7 @@
         public void Action()
         {
             if (isAction) return;
-            skill.Action(troop, spellCell, 100);
+            skill.Action(troop, spellCell, criticalFactor);
 
             if (troop.IsAlive)
             {

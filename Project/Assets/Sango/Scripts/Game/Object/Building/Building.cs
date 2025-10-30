@@ -151,8 +151,9 @@ namespace Sango.Game
 #if SANGO_DEBUG
             Sango.Log.Print($"[{BelongCity.Name}]{stringBuilder}完成{Name}建造!!");
 #endif
-            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(BelongCity, jobId, Builders.objects.ToArray(),
-               techniquePointGain, (x) => { techniquePointGain = x; });
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(techniquePointGain);
+            GameEvent.OnCityJobGainTechniquePoint?.Invoke(BelongCity, jobId, Builders.objects.ToArray(), overrideData);
+            techniquePointGain = overrideData.Value;
 
             BelongForce.GainTechniquePoint(techniquePointGain);
             Render.UpdateRender();
@@ -184,8 +185,9 @@ namespace Sango.Game
 #if SANGO_DEBUG
             Sango.Log.Print($"[{BelongCity.Name}]{stringBuilder}完成{Name}建造!!");
 #endif
-            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(BelongCity, jobId, Builders.objects.ToArray(),
-               techniquePointGain, (x) => { techniquePointGain = x; });
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(techniquePointGain);
+            GameEvent.OnCityJobGainTechniquePoint?.Invoke(BelongCity, jobId, Builders.objects.ToArray(), overrideData);
+            techniquePointGain = overrideData.Value;
 
             BelongForce.GainTechniquePoint(techniquePointGain);
 
@@ -220,8 +222,9 @@ namespace Sango.Game
 #if SANGO_DEBUG
             Sango.Log.Print($"[{BelongCity.Name}]{stringBuilder}完成{Name}升级!!");
 #endif
-            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(BelongCity, jobId, Builders.objects.ToArray(),
-               techniquePointGain, (x) => { techniquePointGain = x; });
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(techniquePointGain);
+            GameEvent.OnCityJobGainTechniquePoint?.Invoke(BelongCity, jobId, Builders.objects.ToArray(), overrideData);
+            techniquePointGain = overrideData.Value;
 
             BelongForce.GainTechniquePoint(techniquePointGain);
 

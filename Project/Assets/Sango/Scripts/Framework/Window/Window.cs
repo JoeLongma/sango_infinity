@@ -330,7 +330,7 @@ namespace Sango
             if (win != null)
             {
                 win.Show();
-                Sango.Game.Event.OnWindowCreate?.Invoke(windowName, win);
+                Sango.Game.GameEvent.OnWindowCreate?.Invoke(windowName, win);
             }
             return win;
         }

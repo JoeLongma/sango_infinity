@@ -1,11 +1,17 @@
-﻿namespace Sango.Game.Render
+﻿using Sango.Render;
+using System.Collections.Generic;
+using UnityEngine;
+
+
+namespace Sango.Game.Render
 {
-    public class TroopSpellSkillEvent : RenderEventBase
+    public class TroopSpellSkillFailEvent : RenderEventBase
     {
         public Troop troop;
         public Skill skill;
         public Cell spellCell;
         private bool isAction = false;
+        private Skill replaceSkill;
         private float time = 0;
         public override void Enter(Scenario scenario)
         {
@@ -15,8 +21,11 @@
             {
                 troop.Render.SetSmokeShow(true);
             }
+
+            replaceSkill = skill.isRange ? troop.NormalRangeSkill.Skill : troop.NormalSkill.Skill;
+
             if (skill.costEnergy > 0)
-                troop.Render.ShowSkill(skill, false);
+                troop.Render.ShowSkill(skill, true);
         }
 
         public override void Exit(Scenario scenario)
@@ -40,7 +49,7 @@
                 IsDone = true;
                 return IsDone;
             }
-            IsDone = skill.UpdateRender(troop, spellCell, scenario, time, Action);
+            IsDone = replaceSkill.UpdateRender(troop, spellCell, scenario, time, Action);
             time += deltaTime;
             return IsDone;
         }
@@ -49,7 +58,7 @@
         public void Action()
         {
             if (isAction) return;
-            skill.Action(troop, spellCell, 100);
+            replaceSkill.Action(troop, spellCell, 100);
 
             if (troop.IsAlive)
             {

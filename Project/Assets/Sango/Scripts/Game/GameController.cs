@@ -35,7 +35,7 @@ namespace Sango.Game
 
         public GameController()
         {
-            Event.OnContextMenuShow += OnContextMenuShow;
+            GameEvent.OnContextMenuShow += OnContextMenuShow;
         }
 
         public void OnContextMenuShow(ContextMenuData contextMenuData)
@@ -264,8 +264,7 @@ namespace Sango.Game
                 if (touch.phase == TouchPhase.Began)
                 {
                     dragPosition = touch.position;
-                    if (controlType != ControlType.None)
-                        return;
+                    isDragMoving = false;
 
                     if (IsOverUI(touch.fingerId)) return;
 
@@ -319,19 +318,51 @@ namespace Sango.Game
 
                 if (touch1.phase == TouchPhase.Began || touch2.phase == TouchPhase.Began)
                 {
-                    if ((touch1.phase == TouchPhase.Began && IsOverUI(touch1.fingerId)) || (touch2.phase == TouchPhase.Began && IsOverUI(touch2.fingerId)))
-                    {
-                        controlType = ControlType.None;
-                        return;
-                    }
+                    // 两只手指操作可以无视界面旋转和缩放相机
+                    //if ((touch1.phase == TouchPhase.Began && IsOverUI(touch1.fingerId)) || (touch2.phase == TouchPhase.Began && IsOverUI(touch2.fingerId)))
+                    //{
+                    //    controlType = ControlType.None;
+                    //    return;
+                    //}
                     touchPos[0] = touch1.position;
                     touchPos[1] = touch2.position;
                     controlType = ControlType.Rotate;
                 }
+                // 需要先检测,不然会由于有一个是Move而导致检测不到End
+                else if (touch1.phase == TouchPhase.Ended || touch2.phase == TouchPhase.Ended || touch1.phase == TouchPhase.Canceled || touch2.phase == TouchPhase.Canceled)
+                {
+                    // 返回单手指移动
+                    controlType = ControlType.Move;
+
+                    // 不再触发Click
+                    isDragMoving = true;
+
+                    Vector3 touchPosition;
+                    if (touch1.phase != TouchPhase.Ended && touch1.phase != TouchPhase.Canceled)
+                    {
+                        touchPosition = touch1.position;
+                    }
+                    else
+                    {
+                        touchPosition = touch2.position;
+                    }
+                    ray = Camera.main.ScreenPointToRay(touchPosition);
+                    float dis;
+                    if (viewPlane.Raycast(ray, out dis))
+                        worldPlaneDragPosition = ray.GetPoint(dis);
+
+                    if (isRotateMoving)
+                    {
+                        isRotateMoving = false;
+                        return;
+                    }
+
+                    OnRClickWorld();
+                }
                 else if (touch1.phase == TouchPhase.Moved || touch2.phase == TouchPhase.Moved)
                 {
-                    if (controlType != ControlType.Rotate)
-                        return;
+                    //if (controlType != ControlType.Rotate)
+                    //    return;
 
                     isRotateMoving = true;
                     Vector2 touch1Dirction = touch1.position - touchPos[0];
@@ -354,17 +385,6 @@ namespace Sango.Game
                     touchPos[0] = touch1.position;
                     touchPos[1] = touch2.position;
                 }
-                else if (touch1.phase == TouchPhase.Ended || touch2.phase == TouchPhase.Ended || touch1.phase == TouchPhase.Canceled || touch2.phase == TouchPhase.Canceled)
-                {
-                    controlType = ControlType.None;
-                    if (isRotateMoving)
-                    {
-                        isRotateMoving = false;
-                        return;
-                    }
-
-                    OnRClickWorld();
-                }
             }
         }
         public void OnClickWorld()
@@ -372,7 +392,7 @@ namespace Sango.Game
             Sango.Log.Error("OnClickWorld");
 
         }
-       
+
         public void OnRClickWorld()
         {
             Sango.Log.Error("OnRClickWorld");
@@ -425,7 +445,7 @@ namespace Sango.Game
 #endif
         }
 
-       
+
     }
 
 }

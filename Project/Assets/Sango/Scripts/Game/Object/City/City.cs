@@ -358,6 +358,14 @@ namespace Sango.Game
         }
 
 
+        public void LeaveToWild()
+        {
+            Leader = null;
+            BelongCorps = null;
+            BelongForce = null;
+            Render?.UpdateRender();
+        }
+
         public void UpdateFightPower()
         {
             fightPower = 1000 + troops;
@@ -862,7 +870,7 @@ namespace Sango.Game
                 atk.EnterCity(this);
                 Render?.UpdateRender();
                 CalculateHarvest();
-                Scenario.Cur.Event.OnCityFall?.Invoke(this, atk, Scenario.Cur);
+                GameEvent.OnCityFall?.Invoke(this, atk);
                 return;
             }
 
@@ -891,6 +899,31 @@ namespace Sango.Game
                     if (troop.IsAlive && troop.BelongForce == this.BelongForce)
                         troop.Clear();
                 });
+
+                // 清理港口,关卡
+                BelongForce.ForEachGate(x =>
+                {
+                    x.allPersons.ForEach(p =>
+                    {
+                        p.BelongCity = this;
+                        p.ClearMission();
+                        p.LeaveToWild();
+                    });
+                    x.allPersons.Clear();
+                    x.LeaveToWild();
+                });
+
+                BelongForce.ForEachPort(x =>
+                {
+                    x.allPersons.ForEach(p =>
+                    {
+                        p.BelongCity = this;
+                        p.ClearMission();
+                        p.LeaveToWild();
+                    });
+                    x.allPersons.Clear();
+                    x.LeaveToWild();
+                });
             }
 
             for (int i = allPersons.Count - 1; i >= 0; --i)
@@ -898,7 +931,7 @@ namespace Sango.Game
                 Person person = allPersons[i];
 
                 // 没有执行任务的才能被捕获,暂时不能抓捕主公
-                if (person.IsFree && person != person.BelongForce.Governor && GameRandom.Changce(cacaptureChangce))
+                if (person.IsFree && person != person.BelongForce.Governor && GameRandom.Chance(cacaptureChangce))
                 {
                     captiveList.Add(person);
                 }
@@ -922,7 +955,7 @@ namespace Sango.Game
             for (int i = allIntriorBuildings.Count - 1; i >= 0; i--)
             {
                 Building building = allIntriorBuildings[i];
-                if (building.isComplte && GameRandom.Changce(30))
+                if (building.isComplte && GameRandom.Chance(30))
                 {
                     building.ChangeCorps(atk.BelongCorps);
                 }
@@ -935,7 +968,7 @@ namespace Sango.Game
             for (int i = allOutterBuildings.Count - 1; i >= 0; i--)
             {
                 Building building = allOutterBuildings[i];
-                if (building.isComplte && GameRandom.Changce(30))
+                if (building.isComplte && GameRandom.Chance(30))
                 {
                     building.ChangeCorps(atk.BelongCorps);
                 }
@@ -994,7 +1027,7 @@ namespace Sango.Game
                 }
             }
 
-            Scenario.Cur.Event.OnCityFall?.Invoke(this, atk, Scenario.Cur);
+            GameEvent.OnCityFall?.Invoke(this, atk);
 
         }
 
@@ -1175,8 +1208,9 @@ namespace Sango.Game
             // TODO: 特性对开发的影响
             int goldNeed = variables.jobCost[jobId];
 
-            scenario.Event.OnCityCheckJobCost?.Invoke(this, jobId, personList,
-                goldNeed, (x) => { goldNeed = x; });
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(goldNeed);
+            GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
+            goldNeed = overrideData.Value;
 
             if (gold < goldNeed)
                 return false;
@@ -1206,11 +1240,14 @@ namespace Sango.Game
 
             totalValue = GameUtility.Method_FarmingAbility(totalValue);
 
-            scenario.Event.OnCityJobResult?.Invoke(this, jobId, personList,
-                totalValue, (x) => { totalValue = x; });
+            overrideData.Value = totalValue;
+            GameEvent.OnCityJobResult?.Invoke(this, jobId, personList, overrideData);
+            totalValue = overrideData.Value;
 
-            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList,
-                techniquePointGain, (x) => { techniquePointGain = x; });
+
+            overrideData.Value = totalValue;
+            GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
+            techniquePointGain = overrideData.Value;
 
             BelongForce.GainTechniquePoint(techniquePointGain);
             gold -= goldNeed;
@@ -1244,8 +1281,9 @@ namespace Sango.Game
             // TODO: 特性对开发的影响
             int goldNeed = variables.jobCost[jobId];
 
-            scenario.Event.OnCityCheckJobCost?.Invoke(this, jobId, personList,
-               goldNeed, (x) => { goldNeed = x; });
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(goldNeed);
+            GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
+            goldNeed = overrideData.Value;
 
             if (gold < goldNeed)
                 return false;
@@ -1276,11 +1314,14 @@ namespace Sango.Game
 
             totalValue = GameUtility.Method_DevelopAbility(totalValue);
 
-            scenario.Event.OnCityJobResult?.Invoke(this, jobId, personList,
-                totalValue, (x) => { totalValue = x; });
+            overrideData.Value = totalValue;
+            GameEvent.OnCityJobResult?.Invoke(this, jobId, personList, overrideData);
+            totalValue = overrideData.Value;
 
-            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList,
-                techniquePointGain, (x) => { techniquePointGain = x; });
+
+            overrideData.Value = totalValue;
+            GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
+            techniquePointGain = overrideData.Value;
 
             BelongForce.GainTechniquePoint(techniquePointGain);
             gold -= goldNeed;
@@ -1314,8 +1355,9 @@ namespace Sango.Game
 
             int goldNeed = variables.jobCost[jobId];
 
-            scenario.Event.OnCityCheckJobCost?.Invoke(this, jobId, personList,
-                goldNeed, (x) => { goldNeed = x; });
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(goldNeed);
+            GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
+            goldNeed = overrideData.Value;
 
 
             if (gold < goldNeed)
@@ -1349,11 +1391,14 @@ namespace Sango.Game
             totalValue = GameUtility.Method_SecurityAbility(totalValue, barracksLv);
 
             // 
-            scenario.Event.OnCityJobResult?.Invoke(this, jobId, personList,
-                  totalValue, (x) => { totalValue = x; });
+            overrideData.Value = totalValue;
+            GameEvent.OnCityJobResult?.Invoke(this, jobId, personList, overrideData);
+            totalValue = overrideData.Value;
 
-            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList,
-                techniquePointGain, (x) => { techniquePointGain = x; });
+
+            overrideData.Value = totalValue;
+            GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
+            techniquePointGain = overrideData.Value;
 
             BelongForce.GainTechniquePoint(techniquePointGain);
             gold -= goldNeed;
@@ -1386,8 +1431,9 @@ namespace Sango.Game
 
             int goldNeed = variables.jobCost[jobId];
 
-            scenario.Event.OnCityCheckJobCost?.Invoke(this, jobId, personList,
-                goldNeed, (x) => { goldNeed = x; });
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(goldNeed);
+            GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
+            goldNeed = overrideData.Value;
 
             if (gold < goldNeed)
                 return false;
@@ -1419,11 +1465,14 @@ namespace Sango.Game
             // 最终数值
             totalValue = GameUtility.Method_TrainTroop(totalValue, barracksLv);
 
-            scenario.Event.OnCityJobResult?.Invoke(this, jobId, personList,
-                 totalValue, (x) => { totalValue = x; });
+            overrideData.Value = totalValue;
+            GameEvent.OnCityJobResult?.Invoke(this, jobId, personList, overrideData);
+            totalValue = overrideData.Value;
 
-            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList,
-                techniquePointGain, (x) => { techniquePointGain = x; });
+
+            overrideData.Value = totalValue;
+            GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
+            techniquePointGain = overrideData.Value;
 
             BelongForce.GainTechniquePoint(techniquePointGain);
             gold -= goldNeed;
@@ -1453,8 +1502,9 @@ namespace Sango.Game
 
             int goldNeed = variables.jobCost[jobId];
 
-            scenario.Event.OnCityCheckJobCost?.Invoke(this, jobId, personList,
-             goldNeed, (x) => { goldNeed = x; });
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(goldNeed);
+            GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
+            goldNeed = overrideData.Value;
 
             if (gold < goldNeed)
                 return false;
@@ -1486,10 +1536,11 @@ namespace Sango.Game
 
                     if (wild_dest != null)
                     {
-                        scenario.Event.OnCityJobSearchingWild?.Invoke(this, jobId, person,
-                           ability_improve, (x) => { ability_improve = x; });
+                        overrideData.Value = ability_improve;
+                        GameEvent.OnCityJobSearchingWild?.Invoke(this, jobId, person, overrideData);
+                        ability_improve = overrideData.Value;
 
-                        if (GameRandom.Changce(10 * ability_improve))
+                        if (GameRandom.Chance(10 * ability_improve))
                         {
 #if SANGO_DEBUG
                             Sango.Log.Print($"@内政@[{BelongForce.Name}]<{Name}>的{person.Name}发现了人才->{wild_dest.Name}");
@@ -1512,7 +1563,7 @@ namespace Sango.Game
 
 
                 // 搜索钱财
-                if (!person.ActionOver && GameRandom.Changce((int)(10 * ability_improve)))
+                if (!person.ActionOver && GameRandom.Chance((int)(10 * ability_improve)))
                 {
                     person.merit += meritGain;
                     person.GainExp(meritGain);
@@ -1529,8 +1580,9 @@ namespace Sango.Game
                 person.ActionOver = true;
             }
 
-            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList,
-                techniquePointGain, (x) => { techniquePointGain = x; });
+            overrideData.Value = techniquePointGain;
+            GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
+            techniquePointGain = overrideData.Value;
 
             BelongForce.GainTechniquePoint(techniquePointGain);
             return true;
@@ -1591,8 +1643,9 @@ namespace Sango.Game
 
             int goldNeed = variables.jobCost[jobId];
 
-            scenario.Event.OnCityCheckJobCost?.Invoke(this, jobId, personList,
-                goldNeed, (x) => { goldNeed = x; });
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(goldNeed);
+            GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
+            goldNeed = overrideData.Value;
 
             if (gold < goldNeed)
                 return false;
@@ -1645,11 +1698,14 @@ namespace Sango.Game
 
             totalValue = GameUtility.Method_RecuritTroop(totalValue, barracksNum);
 
-            scenario.Event.OnCityJobResult?.Invoke(this, jobId, personList,
-                 totalValue, (x) => { totalValue = x; });
+            overrideData.Value = totalValue;
+            GameEvent.OnCityJobResult?.Invoke(this, jobId, personList, overrideData);
+            totalValue = overrideData.Value;
 
-            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList,
-                techniquePointGain, (x) => { techniquePointGain = x; });
+
+            overrideData.Value = totalValue;
+            GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
+            techniquePointGain = overrideData.Value;
 
             if (Scenario.Cur.Variables.populationEnable)
             {
@@ -1695,8 +1751,9 @@ namespace Sango.Game
 
             int goldNeed = variables.jobCost[jobId] + itemType.cost;
 
-            scenario.Event.OnCityCheckJobCost?.Invoke(this, jobId, personList,
-                 goldNeed, (x) => { goldNeed = x; });
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(goldNeed);
+            GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
+            goldNeed = overrideData.Value;
 
             if (gold < goldNeed)
                 return false;
@@ -1748,11 +1805,14 @@ namespace Sango.Game
 
             totalValue = GameUtility.Method_CreateItems(totalValue, buildingTotalLevel);
 
-            scenario.Event.OnCityJobResult?.Invoke(this, jobId, personList,
-                 totalValue, (x) => { totalValue = x; });
+            overrideData.Value = totalValue;
+            GameEvent.OnCityJobResult?.Invoke(this, jobId, personList, overrideData);
+            totalValue = overrideData.Value;
 
-            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList,
-                techniquePointGain, (x) => { techniquePointGain = x; });
+
+            overrideData.Value = totalValue;
+            GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
+            techniquePointGain = overrideData.Value;
 
             totalValue = Math.Min(empty, totalValue);
             int exsistNumber = itemStore.Add(itemType.Id, totalValue);
@@ -1795,11 +1855,15 @@ namespace Sango.Game
 
             int totalValue = GameUtility.Method_Trade(person.Politics);
 
-            scenario.Event.OnCityJobResult?.Invoke(this, jobId, personList,
-                 totalValue, (x) => { totalValue = x; });
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(totalValue);
+            GameEvent.OnCityJobResult?.Invoke(this, jobId, personList, overrideData);
+            totalValue = overrideData.Value;
 
-            scenario.Event.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList,
-                techniquePointGain, (x) => { techniquePointGain = x; });
+
+            overrideData.Value = totalValue;
+            GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
+            techniquePointGain = overrideData.Value;
+
             // TODO : 城市粮价
             totalValue = totalValue * goldNum * 5 / 100;
 
@@ -1970,7 +2034,7 @@ namespace Sango.Game
             if (!AIPrepared)
             {
                 AIPrepare(scenario);
-                scenario.Event.OnCityAIStart?.Invoke(this, scenario);
+                GameEvent.OnCityAIStart?.Invoke(this, scenario);
                 AIPrepared = true;
             }
 
@@ -1990,7 +2054,7 @@ namespace Sango.Game
                 AICommandList.RemoveAt(0);
             }
 
-            scenario.Event.OnCityAIEnd?.Invoke(this, scenario);
+            GameEvent.OnCityAIEnd?.Invoke(this, scenario);
             AIFinished = true;
             ActionOver = true;
             return true;
@@ -2063,7 +2127,7 @@ namespace Sango.Game
                 AICommandList.Add(CityAI.AIIntrior);
             }
 
-            scenario.Event.OnCityAIPrepare?.Invoke(this, scenario);
+            GameEvent.OnCityAIPrepare?.Invoke(this, scenario);
         }
 
         /// <summary>

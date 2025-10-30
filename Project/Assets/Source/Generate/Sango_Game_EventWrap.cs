@@ -6,7 +6,7 @@ public class Sango_Game_EventWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(Sango.Game.Event), typeof(Sango.EventBase));
+		L.BeginClass(typeof(Sango.Game.GameEvent), typeof(Sango.EventBase));
 		L.RegFunction("New", new LuaCSFunction(_CreateSango_Game_Event));
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
 		L.RegVar("OnGameStateEnter", new LuaCSFunction(get_OnGameStateEnter), new LuaCSFunction(set_OnGameStateEnter));
@@ -33,7 +33,7 @@ public class Sango_Game_EventWrap
 
 			if (count == 0)
 			{
-				Sango.Game.Event obj = new Sango.Game.Event();
+				Sango.Game.GameEvent obj = new Sango.Game.GameEvent();
 				ToLua.PushObject(L, obj);
 				return 1;
 			}
@@ -53,7 +53,7 @@ public class Sango_Game_EventWrap
 	{
 		try
 		{
-			ToLua.Push(L, Sango.Game.Event.OnGameStateEnter);
+			ToLua.Push(L, Sango.Game.GameEvent.OnGameStateEnter);
 			return 1;
 		}
 		catch (Exception e)
@@ -67,7 +67,7 @@ public class Sango_Game_EventWrap
 	{
 		try
 		{
-			ToLua.Push(L, Sango.Game.Event.OnGameStateExit);
+			ToLua.Push(L, Sango.Game.GameEvent.OnGameStateExit);
 			return 1;
 		}
 		catch (Exception e)
@@ -81,7 +81,7 @@ public class Sango_Game_EventWrap
 	{
 		try
 		{
-			ToLua.Push(L, Sango.Game.Event.OnScenarioLoadStart);
+			ToLua.Push(L, Sango.Game.GameEvent.OnScenarioLoadStart);
 			return 1;
 		}
 		catch (Exception e)
@@ -95,7 +95,7 @@ public class Sango_Game_EventWrap
 	{
 		try
 		{
-			ToLua.Push(L, Sango.Game.Event.OnScenarioLoadEnd);
+			ToLua.Push(L, Sango.Game.GameEvent.OnScenarioLoadEnd);
 			return 1;
 		}
 		catch (Exception e)
@@ -109,7 +109,7 @@ public class Sango_Game_EventWrap
 	{
 		try
 		{
-			ToLua.Push(L, Sango.Game.Event.OnWorldLoadStart);
+			ToLua.Push(L, Sango.Game.GameEvent.OnWorldLoadStart);
 			return 1;
 		}
 		catch (Exception e)
@@ -123,7 +123,7 @@ public class Sango_Game_EventWrap
 	{
 		try
 		{
-			ToLua.Push(L, Sango.Game.Event.OnWorldLoadEnd);
+			ToLua.Push(L, Sango.Game.GameEvent.OnWorldLoadEnd);
 			return 1;
 		}
 		catch (Exception e)
@@ -137,7 +137,7 @@ public class Sango_Game_EventWrap
 	{
 		try
 		{
-			ToLua.Push(L, Sango.Game.Event.OnScenarioStart);
+			ToLua.Push(L, Sango.Game.GameEvent.OnScenarioStart);
 			return 1;
 		}
 		catch (Exception e)
@@ -151,7 +151,7 @@ public class Sango_Game_EventWrap
 	{
 		try
 		{
-			ToLua.Push(L, Sango.Game.Event.OnScenarioPrepare);
+			ToLua.Push(L, Sango.Game.GameEvent.OnScenarioPrepare);
 			return 1;
 		}
 		catch (Exception e)
@@ -165,7 +165,7 @@ public class Sango_Game_EventWrap
 	{
 		try
 		{
-			ToLua.Push(L, Sango.Game.Event.OnScenarioEnd);
+			ToLua.Push(L, Sango.Game.GameEvent.OnScenarioEnd);
 			return 1;
 		}
 		catch (Exception e)
@@ -179,7 +179,7 @@ public class Sango_Game_EventWrap
 	{
 		try
 		{
-			ToLua.Push(L, Sango.Game.Event.OnScenarioTick);
+			ToLua.Push(L, Sango.Game.GameEvent.OnScenarioTick);
 			return 1;
 		}
 		catch (Exception e)
@@ -193,7 +193,7 @@ public class Sango_Game_EventWrap
 	{
 		try
 		{
-			ToLua.Push(L, Sango.Game.Event.OnWindowCreate);
+			ToLua.Push(L, Sango.Game.GameEvent.OnWindowCreate);
 			return 1;
 		}
 		catch (Exception e)
@@ -221,12 +221,12 @@ public class Sango_Game_EventWrap
 		try
 		{
 			Sango.EventBase.EventDelegate<int,int> arg0 = (Sango.EventBase.EventDelegate<int,int>)ToLua.CheckDelegate<Sango.EventBase.EventDelegate<int,int>>(L, 2);
-			Sango.Game.Event.OnGameStateEnter = arg0;
+			Sango.Game.GameEvent.OnGameStateEnter = arg0;
 
-			if (!object.ReferenceEquals(Sango.Game.Event.OnGameStateEnter, arg0))
+			if (!object.ReferenceEquals(Sango.Game.GameEvent.OnGameStateEnter, arg0))
 			{
-				if (Sango.Game.Event.OnGameStateEnter != null) Sango.Game.Event.OnGameStateEnter.SubRef();
-				Sango.Game.Event.OnGameStateEnter = arg0;
+				if (Sango.Game.GameEvent.OnGameStateEnter != null) Sango.Game.GameEvent.OnGameStateEnter.SubRef();
+				Sango.Game.GameEvent.OnGameStateEnter = arg0;
 			}
 
 			return 0;
@@ -243,12 +243,12 @@ public class Sango_Game_EventWrap
 		try
 		{
 			Sango.EventBase.EventDelegate<int,int> arg0 = (Sango.EventBase.EventDelegate<int,int>)ToLua.CheckDelegate<Sango.EventBase.EventDelegate<int,int>>(L, 2);
-			Sango.Game.Event.OnGameStateExit = arg0;
+			Sango.Game.GameEvent.OnGameStateExit = arg0;
 
-			if (!object.ReferenceEquals(Sango.Game.Event.OnGameStateExit, arg0))
+			if (!object.ReferenceEquals(Sango.Game.GameEvent.OnGameStateExit, arg0))
 			{
-				if (Sango.Game.Event.OnGameStateExit != null) Sango.Game.Event.OnGameStateExit.SubRef();
-				Sango.Game.Event.OnGameStateExit = arg0;
+				if (Sango.Game.GameEvent.OnGameStateExit != null) Sango.Game.GameEvent.OnGameStateExit.SubRef();
+				Sango.Game.GameEvent.OnGameStateExit = arg0;
 			}
 
 			return 0;
@@ -265,12 +265,12 @@ public class Sango_Game_EventWrap
 		try
 		{
 			Sango.EventBase.EventDelegate<Sango.Game.Scenario> arg0 = (Sango.EventBase.EventDelegate<Sango.Game.Scenario>)ToLua.CheckDelegate<Sango.EventBase.EventDelegate<Sango.Game.Scenario>>(L, 2);
-			Sango.Game.Event.OnScenarioLoadStart = arg0;
+			Sango.Game.GameEvent.OnScenarioLoadStart = arg0;
 
-			if (!object.ReferenceEquals(Sango.Game.Event.OnScenarioLoadStart, arg0))
+			if (!object.ReferenceEquals(Sango.Game.GameEvent.OnScenarioLoadStart, arg0))
 			{
-				if (Sango.Game.Event.OnScenarioLoadStart != null) Sango.Game.Event.OnScenarioLoadStart.SubRef();
-				Sango.Game.Event.OnScenarioLoadStart = arg0;
+				if (Sango.Game.GameEvent.OnScenarioLoadStart != null) Sango.Game.GameEvent.OnScenarioLoadStart.SubRef();
+				Sango.Game.GameEvent.OnScenarioLoadStart = arg0;
 			}
 
 			return 0;
@@ -287,12 +287,12 @@ public class Sango_Game_EventWrap
 		try
 		{
 			Sango.EventBase.EventDelegate<Sango.Game.Scenario> arg0 = (Sango.EventBase.EventDelegate<Sango.Game.Scenario>)ToLua.CheckDelegate<Sango.EventBase.EventDelegate<Sango.Game.Scenario>>(L, 2);
-			Sango.Game.Event.OnScenarioLoadEnd = arg0;
+			Sango.Game.GameEvent.OnScenarioLoadEnd = arg0;
 
-			if (!object.ReferenceEquals(Sango.Game.Event.OnScenarioLoadEnd, arg0))
+			if (!object.ReferenceEquals(Sango.Game.GameEvent.OnScenarioLoadEnd, arg0))
 			{
-				if (Sango.Game.Event.OnScenarioLoadEnd != null) Sango.Game.Event.OnScenarioLoadEnd.SubRef();
-				Sango.Game.Event.OnScenarioLoadEnd = arg0;
+				if (Sango.Game.GameEvent.OnScenarioLoadEnd != null) Sango.Game.GameEvent.OnScenarioLoadEnd.SubRef();
+				Sango.Game.GameEvent.OnScenarioLoadEnd = arg0;
 			}
 
 			return 0;
@@ -309,12 +309,12 @@ public class Sango_Game_EventWrap
 		try
 		{
 			Sango.EventBase.EventDelegate<Sango.Game.Scenario> arg0 = (Sango.EventBase.EventDelegate<Sango.Game.Scenario>)ToLua.CheckDelegate<Sango.EventBase.EventDelegate<Sango.Game.Scenario>>(L, 2);
-			Sango.Game.Event.OnWorldLoadStart = arg0;
+			Sango.Game.GameEvent.OnWorldLoadStart = arg0;
 
-			if (!object.ReferenceEquals(Sango.Game.Event.OnWorldLoadStart, arg0))
+			if (!object.ReferenceEquals(Sango.Game.GameEvent.OnWorldLoadStart, arg0))
 			{
-				if (Sango.Game.Event.OnWorldLoadStart != null) Sango.Game.Event.OnWorldLoadStart.SubRef();
-				Sango.Game.Event.OnWorldLoadStart = arg0;
+				if (Sango.Game.GameEvent.OnWorldLoadStart != null) Sango.Game.GameEvent.OnWorldLoadStart.SubRef();
+				Sango.Game.GameEvent.OnWorldLoadStart = arg0;
 			}
 
 			return 0;
@@ -331,12 +331,12 @@ public class Sango_Game_EventWrap
 		try
 		{
 			Sango.EventBase.EventDelegate<Sango.Game.Scenario> arg0 = (Sango.EventBase.EventDelegate<Sango.Game.Scenario>)ToLua.CheckDelegate<Sango.EventBase.EventDelegate<Sango.Game.Scenario>>(L, 2);
-			Sango.Game.Event.OnWorldLoadEnd = arg0;
+			Sango.Game.GameEvent.OnWorldLoadEnd = arg0;
 
-			if (!object.ReferenceEquals(Sango.Game.Event.OnWorldLoadEnd, arg0))
+			if (!object.ReferenceEquals(Sango.Game.GameEvent.OnWorldLoadEnd, arg0))
 			{
-				if (Sango.Game.Event.OnWorldLoadEnd != null) Sango.Game.Event.OnWorldLoadEnd.SubRef();
-				Sango.Game.Event.OnWorldLoadEnd = arg0;
+				if (Sango.Game.GameEvent.OnWorldLoadEnd != null) Sango.Game.GameEvent.OnWorldLoadEnd.SubRef();
+				Sango.Game.GameEvent.OnWorldLoadEnd = arg0;
 			}
 
 			return 0;
@@ -353,12 +353,12 @@ public class Sango_Game_EventWrap
 		try
 		{
 			Sango.EventBase.EventDelegate<Sango.Game.Scenario> arg0 = (Sango.EventBase.EventDelegate<Sango.Game.Scenario>)ToLua.CheckDelegate<Sango.EventBase.EventDelegate<Sango.Game.Scenario>>(L, 2);
-			Sango.Game.Event.OnScenarioStart = arg0;
+			Sango.Game.GameEvent.OnScenarioStart = arg0;
 
-			if (!object.ReferenceEquals(Sango.Game.Event.OnScenarioStart, arg0))
+			if (!object.ReferenceEquals(Sango.Game.GameEvent.OnScenarioStart, arg0))
 			{
-				if (Sango.Game.Event.OnScenarioStart != null) Sango.Game.Event.OnScenarioStart.SubRef();
-				Sango.Game.Event.OnScenarioStart = arg0;
+				if (Sango.Game.GameEvent.OnScenarioStart != null) Sango.Game.GameEvent.OnScenarioStart.SubRef();
+				Sango.Game.GameEvent.OnScenarioStart = arg0;
 			}
 
 			return 0;
@@ -375,12 +375,12 @@ public class Sango_Game_EventWrap
 		try
 		{
 			Sango.EventBase.EventDelegate<Sango.Game.Scenario> arg0 = (Sango.EventBase.EventDelegate<Sango.Game.Scenario>)ToLua.CheckDelegate<Sango.EventBase.EventDelegate<Sango.Game.Scenario>>(L, 2);
-			Sango.Game.Event.OnScenarioPrepare = arg0;
+			Sango.Game.GameEvent.OnScenarioPrepare = arg0;
 
-			if (!object.ReferenceEquals(Sango.Game.Event.OnScenarioPrepare, arg0))
+			if (!object.ReferenceEquals(Sango.Game.GameEvent.OnScenarioPrepare, arg0))
 			{
-				if (Sango.Game.Event.OnScenarioPrepare != null) Sango.Game.Event.OnScenarioPrepare.SubRef();
-				Sango.Game.Event.OnScenarioPrepare = arg0;
+				if (Sango.Game.GameEvent.OnScenarioPrepare != null) Sango.Game.GameEvent.OnScenarioPrepare.SubRef();
+				Sango.Game.GameEvent.OnScenarioPrepare = arg0;
 			}
 
 			return 0;
@@ -397,12 +397,12 @@ public class Sango_Game_EventWrap
 		try
 		{
 			Sango.EventBase.EventDelegate<Sango.Game.Scenario> arg0 = (Sango.EventBase.EventDelegate<Sango.Game.Scenario>)ToLua.CheckDelegate<Sango.EventBase.EventDelegate<Sango.Game.Scenario>>(L, 2);
-			Sango.Game.Event.OnScenarioEnd = arg0;
+			Sango.Game.GameEvent.OnScenarioEnd = arg0;
 
-			if (!object.ReferenceEquals(Sango.Game.Event.OnScenarioEnd, arg0))
+			if (!object.ReferenceEquals(Sango.Game.GameEvent.OnScenarioEnd, arg0))
 			{
-				if (Sango.Game.Event.OnScenarioEnd != null) Sango.Game.Event.OnScenarioEnd.SubRef();
-				Sango.Game.Event.OnScenarioEnd = arg0;
+				if (Sango.Game.GameEvent.OnScenarioEnd != null) Sango.Game.GameEvent.OnScenarioEnd.SubRef();
+				Sango.Game.GameEvent.OnScenarioEnd = arg0;
 			}
 
 			return 0;
@@ -419,12 +419,12 @@ public class Sango_Game_EventWrap
 		try
 		{
 			Sango.EventBase.EventDelegate<Sango.Game.Scenario,float> arg0 = (Sango.EventBase.EventDelegate<Sango.Game.Scenario,float>)ToLua.CheckDelegate<Sango.EventBase.EventDelegate<Sango.Game.Scenario,float>>(L, 2);
-			Sango.Game.Event.OnScenarioTick = arg0;
+			Sango.Game.GameEvent.OnScenarioTick = arg0;
 
-			if (!object.ReferenceEquals(Sango.Game.Event.OnScenarioTick, arg0))
+			if (!object.ReferenceEquals(Sango.Game.GameEvent.OnScenarioTick, arg0))
 			{
-				if (Sango.Game.Event.OnScenarioTick != null) Sango.Game.Event.OnScenarioTick.SubRef();
-				Sango.Game.Event.OnScenarioTick = arg0;
+				if (Sango.Game.GameEvent.OnScenarioTick != null) Sango.Game.GameEvent.OnScenarioTick.SubRef();
+				Sango.Game.GameEvent.OnScenarioTick = arg0;
 			}
 
 			return 0;
@@ -441,12 +441,12 @@ public class Sango_Game_EventWrap
 		try
 		{
 			Sango.EventBase.EventDelegate<string,Sango.Window.WindowInterface> arg0 = (Sango.EventBase.EventDelegate<string,Sango.Window.WindowInterface>)ToLua.CheckDelegate<Sango.EventBase.EventDelegate<string,Sango.Window.WindowInterface>>(L, 2);
-			Sango.Game.Event.OnWindowCreate = arg0;
+			Sango.Game.GameEvent.OnWindowCreate = arg0;
 
-			if (!object.ReferenceEquals(Sango.Game.Event.OnWindowCreate, arg0))
+			if (!object.ReferenceEquals(Sango.Game.GameEvent.OnWindowCreate, arg0))
 			{
-				if (Sango.Game.Event.OnWindowCreate != null) Sango.Game.Event.OnWindowCreate.SubRef();
-				Sango.Game.Event.OnWindowCreate = arg0;
+				if (Sango.Game.GameEvent.OnWindowCreate != null) Sango.Game.GameEvent.OnWindowCreate.SubRef();
+				Sango.Game.GameEvent.OnWindowCreate = arg0;
 			}
 
 			return 0;

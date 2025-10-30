@@ -54,8 +54,6 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public int[][] RelationMap { get; set; }
 
-        private ScenarioEvent scenarioEvent = new ScenarioEvent();
-        public ScenarioEvent Event { get { return scenarioEvent; } }
         public Force Add(Force force) { forceSet.Add(force); return force; }
         public Corps Add(Corps corps) { corpsSet.Add(corps); return corps; }
         public City Add(City city) { citySet.Add(city); return city; }
@@ -63,7 +61,7 @@ namespace Sango.Game
         public Troop Add(Troop troop)
         {
             troopsSet.Add(troop);
-            Event.OnTroopCreated?.Invoke(troop, this);
+            GameEvent.OnTroopCreated?.Invoke(troop, this);
             return troop;
         }
         public Building Add(Building building) { buildingSet.Add(building); return building; }
@@ -76,7 +74,7 @@ namespace Sango.Game
         public Troop Remove(Troop troop)
         {
             troopsSet.Remove(troop);
-            Event.OnTroopDestroyed?.Invoke(troop, this);
+            GameEvent.OnTroopDestroyed?.Invoke(troop, this);
             return troop;
         }
         public Building Remove(Building building) { buildingSet.Remove(building); return building; }
@@ -420,11 +418,10 @@ namespace Sango.Game
 
         public void OnWorldLoaded()
         {
-            Event.OnWorldLoadEnd?.Invoke(this);
+            GameEvent.OnWorldLoadEnd?.Invoke(this);
             this.Map.Init(this);
             this.Prepare();
             this.Init(this);
-            Event.OnStart?.Invoke(this);
             this.Start();
         }
 
@@ -481,10 +478,10 @@ namespace Sango.Game
             GameRandom.Init();
             Cur = scenario;
             scenario.IsAlive = false;
-            Cur.Event.OnLoadStart?.Invoke(scenario);
+            GameEvent.OnScenarioLoadStart?.Invoke(scenario);
             Cur.LoadContent();
-            Cur.Event.OnLoadEnd?.Invoke(Cur);
-            Cur.Event.OnWorldLoadStart?.Invoke(Cur);
+            GameEvent.OnScenarioLoadEnd?.Invoke(Cur);
+            GameEvent.OnWorldLoadStart?.Invoke(Cur);
             Cur.LoadWorld();
             //Cur.OnWorldLoaded();
             //Event.OnScenarioEnd?.Invoke(Cur);
@@ -513,9 +510,9 @@ namespace Sango.Game
         // 在Prepare之后
         public override void Init(Scenario scenario)
         {
-            Sango.Game.Event.OnGameShutdown += OnGameShutdown;
-            Sango.Game.Event.OnGamePause += OnGamePause;
-            Sango.Game.Event.OnGameResume += OnGameResume;
+            GameEvent.OnGameShutdown += OnGameShutdown;
+            GameEvent.OnGamePause += OnGamePause;
+            GameEvent.OnGameResume += OnGameResume;
 
             SeasonType cur_season = GameDefine.SeasonInMonth[Info.month - 1];
             MapRender.Instance.ChangeSeason((int)cur_season);
@@ -570,6 +567,8 @@ namespace Sango.Game
                     }
                 }
             }
+
+            GameEvent.OnScenarioInit?.Invoke(this);
         }
 
         /// <summary>
@@ -577,7 +576,7 @@ namespace Sango.Game
         /// </summary>
         public void Prepare()
         {
-            Sango.Game.Event.OnScenarioPrepare?.Invoke(this);
+            GameEvent.OnScenarioPrepare?.Invoke(this);
 
             for (int i = 0; i < prepareList.Count; ++i)
             {
@@ -590,6 +589,8 @@ namespace Sango.Game
         bool isThreadPause = false;
         public void Start()
         {
+            GameEvent.OnScenarioStart?.Invoke(this);
+
             Window.Instance.HideWindow("window_start");
             Window.Instance.HideWindow("window_loading");
             Window.Instance.ShowWindow("window_game");
@@ -635,6 +636,11 @@ namespace Sango.Game
                     }
                 });
             }
+        }
+
+        public void End()
+        {
+            GameEvent.OnScenarioEnd?.Invoke(this);
         }
 
         public void MakeForceQuene()
@@ -688,7 +694,7 @@ namespace Sango.Game
                 else
                 {
                     CurRunForce.OnForceTurnEnd(this);
-                    scenarioEvent.OnForceEnd?.Invoke(CurRunForce, this);
+                    GameEvent.OnForceEnd?.Invoke(CurRunForce, this);
                     CurRunForce = null;
                 }
             }
@@ -702,7 +708,7 @@ namespace Sango.Game
             {
                 Info.curForceId = CurRunForce.Id;
                 CurRunForce.OnForceTurnStart(this);
-                scenarioEvent.OnForceStart?.Invoke(CurRunForce, this);
+                GameEvent.OnForceStart?.Invoke(CurRunForce, this);
             }
             return false;
         }
@@ -744,15 +750,15 @@ namespace Sango.Game
             if (hasYear)
             {
                 OnYearStart(this);
-                scenarioEvent.OnYearUpdate?.Invoke(this);
+                GameEvent.OnYearUpdate?.Invoke(this);
             }
             if (hasMonth)
             {
                 OnMonthStart(this);
-                scenarioEvent.OnMonthUpdate?.Invoke(this);
+                GameEvent.OnMonthUpdate?.Invoke(this);
             }
             OnDayStart(this);
-            scenarioEvent.OnDayUpdate?.Invoke(this);
+            GameEvent.OnDayUpdate?.Invoke(this);
             OnDayEnd(this);
             if (hasMonth)
             {
@@ -767,7 +773,7 @@ namespace Sango.Game
             {
                 OnSeasonStart(this);
                 MapRender.Instance.ChangeSeason((int)cur_season);
-                scenarioEvent.OnSeasonUpdate?.Invoke(this);
+                GameEvent.OnSeasonUpdate?.Invoke(this);
                 OnSeasonEnd(this);
             }
 
@@ -842,7 +848,7 @@ namespace Sango.Game
             {
                 for (int j = i + 1; j < forceCount; ++j)
                 {
-                    if (GameRandom.Changce(scenario.Variables.relationChangeChance))
+                    if (GameRandom.Chance(scenario.Variables.relationChangeChance))
                     {
                         RelationMap[i][j] += scenario.Variables.relationChangePerMonth;
                         RelationMap[j][i] += scenario.Variables.relationChangePerMonth;

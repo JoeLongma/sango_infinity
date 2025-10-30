@@ -13,7 +13,7 @@ namespace Sango.Game
     {
         public override void Action(SkillInstance skillInstance, Troop troop, Cell spellCell, List<Cell> atkCellList)
         {
-            if (GameRandom.Changce(p1, 10000))
+            if (GameRandom.Chance(p1, 10000))
             {
                 Fire fire = new Fire()
                 {

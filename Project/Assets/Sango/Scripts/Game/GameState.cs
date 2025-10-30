@@ -27,9 +27,9 @@ namespace Sango.Game
             if (curState != dest)
             {
                 int last = curState;
-                Event.OnGameStateExit?.Invoke((int)curState, (int)dest);
+                GameEvent.OnGameStateExit?.Invoke((int)curState, (int)dest);
                 curState = dest;
-                Event.OnGameStateEnter?.Invoke((int)curState, (int)last);
+                GameEvent.OnGameStateEnter?.Invoke((int)curState, (int)last);
             }
         }
     }

@@ -55,7 +55,7 @@ namespace Sango.Game
             AICommandList.Add(CityAI.AIAttack);
             // 物资输送
             AICommandList.Add(CityAI.AITransfromToBelongCity);
-            scenario.Event.OnCityAIPrepare?.Invoke(this, scenario);
+            GameEvent.OnCityAIPrepare?.Invoke(this, scenario);
         }
     }
 }

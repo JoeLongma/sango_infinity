@@ -218,14 +218,14 @@ namespace Sango.Game.Render
             }
         }
 
-        public override void ShowSkill(Skill skill)
+        public override void ShowSkill(Skill skill, bool isFail, bool isCritical)
         {
             if (HeadBar != null)
             {
                 UITroopHeadbar uITroopHeadbar = HeadBar as UITroopHeadbar;
                 if (uITroopHeadbar != null)
                 {
-                    uITroopHeadbar.ShowSkill(skill);
+                    uITroopHeadbar.ShowSkill(skill, isFail, isCritical);
                 }
             }
         }

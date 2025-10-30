@@ -22,6 +22,8 @@ namespace Sango.Game
         [JsonProperty] public int level;
         [JsonProperty] public int[] spellRanges;
         [JsonProperty] public int needAblilityLevel;
+        [JsonProperty] public int successRate;
+        [JsonProperty] public int[] successRateAdd;
 
         [JsonProperty] public List<int> atkOffsetPoint;
 
@@ -204,6 +206,71 @@ namespace Sango.Game
             return isRange;
         }
 
+        /// <summary>
+        /// 成功率判断
+        /// </summary>
+        /// <param name="troop"></param>
+        /// <param name="spellCell"></param>
+        /// <returns></returns>
+        public bool CheckSuccess(Troop troop, Cell spellCell)
+        {
+            // TODO: 特殊状态必定成功
+            int baseSuccessRate = successRate + Math.Max(0, troop.TroopTypeLv - 1) * Scenario.Cur.Variables.skillSuccessRateAddByAbility;
+
+            // TODO: 其他加成
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(baseSuccessRate);
+            GameEvent.OnTroopCalculateSkillSuccess?.Invoke(troop, this, spellCell, overrideData);
+            baseSuccessRate = overrideData.Value;
+
+            return GameRandom.Chance(baseSuccessRate);
+        }
+
+        /*
+        *【战法爆击率】
+           1、如果有必爆特技则爆击率为100％，无必爆则执行战法爆击率判断。
+           2、战法爆击率 ＝ A + B + C
+           A：部队武力爆击加成：武力60以下＝0％；武力在60～79之间＝1％；武力大于等于80＝2％
+           B：部队适性爆击加成：C＝0％，B＝1％，A＝2％，S＝3％，依次推类
+           C：主副将关系爆击加成：
+            如果副将亲爱主将＋2％；
+            如果副将与主将结义或结婚＋4％；
+            如果副将厌恶主将－5％；
+           注：每名副将单独计算，即2员副将都亲爱主将＋4％，一仲介一厌恶则－1％；
+
+        * 
+        **/
+        /// <summary>
+        /// 暴击率检查
+        /// </summary>
+        /// <param name="troop"></param>
+        /// <param name="spellCell"></param>
+        /// <returns></returns>
+        public int CheckCritical(Troop troop, Cell spellCell)
+        {
+            // TODO: 特殊状态必定暴击
+            ScenarioVariables scenarioVariables = Scenario.Cur.Variables;
+
+            int basCriticalRate = scenarioVariables.baseSkillCriticalRate + troop.TroopTypeLv * Scenario.Cur.Variables.skillCriticalRateAddByAbility;
+            basCriticalRate += Math.Max(0, (troop.Strength - 60) * scenarioVariables.skillCriticalRateAddByStength / 10);
+
+            // TODO: 其他加成
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(basCriticalRate);
+            GameEvent.OnTroopCalculateSkillCritical?.Invoke(troop, this, spellCell, overrideData);
+            basCriticalRate = overrideData.Value;
+
+            int criticalFactor = 100;
+            if (GameRandom.Chance(basCriticalRate))
+            {
+                criticalFactor = scenarioVariables.baseSkillCriticalRate;
+                overrideData = new Tools.OverrideData<int>(criticalFactor);
+                GameEvent.OnTroopCalculateSkillCriticalFactor?.Invoke(troop, this, spellCell, overrideData);
+                criticalFactor = overrideData.Value;
+            }
+
+            return criticalFactor;
+        }
+
+
         public bool UpdateRender(Troop troop, Cell spellCell, Scenario scenario, float time, Action action)
         {
             if (time <= 0f)
@@ -223,8 +290,9 @@ namespace Sango.Game
 
         List<Cell> tempCellList = new List<Cell>();
 
-        public void Action(Troop troop, Cell spellCell)
+        public void Action(Troop troop, Cell spellCell, int criticalFactor)
         {
+
             ScenarioVariables scenarioVariables = Scenario.Cur.Variables;
             Troop targetTroop = spellCell.troop;
             BuildingBase targetBuilding = spellCell.building;
@@ -238,7 +306,7 @@ namespace Sango.Game
                 Troop beAtkTroop = atkCell.troop;
                 if (beAtkTroop != null && this.canDamageTroop && (troop.IsEnemy(beAtkTroop) || this.canDamageTeam))
                 {
-                    int damage = Troop.CalculateSkillDamage(troop, beAtkTroop, this);
+                    int damage = Troop.CalculateSkillDamage(troop, beAtkTroop, this) * criticalFactor / 100;
                     if (damage < 0)
                     {
                         damage = 0;
@@ -314,7 +382,7 @@ namespace Sango.Game
                 BuildingBase beAtkBuildingBase = atkCell.building;
                 if (beAtkBuildingBase != null && this.canDamageBuilding && (troop.IsEnemy(beAtkBuildingBase) || this.canDamageTeam))
                 {
-                    int damage = Troop.CalculateSkillDamage(troop, beAtkBuildingBase, this);
+                    int damage = Troop.CalculateSkillDamage(troop, beAtkBuildingBase, this) * criticalFactor / 100;
 #if SANGO_DEBUG
                     Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 使用<{this.Name}> 攻击 {beAtkBuildingBase.BelongForce?.Name}的 [{beAtkBuildingBase.Name}], 造成伤害:{damage}, 目标剩余耐久: {beAtkBuildingBase.durability}");
 #endif
@@ -322,7 +390,7 @@ namespace Sango.Game
                     if (beAtkBuildingBase is City)
                     {
                         City city = (City)beAtkBuildingBase;
-                        int damage_troops = Troop.CalculateSkillDamageTroopOnCity(troop, city, this);
+                        int damage_troops = Troop.CalculateSkillDamageTroopOnCity(troop, city, this) * criticalFactor / 100;
                         if (!city.ChangeTroops(-damage_troops, troop, city.BelongForce != null))
                         {
                             ep += 100;

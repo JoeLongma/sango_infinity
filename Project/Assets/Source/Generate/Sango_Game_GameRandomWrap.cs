@@ -73,7 +73,7 @@ public class Sango_Game_GameRandomWrap
 			if (count == 1)
 			{
 				int arg0 = (int)LuaDLL.luaL_checkinteger(L, 1);
-				bool o = Sango.Game.GameRandom.Changce(arg0);
+				bool o = Sango.Game.GameRandom.Chance(arg0);
 				LuaDLL.lua_pushboolean(L, o);
 				return 1;
 			}
@@ -81,7 +81,7 @@ public class Sango_Game_GameRandomWrap
 			{
 				int arg0 = (int)LuaDLL.luaL_checkinteger(L, 1);
 				int arg1 = (int)LuaDLL.luaL_checkinteger(L, 2);
-				bool o = Sango.Game.GameRandom.Changce(arg0, arg1);
+				bool o = Sango.Game.GameRandom.Chance(arg0, arg1);
 				LuaDLL.lua_pushboolean(L, o);
 				return 1;
 			}

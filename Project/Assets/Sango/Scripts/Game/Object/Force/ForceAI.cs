@@ -38,7 +38,7 @@ namespace Sango.Game
                             if (centerCity.gold > 3000)
                             {
                                 // 派遣结盟
-                                if (GameRandom.Changce(enemysenemy_relation, 10000))
+                                if (GameRandom.Chance(enemysenemy_relation, 10000))
                                 {
                                     centerCity.gold -= 1000;
                                     Alliance alliance = new Alliance()

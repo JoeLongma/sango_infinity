@@ -164,7 +164,7 @@ namespace Sango.Game
 
             if (IsPlayer)
             {
-                scenario.Event.OnPlayerControl(this, scenario);
+                GameEvent.OnPlayerControl(this, scenario);
                 return false;
             }
 
