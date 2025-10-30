@@ -25,7 +25,7 @@ namespace Sango.Game.Render
             replaceSkill = skill.isRange ? troop.NormalRangeSkill.Skill : troop.NormalSkill.Skill;
 
             if (skill.costEnergy > 0)
-                troop.Render.ShowSkill(skill, true);
+                troop.Render.ShowSkill(skill, true, false);
         }
 
         public override void Exit(Scenario scenario)

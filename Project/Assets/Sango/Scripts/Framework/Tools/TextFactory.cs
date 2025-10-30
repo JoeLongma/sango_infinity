@@ -31,7 +31,6 @@ namespace Sango
         private void Awake()
         {
             _instance = this;
-            GameObject.DontDestroyOnLoad(this.gameObject);
             StartCoroutine("RenderText");
         }
 

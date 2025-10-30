@@ -22,7 +22,7 @@ namespace Sango.Game.Render
                 troop.Render.SetSmokeShow(true);
             }
             if (skill.costEnergy > 0)
-                troop.Render.ShowSkill(skill, false);
+                troop.Render.ShowSkill(skill, false, true);
         }
 
         public override void Exit(Scenario scenario)

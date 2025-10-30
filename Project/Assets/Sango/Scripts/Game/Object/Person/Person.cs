@@ -447,7 +447,7 @@ namespace Sango.Game
                 {
                     beFinded = true;
 
-                    if(missionType != (int)MissionType.PersonInCityCaptive && missionType != (int)MissionType.PersonInTroopCaptive)
+                    if (missionType != (int)MissionType.PersonInCityCaptive && missionType != (int)MissionType.PersonInTroopCaptive)
                     {
                         BelongCity.allPersons.Add(this);
                         if (BelongForce != BelongCity.BelongForce || BelongCorps != BelongCity.BelongCorps)
@@ -704,7 +704,22 @@ namespace Sango.Game
         {
             BelongCity.allPersons.Remove(this);
             Official = Scenario.Cur.CommonData.Officials.Get(0);
-            BelongCity.wildPersons.Add(this);
+            // 关卡和港口的武将下野到对应的城池里
+            if (BelongCity.BelongCity != null)
+            {
+                BelongCity.BelongCity.wildPersons.Add(this);
+#if SANGO_DEBUG
+                Sango.Log.Print($"@人才@[{BelongForce.Name}]的<{Name}>下野至{BelongCity.BelongCity.Name}");
+
+#endif
+            }
+            else
+            {
+                BelongCity.wildPersons.Add(this);
+#if SANGO_DEBUG
+                Sango.Log.Print($"@人才@[{BelongForce.Name}]的<{Name}>下野至{BelongCity.Name}");
+#endif
+            }
             BelongCorps = null;
             BelongForce = null;
             BelongTroop = null;

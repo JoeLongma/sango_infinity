@@ -80,7 +80,7 @@ namespace Sango.Game
         }
         public override void ForEach(Action<T> action)
         {
-            for (int i = 0; i < objects.Count; i++)
+            for (int i = objects.Count - 1; i >= 0; i--)
             {
                 T obj = objects[i];
                 if (obj != null)
@@ -90,7 +90,7 @@ namespace Sango.Game
 
         public override void ForEach(Action<SangoObject> action)
         {
-            for (int i = 1; i < objects.Count; i++)
+            for (int i = objects.Count - 1; i >= 0; i--)
             {
                 T obj = objects[i];
                 if (obj != null)

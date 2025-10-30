@@ -222,6 +222,9 @@ namespace Sango.Game
             GameEvent.OnTroopCalculateSkillSuccess?.Invoke(troop, this, spellCell, overrideData);
             baseSuccessRate = overrideData.Value;
 
+#if SANGO_DEBUG
+            Sango.Log.Print($"{troop.BelongForce.Name}的[{Name} 部队 准备释放技能: {Name} =>({spellCell.x},{spellCell.y})] 成功率:{baseSuccessRate}");
+#endif
             return GameRandom.Chance(baseSuccessRate);
         }
 
@@ -261,7 +264,7 @@ namespace Sango.Game
             int criticalFactor = 100;
             if (GameRandom.Chance(basCriticalRate))
             {
-                criticalFactor = scenarioVariables.baseSkillCriticalRate;
+                criticalFactor = scenarioVariables.skillCriticalFactor;
                 overrideData = new Tools.OverrideData<int>(criticalFactor);
                 GameEvent.OnTroopCalculateSkillCriticalFactor?.Invoke(troop, this, spellCell, overrideData);
                 criticalFactor = overrideData.Value;

@@ -510,7 +510,7 @@ namespace Sango.Game
                 )
                 //兵种相克系数
                 * CalculateRestrainBoost(attacker, target)
-               
+
                 // 额外增益 (科技系数等)
                 * Math.Max(0, (1 + attacker.DamageTroopExtraFactor))
 
@@ -597,7 +597,7 @@ namespace Sango.Game
                 + attacker.troops / Variables.fight_base_troop_count
 
                 )
-               
+
                 // 额外增益 (科技系数等)
                 * Math.Max(0, (1 + attacker.DamageTroopExtraFactor))
 
@@ -1091,6 +1091,7 @@ namespace Sango.Game
 
         public bool SpellSkill(Skill skill, Cell spellCell)
         {
+
             if (actionRenderEvent != null)
             {
                 if (actionRenderEvent.IsDone)
@@ -1102,17 +1103,21 @@ namespace Sango.Game
                     return false;
             }
 
-            if (!skill.CheckSuccess(this, spellCell))
+            if (skill.CheckSuccess(this, spellCell))
             {
+
                 int criticalFactor = skill.CheckCritical(this, spellCell);
-                if(criticalFactor > 100)
+                if (criticalFactor > 100)
                 {
+#if SANGO_DEBUG
+                    Sango.Log.Print($"{BelongForce.Name}的[{Name} 部队 技能: {skill.Name} =>({spellCell.x},{spellCell.y})]  暴击判定成功!  暴击伤害倍率{criticalFactor}!!");
+#endif
                     TroopSpellSkillCriticalEvent @event = new TroopSpellSkillCriticalEvent()
                     {
                         troop = this,
                         skill = skill,
                         spellCell = spellCell,
-                        criticalFactor = criticalFactor 
+                        criticalFactor = criticalFactor
                     };
                     actionRenderEvent = @event;
                     RenderEvent.Instance.Add(@event);
@@ -1131,6 +1136,9 @@ namespace Sango.Game
             }
             else
             {
+#if SANGO_DEBUG
+                Sango.Log.Print($"{BelongForce.Name}的[{Name} 部队 技能: {skill.Name} =>({spellCell.x},{spellCell.y})]  判定失败! 释放不成功!!");
+#endif
                 TroopSpellSkillFailEvent @event = new TroopSpellSkillFailEvent()
                 {
                     troop = this,

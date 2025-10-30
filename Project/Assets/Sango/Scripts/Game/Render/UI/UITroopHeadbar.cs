@@ -54,19 +54,19 @@ namespace Sango.Game.Render.UI
             if (isFail)
             {
                 skillText.flipY = true;
-                skillText.Create(skill.Name, UnityEngine.Color.gray, 0.4f);
+                skillText.Create(skill.Name + "(失败)", UnityEngine.Color.gray, 1f);
             }
             else
             {
                 if (isCritical)
                 {
                     skillText.flipY = false;
-                    skillText.Create(skill.Name+"(暴击)", UnityEngine.Color.red, 1f);
+                    skillText.Create(skill.Name + "<暴击!!>", UnityEngine.Color.red, 1f);
                 }
                 else
                 {
                     skillText.flipY = false;
-                    skillText.Create(skill.Name, UnityEngine.Color.cyan, 0.6f);
+                    skillText.Create(skill.Name, UnityEngine.Color.green, 1f);
                 }
             }
         }

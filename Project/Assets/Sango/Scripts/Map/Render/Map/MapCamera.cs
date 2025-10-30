@@ -22,7 +22,7 @@ namespace Sango.Render
         public float cur_distance = 300f;
         public Vector3 look_rotate = new Vector3(45f, -90f, 0f);
         public float zoomSpeed = 30;
-        public float keyBoardMoveSpeed = 1f;
+        public float keyBoardMoveSpeed = 300f;
         public float rotSpeed = 0.1f;
 
         bool changed = false;
@@ -254,29 +254,29 @@ namespace Sango.Render
             lookRotate = new Vector3(xl, look_rotate.y + angleX, lookRotate.z);
         }
 
-        public void MoveCameraKeyBoard(bool [] keyFlags)
+        public void MoveCameraKeyBoard(bool[] keyFlags)
         {
             if (keyFlags[0])//(Input.GetAxis("Horizontal")<0)
             {
-                position += -transform.right * keyBoardMoveSpeed;
+                position += -transform.right * keyBoardMoveSpeed * Time.unscaledDeltaTime;
             }
             if (keyFlags[1])
             {
-                position += transform.right * keyBoardMoveSpeed;
+                position += transform.right * keyBoardMoveSpeed * Time.unscaledDeltaTime;
             }
             if (keyFlags[2])
             {
                 Vector3 forward = transform.forward;
                 forward.y = 0;
                 forward.Normalize();
-                position += forward * keyBoardMoveSpeed;
+                position += forward * keyBoardMoveSpeed * Time.unscaledDeltaTime;
             }
             if (keyFlags[3])
             {
                 Vector3 forward = transform.forward;
                 forward.y = 0;
                 forward.Normalize();
-                position += forward * -keyBoardMoveSpeed;
+                position += forward * -keyBoardMoveSpeed * Time.unscaledDeltaTime;
             }
         }
 

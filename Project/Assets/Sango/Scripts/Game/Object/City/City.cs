@@ -746,11 +746,27 @@ namespace Sango.Game
 
         public City GetNearnestForceCity()
         {
-            for (int i = 0; i < NeighborList.Count; i++)
+            City checkCity = BelongCity;
+            if (checkCity != null)
             {
-                City city = NeighborList[i];
-                if (city.IsSameForce(this))
-                    return city;
+                if (checkCity.BelongForce == BelongForce)
+                    return checkCity;
+
+                for (int i = 0; i < checkCity.NeighborList.Count; i++)
+                {
+                    City city = checkCity.NeighborList[i];
+                    if (city.BelongForce == BelongForce)
+                        return city;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < NeighborList.Count; i++)
+                {
+                    City city = NeighborList[i];
+                    if (city.IsSameForce(this))
+                        return city;
+                }
             }
 
             City nearnest = null;
@@ -772,37 +788,6 @@ namespace Sango.Game
             }
             return nearnest;
         }
-
-        public City GetNearnestForceCity(Force force)
-        {
-            for (int i = 0; i < NeighborList.Count; i++)
-            {
-                City city = NeighborList[i];
-                if (city.BelongForce == force)
-                    return city;
-            }
-
-            City nearnest = null;
-            int distance = 100000;
-            if (force != null)
-            {
-                force.ForEachCity(city =>
-                {
-                    if (city != this)
-                    {
-                        int dis = Scenario.Cur.Map.Distance(city.CenterCell, this.CenterCell);
-                        if (dis < distance)
-                        {
-                            distance = dis;
-                            nearnest = city;
-                        }
-                    }
-                });
-            }
-            return nearnest;
-        }
-
-
         public Corps ChangeCorps(Corps other)
         {
             Corps last = null;
@@ -876,7 +861,7 @@ namespace Sango.Game
 
             // 确认一个撤退城市
             City escapeCity = null;
-            if (BelongForce.CityCount > 1)
+            if ((BelongForce.CityCount > 1 && IsCity()) || !IsCity())
             {
                 if (this == BelongForce.Governor.BelongCity)
                     escapeCity = GetNearnestForceCity();
@@ -905,7 +890,6 @@ namespace Sango.Game
                 {
                     x.allPersons.ForEach(p =>
                     {
-                        p.BelongCity = this;
                         p.ClearMission();
                         p.LeaveToWild();
                     });
@@ -917,7 +901,6 @@ namespace Sango.Game
                 {
                     x.allPersons.ForEach(p =>
                     {
-                        p.BelongCity = this;
                         p.ClearMission();
                         p.LeaveToWild();
                     });
@@ -1008,8 +991,10 @@ namespace Sango.Game
             troops = troops * scenarioVariables.cityFallCanKeepTroopsFactor / 100;
             itemStore.Split((100 - scenarioVariables.cityFallCanKeepItemFactor) / 100);
 
-            if (Render != null)
-                Render.UpdateRender();
+            Leader = atk.Leader;
+            atk.EnterCity(this);
+
+            Render?.UpdateRender();
 
             CalculateHarvest();
 
@@ -1071,7 +1056,9 @@ namespace Sango.Game
 
         public void OnPersonReturnCity(Person person)
         {
+#if SANGO_DEBUG
             Sango.Log.Print($"[{person.BelongForce.Name}]{person.Name}回到[{BelongForce.Name}]<{Name}>");
+#endif
         }
         public void OnPersonTransformEnd(Person person)
         {

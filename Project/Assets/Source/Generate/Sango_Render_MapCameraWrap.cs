@@ -16,6 +16,7 @@ public class Sango_Render_MapCameraWrap
 		L.RegFunction("ZoomCamera", new LuaCSFunction(ZoomCamera));
 		L.RegFunction("OffsetCamera", new LuaCSFunction(OffsetCamera));
 		L.RegFunction("RotateCamera", new LuaCSFunction(RotateCamera));
+		L.RegFunction("MoveCameraKeyBoard", new LuaCSFunction(MoveCameraKeyBoard));
 		L.RegFunction("SetCamera", new LuaCSFunction(SetCamera));
 		L.RegFunction("NeedUpdateCamera", new LuaCSFunction(NeedUpdateCamera));
 		L.RegFunction("UpdateRender", new LuaCSFunction(UpdateRender));
@@ -222,6 +223,23 @@ public class Sango_Render_MapCameraWrap
 			Sango.Render.MapCamera obj = (Sango.Render.MapCamera)ToLua.CheckObject<Sango.Render.MapCamera>(L, 1);
 			UnityEngine.Vector2 arg0 = ToLua.ToVector2(L, 2);
 			obj.RotateCamera(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int MoveCameraKeyBoard(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Render.MapCamera obj = (Sango.Render.MapCamera)ToLua.CheckObject<Sango.Render.MapCamera>(L, 1);
+			bool[] arg0 = ToLua.CheckBoolArray(L, 2);
+			obj.MoveCameraKeyBoard(arg0);
 			return 0;
 		}
 		catch (Exception e)

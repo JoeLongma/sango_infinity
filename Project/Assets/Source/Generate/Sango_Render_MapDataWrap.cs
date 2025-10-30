@@ -24,6 +24,7 @@ public class Sango_Render_MapDataWrap
 		L.RegFunction("VertexWaterPosition", new LuaCSFunction(VertexWaterPosition));
 		L.RegFunction("VertexNormal", new LuaCSFunction(VertexNormal));
 		L.RegFunction("UpdateRender", new LuaCSFunction(UpdateRender));
+		L.RegFunction("GetWaterHeight", new LuaCSFunction(GetWaterHeight));
 		L.RegFunction("GetHeight", new LuaCSFunction(GetHeight));
 		L.RegFunction("GetVertexData", new LuaCSFunction(GetVertexData));
 		L.RegFunction("GetWorldHeight", new LuaCSFunction(GetWorldHeight));
@@ -35,6 +36,9 @@ public class Sango_Render_MapDataWrap
 		L.RegVar("vertexDatas", new LuaCSFunction(get_vertexDatas), new LuaCSFunction(set_vertexDatas));
 		L.RegVar("bin_path", new LuaCSFunction(get_bin_path), new LuaCSFunction(set_bin_path));
 		L.RegVar("color_map", new LuaCSFunction(get_color_map), new LuaCSFunction(set_color_map));
+		L.RegVar("MapUVPiece", new LuaCSFunction(get_MapUVPiece), new LuaCSFunction(set_MapUVPiece));
+		L.RegVar("vertex_x_max", new LuaCSFunction(get_vertex_x_max), new LuaCSFunction(set_vertex_x_max));
+		L.RegVar("vertex_y_max", new LuaCSFunction(get_vertex_y_max), new LuaCSFunction(set_vertex_y_max));
 		L.RegVar("vertex_width", new LuaCSFunction(get_vertex_width), null);
 		L.RegVar("vertex_height", new LuaCSFunction(get_vertex_height), null);
 		L.RegVar("world_width", new LuaCSFunction(get_world_width), null);
@@ -433,6 +437,25 @@ public class Sango_Render_MapDataWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetWaterHeight(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			Sango.Render.MapData obj = (Sango.Render.MapData)ToLua.CheckObject<Sango.Render.MapData>(L, 1);
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			int arg1 = (int)LuaDLL.luaL_checkinteger(L, 3);
+			float o = obj.GetWaterHeight(arg0, arg1);
+			LuaDLL.lua_pushnumber(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int GetHeight(IntPtr L)
 	{
 		try
@@ -588,6 +611,63 @@ public class Sango_Render_MapDataWrap
 		catch (Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_MapUVPiece(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapData obj = (Sango.Render.MapData)o;
+			UnityEngine.Vector2 ret = obj.MapUVPiece;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index MapUVPiece on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_vertex_x_max(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapData obj = (Sango.Render.MapData)o;
+			int ret = obj.vertex_x_max;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index vertex_x_max on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_vertex_y_max(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapData obj = (Sango.Render.MapData)o;
+			int ret = obj.vertex_y_max;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index vertex_y_max on a nil value");
 		}
 	}
 
@@ -772,6 +852,63 @@ public class Sango_Render_MapDataWrap
 		catch (Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_MapUVPiece(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapData obj = (Sango.Render.MapData)o;
+			UnityEngine.Vector2 arg0 = ToLua.ToVector2(L, 2);
+			obj.MapUVPiece = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index MapUVPiece on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_vertex_x_max(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapData obj = (Sango.Render.MapData)o;
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			obj.vertex_x_max = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index vertex_x_max on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_vertex_y_max(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapData obj = (Sango.Render.MapData)o;
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			obj.vertex_y_max = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index vertex_y_max on a nil value");
 		}
 	}
 

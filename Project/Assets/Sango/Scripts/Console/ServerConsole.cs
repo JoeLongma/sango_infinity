@@ -178,7 +178,6 @@ public class ServerConsole : MonoBehaviour
     {
         GameObject console = new GameObject("console");
         console.AddComponent<ServerConsole>();
-        DontDestroyOnLoad(console);
     }
 }
 

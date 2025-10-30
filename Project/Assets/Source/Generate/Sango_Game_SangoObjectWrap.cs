@@ -7,11 +7,13 @@ public class Sango_Game_SangoObjectWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(Sango.Game.SangoObject), typeof(System.Object));
+		L.RegFunction("GetRender", new LuaCSFunction(GetRender));
 		L.RegFunction("DoAI", new LuaCSFunction(DoAI));
 		L.RegFunction("Run", new LuaCSFunction(Run));
 		L.RegFunction("OnScenarioPrepare", new LuaCSFunction(OnScenarioPrepare));
 		L.RegFunction("OnScenarioStart", new LuaCSFunction(OnScenarioStart));
-		L.RegFunction("OnNewTurn", new LuaCSFunction(OnNewTurn));
+		L.RegFunction("OnForceTurnStart", new LuaCSFunction(OnForceTurnStart));
+		L.RegFunction("OnForceTurnEnd", new LuaCSFunction(OnForceTurnEnd));
 		L.RegFunction("OnTurnStart", new LuaCSFunction(OnTurnStart));
 		L.RegFunction("OnTurnEnd", new LuaCSFunction(OnTurnEnd));
 		L.RegFunction("OnDayStart", new LuaCSFunction(OnDayStart));
@@ -55,6 +57,23 @@ public class Sango_Game_SangoObjectWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: Sango.Game.SangoObject.New");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetRender(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			Sango.Game.SangoObject obj = (Sango.Game.SangoObject)ToLua.CheckObject<Sango.Game.SangoObject>(L, 1);
+			Sango.Game.Render.ObjectRender o = obj.GetRender();
+			ToLua.PushObject(L, o);
+			return 1;
 		}
 		catch (Exception e)
 		{
@@ -133,25 +152,7 @@ public class Sango_Game_SangoObjectWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int OnNewTurn(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 2);
-			Sango.Game.SangoObject obj = (Sango.Game.SangoObject)ToLua.CheckObject<Sango.Game.SangoObject>(L, 1);
-			Sango.Game.Scenario arg0 = (Sango.Game.Scenario)ToLua.CheckObject<Sango.Game.Scenario>(L, 2);
-			bool o = obj.OnTurnStart(arg0);
-			LuaDLL.lua_pushboolean(L, o);
-			return 1;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int OnTurnStart(IntPtr L)
+	static int OnForceTurnStart(IntPtr L)
 	{
 		try
 		{
@@ -169,7 +170,7 @@ public class Sango_Game_SangoObjectWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int OnTurnEnd(IntPtr L)
+	static int OnForceTurnEnd(IntPtr L)
 	{
 		try
 		{
@@ -177,6 +178,42 @@ public class Sango_Game_SangoObjectWrap
 			Sango.Game.SangoObject obj = (Sango.Game.SangoObject)ToLua.CheckObject<Sango.Game.SangoObject>(L, 1);
 			Sango.Game.Scenario arg0 = (Sango.Game.Scenario)ToLua.CheckObject<Sango.Game.Scenario>(L, 2);
 			bool o = obj.OnForceTurnEnd(arg0);
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OnTurnStart(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Game.SangoObject obj = (Sango.Game.SangoObject)ToLua.CheckObject<Sango.Game.SangoObject>(L, 1);
+			Sango.Game.Scenario arg0 = (Sango.Game.Scenario)ToLua.CheckObject<Sango.Game.Scenario>(L, 2);
+			bool o = obj.OnTurnStart(arg0);
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OnTurnEnd(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Game.SangoObject obj = (Sango.Game.SangoObject)ToLua.CheckObject<Sango.Game.SangoObject>(L, 1);
+			Sango.Game.Scenario arg0 = (Sango.Game.Scenario)ToLua.CheckObject<Sango.Game.Scenario>(L, 2);
+			bool o = obj.OnTurnEnd(arg0);
 			LuaDLL.lua_pushboolean(L, o);
 			return 1;
 		}

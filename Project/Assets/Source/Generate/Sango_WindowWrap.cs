@@ -14,6 +14,7 @@ public class Sango_WindowWrap
 		L.RegFunction("CreateWindow", new LuaCSFunction(CreateWindow));
 		L.RegFunction("Init", new LuaCSFunction(Init));
 		L.RegFunction("ShowWindow", new LuaCSFunction(ShowWindow));
+		L.RegFunction("GetWindow", new LuaCSFunction(GetWindow));
 		L.RegFunction("HideWindow", new LuaCSFunction(HideWindow));
 		L.RegFunction("NewWindow", new LuaCSFunction(NewWindow));
 		L.RegFunction("New", new LuaCSFunction(_CreateSango_Window));
@@ -183,6 +184,24 @@ public class Sango_WindowWrap
 			Sango.Window obj = (Sango.Window)ToLua.CheckObject<Sango.Window>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
 			Sango.Window.WindowInterface o = obj.ShowWindow(arg0);
+			ToLua.PushObject(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetWindow(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Window obj = (Sango.Window)ToLua.CheckObject<Sango.Window>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			Sango.Window.WindowInterface o = obj.GetWindow(arg0);
 			ToLua.PushObject(L, o);
 			return 1;
 		}

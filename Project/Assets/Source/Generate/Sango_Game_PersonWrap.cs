@@ -17,8 +17,8 @@ public class Sango_Game_PersonWrap
 		L.RegFunction("UpdateMission", new LuaCSFunction(UpdateMission));
 		L.RegFunction("SetMission", new LuaCSFunction(SetMission));
 		L.RegFunction("ClearMission", new LuaCSFunction(ClearMission));
-		L.RegFunction("OnNewTurn", new LuaCSFunction(OnNewTurn));
 		L.RegFunction("OnTurnStart", new LuaCSFunction(OnTurnStart));
+		L.RegFunction("OnForceTurnStart", new LuaCSFunction(OnForceTurnStart));
 		L.RegFunction("TransformToCity", new LuaCSFunction(TransformToCity));
 		L.RegFunction("ChangeCorps", new LuaCSFunction(ChangeCorps));
 		L.RegFunction("ChangeCity", new LuaCSFunction(ChangeCity));
@@ -397,7 +397,7 @@ public class Sango_Game_PersonWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int OnNewTurn(IntPtr L)
+	static int OnTurnStart(IntPtr L)
 	{
 		try
 		{
@@ -415,7 +415,7 @@ public class Sango_Game_PersonWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int OnTurnStart(IntPtr L)
+	static int OnForceTurnStart(IntPtr L)
 	{
 		try
 		{

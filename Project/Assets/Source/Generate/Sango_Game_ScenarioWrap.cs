@@ -24,6 +24,7 @@ public class Sango_Game_ScenarioWrap
 		L.RegFunction("Init", new LuaCSFunction(Init));
 		L.RegFunction("Prepare", new LuaCSFunction(Prepare));
 		L.RegFunction("Start", new LuaCSFunction(Start));
+		L.RegFunction("End", new LuaCSFunction(End));
 		L.RegFunction("MakeForceQuene", new LuaCSFunction(MakeForceQuene));
 		L.RegFunction("TurnStart", new LuaCSFunction(TurnStart));
 		L.RegFunction("RunForces", new LuaCSFunction(RunForces));
@@ -67,7 +68,6 @@ public class Sango_Game_ScenarioWrap
 		L.RegVar("Variables", new LuaCSFunction(get_Variables), null);
 		L.RegVar("Map", new LuaCSFunction(get_Map), null);
 		L.RegVar("RelationMap", new LuaCSFunction(get_RelationMap), new LuaCSFunction(set_RelationMap));
-		L.RegVar("Event", new LuaCSFunction(get_Event), null);
 		L.RegVar("Cur", new LuaCSFunction(get_Cur), null);
 		L.RegVar("FilePath", new LuaCSFunction(get_FilePath), null);
 		L.RegVar("CurRunForce", new LuaCSFunction(get_CurRunForce), null);
@@ -540,6 +540,22 @@ public class Sango_Game_ScenarioWrap
 			ToLua.CheckArgsCount(L, 1);
 			Sango.Game.Scenario obj = (Sango.Game.Scenario)ToLua.CheckObject<Sango.Game.Scenario>(L, 1);
 			obj.Start();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int End(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			Sango.Game.Scenario obj = (Sango.Game.Scenario)ToLua.CheckObject<Sango.Game.Scenario>(L, 1);
+			obj.End();
 			return 0;
 		}
 		catch (Exception e)
@@ -1291,22 +1307,6 @@ public class Sango_Game_ScenarioWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index RelationMap on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_Event(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Event on a nil value");
 		}
 	}
 

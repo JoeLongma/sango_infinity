@@ -389,13 +389,13 @@ namespace Sango.Game
         }
         public void OnClickWorld()
         {
-            Sango.Log.Error("OnClickWorld");
+            //Sango.Log.Error("OnClickWorld");
 
         }
 
         public void OnRClickWorld()
         {
-            Sango.Log.Error("OnRClickWorld");
+            //Sango.Log.Error("OnRClickWorld");
         }
 
         bool[] keyFlags = new bool[4];

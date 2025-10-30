@@ -18,6 +18,7 @@ public class Sango_Game_GameWrap
 		L.RegFunction("DebugAI", new LuaCSFunction(DebugAI));
 		L.RegFunction("New", new LuaCSFunction(_CreateSango_Game_Game));
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
+		L.RegVar("UICamera", new LuaCSFunction(get_UICamera), null);
 		L.EndClass();
 	}
 
@@ -188,6 +189,25 @@ public class Sango_Game_GameWrap
 		catch (Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_UICamera(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Game obj = (Sango.Game.Game)o;
+			UnityEngine.Camera ret = obj.UICamera;
+			ToLua.PushSealed(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index UICamera on a nil value");
 		}
 	}
 }

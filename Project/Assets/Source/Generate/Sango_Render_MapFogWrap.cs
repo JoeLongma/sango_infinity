@@ -9,6 +9,7 @@ public class Sango_Render_MapFogWrap
 		L.BeginClass(typeof(Sango.Render.MapFog), typeof(Sango.Render.MapProperty));
 		L.RegFunction("Init", new LuaCSFunction(Init));
 		L.RegFunction("UpdateRender", new LuaCSFunction(UpdateRender));
+		L.RegFunction("Clear", new LuaCSFunction(Clear));
 		L.RegFunction("New", new LuaCSFunction(_CreateSango_Render_MapFog));
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
 		L.RegVar("fog_color", new LuaCSFunction(get_fog_color), new LuaCSFunction(set_fog_color));
@@ -73,6 +74,22 @@ public class Sango_Render_MapFogWrap
 			ToLua.CheckArgsCount(L, 1);
 			Sango.Render.MapFog obj = (Sango.Render.MapFog)ToLua.CheckObject<Sango.Render.MapFog>(L, 1);
 			obj.UpdateRender();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Clear(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			Sango.Render.MapFog obj = (Sango.Render.MapFog)ToLua.CheckObject<Sango.Render.MapFog>(L, 1);
+			obj.Clear();
 			return 0;
 		}
 		catch (Exception e)

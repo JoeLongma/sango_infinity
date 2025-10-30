@@ -12,7 +12,7 @@
 	<word>System.IO.FileAccess</word>
 	<word>System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</word>
 	<!-- XFreamwork -->
-
+	
 
 	<!-- Unity -->
 	<word extendType="DG.Tweening.ShortcutExtensions">UnityEngine.Component</word>
@@ -289,5 +289,7 @@
 	<word>Sango.Game.Render.RenderEventBase</word>
 	<word>Sango.Game.Render.WindowEvent</word>
 	<word>Sango.Game.Render.TroopMoveEvent</word>
+
+	<word>System.Collections.Generic.List`1[[Sango.Game.Scenario, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]</word>
 
 </root>

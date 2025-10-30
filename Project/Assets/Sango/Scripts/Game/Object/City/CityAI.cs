@@ -261,11 +261,8 @@ namespace Sango.Game
             if (city.BelongCity == null) return true;
 
             // 寻找最近的附属城市
-            City target = city.BelongCity;
-            if (!target.IsSameForce(city))
-            {
-                target = city.GetNearnestForceCity(city.BelongForce);
-            }
+            City target = city.GetNearnestForceCity();
+           
             if (target == null) return true;
 
             if (target.IsEnemiesRound()) return true;

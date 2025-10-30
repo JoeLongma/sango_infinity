@@ -7,6 +7,8 @@ public class Sango_Render_MapModelsWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(Sango.Render.MapModels), typeof(Sango.Render.MapProperty));
+		L.RegFunction("AddInstance", new LuaCSFunction(AddInstance));
+		L.RegFunction("RemoveInstance", new LuaCSFunction(RemoveInstance));
 		L.RegFunction("Init", new LuaCSFunction(Init));
 		L.RegFunction("Clear", new LuaCSFunction(Clear));
 		L.RegFunction("SetOutLineShow", new LuaCSFunction(SetOutLineShow));
@@ -28,6 +30,7 @@ public class Sango_Render_MapModelsWrap
 		L.RegVar("dynamicObjects", new LuaCSFunction(get_dynamicObjects), new LuaCSFunction(set_dynamicObjects));
 		L.RegVar("staticObjects", new LuaCSFunction(get_staticObjects), new LuaCSFunction(set_staticObjects));
 		L.RegVar("staticObjectsQuadTree", new LuaCSFunction(get_staticObjectsQuadTree), new LuaCSFunction(set_staticObjectsQuadTree));
+		L.RegVar("modelInstanceDatas", new LuaCSFunction(get_modelInstanceDatas), new LuaCSFunction(set_modelInstanceDatas));
 		L.EndClass();
 	}
 
@@ -49,6 +52,40 @@ public class Sango_Render_MapModelsWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: Sango.Render.MapModels.New");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int AddInstance(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Render.MapModels obj = (Sango.Render.MapModels)ToLua.CheckObject<Sango.Render.MapModels>(L, 1);
+			Sango.Render.MapObject arg0 = (Sango.Render.MapObject)ToLua.CheckObject<Sango.Render.MapObject>(L, 2);
+			obj.AddInstance(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int RemoveInstance(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Render.MapModels obj = (Sango.Render.MapModels)ToLua.CheckObject<Sango.Render.MapModels>(L, 1);
+			Sango.Render.MapObject arg0 = (Sango.Render.MapObject)ToLua.CheckObject<Sango.Render.MapObject>(L, 2);
+			obj.RemoveInstance(arg0);
+			return 0;
 		}
 		catch (Exception e)
 		{
@@ -318,6 +355,7 @@ public class Sango_Render_MapModelsWrap
 			{
 				Sango.Render.MapModels obj = (Sango.Render.MapModels)ToLua.CheckObject<Sango.Render.MapModels>(L, 1);
 				Sango.Tools.Rect arg0 = StackTraits<Sango.Tools.Rect>.Check(L, 2);
+				obj.Update(arg0);
 				return 0;
 			}
 			else
@@ -405,6 +443,25 @@ public class Sango_Render_MapModelsWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_modelInstanceDatas(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapModels obj = (Sango.Render.MapModels)o;
+			Sango.Render.MapModels.ModelInstanceData[] ret = obj.modelInstanceDatas;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index modelInstanceDatas on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_dynamicObjects(IntPtr L)
 	{
 		object o = null;
@@ -458,6 +515,25 @@ public class Sango_Render_MapModelsWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index staticObjectsQuadTree on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_modelInstanceDatas(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapModels obj = (Sango.Render.MapModels)o;
+			Sango.Render.MapModels.ModelInstanceData[] arg0 = ToLua.CheckObjectArray<Sango.Render.MapModels.ModelInstanceData>(L, 2);
+			obj.modelInstanceDatas = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index modelInstanceDatas on a nil value");
 		}
 	}
 }

@@ -26,6 +26,7 @@ public class Sango_Render_MapGridWrap
 		L.RegFunction("ApplyRangMask", new LuaCSFunction(ApplyRangMask));
 		L.RegFunction("GetGridData", new LuaCSFunction(GetGridData));
 		L.RegFunction("GetGridHeight", new LuaCSFunction(GetGridHeight));
+		L.RegFunction("GetGridWaterHeight", new LuaCSFunction(GetGridWaterHeight));
 		L.RegFunction("CoordsToPosition", new LuaCSFunction(CoordsToPosition));
 		L.RegFunction("PositionToCoords", new LuaCSFunction(PositionToCoords));
 		L.RegFunction("New", new LuaCSFunction(_CreateSango_Render_MapGrid));
@@ -408,6 +409,25 @@ public class Sango_Render_MapGridWrap
 			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
 			int arg1 = (int)LuaDLL.luaL_checkinteger(L, 3);
 			float o = obj.GetGridHeight(arg0, arg1);
+			LuaDLL.lua_pushnumber(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetGridWaterHeight(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			Sango.Render.MapGrid obj = (Sango.Render.MapGrid)ToLua.CheckObject<Sango.Render.MapGrid>(L, 1);
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			int arg1 = (int)LuaDLL.luaL_checkinteger(L, 3);
+			float o = obj.GetGridWaterHeight(arg0, arg1);
 			LuaDLL.lua_pushnumber(L, o);
 			return 1;
 		}

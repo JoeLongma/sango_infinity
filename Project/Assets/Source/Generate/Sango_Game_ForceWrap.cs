@@ -12,10 +12,12 @@ public class Sango_Game_ForceWrap
 		L.RegFunction("Run", new LuaCSFunction(Run));
 		L.RegFunction("DoAI", new LuaCSFunction(DoAI));
 		L.RegFunction("DoBuildingBehaviour", new LuaCSFunction(DoBuildingBehaviour));
-		L.RegFunction("OnTurnStart", new LuaCSFunction(OnTurnStart));
-		L.RegFunction("OnTurnEnd", new LuaCSFunction(OnTurnEnd));
+		L.RegFunction("OnForceTurnStart", new LuaCSFunction(OnForceTurnStart));
+		L.RegFunction("OnForceTurnEnd", new LuaCSFunction(OnForceTurnEnd));
 		L.RegFunction("OnMonthStart", new LuaCSFunction(OnMonthStart));
 		L.RegFunction("ForEachCity", new LuaCSFunction(ForEachCity));
+		L.RegFunction("ForEachGate", new LuaCSFunction(ForEachGate));
+		L.RegFunction("ForEachPort", new LuaCSFunction(ForEachPort));
 		L.RegFunction("ForEachPerson", new LuaCSFunction(ForEachPerson));
 		L.RegFunction("ForEachCorps", new LuaCSFunction(ForEachCorps));
 		L.RegFunction("ForEachBuilding", new LuaCSFunction(ForEachBuilding));
@@ -177,7 +179,7 @@ public class Sango_Game_ForceWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int OnTurnStart(IntPtr L)
+	static int OnForceTurnStart(IntPtr L)
 	{
 		try
 		{
@@ -195,7 +197,7 @@ public class Sango_Game_ForceWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int OnTurnEnd(IntPtr L)
+	static int OnForceTurnEnd(IntPtr L)
 	{
 		try
 		{
@@ -239,6 +241,40 @@ public class Sango_Game_ForceWrap
 			Sango.Game.Force obj = (Sango.Game.Force)ToLua.CheckObject<Sango.Game.Force>(L, 1);
 			System.Action<Sango.Game.City> arg0 = (System.Action<Sango.Game.City>)ToLua.CheckDelegate<System.Action<Sango.Game.City>>(L, 2);
 			obj.ForEachCity(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ForEachGate(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Game.Force obj = (Sango.Game.Force)ToLua.CheckObject<Sango.Game.Force>(L, 1);
+			System.Action<Sango.Game.City> arg0 = (System.Action<Sango.Game.City>)ToLua.CheckDelegate<System.Action<Sango.Game.City>>(L, 2);
+			obj.ForEachGate(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ForEachPort(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Game.Force obj = (Sango.Game.Force)ToLua.CheckObject<Sango.Game.Force>(L, 1);
+			System.Action<Sango.Game.City> arg0 = (System.Action<Sango.Game.City>)ToLua.CheckDelegate<System.Action<Sango.Game.City>>(L, 2);
+			obj.ForEachPort(arg0);
 			return 0;
 		}
 		catch (Exception e)

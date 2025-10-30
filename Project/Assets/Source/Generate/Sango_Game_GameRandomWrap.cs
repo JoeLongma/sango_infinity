@@ -9,7 +9,7 @@ public class Sango_Game_GameRandomWrap
 		L.BeginStaticLibs("GameRandom");
 		L.RegFunction("Init", new LuaCSFunction(Init));
 		L.RegFunction("Random", new LuaCSFunction(Random));
-		L.RegFunction("Changce", new LuaCSFunction(Changce));
+		L.RegFunction("Chance", new LuaCSFunction(Chance));
 		L.RegFunction("Range", new LuaCSFunction(Range));
 		L.RegFunction("RandomGaussian", new LuaCSFunction(RandomGaussian));
 		L.RegFunction("RandomGaussianRange", new LuaCSFunction(RandomGaussianRange));
@@ -64,7 +64,7 @@ public class Sango_Game_GameRandomWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Changce(IntPtr L)
+	static int Chance(IntPtr L)
 	{
 		try
 		{
@@ -87,7 +87,7 @@ public class Sango_Game_GameRandomWrap
 			}
 			else
 			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to method: Sango.Game.GameRandom.Changce");
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: Sango.Game.GameRandom.Chance");
 			}
 		}
 		catch (Exception e)

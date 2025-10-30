@@ -40,6 +40,6 @@ namespace Sango.Game.Render
 
         public virtual void UpdateRender() { }
         public virtual void ShowInfo(int damage, int damageType) {; }
-        public virtual void ShowSkill(Skill skill, bool isFail) {; }
+        public virtual void ShowSkill(Skill skill, bool isFail, bool isCritical) {; }
     }
 }
