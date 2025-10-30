@@ -284,25 +284,25 @@ namespace Sango.Render
         {
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))//(Input.GetAxis("Horizontal")<0)
             {
-                position += -transform.right * keyBoardMoveSpeed;
+                position += -transform.right * keyBoardMoveSpeed * Time.unscaledDeltaTime;
             }
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
-                position += transform.right * keyBoardMoveSpeed;
+                position += transform.right * keyBoardMoveSpeed * Time.unscaledDeltaTime;
             }
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
                 Vector3 forward = transform.forward;
                 forward.y = 0;
                 forward.Normalize();
-                position += forward * keyBoardMoveSpeed;
+                position += forward * keyBoardMoveSpeed * Time.unscaledDeltaTime;
             }
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
                 Vector3 forward = transform.forward;
                 forward.y = 0;
                 forward.Normalize();
-                position += forward * -keyBoardMoveSpeed;
+                position += forward * -keyBoardMoveSpeed * Time.unscaledDeltaTime;
             }
         }
 
