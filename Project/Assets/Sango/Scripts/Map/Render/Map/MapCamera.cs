@@ -71,7 +71,8 @@ namespace Sango.Render
             transform = camera.transform;
             camera.fieldOfView = fov;
             camera.nearClipPlane = near_clip;
-            camera.farClipPlane = far_clip;
+            if(!MapEditor.IsEditOn)
+                camera.farClipPlane = far_clip;
             camera.depthTextureMode = DepthTextureMode.Depth;
             camera.clearFlags = CameraClearFlags.Skybox;
 
