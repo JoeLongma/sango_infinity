@@ -274,7 +274,7 @@ namespace Sango.Tools
                         // 吸取目标值
                         if (SuckValue(center, editor))
                             return;
-
+                        
                         int xStart = Mathf.FloorToInt(center.z - size) / editor.mapData.quadSize;
                         int yStart = Mathf.FloorToInt(center.x - size) / editor.mapData.quadSize;
                         Vector3 cPos = center;
@@ -306,7 +306,9 @@ namespace Sango.Tools
                             {
                                 if (cell.Overlaps(rect))
                                 {
-                                    cell.PrepareDatas();
+                                    float time = Time.realtimeSinceStartup;
+                                    cell.PrepareDatas(false);
+                                    //Debug.LogError(Time.realtimeSinceStartup - time);
                                 }
                             }
                         }
@@ -345,6 +347,9 @@ namespace Sango.Tools
                                 destHeight = 255;
                             }
                             vertexData.height = (byte)destHeight;
+                            Vector3 vector3 = vertexData.position;
+                            vector3.y = vertexData.height * 0.5f;
+                            vertexData.position = vector3;
                         }
                         break;
                     case BrushType.LowerHeight:
@@ -355,6 +360,9 @@ namespace Sango.Tools
                                 destHeight = 0;
                             }
                             vertexData.height = (byte)destHeight;
+                            Vector3 vector3 = vertexData.position;
+                            vector3.y = vertexData.height * 0.5f;
+                            vertexData.position = vector3;
                         }
                         break;
                     case BrushType.PullHeight:
@@ -384,6 +392,9 @@ namespace Sango.Tools
                                 destHeight = 0;
                             }
                             vertexData.height = (byte)destHeight;
+                            Vector3 vector3 = vertexData.position;
+                            vector3.y = vertexData.height * 0.5f;
+                            vertexData.position = vector3;
                         }
                         break;
                     case BrushType.SmoothHeight:
@@ -417,6 +428,9 @@ namespace Sango.Tools
                                 destHeight = 0;
                             }
                             vertexData.height = (byte)destHeight;
+                            Vector3 vector3 = vertexData.position;
+                            vector3.y = vertexData.height * 0.5f;
+                            vertexData.position = vector3;
                         }
                         break;
                     case BrushType.Texture:
@@ -436,6 +450,9 @@ namespace Sango.Tools
                                 destHeight = 0;
                             }
                             vertexData.water = (byte)destHeight;
+                            Vector3 vector3 = vertexData.waterPosition;
+                            vector3.y = vertexData.water * 0.5f;
+                            vertexData.waterPosition = vector3;
                         }
                         break;
                     default:
@@ -808,7 +825,7 @@ namespace Sango.Tools
                 string seasonName = MapRender.SeasonNames[j];
                 for (int i = 0; i < 100; i++)
                 {
-                    string file = ($"Terrain/{seasonName}/layer_{i}");
+                    string file = Path.FindFile($"Terrain/{seasonName}/layer_{i}.png");
                     if (file != null)
                     {
                         maxCount = Math.Max(maxCount, (i + 1));
@@ -849,7 +866,7 @@ namespace Sango.Tools
                 string seasonName = MapRender.SeasonNames[j];
                 for (int i = 0; i < 100; i++)
                 {
-                    string file = ($"Terrain/{seasonName}/water_{i}");
+                    string file = Path.FindFile($"Terrain/{seasonName}/water_{i}");
                     if (file != null)
                     {
                         maxCount = Math.Max(maxCount, (i + 1));

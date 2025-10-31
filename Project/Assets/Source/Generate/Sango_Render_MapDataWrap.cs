@@ -483,8 +483,6 @@ public class Sango_Render_MapDataWrap
 			Sango.Render.MapData obj = (Sango.Render.MapData)ToLua.CheckObject<Sango.Render.MapData>(L, 1);
 			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
 			float arg1 = (float)LuaDLL.luaL_checknumber(L, 3);
-			Sango.Render.MapData.VertexData o = obj.GetVertexData(arg0, arg1);
-			ToLua.PushValue(L, o);
 			return 1;
 		}
 		catch (Exception e)

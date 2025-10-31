@@ -262,7 +262,7 @@ namespace Sango.Game
 
             // 寻找最近的附属城市
             City target = city.GetNearnestForceCity();
-           
+
             if (target == null) return true;
 
             if (target.IsEnemiesRound()) return true;
@@ -362,6 +362,10 @@ namespace Sango.Game
 
         public static bool AIBuildMilitaryBuilding(City city, Scenario scenario)
         {
+
+            if (city.defenceCellList.Count == 0)
+                return true;
+
             if (city.allIntriorBuildings.Count < city.InsideSlot)
                 return true;
 
@@ -376,6 +380,8 @@ namespace Sango.Game
 
             if (city.food < 10000)
                 return true;
+
+
 
             // 最大允许两只建设队伍
             int buildMax = 1;

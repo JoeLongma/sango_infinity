@@ -135,9 +135,10 @@ namespace Sango.Render
             }
         }
 
-        public void PrepareDatas()
+        public void PrepareDatas(bool needInit = true)
         {
-            Init();
+            if (needInit)
+                Init();
             if (lmdCache == null)
             {
                 int _vertex_x_max = quadBounds.x + 1;
@@ -150,6 +151,7 @@ namespace Sango.Render
                 lmdCache.normalCount = maxCount;
                 lmdCache.triangleCount = maxCount * 6;
             }
+            float time = Time.realtimeSinceStartup;
 
             threadLoadStart = false;
             int maxLayer = map.mapLayer.layerDatas.Length;
@@ -160,10 +162,10 @@ namespace Sango.Render
                 _PrepareDatas();
                 OnAsyncPrepareDatasDone(threadBeginLayer, lmdCache);
             }
+
             threadBeginLayer = maxLayer;
             OnLoadDone();
         }
-
         void _PrepareDatas()
         {
             threadLoadDone = false;
@@ -324,8 +326,11 @@ namespace Sango.Render
                     r.enabled = visible;
                 }
             }
+
+
             lmdCache.Clear();
-            lmdCache = null;
+            if (!MapEditor.IsEditOn)
+                lmdCache = null;
         }
 
         void OnAsyncPrepareDatasDone(int layer, LayerMeshData lmd)
@@ -427,13 +432,14 @@ namespace Sango.Render
 
                     int xL = x + lodL;
                     int yL = y + lodL;
+
+
                     MapData.VertexData start0 = vertexMap[x][y];
                     MapData.VertexData start1 = vertexMap[xL][y];
                     MapData.VertexData start2 = vertexMap[xL][yL];
                     MapData.VertexData start3 = vertexMap[x][yL];
 
                     int normalY = y - startCoords.y;
-
                     if ((!layerIsWater && start0.textureIndex != bLayer && start1.textureIndex != bLayer && start2.textureIndex != bLayer && start3.textureIndex != bLayer) ||
                         (layerIsWater && start0.water == 0 && start1.water == 0 && start2.water == 0 && start3.water == 0))
                     {

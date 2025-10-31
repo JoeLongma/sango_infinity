@@ -28,10 +28,40 @@ namespace Sango.Tools
 
         public static void OnGUI(Render.MapData data)
         {
+            GUI.changed = false;
+            string names = Tools.EditorUtility.TextField(data.map.WorkContent, "地图命名空间");
+            if (GUI.changed)
+            {
+                data.map.WorkContent = names;
+            }
+
             GUILayout.BeginHorizontal();
             GUILayout.Label("地图大小");
-            GUILayout.Label(data.vertex_width.ToString());
-            GUILayout.Label(data.vertex_height.ToString());
+            GUI.changed = false;
+            int size = Tools.EditorUtility.IntField(data.map.mapWidth, "宽");
+            if (GUI.changed)
+            {
+                data.map.mapWidth = size;
+            }
+            GUI.changed = false;
+            size = Tools.EditorUtility.IntField(data.map.mapHeight, "高");
+            if (GUI.changed)
+            {
+                data.map.mapHeight = size;
+            }
+
+            if (GUILayout.Button("新建地图"))
+            {
+                int width = data.map.mapWidth;
+                int height = data.map.mapHeight;
+                data.map.Clear();
+                data.map.Init();
+                data.map.NewMap(width, height);
+               
+            }
+
+            //GUILayout.Label(data.vertex_width.ToString());
+            //GUILayout.Label(data.vertex_height.ToString());
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();

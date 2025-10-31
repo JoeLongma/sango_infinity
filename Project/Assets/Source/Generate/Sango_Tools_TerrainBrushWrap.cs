@@ -185,8 +185,6 @@ public class Sango_Tools_TerrainBrushWrap
 			int arg2 = (int)LuaDLL.luaL_checkinteger(L, 4);
 			int arg3 = (int)LuaDLL.luaL_checkinteger(L, 5);
 			bool o = obj.Do(arg0, ref arg1, arg2, arg3);
-			LuaDLL.lua_pushboolean(L, o);
-			ToLua.PushValue(L, arg1);
 			return 2;
 		}
 		catch (Exception e)

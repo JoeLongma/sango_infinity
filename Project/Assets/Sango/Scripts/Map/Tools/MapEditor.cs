@@ -56,9 +56,10 @@ namespace Sango.Tools
         EditorWindow editorContentWindow;
         private void Awake()
         {
-            //Path.Init();
+            Path.Init();
             //Path.AddSearchPath("D:/project_tk/Build/Mods/CoreMap");
-
+            string assetsPath = $"{Application.dataPath}/Packages/Content.pkg+Content/Assets/Map/Default";
+            Path.AddSearchPath(assetsPath, false);
 
             IsEditOn = true;
 
@@ -358,6 +359,10 @@ namespace Sango.Tools
                     EditorFreeCamera editorfree = Camera.main.gameObject.GetComponent<Sango.Tools.EditorFreeCamera>();
                     if (editorfree != null)
                         editorfree.lookAt = map.mapCamera.GetCenterTransform();
+                    
+                    BrushBase brush = CheckBrush();
+                    if (brush == null) return;
+                    brush.OnEnter();
 
                     if (viewIs311Camera)
                         SetCameraControlType(1);

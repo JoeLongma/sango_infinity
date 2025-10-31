@@ -15,13 +15,13 @@ namespace Sango.Map.Render
     public struct MapDataJob : IJobParallelFor
     {
         [ReadOnly]
-        public NativeArray<VertexData> Input;
+        public NativeArray<VertexDataNative> Input;
 
         [ReadOnly]
         public NativeArray<Vector2Int> NeighborVertexs;
 
         [WriteOnly]
-        public NativeArray<VertexData> Output;
+        public NativeArray<VertexDataNative> Output;
 
         [ReadOnly]
         public Vector2 MapUVPiece;
@@ -45,29 +45,29 @@ namespace Sango.Map.Render
             int x = index / vertex_x_max;
             int y = index % vertex_x_max;
 
-            VertexData data = Input[index];
+            VertexDataNative data = Input[index];
             data.position = new Vector3(y * quadSize, data.height * 0.5f, x * quadSize);
             data.uv = new Vector2(x * MapUVPiece.x, y * MapUVPiece.y);
             data.waterPosition = VertexWaterPosition(data, x, y);
             Output[index] = data;
         }
 
-        public Vector2 VertexUV(VertexData data, int x, int y)
+        public Vector2 VertexUV(VertexDataNative data, int x, int y)
         {
             return new Vector2(x * MapUVPiece.x, y * MapUVPiece.y);
         }
-        public Vector3 VertexPosition(VertexData data, int x, int y)
+        public Vector3 VertexPosition(VertexDataNative data, int x, int y)
         {
             return new Vector3(y * quadSize, data.height * 0.5f, x * quadSize);
         }
-        public Vector3 VertexWaterPosition(VertexData data, int x, int y)
+        public Vector3 VertexWaterPosition(VertexDataNative data, int x, int y)
         {
             if (data.water == 0)
             {
                 int lx = x - 1;
                 if (lx > 0)
                 {
-                    VertexData d = Input[XY2Index(lx, y)];
+                    VertexDataNative d = Input[XY2Index(lx, y)];
                     if (d.water > 0)
                     {
                         return new Vector3(y * quadSize, d.water * 0.5f, x * quadSize);
@@ -76,7 +76,7 @@ namespace Sango.Map.Render
                 int uy = y - 1;
                 if (uy > 0)
                 {
-                    VertexData d = Input[XY2Index(x, uy)];
+                    VertexDataNative d = Input[XY2Index(x, uy)];
                     if (d.water > 0)
                     {
                         return new Vector3(y * quadSize, d.water * 0.5f, x * quadSize);
@@ -95,7 +95,7 @@ namespace Sango.Map.Render
                 int rx = x + 1;
                 if (rx < vertex_x_max)
                 {
-                    VertexData d = Input[XY2Index(rx, y)];
+                    VertexDataNative d = Input[XY2Index(rx, y)];
                     if (d.water > 0)
                     {
                         return new Vector3(y * quadSize, d.water * 0.5f, x * quadSize);
@@ -113,7 +113,7 @@ namespace Sango.Map.Render
                 int dy = y + 1;
                 if (dy < vertex_y_max)
                 {
-                    VertexData d = Input[XY2Index(x, dy)];
+                    VertexDataNative d = Input[XY2Index(x, dy)];
                     if (d.water > 0)
                     {
                         return new Vector3(y * quadSize, d.water * 0.5f, x * quadSize);
@@ -146,13 +146,13 @@ namespace Sango.Map.Render
     public struct MapDataNormalJob : IJobParallelFor
     {
         [ReadOnly]
-        public NativeArray<VertexData> Input;
+        public NativeArray<VertexDataNative> Input;
 
         [ReadOnly]
         public NativeArray<Vector2Int> NeighborVertexs;
 
         [WriteOnly]
-        public NativeArray<VertexData> Output;
+        public NativeArray<VertexDataNative> Output;
 
         [ReadOnly]
         public Vector2 MapUVPiece;
@@ -175,11 +175,11 @@ namespace Sango.Map.Render
         {
             int x = index / vertex_x_max;
             int y = index % vertex_x_max;
-            VertexData data = Input[index];
+            VertexDataNative data = Input[index];
             data.normal = VertexNormal(data, x, y);
             Output[index] = data;
         }
-        public Vector3 VertexNormal(VertexData data, int x, int y)
+        public Vector3 VertexNormal(VertexDataNative data, int x, int y)
         {
             Vector3 vdPos = data.position;
             Vector3 normal = Vector3.zero;
@@ -200,10 +200,10 @@ namespace Sango.Map.Render
                 if (neighbor_z_x >= 0 && neighbor_z_x < vertex_x_max && neighbor_z_y >= 0 && neighbor_z_y < vertex_y_max &&
                     neighbor_next_x >= 0 && neighbor_next_x < vertex_x_max && neighbor_next_y >= 0 && neighbor_next_y < vertex_y_max)
                 {
-                    VertexData n_z = Input[XY2Index(neighbor_z_x, neighbor_z_y)];
+                    VertexDataNative n_z = Input[XY2Index(neighbor_z_x, neighbor_z_y)];
                     Vector3 pos_z = n_z.position;
 
-                    VertexData n_next = Input[XY2Index(neighbor_next_x, neighbor_next_y)];
+                    VertexDataNative n_next = Input[XY2Index(neighbor_next_x, neighbor_next_y)];
                     Vector3 pos_n_next = n_next.position;
 
                     normal += Vector3.Cross(pos_z - vdPos, pos_n_next - vdPos);
@@ -220,13 +220,13 @@ namespace Sango.Map.Render
     public struct MapCellCreateLayer : IJobParallelFor
     {
         [ReadOnly]
-        public NativeArray<VertexData> Input;
+        public NativeArray<VertexDataNative> Input;
 
         [ReadOnly]
         public NativeArray<Vector2Int> NeighborVertexs;
 
         [WriteOnly]
-        public NativeArray<VertexData> Output;
+        public NativeArray<VertexDataNative> Output;
 
         [ReadOnly]
         public Vector2 MapUVPiece;
@@ -249,11 +249,11 @@ namespace Sango.Map.Render
         {
             int x = index / vertex_x_max;
             int y = index % vertex_x_max;
-            VertexData data = Input[index];
+            VertexDataNative data = Input[index];
             data.normal = VertexNormal(data, x, y);
             Output[index] = data;
         }
-        public Vector3 VertexNormal(VertexData data, int x, int y)
+        public Vector3 VertexNormal(VertexDataNative data, int x, int y)
         {
             Vector3 vdPos = data.position;
             Vector3 normal = Vector3.zero;
@@ -274,10 +274,10 @@ namespace Sango.Map.Render
                 if (neighbor_z_x >= 0 && neighbor_z_x < vertex_x_max && neighbor_z_y >= 0 && neighbor_z_y < vertex_y_max &&
                     neighbor_next_x >= 0 && neighbor_next_x < vertex_x_max && neighbor_next_y >= 0 && neighbor_next_y < vertex_y_max)
                 {
-                    VertexData n_z = Input[XY2Index(neighbor_z_x, neighbor_z_y)];
+                    VertexDataNative n_z = Input[XY2Index(neighbor_z_x, neighbor_z_y)];
                     Vector3 pos_z = n_z.position;
 
-                    VertexData n_next = Input[XY2Index(neighbor_next_x, neighbor_next_y)];
+                    VertexDataNative n_next = Input[XY2Index(neighbor_next_x, neighbor_next_y)];
                     Vector3 pos_n_next = n_next.position;
 
                     normal += Vector3.Cross(pos_z - vdPos, pos_n_next - vdPos);

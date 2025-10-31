@@ -18,9 +18,10 @@ namespace Sango.Render
             new Vector2Int(-1, -1),
             new Vector2Int(0, -1),
         };
-        NativeArray<VertexData> nativeVertexDatas;
+        NativeArray<VertexDataNative> nativeVertexDatas;
         bool needDisposeNativeVertexDatas;
-        public struct VertexData
+
+        public struct VertexDataNative
         {
             public byte height;
             public byte textureIndex;
@@ -33,6 +34,36 @@ namespace Sango.Render
             public Vector3 normal;
 
         }
+
+        public class VertexData
+        {
+            public byte height;
+            public byte textureIndex;
+            public byte water;
+            public byte waterIndex;
+
+            public Vector3 position;
+            public Vector3 waterPosition;
+            public Vector2 uv;
+            public Vector3 normal;
+            public VertexData(VertexDataNative data)
+            {
+                height = data.height;
+                textureIndex = data.textureIndex;
+                water = data.water;
+                waterIndex = data.waterIndex;
+                position = data.position;
+                waterPosition = data.waterPosition;
+                uv = data.uv;
+                normal = data.normal;
+            }
+            public VertexData()
+            {
+
+            }
+
+        }
+
         private Vector2Int _bounds;
         public int quadSize = 5;
         public VertexData[][] vertexDatas;
@@ -117,9 +148,9 @@ namespace Sango.Render
 
             int maxVertexCount = vertex_x_max * vertex_y_max;
 
-            nativeVertexDatas = new NativeArray<VertexData>(maxVertexCount, Allocator.Persistent);
+            nativeVertexDatas = new NativeArray<VertexDataNative>(maxVertexCount, Allocator.Persistent);
             needDisposeNativeVertexDatas = true;
-            NativeArray<VertexData> nativeVertexDatasTemp = new NativeArray<VertexData>(maxVertexCount, Allocator.Persistent);
+            NativeArray<VertexDataNative> nativeVertexDatasTemp = new NativeArray<VertexDataNative>(maxVertexCount, Allocator.Persistent);
 
             NativeArray<Vector2Int> neighborVertexArray = new NativeArray<Vector2Int>(6, Allocator.Persistent);
             for (int i = 0; i < 6; i++)
@@ -132,13 +163,12 @@ namespace Sango.Render
                 VertexData[] yTable = vertexDatas[x];
                 for (int y = 0; y < yTable.Length; y++)
                 {
-                    VertexData data = new VertexData()
+                    VertexDataNative data = new VertexDataNative()
                     {
                         height = reader.ReadByte(),
                         textureIndex = reader.ReadByte(),
                         water = reader.ReadByte(),
                     };
-
                     //yTable[y] = data;
                     nativeVertexDatas[x * vertex_x_max + y] = data;
                 }
@@ -178,7 +208,7 @@ namespace Sango.Render
                 for (int y = 0; y < yTable.Length; y++)
                 {
                     int index = x * vertex_x_max + y;
-                    yTable[y] = nativeVertexDatas[index];
+                    yTable[y] = new VertexData(nativeVertexDatas[index]);
                 }
             }
 
@@ -614,8 +644,13 @@ namespace Sango.Render
                         height = initHeight,
                         water = 0,
                         //TODO:优化贴图数据，用单通道表示，最大图层255个
-                        textureIndex = 0//color_is_layer(rl, gl, bl),
-                    };
+                        textureIndex = 0,//color_is_layer(rl, gl, bl),
+                        position = new Vector3(y * quadSize, initHeight * 0.5f, x * quadSize),
+                        uv = new Vector2(x * MapUVPiece.x, y * MapUVPiece.y),
+                        normal = Vector3.up,
+                        waterPosition = new Vector3(y * quadSize, 0, x * quadSize)
+
+                };
                 }
             }
             UpdateRender();

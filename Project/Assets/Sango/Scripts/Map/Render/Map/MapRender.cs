@@ -392,7 +392,9 @@ namespace Sango.Render
             Texture texture = ObjectLoader.LoadObject<Texture>(destPath);
             if (texture == null)
             {
-                destPath = $"Assets/Map/{DefaultContentName}/{textureName}{extensions}";
+                destPath = $"Assets/Map/{DefaultContentName}/{textureName}";
+                if (!textureName.EndsWith(extensions))
+                    destPath = destPath + extensions;
                 texture = ObjectLoader.LoadObject<Texture>(destPath);
                 if (texture == null)
                 {

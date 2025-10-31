@@ -59,7 +59,13 @@ namespace Sango.Render
                             byte[] bytes = texture2D.EncodeToPNG();
 
                             string dir = Path.FindDirectory($"Assets/Map/{map.WorkContent}");
+                            if (dir == null)
+                            {
+                                dir = $"{Path.ContentRootPath}/Assets/Map/{map.WorkContent}";
+                            }
+
                             string fileName = $"{dir}/BaseTex/BaseMap{i}.png";
+                            Sango.Directory.Create(fileName, false);
                             FileStream fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
                             fileStream.Write(bytes, 0, bytes.Length);
                             fileStream.Dispose();
@@ -146,7 +152,7 @@ namespace Sango.Render
 #endif
 
                 Texture tex = map.CreateTexture(destFile);
-                if(tex != Texture2D.whiteTexture)
+                if (tex != Texture2D.whiteTexture)
                 {
                     texture[i] = tex;
                     if (i == curSeason)

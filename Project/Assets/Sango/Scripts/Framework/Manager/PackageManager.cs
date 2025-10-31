@@ -55,6 +55,7 @@ namespace Sango
 
             return true;
         }
+
         public UnityEngine.Object LoadAssets(string packageName, string assetName, Type assetType)
         {
 #if UNITY_EDITOR

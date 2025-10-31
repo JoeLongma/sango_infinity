@@ -344,10 +344,10 @@ namespace HSVPicker
                 }
             }
 
-            if (Input.GetMouseButtonDown(1))
-            {
-                gameObject.SetActive(false);
-            }
+            //if (Input.GetMouseButtonDown(1))
+            //{
+            //    gameObject.SetActive(false);
+            //}
         }
 
         public void QuitPick()
