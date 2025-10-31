@@ -13,6 +13,7 @@ namespace Sango.Game
         public int terrainState;
         public int areaId;
 
+        public City BelongCity {  get; internal set; }
         public TerrainType TerrainType { get; set; }
         public Hexagon.Hex Cub { get; set; }// { get { return Hexagon.Coord.OffsetToCube(x, y); } }
         public Vector3 Position { get; set; }// { get { return Scenario.Cur.Map.Coords2Position(x, y); } }

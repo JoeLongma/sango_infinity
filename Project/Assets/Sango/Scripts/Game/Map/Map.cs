@@ -22,8 +22,9 @@ namespace Sango.Game
         public HexWorld HexWorld { get; internal set; }
         public string FileName { get; internal set; }
 
-        public void Load(string mapName)
+        public void Load(Scenario scenario)
         {
+            string mapName = scenario.Info.mapType;
             FileName = Path.FindFile($"Map/{mapName}.bin");
             if (File.Exists(FileName))
             {
@@ -47,10 +48,14 @@ namespace Sango.Game
                 {
                     for (int y = 0; y < Height; ++y)
                     {
-                        int terrainType = reader.ReadByte();
+                        int terrainTypeId = reader.ReadByte();
                         int terrainState = reader.ReadInt32();
                         int areaId = reader.ReadUInt16();
-                        CellSet.SetTerrainTypeAndState(x, y, terrainType, terrainState, areaId);
+                        TerrainType terrainType = scenario.CommonData.TerrainTypes.Get(terrainTypeId);
+                        if (terrainType == null)
+                            terrainType = scenario.CommonData.TerrainTypes.Get(0);
+                        City city = scenario.citySet.Get(areaId);
+                        CellSet.SetTerrainTypeAndState(x, y, terrainType, terrainState, city);
                     }
                 }
 
@@ -260,7 +265,7 @@ namespace Sango.Game
                     Cell next = GetNeighbor(current, i);
                     if (next != null && next.CanMove(troops) && next.CanPassThrough(troops))
                     {
-                        if(!next._isChecked)
+                        if (!next._isChecked)
                         {
                             bool isZoc = IsZOC(troops, next);
                             int new_cost;
@@ -283,24 +288,24 @@ namespace Sango.Game
                             GameAIDebug.Instance.ShowCellCost(next, new_cost, troops);
 #endif
                         }
-//                        else if(!next._isZOC)
-//                        {
-//                            int new_cost = cost_current + troops.MoveCost(next);
-//                            if (new_cost < next._cost)
-//                            {
-//                                next._cost = new_cost;
-//                                came_from[next] = current;
-//                                frontier.Enqueue(next, new_cost);
-//#if SANGO_DEBUG_AI
-//                                GameAIDebug.Instance.ShowCellCost(next, new_cost, troops);
-//#endif
-//                            }
-//                        }
+                        //                        else if(!next._isZOC)
+                        //                        {
+                        //                            int new_cost = cost_current + troops.MoveCost(next);
+                        //                            if (new_cost < next._cost)
+                        //                            {
+                        //                                next._cost = new_cost;
+                        //                                came_from[next] = current;
+                        //                                frontier.Enqueue(next, new_cost);
+                        //#if SANGO_DEBUG_AI
+                        //                                GameAIDebug.Instance.ShowCellCost(next, new_cost, troops);
+                        //#endif
+                        //                            }
+                        //                        }
                     }
                 }
             }
 
-            for(int i = 0; i < cellList.Count; i++)
+            for (int i = 0; i < cellList.Count; i++)
             {
                 Cell cell = cellList[i];
                 cell._cost = 0;
@@ -309,87 +314,87 @@ namespace Sango.Game
             }
         }
 
-//        public void GetMoveRange2(Troop troops, List<Cell> cellList)
-//        {
+        //        public void GetMoveRange2(Troop troops, List<Cell> cellList)
+        //        {
 
-//            frontier.Clear();
-//            came_from.Clear();
-//            cost_so_far.Clear();
-//            cellList.Add(troops.cell);
-//            int moveAttr = troops.MoveAbility;
-//            came_from[troops.cell] = null;
-//            frontier.Enqueue(troops.cell, 0);
-//            cost_so_far[troops.cell] = new cellTempInfo()
-//            {
-//                cost = 0,
-//                isZOC = false
-//            };
-//            while (frontier.Count > 0)
-//            {
-//                Cell current = frontier.Dequeue();
-//                cellTempInfo cellTempInfo = cost_so_far[current] as cellTempInfo;
+        //            frontier.Clear();
+        //            came_from.Clear();
+        //            cost_so_far.Clear();
+        //            cellList.Add(troops.cell);
+        //            int moveAttr = troops.MoveAbility;
+        //            came_from[troops.cell] = null;
+        //            frontier.Enqueue(troops.cell, 0);
+        //            cost_so_far[troops.cell] = new cellTempInfo()
+        //            {
+        //                cost = 0,
+        //                isZOC = false
+        //            };
+        //            while (frontier.Count > 0)
+        //            {
+        //                Cell current = frontier.Dequeue();
+        //                cellTempInfo cellTempInfo = cost_so_far[current] as cellTempInfo;
 
-//                if (cellTempInfo.isZOC)
-//                    continue;
+        //                if (cellTempInfo.isZOC)
+        //                    continue;
 
-//                int cost_current = cellTempInfo.cost;
-//                for (int i = 0; i < 6; i++)
-//                {
-//                    Cell next = GetNeighbor(current, i);
-//                    if (next != null && next.CanMove(troops) && next.CanPassThrough(troops))
-//                    {
+        //                int cost_current = cellTempInfo.cost;
+        //                for (int i = 0; i < 6; i++)
+        //                {
+        //                    Cell next = GetNeighbor(current, i);
+        //                    if (next != null && next.CanMove(troops) && next.CanPassThrough(troops))
+        //                    {
 
-//                        cellTempInfo cellTempInfo_next = cost_so_far[next] as cellTempInfo;
-//                        if (cellTempInfo_next == null)
-//                        {
-//                            bool isZoc = IsZOC(troops, next);
-//                            int new_cost;
-//                            if (isZoc)
-//                                new_cost = moveAttr;
-//                            else
-//                                new_cost = cost_current + troops.MoveCost(next);
+        //                        cellTempInfo cellTempInfo_next = cost_so_far[next] as cellTempInfo;
+        //                        if (cellTempInfo_next == null)
+        //                        {
+        //                            bool isZoc = IsZOC(troops, next);
+        //                            int new_cost;
+        //                            if (isZoc)
+        //                                new_cost = moveAttr;
+        //                            else
+        //                                new_cost = cost_current + troops.MoveCost(next);
 
-//                            if (new_cost > moveAttr)
-//                                continue;
+        //                            if (new_cost > moveAttr)
+        //                                continue;
 
-//                            cost_so_far.Add(next, new cellTempInfo()
-//                            {
-//                                cost = new_cost,
-//                                isZOC = isZoc
-//                            });
-//                            int priority = new_cost;
-//                            came_from[next] = current;
-//                            frontier.Enqueue(next, priority);
-//                            cellList.Add(next);
-//#if SANGO_DEBUG_AI
-//                            GameAIDebug.Instance.ShowCellCost(next, priority, troops);
-//#endif
-//                        }
-//                        else
-//                        {
-//                            int new_cost = 0;
-//                            bool isZoc = cellTempInfo_next.isZOC;
-//                            if (isZoc)
-//                                new_cost = moveAttr;
-//                            else
-//                                new_cost = cost_current + troops.MoveCost(next);
+        //                            cost_so_far.Add(next, new cellTempInfo()
+        //                            {
+        //                                cost = new_cost,
+        //                                isZOC = isZoc
+        //                            });
+        //                            int priority = new_cost;
+        //                            came_from[next] = current;
+        //                            frontier.Enqueue(next, priority);
+        //                            cellList.Add(next);
+        //#if SANGO_DEBUG_AI
+        //                            GameAIDebug.Instance.ShowCellCost(next, priority, troops);
+        //#endif
+        //                        }
+        //                        else
+        //                        {
+        //                            int new_cost = 0;
+        //                            bool isZoc = cellTempInfo_next.isZOC;
+        //                            if (isZoc)
+        //                                new_cost = moveAttr;
+        //                            else
+        //                                new_cost = cost_current + troops.MoveCost(next);
 
-//                            if (new_cost < cellTempInfo_next.cost)
-//                            {
-//                                cellTempInfo_next.cost = new_cost;
-//                                int priority = new_cost;
-//                                came_from[next] = current;
-//                                frontier.Enqueue(next, priority);
-//#if SANGO_DEBUG_AI
-//                                GameAIDebug.Instance.ShowCellCost(next, priority, troops);
-//#endif
-//                            }
+        //                            if (new_cost < cellTempInfo_next.cost)
+        //                            {
+        //                                cellTempInfo_next.cost = new_cost;
+        //                                int priority = new_cost;
+        //                                came_from[next] = current;
+        //                                frontier.Enqueue(next, priority);
+        //#if SANGO_DEBUG_AI
+        //                                GameAIDebug.Instance.ShowCellCost(next, priority, troops);
+        //#endif
+        //                            }
 
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
 
         /// <summary>
         /// 该方法确定dest一定是在troop的移动范围内可到达
@@ -526,7 +531,7 @@ namespace Sango.Game
 
 
         /// <summary>
-        /// 获取一个格子之间的路径,仅判断是否可以行走,最大寻路范围为len
+        /// 获取周围的路径,仅判断是否可以行走,最大寻路范围为len
         /// </summary>
         /// <param name="troops"></param>
         /// <param name="dest"></param>
@@ -582,7 +587,7 @@ namespace Sango.Game
                     Cell current = openList[j];
                     if (!came_from.ContainsKey(current))
                     {
-                        if (begin >= startLen) 
+                        if (begin >= startLen)
                             cellList.Add(current);
                         came_from.Add(current, current);
                         for (int i = 0; i < 6; i++)

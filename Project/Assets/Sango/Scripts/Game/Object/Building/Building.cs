@@ -44,12 +44,16 @@ namespace Sango.Game
             BelongCity?.OnBuildingCreate(this);
             if (!BuildingType.isIntrior)
             {
-                //UnityEngine.Debug.LogError($"{BelongCity.Name}-><{x},{y}>");
-                CenterCell = scenario.Map.GetCell(x, y);
-                CenterCell.building = this;
+                // 地格占用
+                OccupyCellList = new List<Cell>();
+                scenario.Map.GetSpiral(x, y, BuildingType.radius, OccupyCellList);
+                foreach (Cell cell in OccupyCellList)
+                    cell.building = this;
+                CenterCell = OccupyCellList[0];
+
+                // 效果范围
                 effectCells = new System.Collections.Generic.List<Cell>();
-                scenario.Map.GetDirectSpiral(CenterCell, BuildingType.radius, effectCells);
-                //CalculateHarvest();
+                scenario.Map.GetDirectSpiral(CenterCell, BuildingType.radius, BuildingType.atkRange, effectCells);
 
             }
             OnPrepareRender();
@@ -101,13 +105,11 @@ namespace Sango.Game
 
 
             // 暂时写死
-            if (isComplte && BuildingType.atkRange > 0)
+            if (isComplte && BuildingType.atk > 0 && BuildingType.atkRange > 0)
             {
-                List<Cell> atkCells = new List<Cell>();
-                scenario.Map.GetSpiral(x, y, BuildingType.atkRange, atkCells);
-                for (int i = 1; i < atkCells.Count; i++)
+                for (int i = 1; i < effectCells.Count; i++)
                 {
-                    Cell cell = atkCells[i];
+                    Cell cell = effectCells[i];
                     if (cell.troop != null && IsEnemy(cell.troop))
                     {
                         BuildingAttackEvent @event = new BuildingAttackEvent()

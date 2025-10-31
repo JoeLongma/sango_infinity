@@ -36,12 +36,20 @@ namespace Sango.Game
                     Cell c = new Cell(x, y);
 
                     string[] vs = valus[x * h + y].Split(',');
-                    c.terrainType = int.Parse(vs[0]);
-                    c.TerrainType = Scenario.Cur.CommonData.TerrainTypes.Get(c.terrainType);
+                    int terrainTypeId = int.Parse(vs[0]);
+                    c.TerrainType = Scenario.Cur.CommonData.TerrainTypes.Get(terrainTypeId);
                     if (c.TerrainType == null)
                         c.TerrainType = Scenario.Cur.CommonData.TerrainTypes[0];
-                    //if (vs.Length > 1)
-                    //    c.Fertility = float.Parse(vs[1]);
+                    if (vs.Length > 1)
+                    {
+                        c.terrainState = int.Parse(vs[2]);
+                    }
+                    if (vs.Length > 2)
+                    {
+                        int areaId = int.Parse(vs[1]);
+                        c.BelongCity = Scenario.Cur.citySet.Get(areaId);
+                        c.BelongCity?.AddAreaCell(c);
+                    }
                     //if (vs.Length > 2)
                     //    c.Prosperity = float.Parse(vs[2]);
                     c.moveAble = c.TerrainType.moveable;
@@ -50,30 +58,15 @@ namespace Sango.Game
                 Cells[x] = cells;
             }
         }
-        public void SetTerrainType(int x, int y, int terrainType)
-        {
-            Cell c = Cells[x][y];
-            c.terrainType = terrainType;
-            c.TerrainType = Scenario.Cur.CommonData.TerrainTypes.Get(c.terrainType);
-            if (c.TerrainType == null)
-                c.TerrainType = Scenario.Cur.CommonData.TerrainTypes[0];
-            //c.Fertility = c.TerrainType.Fertility;
-            //c.Prosperity = c.TerrainType.Prosperity;
-            c.moveAble = c.TerrainType.moveable;
-        }
 
-        public void SetTerrainTypeAndState(int x, int y, int terrainType, int terrainState, int areaId)
+        public void SetTerrainTypeAndState(int x, int y, TerrainType terrainType, int terrainState, City belongCity)
         {
             Cell c = Cells[x][y];
-            c.terrainType = terrainType;
-            c.TerrainType = Scenario.Cur.CommonData.TerrainTypes.Get(c.terrainType);
-            c.areaId = areaId;
-            if (c.TerrainType == null)
-                c.TerrainType = Scenario.Cur.CommonData.TerrainTypes[0];
-            //c.Fertility = c.TerrainType.Fertility;
-            //c.Prosperity = c.TerrainType.Prosperity;
+            c.TerrainType = terrainType;
+            c.BelongCity = belongCity;
             c.moveAble = c.TerrainType.moveable;
             c.terrainState = terrainState;
+            belongCity?.AddAreaCell(c);
         }
 
         public void Init(Map map)
@@ -102,7 +95,7 @@ namespace Sango.Game
             if (string.IsNullOrEmpty(data))
                 return;
 
-            string[] values = data.Split(new char[] { ',' });
+            string[] values = data.Split(new char[] { ';' });
             int w = int.Parse(values[values.Length - 2]);
             int h = int.Parse(values[values.Length - 1]);
             Init(w, h, values);
@@ -118,16 +111,16 @@ namespace Sango.Game
                     for (ushort y = 0; y < cells.Length; y++)
                     {
                         Cell cell = cells[y];
-                        stringBuilder.Append(cell.terrainType);
-                        //stringBuilder.Append(',');
-                        //stringBuilder.Append(cell.Fertility);
-                        //stringBuilder.Append(',');
-                        //stringBuilder.Append(cell.Prosperity);
-                        //stringBuilder.Append(';');
+                        stringBuilder.Append(cell.TerrainType?.Id ?? 0);
+                        stringBuilder.Append(',');
+                        stringBuilder.Append(cell.terrainState);
+                        stringBuilder.Append(',');
+                        stringBuilder.Append(cell.BelongCity?.Id ?? 0);
+                        stringBuilder.Append(';');
                     }
                 }
                 stringBuilder.Append(Cells.Length);
-                stringBuilder.Append(',');
+                stringBuilder.Append(';');
                 stringBuilder.Append(Cells[0].Length);
             }
             return stringBuilder.ToString();

@@ -77,14 +77,6 @@ namespace Sango.Game.Render.UI
 
         void Start()
         {
-#if UNITY_STANDALONE_WIN
-            foreach (GameObject obj in fpaObj)
-            {
-                if (obj != null)
-                    obj.SetActive(false);
-            }
-#endif
-
             GameEvent.OnTroopCreated += OnTroopChange;
             GameEvent.OnTroopDestroyed += OnTroopChange;
             GameEvent.OnForceStart += OnForceStart;
@@ -307,10 +299,18 @@ namespace Sango.Game.Render.UI
 
         public void OnLowFPS()
         {
+#if UNITY_STANDALONE_WIN
+            if (Application.targetFrameRate == 60)
+                Application.targetFrameRate = 120;
+            else
+                Application.targetFrameRate = 60;
+
+#else
             if (Application.targetFrameRate == 30)
                 Application.targetFrameRate = 60;
             else
                 Application.targetFrameRate = 30;
+#endif
             frameBtnText.text = $"切换帧率:{Application.targetFrameRate}";
         }
 

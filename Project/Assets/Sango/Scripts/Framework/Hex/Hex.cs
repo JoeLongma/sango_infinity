@@ -161,7 +161,7 @@ namespace Sango.Hexagon
         {
             Hex start = Add(Hex.Direction(startDir).Scale(radius));
             int dir = startDir - 4;
-            for (int i = 1; i < 6; i++)
+            for (int i = 0; i < 6; i++)
             {
                 int dir_i = dir + i;
                 if (dir_i < 0)

@@ -218,9 +218,15 @@ namespace Sango.Loader
             else
             {
                 UnityEngine.Object obj = null;
-                if (objType == TextureType && ps.Length > 1)
+                if (objType == TextureType)
                 {
-                    obj = TextureLoader.LoadFromFileSync(objName, (bool)ps[0], (bool)ps[1]);
+                    bool textureNeedCompress = true;
+                    bool needMipmap = false;
+                    if (ps.Length > 0)
+                        textureNeedCompress = (bool)ps[0];
+                    if (ps.Length > 1)
+                        needMipmap = (bool)ps[1];
+                    obj = TextureLoader.LoadFromFileSync(objName, textureNeedCompress, needMipmap);
                 }
                 else if (objType == MaterialType && ps.Length > 0)
                 {
@@ -235,7 +241,7 @@ namespace Sango.Loader
                     obj = SpriteLoader.LoadSprite(objName);
                 }
 
-                if(obj == null)
+                if (obj == null)
                 {
                     obj = LoadObject(assetName, "Content", objType, ps);
                 }

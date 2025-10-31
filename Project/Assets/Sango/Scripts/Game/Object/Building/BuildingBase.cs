@@ -72,7 +72,15 @@ namespace Sango.Game
 
         public virtual int DurabilityLimit => BuildingType.durabilityLimit;
 
+        /// <summary>
+        /// 中心Cell
+        /// </summary>
         public virtual Cell CenterCell { get; set; }
+        
+        /// <summary>
+        /// 占用的cell
+        /// </summary>
+        public List<Cell> OccupyCellList { get; set; }
 
         /// <summary>
         /// 渲染器

@@ -283,6 +283,7 @@ namespace Sango.Render
         //}
         public void SaveTo311GridData(string filename)
         {
+#if UNITY_EDITOR
             FileStream fs = new FileStream(filename, FileMode.Create, FileAccess.ReadWrite);
             BinaryWriter binr = new BinaryWriter(fs);
             //SHEX0008
@@ -301,10 +302,12 @@ namespace Sango.Render
                 GridData data = gridDatas[x + 28][y + 28];
                 data.san11GridData.OnSave(binr);
             }
+#endif
         }
 
         public void LoadFrom311GridData(string filename)
         {
+#if UNITY_EDITOR
             FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
             BinaryReader binr = new BinaryReader(fs);
             binr.ReadBytes(8);
@@ -325,6 +328,8 @@ namespace Sango.Render
                 //if (sanData.interior > 0)
                 //    data.SetGridState(GridState.Interior, true);
             }
+#endif
+
         }
 
         internal override void OnSave(BinaryWriter writer)

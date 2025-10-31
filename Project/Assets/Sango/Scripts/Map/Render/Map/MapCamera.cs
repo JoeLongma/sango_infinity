@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using Sango.Tools;
+using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -308,17 +309,17 @@ namespace Sango.Render
 
         private void ZoomCamera()
         {
-            float offset = Input.GetAxis("Mouse ScrollWheel");
-            if (offset != 0)
+            Vector2 scrollWheel = Input.mouseScrollDelta;
+            if (scrollWheel.y != 0)
             {
-                ZoomCamera(offset);
+                ZoomCamera(scrollWheel.y);
             }
         }
 
 
         bool IsOverUI()
         {
-            return (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())/* || FairyGUI.Stage.isTouchOnUI*/;
+            return (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) || (MapEditor.IsEditOn && EditorWindow.IsPointOverUI())  /* || FairyGUI.Stage.isTouchOnUI*/;
         }
 
         Ray ray;
@@ -424,7 +425,7 @@ namespace Sango.Render
                     ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     float dis;
 
-                    if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+                    if (IsOverUI())
                         isPressedUI = true;
 
                     if (viewPlane.Raycast(ray, out dis))

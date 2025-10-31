@@ -394,7 +394,7 @@ namespace Sango.Game
 
             JsonConvert.PopulateObject(File.ReadAllText(FilePath), this);
 
-            Map.Load(Info.mapType);
+            Map.Load(this);
 
             prepareList.Add(forceSet);
             prepareList.Add(corpsSet);

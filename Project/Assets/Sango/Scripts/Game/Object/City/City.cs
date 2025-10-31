@@ -202,8 +202,6 @@ namespace Sango.Game
 
         public List<Building> villageList = new List<Building>();
 
-        protected List<Cell> cell_list = new List<Cell>();
-
         public int totalGainFood = 0;
         public int totalGainGold = 0;
 
@@ -216,7 +214,6 @@ namespace Sango.Game
 
 
         float population_increase_factor = 0;
-        public override Cell CenterCell => cell_list[0];
         internal int borderLine;
         public bool IsBorderCity => borderLine == 0;
         public int BorderLine => borderLine;
@@ -246,6 +243,13 @@ namespace Sango.Game
 
         public List<Troop> activedTroops = new List<Troop>();
 
+        /// <summary>
+        /// 城池直辖范围cell
+        /// </summary>
+        public List<Cell> areaCellList = new List<Cell>();
+
+        // 初始化地图的时候就添加完全了
+        public void AddAreaCell(Cell cell) { areaCellList.Add(cell); }
 
         /// <summary>
         /// 所有内城设施
@@ -294,6 +298,7 @@ namespace Sango.Game
             return person;
         }
 
+
         public void UpdateActiveTroopTypes()
         {
             activedTroopType.Clear();
@@ -310,29 +315,30 @@ namespace Sango.Game
             //y *= 2;
 
             base.OnScenarioPrepare(scenario);
-            //TroopList?.InitCache();// = new SangoObjectList<Troop>().FromString(_troopListStr, scenario.troopSet);
-            //NeighborList?.InitCache();// = new SangoObjectList<City>().FromString(_neighborListStr, scenario.citySet);
-            //CityLevelType = scenario.CommonData.CityLevelTypes.Get(_cityLevelTypeId);
+
             innerSlot = new int[InsideSlot];
             if (durability <= 0)
                 durability = DurabilityLimit;
             buildingLevelCountMap.Clear();
+
+
             // 地格占用
-            effectCells = new System.Collections.Generic.List<Cell>();
-            scenario.Map.GetSpiral(x, y, BuildingType.radius, cell_list);
-            foreach (Cell cell in cell_list)
+            OccupyCellList = new List<Cell>();
+            scenario.Map.GetSpiral(x, y, BuildingType.radius, OccupyCellList);
+            foreach (Cell cell in OccupyCellList)
                 cell.building = this;
+            CenterCell = OccupyCellList[0];
 
-            effectCells.Clear();
-            scenario.Map.GetDirectSpiral(CenterCell, BuildingType.radius + 1, BuildingType.radius + 10, effectCells);
+            // 效果范围
+            effectCells = new System.Collections.Generic.List<Cell>();
+            scenario.Map.GetDirectSpiral(CenterCell, BuildingType.radius, BuildingType.atkRange, effectCells);
 
-            for (int i = 0; i < effectCells.Count; i++)
+            for (int i = 0; i < areaCellList.Count; i++)
             {
-                Cell cell = effectCells[i];
+                Cell cell = areaCellList[i];
                 if (cell.HasGridState(Sango.Render.MapGrid.GridState.Defence))
                     defenceCellList.Add(cell);
             }
-
 
             foreach (Person person in CaptiveList)
             {

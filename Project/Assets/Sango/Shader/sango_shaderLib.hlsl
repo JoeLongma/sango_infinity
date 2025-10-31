@@ -270,8 +270,8 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 
 	half4 tarrainTypeColor = SAMPLE_TEXTURE2D(_TerrainTypeTex, smpPoint, ttUV);
 
-	//diffuse = lerp(diffuse, tarrainTypeColor, _TerrainTypeShowFlag * _terrainTypeAlpha);
-	diffuse = diffuse + tarrainTypeColor * _TerrainTypeShowFlag * _terrainTypeAlpha;
+	diffuse = lerp(diffuse, diffuse * 0.5 + tarrainTypeColor, _TerrainTypeShowFlag * _terrainTypeAlpha);
+	//diffuse = diffuse + tarrainTypeColor * _TerrainTypeShowFlag * _terrainTypeAlpha;
 #endif
 	#endif
 

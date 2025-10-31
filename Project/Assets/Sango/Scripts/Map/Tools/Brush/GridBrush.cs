@@ -21,8 +21,8 @@ namespace Sango.Tools
             //Trap,
             //Dir,
             //Interior,
-            //Defence,
-            //Thief,
+            Defence,
+            Thief,
             //Flood,
             //Ruins,
             Unknown,
@@ -39,8 +39,8 @@ namespace Sango.Tools
             //"陷阱",
             //"方向",
             //"内政",
-            //"防守",
-            //"贼",
+            "防守",
+            "贼",
             //"水淹",
             ////"种类?",
             //"遗迹"
@@ -53,16 +53,16 @@ namespace Sango.Tools
             //"editor_trap_type",
             //"editor_dir_type",
             //"editor_interior_type",
-            //"editor_defence_type",
-            //"editor_thief_type",
+            "editor_defence_type",
+            "editor_thief_type",
             //"editor_flood_type",
             //"editor_ruins_type",
         };
         public Texture[] terrainTypeTexes = new Texture[] {
             Texture2D.whiteTexture,
             Texture2D.whiteTexture,
-            //Texture2D.whiteTexture,
-            //Texture2D.whiteTexture,
+            Texture2D.whiteTexture,
+            Texture2D.whiteTexture,
             //Texture2D.whiteTexture,
             //Texture2D.whiteTexture,
             //Texture2D.whiteTexture,
@@ -73,10 +73,6 @@ namespace Sango.Tools
         public Texture2D terrainTypeMaskTex;
         public int terrainTypeMaskCol = 4;
         public int terrainTypeMaskRow = 8;
-
-        public Texture2D terrainAreaTex;
-        public int terrainAreaMaskCol = 4;
-        public int terrainAreaMaskRow = 8;
 
         public bool showTerrainType = false;
         private bool showGrid = true;
@@ -96,6 +92,7 @@ namespace Sango.Tools
         "都市", "港", "关所", "间道"};
 
         EditorWindow infoWind;
+        float gridInfoAlpha = 1;
 
         public GridBrush(MapEditor e) : base(e)
         {
@@ -110,12 +107,14 @@ namespace Sango.Tools
                 terrainTypeTitle[i] = terrainType.Name;
             }
 
-            Game.Game.Instance.StartCoroutine(CreateLayerTexture());
+
         }
 
         // 准备图层贴图
         IEnumerator CreateLayerTexture()
         {
+            Debug.LogError("正在创建所需贴图,请稍等!!");
+
             int celSize = 128;
             GameObject texCreator = GameObject.Instantiate(Resources.Load("TerrainLayer")) as GameObject;
             UnityEngine.UI.Text text = texCreator.GetComponentInChildren<UnityEngine.UI.Text>();
@@ -165,12 +164,20 @@ namespace Sango.Tools
             }
             RenderTexture.ReleaseTemporary(renderTexture);
             terrainTypeTex.Apply();
-            terrainTypeTexes[0] = terrainTypeTex;
+            terrainTypeTexes[(int)BrushType.TerrainType] = terrainTypeTex;
 
+            string savePath = Path.ContentRootPath + $"/Assets/Map/{editor.map.WorkContent}/Editor/editor_terrain_type.png";
+            Sango.Directory.Create(savePath, false);
+            if (File.Exists(savePath))
+                File.Delete(savePath);
+            File.WriteAllBytes(savePath, terrainTypeTex.EncodeToPNG());
+
+            terrainTypeTex.EncodeToPNG();
             UpdateTerrainMaskTex(brushType);
             //Shader.SetGlobalTexture("_TerrainTypeTex", terrainTypeTex);
             image[1].texture = terrainTypeTex;
-            //GameObject.Destroy(texCreator);
+            terrainTypeTex = null;
+            GameObject.Destroy(texCreator);
 
             yield return CreateAreaTexture();
         }
@@ -187,7 +194,7 @@ namespace Sango.Tools
             int terrainTypeMaskCol = count;
             int terrainTypeMaskRow = count;
             count = count * count;
-            terrainAreaTex = new Texture2D(terrainTypeMaskCol * celSize, terrainTypeMaskCol * celSize);
+            terrainTypeTex = new Texture2D(terrainTypeMaskCol * celSize, terrainTypeMaskCol * celSize);
             terrainTypeMaskRow = terrainTypeMaskCol;
             Texture gridTex = Resources.Load<Texture>("layer_grid");
             for (int i = 0; i < count; ++i)
@@ -216,34 +223,175 @@ namespace Sango.Tools
                 for (int x = 0; x < texture2D.width; ++x)
                     for (int y = 0; y < texture2D.height; ++y)
                     {
-                        terrainAreaTex.SetPixel(xStart + x, yStart + y, pixels[x + y * texture2D.width]);
+                        terrainTypeTex.SetPixel(xStart + x, yStart + y, pixels[x + y * texture2D.width]);
                     }
 
                 GameObject.DestroyImmediate(texture2D);
 
             }
             RenderTexture.ReleaseTemporary(renderTexture);
-            terrainAreaTex.Apply();
-            terrainTypeTexes[1] = terrainAreaTex;
+            terrainTypeTex.Apply();
+            terrainTypeTexes[(int)BrushType.Area] = terrainTypeTex;
+
+            string savePath = Path.ContentRootPath + $"/Assets/Map/{editor.map.WorkContent}/Editor/editor_area_type.png";
+            Sango.Directory.Create(savePath, false);
+            if (File.Exists(savePath))
+                File.Delete(savePath);
+            File.WriteAllBytes(savePath, terrainTypeTex.EncodeToPNG());
+
             //Shader.SetGlobalTexture("_TerrainTypeTex", terrainTypeTex);
-            image[1].texture = terrainAreaTex;
-            //GameObject.Destroy(texCreator);
+            image[1].texture = terrainTypeTex;
+            GameObject.Destroy(texCreator);
 
-            UpdateTerrainMaskTex(brushType);
-
-            yield return null;
+            yield return CreateDefenceTexture();
         }
 
+        IEnumerator CreateDefenceTexture()
+        {
+            int celSize = 128;
+            GameObject texCreator = GameObject.Instantiate(Resources.Load("TerrainLayer")) as GameObject;
+            UnityEngine.UI.Text text = texCreator.GetComponentInChildren<UnityEngine.UI.Text>();
+            UnityEngine.UI.RawImage[] image = texCreator.GetComponentsInChildren<UnityEngine.UI.RawImage>(true);
+            Camera cam = texCreator.GetComponent<Camera>();
+            RenderTexture renderTexture = RenderTexture.GetTemporary(celSize, celSize, 24, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default, 8);
+            int count = 2;
+            int terrainTypeMaskCol = count;
+            int terrainTypeMaskRow = count;
+
+            terrainTypeTex = new Texture2D(terrainTypeMaskCol * celSize, terrainTypeMaskCol * celSize);
+            terrainTypeMaskRow = terrainTypeMaskCol;
+            Texture gridTex = Resources.Load<Texture>("layer_grid");
+            for (int i = 0; i < count; ++i)
+            {
+                text.fontSize = 30;
+                text.text = i == 0 ? "\n" : $"\n防守";
+                text.color = UnityEngine.Color.red;
+                image[0].color = i == 0 ? UnityEngine.Color.white : UnityEngine.Color.red;
+                image[0].texture = gridTex;
+                cam.enabled = true;
+                cam.targetTexture = renderTexture;
+                cam.Render();
+                yield return new WaitForEndOfFrame();
+                yield return new WaitForEndOfFrame();
+                cam.enabled = false;
+                cam.targetTexture = null;
+                RenderTexture.active = renderTexture;
+                Texture2D texture2D = new Texture2D(celSize, celSize);
+                texture2D.ReadPixels(new UnityEngine.Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
+                texture2D.Apply(); // 应用更改
+                RenderTexture.active = null; // 重置RenderTexture.active以避免潜在问题
+                UnityEngine.Color[] pixels = texture2D.GetPixels();
+
+                int xStart = i % terrainTypeMaskCol * texture2D.width;
+                int yStart = (terrainTypeMaskCol - 1 - i / terrainTypeMaskCol) * texture2D.width;
+
+                for (int x = 0; x < texture2D.width; ++x)
+                    for (int y = 0; y < texture2D.height; ++y)
+                    {
+                        terrainTypeTex.SetPixel(xStart + x, yStart + y, pixels[x + y * texture2D.width]);
+                    }
+
+                GameObject.DestroyImmediate(texture2D);
+
+            }
+            RenderTexture.ReleaseTemporary(renderTexture);
+            terrainTypeTex.Apply();
+            terrainTypeTexes[(int)BrushType.Defence] = terrainTypeTex;
+
+            string savePath = Path.ContentRootPath + $"/Assets/Map/{editor.map.WorkContent}/Editor/editor_defence_type.png";
+            Sango.Directory.Create(savePath, false);
+            if (File.Exists(savePath))
+                File.Delete(savePath);
+            File.WriteAllBytes(savePath, terrainTypeTex.EncodeToPNG());
+
+            //Shader.SetGlobalTexture("_TerrainTypeTex", terrainTypeTex);
+            image[1].texture = terrainTypeTex;
+            GameObject.Destroy(texCreator);
+
+            yield return CreateThiefTexture();
+        }
+
+        IEnumerator CreateThiefTexture()
+        {
+            int celSize = 128;
+            GameObject texCreator = GameObject.Instantiate(Resources.Load("TerrainLayer")) as GameObject;
+            UnityEngine.UI.Text text = texCreator.GetComponentInChildren<UnityEngine.UI.Text>();
+            UnityEngine.UI.RawImage[] image = texCreator.GetComponentsInChildren<UnityEngine.UI.RawImage>(true);
+            Camera cam = texCreator.GetComponent<Camera>();
+            RenderTexture renderTexture = RenderTexture.GetTemporary(celSize, celSize, 24, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default, 8);
+            int count = 2;
+            int terrainTypeMaskCol = count;
+            int terrainTypeMaskRow = count;
+
+            terrainTypeTex = new Texture2D(terrainTypeMaskCol * celSize, terrainTypeMaskCol * celSize);
+            terrainTypeMaskRow = terrainTypeMaskCol;
+            Texture gridTex = Resources.Load<Texture>("layer_grid");
+            for (int i = 0; i < count; ++i)
+            {
+                text.fontSize = 30;
+                text.text = i == 0 ? "\n" : $"\n贼";
+                text.color = UnityEngine.Color.red;
+                image[0].color = i == 0 ? UnityEngine.Color.white : UnityEngine.Color.red;
+                image[0].texture = gridTex;
+                cam.enabled = true;
+                cam.targetTexture = renderTexture;
+                cam.Render();
+                yield return new WaitForEndOfFrame();
+                yield return new WaitForEndOfFrame();
+                cam.enabled = false;
+                cam.targetTexture = null;
+                RenderTexture.active = renderTexture;
+                Texture2D texture2D = new Texture2D(celSize, celSize);
+                texture2D.ReadPixels(new UnityEngine.Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
+                texture2D.Apply(); // 应用更改
+                RenderTexture.active = null; // 重置RenderTexture.active以避免潜在问题
+                UnityEngine.Color[] pixels = texture2D.GetPixels();
+
+                int xStart = i % terrainTypeMaskCol * texture2D.width;
+                int yStart = (terrainTypeMaskCol - 1 - i / terrainTypeMaskCol) * texture2D.width;
+
+                for (int x = 0; x < texture2D.width; ++x)
+                    for (int y = 0; y < texture2D.height; ++y)
+                    {
+                        terrainTypeTex.SetPixel(xStart + x, yStart + y, pixels[x + y * texture2D.width]);
+                    }
+
+                GameObject.DestroyImmediate(texture2D);
+
+            }
+            RenderTexture.ReleaseTemporary(renderTexture);
+            terrainTypeTex.Apply();
+            terrainTypeTexes[(int)BrushType.Thief] = terrainTypeTex;
+
+            string savePath = Path.ContentRootPath + $"/Assets/Map/{editor.map.WorkContent}/Editor/editor_thief_type.png";
+            Sango.Directory.Create(savePath, false);
+            if (File.Exists(savePath))
+                File.Delete(savePath);
+            File.WriteAllBytes(savePath, terrainTypeTex.EncodeToPNG());
+
+            //Shader.SetGlobalTexture("_TerrainTypeTex", terrainTypeTex);
+            image[1].texture = terrainTypeTex;
+            GameObject.Destroy(texCreator);
+
+            Debug.LogError("创建所需贴图完成!!");
+            yield return null;
+        }
 
         public override void OnEnter()
         {
             Shader.SetGlobalFloat("_terrainTypeAlpha", 1);
-            //for (int i = 0; i < terrainTypeTexNames.Length; ++i)
-            //{
-            //    terrainTypeTexes[i] = editor.map.CreateTexture("Editor/" + terrainTypeTexNames[i]);
-            //    if (i == (int)brushType)
-            //        UpdateTerrainMaskTex();
-            //}
+            bool needCreateTex = false;
+            for (int i = 0; i < terrainTypeTexNames.Length; ++i)
+            {
+                terrainTypeTexes[i] = editor.map.CreateTexture("Editor/" + terrainTypeTexNames[i]);
+                if (terrainTypeTexes[i] == Texture2D.whiteTexture)
+                {
+                    needCreateTex = true;
+                }
+            }
+
+            if (needCreateTex)
+                Game.Game.Instance.StartCoroutine(CreateLayerTexture());
         }
         public UnityEngine.Color TypeIndexToColor(int index)
         {
@@ -274,16 +422,16 @@ namespace Sango.Tools
                     return data.terrainType;
                 case BrushType.Area:
                     return data.areaId;
-                    //case BrushType.Trap:
-                    //    return data.trap;
-                    //case BrushType.Dir:
-                    //    return data.dir;
-                    //case BrushType.Interior:
-                    //    return data.interior;
-                    //case BrushType.Defence:
-                    //    return data.defence;
-                    //case BrushType.Thief:
-                    //    return data.thief;
+                //case BrushType.Trap:
+                //    return data.trap;
+                //case BrushType.Dir:
+                //    return data.dir;
+                //case BrushType.Interior:
+                //    return data.interior;
+                case BrushType.Defence:
+                    return data.HasGridState(MapGrid.GridState.Defence) ? 1 : 0;
+                case BrushType.Thief:
+                    return data.HasGridState(MapGrid.GridState.Thief) ? 1 : 0;
                     //case BrushType.Flood:
                     //    return data.flood;
                     //case BrushType.Ruins:
@@ -301,21 +449,21 @@ namespace Sango.Tools
                 case BrushType.Area:
                     data.areaId = value;
                     break;
-                    //case BrushType.Trap:
-                    //    data.trap = value;
-                    //    break;
-                    //case BrushType.Dir:
-                    //    data.dir = value;
-                    //    break;
-                    //case BrushType.Interior:
-                    //    data.interior = value;
-                    //    break;
-                    //case BrushType.Defence:
-                    //    data.defence = value;
-                    //    break;
-                    //case BrushType.Thief:
-                    //    data.thief = value;
-                    //    break;
+                //case BrushType.Trap:
+                //    data.trap = value;
+                //    break;
+                //case BrushType.Dir:
+                //    data.dir = value;
+                //    break;
+                //case BrushType.Interior:
+                //    data.interior = value;
+                //    break;
+                case BrushType.Defence:
+                    data.SetGridState(MapGrid.GridState.Defence, value > 0);
+                    break;
+                case BrushType.Thief:
+                    data.SetGridState(MapGrid.GridState.Defence, value > 0);
+                    break;
                     //case BrushType.Flood:
                     //    data.flood = value;
                     //    break;
@@ -353,28 +501,28 @@ namespace Sango.Tools
                         terrainTypeMaskRow = 32;
                     }
                     break;
-                    //case BrushType.Dir:
-                    //    {
-                    //        terrainTypeMaskCol = 4;
-                    //        terrainTypeMaskRow = 4;
-                    //    }
-                    //    break;
-                    //case BrushType.Trap:
-                    //    {
-                    //        terrainTypeMaskCol = 2;
-                    //        terrainTypeMaskRow = 2;
-                    //    }
-                    //    break;
-                    //case BrushType.Interior:
-                    //case BrushType.Defence:
-                    //case BrushType.Thief:
+                //case BrushType.Dir:
+                //    {
+                //        terrainTypeMaskCol = 4;
+                //        terrainTypeMaskRow = 4;
+                //    }
+                //    break;
+                //case BrushType.Trap:
+                //    {
+                //        terrainTypeMaskCol = 2;
+                //        terrainTypeMaskRow = 2;
+                //    }
+                //    break;
+                //case BrushType.Interior:
+                case BrushType.Defence:
+                case BrushType.Thief:
                     //case BrushType.Flood:
                     //case BrushType.Ruins:
-                    //    {
-                    //        terrainTypeMaskCol = 2;
-                    //        terrainTypeMaskRow = 1;
-                    //    }
-                    //    break;
+                    {
+                        terrainTypeMaskCol = 2;
+                        terrainTypeMaskRow = 2;
+                    }
+                    break;
             }
             Shader.SetGlobalTexture("_TerrainTypeTex", terrainTypeTexes[(int)b]);
 
@@ -454,6 +602,14 @@ namespace Sango.Tools
             if (_opacity != opacity)
             {
                 opacity = _opacity;
+            }
+
+            GUILayout.Label("地格信息透明度");
+            float _alpha = GUILayout.HorizontalSlider(gridInfoAlpha, 0f, 1f);
+            if (_alpha != gridInfoAlpha)
+            {
+                gridInfoAlpha = _alpha;
+                Shader.SetGlobalFloat("_terrainTypeAlpha", gridInfoAlpha);
             }
 
             GUILayout.BeginHorizontal();
