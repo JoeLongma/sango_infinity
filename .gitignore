@@ -53,3 +53,5 @@
 *.exe
 /Build/无限三国_Data
 /Project/.editorconfig
+/Build/无限三国_BurstDebugInformation_DoNotShip/Data/Plugins/x86_64
+/Build/无限三国_BackUpThisFolder_ButDontShipItWithYourGame
