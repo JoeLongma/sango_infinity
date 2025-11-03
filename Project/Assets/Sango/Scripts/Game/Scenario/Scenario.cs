@@ -396,6 +396,22 @@ namespace Sango.Game
 
             Map.Load(this);
 
+            // 玩家确定
+            if (Info.playerForceList != null && Info.playerForceList.Length > 0)
+            {
+                forceSet.ForEach(x =>
+                {
+                    for (int k = 0; k < Info.playerForceList.Length; k++)
+                    {
+                        if (Info.playerForceList[k] == x.Id)
+                        {
+                            x.IsPlayer = true;
+                            return;
+                        }
+                    }
+                });
+            }
+
             prepareList.Add(forceSet);
             prepareList.Add(corpsSet);
             prepareList.Add(citySet);

@@ -31,7 +31,7 @@ namespace Sango.Game
         public int priority;
         [JsonProperty]
         public bool isSave;
-       
-
+        [JsonProperty]
+        public int[] playerForceList;
     }
 }
