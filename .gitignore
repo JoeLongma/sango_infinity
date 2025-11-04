@@ -55,3 +55,10 @@
 /Project/.editorconfig
 /Build/无限三国_BurstDebugInformation_DoNotShip/Data/Plugins/x86_64
 /Build/无限三国_BackUpThisFolder_ButDontShipItWithYourGame
+/Project/Assets/Packages/Content.pkg+Content/unit
+/Project/Assets/Packages/Content.pkg+Content/troop
+/Project/Assets/Packages/Content.pkg+Content/Texture
+/Project/Assets/Packages/Content.pkg+Content/unit.meta
+/Project/Assets/Packages/Content.pkg+Content/troop.meta
+/Project/Assets/Packages/Content.pkg+Content/Texture.meta
+/Project/Assets/ModelEdit.unity
