@@ -2938,12 +2938,14 @@
   },
   "Skills": {
     "1": {
-      "Id": "1",
+      "Id": 1,
       "Name": "近战普攻",
-      "atk": "10",
-      "atkDurability": "15",
-      "costEnergy": "0",
+      "kind": 1,
+      "atk": 10,
+      "atkDurability": 15,
+      "costEnergy": 0,
       "successRate": 100,
+      "needAblilityLevel": 0,
       "isRange": false,
       "spellRanges": [
         1
@@ -2952,16 +2954,17 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": true,
-      "canDamageTeam": false,
-      "level": "1"
+      "canDamageTeam": false
     },
     "2": {
-      "Id": "2",
+      "Id": 2,
       "Name": "远程普攻",
-      "atk": "0",
-      "atkDurability": "5",
-      "costEnergy": "0",
+      "kind": 1,
+      "atk": 0,
+      "atkDurability": 5,
+      "costEnergy": 0,
       "successRate": 100,
+      "needAblilityLevel": 0,
       "isRange": true,
       "spellRanges": [
         2
@@ -2970,16 +2973,17 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": true,
-      "canDamageTeam": false,
-      "level": "2"
+      "canDamageTeam": false
     },
     "3": {
-      "Id": "3",
+      "Id": 3,
       "Name": "突刺",
-      "atk": "25",
-      "atkDurability": "0",
-      "costEnergy": "15",
+      "kind": 2,
+      "atk": 25,
+      "atkDurability": 0,
+      "costEnergy": 15,
       "successRate": 70,
+      "needAblilityLevel": 1,
       "isRange": false,
       "spellRanges": [
         1
@@ -2993,16 +2997,17 @@
       "canDamageMachine": true,
       "canDamageBoat": false,
       "canDamageBuilding": false,
-      "canDamageTeam": false,
-      "level": "1"
+      "canDamageTeam": false
     },
     "4": {
-      "Id": "4",
+      "Id": 4,
       "Name": "螺旋突刺",
-      "atk": "30",
-      "atkDurability": "0",
-      "costEnergy": "20",
+      "kind": 2,
+      "atk": 30,
+      "atkDurability": 0,
+      "costEnergy": 20,
       "successRate": 70,
+      "needAblilityLevel": 2,
       "isRange": false,
       "spellRanges": [
         1
@@ -3011,16 +3016,17 @@
       "canDamageMachine": true,
       "canDamageBoat": false,
       "canDamageBuilding": false,
-      "canDamageTeam": false,
-      "level": "2"
+      "canDamageTeam": false
     },
     "5": {
-      "Id": "5",
+      "Id": 5,
       "Name": "二段突刺",
-      "atk": "35",
-      "atkDurability": "0",
-      "costEnergy": "25",
+      "kind": 2,
+      "atk": 35,
+      "atkDurability": 0,
+      "costEnergy": 25,
       "successRate": 60,
+      "needAblilityLevel": 3,
       "isRange": false,
       "spellRanges": [
         1
@@ -3034,16 +3040,17 @@
       "canDamageMachine": true,
       "canDamageBoat": false,
       "canDamageBuilding": false,
-      "canDamageTeam": false,
-      "level": "3"
+      "canDamageTeam": false
     },
     "6": {
-      "Id": "6",
+      "Id": 6,
       "Name": "熊手",
-      "atk": "25",
-      "atkDurability": "0",
-      "costEnergy": "15",
+      "kind": 2,
+      "atk": 25,
+      "atkDurability": 0,
+      "costEnergy": 15,
       "successRate": 70,
+      "needAblilityLevel": 1,
       "isRange": false,
       "spellRanges": [
         1
@@ -3058,16 +3065,17 @@
       "canDamageMachine": true,
       "canDamageBoat": false,
       "canDamageBuilding": false,
-      "canDamageTeam": false,
-      "level": "1"
+      "canDamageTeam": false
     },
     "7": {
-      "Id": "7",
+      "Id": 7,
       "Name": "横扫",
-      "atk": "30",
-      "atkDurability": "0",
-      "costEnergy": "20",
+      "kind": 2,
+      "atk": 30,
+      "atkDurability": 0,
+      "costEnergy": 20,
       "successRate": 70,
+      "needAblilityLevel": 2,
       "isRange": false,
       "spellRanges": [
         1
@@ -3079,16 +3087,17 @@
       "canDamageMachine": true,
       "canDamageBoat": false,
       "canDamageBuilding": false,
-      "canDamageTeam": false,
-      "level": "2"
+      "canDamageTeam": false
     },
     "8": {
-      "Id": "8",
+      "Id": 8,
       "Name": "旋风",
-      "atk": "33",
-      "atkDurability": "0",
-      "costEnergy": "25",
+      "kind": 2,
+      "atk": 33,
+      "atkDurability": 0,
+      "costEnergy": 25,
       "successRate": 65,
+      "needAblilityLevel": 3,
       "isRange": false,
       "spellRanges": [
         1
@@ -3101,16 +3110,17 @@
       "canDamageMachine": true,
       "canDamageBoat": false,
       "canDamageBuilding": false,
-      "canDamageTeam": false,
-      "level": "3"
+      "canDamageTeam": false
     },
     "9": {
-      "Id": "9",
+      "Id": 9,
       "Name": "火矢",
-      "atk": "10",
-      "atkDurability": "15",
-      "costEnergy": "15",
+      "kind": 2,
+      "atk": 10,
+      "atkDurability": 15,
+      "costEnergy": 15,
       "successRate": 75,
+      "needAblilityLevel": 1,
       "isRange": true,
       "spellRanges": [
         2
@@ -3122,16 +3132,17 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": true,
-      "canDamageTeam": false,
-      "level": "1"
+      "canDamageTeam": false
     },
     "10": {
-      "Id": "10",
+      "Id": 10,
       "Name": "贯箭",
-      "atk": "20",
-      "atkDurability": "15",
-      "costEnergy": "20",
+      "kind": 2,
+      "atk": 20,
+      "atkDurability": 15,
+      "costEnergy": 20,
       "successRate": 70,
+      "needAblilityLevel": 2,
       "isRange": true,
       "spellRanges": [
         2
@@ -3144,16 +3155,17 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": true,
-      "canDamageTeam": false,
-      "level": "2"
+      "canDamageTeam": false
     },
     "11": {
-      "Id": "11",
+      "Id": 11,
       "Name": "乱射",
-      "atk": "25",
-      "atkDurability": "15",
-      "costEnergy": "25",
+      "kind": 2,
+      "atk": 25,
+      "atkDurability": 15,
+      "costEnergy": 25,
       "successRate": 65,
+      "needAblilityLevel": 3,
       "isRange": true,
       "spellRanges": [
         2
@@ -3166,16 +3178,17 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": true,
-      "canDamageTeam": false,
-      "level": "3"
+      "canDamageTeam": false
     },
     "12": {
-      "Id": "12",
+      "Id": 12,
       "Name": "突击",
-      "atk": "30",
-      "atkDurability": "0",
-      "costEnergy": "15",
+      "kind": 2,
+      "atk": 30,
+      "atkDurability": 0,
+      "costEnergy": 15,
       "successRate": 70,
+      "needAblilityLevel": 1,
       "isRange": false,
       "spellRanges": [
         1
@@ -3190,16 +3203,17 @@
       "canDamageMachine": true,
       "canDamageBoat": false,
       "canDamageBuilding": false,
-      "canDamageTeam": false,
-      "level": "1"
+      "canDamageTeam": false
     },
     "13": {
-      "Id": "13",
+      "Id": 13,
       "Name": "突破",
-      "atk": "35",
-      "atkDurability": "0",
-      "costEnergy": "20",
+      "kind": 2,
+      "atk": 35,
+      "atkDurability": 0,
+      "costEnergy": 20,
       "successRate": 65,
+      "needAblilityLevel": 2,
       "isRange": false,
       "spellRanges": [
         1
@@ -3212,16 +3226,17 @@
       "canDamageMachine": true,
       "canDamageBoat": false,
       "canDamageBuilding": false,
-      "canDamageTeam": false,
-      "level": "2"
+      "canDamageTeam": false
     },
     "14": {
-      "Id": "14",
+      "Id": 14,
       "Name": "突进",
-      "atk": "40",
-      "atkDurability": "0",
-      "costEnergy": "25",
+      "kind": 2,
+      "atk": 40,
+      "atkDurability": 0,
+      "costEnergy": 25,
       "successRate": 60,
+      "needAblilityLevel": 3,
       "isRange": false,
       "spellRanges": [
         1
@@ -3236,16 +3251,18 @@
       "canDamageMachine": true,
       "canDamageBoat": false,
       "canDamageBuilding": false,
-      "canDamageTeam": false,
-      "level": "3"
+      "canDamageTeam": false
     },
     "15": {
-      "Id": "15",
+      "Id": 15,
       "Name": "火矢",
-      "atk": "15",
-      "atkDurability": "20",
-      "costEnergy": "15",
+      "kind": 2,
+      "atk": 15,
+      "atkDurability": 20,
+      "costEnergy": 15,
       "successRate": 100,
+      "needAblilityLevel": 0,
+      "needItem": 7,
       "isRange": true,
       "spellRanges": [
         2
@@ -3257,71 +3274,86 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": true,
-      "canDamageTeam": false,
-      "level": "0"
+      "canDamageTeam": false
     },
     "16": {
-      "Id": "16",
+      "Id": 16,
       "Name": "破碎",
-      "atk": "0",
-      "atkDurability": "120",
-      "costEnergy": "10",
+      "kind": 2,
+      "atk": 0,
+      "atkDurability": 120,
+      "costEnergy": 10,
       "successRate": 100,
+      "needAblilityLevel": 0,
+      "needItem": 6,
       "isRange": false,
       "spellRanges": [
         1
       ],
-      "canDamageTroop": true,
+      "canDamageTroop": false,
       "canDamageMachine": false,
       "canDamageBoat": false,
       "canDamageBuilding": true,
-      "canDamageTeam": false,
-      "level": "0"
+      "canDamageTeam": false
     },
     "17": {
-      "Id": "17",
+      "Id": 17,
       "Name": "放射",
-      "atk": "20",
-      "atkDurability": "150",
-      "costEnergy": "15",
+      "kind": 2,
+      "atk": 20,
+      "atkDurability": 150,
+      "costEnergy": 15,
       "successRate": 100,
+      "needAblilityLevel": 0,
+      "needItem": 9,
       "isRange": true,
       "spellRanges": [
+        1
+      ],
+      "skillEffects": [
         1
       ],
       "canDamageTroop": true,
       "canDamageMachine": true,
       "canDamageBoat": false,
       "canDamageBuilding": true,
-      "canDamageTeam": false,
-      "level": "0"
+      "canDamageTeam": false
     },
     "18": {
-      "Id": "18",
+      "Id": 18,
       "Name": "投石",
-      "atk": "20",
-      "atkDurability": "80",
-      "costEnergy": "20",
+      "kind": 2,
+      "atk": 20,
+      "atkDurability": 80,
+      "costEnergy": 20,
       "successRate": 100,
+      "needAblilityLevel": 0,
+      "needItem": 8,
       "isRange": true,
       "spellRanges": [
         2,
         3
       ],
+      "atkOffsetPoint": [
+        5,
+        1
+      ],
       "canDamageTroop": true,
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": true,
-      "canDamageTeam": false,
-      "level": "0"
+      "canDamageTeam": false
     },
     "19": {
-      "Id": "19",
+      "Id": 19,
       "Name": "火矢",
-      "atk": "15",
-      "atkDurability": "15",
-      "costEnergy": "15",
+      "kind": 2,
+      "atk": 15,
+      "atkDurability": 15,
+      "costEnergy": 15,
       "successRate": 100,
+      "needAblilityLevel": 1,
+      "needItem": 10,
       "isRange": true,
       "spellRanges": [
         2
@@ -3333,45 +3365,58 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": true,
-      "canDamageTeam": false,
-      "level": "1"
+      "canDamageTeam": false
     },
     "20": {
-      "Id": "20",
+      "Id": 20,
       "Name": "猛撞",
-      "atk": "25",
-      "atkDurability": "0",
-      "costEnergy": "15",
+      "kind": 2,
+      "atk": 25,
+      "atkDurability": 0,
+      "costEnergy": 15,
       "successRate": 70,
+      "needAblilityLevel": 2,
+      "needItem": 11,
       "isRange": false,
       "spellRanges": [
+        1
+      ],
+      "offsetAction": [
+        2,
+        1,
+        1,
         1
       ],
       "canDamageTroop": true,
       "canDamageMachine": false,
       "canDamageBoat": true,
       "canDamageBuilding": false,
-      "canDamageTeam": false,
-      "level": "2"
+      "canDamageTeam": false
     },
     "21": {
-      "Id": "21",
+      "Id": 21,
       "Name": "投石",
-      "atk": "35",
-      "atkDurability": "80",
-      "costEnergy": "20",
+      "kind": 2,
+      "atk": 35,
+      "atkDurability": 80,
+      "costEnergy": 20,
       "successRate": 100,
+      "needAblilityLevel": 3,
+      "needItem": 12,
       "isRange": true,
       "spellRanges": [
         2,
         3
       ],
+      "atkOffsetPoint": [
+        5,
+        1
+      ],
       "canDamageTroop": true,
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": true,
-      "canDamageTeam": false,
-      "level": "3"
+      "canDamageTeam": false
     }
   },
   "Flags": {
@@ -5129,7 +5174,7 @@
     "5": {
       "Id": 5,
       "Name": "军马",
-      "kind": 1,
+      "kind": 2,
       "subKind": 5,
       "desc": "有利于对付戟兵，但不利于枪兵",
       "icon": "ui://game/4845_7_4",
@@ -5138,65 +5183,72 @@
     "6": {
       "Id": 6,
       "Name": "冲车",
-      "kind": 2,
-      "subKind": 6,
+      "kind": 3,
+      "subKind": 7,
       "desc": "直接攻击建筑物的兵器，可大大削弱建筑物的耐久",
       "icon": "ui://game/4845_7_5",
-      "cost": 800
+      "cost": 800,
+      "p1": "10"
     },
     "7": {
       "Id": 7,
-      "Name": "井阑",
-      "kind": 2,
-      "subKind": 6,
-      "desc": "以弓箭攻击建筑物的兵器，可大大削减士兵数",
-      "icon": "ui://game/4845_7_6",
-      "cost": 800
+      "Name": "木兽",
+      "kind": 3,
+      "subKind": 7,
+      "desc": "将冲车强化后的兵器，可削减建筑物的耐久，并放火",
+      "icon": "ui://game/4845_7_8",
+      "cost": 800,
+      "p1": "10"
     },
     "8": {
       "Id": 8,
-      "Name": "投石",
-      "kind": 2,
-      "subKind": 6,
-      "desc": "强化井阑后的兵器，以投石攻击３区格外之敌方耐久与士兵",
-      "icon": "ui://game/4845_7_7",
-      "cost": 800
+      "Name": "井阑",
+      "kind": 3,
+      "subKind": 9,
+      "desc": "以弓箭攻击建筑物的兵器，可大大削减士兵数",
+      "icon": "ui://game/4845_7_6",
+      "cost": 800,
+      "p1": "10"
     },
     "9": {
       "Id": 9,
-      "Name": "木兽",
-      "kind": 2,
-      "subKind": 6,
-      "desc": "将冲车强化后的兵器，可削减建筑物的耐久，并放火",
-      "icon": "ui://game/4845_7_8",
-      "cost": 800
+      "Name": "投石",
+      "kind": 3,
+      "subKind": 9,
+      "desc": "强化井阑后的兵器，以投石攻击３区格外之敌方耐久与士兵",
+      "icon": "ui://game/4845_7_7",
+      "cost": 800,
+      "p1": "10"
     },
     "10": {
       "Id": 10,
       "Name": "走舸",
-      "kind": 3,
-      "subKind": 7,
+      "kind": 4,
+      "subKind": 12,
       "desc": "标准装备的舰船。",
       "icon": "ui://game/4845_7_9",
-      "cost": 800
+      "cost": 500,
+      "p1": "50"
     },
     "11": {
       "Id": 11,
       "Name": "楼船",
-      "kind": 3,
-      "subKind": 7,
+      "kind": 4,
+      "subKind": 12,
       "desc": "大型船，移动力、装甲都比走舸强化许多",
       "icon": "ui://game/4845_7_10",
-      "cost": 800
+      "cost": 1000,
+      "p1": "10"
     },
     "12": {
       "Id": 12,
       "Name": "斗舰",
-      "kind": 3,
-      "subKind": 7,
+      "kind": 4,
+      "subKind": 12,
       "desc": "将楼船强化后的舰船，可执行投石攻击",
       "icon": "ui://game/4845_7_11",
-      "cost": 800
+      "cost": 1000,
+      "p1": "8"
     }
   },
   "TroopAnimations": {
@@ -5476,7 +5528,7 @@
       "validTechId": 0,
       "costItems": [
         2,
-        1
+        1000
       ],
       "costFood": 0,
       "costGold": 0,
@@ -5541,7 +5593,7 @@
       "validTechId": 0,
       "costItems": [
         3,
-        1
+        1000
       ],
       "costFood": 0,
       "costGold": 0,
@@ -5607,7 +5659,7 @@
       "validTechId": 0,
       "costItems": [
         4,
-        1
+        1000
       ],
       "costFood": 0,
       "costGold": 0,
@@ -5672,7 +5724,7 @@
       "validTechId": 0,
       "costItems": [
         5,
-        1
+        1000
       ],
       "costFood": 0,
       "costGold": 0,
@@ -5820,6 +5872,7 @@
       "kind": 6,
       "skills": [
         1,
+        2,
         19
       ],
       "atk": 70,
@@ -5829,6 +5882,10 @@
       "influenceAbility": 5,
       "validItemId": 0,
       "validTechId": 0,
+      "costItems": [
+        10,
+        50
+      ],
       "costFood": 0,
       "costGold": 0,
       "costPopulation": 0,
@@ -5881,6 +5938,10 @@
       "influenceAbility": 5,
       "validItemId": 0,
       "validTechId": 0,
+      "costItems": [
+        11,
+        10
+      ],
       "costFood": 0,
       "costGold": 0,
       "costPopulation": 0,
@@ -5924,6 +5985,7 @@
       "kind": 6,
       "skills": [
         1,
+        2,
         21
       ],
       "atk": 90,
@@ -5933,6 +5995,10 @@
       "influenceAbility": 5,
       "validItemId": 0,
       "validTechId": 0,
+      "costItems": [
+        12,
+        8
+      ],
       "costFood": 0,
       "costGold": 0,
       "costPopulation": 0,
@@ -5972,6 +6038,234 @@
     },
     "11": {
       "Id": 11,
+      "Name": "冲车",
+      "kind": 8,
+      "skills": [
+        1
+      ],
+      "atk": 70,
+      "def": 90,
+      "durabilityDmg": 100,
+      "move": 16,
+      "influenceAbility": 5,
+      "validTechId": -1,
+      "costItems": [
+        7,
+        10
+      ],
+      "costFood": 2000,
+      "costGold": 2000,
+      "costPopulation": 2000,
+      "foodCostFactor": 1.0,
+      "isRange": false,
+      "isFight": true,
+      "isSingle": false,
+      "isLand": true,
+      "terrainCost": [
+        99,
+        4,
+        4,
+        5,
+        5,
+        4,
+        6,
+        4,
+        4,
+        4,
+        4,
+        3,
+        6,
+        4,
+        4,
+        4,
+        4,
+        1,
+        1,
+        4,
+        4
+      ],
+      "desc": "直接攻击建筑物的兵器，可大大削弱建筑物的耐久",
+      "icon": "ui://game/4845_7_5",
+      "model": "Assets/Model/Prefab/2227.prefab",
+      "aniIds": [
+        4,
+        5,
+        6
+      ]
+    },
+    "12": {
+      "Id": 12,
+      "Name": "木兽",
+      "kind": 8,
+      "skills": [
+        1
+      ],
+      "atk": 90,
+      "def": 90,
+      "durabilityDmg": 100,
+      "move": 16,
+      "influenceAbility": 5,
+      "validTechId": 1,
+      "costItems": [
+        7,
+        10
+      ],
+      "costFood": 2400,
+      "costGold": 2400,
+      "costPopulation": 2400,
+      "foodCostFactor": 1.0,
+      "isRange": false,
+      "isFight": true,
+      "isSingle": false,
+      "isLand": true,
+      "terrainCost": [
+        99,
+        4,
+        4,
+        5,
+        5,
+        4,
+        6,
+        4,
+        4,
+        4,
+        4,
+        3,
+        6,
+        4,
+        4,
+        4,
+        4,
+        1,
+        1,
+        4,
+        4
+      ],
+      "desc": "将冲车强化后的兵器，可削减建筑物的耐久，并放火",
+      "icon": "ui://game/4845_7_8",
+      "model": "Assets/Model/Prefab/2227.prefab",
+      "aniIds": [
+        1,
+        2,
+        3
+      ]
+    },
+    "13": {
+      "Id": 13,
+      "Name": "井阑",
+      "kind": 9,
+      "skills": [
+        1
+      ],
+      "atk": 80,
+      "def": 80,
+      "durabilityDmg": 100,
+      "move": 16,
+      "influenceAbility": 5,
+      "validTechId": -2,
+      "costItems": [
+        9,
+        10
+      ],
+      "costFood": 2400,
+      "costGold": 2400,
+      "costPopulation": 2400,
+      "foodCostFactor": 1.0,
+      "isRange": true,
+      "isFight": true,
+      "isSingle": false,
+      "isLand": true,
+      "terrainCost": [
+        99,
+        4,
+        4,
+        5,
+        5,
+        4,
+        6,
+        4,
+        4,
+        4,
+        4,
+        3,
+        6,
+        4,
+        4,
+        4,
+        4,
+        1,
+        1,
+        4,
+        4
+      ],
+      "desc": "以弓箭攻击建筑物的兵器，可大大削减士兵数",
+      "icon": "ui://game/4845_7_6",
+      "model": "Assets/Model/Prefab/p_jinlan.prefab",
+      "aniIds": [
+        4,
+        5,
+        6
+      ]
+    },
+    "14": {
+      "Id": 14,
+      "Name": "投石",
+      "kind": 9,
+      "skills": [
+        1
+      ],
+      "atk": 100,
+      "def": 80,
+      "durabilityDmg": 100,
+      "move": 16,
+      "influenceAbility": 5,
+      "validTechId": 2,
+      "costItems": [
+        9,
+        10
+      ],
+      "costFood": 2500,
+      "costGold": 2500,
+      "costPopulation": 2500,
+      "foodCostFactor": 1.0,
+      "isRange": true,
+      "isFight": true,
+      "isSingle": false,
+      "isLand": true,
+      "terrainCost": [
+        99,
+        4,
+        4,
+        5,
+        5,
+        4,
+        6,
+        4,
+        4,
+        4,
+        4,
+        3,
+        6,
+        4,
+        4,
+        4,
+        4,
+        1,
+        1,
+        4,
+        4
+      ],
+      "desc": "强化井阑后的兵器，以投石攻击３区格外之敌方耐久与士兵",
+      "icon": "ui://game/4845_7_7",
+      "model": "Assets/Model/Prefab/p_jinlan.prefab",
+      "aniIds": [
+        4,
+        5,
+        6
+      ]
+    },
+    "15": {
+      "Id": 15,
       "Name": "陷阵营",
       "kind": 1,
       "skills": [
@@ -5987,8 +6281,8 @@
       "validTechId": 0,
       "costGold": 0
     },
-    "12": {
-      "Id": 12,
+    "16": {
+      "Id": 16,
       "Name": "青州兵",
       "kind": 3,
       "skills": [
@@ -6003,8 +6297,8 @@
       "validItemId": 9,
       "validTechId": 0
     },
-    "13": {
-      "Id": 13,
+    "17": {
+      "Id": 17,
       "Name": "白毦兵",
       "kind": 3,
       "skills": [
@@ -6019,8 +6313,8 @@
       "validItemId": 10,
       "validTechId": 0
     },
-    "14": {
-      "Id": 14,
+    "18": {
+      "Id": 18,
       "Name": "虎豹骑",
       "kind": 4,
       "skills": [
@@ -6036,8 +6330,8 @@
       "validItemId": 11,
       "validTechId": 0
     },
-    "15": {
-      "Id": 15,
+    "19": {
+      "Id": 19,
       "Name": "大戟士",
       "kind": 3,
       "skills": [
@@ -6052,8 +6346,8 @@
       "validItemId": 12,
       "validTechId": 0
     },
-    "16": {
-      "Id": 16,
+    "20": {
+      "Id": 20,
       "Name": "虎卫军",
       "kind": 1,
       "skills": [
@@ -6068,8 +6362,8 @@
       "validItemId": 13,
       "validTechId": 0
     },
-    "17": {
-      "Id": 17,
+    "21": {
+      "Id": 21,
       "Name": "白马义从",
       "kind": 4,
       "skills": [
@@ -6085,8 +6379,8 @@
       "validItemId": 14,
       "validTechId": 0
     },
-    "18": {
-      "Id": 18,
+    "22": {
+      "Id": 22,
       "Name": "西凉铁骑‌",
       "kind": 4,
       "skills": [
@@ -6102,8 +6396,8 @@
       "validItemId": 15,
       "validTechId": 0
     },
-    "19": {
-      "Id": 19,
+    "23": {
+      "Id": 23,
       "Name": "藤甲兵",
       "kind": 1,
       "skills": [
@@ -6118,8 +6412,8 @@
       "validItemId": 16,
       "validTechId": 0
     },
-    "20": {
-      "Id": 20,
+    "24": {
+      "Id": 24,
       "Name": "象兵",
       "kind": 4,
       "skills": [
@@ -6135,8 +6429,8 @@
       "validItemId": 17,
       "validTechId": 0
     },
-    "21": {
-      "Id": 21,
+    "25": {
+      "Id": 25,
       "Name": "无当飞军",
       "kind": 2,
       "skills": [
@@ -6152,8 +6446,8 @@
       "validItemId": 18,
       "validTechId": 0
     },
-    "22": {
-      "Id": 22,
+    "26": {
+      "Id": 26,
       "Name": "锦帆军",
       "kind": 2,
       "skills": [

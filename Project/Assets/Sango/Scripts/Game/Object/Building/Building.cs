@@ -63,13 +63,7 @@ namespace Sango.Game
         {
             if (!isComplte && Builders != null)
             {
-                int totalValue = 0;
-                for (int i = 0; i < Builders.Count; i++)
-                {
-                    Person person = Builders[i];
-                    totalValue += person.BaseBuildAbility;
-                }
-                totalValue = GameUtility.Method_PersonBuildAbility(totalValue);
+                int totalValue = GameUtility.Method_PersonBuildAbility(Builders);
                 durability += totalValue;
                 if (durability >= BuildingType.durabilityLimit)
                 {
@@ -83,13 +77,7 @@ namespace Sango.Game
             }
             else if (isUpgrading && Builders != null)
             {
-                int totalValue = 0;
-                for (int i = 0; i < Builders.Count; i++)
-                {
-                    Person person = Builders[i];
-                    totalValue += person.BaseBuildAbility;
-                }
-                totalValue = GameUtility.Method_PersonBuildAbility(totalValue);
+                int totalValue = GameUtility.Method_PersonBuildAbility(Builders);
                 durability += totalValue;
                 if (durability >= BuildingType.durabilityLimit)
                 {

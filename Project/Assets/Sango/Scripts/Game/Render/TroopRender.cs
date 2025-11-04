@@ -239,7 +239,7 @@ namespace Sango.Game.Render
             }
             else
             {
-                MapObject.ChangeModel(Troop.TroopType.model);
+                MapObject.ChangeModel(Troop.LandTroopType.model);
             }
         }
 

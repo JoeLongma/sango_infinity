@@ -238,7 +238,10 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public float securityInfluence = 0.1f;
 
-
+        /// <summary>
+        /// 治安每一点对征兵的影响值比例
+        /// </summary>
+        [JsonProperty] public float securityInfluenceRecruitTroops = 0.005f;
 
         /// <summary>
         /// 工作花费 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}

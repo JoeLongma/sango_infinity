@@ -137,7 +137,7 @@ namespace Sango.Game
                 int itemTypeId = cost[i];
                 int costN = cost[i + 1];
                 int have = GetNumber(itemTypeId);
-                if (have < costN * number)
+                if (have < costN * number / 1000)
                     return false;
             }
             return true;
@@ -149,7 +149,7 @@ namespace Sango.Game
             for (int i = 0; i < cost.Length; i += 2)
             {
                 int itemTypeId = cost[i];
-                int costN = cost[i + 1] * number;
+                int costN = cost[i + 1] * number / 1000;
                 Remove(itemTypeId, costN);
             }
         }
@@ -160,7 +160,7 @@ namespace Sango.Game
             for (int i = 0; i < cost.Length; i += 2)
             {
                 int itemTypeId = cost[i];
-                int costN = cost[i + 1] * number;
+                int costN = cost[i + 1] * number / 1000;
                 Add(itemTypeId, costN);
             }
         }
@@ -172,7 +172,7 @@ namespace Sango.Game
             {
                 int itemTypeId = cost[i];
                 int costN = cost[i + 1];
-                int have = GetNumber(itemTypeId) / costN;
+                int have = GetNumber(itemTypeId) * 1000 / costN;
                 number = Math.Min(number, have);
             }
             return number;

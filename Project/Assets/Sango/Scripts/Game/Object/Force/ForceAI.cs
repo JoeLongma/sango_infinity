@@ -460,13 +460,7 @@ namespace Sango.Game
         {
             return CounsellorRecommend3Person(personList, (ref int[] maxBuildTurn, Person check1, Person check2, Person check3) =>
             {
-                int buildAbility = 0;
-                if (check1 != null) buildAbility += check1.BaseBuildAbility;
-                if (check2 != null) buildAbility += check2.BaseBuildAbility;
-                if (check3 != null) buildAbility += check3.BaseBuildAbility;
-
-                buildAbility = GameUtility.Method_PersonBuildAbility(buildAbility);
-
+                int buildAbility = GameUtility.Method_PersonBuildAbility(check1, check2, check3);
                 int turnCount = buildingType.durabilityLimit % buildAbility == 0 ? 0 : 1;
                 int buildCount = Math.Min(Scenario.Cur.Variables.BuildMaxTurn, buildingType.durabilityLimit / buildAbility + turnCount);
 

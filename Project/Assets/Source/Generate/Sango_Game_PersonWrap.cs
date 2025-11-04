@@ -1165,7 +1165,7 @@ public class Sango_Game_PersonWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Person obj = (Sango.Game.Person)o;
-			Sango.Game.PersonAbilityValue ret = obj.horseLv;
+			Sango.Game.PersonAbilityValue ret = obj.rideLv;
 			ToLua.PushObject(L, ret);
 			return 1;
 		}
@@ -2686,7 +2686,7 @@ public class Sango_Game_PersonWrap
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Person obj = (Sango.Game.Person)o;
 			Sango.Game.PersonAbilityValue arg0 = (Sango.Game.PersonAbilityValue)ToLua.CheckObject<Sango.Game.PersonAbilityValue>(L, 2);
-			obj.horseLv = arg0;
+			obj.rideLv = arg0;
 			return 0;
 		}
 		catch(Exception e)

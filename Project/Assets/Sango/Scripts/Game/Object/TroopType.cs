@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Sango.Game
@@ -97,7 +98,7 @@ namespace Sango.Game
         [JsonProperty] public List<int> skills = new List<int>();
 
         /// <summary>
-        /// 组建消耗的道具(兵器,战马,兵符等)
+        /// 组建1000人所消耗的道具(兵器,战马,船等) 
         /// </summary>
         [JsonProperty] public int[] costItems;
 
@@ -175,6 +176,8 @@ namespace Sango.Game
 
                 // 检查科技
                 if (t.validTechId > 0 && !force.HasTechnique(t.validTechId))
+                    return;
+                else if (t.validTechId < 0 && force.HasTechnique(Math.Abs(t.validTechId)))
                     return;
 
                 if (t.validItemId == 0)

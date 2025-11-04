@@ -18,6 +18,8 @@
 
 
         PersonBuild,
+        PersonCreateBoat,
+        PersonCreateMachine,
         PersonWork,
         PersonInTroop,
         PersonInCityCaptive,

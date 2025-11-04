@@ -133,6 +133,7 @@ namespace Sango.Game
             }
             return false;
         }
+
         //public Corps Add(Corps corps)
         //{
         //    allCorps.Add(Scenario.Cur.Add(corps));
@@ -304,27 +305,33 @@ namespace Sango.Game
                 var c = scenario.citySet[i];
                 if (c != null && c.IsAlive && c.BelongForce == this)
                 {
-                    CityCount++;
+                   
                     c.OnForceTurnStart(scenario);
                     FightPower += c.FightPower;
                     buildingBaseList.Enqueue(c);
-                    c.borderLine = -1;
-                    // 计算相邻势力
-                    foreach (City neighbor in c.NeighborList)
+
+                    if (c.IsCity())
                     {
-                        if (!neighbor.IsSameForce(c))
+                        CityCount++;
+
+                        c.borderLine = -1;
+                        // 计算相邻势力
+                        foreach (City neighbor in c.NeighborList)
                         {
-                            c.borderLine = 0;
-                            if (neighbor.BelongForce != null)
+                            if (!neighbor.IsSameForce(c))
                             {
-                                if (!NeighborForceList.Contains(neighbor.BelongForce))
+                                c.borderLine = 0;
+                                if (neighbor.BelongForce != null)
                                 {
-                                    NeighborForceList.Add(neighbor.BelongForce);
+                                    if (!NeighborForceList.Contains(neighbor.BelongForce))
+                                    {
+                                        NeighborForceList.Add(neighbor.BelongForce);
+                                    }
                                 }
                             }
                         }
+                        hasNoCheckBorder = c.borderLine == -1;
                     }
-                    hasNoCheckBorder = c.borderLine == -1;
                 }
             }
 
@@ -526,7 +533,7 @@ namespace Sango.Game
 
         public bool HasTechnique(int techId)
         {
-            return true;
+            return false;
         }
     }
 }

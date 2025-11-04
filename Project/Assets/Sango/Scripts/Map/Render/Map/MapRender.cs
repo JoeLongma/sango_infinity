@@ -547,23 +547,50 @@ namespace Sango.Render
                 VertexData ver0 = vertexDatas[startX][startY];
                 VertexData ver2 = vertexDatas[startX + 1][startY + 1];
                 VertexData ver3 = vertexDatas[startX][startY + 1];
-                if (PlaneLineIntersection.GetIntersectionWithXPerpendicularLine(ver0.position,
-                    ver2.position, ver3.position, direction, Vector3.down, out hitPoint))
+
+                if (ver0.water > 0 || ver2.water > 0 || ver3.water > 0)
                 {
-                    return true;
+                    if (PlaneLineIntersection.GetIntersectionWithXPerpendicularLine(ver0.waterPosition,
+                        ver2.waterPosition, ver3.waterPosition, direction, Vector3.down, out hitPoint))
+                    {
+                        return true;
+                    }
                 }
+                else
+                {
+                    if (PlaneLineIntersection.GetIntersectionWithXPerpendicularLine(ver0.position,
+                        ver2.position, ver3.position, direction, Vector3.down, out hitPoint))
+                    {
+                        return true;
+                    }
+                }
+
+
             }
             else
             {
                 VertexData ver0 = vertexDatas[startX][startY];
                 VertexData ver1 = vertexDatas[startX + 1][startY];
                 VertexData ver2 = vertexDatas[startX + 1][startY + 1];
-                if (PlaneLineIntersection.GetIntersectionWithXPerpendicularLine(ver1.position,
-                   ver2.position, ver0.position, direction, Vector3.down, out hitPoint))
-
+                if (ver0.water > 0 || ver1.water > 0 || ver2.water > 0)
                 {
-                    return true;
+                    if (PlaneLineIntersection.GetIntersectionWithXPerpendicularLine(ver1.waterPosition,
+                        ver2.waterPosition, ver0.waterPosition, direction, Vector3.down, out hitPoint))
+
+                    {
+                        return true;
+                    }
                 }
+                else
+                {
+                    if (PlaneLineIntersection.GetIntersectionWithXPerpendicularLine(ver1.position,
+                        ver2.position, ver0.position, direction, Vector3.down, out hitPoint))
+
+                    {
+                        return true;
+                    }
+                }
+
             }
             return false;
         }

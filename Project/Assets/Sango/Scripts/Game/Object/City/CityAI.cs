@@ -18,10 +18,9 @@ namespace Sango.Game
                 if (city.TroopMissionType == MissionType.TroopOccupyCity)
                 {
                     City targetCity = scenario.citySet.Get(city.TroopMissionTargetId);
-                    if (targetCity.BelongForce != null || (targetCity.BelongForce == null && city.TroopsCount < 1))
+                    if ((targetCity.BelongForce != null && city.TroopsCount < GameRandom.Range(5, 10)) || (targetCity.BelongForce == null && city.TroopsCount < 2))
                     {
-                        // 白城只去一直部队
-
+                        // 白城只去2支部队
                         Troop troop = AIMakeTroop(city, 20, true, scenario);
                         if (troop != null)
                         {
@@ -166,7 +165,8 @@ namespace Sango.Game
 
             AISecurity(city, scenario);
             AITrainTroop(city, scenario);
-
+            AICreateBoat(city, scenario);
+            AICreateMachine(city, scenario);
             if (city.freePersons.Count > 3)
             {
                 city.JobSearching(city.freePersons.GetRange(0, GameRandom.Range(city.freePersons.Count / 2)).ToArray());
@@ -525,6 +525,70 @@ namespace Sango.Game
                 (int)BuildingKindType.Market,
                 (int)BuildingKindType.Stable,// 24巨城
             },
+
+            // 后方港口城市
+            new int[] {
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Barracks,
+                (int)BuildingKindType.BlacksmithShop,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.PatrolBureau,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.BoatFactory,
+                (int)BuildingKindType.MechineFactory,// 12小城
+
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.BoatFactory,
+                (int)BuildingKindType.CustomKind,// 16中城
+
+
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.CustomKind,
+                (int)BuildingKindType.Market,// 20大城
+
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 24巨城
+            },
+
+             // 边境港口城市
+            new int[] {
+                (int)BuildingKindType.Barracks,
+                (int)BuildingKindType.BlacksmithShop,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.PatrolBureau,
+                (int)BuildingKindType.BoatFactory,
+                (int)BuildingKindType.MechineFactory,
+                (int)BuildingKindType.BoatFactory,// 12小城
+
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Barracks,
+                (int)BuildingKindType.BlacksmithShop,// 16中城
+
+
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 20大城
+
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Stable,// 24巨城
+            },
         };
 
         public static bool AIBuildIntriore(City city, Scenario scenario)
@@ -537,12 +601,27 @@ namespace Sango.Game
 
             if (city.IsBorderCity)
             {
-                // 优先建造军事
-                AIBuildingTemplate(1, city, scenario);
+                if (city.portList.Count > 0)
+                {
+                    AIBuildingTemplate(3, city, scenario);
+
+                }
+                else
+                {
+                    AIBuildingTemplate(1, city, scenario);
+                }
             }
             else
             {
-                AIBuildingTemplate(0, city, scenario);
+                if (city.portList.Count > 0)
+                {
+                    AIBuildingTemplate(2, city, scenario);
+
+                }
+                else
+                {
+                    AIBuildingTemplate(0, city, scenario);
+                }
             }
 
             return true;
@@ -637,21 +716,13 @@ namespace Sango.Game
                 Person[] people = ForceAI.CounsellorRecommendBuild(city.freePersons, buildingType);
                 if (people != null)
                 {
-                    int buildAbility = 0;
-                    for (int k = 0; k < people.Length; k++)
-                    {
-                        Person person = people[k];
-                        if (person == null) continue;
-                        buildAbility += person.BaseBuildAbility;
-                    }
-
-                    buildAbility = GameUtility.Method_PersonBuildAbility(buildAbility);
+                    int buildAbility = GameUtility.Method_PersonBuildAbility(people);
                     int turnCount = buildingType.durabilityLimit % buildAbility == 0 ? 0 : 1;
                     int buildCount = Math.Min(Scenario.Cur.Variables.BuildMaxTurn, buildingType.durabilityLimit / buildAbility + turnCount);
 
                     if (buildCount <= 6)
                     {
-                        city.BuildBuilding(index, people, buildingType);
+                        city.JobBuildBuilding(index, people, buildingType);
                     }
                     return true;
                 }
@@ -690,24 +761,15 @@ namespace Sango.Game
                     Person[] people = ForceAI.CounsellorRecommendBuild(city.freePersons, nextBuildingType);
                     if (people != null)
                     {
-                        int buildAbility = 0;
-                        for (int k = 0; k < people.Length; k++)
-                        {
-                            Person person = people[k];
-                            if (person == null) continue;
-                            buildAbility += person.BaseBuildAbility;
-                        }
-
-                        buildAbility = GameUtility.Method_PersonBuildAbility(buildAbility);
+                        int buildAbility = GameUtility.Method_PersonBuildAbility(people);
                         int turnCount = nextBuildingType.durabilityLimit % buildAbility == 0 ? 0 : 1;
                         int buildCount = Math.Min(Scenario.Cur.Variables.BuildMaxTurn, nextBuildingType.durabilityLimit / buildAbility + turnCount);
                         if (buildCount <= 6)
                         {
-                            city.UpgradeBuilding(building, people, nextBuildingType);
+                            city.JobUpgradeBuilding(building, people, nextBuildingType);
                         }
                         return true;
                     }
-
                 }
             }
             return true;
@@ -967,6 +1029,80 @@ namespace Sango.Game
                 }
             }
 
+            return true;
+        }
+
+        public static bool AICreateBoat(City city, Scenario scenario)
+        {
+            if (city.portList.Count == 0) return false;
+
+            if (city.freePersons.Count < 2 || city.gold < 1500)
+                return true;
+
+            if (city.itemStore.TotalNumber >= city.StoreLimit - 1000) return true;
+
+            int BoatFactoryNum = city.GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.BoatFactory);
+            if (BoatFactoryNum <= 0)
+                return true;
+
+            ItemType targetItemType = scenario.GetObject<ItemType>(12);
+            if (!targetItemType.IsValid(city.BelongForce))
+                targetItemType = scenario.GetObject<ItemType>(11);
+
+            // 获取总兵装
+            int totalNum = city.itemStore.GetNumber(targetItemType.subKind);
+            if (totalNum > (city.troops / 2) * targetItemType.p1 / 1000 + 1)
+                return true;
+
+            Person[] people = ForceAI.CounsellorRecommendCreateItems(city.freePersons);
+            if (people == null) return true;
+            if (city.JobCreateBoat(people, targetItemType, BoatFactoryNum))
+            {
+
+            }
+            return true;
+        }
+
+        public static bool AICreateMachine(City city, Scenario scenario)
+        {
+            if (city.freePersons.Count < 2 || city.gold < 1500)
+                return true;
+
+            if (city.itemStore.TotalNumber >= city.StoreLimit - 1000) return true;
+
+            int MechineFactoryNum = city.GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.MechineFactory);
+            if (MechineFactoryNum <= 0)
+                return true;
+
+            int monsterNum = city.itemStore.GetNumber(7);
+            int towerNum = city.itemStore.GetNumber(9);
+
+            int totalNum;
+            ItemType targetItemType;
+            if (towerNum > monsterNum)
+            {
+                totalNum = monsterNum;
+                targetItemType = scenario.GetObject<ItemType>(7);
+                if (!targetItemType.IsValid(city.BelongForce))
+                    targetItemType = scenario.GetObject<ItemType>(6);
+            }
+            else
+            {
+                totalNum = towerNum;
+                targetItemType = scenario.GetObject<ItemType>(9);
+                if (!targetItemType.IsValid(city.BelongForce))
+                    targetItemType = scenario.GetObject<ItemType>(8);
+            }
+
+            if (totalNum > (city.troops / 6) * targetItemType.p1 / 1000 + 1)
+                return true;
+
+            Person[] people = ForceAI.CounsellorRecommendCreateItems(city.freePersons);
+            if (people == null) return true;
+            if (city.JobCreateMachine(people, targetItemType, MechineFactoryNum))
+            {
+
+            }
             return true;
         }
 

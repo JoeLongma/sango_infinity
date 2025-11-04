@@ -246,7 +246,7 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty]
         [JsonConverter(typeof(PersonAbilityValueConverter))]
-        public PersonAbilityValue horseLv = new PersonAbilityValue();
+        public PersonAbilityValue rideLv = new PersonAbilityValue();
 
         /// <summary>
         /// 水军
@@ -289,7 +289,7 @@ namespace Sango.Game
         public int SpearLv => spearLv.value;
         public int HalberdLv => halberdLv.value;
         public int CrossbowLv => crossbowLv.value;
-        public int HorseLv => horseLv.value;
+        public int HorseLv => rideLv.value;
         public int WaterLv => waterLv.value;
         public int MachineLv => machineLv.value;
 
@@ -397,6 +397,8 @@ namespace Sango.Game
         [JsonProperty] public int missionType;
         [JsonProperty] public int missionTarget;
         [JsonProperty] public int missionCounter;
+        [JsonProperty] public int missionParamas1;
+        [JsonProperty] public int missionParamas2;
 
         public bool rewardOver;
 
@@ -529,7 +531,48 @@ namespace Sango.Game
                         }
                     }
                     break;
+                case (int)MissionType.PersonCreateBoat:
+                    {
+                        missionCounter--;
+                        if (missionCounter <= 0)
+                        {
+                            int buildingTotalLv = missionParamas1;
+                            int totalValue = missionParamas2;
+                            ItemType itemType = scenario.GetObject<ItemType>(missionTarget);
+                            BelongCity.DoJobCreateBoat(itemType, buildingTotalLv, totalValue);
+                        }
+                    }
+                    break;
+                case (int)MissionType.PersonCreateMachine:
+                    {
+                        missionCounter--;
+                        if (missionCounter <= 0)
+                        {
+                            int buildingTotalLv = missionParamas1;
+                            int totalValue = missionParamas2;
+                            ItemType itemType = scenario.GetObject<ItemType>(missionTarget);
+                            BelongCity.DoJobCreateMachine(itemType, buildingTotalLv, totalValue);
+                        }
+                    }
+                    break;
             }
+        }
+
+        public void SetMission(MissionType missionType, SangoObject missionTarget, int missionCounter, int p1, int p2)
+        {
+            this.missionType = (int)missionType;
+            this.missionTarget = missionTarget.Id;
+            this.missionCounter = missionCounter;
+            this.missionParamas1 = p1;
+            this.missionParamas2 = p2;
+        }
+
+        public void SetMission(MissionType missionType, SangoObject missionTarget, int missionCounter, int p1)
+        {
+            this.missionType = (int)missionType;
+            this.missionTarget = missionTarget.Id;
+            this.missionCounter = missionCounter;
+            this.missionParamas1 = p1;
         }
 
         public void SetMission(MissionType missionType, SangoObject missionTarget, int missionCounter)
@@ -728,8 +771,8 @@ namespace Sango.Game
         //TODO: 完善招降概率
         public bool Persuade(Person person)
         {
-            //return GameRandom.Changce(30);
-            return true;
+            return GameRandom.Chance(10);
+            //return true;
         }
 
         public Person BeCaptive(City city)

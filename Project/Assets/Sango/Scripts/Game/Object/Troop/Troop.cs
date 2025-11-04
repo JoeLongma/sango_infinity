@@ -48,23 +48,6 @@ namespace Sango.Game
         [JsonProperty]
         public Person Member2 { get; set; }
 
-        /// <summary>
-        /// 部队类型
-        /// </summary>
-        [JsonConverter(typeof(Id2ObjConverter<TroopType>))]
-        [JsonProperty]
-        public TroopType TroopType { get; set; }
-
-        /// <summary>
-        /// 兵种适应力
-        /// </summary>
-        public int TroopTypeLv { get; private set; }
-
-
-        public TroopType WaterTroopType { get; set; }
-
-        public int WaterTroopTypeLv { get; private set; }
-
 
         /// <summary>
         /// 俘虏
@@ -177,40 +160,98 @@ namespace Sango.Game
         [JsonConverter(typeof(XY2CellConverter))]
         public Cell missionTargetCell;
 
+
+        public TroopType TroopType
+        {
+            get { return IsInWater ? WaterTroopType : LandTroopType; }
+            set { LandTroopType = value; }
+        }
+
+        /// <summary>
+        /// 兵种适应力
+        /// </summary>
+        public int TroopTypeLv => IsInWater ? WaterTroopTypeLv : LandTroopTypeLv;
+
+        /// <summary>
+        /// 部队类型
+        /// </summary>
+        [JsonConverter(typeof(Id2ObjConverter<TroopType>))]
+        [JsonProperty]
+        public TroopType WaterTroopType { get; set; }
+
+        /// <summary>
+        /// 部队类型
+        /// </summary>
+        [JsonConverter(typeof(Id2ObjConverter<TroopType>))]
+        [JsonProperty]
+        public TroopType LandTroopType { get; set; }
+
+        public int WaterTroopTypeLv { get; private set; }
+        public int LandTroopTypeLv { get; private set; }
+
+        /// <summary>
+        /// 是否在水中
+        /// </summary>
+        /// <returns></returns>
+        public bool IsInWater => cell.TerrainType.isWater;
+
+
+        public List<SkillInstance> skills => IsInWater ? waterSkills : landSkills;
+
         /// <summary>
         /// 当前技能
         /// </summary>
         [JsonProperty]
-        public List<SkillInstance> skills;
-
-        // 近战普攻
-        public SkillInstance NormalSkill { get; private set; }
-
-        // 远程普攻
-        public SkillInstance NormalRangeSkill { get; private set; }
+        public List<SkillInstance> waterSkills;
 
         /// <summary>
-        /// 伤害额外增减
+        /// 当前技能
+        /// </summary>
+        [JsonProperty]
+        public List<SkillInstance> landSkills;
+
+        // 近战普攻
+        public SkillInstance NormalSkill => IsInWater ? waterNormalSkill : landNormalSkill;
+        SkillInstance waterNormalSkill;
+        SkillInstance landNormalSkill;
+
+        // 远程普攻
+        public SkillInstance NormalRangeSkill => IsInWater ? waterNormalRangeSkill : landNormalRangeSkill;
+        SkillInstance waterNormalRangeSkill;
+        SkillInstance landNormalRangeSkill;
+
+        /// <summary>
+        /// 对部队的额外伤害增减
         /// </summary>
         public float DamageTroopExtraFactor { get; private set; }
+
+        /// <summary>
+        /// 对建筑的额外伤害增益
+        /// </summary>
         public float DamageBuildingExtraFactor { get; private set; }
 
         public int SpearLv { get; private set; }
         public int HalberdLv { get; private set; }
         public int CrossbowLv { get; private set; }
-        public int HorseLv { get; private set; }
+        public int RideLv { get; private set; }
         public int WaterLv { get; private set; }
         public int MachineLv { get; private set; }
 
         /// <summary>
         /// 攻击力
         /// </summary>
-        public int Attack { get; set; }
+        public int Attack => IsInWater ? waterAttack : landAttack;
+
+        int waterAttack;
+        int landAttack;
 
         /// <summary>
         /// 防御力
         /// </summary>
-        public int Defence { get; set; }
+        public int Defence => IsInWater ? waterDefence : landDefence;
+
+        int waterDefence;
+        int landDefence;
 
         /// <summary>
         /// 建设力
@@ -250,9 +291,8 @@ namespace Sango.Game
         public override void Init(Scenario scenario)
         {
             ForEachPerson(x => x.BelongTroop = this);
-            BelongCity.activedTroops.Add(this);
+            BelongCity.allTroops.Add(this);
             CalculateAttribute(scenario);
-            WaterTroopType = scenario.GetObject<TroopType>(8);
             Render = new TroopRender(this);
             foodCost = (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
         }
@@ -341,6 +381,9 @@ namespace Sango.Game
         {
             ScenarioVariables Variables = Scenario.Cur.Variables;
 
+            if (WaterTroopType == null)
+                WaterTroopType = scenario.GetObject<TroopType>(8);
+
             // 计算能力,能力取最大
             ForEachPerson((p) =>
             {
@@ -349,17 +392,19 @@ namespace Sango.Game
                 Intelligence = Math.Max(Intelligence, p.Intelligence);
                 Politics = Math.Max(Politics, p.Politics);
                 Glamour = Math.Max(Glamour, p.Glamour);
-                TroopTypeLv = Math.Max(TroopTypeLv, CheckTroopTypeLevel(TroopType, p));
+                LandTroopTypeLv = Math.Max(LandTroopTypeLv, CheckTroopTypeLevel(LandTroopType, p));
                 WaterTroopTypeLv = Math.Max(WaterTroopTypeLv, p.WaterLv);
             });
 
             List<SkillInstance> skillInstances = new List<SkillInstance>();
-            NormalSkill = null;
-            NormalRangeSkill = null;
+            landNormalSkill = null;
+            waterNormalSkill = null;
+            landNormalRangeSkill = null;
+            waterNormalRangeSkill = null;
             // 准备技能
-            for (int i = 0; i < TroopType.skills.Count; i++)
+            for (int i = 0; i < LandTroopType.skills.Count; i++)
             {
-                Skill skill = Scenario.Cur.GetObject<Skill>(TroopType.skills[i]);
+                Skill skill = Scenario.Cur.GetObject<Skill>(LandTroopType.skills[i]);
                 if (skill != null && skill.CanAddToTroop(this))
                 {
 
@@ -374,31 +419,76 @@ namespace Sango.Game
                     if (skill.costEnergy == 0)
                     {
                         if (skill.isRange)
-                            NormalRangeSkill = ins;
+                            landNormalRangeSkill = ins;
                         else
-                            NormalSkill = ins;
+                            landNormalSkill = ins;
                     }
                 }
             }
-            skills = skillInstances;
+            landSkills = skillInstances;
+
+            skillInstances = new List<SkillInstance>();
+            for (int i = 0; i < WaterTroopType.skills.Count; i++)
+            {
+                Skill skill = Scenario.Cur.GetObject<Skill>(WaterTroopType.skills[i]);
+                if (skill != null && skill.CanAddToTroop(this))
+                {
+
+
+                    SkillInstance ins = null;
+                    if (skills != null)
+                        ins = skills.Find(x => x.Skill == skill);
+                    if (ins == null)
+                        ins = new SkillInstance() { Skill = skill, CDCount = 0 };
+
+                    skillInstances.Add(ins);
+                    if (skill.costEnergy == 0)
+                    {
+                        if (skill.isRange)
+                            waterNormalRangeSkill = ins;
+                        else
+                            waterNormalSkill = ins;
+                    }
+                }
+            }
+            waterSkills = skillInstances;
 
             // 防御力 = (70%统率+30%智力) * 兵种防御力 / 100 * 适应力加成(A为1)
-            Defence = TroopsLevelBoost((
+            landDefence = TroopsLevelBoost((
                 Command * Variables.fight_troop_defence_command_factor
                 + Strength * Variables.fight_troop_defence_strength_factor
                 + Intelligence * Variables.fight_troop_defence_intelligence_factor
                 + Politics * Variables.fight_troop_defence_intelligence_factor
                 + Glamour * Variables.fight_troop_defence_intelligence_factor
-                ) / 10000 * TroopType.def) / 100;
+                ) / 10000 * LandTroopType.def, LandTroopTypeLv) / 100;
 
             // 攻击力 = (70%武力+30%统率) * 兵种攻击力 / 100 * 适应力加成(A为1)
-            Attack = TroopsLevelBoost((
+            landAttack = TroopsLevelBoost((
                  Command * Variables.fight_troop_attack_command_factor
                 + Strength * Variables.fight_troop_attack_strength_factor
                 + Intelligence * Variables.fight_troop_attack_intelligence_factor
                 + Politics * Variables.fight_troop_attack_politics_factor
                 + Glamour * Variables.fight_troop_attack_glamour_factor
-                ) / 10000 * TroopType.atk) / 100;
+                ) / 10000 * LandTroopType.atk, LandTroopTypeLv) / 100;
+
+
+            // 防御力 = (70%统率+30%智力) * 兵种防御力 / 100 * 适应力加成(A为1)
+            waterDefence = TroopsLevelBoost((
+                Command * Variables.fight_troop_defence_command_factor
+                + Strength * Variables.fight_troop_defence_strength_factor
+                + Intelligence * Variables.fight_troop_defence_intelligence_factor
+                + Politics * Variables.fight_troop_defence_intelligence_factor
+                + Glamour * Variables.fight_troop_defence_intelligence_factor
+                ) / 10000 * WaterTroopType.def, WaterTroopTypeLv) / 100;
+
+            // 攻击力 = (70%武力+30%统率) * 兵种攻击力 / 100 * 适应力加成(A为1)
+            waterAttack = TroopsLevelBoost((
+                 Command * Variables.fight_troop_attack_command_factor
+                + Strength * Variables.fight_troop_attack_strength_factor
+                + Intelligence * Variables.fight_troop_attack_intelligence_factor
+                + Politics * Variables.fight_troop_attack_politics_factor
+                + Glamour * Variables.fight_troop_attack_glamour_factor
+                ) / 10000 * WaterTroopType.atk, WaterTroopTypeLv) / 100;
 
 
             // 建设能力 = 政治 * 67% + 50;
@@ -518,18 +608,6 @@ namespace Sango.Game
                 * difficultyDamageFactor
                 );
 
-
-            ////基础伤害
-            //float base_dmg = Variables.fight_base_damage * (attack_troops_type.atk - defender_troops_type.def);
-
-            ////兵力加成系数
-            //var troops_add = (attacker.troops - Variables.fight_base_troops_need) / Variables.fight_base_troop_count * Variables.fight_base_troop_factor_per_count;
-
-            ////基础减伤
-            //var base_reduce = Variables.fight_base_reduce_percent * target.Command / 100f;
-
-            //var damage = base_dmg * (1 + troops_add) * (1 - base_reduce);
-
             ////士气矫正后的伤害
             //damage = damage * (UnityEngine.Mathf.Max(attacker.morale - Variables.fight_morale_decay_below, 0) / (100 - Variables.fight_morale_decay_below) *
             //Variables.fight_morale_add + (1 - Variables.fight_morale_decay_percent) + UnityEngine.Mathf.Min(UnityEngine.Mathf.Max(attacker.morale, 0), Variables.fight_morale_decay_below) / Variables.fight_morale_decay_below * Variables.fight_morale_decay_percent);
@@ -604,18 +682,6 @@ namespace Sango.Game
                 // 难度系数,仅对玩家生效
                 * difficultyDamageFactor
                 );
-
-
-            ////基础伤害
-            //float base_dmg = Variables.fight_base_damage * (attack_troops_type.atk - defender_troops_type.def);
-
-            ////兵力加成系数
-            //var troops_add = (attacker.troops - Variables.fight_base_troops_need) / Variables.fight_base_troop_count * Variables.fight_base_troop_factor_per_count;
-
-            ////基础减伤
-            //var base_reduce = Variables.fight_base_reduce_percent * target.Command / 100f;
-
-            //var damage = base_dmg * (1 + troops_add) * (1 - base_reduce);
 
             ////士气矫正后的伤害
             //damage = damage * (UnityEngine.Mathf.Max(attacker.morale - Variables.fight_morale_decay_below, 0) / (100 - Variables.fight_morale_decay_below) *
@@ -774,15 +840,15 @@ namespace Sango.Game
         }
 
 
-        // 克制系数
+        // 适应力加成
         //@param attacker Troops
-        public int TroopsLevelBoost(int value)
+        public int TroopsLevelBoost(int value, int troopTypeLv)
         {
             ScenarioVariables Variables = Scenario.Cur.Variables;
-            if (TroopTypeLv < 0 || TroopTypeLv > Variables.troops_adaptation_level_boost.Length)
+            if (troopTypeLv < 0 || troopTypeLv > Variables.troops_adaptation_level_boost.Length)
                 return value;
 
-            return value * Variables.troops_adaptation_level_boost[TroopTypeLv] / 100;
+            return value * Variables.troops_adaptation_level_boost[troopTypeLv] / 100;
         }
 
         internal static List<Cell> tempCellList = new List<Cell>(256);
@@ -1454,7 +1520,7 @@ namespace Sango.Game
 
         public override void Clear()
         {
-            BelongCity.activedTroops.Remove(this);
+            BelongCity.allTroops.Remove(this);
             Scenario.Cur.Remove(this);
             ForEachPerson((person) =>
             {

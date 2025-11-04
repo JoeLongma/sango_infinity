@@ -9,25 +9,90 @@ namespace Sango.Game
     public class Skill : SangoObject
     {
         public override SangoObjectType ObjectType { get { return SangoObjectType.Skill; } }
+        
+        /// <summary>
+        /// 技能类型
+        /// </summary>
+        [JsonProperty] public int kind;
 
+        /// <summary>
+        /// 基础攻击力
+        /// </summary>
         [JsonProperty] public int atk;
+
+        /// <summary>
+        /// 基础攻城值
+        /// </summary>
         [JsonProperty] public int atkDurability;
+
+        /// <summary>
+        /// 释放所需能量
+        /// </summary>
         [JsonProperty] public int costEnergy;
+
+        /// <summary>
+        /// 是否可以对部队造成伤害
+        /// </summary>
         [JsonProperty] public bool canDamageTroop;
+
+        /// <summary>
+        /// 是否可以对器械造成伤害
+        /// </summary>
         [JsonProperty] public bool canDamageMachine;
+
+        /// <summary>
+        /// 是否可以对船只造成伤害
+        /// </summary>
         [JsonProperty] public bool canDamageBoat;
+
+        /// <summary>
+        /// 是否可以对建筑造成伤害
+        /// </summary>
         [JsonProperty] public bool canDamageBuilding;
+
+        /// <summary>
+        /// 是否可误伤
+        /// </summary>
         [JsonProperty] public bool canDamageTeam;
+
+        /// <summary>
+        /// 是否为远程技能
+        /// </summary>
         [JsonProperty] public bool isRange;
-        [JsonProperty] public int level;
+
+        /// <summary>
+        /// 施法范围
+        /// </summary>
         [JsonProperty] public int[] spellRanges;
+
+        /// <summary>
+        /// 所需适应等级
+        /// </summary>
         [JsonProperty] public int needAblilityLevel;
+
+        /// <summary>
+        /// 基础成功率
+        /// </summary>
         [JsonProperty] public int successRate;
+
+        /// <summary>
+        /// 成功率加成
+        /// </summary>
         [JsonProperty] public int[] successRateAdd;
 
+        /// <summary>
+        /// 额外的攻击位置
+        /// </summary>
         [JsonProperty] public List<int> atkOffsetPoint;
 
+        /// <summary>
+        /// 位移配置
+        /// </summary>
         [JsonProperty] public int[] offsetAction;
+
+        /// <summary>
+        /// 碰撞伤害系数
+        /// </summary>
         [JsonProperty] public int blockFactor;
 
         [JsonConverter(typeof(SangoObjectListIDConverter<SkillEffect>))]
@@ -223,7 +288,7 @@ namespace Sango.Game
             baseSuccessRate = overrideData.Value;
 
 #if SANGO_DEBUG
-            Sango.Log.Print($"{troop.BelongForce.Name}的[{Name} 部队 准备释放技能: {Name} =>({spellCell.x},{spellCell.y})] 成功率:{baseSuccessRate}");
+            Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} 部队 准备释放技能: {Name} =>({spellCell.x},{spellCell.y})] 成功率:{baseSuccessRate}");
 #endif
             return GameRandom.Chance(baseSuccessRate);
         }

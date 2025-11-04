@@ -201,6 +201,8 @@ namespace Sango.Game
 
 
         public List<Building> villageList = new List<Building>();
+        public List<Port> portList = new List<Port>();
+        public List<Gate> gateList = new List<Gate>();
 
         public int totalGainFood = 0;
         public int totalGainGold = 0;
@@ -241,7 +243,10 @@ namespace Sango.Game
         /// </summary>
         public SangoObjectList<Building> allOutterBuildings = new SangoObjectList<Building>();
 
-        public List<Troop> activedTroops = new List<Troop>();
+        /// <summary>
+        /// 所有部队
+        /// </summary>
+        public List<Troop> allTroops = new List<Troop>();
 
         /// <summary>
         /// 城池直辖范围cell
@@ -276,6 +281,25 @@ namespace Sango.Game
         public List<System.Func<City, Scenario, bool>> AICommandList = new List<System.Func<City, Scenario, bool>>();
 
         public List<Cell> defenceCellList = new List<Cell>();
+
+        public int TroopsCount
+        {
+            get
+            {
+                //int troopsCount = 0;
+                //SangoObjectSet<Troop> troopSet = Scenario.Cur.troopsSet;
+                //for (int i = 0; i < troopSet.Count; i++)
+                //{
+                //    Troop troop = troopSet[i];
+                //    if (troop != null && troop.IsAlive && troop.BelongCity == this)
+                //        troopsCount++;
+                //}
+                //return troopsCount;
+                return allTroops.Count;
+            }
+        }
+
+
 
         public List<Cell> GetRoadToNeighbor(City city)
         {
@@ -355,6 +379,10 @@ namespace Sango.Game
         public override void Init(Scenario scenario)
         {
             base.Init(scenario);
+            if (IsPort())
+                BelongCity.portList.Add((Port)this);
+            else if (IsGate())
+                BelongCity.gateList.Add((Gate)this);
             if (BuildingType.Id == 1)
             {
                 UpdateActiveTroopTypes();
@@ -587,6 +615,8 @@ namespace Sango.Game
             CalculateHarvest();
             UpdateFightPower();
             JobHealingTroop();
+
+            // 空闲人员判断
             freePersons.Clear();
             allPersons.ForEach(person =>
             {
@@ -594,8 +624,10 @@ namespace Sango.Game
                     freePersons.Add(person);
             });
 
+            // 粮食消耗
             FoodCost(scenario);
 
+            // 耐久自修复
             if (durability < DurabilityLimit)
             {
                 durability += Leader?.BaseBuildAbility * 2 + 50 ?? 50;
@@ -828,6 +860,7 @@ namespace Sango.Game
 
         public override void OnFall(SangoObject atker)
         {
+            Scenario scenario = Scenario.Cur;
             ScenarioVariables scenarioVariables = Scenario.Cur.Variables;
             Troop atk = atker as Troop;
             if (atk == null) return;
@@ -865,14 +898,27 @@ namespace Sango.Game
                 return;
             }
 
+            if (IsCity())
+            {
+                BelongForce.CityCount--;
+            }
+
             // 确认一个撤退城市
             City escapeCity = null;
-            if ((BelongForce.CityCount > 1 && IsCity()) || !IsCity())
+            if (BelongForce.CityCount == 0 || !IsCity())
             {
                 if (this == BelongForce.Governor.BelongCity)
                     escapeCity = GetNearnestForceCity();
                 else
                     escapeCity = BelongForce.Governor.BelongCity;
+            }
+
+            if (IsPort() || IsGate())
+            {
+                if (escapeCity == null)
+                {
+                    Debug.LogError("为啥 escapeCity == null");
+                }
             }
 
             // 基础抓捕率
@@ -885,34 +931,30 @@ namespace Sango.Game
             if (escapeCity == null)
             {
                 // 灭亡后,队伍要清除
-                Scenario.Cur.troopsSet.ForEach((troop) =>
+                scenario.troopsSet.ForEach((troop) =>
                 {
                     if (troop.IsAlive && troop.BelongForce == this.BelongForce)
                         troop.Clear();
                 });
 
                 // 清理港口,关卡
-                BelongForce.ForEachGate(x =>
+                for (int i = 0; i < scenario.citySet.Count; ++i)
                 {
-                    x.allPersons.ForEach(p =>
+                    var c = scenario.citySet[i];
+                    if (c != null && c.IsAlive && c.BelongForce == BelongForce)
                     {
-                        p.ClearMission();
-                        p.LeaveToWild();
-                    });
-                    x.allPersons.Clear();
-                    x.LeaveToWild();
-                });
-
-                BelongForce.ForEachPort(x =>
-                {
-                    x.allPersons.ForEach(p =>
-                    {
-                        p.ClearMission();
-                        p.LeaveToWild();
-                    });
-                    x.allPersons.Clear();
-                    x.LeaveToWild();
-                });
+                        if (c.IsGate() || c.IsPort())
+                        {
+                            c.allPersons.ForEach(p =>
+                             {
+                                 p.ClearMission();
+                                 p.LeaveToWild();
+                             });
+                            c.allPersons.Clear();
+                            c.LeaveToWild();
+                        }
+                    }
+                }
             }
 
             for (int i = allPersons.Count - 1; i >= 0; --i)
@@ -982,10 +1024,9 @@ namespace Sango.Game
                 };
                 RenderEvent.Instance.Add(windowEvent);
 
-
                 if (Scenario.Cur.forceSet.DataCount == 1)
                 {
-                    Sango.Log.Print($"{atk.BelongForce.Name} 统一!!!!!!!!!!!!!!");
+                    Sango.Log.Print($"{Scenario.Cur.GetDateStr()} --> {atk.BelongForce.Name} 统一!!!!!!!!!!!!!!");
                 }
             }
 
@@ -1005,16 +1046,40 @@ namespace Sango.Game
             CalculateHarvest();
 
             //TODO: 玩家处理俘虏
-            for (int i = 0; i < captiveList.Count; ++i)
+            for (int i = captiveList.Count - 1; i >= 0; i--)
             {
                 Person person = captiveList[i];
                 if (atk.BelongForce.Governor.Persuade(person))
                 {
+#if SANGO_DEBUG
+                    Sango.Log.Print($"{person.Name} 加入了 {atk.BelongForce} 势力!!!");
+#endif
                     person.ChangeCorps(atk.BelongCorps);
+                    captiveList.RemoveAt(i);
+                }
+                //else
+                //{
+                //    allPersons.Remove(person.BeCaptive(this));
+                //}
+            }
+
+            // 释放
+            for (int i = captiveList.Count - 1; i >= 0; i--)
+            {
+                Person person = captiveList[i];
+#if SANGO_DEBUG
+                Sango.Log.Print($"{person.Name} 被释放!!!");
+#endif
+                if (escapeCity != null)
+                {
+                    person.ChangeCity(escapeCity);
+                    if (person.BelongTroop == null)
+                        person.SetMission(MissionType.PersonReturn, person.BelongCity, 1);
                 }
                 else
                 {
-                    allPersons.Remove(person.BeCaptive(this));
+                    person.ClearMission();
+                    person.LeaveToWild();
                 }
             }
 
@@ -1108,7 +1173,14 @@ namespace Sango.Game
             return -1;
         }
 
-        public Building BuildBuilding(int slotId, Person[] builders, BuildingType buildingType)
+        /// <summary>
+        /// 建造内城建筑
+        /// </summary>
+        /// <param name="slotId"></param>
+        /// <param name="builders"></param>
+        /// <param name="buildingType"></param>
+        /// <returns></returns>
+        public Building JobBuildBuilding(int slotId, Person[] builders, BuildingType buildingType)
         {
             Building building = new Building();
             building.BelongForce = BelongForce;
@@ -1151,7 +1223,14 @@ namespace Sango.Game
             return building;
         }
 
-        public Building UpgradeBuilding(Building building, Person[] builders, BuildingType upgradeBuildingType)
+        /// <summary>
+        /// 升级内城建筑
+        /// </summary>
+        /// <param name="building"></param>
+        /// <param name="builders"></param>
+        /// <param name="upgradeBuildingType"></param>
+        /// <returns></returns>
+        public Building JobUpgradeBuilding(Building building, Person[] builders, BuildingType upgradeBuildingType)
         {
             building.isUpgrading = true;
             building.durability = 1;
@@ -1183,6 +1262,323 @@ namespace Sango.Game
             Sango.Log.Print($"@内政@[{BelongForce.Name}]在<{Name}>由{stringBuilder}开始升级建筑: {building.Name}");
 #endif
             return building;
+        }
+
+
+        /// <summary>
+        /// 生产船
+        /// </summary>
+        /// <param name="personList"></param>
+        /// <param name="itemType"></param>
+        /// <param name="buildingTotalLevel"></param>
+        /// <returns></returns>
+        public bool JobCreateBoat(Person[] personList, ItemType itemType, int buildingTotalLevel)
+        {
+            if (personList == null || personList.Length == 0 || itemType == null) return false;
+
+            if (itemType.kind != (int)ItemKindType.Boat) return false;
+
+            if (itemStore.TotalNumber >= StoreLimit) return false;
+
+            Scenario scenario = Scenario.Cur;
+            int empty = StoreLimit - itemStore.TotalNumber;
+            if (empty < 1000) return false;
+
+            ScenarioVariables variables = scenario.Variables;
+            int jobId = (int)CityJobType.CreateItems;
+
+            int goldNeed = variables.jobCost[jobId] + itemType.cost;
+
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(goldNeed);
+            GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
+            goldNeed = overrideData.Value;
+
+            if (gold < goldNeed)
+                return false;
+
+#if SANGO_DEBUG
+            StringBuilder stringBuilder = new StringBuilder();
+            int lastTroops = troops;
+#endif
+            int maxValue = 0;
+            Person maxPerson = null;
+            for (int i = 0; i < personList.Length; i++)
+            {
+                Person person = personList[i];
+                if (person == null) continue;
+                if (person.BaseCreativeAbility > maxValue)
+                {
+                    maxPerson = person;
+                    maxValue = person.BaseCreativeAbility;
+                }
+
+                freePersons.Remove(person);
+#if SANGO_DEBUG
+                stringBuilder.Append(person.Name);
+                stringBuilder.Append(",");
+#endif
+                person.ActionOver = true;
+            }
+
+            int subValue = 0;
+
+            // 最高属性武将获得100%加成,其余两个获取50%加成
+            for (int i = 0; i < personList.Length; i++)
+            {
+                Person person = personList[i];
+                if (person == null) continue;
+                if (person != maxPerson)
+                {
+                    subValue += maxPerson.BaseCreativeAbility;
+                }
+            }
+
+
+            int turnCount = GameUtility.Method_CreateBoatCounter(maxValue, subValue, buildingTotalLevel);
+
+            // 最高属性武将获得100%加成,其余两个获取50%加成
+            maxValue *= 5;
+            for (int i = 0; i < personList.Length; i++)
+            {
+                Person person = personList[i];
+                if (person == null) continue;
+                if (person != maxPerson)
+                {
+                    maxValue += maxPerson.BaseCreativeAbility * 10;
+                }
+                person.SetMission(MissionType.PersonCreateBoat, itemType, turnCount, buildingTotalLevel, maxValue);
+            }
+
+#if SANGO_DEBUG
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了舰船生产!开始生产{itemType.Name}, 所需回合:{turnCount}");
+#endif
+            return true;
+        }
+
+        /// <summary>
+        /// 生产兵装
+        /// </summary>
+        /// <param name="personList"></param>
+        /// <param name="itemType"></param>
+        /// <returns></returns>
+        public bool DoJobCreateBoat(ItemType itemType, int buildingTotalLevel, int totalValue)
+        {
+            List<Person> people = new List<Person>();
+            allPersons.ForEach(person =>
+            {
+                if (person.missionType == (int)MissionType.PersonCreateBoat)
+                {
+                    people.Add(person);
+                }
+            });
+            if (people.Count == 0) return false;
+
+            Scenario scenario = Scenario.Cur;
+            ScenarioVariables variables = scenario.Variables;
+            int jobId = (int)CityJobType.CreateItems;
+            int meritGain = variables.jobMaxPersonCount[jobId];
+            int techniquePointGain = variables.jobTechniquePoint[jobId];
+
+#if SANGO_DEBUG
+            StringBuilder stringBuilder = new StringBuilder();
+#endif
+            int maxValue = 0;
+            Person maxPerson = null;
+            for (int i = 0; i < people.Count; i++)
+            {
+                Person person = people[i];
+                if (person == null) continue;
+                person.merit += meritGain;
+                person.GainExp(meritGain);
+                person.ClearMission();
+#if SANGO_DEBUG
+                stringBuilder.Append(person.Name);
+                stringBuilder.Append(",");
+#endif
+            }
+
+            totalValue = GameUtility.Method_CreateItems(totalValue, buildingTotalLevel) / itemType.p1 / 3;
+
+            Person[] personList = people.ToArray();
+
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(totalValue);
+            overrideData.Value = totalValue;
+            GameEvent.OnCityJobResult?.Invoke(this, jobId, personList, overrideData);
+            totalValue = overrideData.Value;
+
+
+            overrideData.Value = totalValue;
+            GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
+            techniquePointGain = overrideData.Value;
+
+            int empty = StoreLimit - itemStore.TotalNumber;
+            totalValue = Math.Min(empty, totalValue);
+            int exsistNumber = itemStore.Add(itemType.subKind, totalValue);
+
+            BelongForce.GainTechniquePoint(techniquePointGain);
+
+#if SANGO_DEBUG
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了船只生产!共生产了{totalValue}{itemType.Name}, 当前数量:{exsistNumber}");
+#endif
+
+            Render?.ShowInfo(totalValue, (int)InfoTyoe.Boat);
+            return true;
+        }
+
+
+
+        /// <summary>
+        /// 生产器械
+        /// </summary>
+        /// <param name="personList"></param>
+        /// <param name="itemType"></param>
+        /// <param name="buildingTotalLevel"></param>
+        /// <returns></returns>
+        public bool JobCreateMachine(Person[] personList, ItemType itemType, int buildingTotalLevel)
+        {
+            if (personList == null || personList.Length == 0 || itemType == null) return false;
+
+            if (itemType.kind != (int)ItemKindType.Machine) return false;
+
+            if (itemStore.TotalNumber >= StoreLimit) return false;
+
+            Scenario scenario = Scenario.Cur;
+            int empty = StoreLimit - itemStore.TotalNumber;
+            if (empty < 1000) return false;
+
+            ScenarioVariables variables = scenario.Variables;
+            int jobId = (int)CityJobType.CreateItems;
+
+            int goldNeed = variables.jobCost[jobId] + itemType.cost;
+
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(goldNeed);
+            GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
+            goldNeed = overrideData.Value;
+
+            if (gold < goldNeed)
+                return false;
+
+#if SANGO_DEBUG
+            StringBuilder stringBuilder = new StringBuilder();
+            int lastTroops = troops;
+#endif
+            int maxValue = 0;
+            Person maxPerson = null;
+            for (int i = 0; i < personList.Length; i++)
+            {
+                Person person = personList[i];
+                if (person == null) continue;
+                if (person.BaseCreativeAbility > maxValue)
+                {
+                    maxPerson = person;
+                    maxValue = person.BaseCreativeAbility;
+                }
+
+                freePersons.Remove(person);
+#if SANGO_DEBUG
+                stringBuilder.Append(person.Name);
+                stringBuilder.Append(",");
+#endif
+                person.ActionOver = true;
+            }
+
+            int subValue = 0;
+
+            // 最高属性武将获得100%加成,其余两个获取50%加成
+            for (int i = 0; i < personList.Length; i++)
+            {
+                Person person = personList[i];
+                if (person == null) continue;
+                if (person != maxPerson)
+                {
+                    subValue += maxPerson.BaseCreativeAbility;
+                }
+            }
+
+
+            int turnCount = GameUtility.Method_CreateMachineCounter(maxValue, subValue, buildingTotalLevel);
+
+            // 最高属性武将获得100%加成,其余两个获取50%加成
+            maxValue *= 5;
+            for (int i = 0; i < personList.Length; i++)
+            {
+                Person person = personList[i];
+                if (person == null) continue;
+                if (person != maxPerson)
+                {
+                    maxValue += maxPerson.BaseCreativeAbility * 10;
+                }
+                person.SetMission(MissionType.PersonCreateMachine, itemType, turnCount, buildingTotalLevel, maxValue);
+            }
+
+#if SANGO_DEBUG
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了器械生产!开始生产{itemType.Name}, 所需回合:{turnCount}");
+#endif
+            return true;
+        }
+
+        public bool DoJobCreateMachine(ItemType itemType, int buildingTotalLevel, int totalValue)
+        {
+            List<Person> people = new List<Person>();
+            allPersons.ForEach(person =>
+            {
+                if (person.missionType == (int)MissionType.PersonCreateMachine)
+                {
+                    people.Add(person);
+                }
+            });
+            if (people.Count == 0) return false;
+
+            Scenario scenario = Scenario.Cur;
+            ScenarioVariables variables = scenario.Variables;
+            int jobId = (int)CityJobType.CreateItems;
+            int meritGain = variables.jobMaxPersonCount[jobId];
+            int techniquePointGain = variables.jobTechniquePoint[jobId];
+
+#if SANGO_DEBUG
+            StringBuilder stringBuilder = new StringBuilder();
+#endif
+            int maxValue = 0;
+            Person maxPerson = null;
+            for (int i = 0; i < people.Count; i++)
+            {
+                Person person = people[i];
+                if (person == null) continue;
+                person.merit += meritGain;
+                person.GainExp(meritGain);
+                person.ClearMission();
+#if SANGO_DEBUG
+                stringBuilder.Append(person.Name);
+                stringBuilder.Append(",");
+#endif
+            }
+
+            totalValue = GameUtility.Method_CreateItems(totalValue, buildingTotalLevel) / itemType.p1 / 3;
+
+            Person[] personList = people.ToArray();
+
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(totalValue);
+            overrideData.Value = totalValue;
+            GameEvent.OnCityJobResult?.Invoke(this, jobId, personList, overrideData);
+            totalValue = overrideData.Value;
+
+
+            overrideData.Value = totalValue;
+            GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
+            techniquePointGain = overrideData.Value;
+
+            int empty = StoreLimit - itemStore.TotalNumber;
+            totalValue = Math.Min(empty, totalValue);
+            int exsistNumber = itemStore.Add(itemType.subKind, totalValue);
+
+            BelongForce.GainTechniquePoint(techniquePointGain);
+
+#if SANGO_DEBUG
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了器械生产!共生产了{totalValue}{itemType.Name}, 当前数量:{exsistNumber}");
+#endif
+
+            Render?.ShowInfo(totalValue, (int)InfoTyoe.M3);
+            return true;
         }
 
         /// <summary>
@@ -1628,7 +2024,7 @@ namespace Sango.Game
             Scenario scenario = Scenario.Cur;
 
             if (scenario.Variables.populationEnable && troopPopulation <= 500) return false;
-            if (security < 60) return false;
+            if (security < 80) return false;
             if (troops > food) return false;
 
             ScenarioVariables variables = scenario.Variables;
@@ -1695,6 +2091,8 @@ namespace Sango.Game
             GameEvent.OnCityJobResult?.Invoke(this, jobId, personList, overrideData);
             totalValue = overrideData.Value;
 
+            // 治安对征兵的影响
+            totalValue = (int)(totalValue * (1f - Math.Max(0, (100 - security)) * variables.securityInfluenceRecruitTroops));
 
             overrideData.Value = totalValue;
             GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
@@ -2240,22 +2638,6 @@ namespace Sango.Game
                 }
             }
             return complateNum;
-        }
-
-        public int TroopsCount
-        {
-            get
-            {
-                int troopsCount = 0;
-                SangoObjectSet<Troop> troopSet = Scenario.Cur.troopsSet;
-                for (int i = 0; i < troopSet.Count; i++)
-                {
-                    Troop troop = troopSet[i];
-                    if (troop != null && troop.IsAlive && troop.BelongCity == this)
-                        troopsCount++;
-                }
-                return troopsCount;
-            }
         }
 
         public int EnemyCount
