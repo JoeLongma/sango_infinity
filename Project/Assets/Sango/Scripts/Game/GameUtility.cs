@@ -118,90 +118,41 @@ namespace Sango.Game
             int v3 = p3?.BaseBuildAbility ?? 0;
 
             int total = v1 + v2 + v3;
-            int maxValue = Math.Max(v3, Math.Max(v1, v2));
-            return maxValue * 3 / 2 + (total - maxValue) / 2;
+            return total * 2;
         }
 
         public static int Method_PersonBuildAbility(List<Person> people)
         {
-            Person maxPerson = null;
-            int maxValue = -9999;
+            int maxValue = 0;
             for (int i = 0; i < people.Count; ++i)
             {
                 Person person = people[i];
                 if (person == null) continue;
-                if (person.BaseBuildAbility > maxValue)
-                {
-                    maxValue = person.BaseBuildAbility;
-                    maxPerson = person;
-                }
+                maxValue += person.BaseBuildAbility;
             }
-            int subValue = 0;
-            for (int i = 0; i < people.Count; ++i)
-            {
-                Person person = people[i];
-                if (person == null) continue;
-                if (person != maxPerson)
-                {
-                    subValue += person.BaseBuildAbility;
-                }
-            }
-
-            return maxValue * 3 / 2 + subValue / 2;
+            return maxValue * 2;
         }
         public static int Method_PersonBuildAbility(Person[] people)
         {
-            Person maxPerson = null;
-            int maxValue = -9999;
+            int maxValue = 0;
             for (int i = 0; i < people.Length; ++i)
             {
                 Person person = people[i];
                 if (person == null) continue;
-                if (person.BaseBuildAbility > maxValue)
-                {
-                    maxValue = person.BaseBuildAbility;
-                    maxPerson = person;
-                }
+                maxValue += person.BaseBuildAbility;
             }
-            int subValue = 0;
-            for (int i = 0; i < people.Length; ++i)
-            {
-                Person person = people[i];
-                if (person == null) continue;
-                if (person != maxPerson)
-                {
-                    subValue += person.BaseBuildAbility;
-                }
-            }
-
-            return maxValue * 3 / 2 + subValue / 2;
+            return maxValue * 2;
         }
         public static int Method_PersonBuildAbility(SangoObjectList<Person> people)
         {
-            Person maxPerson = null;
-            int maxValue = -9999;
+            int maxValue = 0;
             for (int i = 0; i < people.Count; ++i)
             {
                 Person person = people[i];
                 if (person == null) continue;
-                if (person.BaseBuildAbility > maxValue)
-                {
-                    maxValue = person.BaseBuildAbility;
-                    maxPerson = person;
-                }
+                maxValue += person.BaseBuildAbility;
             }
-            int subValue = 0;
-            for (int i = 0; i < people.Count; ++i)
-            {
-                Person person = people[i];
-                if (person == null) continue;
-                if (person != maxPerson)
-                {
-                    subValue += person.BaseBuildAbility;
-                }
-            }
-
-            return maxValue * 3 / 2 + subValue / 2;
+            return maxValue * 2;
         }
 
         public static int Method_SecurityAbility(int v, int buildingTotalLevel)

@@ -18,7 +18,7 @@ namespace Sango.Game
                 if (city.TroopMissionType == MissionType.TroopOccupyCity)
                 {
                     City targetCity = scenario.citySet.Get(city.TroopMissionTargetId);
-                    if ((targetCity.BelongForce != null && city.TroopsCount < GameRandom.Range(5, 10)) || (targetCity.BelongForce == null && city.TroopsCount < 2))
+                    if ((targetCity.BelongForce != null && city.AttackTroopsCount < GameRandom.Range(5, 10)) || (targetCity.BelongForce == null && city.AttackTroopsCount < 2))
                     {
                         // 白城只去2支部队
                         Troop troop = AIMakeTroop(city, 20, true, scenario);
@@ -28,7 +28,7 @@ namespace Sango.Game
                             city.CurActiveTroop = troop;
 #if SANGO_DEBUG
 
-                            Sango.Log.Print($"{scenario.GetDateStr()}{city.BelongForce.Name}3势力在{city.Name}由{troop.Leader.Name}率领军队出城 进攻{targetCity.BelongForce?.Name}的{targetCity.Name}!");
+                            Sango.Log.Print($"{scenario.GetDateStr()}{city.BelongForce.Name}3势力在{city.Name}由{troop.Leader.Name}率领{troop.TroopType.Name}军队出城 进攻{targetCity.BelongForce?.Name}的{targetCity.Name}!");
 #endif
                         }
                     }
@@ -37,7 +37,7 @@ namespace Sango.Game
                 {
                     if (city.CheckEnemiesIfAlive())
                     {
-                        if (city.TroopsCount < Math.Max(3, city.EnemyCount + 1))
+                        if (city.AttackTroopsCount < Math.Max(3, city.EnemyCount + 2))
                         {
                             Troop troop = AIMakeTroop(city, 15, false, scenario);
                             if (troop != null)
@@ -341,6 +341,9 @@ namespace Sango.Game
             if (troop != null)
             {
                 troop = city.EnsureTroop(troop, scenario);
+                city.gold -= gold;
+                city.food -= food;
+                city.itemStore.Remove(itemStore);
                 troop.missionParamas1 = 1;
                 city.CurActiveTroop = troop;
                 city.Render?.UpdateRender();
@@ -719,11 +722,7 @@ namespace Sango.Game
                     int buildAbility = GameUtility.Method_PersonBuildAbility(people);
                     int turnCount = buildingType.durabilityLimit % buildAbility == 0 ? 0 : 1;
                     int buildCount = Math.Min(Scenario.Cur.Variables.BuildMaxTurn, buildingType.durabilityLimit / buildAbility + turnCount);
-
-                    if (buildCount <= 6)
-                    {
-                        city.JobBuildBuilding(index, people, buildingType);
-                    }
+                    city.JobBuildBuilding(index, people, buildingType);
                     return true;
                 }
             }
@@ -1045,6 +1044,9 @@ namespace Sango.Game
             if (BoatFactoryNum <= 0)
                 return true;
 
+            if (city.allPersons.Find(x => x.missionType == (int)MissionType.PersonCreateBoat) != null)
+                return true;
+
             ItemType targetItemType = scenario.GetObject<ItemType>(12);
             if (!targetItemType.IsValid(city.BelongForce))
                 targetItemType = scenario.GetObject<ItemType>(11);
@@ -1072,6 +1074,9 @@ namespace Sango.Game
 
             int MechineFactoryNum = city.GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.MechineFactory);
             if (MechineFactoryNum <= 0)
+                return true;
+
+            if (city.allPersons.Find(x => x.missionType == (int)MissionType.PersonCreateMachine) != null)
                 return true;
 
             int monsterNum = city.itemStore.GetNumber(7);
@@ -1125,8 +1130,11 @@ namespace Sango.Game
             TroopType.GetCostEnoughTroopTypeList(city, costEnoughTroopTypes, 5000);
 
             // 去掉剑兵(进攻不允许)
-            costEnoughTroopTypes.RemoveAll(x => x.Id == 1);
-            costEnoughTroopTypes.RemoveAll(x => !x.isLand);
+            costEnoughTroopTypes.RemoveAll(x => x.Id == 1 || !x.isLand);
+
+            // 小于4支部队不带器械, 防守不组建器械
+            if(city.AttackTroopsCount < 4 || !isAttack)
+                costEnoughTroopTypes.RemoveAll(x => x.kind == 8 || x.kind == 9);
 
             if (costEnoughTroopTypes.Count == 0)
                 return null;

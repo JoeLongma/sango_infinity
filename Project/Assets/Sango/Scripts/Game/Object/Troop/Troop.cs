@@ -291,8 +291,9 @@ namespace Sango.Game
         public override void Init(Scenario scenario)
         {
             ForEachPerson(x => x.BelongTroop = this);
-            BelongCity.allTroops.Add(this);
             CalculateAttribute(scenario);
+            if (LandTroopType.isFight && LandTroopType.Id != 1)
+                BelongCity.allAttackTroops.Add(this);
             Render = new TroopRender(this);
             foodCost = (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
         }
@@ -533,8 +534,24 @@ namespace Sango.Game
             return IsSameForce(BelongForce, other.BelongForce);
         }
 
+        public bool IsTransport()
+        {
+            return LandTroopType.kind == 7;
+        }
+
+        public bool IsMachine()
+        {
+            return LandTroopType.kind == 8 || LandTroopType.kind == 9;
+        }
+        public bool IsHelepolis()
+        {
+            return LandTroopType.kind == 8;
+        }
+
         public float GetAttackBackFactor(Skill skill, int distance)
         {
+            if (IsMachine())
+                return 0;
             if (skill.IsRange() && distance > 1)
                 return 0;
             else if (!skill.IsRange() && distance == 1)
@@ -625,7 +642,20 @@ namespace Sango.Game
             if (attacker.BelongForce != null && attacker.BelongForce.IsPlayer)
                 difficultyDamageFactor = Variables.DifficultyDamageFactor;
 
-            int damage = (int)(Math.Pow(attacker.troops, 0.5f) * attacker.Attack * Math.Pow((1f / 1500f), 0.5f) * (1 + (float)skill.atkDurability / 25f) * buildingType.damageBounds
+            if (attacker.IsHelepolis())
+            {
+                int damage = (int)(attacker.troops / 25 + Math.Pow(attacker.troops, 0.5f) + Math.Min(Math.Pow(attacker.troops, 0.5f), 40) * attacker.Attack * Math.Pow((1f / 1500f), 0.5f) * (1 + (float)skill.atkDurability / 25f) * buildingType.damageBounds
+               // 额外增益 (科技系数等)
+               * Math.Max(0, (1 + attacker.DamageBuildingExtraFactor))
+               * attack_troops_type.durabilityDmg / 100
+               // 难度系数,仅对玩家生效
+               * difficultyDamageFactor
+               );
+                return damage;
+            }
+            else
+            {
+                int damage = (int)(Math.Pow(attacker.troops, 0.5f) * attacker.Attack * Math.Pow((1f / 1500f), 0.5f) * (1 + (float)skill.atkDurability / 25f) * buildingType.damageBounds
                 // 额外增益 (科技系数等)
                 * Math.Max(0, (1 + attacker.DamageBuildingExtraFactor))
                 * attack_troops_type.durabilityDmg / 100
@@ -633,7 +663,8 @@ namespace Sango.Game
                 * difficultyDamageFactor
                 );
 
-            return damage;
+                return damage;
+            }
         }
 
         public static int CalculateSkillDamageTroopOnCity(Troop attacker, City target, Skill skill)
@@ -1486,6 +1517,9 @@ namespace Sango.Game
                 person.ActionOver = true;
             });
 
+            if (LandTroopType.isFight && LandTroopType.Id != 1)
+                BelongCity.allAttackTroops.Remove(this);
+
             city.Render.UpdateRender();
             Render.Clear();
             ActionOver = true;
@@ -1520,7 +1554,8 @@ namespace Sango.Game
 
         public override void Clear()
         {
-            BelongCity.allTroops.Remove(this);
+            if (LandTroopType.isFight)
+                BelongCity.allAttackTroops.Remove(this);
             Scenario.Cur.Remove(this);
             ForEachPerson((person) =>
             {

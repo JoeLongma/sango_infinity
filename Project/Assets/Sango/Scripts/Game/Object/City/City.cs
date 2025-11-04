@@ -246,7 +246,7 @@ namespace Sango.Game
         /// <summary>
         /// 所有部队
         /// </summary>
-        public List<Troop> allTroops = new List<Troop>();
+        public List<Troop> allAttackTroops = new List<Troop>();
 
         /// <summary>
         /// 城池直辖范围cell
@@ -282,7 +282,7 @@ namespace Sango.Game
 
         public List<Cell> defenceCellList = new List<Cell>();
 
-        public int TroopsCount
+        public int AttackTroopsCount
         {
             get
             {
@@ -295,7 +295,7 @@ namespace Sango.Game
                 //        troopsCount++;
                 //}
                 //return troopsCount;
-                return allTroops.Count;
+                return allAttackTroops.Count;
             }
         }
 
@@ -905,7 +905,7 @@ namespace Sango.Game
 
             // 确认一个撤退城市
             City escapeCity = null;
-            if (BelongForce.CityCount == 0 || !IsCity())
+            if (BelongForce.CityCount != 0 || !IsCity())
             {
                 if (this == BelongForce.Governor.BelongCity)
                     escapeCity = GetNearnestForceCity();

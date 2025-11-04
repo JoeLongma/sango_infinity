@@ -9,7 +9,7 @@ namespace Sango.Game
     public class Skill : SangoObject
     {
         public override SangoObjectType ObjectType { get { return SangoObjectType.Skill; } }
-        
+
         /// <summary>
         /// 技能类型
         /// </summary>
@@ -364,6 +364,8 @@ namespace Sango.Game
             ScenarioVariables scenarioVariables = Scenario.Cur.Variables;
             Troop targetTroop = spellCell.troop;
             BuildingBase targetBuilding = spellCell.building;
+
+            List<SangoObject> activedTargetList = new List<SangoObject>();
             //TODO: 释放技能
             tempCellList.Clear();
             GetAttackCells(troop, spellCell, tempCellList);
@@ -372,6 +374,7 @@ namespace Sango.Game
             {
                 Cell atkCell = tempCellList[i];
                 Troop beAtkTroop = atkCell.troop;
+
                 if (beAtkTroop != null && this.canDamageTroop && (troop.IsEnemy(beAtkTroop) || this.canDamageTeam))
                 {
                     int damage = Troop.CalculateSkillDamage(troop, beAtkTroop, this) * criticalFactor / 100;
@@ -448,8 +451,14 @@ namespace Sango.Game
                 }
 
                 BuildingBase beAtkBuildingBase = atkCell.building;
+
                 if (beAtkBuildingBase != null && this.canDamageBuilding && (troop.IsEnemy(beAtkBuildingBase) || this.canDamageTeam))
                 {
+                    // 一个目标只会收到一次伤害
+                    if (activedTargetList.Contains(beAtkBuildingBase))
+                        continue;
+                    activedTargetList.Add(beAtkBuildingBase);
+
                     int damage = Troop.CalculateSkillDamage(troop, beAtkBuildingBase, this) * criticalFactor / 100;
 #if SANGO_DEBUG
                     Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 使用<{this.Name}> 攻击 {beAtkBuildingBase.BelongForce?.Name}的 [{beAtkBuildingBase.Name}], 造成伤害:{damage}, 目标剩余耐久: {beAtkBuildingBase.durability}");

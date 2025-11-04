@@ -34,7 +34,7 @@ namespace Sango.Game
         /// <summary>
         /// 所需科技
         /// </summary>
-        [JsonProperty] public int needTechnique;
+        [JsonProperty] public int validTechId;
 
         /// <summary>
         /// 额外参数1,
@@ -54,8 +54,13 @@ namespace Sango.Game
 
         public bool IsValid(Force force)
         {
-            if (needTechnique == 0) return true;
-            return force.HasTechnique(needTechnique);
+            // 检查科技
+            if (validTechId == 0) 
+                return true;
+            else if (validTechId > 0)
+                return force.HasTechnique(validTechId);
+            else //if (validTechId < 0)
+                return !force.HasTechnique(System.Math.Abs(validTechId));
         }
     }
 }

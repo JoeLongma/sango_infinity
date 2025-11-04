@@ -3271,8 +3271,8 @@
         1
       ],
       "canDamageTroop": true,
-      "canDamageMachine": true,
-      "canDamageBoat": true,
+      "canDamageMachine": false,
+      "canDamageBoat": false,
       "canDamageBuilding": true,
       "canDamageTeam": false
     },
@@ -3388,9 +3388,9 @@
         1
       ],
       "canDamageTroop": true,
-      "canDamageMachine": false,
+      "canDamageMachine": true,
       "canDamageBoat": true,
-      "canDamageBuilding": false,
+      "canDamageBuilding": true,
       "canDamageTeam": false
     },
     "21": {
@@ -5185,6 +5185,7 @@
       "Name": "冲车",
       "kind": 3,
       "subKind": 7,
+      "validTechId": -1,
       "desc": "直接攻击建筑物的兵器，可大大削弱建筑物的耐久",
       "icon": "ui://game/4845_7_5",
       "cost": 800,
@@ -5195,6 +5196,7 @@
       "Name": "木兽",
       "kind": 3,
       "subKind": 7,
+      "validTechId": 1,
       "desc": "将冲车强化后的兵器，可削减建筑物的耐久，并放火",
       "icon": "ui://game/4845_7_8",
       "cost": 800,
@@ -5205,6 +5207,7 @@
       "Name": "井阑",
       "kind": 3,
       "subKind": 9,
+      "validTechId": -2,
       "desc": "以弓箭攻击建筑物的兵器，可大大削减士兵数",
       "icon": "ui://game/4845_7_6",
       "cost": 800,
@@ -5215,6 +5218,7 @@
       "Name": "投石",
       "kind": 3,
       "subKind": 9,
+      "validTechId": 2,
       "desc": "强化井阑后的兵器，以投石攻击３区格外之敌方耐久与士兵",
       "icon": "ui://game/4845_7_7",
       "cost": 800,
@@ -5463,13 +5467,6 @@
       "defType": 1,
       "atkType": 1,
       "influenceAbility": 0,
-      "validItemId": 0,
-      "validTechId": 0,
-      "costFood": 0,
-      "costGold": 0,
-      "costPopulation": 0,
-      "costTechPoint": 0,
-      "costExpPoint": 0,
       "foodCostFactor": 1.0,
       "isRange": false,
       "isFight": true,
@@ -5524,17 +5521,10 @@
       "defType": 2,
       "atkType": 2,
       "influenceAbility": 1,
-      "validItemId": 0,
-      "validTechId": 0,
       "costItems": [
         2,
         1000
       ],
-      "costFood": 0,
-      "costGold": 0,
-      "costPopulation": 0,
-      "costTechPoint": 0,
-      "costExpPoint": 0,
       "foodCostFactor": 1.0,
       "isRange": false,
       "isFight": true,
@@ -5589,17 +5579,10 @@
       "defType": 2,
       "atkType": 1,
       "influenceAbility": 2,
-      "validItemId": 0,
-      "validTechId": 0,
       "costItems": [
         3,
         1000
       ],
-      "costFood": 0,
-      "costGold": 0,
-      "costPopulation": 0,
-      "costTechPoint": 0,
-      "costExpPoint": 0,
       "foodCostFactor": 1.0,
       "isRange": false,
       "isFight": true,
@@ -5655,17 +5638,10 @@
       "defType": 3,
       "atkType": 2,
       "influenceAbility": 3,
-      "validItemId": 0,
-      "validTechId": 0,
       "costItems": [
         4,
         1000
       ],
-      "costFood": 0,
-      "costGold": 0,
-      "costPopulation": 0,
-      "costTechPoint": 0,
-      "costExpPoint": 0,
       "foodCostFactor": 1.0,
       "isRange": true,
       "isFight": true,
@@ -5720,17 +5696,10 @@
       "defType": 3,
       "atkType": 1,
       "influenceAbility": 4,
-      "validItemId": 0,
-      "validTechId": 0,
       "costItems": [
         5,
         1000
       ],
-      "costFood": 0,
-      "costGold": 0,
-      "costPopulation": 0,
-      "costTechPoint": 0,
-      "costExpPoint": 0,
       "foodCostFactor": 2.0,
       "isRange": false,
       "isFight": true,
@@ -5779,13 +5748,6 @@
       "defType": 1,
       "atkType": 1,
       "influenceAbility": 0,
-      "validItemId": 0,
-      "validTechId": 0,
-      "costFood": 0,
-      "costGold": 0,
-      "costPopulation": 0,
-      "costTechPoint": 0,
-      "costExpPoint": 0,
       "foodCostFactor": 0.5,
       "isRange": false,
       "isFight": false,
@@ -5828,13 +5790,6 @@
       "defType": 1,
       "atkType": 1,
       "influenceAbility": 0,
-      "validItemId": 0,
-      "validTechId": 0,
-      "costFood": 0,
-      "costGold": 0,
-      "costPopulation": 0,
-      "costTechPoint": 0,
-      "costExpPoint": 0,
       "foodCostFactor": 0.5,
       "isRange": false,
       "isFight": false,
@@ -5880,17 +5835,10 @@
       "durabilityDmg": 100,
       "move": 24,
       "influenceAbility": 5,
-      "validItemId": 0,
-      "validTechId": 0,
       "costItems": [
         10,
         50
       ],
-      "costFood": 0,
-      "costGold": 0,
-      "costPopulation": 0,
-      "costTechPoint": 0,
-      "costExpPoint": 0,
       "foodCostFactor": 1.0,
       "isRange": false,
       "isFight": true,
@@ -5936,17 +5884,10 @@
       "durabilityDmg": 100,
       "move": 26,
       "influenceAbility": 5,
-      "validItemId": 0,
-      "validTechId": 0,
       "costItems": [
         11,
         10
       ],
-      "costFood": 0,
-      "costGold": 0,
-      "costPopulation": 0,
-      "costTechPoint": 0,
-      "costExpPoint": 0,
       "foodCostFactor": 1.0,
       "isRange": false,
       "isFight": true,
@@ -5993,17 +5934,10 @@
       "durabilityDmg": 100,
       "move": 28,
       "influenceAbility": 5,
-      "validItemId": 0,
-      "validTechId": 0,
       "costItems": [
         12,
         8
       ],
-      "costFood": 0,
-      "costGold": 0,
-      "costPopulation": 0,
-      "costTechPoint": 0,
-      "costExpPoint": 0,
       "foodCostFactor": 1.0,
       "isRange": false,
       "isFight": true,
@@ -6041,7 +5975,7 @@
       "Name": "冲车",
       "kind": 8,
       "skills": [
-        1
+        16
       ],
       "atk": 70,
       "def": 90,
@@ -6053,9 +5987,6 @@
         7,
         10
       ],
-      "costFood": 2000,
-      "costGold": 2000,
-      "costPopulation": 2000,
       "foodCostFactor": 1.0,
       "isRange": false,
       "isFight": true,
@@ -6098,7 +6029,7 @@
       "Name": "木兽",
       "kind": 8,
       "skills": [
-        1
+        17
       ],
       "atk": 90,
       "def": 90,
@@ -6110,9 +6041,6 @@
         7,
         10
       ],
-      "costFood": 2400,
-      "costGold": 2400,
-      "costPopulation": 2400,
       "foodCostFactor": 1.0,
       "isRange": false,
       "isFight": true,
@@ -6155,7 +6083,7 @@
       "Name": "井阑",
       "kind": 9,
       "skills": [
-        1
+        15
       ],
       "atk": 80,
       "def": 80,
@@ -6167,9 +6095,6 @@
         9,
         10
       ],
-      "costFood": 2400,
-      "costGold": 2400,
-      "costPopulation": 2400,
       "foodCostFactor": 1.0,
       "isRange": true,
       "isFight": true,
@@ -6212,7 +6137,7 @@
       "Name": "投石",
       "kind": 9,
       "skills": [
-        1
+        18
       ],
       "atk": 100,
       "def": 80,
@@ -6224,9 +6149,6 @@
         9,
         10
       ],
-      "costFood": 2500,
-      "costGold": 2500,
-      "costPopulation": 2500,
       "foodCostFactor": 1.0,
       "isRange": true,
       "isFight": true,
@@ -6277,9 +6199,7 @@
       "atk": 110,
       "def": 100,
       "durabilityDmg": 100,
-      "validItemId": 8,
-      "validTechId": 0,
-      "costGold": 0
+      "validItemId": 8
     },
     "16": {
       "Id": 16,
@@ -6294,8 +6214,7 @@
       "atk": 110,
       "def": 100,
       "durabilityDmg": 100,
-      "validItemId": 9,
-      "validTechId": 0
+      "validItemId": 9
     },
     "17": {
       "Id": 17,
@@ -6310,8 +6229,7 @@
       "atk": 110,
       "def": 101,
       "durabilityDmg": 100,
-      "validItemId": 10,
-      "validTechId": 0
+      "validItemId": 10
     },
     "18": {
       "Id": 18,
@@ -6327,8 +6245,7 @@
       "def": 102,
       "durabilityDmg": 100,
       "move": 28,
-      "validItemId": 11,
-      "validTechId": 0
+      "validItemId": 11
     },
     "19": {
       "Id": 19,
@@ -6343,8 +6260,7 @@
       "atk": 110,
       "def": 103,
       "durabilityDmg": 100,
-      "validItemId": 12,
-      "validTechId": 0
+      "validItemId": 12
     },
     "20": {
       "Id": 20,
@@ -6359,8 +6275,7 @@
       "atk": 110,
       "def": 104,
       "durabilityDmg": 100,
-      "validItemId": 13,
-      "validTechId": 0
+      "validItemId": 13
     },
     "21": {
       "Id": 21,
@@ -6376,8 +6291,7 @@
       "def": 105,
       "durabilityDmg": 100,
       "move": 28,
-      "validItemId": 14,
-      "validTechId": 0
+      "validItemId": 14
     },
     "22": {
       "Id": 22,
@@ -6393,8 +6307,7 @@
       "def": 106,
       "durabilityDmg": 100,
       "move": 28,
-      "validItemId": 15,
-      "validTechId": 0
+      "validItemId": 15
     },
     "23": {
       "Id": 23,
@@ -6409,8 +6322,7 @@
       "atk": 110,
       "def": 107,
       "durabilityDmg": 100,
-      "validItemId": 16,
-      "validTechId": 0
+      "validItemId": 16
     },
     "24": {
       "Id": 24,
@@ -6426,8 +6338,7 @@
       "def": 108,
       "durabilityDmg": 100,
       "move": 28,
-      "validItemId": 17,
-      "validTechId": 0
+      "validItemId": 17
     },
     "25": {
       "Id": 25,
@@ -6443,8 +6354,7 @@
       "atk": 110,
       "def": 109,
       "durabilityDmg": 100,
-      "validItemId": 18,
-      "validTechId": 0
+      "validItemId": 18
     },
     "26": {
       "Id": 26,
@@ -6460,8 +6370,7 @@
       "atk": 110,
       "def": 110,
       "durabilityDmg": 100,
-      "validItemId": 19,
-      "validTechId": 0
+      "validItemId": 19
     }
   }
 }
