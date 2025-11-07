@@ -365,8 +365,15 @@ namespace Sango.Game
 
         public static bool AIBuilding(City city, Scenario scenario)
         {
-            AIBuildIntriore(city, scenario);
-            AIBuildingLevelUp(city, scenario);
+            int count = 1;
+            if (city.freePersons.Count > 6)
+                count = count + (city.freePersons.Count - 3) / 3;
+            
+            for(int i = 0; i < count; i++)
+                AIBuildIntriore(city, scenario);
+            for (int i = 0; i < count; i++)
+                AIBuildingLevelUp(city, scenario);
+
             AIBuildMilitaryBuilding(city, scenario);
             return true;
         }
