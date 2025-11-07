@@ -2538,8 +2538,8 @@ namespace Sango.Game
             if (IsBorderCity)
             {
 
-                AICommandList.Add(CityAI.AITradeFood);
                 AICommandList.Add(CityAI.AIAttack);
+                AICommandList.Add(CityAI.AITradeFood);
                 AICommandList.Add(CityAI.AISecurity);
 
                 if (troops < 20000)

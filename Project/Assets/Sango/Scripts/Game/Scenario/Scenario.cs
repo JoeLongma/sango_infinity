@@ -362,6 +362,7 @@ namespace Sango.Game
                         if (!string.IsNullOrEmpty(reader.Path) && reader.Path == "Info")
                         {
                             Info = JsonSerializer.CreateDefault().Deserialize<ScenarioInfo>(reader); // Deserialize the object.
+                            Name = Info.name;
                             return;
                         }
                     }

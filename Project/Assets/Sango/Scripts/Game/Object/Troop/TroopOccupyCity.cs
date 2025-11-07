@@ -10,7 +10,6 @@ namespace Sango.Game
 {
     public class TroopOccupyCity : TroopMissionBehaviour
     {
-        List<Cell> tempCells = new List<Cell>(256);
         PriorityActionData priorityActionData;
 
         public override MissionType MissionType { get { return MissionType.TroopOccupyCity; } }
@@ -65,7 +64,7 @@ namespace Sango.Game
                 //}
 
                 // 获取目标城市周围的敌人
-                priorityActionData = TroopAIUtility.PriorityAction(Troop, scenario, SkillAttackPriority);
+                priorityActionData = TroopAIUtility.PriorityAction(Troop, TargetCity.CenterCell, scenario, SkillAttackPriority);
 
             }
         }

@@ -293,12 +293,12 @@ namespace Sango.Game
         /// <summary>
         /// 破城时候的抓捕率(百分比)
         /// </summary>
-        [JsonProperty] public int captureChangceWhenCityFall = 30;
+        [JsonProperty] public int captureChangceWhenCityFall = 10;
 
         /// <summary>
         /// 最后一城时候的抓捕率(百分比)
         /// </summary>
-        [JsonProperty] public int captureChangceWhenLastCityFall = 80;
+        [JsonProperty] public int captureChangceWhenLastCityFall = 40;
 
         /// <summary>
         /// 队伍溃败时候的抓捕率(百分比)

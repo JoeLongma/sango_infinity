@@ -55,7 +55,7 @@ namespace Sango.Game
         /// <param name="troop"></param>
         /// <param name="scenario"></param>
         /// <returns></returns>
-        public static PriorityActionData PriorityAction(Troop troop, Scenario scenario, SkillAttackPriorityCalculateMethod prioritySkillAtkMethod = null, SkillDefencePriorityCalculateMethod prioritySkillDefMethod = null)
+        public static PriorityActionData PriorityAction(Troop troop, Cell targetCell, Scenario scenario, SkillAttackPriorityCalculateMethod prioritySkillAtkMethod = null, SkillDefencePriorityCalculateMethod prioritySkillDefMethod = null)
         {
             List<SkillInstance> skill_list = troop.skills;
             troop.MoveRange.Clear();
@@ -115,7 +115,11 @@ namespace Sango.Game
 
                                         if (priorityActionData != null)
                                         {
-                                            int dis = troop.cell.Distance(cell);
+                                            Cell checkCell = targetCell;
+                                            if (checkCell == null)
+                                                checkCell = troop.cell;
+
+                                            int dis = checkCell.Distance(cell);
                                             if (dis < priorityActionData.prioriry)
                                             {
                                                 priorityActionData.movetoCell = cell;
@@ -126,9 +130,13 @@ namespace Sango.Game
                                         }
                                         else
                                         {
+                                            Cell checkCell = targetCell;
+                                            if (checkCell == null)
+                                                checkCell = troop.cell;
+
                                             priorityActionData = new PriorityActionData()
                                             {
-                                                prioriry = troop.cell.Distance(cell),
+                                                prioriry = checkCell.Distance(cell),
                                                 skill = skill,
                                                 movetoCell = cell,
                                                 spellCell = spellCell,

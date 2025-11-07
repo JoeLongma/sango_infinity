@@ -45,6 +45,10 @@ namespace Sango.Game
         {
             IsAlive = true;
         }
+        public override string ToString()
+        {
+            return Name;
+        }
 
         public virtual bool DoAI(Scenario scenario) { return true; }
         public virtual bool Run(Scenario scenario) { return true; }

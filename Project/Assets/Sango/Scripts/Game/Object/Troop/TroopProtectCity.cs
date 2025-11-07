@@ -44,7 +44,7 @@ namespace Sango.Game
             else
             {
                 // 获取目标城市周围的敌人
-                priorityActionData = TroopAIUtility.PriorityAction(Troop, scenario, SkillAttackPriority);
+                priorityActionData = TroopAIUtility.PriorityAction(Troop, TargetCity.CenterCell, scenario, SkillAttackPriority);
                 if (priorityActionData == null)
                 {
                     nearestEnemy = TargetCity.GetNearestEnemy(troop.cell);

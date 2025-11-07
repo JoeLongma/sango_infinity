@@ -63,7 +63,7 @@ namespace Sango
 
         public void SetShowCount(int count)
         {
-            if (count < 0 || count >= elementCount)
+            if (count < 0 || count > elementCount)
                 return;
             showCount = count;
         }
@@ -71,7 +71,7 @@ namespace Sango
         {
             p = Mathf.Clamp01(p);
             int count = Mathf.CeilToInt(p * elementCount);
-            if (count < 0 || count >= elementCount)
+            if (count < 0 || count > elementCount)
                 return;
             showCount = count;
         }
@@ -193,7 +193,7 @@ namespace Sango
             mesh.RecalculateBounds();
 
             Vector3 srcPosition = transform.position;
-            Vector3 srcScale = transform.lossyScale * totalScale;
+            //Vector3 srcScale = transform.lossyScale * totalScale;
 
             mSmoothPosition = srcPosition;
 

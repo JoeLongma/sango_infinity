@@ -7,7 +7,7 @@ namespace Sango.Game
     public class CityAI
     {
         static internal PriorityQueue<City> priorityQueue = new PriorityQueue<City>();
-
+        public static List<Cell> tempCellList = new List<Cell>();
         public static bool AIAttack(City city, Scenario scenario)
         {
             if (city.BelongForce == null)
@@ -148,7 +148,7 @@ namespace Sango.Game
             // 兵临城下
             if (city.IsEnemiesRound(9))
                 return true;
-            
+
 
             AIBuilding(city, scenario);
             AIIntriorBalance(city, scenario);
@@ -164,7 +164,7 @@ namespace Sango.Game
                     }
                 }
             }
-           
+
             AITrainTroop(city, scenario);
             AICreateBoat(city, scenario);
             AICreateMachine(city, scenario);
@@ -292,6 +292,16 @@ namespace Sango.Game
             if (target.food >= target.FoodLimit && city.gold <= goldLine)
                 return true;
 
+            // 检查通路
+            tempCellList.Clear();
+            scenario.Map.GetDirectPath(city.CenterCell, target.CenterCell, tempCellList);
+            for (int i = 0; i < tempCellList.Count; ++i)
+            {
+                Cell road = tempCellList[i];
+                if (road.building != null && !road.building.IsCity() && !road.building.IsSameForce(city))
+                    return true;
+            }
+
             // 资源够运输, 但是兵力不够, 请求兵力输送
             if (city.troops < 500)
             {
@@ -366,8 +376,8 @@ namespace Sango.Game
             int count = 1;
             if (city.freePersons.Count > 6)
                 count = count + (city.freePersons.Count - 3) / 3;
-            
-            for(int i = 0; i < count; i++)
+
+            for (int i = 0; i < count; i++)
                 AIBuildIntriore(city, scenario);
             for (int i = 0; i < count; i++)
                 AIBuildingLevelUp(city, scenario);
@@ -397,8 +407,6 @@ namespace Sango.Game
             if (city.food < 10000)
                 return true;
 
-
-
             // 最大允许两只建设队伍
             int buildMax = 1;
             for (int i = 0; i < city.allPersons.Count; i++)
@@ -418,6 +426,30 @@ namespace Sango.Game
 
             Cell dest = city.defenceCellList[GameRandom.Range(0, city.defenceCellList.Count)];
             if (dest.building != null) return true;
+
+            for (int j = 0; j < dest.Neighbors.Length; ++j)
+            {
+                Cell cell = dest.Neighbors[j];
+                if (cell.building != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    for (int m = 0; m < city.allPersons.Count; m++)
+                    {
+                        Person person = city.allPersons[m];
+                        if (person.BelongTroop != null)
+                        {
+                            if (person.BelongTroop.missionType == (int)MissionType.TroopBuildBuilding && person.BelongTroop.missionTargetCell == cell)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+
             bool alreadyBuild = false;
             for (int j = 0; j < city.allPersons.Count; j++)
             {
@@ -1131,6 +1163,7 @@ namespace Sango.Game
 
         public static Troop AIMakeTroop(City city, int minTurn, bool isAttack, Scenario scenario)
         {
+            int minEquipNeed = 5000;
             if (isAttack)
             {
                 if (city.freePersons.Count < 3) return null;
@@ -1141,11 +1174,12 @@ namespace Sango.Game
             {
                 if (city.troops < scenario.Variables.minTroopsKeepWhenDefence) return null;
                 if (city.food < scenario.Variables.minTroopsKeepWhenDefence) return null;
+                minEquipNeed = 1500;
             }
 
             // 所有满足5000兵的部队类型
             List<TroopType> costEnoughTroopTypes = new List<TroopType>();
-            TroopType.GetCostEnoughTroopTypeList(city, costEnoughTroopTypes, 5000);
+            TroopType.GetCostEnoughTroopTypeList(city, costEnoughTroopTypes, minEquipNeed);
 
             // 去掉剑兵(进攻不允许)
             costEnoughTroopTypes.RemoveAll(x => x.Id == 1 || !x.isLand);

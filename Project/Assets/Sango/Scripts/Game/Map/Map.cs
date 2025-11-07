@@ -476,12 +476,11 @@ namespace Sango.Game
         /// <param name="cellList"></param>
         public void GetDirectPath(Cell start, Cell dest, List<Cell> cellList, CellCheck action = null)
         {
-
-            if (start.Cub.Distance(dest.Cub) > 40)
-            {
-                UnityEngine.Debug.LogError($"寻路距离: 40 At:<{start.x},{start.y}> => <{dest.x},{dest.y}>]");
-                return;
-            }
+            //if (start.Cub.Distance(dest.Cub) > 100)
+            //{
+            //    UnityEngine.Debug.LogError($"寻路距离: 100 At:<{start.x},{start.y}> => <{dest.x},{dest.y}>]");
+            //    return;
+            //}
 
             frontier.Clear();
             came_from.Clear();
