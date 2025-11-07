@@ -50,14 +50,6 @@
         {
             if (isAction) return;
             skill.Action(troop, spellCell, 100);
-
-            if (troop.IsAlive)
-            {
-                troop.morale -= skill.costEnergy;
-                if (troop.morale < 0)
-                    troop.morale = 0;
-                troop.Render.UpdateRender();
-            }
             isAction = true;
         }
 

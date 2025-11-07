@@ -2072,10 +2072,6 @@ namespace Sango.Game
 
             Scenario scenario = Scenario.Cur;
 
-            if (scenario.Variables.populationEnable && troopPopulation <= 500) return false;
-            if (security < 80) return false;
-            if (troops > food) return false;
-
             ScenarioVariables variables = scenario.Variables;
             int jobId = (int)CityJobType.TrainTroop;
 
@@ -2541,13 +2537,15 @@ namespace Sango.Game
 
             if (IsBorderCity)
             {
+
                 AICommandList.Add(CityAI.AITradeFood);
                 AICommandList.Add(CityAI.AIAttack);
+                AICommandList.Add(CityAI.AISecurity);
 
                 if (troops < 20000)
                 {
-                    AICommandList.Add(CityAI.AISecurity);
                     AICommandList.Add(CityAI.AIRecuritTroop);
+                    AICommandList.Add(CityAI.AIIntrior);
                 }
                 else
                 {

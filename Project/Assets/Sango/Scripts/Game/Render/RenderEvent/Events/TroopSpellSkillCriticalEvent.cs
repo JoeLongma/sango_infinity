@@ -56,14 +56,6 @@ namespace Sango.Game.Render
         {
             if (isAction) return;
             skill.Action(troop, spellCell, criticalFactor);
-
-            if (troop.IsAlive)
-            {
-                troop.morale -= skill.costEnergy;
-                if (troop.morale < 0)
-                    troop.morale = 0;
-                troop.Render.UpdateRender();
-            }
             isAction = true;
         }
 

@@ -144,9 +144,11 @@ namespace Sango.Game
         /// <param name="scenario"></param>
         public static bool AIIntrior(City city, Scenario scenario)
         {
+
             // 兵临城下
             if (city.IsEnemiesRound(9))
                 return true;
+            
 
             AIBuilding(city, scenario);
             AIIntriorBalance(city, scenario);
@@ -162,8 +164,7 @@ namespace Sango.Game
                     }
                 }
             }
-
-            AISecurity(city, scenario);
+           
             AITrainTroop(city, scenario);
             AICreateBoat(city, scenario);
             AICreateMachine(city, scenario);
@@ -349,9 +350,6 @@ namespace Sango.Game
             if (troop != null)
             {
                 troop = city.EnsureTroop(troop, scenario);
-                city.gold -= gold;
-                city.food -= food;
-                city.itemStore.Remove(itemStore);
                 troop.missionParams1 = 1;
                 city.CurActiveTroop = troop;
                 city.Render?.UpdateRender();
@@ -798,6 +796,10 @@ namespace Sango.Game
             if (city.troops >= expectationTroops)
                 return true;
 
+            if (scenario.Variables.populationEnable && city.troopPopulation <= 500) return true;
+            if (city.security < 70) return true;
+            if (city.troops > city.food) return true;
+
             int barracksNum = city.GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.Barracks);
             if (barracksNum <= 0) return true;
 
@@ -944,7 +946,7 @@ namespace Sango.Game
             int barracksNum = city.GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.PatrolBureau);
             if (barracksNum <= 0) return true;
 
-            if (GameRandom.Chance((90 - city.security) * 3 / 2))
+            if (GameRandom.Chance((100 - city.security) * 4))
             {
                 Person[] people = ForceAI.CounsellorRecommendDevelop(city.freePersons);
                 if (people == null) return true;
