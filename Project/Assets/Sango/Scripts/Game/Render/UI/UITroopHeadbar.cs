@@ -31,7 +31,7 @@ namespace Sango.Game.Render.UI
         public void UpdateState(Troop troop)
         {
             state.enabled = false;
-            energy.fillAmount = (float)troop.morale / 100.0f;
+            energy.fillAmount = (float)troop.morale / troop.MaxMorale;
             angry.fillAmount = 0;
             number.text = troop.troops.ToString();
         }

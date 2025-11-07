@@ -2,30 +2,37 @@
 {
     public enum AbilityType : int
     {
+        None = 0,
+
         ///// <summary>
         ///// 矛
         ///// </summary>
-        Spear = 0,
+        Spear = 1,
+
         ///// <summary>
         ///// 戟
         ///// </summary>
-        Halberd = 1,
+        Halberd,
+
         ///// <summary>
         ///// 弩
         ///// </summary>
-        Crossbow = 2,
+        Crossbow,
+
         ///// <summary>
         ///// 骑兵
         ///// </summary>
-        Horse = 3,
+        Horse,
+
         ///// <summary>
         ///// 器械
         ///// </summary>
-        Machine = 4,
+        Machine,
+
         ///// <summary>
         ///// 水军
         ///// </summary>
-        Water = 5,
+        Water,
     }
 
 }

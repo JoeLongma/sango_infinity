@@ -28,6 +28,45 @@
 
     }
 
+
+    /// <summary>
+    /// 对象枚举类型：武将性别（男、女）
+    /// </summary>
+    public enum Sex : int
+    {
+        //男
+        Male = 0,
+        //女
+        Female = 1
+    }
+
+    /// <summary>
+    /// 对象枚举类型：武将适性级别（C、B、A、S、SS、SSR）
+    /// </summary>
+    public enum LevelString : int
+    {
+        Ｃ = 0,
+        Ｂ,
+        Ａ,
+        Ｓ,
+        ＳＳ,
+        ＳＳＳ,
+        ＳＳR,
+    }
+
+    /// <summary>
+    /// 对象枚举类型：宝物类型
+    /// </summary>
+    public enum TreasureType : int
+    {
+        //-@马
+        horse = 0,
+        //-@武器
+        Weapon = 1,
+        //-@书
+        Book = 2,
+    }
+
     public enum CityJobType : int
     {
         Default = 0,
@@ -110,10 +149,25 @@
         CrossBow,
         Food,
         Hourse,
-        M1,
-        M2,
-        M3,
-        M4,
+        /// <summary>
+        /// 冲车
+        /// </summary>
+        Helepolis,
+
+        /// <summary>
+        /// 木兽
+        /// </summary>
+        WoodenBeast,
+
+        /// <summary>
+        /// 井阑
+        /// </summary>
+        SiegeTower,
+
+        /// <summary>
+        /// 投石车
+        /// </summary>
+        Catapult,
         Boat,
         BigBoat,
         Morale,

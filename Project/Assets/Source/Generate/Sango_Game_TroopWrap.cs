@@ -1389,7 +1389,7 @@ public class Sango_Game_TroopWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			int ret = obj.missionParamas1;
+			int ret = obj.missionParams1;
 			LuaDLL.lua_pushinteger(L, ret);
 			return 1;
 		}
@@ -1408,8 +1408,6 @@ public class Sango_Game_TroopWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			int ret = obj.missionParamas2;
-			LuaDLL.lua_pushinteger(L, ret);
 			return 1;
 		}
 		catch(Exception e)
@@ -2492,7 +2490,7 @@ public class Sango_Game_TroopWrap
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)o;
 			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
-			obj.missionParamas1 = arg0;
+			obj.missionParams1 = arg0;
 			return 0;
 		}
 		catch(Exception e)
@@ -2511,7 +2509,6 @@ public class Sango_Game_TroopWrap
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)o;
 			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
-			obj.missionParamas2 = arg0;
 			return 0;
 		}
 		catch(Exception e)

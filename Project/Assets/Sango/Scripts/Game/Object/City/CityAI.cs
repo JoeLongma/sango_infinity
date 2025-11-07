@@ -217,6 +217,7 @@ namespace Sango.Game
             Troop troop = scenario.CreateTroop();
             troop.energy = city.energy;
             troop.morale = city.morale;
+            troop.MaxMorale = city.MaxMorale;
             troop.Leader = leader;
             troop.TroopType = troopType;
             if (target.troops < target.TroopsLimit)
@@ -267,8 +268,11 @@ namespace Sango.Game
 
             if (target.IsEnemiesRound()) return true;
 
+            int goldLine = 2500;
+            int foodLine = 20000;
+
             // 资源不够, 人员进入附属城池
-            if (city.gold <= 1500 && city.food <= 20000)
+            if (city.gold <= goldLine && city.food <= foodLine)
             {
                 if (city.freePersons.Count > 0)
                 {
@@ -282,6 +286,10 @@ namespace Sango.Game
                 return true;
             }
 
+            if (target.gold >= target.GoldLimit && city.food <= foodLine)
+                return true;
+            if (target.food >= target.FoodLimit && city.gold <= goldLine)
+                return true;
 
             // 资源够运输, 但是兵力不够, 请求兵力输送
             if (city.troops < 500)
@@ -301,7 +309,7 @@ namespace Sango.Game
                 Troop transport = AIMakeTransportTroop(target, city, 1000, 0, 1000, null, scenario);
                 if (transport != null)
                 {
-                    transport.missionParamas1 = 1;
+                    transport.missionParams1 = 1;
                     transport = target.EnsureTroop(transport, scenario);
                     city.CurActiveTroop = transport;
                     target.Render?.UpdateRender();
@@ -344,7 +352,7 @@ namespace Sango.Game
                 city.gold -= gold;
                 city.food -= food;
                 city.itemStore.Remove(itemStore);
-                troop.missionParamas1 = 1;
+                troop.missionParams1 = 1;
                 city.CurActiveTroop = troop;
                 city.Render?.UpdateRender();
 #if SANGO_DEBUG
@@ -448,6 +456,7 @@ namespace Sango.Game
             Troop troop = scenario.CreateTroop();
             troop.energy = city.energy;
             troop.morale = city.morale;
+            troop.MaxMorale = city.MaxMorale;
             troop.Leader = builders[0];
             troop.TroopType = troopType;
             troop.troops = maxTroopNum;
@@ -722,7 +731,7 @@ namespace Sango.Game
                     int buildAbility = GameUtility.Method_PersonBuildAbility(people);
                     int turnCount = buildingType.durabilityLimit % buildAbility == 0 ? 0 : 1;
                     int buildCount = Math.Min(Scenario.Cur.Variables.BuildMaxTurn, buildingType.durabilityLimit / buildAbility + turnCount);
-                    city.JobBuildBuilding(index, people, buildingType);
+                    city.JobBuildBuilding(index, people, buildingType, buildCount);
                     return true;
                 }
             }
@@ -765,7 +774,7 @@ namespace Sango.Game
                         int buildCount = Math.Min(Scenario.Cur.Variables.BuildMaxTurn, nextBuildingType.durabilityLimit / buildAbility + turnCount);
                         if (buildCount <= 6)
                         {
-                            city.JobUpgradeBuilding(building, people, nextBuildingType);
+                            city.JobUpgradeBuilding(building, people, nextBuildingType, buildCount);
                         }
                         return true;
                     }
@@ -986,7 +995,7 @@ namespace Sango.Game
                 // 获取总兵装
                 totalNum += city.itemStore.GetNumber(itemTypeId);
 
-            if (totalNum > city.troops * 2)
+            if (totalNum > city.troops * (2 + city.gold / 5000))
                 return true;
 
             // 统计适应偏向
@@ -1133,7 +1142,7 @@ namespace Sango.Game
             costEnoughTroopTypes.RemoveAll(x => x.Id == 1 || !x.isLand);
 
             // 小于4支部队不带器械, 防守不组建器械
-            if(city.AttackTroopsCount < 4 || !isAttack)
+            if (city.AttackTroopsCount < 4 || !isAttack)
                 costEnoughTroopTypes.RemoveAll(x => x.kind == 8 || x.kind == 9);
 
             if (costEnoughTroopTypes.Count == 0)
@@ -1152,12 +1161,41 @@ namespace Sango.Game
             }
 
             if (spType == null)
-                spType = costEnoughTroopTypes[GameRandom.Range(0, costEnoughTroopTypes.Count)];
+            {
+                city.freePersons.Sort((a, b) => b.MilitaryAbility.CompareTo(a.MilitaryAbility));
+                Person person = city.freePersons[0];
+
+                for (int i = 0; i < costEnoughTroopTypes.Count; i++)
+                {
+                    TroopType troopType = costEnoughTroopTypes[i];
+                    if (Troop.CheckTroopTypeLevel(troopType, person) >= 3)
+                    {
+                        spType = troopType;
+                        break;
+                    }
+                }
+                if (spType == null)
+                    spType = costEnoughTroopTypes[GameRandom.Range(0, costEnoughTroopTypes.Count)];
+            }
 
             Person[] people = ForceAI.CounsellorRecommendMakeTroop(city.freePersons, spType, maxPersonCount);
 
+            Troop troop = scenario.CreateTroop();
+            troop.energy = city.energy;
+            troop.morale = city.morale;
+            troop.MaxMorale = city.MaxMorale;
+            troop.Leader = people[0];
+            troop.TroopType = spType;
+            troop.missionType = (int)city.TroopMissionType;
+            troop.missionTarget = city.TroopMissionTargetId;
+            if (people.Length > 1) troop.Member1 = people[1];
+            if (people.Length > 2) troop.Member1 = people[2];
+
+            // 计算最大兵力
+            troop.CalculateMaxTroops();
+
             // 确定兵数
-            int maxTroopNum = people[0].TroopsLimit;
+            int maxTroopNum = troop.MaxTroops;
             if (city.troops < maxTroopNum * 2)
                 maxTroopNum = (city.troops / 2000) * 1000;
 
@@ -1183,17 +1221,8 @@ namespace Sango.Game
             for (int p = 0; p < people.Length; p++)
                 city.freePersons.Remove(people[p]);
 
-            Troop troop = scenario.CreateTroop();
-            troop.energy = city.energy;
-            troop.morale = city.morale;
-            troop.Leader = people[0];
-            troop.TroopType = spType;
             troop.troops = maxTroopNum;
             troop.food = food;
-            troop.missionType = (int)city.TroopMissionType;
-            troop.missionTarget = city.TroopMissionTargetId;
-            if (people.Length > 1) troop.Member1 = people[1];
-            if (people.Length > 2) troop.Member1 = people[2];
             city.Render?.UpdateRender();
             return troop;
         }
@@ -1208,6 +1237,7 @@ namespace Sango.Game
             Troop troop = scenario.CreateTroop();
             troop.energy = city.energy;
             troop.morale = city.morale;
+            troop.MaxMorale = city.MaxMorale;
             troop.Leader = leader;
             troop.TroopType = troopType;
             city.troops -= troops;

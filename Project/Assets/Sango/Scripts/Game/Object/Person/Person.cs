@@ -270,9 +270,9 @@ namespace Sango.Game
         /// <summary>
         /// 武将特性
         /// </summary>
-        [JsonConverter(typeof(SangoObjectListIDConverter<Feature>))]
         [JsonProperty]
-        public SangoObjectList<Feature> FeatureList;
+        [JsonConverter(typeof(SangoObjectListIDConverter<Feature>))]
+        public SangoObjectList<Feature> FeatureList { get; private set; }
 
         /// <summary>
         /// 库存
@@ -397,8 +397,8 @@ namespace Sango.Game
         [JsonProperty] public int missionType;
         [JsonProperty] public int missionTarget;
         [JsonProperty] public int missionCounter;
-        [JsonProperty] public int missionParamas1;
-        [JsonProperty] public int missionParamas2;
+        [JsonProperty] public int missionParams1;
+        [JsonProperty] public int missionParams2;
 
         public bool rewardOver;
 
@@ -536,8 +536,8 @@ namespace Sango.Game
                         missionCounter--;
                         if (missionCounter <= 0)
                         {
-                            int buildingTotalLv = missionParamas1;
-                            int totalValue = missionParamas2;
+                            int buildingTotalLv = missionParams1;
+                            int totalValue = missionParams2;
                             ItemType itemType = scenario.GetObject<ItemType>(missionTarget);
                             BelongCity.DoJobCreateBoat(itemType, buildingTotalLv, totalValue);
                         }
@@ -548,8 +548,8 @@ namespace Sango.Game
                         missionCounter--;
                         if (missionCounter <= 0)
                         {
-                            int buildingTotalLv = missionParamas1;
-                            int totalValue = missionParamas2;
+                            int buildingTotalLv = missionParams1;
+                            int totalValue = missionParams2;
                             ItemType itemType = scenario.GetObject<ItemType>(missionTarget);
                             BelongCity.DoJobCreateMachine(itemType, buildingTotalLv, totalValue);
                         }
@@ -563,8 +563,8 @@ namespace Sango.Game
             this.missionType = (int)missionType;
             this.missionTarget = missionTarget.Id;
             this.missionCounter = missionCounter;
-            this.missionParamas1 = p1;
-            this.missionParamas2 = p2;
+            this.missionParams1 = p1;
+            this.missionParams2 = p2;
         }
 
         public void SetMission(MissionType missionType, SangoObject missionTarget, int missionCounter, int p1)
@@ -572,7 +572,7 @@ namespace Sango.Game
             this.missionType = (int)missionType;
             this.missionTarget = missionTarget.Id;
             this.missionCounter = missionCounter;
-            this.missionParamas1 = p1;
+            this.missionParams1 = p1;
         }
 
         public void SetMission(MissionType missionType, SangoObject missionTarget, int missionCounter)

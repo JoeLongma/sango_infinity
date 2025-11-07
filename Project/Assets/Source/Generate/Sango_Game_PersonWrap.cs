@@ -2761,8 +2761,6 @@ public class Sango_Game_PersonWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Person obj = (Sango.Game.Person)o;
-			Sango.Game.SangoObjectList<Sango.Game.Feature> arg0 = (Sango.Game.SangoObjectList<Sango.Game.Feature>)ToLua.CheckObject<Sango.Game.SangoObjectList<Sango.Game.Feature>>(L, 2);
-			obj.FeatureList = arg0;
 			return 0;
 		}
 		catch(Exception e)

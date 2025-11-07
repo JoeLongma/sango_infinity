@@ -71,6 +71,8 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public int morale;
 
+        public int MaxMorale { get; set; }
+
         /// <summary>
         /// 是否有商人, 数字为兑换比例 0为没有商人
         /// </summary>
@@ -90,25 +92,28 @@ namespace Sango.Game
         /// 可容纳兵力
         /// </summary>
         [JsonProperty] public int troopsLimit;
-        public int TroopsLimit => troopsLimit + CityLevelType.troopsLimitAdd;
-
+        public int TroopsLimit => troopsLimit + CityLevelType.troopsLimitAdd + troopsLimitAdd;
+        int troopsLimitAdd;
         /// <summary>
         /// 仓库大小
         /// </summary>
         [JsonProperty] public int storeLimit;
-        public int StoreLimit => storeLimit + CityLevelType.storeLimitAdd;
+        public int StoreLimit => storeLimit + CityLevelType.storeLimitAdd + storeLimitAdd;
+        int storeLimitAdd;
 
         /// <summary>
         /// 金库大小
         /// </summary>
         [JsonProperty] public int goldLimit;
-        public int GoldLimit => goldLimit + CityLevelType.goldLimitAdd;
+        public int GoldLimit => goldLimit + CityLevelType.goldLimitAdd + goldLimitAdd;
+        int goldLimitAdd;
 
         /// <summary>
         /// 粮仓大小
         /// </summary>
         [JsonProperty] public int foodLimit;
-        public int FoodLimit => foodLimit + CityLevelType.foodLimitAdd;
+        public int FoodLimit => foodLimit + CityLevelType.foodLimitAdd + foodLimitAdd;
+        int foodLimitAdd;
 
         /// <summary>
         /// 城内建筑槽位
@@ -156,8 +161,9 @@ namespace Sango.Game
         /// 最大耐久
         /// </summary>
         [JsonProperty] public int durabilityLimit;
+        int durabilityLimitAdd;
 
-        public override int DurabilityLimit => durabilityLimit + CityLevelType.durabilityLimitAdd;
+        public override int DurabilityLimit => durabilityLimit + CityLevelType.durabilityLimitAdd + durabilityLimitAdd;
 
         /// <summary>
         /// 是否,满兵
@@ -299,7 +305,34 @@ namespace Sango.Game
             }
         }
 
+        public int AddGold(int v)
+        {
+            gold += v;
+            if (gold > GoldLimit)
+                gold = GoldLimit;
+            else if (gold < 0)
+                gold = 0;
+            return gold;
+        }
 
+        public int AddFood(int v)
+        {
+            food += v;
+            if (food > FoodLimit)
+                food = FoodLimit;
+            else if (food < 0)
+                food = 0;
+            return food;
+        }
+        public int AddTroops(int v)
+        {
+            troops += v;
+            if (troops > TroopsLimit)
+                troops = TroopsLimit;
+            else if (troops < 0)
+                troops = 0;
+            return troops;
+        }
 
         public List<Cell> GetRoadToNeighbor(City city)
         {
@@ -379,6 +412,7 @@ namespace Sango.Game
         public override void Init(Scenario scenario)
         {
             base.Init(scenario);
+
             if (IsPort())
                 BelongCity.portList.Add((Port)this);
             else if (IsGate())
@@ -388,6 +422,9 @@ namespace Sango.Game
                 UpdateActiveTroopTypes();
                 UpdateFightPower();
             }
+
+            //计算最大士气
+            CalculateMaxMorale();
             CalculateHarvest();
         }
 
@@ -510,6 +547,14 @@ namespace Sango.Game
 #if SANGO_DEBUG
             Sango.Log.Print($"城市：{Name}, 收获粮食：{harvest}, 现有粮食: {food}");
 #endif
+
+            // 治安降低
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(scenario.Variables.securityChangeOnSeasonStart);
+            GameEvent.OnCitySecurityChangeOnSeasonStart?.Invoke(this, overrideData);
+            security += overrideData.Value;
+            if (security < 0) security = 0;
+            if (security > 100) security = 100;
+
             if (Render != null)
                 Render.UpdateRender();
 
@@ -541,8 +586,8 @@ namespace Sango.Game
             inComingGold -= GoldCost(scenario);
             Render?.ShowInfo(inComingGold, (int)InfoTyoe.Gold);
 
-            gold += inComingGold;
-            if (gold < 0) gold = 0;
+            AddGold(inComingGold);
+
 #if SANGO_DEBUG
             Sango.Log.Print($"城市：{Name}, 武将人数:{allPersons.Count}, 收入<-- 金钱:{inComingGold}, 人口:{pop}, 兵役:{troopPop}, 现有金钱: {gold}, 人口:{population}, 兵役:{troopPopulation}");
 #endif
@@ -1033,10 +1078,12 @@ namespace Sango.Game
             ChangeCorps(atk.BelongCorps);
 
             // 处理库存和钱粮,兵力
-            food = food * scenarioVariables.cityFallCanKeepFoodFactor / 100;
-            gold = gold * scenarioVariables.cityFallCanKeepGoldFactor / 100;
-            troops = troops * scenarioVariables.cityFallCanKeepTroopsFactor / 100;
-            itemStore.Split((100 - scenarioVariables.cityFallCanKeepItemFactor) / 100);
+            food = food * (GameRandom.RandomWeightIndex(scenarioVariables.cityFallCanKeepFoodFactor) * 10 + 10) / 100;
+            gold = gold * (GameRandom.RandomWeightIndex(scenarioVariables.cityFallCanKeepGoldFactor) * 10 + 10) / 100;
+            troops = troops * (GameRandom.RandomWeightIndex(scenarioVariables.cityFallCanKeepTroopsFactor) * 10 + 10) / 100;
+            itemStore.Split((100 - (GameRandom.RandomWeightIndex(scenarioVariables.cityFallCanKeepItemFactor) * 10 + 10)) / 100);
+            agriculture = agriculture * (GameRandom.RandomWeightIndex(scenarioVariables.cityFallCanKeepAgriculture) * 10 + 10) / 100;
+            commerce = agriculture * (GameRandom.RandomWeightIndex(scenarioVariables.cityFallCanKeepCommerce) * 10 + 10) / 100;
 
             Leader = atk.Leader;
             atk.EnterCity(this);
@@ -1180,7 +1227,7 @@ namespace Sango.Game
         /// <param name="builders"></param>
         /// <param name="buildingType"></param>
         /// <returns></returns>
-        public Building JobBuildBuilding(int slotId, Person[] builders, BuildingType buildingType)
+        public Building JobBuildBuilding(int slotId, Person[] builders, BuildingType buildingType, int buildCount)
         {
             Building building = new Building();
             building.BelongForce = BelongForce;
@@ -1215,10 +1262,11 @@ namespace Sango.Game
             building.Builders = sangoObjectList;
             building.isComplte = false;
             building.durability = 1;
+            building.BuidlLefCounter = buildCount;
             gold -= buildingType.cost;
 
 #if SANGO_DEBUG
-            Sango.Log.Print($"@内政@[{BelongForce.Name}]在<{Name}>由{stringBuilder}开始修建: {building.Name}");
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]在<{Name}>由{stringBuilder}开始修建: {building.Name} 需耗时:{buildCount} 回合");
 #endif
             return building;
         }
@@ -1230,7 +1278,7 @@ namespace Sango.Game
         /// <param name="builders"></param>
         /// <param name="upgradeBuildingType"></param>
         /// <returns></returns>
-        public Building JobUpgradeBuilding(Building building, Person[] builders, BuildingType upgradeBuildingType)
+        public Building JobUpgradeBuilding(Building building, Person[] builders, BuildingType upgradeBuildingType, int buildCount)
         {
             building.isUpgrading = true;
             building.durability = 1;
@@ -1256,10 +1304,11 @@ namespace Sango.Game
             }
 
             building.Builders = sangoObjectList;
+            building.BuidlLefCounter = buildCount;
             gold -= upgradeBuildingType.cost;
 
 #if SANGO_DEBUG
-            Sango.Log.Print($"@内政@[{BelongForce.Name}]在<{Name}>由{stringBuilder}开始升级建筑: {building.Name}");
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]在<{Name}>由{stringBuilder}开始升级建筑: {building.Name} 需耗时: {buildCount}回合");
 #endif
             return building;
         }
@@ -1350,7 +1399,7 @@ namespace Sango.Game
             }
 
 #if SANGO_DEBUG
-            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了舰船生产!开始生产{itemType.Name}, 所需回合:{turnCount}");
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了舰船生产!开始生产{itemType.Name}, 所需回合:{turnCount}, 建筑总等级:{buildingTotalLevel}");
 #endif
             return true;
         }
@@ -1418,10 +1467,10 @@ namespace Sango.Game
             BelongForce.GainTechniquePoint(techniquePointGain);
 
 #if SANGO_DEBUG
-            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了船只生产!共生产了{totalValue}{itemType.Name}, 当前数量:{exsistNumber}");
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了船只生产!共生产了{totalValue}{itemType.Name}, 当前数量:{exsistNumber}, 建筑总等级:{buildingTotalLevel}");
 #endif
 
-            Render?.ShowInfo(totalValue, (int)InfoTyoe.Boat);
+            Render?.ShowInfo(totalValue, itemType.Id + 1);
             return true;
         }
 
@@ -1512,7 +1561,7 @@ namespace Sango.Game
             }
 
 #if SANGO_DEBUG
-            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了器械生产!开始生产{itemType.Name}, 所需回合:{turnCount}");
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了器械生产!开始生产{itemType.Name}, 所需回合:{turnCount}, 建筑总等级:{buildingTotalLevel}");
 #endif
             return true;
         }
@@ -1574,10 +1623,10 @@ namespace Sango.Game
             BelongForce.GainTechniquePoint(techniquePointGain);
 
 #if SANGO_DEBUG
-            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了器械生产!共生产了{totalValue}{itemType.Name}, 当前数量:{exsistNumber}");
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了器械生产!共生产了{totalValue}{itemType.Name}, 当前数量:{exsistNumber}, 建筑总等级:{buildingTotalLevel}");
 #endif
 
-            Render?.ShowInfo(totalValue, (int)InfoTyoe.M3);
+            Render?.ShowInfo(totalValue, itemType.Id + 1);
             return true;
         }
 
@@ -1809,7 +1858,7 @@ namespace Sango.Game
         public bool JobTrainTroop(Person[] personList)
         {
             if (personList == null || personList.Length == 0) return false;
-            if (morale >= 100) return false;
+            if (morale >= MaxMorale) return false;
             Scenario scenario = Scenario.Cur;
 
             int barracksLv = GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.Barracks);
@@ -1866,8 +1915,8 @@ namespace Sango.Game
             BelongForce.GainTechniquePoint(techniquePointGain);
             gold -= goldNeed;
             morale += totalValue;
-            if (morale > 100)
-                morale = 100;
+            if (morale > MaxMorale)
+                morale = MaxMorale;
 
 #if SANGO_DEBUG
             Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了训练!士气提升到了:{morale}");
@@ -2210,8 +2259,15 @@ namespace Sango.Game
 
             BelongForce.GainTechniquePoint(techniquePointGain);
 
+            if (itemType.Id == 2)
+                Render?.ShowInfo(totalValue, 1);
+            else if (itemType.Id == 5)
+                Render?.ShowInfo(totalValue, itemType.Id + 1);
+            else
+                Render?.ShowInfo(totalValue, itemType.Id);
+
 #if SANGO_DEBUG
-            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了生产兵装!共生产了{totalValue}{itemType.Name}, 当前数量:{exsistNumber}");
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了生产兵装!共生产了{totalValue}{itemType.Name}, 当前数量:{exsistNumber}, 建筑总等级:{buildingTotalLevel}");
 #endif
             return true;
         }
@@ -2228,7 +2284,6 @@ namespace Sango.Game
             Scenario scenario = Scenario.Cur;
 
             if (security < 60) return false;
-            if (troops > food) return false;
 
             ScenarioVariables variables = scenario.Variables;
             int jobId = (int)CityJobType.TradeFood;
@@ -2261,8 +2316,9 @@ namespace Sango.Game
             if (totalValue + food > foodLimit)
                 totalValue = foodLimit - food;
 
-            food += totalValue;
-            gold -= goldNum;
+            AddGold(-goldNum);
+            AddFood(totalValue);
+
             BelongForce.GainTechniquePoint(techniquePointGain);
 #if SANGO_DEBUG
             Sango.Log.Print($"@内政@[{BelongForce.Name}]{person.Name}在<{Name}>花费{goldNum}交易到了{totalValue}粮食, 现有粮食:{food}");
@@ -2318,7 +2374,7 @@ namespace Sango.Game
             ScenarioVariables Variables = Scenario.Cur.Variables;
 
             // 根据太守数值来计算基础防御
-            int def = Math.Max(50, (Leader?.Intelligence ?? 40 * 3000 + Leader?.Command ?? 40 * 7000) / 10000);
+            int def = Math.Max(70, (Leader?.Intelligence ?? 70 * 3000 + Leader?.Command ?? 70 * 7000) / 10000);
 
             return def;
         }
@@ -2487,23 +2543,32 @@ namespace Sango.Game
             {
                 AICommandList.Add(CityAI.AITradeFood);
                 AICommandList.Add(CityAI.AIAttack);
-                if (scenario.Info.day == 10)
+
+                if (troops < 20000)
                 {
+                    AICommandList.Add(CityAI.AISecurity);
                     AICommandList.Add(CityAI.AIRecuritTroop);
-                    AICommandList.Add(CityAI.AICreateItems);
-                    AICommandList.Add(CityAI.AIIntrior);
-                }
-                else if (scenario.Info.day == 20)
-                {
-                    AICommandList.Add(CityAI.AIIntrior);
-                    AICommandList.Add(CityAI.AIRecuritTroop);
-                    AICommandList.Add(CityAI.AICreateItems);
                 }
                 else
                 {
-                    AICommandList.Add(CityAI.AICreateItems);
-                    AICommandList.Add(CityAI.AIRecuritTroop);
-                    AICommandList.Add(CityAI.AIIntrior);
+                    if (scenario.Info.day == 10)
+                    {
+                        AICommandList.Add(CityAI.AIRecuritTroop);
+                        AICommandList.Add(CityAI.AICreateItems);
+                        AICommandList.Add(CityAI.AIIntrior);
+                    }
+                    else if (scenario.Info.day == 20)
+                    {
+                        AICommandList.Add(CityAI.AIIntrior);
+                        AICommandList.Add(CityAI.AIRecuritTroop);
+                        AICommandList.Add(CityAI.AICreateItems);
+                    }
+                    else
+                    {
+                        AICommandList.Add(CityAI.AICreateItems);
+                        AICommandList.Add(CityAI.AIRecuritTroop);
+                        AICommandList.Add(CityAI.AIIntrior);
+                    }
                 }
             }
             else
@@ -2646,6 +2711,38 @@ namespace Sango.Game
             {
                 return enemies.Count;
             }
+        }
+
+        public void CalculateMaxMorale()
+        {
+            int max = 100;
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(max);
+            GameEvent.OnCityCalculateMaxMorale?.Invoke(this, overrideData);
+            MaxMorale = overrideData.Value;
+        }
+
+        public void CalculateLimit()
+        {
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(0);
+            GameEvent.OnCityCalculateMaxGold?.Invoke(this, overrideData);
+            goldLimitAdd = overrideData.Value;
+
+            overrideData.Value = 0;
+            GameEvent.OnCityCalculateMaxFood?.Invoke(this, overrideData);
+            foodLimitAdd = overrideData.Value;
+
+            overrideData.Value = 0;
+            GameEvent.OnCityCalculateMaxItemStoreSize?.Invoke(this, overrideData);
+            storeLimitAdd = overrideData.Value;
+
+            overrideData.Value = 0;
+            GameEvent.OnCityCalculateMaxTroops?.Invoke(this, overrideData);
+            troopsLimitAdd = overrideData.Value;
+
+            overrideData.Value = 0;
+            GameEvent.OnCityCalculateMaxDurability?.Invoke(this, overrideData);
+            durabilityLimitAdd = overrideData.Value;
+
         }
     }
 }

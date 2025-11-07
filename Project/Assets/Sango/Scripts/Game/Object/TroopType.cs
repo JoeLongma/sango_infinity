@@ -152,6 +152,13 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public int costExpPoint = 0;
 
+        /// <summary>
+        /// 适配的特性
+        /// </summary>
+        [JsonProperty] public int[] matchFeatures;
+
+        
+
         public int MoveCost(Cell cell)
         {
             int terrainId = cell.TerrainType.Id;

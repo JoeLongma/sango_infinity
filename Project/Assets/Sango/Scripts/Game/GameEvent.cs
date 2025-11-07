@@ -203,10 +203,58 @@ namespace Sango.Game
         public static EventDelegate<City, int, Person, OverrideData<int>> OnCityJobSearchingWild;
 
         /// <summary>
+        /// 可监听改计算城池最大士气
+        /// City, Troop, lastValue, OverrideFunc
+        /// </summary>
+        public static EventDelegate<City, OverrideData<int>> OnCityCalculateMaxMorale;
+
+        /// <summary>
+        /// 可监听改计算城池最大资金
+        /// City, Troop, lastValue, OverrideFunc
+        /// </summary>
+        public static EventDelegate<City, OverrideData<int>> OnCityCalculateMaxGold;
+
+        /// <summary>
+        /// 可监听改计算城池最大兵粮
+        /// City, Troop, lastValue, OverrideFunc
+        /// </summary>
+        public static EventDelegate<City, OverrideData<int>> OnCityCalculateMaxFood;
+
+        /// <summary>
+        /// 可监听改计算城池最大仓库数量
+        /// City, Troop, lastValue, OverrideFunc
+        /// </summary>
+        public static EventDelegate<City, OverrideData<int>> OnCityCalculateMaxItemStoreSize;
+
+        /// <summary>
+        /// 可监听改计算城池最大士兵数
+        /// City, Troop, lastValue, OverrideFunc
+        /// </summary>
+        public static EventDelegate<City, OverrideData<int>> OnCityCalculateMaxTroops;
+
+        /// <summary>
+        /// 可监听改计算城池最大耐久
+        /// City, Troop, lastValue, OverrideFunc
+        /// </summary>
+        public static EventDelegate<City, OverrideData<int>> OnCityCalculateMaxDurability;
+
+        /// <summary>
         /// 可监听改计算部队最大兵力
         /// City, Troop, lastValue, OverrideFunc
         /// </summary>
         public static EventDelegate<City, Troop, OverrideData<int>> OnTroopCalculateMaxTroops;
+
+        /// <summary>
+        /// 可监听改计算城池每季度治安下降值
+        /// City, Troop, lastValue, OverrideFunc
+        /// </summary>
+        public static EventDelegate<City, OverrideData<int>> OnCitySecurityChangeOnSeasonStart;
+
+        /// <summary>
+        /// 可监听改计算建筑反击攻击力
+        /// City, Troop, lastValue, OverrideFunc
+        /// </summary>
+        public static EventDelegate<Troop, Cell, BuildingBase, Skill, OverrideData<int>> OnBuildCalculateAttackBack;
 
         /// <summary>
         /// 武将升级事件
@@ -214,20 +262,25 @@ namespace Sango.Game
         public static EventDelegate<Person> OnPersonLevelUp;
 
         /// <summary>
-        /// 可监听改计算战法成功率
-        /// City, Skill, spellCell, lastValue, OverrideFunc
+        /// 势力忠诚换季衰减概率
+        /// </summary>
+        public static EventDelegate<Force, OverrideData<int>> OnForcePersonLoyaltyChangeProbability;
+
+        /// <summary>
+        /// 可监听改计算战法成功率(百分比)
+        /// City, Skill, spellCell, OverrideFunc
         /// </summary>
         public static EventDelegate<Troop, Skill, Cell, OverrideData<int>> OnTroopCalculateSkillSuccess;
 
         /// <summary>
-        /// 可监听改计算战法暴击率
-        /// City, Skill, spellCell, lastValue, OverrideFunc
+        /// 可监听改计算战法暴击率(百分比)
+        /// City, Skill, spellCell,  OverrideFunc
         /// </summary>
         public static EventDelegate<Troop, Skill, Cell, OverrideData<int>> OnTroopCalculateSkillCritical;
 
         /// <summary>
-        /// 可监听改计算战法暴击时的伤害倍率
-        /// City, Skill, spellCell, lastValue, OverrideFunc
+        /// 可监听改计算战法暴击时的伤害倍率(百分比)
+        /// City, Skill, spellCell,  OverrideFunc
         /// </summary>
         public static EventDelegate<Troop, Skill, Cell, OverrideData<int>> OnTroopCalculateSkillCriticalFactor;
 
