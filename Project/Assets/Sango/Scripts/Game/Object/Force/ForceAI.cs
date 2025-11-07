@@ -621,8 +621,7 @@ namespace Sango.Game
         /// </summary>
         public static Person[] CounsellorRecommendMakeTroop(List<Person> personList, TroopType troopType, int maxPersonLimit = 3)
         {
-            int count = personList.Count;
-            if (count <= 0)
+            if (personList.Count <= 0)
                 return null;
 
             if (personList.Count <= 1)
@@ -633,150 +632,201 @@ namespace Sango.Game
 
             //TODO: 优先内置推荐队伍
             ///
-            int level = 3;
             int checkValue = 0;
+            int v_int = 0;
+            int v_stength = 0;
+            int v_command = 0;
+            int level = 0;
+
+            List<Person> list = new List<Person>(personList);
+            list.Sort((a, b) =>
+            {
+                return b.MilitaryAbility.CompareTo(a.MilitaryAbility);
+            });
+
+            // 确认主将
+            person1 = list[0];
+            checkPersons[0] = person1;
+            list.RemoveAt(0);
+            v_int = person1.Intelligence;
+            v_stength = person1.Strength;
+            v_command = person1.Command;
+            level = Troop.CheckTroopTypeLevel(troopType, person1);
+
+            int destSlot = 1;
+            // 必须要兵符携带者为主将
             if (troopType.validItemId > 0)
             {
-                // 优先兵符携带者为主将
-                for (int i = 0; i < count; i++)
+                for (int i = 0; i < list.Count; i++)
                 {
-                    Person person = personList[i];
+                    Person person = list[i];
                     if (person.HasItem(troopType.validItemId))
                     {
-                        checkPersons[0] = person;
+                        checkPersons[destSlot] = person;
+                        list.RemoveAt(i);
                         person1 = person;
+                        v_int = Math.Max(v_int, person1.Intelligence);
+                        v_stength = Math.Max(v_stength, person1.Strength);
+                        v_command = Math.Max(v_command, person1.Command);
+                        level = Math.Max(level, Troop.CheckTroopTypeLevel(troopType, person1));
+                        destSlot++;
                         break;
                     }
                 }
             }
-            else
-            {
-                while(person1 == null)
-                {
-                    // 优先战斗力最高为主将
-                    for (int i = 0; i < count; i++)
-                    {
-                        Person person = personList[i];
-                        int militaryAbility = person.MilitaryAbility;
-                        int pLevel = Troop.CheckTroopTypeLevel(troopType, person);
-                        if (pLevel == level && militaryAbility > checkValue)
-                        {
-                            checkValue = militaryAbility;
-                            checkPersons[0] = person;
-                            person1 = person;
-                        }
-                    }
-                    level--;
-                }
-            }
 
-            if (maxPersonLimit == 1)
-                return checkPersons;
-
-            // 补充适应,且战斗力最低
-            int v_int = person1.Intelligence;
-            int v_stength = person1.Strength; ;
-            int v_command = person1.Command; ;
-            int destSlot = 1;
-            if (level < 3)
+            // 补充适配的特性的武将, 一般适配特性的武将都带有高适应力
+            if (troopType.matchFeatures != null)
             {
-                for (int i = 0; i < count; i++)
+                bool alreadtHasFeature = false;
+                for (int i = 0; i < destSlot; i++)
                 {
-                    Person person = personList[i];
-                    if (person != person1)
+                    Person exsistP = checkPersons[i];
+                    if (exsistP.FeatureList != null)
                     {
-                        int checkLvl = Troop.CheckTroopTypeLevel(troopType, person);
-                        if (checkLvl > level)
+                        for (int j = 0; j < troopType.matchFeatures.Length; j++)
                         {
-                            if (person.MilitaryAbility < checkValue)
+                            if (exsistP.FeatureList.Contains(troopType.matchFeatures[j]))
                             {
-                                checkValue = person.MilitaryAbility;
-                                level = checkLvl;
-                                checkPersons[destSlot] = person;
-                                v_int = Math.Max(person1.Intelligence, person.Intelligence);
-                                v_stength = Math.Max(person1.Strength, person.Strength);
-                                v_command = Math.Max(person1.Command, person.Command);
-                                destSlot++;
+                                alreadtHasFeature = true;
+                                break;
                             }
                         }
                     }
+                    if (alreadtHasFeature)
+                        break;
+                }
+
+                if (!alreadtHasFeature)
+                {
+                    person1 = null;
+                    // 优先战斗力适配的特性主将
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        Person person = personList[i];
+                        if (person.FeatureList != null)
+                        {
+                            for (int j = 0; j < troopType.matchFeatures.Length; j++)
+                            {
+                                if (person.FeatureList.Contains(troopType.matchFeatures[j]))
+                                {
+                                    checkPersons[destSlot] = person;
+                                    person1 = person;
+                                    v_int = Math.Max(v_int, person1.Intelligence);
+                                    v_stength = Math.Max(v_stength, person1.Strength);
+                                    v_command = Math.Max(v_command, person1.Command);
+                                    level = Math.Max(level, Troop.CheckTroopTypeLevel(troopType, person1));
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (person1 != null)
+                            break;
+                    }
+
+                    if (person1 != null)
+                    {
+                        list.Remove(person1);
+                        destSlot++;
+                    }
                 }
             }
+
+            if (destSlot == maxPersonLimit)
+                return checkPersons;
+
+            // 优先补充适应
+            list.Sort((a, b) =>
+            {
+                int lvl_a = Troop.CheckTroopTypeLevel(troopType, a);
+                int lvl_b = Troop.CheckTroopTypeLevel(troopType, b);
+                if (lvl_a == lvl_b)
+                {
+                    return a.MilitaryAbility.CompareTo(b.MilitaryAbility);
+                }
+                else
+                    return lvl_b.CompareTo(lvl_a);
+            });
+            person1 = list[0];
+            int templevel = Troop.CheckTroopTypeLevel(troopType, person1);
+            if (level < templevel)
+            {
+                list.RemoveAt(0);
+                v_int = Math.Max(v_int, person1.Intelligence);
+                v_stength = Math.Max(v_stength, person1.Strength);
+                v_command = Math.Max(v_command, person1.Command);
+                checkPersons[destSlot] = person1;
+                destSlot++;
+            }
+
+            if (destSlot == maxPersonLimit)
+                return checkPersons;
 
             for (int k = 0; k < 2; k++)
             {
                 // 不需要补充适应,尝试补充战斗力
-                if (destSlot == k + 1)
+                if (v_stength < 60)
                 {
-                    if (v_stength < 60)
+                    for (int i = 0; i < list.Count; i++)
                     {
-                        for (int i = 0; i < count; i++)
+                        Person person = list[i];
+                        int checkLvl = Troop.CheckTroopTypeLevel(troopType, person);
+                        if (person.Strength >= 70 && (checkLvl < level && level >= 3 || checkLvl <= level && level < 3))
                         {
-                            Person person = personList[i];
-                            if (person != person1)
-                            {
-                                int checkLvl = Troop.CheckTroopTypeLevel(troopType, person);
-                                if (person.Strength >= 70 && (checkLvl < level && level >= 3 || checkLvl <= level && level < 3))
-                                {
-                                    checkPersons[destSlot] = person;
-                                    destSlot++;
-                                    v_int = Math.Max(v_int, person.Intelligence);
-                                    v_stength = Math.Max(v_stength, person.Strength);
-                                    v_command = Math.Max(v_command, person.Command);
-                                    break;
-                                }
-                            }
+                            checkPersons[destSlot] = person;
+                            destSlot++;
+                            v_int = Math.Max(v_int, person.Intelligence);
+                            v_stength = Math.Max(v_stength, person.Strength);
+                            v_command = Math.Max(v_command, person.Command);
+                            list.RemoveAt(i);
+                            break;
                         }
                     }
-                    else if (v_command < 60)
+                }
+                else if (v_command < 60)
+                {
+                    for (int i = 0; i < list.Count; i++)
                     {
-                        for (int i = 0; i < count; i++)
+                        Person person = list[i];
+                        int checkLvl = Troop.CheckTroopTypeLevel(troopType, person);
+                        if (person.Command >= 70 && (checkLvl < level && level >= 3 || checkLvl <= level && level < 3))
                         {
-                            Person person = personList[i];
-                            if (person != person1)
-                            {
-                                int checkLvl = Troop.CheckTroopTypeLevel(troopType, person);
-                                if (person.Command >= 70 && (checkLvl < level && level >= 3 || checkLvl <= level && level < 3))
-                                {
-                                    checkPersons[destSlot] = person;
-                                    destSlot++;
-                                    v_int = Math.Max(v_int, person.Intelligence);
-                                    v_stength = Math.Max(v_stength, person.Strength);
-                                    v_command = Math.Max(v_command, person.Command);
-                                    break;
-                                }
-                            }
+                            checkPersons[destSlot] = person;
+                            destSlot++;
+                            v_int = Math.Max(v_int, person.Intelligence);
+                            v_stength = Math.Max(v_stength, person.Strength);
+                            v_command = Math.Max(v_command, person.Command);
+                            list.RemoveAt(i);
+                            break;
                         }
                     }
                 }
 
-                if (destSlot == k + 1)
-                {
-                    if (person1.Intelligence < 70)
-                    {
-                        for (int i = 0; i < count; i++)
-                        {
-                            Person person = personList[i];
-                            if (person != person1)
-                            {
-                                int checkLvl = Troop.CheckTroopTypeLevel(troopType, person);
-                                if (person.Intelligence >= 80 && (checkLvl < level && level >= 3 || checkLvl <= level && level < 3))
-                                {
-                                    checkPersons[destSlot] = person;
-                                    v_int = Math.Max(v_int, person.Intelligence);
-                                    v_stength = Math.Max(v_stength, person.Strength);
-                                    v_command = Math.Max(v_command, person.Command);
-                                    destSlot++;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (destSlot == k + 2 && maxPersonLimit == k + 2)
+                if (destSlot == maxPersonLimit)
                     return checkPersons;
 
+                if (person1.Intelligence < 70)
+                {
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        Person person = list[i];
+                        int checkLvl = Troop.CheckTroopTypeLevel(troopType, person);
+                        if (person.Intelligence >= 80 && (checkLvl < level && level >= 3 || checkLvl <= level && level < 3))
+                        {
+                            checkPersons[destSlot] = person;
+                            v_int = Math.Max(v_int, person.Intelligence);
+                            v_stength = Math.Max(v_stength, person.Strength);
+                            v_command = Math.Max(v_command, person.Command);
+                            destSlot++;
+                            list.RemoveAt(i);
+                            break;
+                        }
+                    }
+                }
+
+                if (destSlot == maxPersonLimit)
+                    return checkPersons;
             }
 
             return checkPersons;

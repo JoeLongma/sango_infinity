@@ -16,6 +16,10 @@ namespace Sango.Game
         [JsonProperty]
         public SangoObjectList<Person> Builders { get; set; }
 
+        [JsonProperty]
+        public int BuidlLefCounter { get; set; }
+
+
         //public Person Builder { get; set; }
 
         public Person Worker { get; set; }
@@ -61,9 +65,10 @@ namespace Sango.Game
 
         public override bool OnForceTurnStart(Scenario scenario)
         {
+            
             if (!isComplte && Builders != null)
             {
-                int totalValue = GameUtility.Method_PersonBuildAbility(Builders);
+                int totalValue = (BuildingType.durabilityLimit - durability) / BuidlLefCounter;
                 durability += totalValue;
                 if (durability >= BuildingType.durabilityLimit)
                 {
@@ -88,9 +93,10 @@ namespace Sango.Game
                     OnUpgradeComplate();
                     BelongCity.OnBuildingUpgradeComplete(this, builder);
                 }
-
             }
 
+            if(BuidlLefCounter > 0)
+                BuidlLefCounter--;
 
             // 暂时写死
             if (isComplte && BuildingType.atk > 0 && BuildingType.atkRange > 0)

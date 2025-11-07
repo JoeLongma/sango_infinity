@@ -461,13 +461,16 @@ namespace Sango.Game
 
                     int damage = Troop.CalculateSkillDamage(troop, beAtkBuildingBase, this) * criticalFactor / 100;
 #if SANGO_DEBUG
-                    Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 使用<{this.Name}> 攻击 {beAtkBuildingBase.BelongForce?.Name}的 [{beAtkBuildingBase.Name}], 造成伤害:{damage}, 目标剩余耐久: {beAtkBuildingBase.durability}");
+                    Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 使用<{this.Name}> 攻击 {beAtkBuildingBase.BelongForce?.Name}的 [{beAtkBuildingBase.Name}], 造成耐久伤害:{damage}, 目标剩余耐久: {beAtkBuildingBase.durability}");
 #endif
                     int ep = damage / 10;
                     if (beAtkBuildingBase is City)
                     {
                         City city = (City)beAtkBuildingBase;
                         int damage_troops = Troop.CalculateSkillDamageTroopOnCity(troop, city, this) * criticalFactor / 100;
+#if SANGO_DEBUG
+                        Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 使用<{this.Name}> 攻击 {beAtkBuildingBase.BelongForce?.Name}的 [{beAtkBuildingBase.Name}], 造成兵力伤害:{damage_troops}, 目标剩余兵力: {city.troops}");
+#endif
                         if (!city.ChangeTroops(-damage_troops, troop, city.BelongForce != null))
                         {
                             ep += 100;
@@ -515,6 +518,9 @@ namespace Sango.Game
                             if (hitBack > 0)
                             {
                                 int atkBack = beAtkBuildingBase.GetAttackBack();
+                                Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(atkBack);
+                                GameEvent.OnBuildCalculateAttackBack?.Invoke(troop, spellCell, beAtkBuildingBase, this, overrideData);
+                                atkBack = overrideData.Value;
                                 if (atkBack > 0)
                                 {
                                     int hitBackDmg = (int)System.Math.Ceiling(hitBack * Troop.CalculateSkillDamage(beAtkBuildingBase, troop, atkBack));

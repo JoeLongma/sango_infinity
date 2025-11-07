@@ -23,7 +23,7 @@ namespace Sango.Game
         /// <returns></returns>
         public static int Random(int baseV, float floatP)
         {
-            if(baseV <= 0) return 0;
+            if (baseV <= 0) return 0;
             int b = baseV;
             if (floatP < 1.0f)
                 b = (int)(baseV * (1.0f - floatP));
@@ -94,5 +94,40 @@ namespace Sango.Game
             return RandomGaussian((hi + lo) / 2.0, Math.Abs(hi - lo) / 2.0);
         }
 
+        public static int RandomWeightIndex(int[] weightValue, int maxValue)
+        {
+            int v = Range(maxValue);
+            for (int i = 0; i < weightValue.Length; i++)
+            {
+                if (v > weightValue[i])
+                {
+                    v -= weightValue[i];
+                    continue;
+                }
+                else
+                    return i;
+            }
+            return weightValue.Length - 1;
+        }
+
+        public static int RandomWeightIndex(int[] weightValue)
+        {
+            int maxValue = weightValue[0];
+            for(int i = 1; i < weightValue.Length; i++)
+                maxValue = maxValue + weightValue[i];
+
+            int v = Range(maxValue);
+            for (int i = 0; i < weightValue.Length; i++)
+            {
+                if (v > weightValue[i])
+                {
+                    v -= weightValue[i];
+                    continue;
+                }
+                else
+                    return i;
+            }
+            return weightValue.Length - 1;
+        }
     }
 }

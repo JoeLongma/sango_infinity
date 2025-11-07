@@ -67,32 +67,14 @@ namespace Sango.Game
         /// <summary>
         /// 当前研究的技术
         /// </summary>
+        [JsonProperty]
         public int ResearchTechnique { get; set; }
 
-        ///// <summary>
-        ///// 所有军团
-        ///// </summary>
-        //public SangoObjectList<Corps> allCorps = new SangoObjectList<Corps>();
-
-        ///// <summary>
-        ///// 所有城市
-        ///// </summary>
-        //public SangoObjectList<City> allCities = new SangoObjectList<City>();
-
-        ///// <summary>
-        ///// 所有武将
-        ///// </summary>
-        //public SangoObjectList<Person> allPersons = new SangoObjectList<Person>();
-
-        ///// <summary>
-        ///// 所有设施
-        ///// </summary>
-        //public SangoObjectList<Building> allBuildings = new SangoObjectList<Building>();
-
-        ///// <summary>
-        ///// 所有部队
-        ///// </summary>
-        //public SangoObjectList<Troop> allTroops = new SangoObjectList<Troop>();
+        /// <summary>
+        /// 当前研究的技术剩余回合
+        /// </summary>
+        [JsonProperty]
+        public int ResearchLeftCounter { get; set; }
 
         /// <summary>
         /// AI指令集
@@ -305,7 +287,7 @@ namespace Sango.Game
                 var c = scenario.citySet[i];
                 if (c != null && c.IsAlive && c.BelongForce == this)
                 {
-                   
+
                     c.OnForceTurnStart(scenario);
                     FightPower += c.FightPower;
                     buildingBaseList.Enqueue(c);
@@ -367,7 +349,7 @@ namespace Sango.Game
                     buildingBaseList.Enqueue(c);
                 }
             }
-            
+
             for (int i = 0; i < scenario.troopsSet.Count; ++i)
             {
                 var c = scenario.troopsSet[i];
@@ -433,6 +415,33 @@ namespace Sango.Game
         public override bool OnMonthStart(Scenario scenario)
         {
             return base.OnMonthStart(scenario);
+        }
+        public override bool OnSeasonStart(Scenario scenario)
+        {
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(100);
+            GameEvent.OnForcePersonLoyaltyChangeProbability?.Invoke(this, overrideData);
+            if (GameRandom.Chance(overrideData.Value))
+            {
+                ForcePersonLoyaltyChange();
+            }
+
+            return base.OnSeasonStart(scenario);
+        }
+
+
+        static int[] loyaltyWeight = new int[5] { 1, 2, 3, 2, 1 };
+
+        /// <summary>
+        /// 势力武将换季掉忠计算
+        /// </summary>
+        public void ForcePersonLoyaltyChange()
+        {
+            // TODO: 武将换季掉忠
+            int v = GameRandom.RandomWeightIndex(loyaltyWeight, 9);
+            ForEachPerson(person =>
+            {
+                person.loyalty -= v;
+            });
         }
 
         public void ForEachCity(System.Action<City> action)
@@ -525,6 +534,7 @@ namespace Sango.Game
                 }
             }
         }
+
 
         public void GainTechniquePoint(int value)
         {

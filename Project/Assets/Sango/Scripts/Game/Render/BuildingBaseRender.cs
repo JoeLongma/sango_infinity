@@ -71,7 +71,7 @@ namespace Sango.Game.Render
                 BillboardUI billboardUI = headBar.GetComponent<BillboardUI>();
                 if (billboardUI != null)
                 {
-                    billboardUI.cacheOffset = new Vector3(0, 25, 0);
+                    //billboardUI.cacheOffset = new Vector3(0, 30, 0);
                     billboardUI.Update();
                 }
                 UGUIWindow uGUIWindow = headBar.GetComponent<UGUIWindow>();

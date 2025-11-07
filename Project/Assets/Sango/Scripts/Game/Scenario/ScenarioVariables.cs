@@ -247,7 +247,7 @@ namespace Sango.Game
         /// 工作花费 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
         /// </summary>
         [JsonProperty]
-        public int[] jobCost = new int[] { 200, 200, 200, 100, 0, 0, 300, 0, 200, 0, 0, 0, 0, 0 };
+        public int[] jobCost = new int[] { 200, 300, 300, 200, 0, 0, 400, 0, 1000, 0, 1000, 1000, 1000, 0 };
         /// <summary>
         /// 工作人数限制 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
         /// </summary>
@@ -339,22 +339,33 @@ namespace Sango.Game
         /// <summary>
         /// 城市沦陷可以保留金钱比例(百分比)
         /// </summary>
-        [JsonProperty] public int cityFallCanKeepGoldFactor = 30;
+        [JsonProperty] public int [] cityFallCanKeepGoldFactor = new int[4] { 1, 2, 4, 1 };
 
         /// <summary>
         /// 城市沦陷可以保留粮食比例(百分比)
         /// </summary>
-        [JsonProperty] public int cityFallCanKeepFoodFactor = 30;
+        [JsonProperty] public int [] cityFallCanKeepFoodFactor = new int[4] { 1, 2, 4, 1 };
 
         /// <summary>
         /// 城市沦陷可以保留士兵比例(百分比)
         /// </summary>
-        [JsonProperty] public int cityFallCanKeepTroopsFactor = 10;
+        [JsonProperty] public int [] cityFallCanKeepTroopsFactor = new int[4] { 1, 2, 4, 1 };
 
         /// <summary>
         /// 城市沦陷可以保留库存比例(百分比)
         /// </summary>
-        [JsonProperty] public int cityFallCanKeepItemFactor = 30;
+        [JsonProperty] public int [] cityFallCanKeepItemFactor = new int[4] { 1, 2, 4, 1 };
+
+        /// <summary>
+        /// 城市沦陷可以保留农业比例(百分比)
+        /// </summary>
+        [JsonProperty] public int[] cityFallCanKeepAgriculture = new int[4] { 1, 2, 4, 1 };
+
+        /// <summary>
+        /// 城市沦陷可以保留开发比例(百分比)
+        /// </summary>
+        [JsonProperty] public int[] cityFallCanKeepCommerce = new int[4] { 1, 2, 4, 1 };
+
 
         /// <summary>
         /// 每级兵种适应力对技能释放成功率的加成(百分比) 需要>=A级适应力(2)
@@ -380,6 +391,12 @@ namespace Sango.Game
         /// 暴击倍率(百分比)
         /// </summary>
         [JsonProperty] public int skillCriticalFactor = 150;
+
+        /// <summary>
+        /// 每一季度治安下降最大数
+        /// </summary>
+        [JsonProperty] public int securityChangeOnSeasonStart = -5;
+
 
         public float DifficultyDamageFactor
         {

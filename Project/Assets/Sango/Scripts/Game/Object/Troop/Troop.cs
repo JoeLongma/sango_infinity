@@ -83,7 +83,7 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public int troops;
 
-        public int MaxTroops => Leader.TroopsLimit;
+        public int MaxTroops { get; set; }
         public bool IsFull => troops >= MaxTroops;
 
         /// <summary>
@@ -104,10 +104,16 @@ namespace Sango.Game
         public int morale;
 
         /// <summary>
+        /// 最大士气
+        /// </summary>
+        public int MaxMorale { get; set; }
+
+        /// <summary>
         /// 移动能力
         /// </summary>
-        public int MoveAbility => TroopType.move;
-
+        public int MoveAbility => IsInWater ? waterMoveAbility : landMoveAbility;
+        public int waterMoveAbility;
+        public int landMoveAbility;
         /// <summary>
         /// 携带粮食
         /// </summary>
@@ -146,12 +152,12 @@ namespace Sango.Game
         /// <summary>
         /// 任务参数1
         /// </summary>
-        [JsonProperty] public int missionParamas1;
+        [JsonProperty] public int missionParams1;
 
         /// <summary>
         /// 任务参数1
         /// </summary>
-        [JsonProperty] public int missionParamas2;
+        [JsonProperty] public int missionParams2;
 
         /// <summary>
         /// 任务地点
@@ -223,12 +229,15 @@ namespace Sango.Game
         /// <summary>
         /// 对部队的额外伤害增减
         /// </summary>
-        public float DamageTroopExtraFactor { get; private set; }
-
+        public float DamageTroopExtraFactor => IsInWater ? waterDamageTroopExtraFactor : landDamageTroopExtraFactor;
+        public float waterDamageTroopExtraFactor;
+        public float landDamageTroopExtraFactor;
         /// <summary>
         /// 对建筑的额外伤害增益
         /// </summary>
-        public float DamageBuildingExtraFactor { get; private set; }
+        public float DamageBuildingExtraFactor => IsInWater ? waterDamageBuildingExtraFactor : landDamageBuildingExtraFactor;
+        public float waterDamageBuildingExtraFactor;
+        public float landDamageBuildingExtraFactor;
 
         public int SpearLv { get; private set; }
         public int HalberdLv { get; private set; }
@@ -242,16 +251,16 @@ namespace Sango.Game
         /// </summary>
         public int Attack => IsInWater ? waterAttack : landAttack;
 
-        int waterAttack;
-        int landAttack;
+        public int waterAttack;
+        public int landAttack;
 
         /// <summary>
         /// 防御力
         /// </summary>
         public int Defence => IsInWater ? waterDefence : landDefence;
 
-        int waterDefence;
-        int landDefence;
+        public int waterDefence;
+        public int landDefence;
 
         /// <summary>
         /// 建设力
@@ -288,9 +297,22 @@ namespace Sango.Game
         bool isMissionPrepared = false;
         public int foodCost = 0;
 
+        public List<ActionBase> actionList;
+
         public override void Init(Scenario scenario)
         {
-            ForEachPerson(x => x.BelongTroop = this);
+            actionList = new List<ActionBase>();
+            ForEachPerson(x =>
+            {
+                x.BelongTroop = this;
+                if (x.FeatureList != null)
+                {
+                    for (int i = 0; i < x.FeatureList.Count; i++)
+                    {
+                        x.FeatureList[i].InitActions(actionList, this);
+                    }
+                }
+            });
             CalculateAttribute(scenario);
             if (LandTroopType.isFight && LandTroopType.Id != 1)
                 BelongCity.allAttackTroops.Add(this);
@@ -495,9 +517,22 @@ namespace Sango.Game
             // 建设能力 = 政治 * 67% + 50;
             BuildPower = Politics * 2 / 3 + 50;
 
+            waterMoveAbility = WaterTroopType.move;
+            landMoveAbility = LandTroopType.move;
+
+            CalculateMaxTroops();
+
             // 事件可二次修改属性
             GameEvent.OnTroopCalculateAttribute?.Invoke(this, scenario);
 
+        }
+
+        public void CalculateMaxTroops()
+        {
+            int max = Leader.TroopsLimit;
+            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(max);
+            GameEvent.OnTroopCalculateMaxTroops?.Invoke(Leader.BelongCity, this, overrideData);
+            MaxTroops = overrideData.Value;
         }
 
         public int MoveCost(Cell cell)
@@ -702,6 +737,8 @@ namespace Sango.Game
                 * Math.Min(Math.Pow(Math.Max(1, attacker.troops / 4), 0.5), 40)
 
                 * Variables.fight_damage_magic_number /* * 太鼓台系数*/
+
+                * target.BuildingType.damageBounds
 
                 + attacker.troops / Variables.fight_base_troop_count
 
@@ -1492,28 +1529,16 @@ namespace Sango.Game
 
         public void EnterCity(City city)
         {
-            cell.troop = null;
-            city.gold += gold;
-            city.food += food;
-            city.troops += troops;
-            if (city.troops > city.TroopsLimit)
-                city.troops = city.TroopsLimit;
-            if (city.gold > city.GoldLimit)
-                city.gold = city.GoldLimit;
-            if (city.food > city.FoodLimit)
-                city.food = city.FoodLimit;
+            city.AddGold(gold);
+            city.AddFood(food);
+            city.AddTroops(troops);
 
             // 返还兵装
             city.itemStore.Gain(TroopType.costItems, troops);
-
             city.woundedTroops += woundedTroops;
-            // 设置了,
-            IsAlive = false;
 
-            Scenario.Cur.Remove(this);
             ForEachPerson((person) =>
             {
-                person.BelongTroop = null;
                 person.ActionOver = true;
             });
 
@@ -1521,17 +1546,17 @@ namespace Sango.Game
                 BelongCity.allAttackTroops.Remove(this);
 
             city.Render.UpdateRender();
-            Render.Clear();
-            ActionOver = true;
+
             if (city == BelongCity)
             {
+                Clear();
 #if SANGO_DEBUG
                 Sango.Log.Print($"{BelongForce.Name}的[{Name}]部队回到{city.BelongForce?.Name}的城池:<{city.Name}>");
 #endif
                 return;
             }
 
-            if (!TroopType.isFight && missionParamas1 <= 0)
+            if (!TroopType.isFight && missionParams1 <= 0)
             {
                 // 运输武将返回所属城市
                 ForEachPerson((person) =>
@@ -1547,6 +1572,8 @@ namespace Sango.Game
                 });
             }
 
+            Clear();
+
 #if SANGO_DEBUG
             Sango.Log.Print($"{BelongForce.Name}的[{Name}]部队进入{city.BelongForce?.Name}的城池:<{city.Name}>");
 #endif
@@ -1554,8 +1581,18 @@ namespace Sango.Game
 
         public override void Clear()
         {
-            if (LandTroopType.isFight)
+            if (actionList != null)
+            {
+                for (int i = 0; i < actionList.Count; i++)
+                    actionList[i].Clear();
+
+                actionList.Clear();
+                actionList = null;
+            }
+
+            if (LandTroopType.isFight && LandTroopType.Id != 1)
                 BelongCity.allAttackTroops.Remove(this);
+
             Scenario.Cur.Remove(this);
             ForEachPerson((person) =>
             {

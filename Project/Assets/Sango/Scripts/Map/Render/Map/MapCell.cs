@@ -151,22 +151,20 @@ namespace Sango.Render
                 lmdCache.normalCount = maxCount;
                 lmdCache.triangleCount = maxCount * 6;
             }
-            float time = Time.realtimeSinceStartup;
-
             threadLoadStart = false;
             int maxLayer = map.mapLayer.layerDatas.Length;
             for (int i = 0; i < maxLayer; ++i)
             {
                 if (mesh[i] == null) continue;
                 threadBeginLayer = i;
-                _PrepareDatas();
+                _PrepareDatas(null);
                 OnAsyncPrepareDatasDone(threadBeginLayer, lmdCache);
             }
 
             threadBeginLayer = maxLayer;
             OnLoadDone();
         }
-        void _PrepareDatas()
+        void _PrepareDatas(object stateInfo)
         {
             threadLoadDone = false;
             CreateLayers(threadBeginLayer, lod);
@@ -266,10 +264,7 @@ namespace Sango.Render
             }
 
             threadLoadStart = true;
-            newThrd = new Thread(new ThreadStart(_PrepareDatas));
-            newThrd.Priority = System.Threading.ThreadPriority.BelowNormal;
-            newThrd.IsBackground = true;
-            newThrd.Start();
+            ThreadPool.QueueUserWorkItem(new WaitCallback(_PrepareDatas));
         }
 
         public void SetLod(int l)
@@ -327,7 +322,6 @@ namespace Sango.Render
                 }
             }
 
-
             lmdCache.Clear();
             if (!MapEditor.IsEditOn)
                 lmdCache = null;
@@ -335,6 +329,12 @@ namespace Sango.Render
 
         void OnAsyncPrepareDatasDone(int layer, LayerMeshData lmd)
         {
+            if (newThrd != null)
+            {
+                newThrd.Abort();
+                newThrd = null;
+            }
+
             MeshRenderer r = meshRenderer[layer];
             if (r == null) return;
 
