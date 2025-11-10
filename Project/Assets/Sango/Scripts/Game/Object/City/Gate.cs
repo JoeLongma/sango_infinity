@@ -18,33 +18,9 @@ namespace Sango.Game
         public override void AIPrepare(Scenario scenario)
         {
             // 准备敌人信息
-            enemies.Clear();
-            for (int i = 0; i < enemiesRound.Length; i++)
-                enemiesRound[i] = false;
+            PrepareEnemiesInfo(scenario);
 
-            scenario.troopsSet.ForEach(x =>
-            {
-                if (x.IsEnemy(this))
-                {
-                    int round = scenario.Map.Distance(CenterCell, x.cell);
-                    if (round < SAVE_ROUND)
-                    {
-                        enemies.Add(new EnemyInfo { troop = x, distance = round });
-                        for (int j = round; j < enemiesRound.Length; j++)
-                            enemiesRound[j] = true;
-                    }
-                }
-            });
-
-            if (enemies.Count > 1)
-            {
-                enemies.Sort((a, b) =>
-                {
-                    return a.distance.CompareTo(b.distance);
-                });
-            }
-
-
+            UpdateActiveTroopTypes();
             UpdateFightPower();
 
             AICommandList.Add(CityAI.AIAttack);

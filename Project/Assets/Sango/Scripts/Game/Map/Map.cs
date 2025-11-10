@@ -537,7 +537,7 @@ namespace Sango.Game
         /// <param name="cellList"></param>
         public void GetDirectSpiral(Cell start, int length, List<Cell> cellList)
         {
-            came_from.Clear();
+            cost_so_far.Clear();
             openList.Clear();
             int leftLen = length;
             openList.Add(start);
@@ -547,15 +547,15 @@ namespace Sango.Game
                 for (int j = 0; j < count; j++)
                 {
                     Cell current = openList[j];
-                    if (!came_from.ContainsKey(current))
+                    if (!cost_so_far.ContainsKey(current))
                     {
                         cellList.Add(current);
-                        came_from.Add(current, current);
+                        cost_so_far.Add(current, current);
                         for (int i = 0; i < 6; i++)
                         {
                             Cell next = current.Neighbors[i];
                             // 一定是目标所占格也可以进判断
-                            if (next != null && next.moveAble && !came_from.ContainsKey(next))
+                            if (next != null && next.moveAble && !cost_so_far.ContainsKey(next))
                             {
                                 openList.Add((Cell)next);
                             }
@@ -574,7 +574,7 @@ namespace Sango.Game
 
         public void GetDirectSpiral(Cell start, int startLen, int endLen, List<Cell> cellList)
         {
-            came_from.Clear();
+            cost_so_far.Clear();
             openList.Clear();
             int begin = 0;
             openList.Add(start);
@@ -584,16 +584,16 @@ namespace Sango.Game
                 for (int j = 0; j < count; j++)
                 {
                     Cell current = openList[j];
-                    if (!came_from.ContainsKey(current))
+                    if (!cost_so_far.ContainsKey(current))
                     {
                         if (begin >= startLen)
                             cellList.Add(current);
-                        came_from.Add(current, current);
+                        cost_so_far.Add(current, current);
                         for (int i = 0; i < 6; i++)
                         {
                             Cell next = current.Neighbors[i];
                             // 一定是目标所占格也可以进判断
-                            if (next != null && next.moveAble && !came_from.ContainsKey(next))
+                            if (next != null && next.moveAble && !cost_so_far.ContainsKey(next))
                             {
                                 openList.Add((Cell)next);
                             }

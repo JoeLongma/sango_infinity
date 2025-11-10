@@ -144,11 +144,9 @@ namespace Sango.Game
         /// <param name="scenario"></param>
         public static bool AIIntrior(City city, Scenario scenario)
         {
-
             // 兵临城下
             if (city.IsEnemiesRound(9))
                 return true;
-
 
             AIBuilding(city, scenario);
             AIIntriorBalance(city, scenario);
@@ -892,7 +890,7 @@ namespace Sango.Game
 
             City.EnemyInfo enemyInfo;
             // 兵临城下且敌军存活
-            if (city.IsEnemiesRound(6) && city.CheckEnemiesIfAlive(out enemyInfo))
+            if (city.IsEnemiesRound(15) && city.CheckEnemiesIfAlive(out enemyInfo))
                 return true;
 
             return false;

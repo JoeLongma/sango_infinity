@@ -16,25 +16,27 @@ namespace Sango.Game
             if (Troop != troop) Troop = troop;
             if (TargetCity == null || TargetCity.Id != troop.missionTarget) TargetCity = scenario.citySet.Get(Troop.missionTarget);
 
-            // 检查通路
-            Troop.tempCellList.Clear();
-            scenario.Map.GetDirectPath(Troop.cell, TargetCity.CenterCell, Troop.tempCellList);
-            for (int i = 0; i < Troop.tempCellList.Count; ++i)
-            {
-                Cell road = Troop.tempCellList[i];
-                if (road.building != null && !road.building.IsCity() && !road.building.IsSameForce(Troop))
-                {
-                    priorityActionData = TroopAIUtility.PriorityAction(Troop, road.building.CenterCell, scenario, SkillAttackPriority);
-                    return;
-                }
-            }
-
             // 任务完成后,如果城池被友军拿取则回到创建城池,否则将进入己方目标城池
             if (IsMissionComplete)
             {
                 Troop.missionType = (int)MissionType.TroopReturnCity;
                 Troop.missionTarget = Troop.BelongCity.Id;
                 Troop.NeedPrepareMission();
+            }
+            else
+            {
+                // 检查通路
+                Troop.tempCellList.Clear();
+                scenario.Map.GetDirectPath(Troop.cell, TargetCity.CenterCell, Troop.tempCellList);
+                for (int i = 0; i < Troop.tempCellList.Count; ++i)
+                {
+                    Cell road = Troop.tempCellList[i];
+                    if (road.building != null && !road.building.IsCity() && !road.building.IsSameForce(Troop))
+                    {
+                        priorityActionData = TroopAIUtility.PriorityAction(Troop, (Cell)null, scenario, SkillAttackPriority);
+                        return;
+                    }
+                }
             }
         }
 

@@ -57,7 +57,7 @@ Shader "Sango/flag_urp" {
 				#define SANGO_COLOR 1
 				#define SANGO_AMBIENT_NO_LIGHT 1
 				#define SANGO_TEXT 1
-
+				#define SANGO_FLAG 1
 				#include "sango_shaderLib.hlsl"
 				//#pragma multi_compile_fwdbase
 				#pragma multi_compile_fog

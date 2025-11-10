@@ -14,7 +14,7 @@ Shader "Sango/outline_urp" {
 					"LightMode" = "SRPDefaultUnlit"
 				}
 				Fog { Mode Off }
-				ZWrite On
+				ZWrite Off
 				Cull Front
 				Blend SrcAlpha OneMinusSrcAlpha
 				HLSLPROGRAM

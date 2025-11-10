@@ -2390,7 +2390,7 @@ namespace Sango.Game
             public int distance;
         }
 
-        protected const int SAVE_ROUND = 15;
+        protected const int SAVE_ROUND = 40;
         protected List<EnemyInfo> enemies = new List<EnemyInfo>();
         protected bool[] enemiesRound = new bool[SAVE_ROUND];
 
@@ -2503,26 +2503,27 @@ namespace Sango.Game
             return true;
         }
 
-        public virtual void AIPrepare(Scenario scenario)
+        public virtual void PrepareEnemiesInfo(Scenario scenario)
         {
             // 准备敌人信息
             enemies.Clear();
             for (int i = 0; i < enemiesRound.Length; i++)
                 enemiesRound[i] = false;
 
-            scenario.troopsSet.ForEach(x =>
+            for (int i = 0; i < areaCellList.Count; i++)
             {
-                if (x.IsEnemy(this))
+                Cell cell = areaCellList[i];
+                if (cell.troop != null && cell.troop.IsEnemy(this))
                 {
-                    int round = scenario.Map.Distance(CenterCell, x.cell);
+                    int round = scenario.Map.Distance(CenterCell, cell);
                     if (round < SAVE_ROUND)
                     {
-                        enemies.Add(new EnemyInfo { troop = x, distance = round });
+                        enemies.Add(new EnemyInfo { troop = cell.troop, distance = round });
                         for (int j = round; j < enemiesRound.Length; j++)
                             enemiesRound[j] = true;
                     }
                 }
-            });
+            }
 
             if (enemies.Count > 1)
             {
@@ -2531,6 +2532,12 @@ namespace Sango.Game
                     return a.distance.CompareTo(b.distance);
                 });
             }
+        }
+
+        public virtual void AIPrepare(Scenario scenario)
+        {
+            // 准备敌人信息
+            PrepareEnemiesInfo(scenario);
 
             UpdateActiveTroopTypes();
             UpdateFightPower();
@@ -2571,6 +2578,7 @@ namespace Sango.Game
             }
             else
             {
+                AICommandList.Add(CityAI.AISecurity);
                 AICommandList.Add(CityAI.AITradeFood);
                 // 物资输送
                 AICommandList.Add(CityAI.AITransfrom);

@@ -312,7 +312,8 @@ namespace Sango.Game
                                 }
                             }
                         }
-                        hasNoCheckBorder = c.borderLine == -1;
+                        if (c.borderLine == -1)
+                            hasNoCheckBorder = true;
                     }
                 }
             }

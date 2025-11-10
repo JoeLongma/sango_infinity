@@ -320,11 +320,13 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 	#endif
 	#endif
 
-
-#if SANGO_COLOR
-	diffuse = diffuse * _Color.rgb;
+#if SANGO_FLAG
+	diffuse = diffuse * _Color.rgb * 0.6;
+#else
+	#if SANGO_COLOR
+		diffuse = diffuse * _Color.rgb;
+	#endif
 #endif
-
 
 	//
 	// light
