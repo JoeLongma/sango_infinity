@@ -1,6 +1,4 @@
-﻿using Sango.Loader;
-using System.Text;
-using Unity.VisualScripting;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
@@ -17,7 +15,7 @@ namespace Sango.Game.Render.UI
         public AnimationText skillText;
         public UIAnimationText aniText;
         public Troop troop;
-
+        public Animation foodAni;
         public void Init(Troop troop)
         {
             aniText = null;
@@ -34,6 +32,16 @@ namespace Sango.Game.Render.UI
             energy.fillAmount = (float)troop.morale / troop.MaxMorale;
             angry.fillAmount = 0;
             number.text = troop.troops.ToString();
+            bool isWithoutFood = troop.IsWithOutFood() <= 1;
+            food.enabled = isWithoutFood;
+            if (isWithoutFood)
+            {
+                foodAni.Play();
+            }
+            else
+            {
+                foodAni.Stop();
+            }
         }
 
         public void ShowInfo(int damage, int damageType = 0)

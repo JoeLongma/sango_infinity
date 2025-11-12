@@ -17,19 +17,19 @@ namespace Sango.Game
         }
         ControlType controlType = ControlType.None;
 
-        public delegate void OnClickCell(Cell cell);
-        public delegate void OnDoubleClickCell(Cell cell);
+        //public delegate void OnClickCell(Cell cell);
+        //public delegate void OnDoubleClickCell(Cell cell);
 
-        public delegate void OnMouseOverEnter(Cell cell);
-        public delegate void OnMouseOverExit(Cell cell);
+        //public delegate void OnMouseOverEnter(Cell cell);
+        //public delegate void OnMouseOverExit(Cell cell);
 
-        public delegate void OnCancel();
-        public delegate void OnKeyDown(KeyCode keyCode);
+        //public delegate void OnCancel();
+        //public delegate void OnKeyDown(KeyCode keyCode);
 
-        public OnClickCell onClickCell;
-        public OnDoubleClickCell onDoubleClickCell;
-        public OnCancel onCancel;
-        public OnKeyDown onKeyDown;
+        //public OnClickCell onClickCell;
+        //public OnDoubleClickCell onDoubleClickCell;
+        //public OnCancel onCancel;
+        //public OnKeyDown onKeyDown;
 
         private Plane viewPlane = new Plane(Vector3.up, Vector3.zero);
 
@@ -62,25 +62,6 @@ namespace Sango.Game
             }
         }
 
-        public void OnInputClick()
-        {
-
-        }
-
-        public void OnInputCancel()
-        {
-            //Sango.Game.Render.UI.ContextMenu.Close();
-        }
-
-        public void OnInputMapObjectOverEnter(MapObject mapObject)
-        {
-
-        }
-        public void OnInputMapObjectOverExit(MapObject mapObject)
-        {
-
-        }
-
         public void OnSelectMapObject(MapObject mapObject, Vector3 selectPoint)
         {
             Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(Camera.main, selectPoint);
@@ -110,6 +91,7 @@ namespace Sango.Game
         }
 
         public MapObject mouseOverMapObject;
+        public Cell mouseOverCell;
         private Ray ray;
         private RaycastHit hit;
         private int rayCastLayer = LayerMask.GetMask("Map", "Building", "Troops");
@@ -119,10 +101,10 @@ namespace Sango.Game
             ray = Camera.main.ScreenPointToRay(mousePosition);
             if (Physics.Raycast(ray, out hit, 2000, rayCastLayer))
             {
+                hitPiont = hit.point;
                 MapObject mapObjcet = hit.collider.gameObject.GetComponentInParent<MapObject>();
                 if (mapObjcet != null)
                 {
-                    hitPiont = hit.point;
                     return mapObjcet;
                 }
             }
@@ -131,7 +113,6 @@ namespace Sango.Game
         }
 
         private Vector2[] touchPos = new Vector2[2];
-        MapObject downSelectMapObject = null;
         bool isDragMoving = false;
         bool isRotateMoving = false;
         Vector3 rotatePosition;
@@ -141,7 +122,38 @@ namespace Sango.Game
 
         public void HandleWindowsEvent()
         {
-            mouseOverMapObject = CheckMouseIsOnMapObject(Input.mousePosition, out Vector3 hitPoint);
+            MapObject mapObject = CheckMouseIsOnMapObject(Input.mousePosition, out Vector3 hitPoint);
+            Cell overCell;
+            if (mapObject != null)
+                overCell = Scenario.Cur.Map.GetCell(mapObject.position);
+            else
+                overCell = Scenario.Cur.Map.GetCell(hitPoint);
+
+            if (overCell != mouseOverCell)
+            {
+                if (mouseOverCell != null)
+                    OnCellOverExit(mouseOverCell);
+                mouseOverCell = overCell;
+                if (mouseOverCell != null)
+                    OnCellOverExit(mouseOverCell);
+            }
+            else if (overCell != null && overCell == mouseOverCell)
+            {
+                OnCellOverExit(overCell);
+            }
+
+            if (mapObject != mouseOverMapObject)
+            {
+                if (mouseOverMapObject != null)
+                    OnMapObjectOverExit(mouseOverMapObject);
+                mouseOverMapObject = mapObject;
+                if (mouseOverMapObject != null)
+                    OnMapObjectOverEnter(mouseOverMapObject);
+            }
+            else if (mapObject != null && mapObject == mouseOverMapObject)
+            {
+                OnMapObjectOverStay(mapObject);
+            }
 
             if (Input.GetMouseButton(0) && !isRotateMoving)
             {
@@ -268,9 +280,38 @@ namespace Sango.Game
 
                     if (IsOverUI(touch.fingerId)) return;
 
-                    downSelectMapObject = CheckMouseIsOnMapObject(touch.position, out Vector3 hitPiont);
-                    if (downSelectMapObject != null)
+                    MapObject mapObject = CheckMouseIsOnMapObject(touch.position, out Vector3 hitPoint);
+                    Cell overCell;
+                    if (mapObject != null)
+                        overCell = Scenario.Cur.Map.GetCell(mapObject.position);
+                    else
+                        overCell = Scenario.Cur.Map.GetCell(hitPoint);
+
+                    if (overCell != mouseOverCell)
+                    {
+                        if (mouseOverCell != null)
+                            OnCellOverExit(mouseOverCell);
+                        mouseOverCell = overCell;
+                        if (mouseOverCell != null)
+                            OnCellOverExit(mouseOverCell);
+                    }
+                    else if (overCell != null && overCell == mouseOverCell)
+                    {
+                        OnCellOverExit(overCell);
+                    }
+
+                    if (mapObject != null)
+                    {
+                        if (mapObject != mouseOverMapObject)
+                        {
+                            if (mouseOverMapObject != null)
+                                OnMapObjectOverExit(mouseOverMapObject);
+                            mouseOverMapObject = mapObject;
+                            if (mouseOverMapObject != null)
+                                OnMapObjectOverEnter(mouseOverMapObject);
+                        }
                         return;
+                    }
 
                     controlType = ControlType.Move;
                     ray = Camera.main.ScreenPointToRay(touch.position);
@@ -308,6 +349,9 @@ namespace Sango.Game
                         isDragMoving = false;
                         return;
                     }
+
+
+
                     OnClickWorld();
                 }
             }
@@ -387,16 +431,7 @@ namespace Sango.Game
                 }
             }
         }
-        public void OnClickWorld()
-        {
-            //Sango.Log.Error("OnClickWorld");
 
-        }
-
-        public void OnRClickWorld()
-        {
-            //Sango.Log.Error("OnRClickWorld");
-        }
 
         bool[] keyFlags = new bool[4];
         private bool MoveCameraKeyBoard()
@@ -444,8 +479,48 @@ namespace Sango.Game
             HandleMobileEvent();
 #endif
         }
+        public void OnClickWorld()
+        {
+            //Sango.Log.Error("OnClickWorld");
 
+        }
 
+        public void OnRClickWorld()
+        {
+            //Sango.Log.Error("OnRClickWorld");
+        }
+
+        public void OnMapObjectOverEnter(MapObject mapObject)
+        {
+
+        }
+        public void OnMapObjectOverExit(MapObject mapObject)
+        {
+
+        }
+
+        public void OnMapObjectOverStay(MapObject mapObject)
+        {
+
+        }
+        public void OnCellOverEnter(Cell cell)
+        {
+
+        }
+        public void OnCellOverExit(Cell cell)
+        {
+
+        }
+
+        public void OnCellOverStay(Cell cell)
+        {
+
+        }
+
+        public void OnCancel()
+        {
+            //Sango.Game.Render.UI.ContextMenu.Close();
+        }
     }
 
 }

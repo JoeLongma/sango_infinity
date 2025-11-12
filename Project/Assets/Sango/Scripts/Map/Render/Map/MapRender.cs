@@ -548,7 +548,7 @@ namespace Sango.Render
                 VertexData ver2 = vertexDatas[startX + 1][startY + 1];
                 VertexData ver3 = vertexDatas[startX][startY + 1];
 
-                if (ver0.water > 0 || ver2.water > 0 || ver3.water > 0)
+                if ((ver0.water > 0 && ver0.water > ver0.height) || (ver2.water > 0 && ver2.water > ver2.height) || (ver3.water > 0 && ver3.water > ver3.height))
                 {
                     if (PlaneLineIntersection.GetIntersectionWithXPerpendicularLine(ver0.waterPosition,
                         ver2.waterPosition, ver3.waterPosition, direction, Vector3.down, out hitPoint))

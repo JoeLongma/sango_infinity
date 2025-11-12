@@ -175,7 +175,8 @@ namespace Sango.Game
             if (!DoBuildingBehaviour(scenario))
                 return false;
 
-            if (!DoAI(scenario))
+            // 非玩家才执行AI
+            if (!IsPlayer && !DoAI(scenario))
                 return false;
 
             for (int i = 0; i < scenario.corpsSet.Count; ++i)
@@ -183,6 +184,10 @@ namespace Sango.Game
                 Corps corps = scenario.corpsSet[i];
                 if (corps != null && corps.IsAlive && corps.BelongForce == this && !corps.ActionOver)
                 {
+                    // 主军团永远不是委任军团,除此之外全是委任军团
+                    if (IsPlayer && corps.Comander == this.Governor)
+                        return false;
+
                     if (!corps.Run(scenario))
                         return false;
                 }
