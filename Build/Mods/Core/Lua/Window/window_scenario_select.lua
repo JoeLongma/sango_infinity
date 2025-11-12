@@ -59,9 +59,12 @@ function Window_Scenario_Select:OnButton_enter()
     self:Clear();
     local scenarioList = Sango.Game.Scenario.all_scenario_list;
     local scenario = scenarioList[self.mCurSelectIndex - 1];
-    Sango.Window.Instance:ShowWindow("window_loading");
+	
+	Sango.Game.Scenario.CurSelected = scenario;
+	
+    Sango.Window.Instance:ShowWindow("window_scenario_force_select");
     Sango.Window.Instance:HideWindow("window_scenario_select");
-    Sango.Game.Scenario.StartScenario(scenario);
+    --Sango.Game.Scenario.StartScenario(scenario);
 end
 
 function Window_Scenario_Select:OnButton_return()

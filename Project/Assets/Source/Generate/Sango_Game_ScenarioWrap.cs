@@ -12,6 +12,7 @@ public class Sango_Game_ScenarioWrap
 		L.RegFunction("GetObject", new LuaCSFunction(GetObject));
 		L.RegFunction("LoadInfo", new LuaCSFunction(LoadInfo));
 		L.RegFunction("LoadContent", new LuaCSFunction(LoadContent));
+		L.RegFunction("LoadBaseContent", new LuaCSFunction(LoadBaseContent));
 		L.RegFunction("LoadWorld", new LuaCSFunction(LoadWorld));
 		L.RegFunction("OnWorldLoaded", new LuaCSFunction(OnWorldLoaded));
 		L.RegFunction("OnModInitStart", new LuaCSFunction(OnModInitStart));
@@ -69,6 +70,7 @@ public class Sango_Game_ScenarioWrap
 		L.RegVar("Map", new LuaCSFunction(get_Map), null);
 		L.RegVar("RelationMap", new LuaCSFunction(get_RelationMap), new LuaCSFunction(set_RelationMap));
 		L.RegVar("Cur", new LuaCSFunction(get_Cur), null);
+		L.RegVar("CurSelected", new LuaCSFunction(get_CurSelected), new LuaCSFunction(set_CurSelected));
 		L.RegVar("FilePath", new LuaCSFunction(get_FilePath), null);
 		L.RegVar("CurRunForce", new LuaCSFunction(get_CurRunForce), null);
 		L.RegVar("CurSeason", new LuaCSFunction(get_CurSeason), null);
@@ -350,6 +352,23 @@ public class Sango_Game_ScenarioWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: Sango.Game.Scenario.LoadContent");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int LoadBaseContent(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Game.Scenario obj = (Sango.Game.Scenario)ToLua.CheckObject<Sango.Game.Scenario>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.LoadBaseContent(arg0);
+			return 0;
 		}
 		catch (Exception e)
 		{
@@ -1325,6 +1344,20 @@ public class Sango_Game_ScenarioWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_CurSelected(IntPtr L)
+	{
+		try
+		{
+			ToLua.PushObject(L, Sango.Game.Scenario.CurSelected);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_FilePath(IntPtr L)
 	{
 		object o = null;
@@ -1603,6 +1636,21 @@ public class Sango_Game_ScenarioWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index RelationMap on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_CurSelected(IntPtr L)
+	{
+		try
+		{
+			Sango.Game.Scenario arg0 = (Sango.Game.Scenario)ToLua.CheckObject<Sango.Game.Scenario>(L, 2);
+			Sango.Game.Scenario.CurSelected = arg0;
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
 		}
 	}
 }

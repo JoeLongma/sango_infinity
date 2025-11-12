@@ -181,10 +181,12 @@ public class Sango_Tools_TerrainBrushWrap
 			ToLua.CheckArgsCount(L, 5);
 			Sango.Tools.TerrainBrush obj = (Sango.Tools.TerrainBrush)ToLua.CheckObject<Sango.Tools.TerrainBrush>(L, 1);
 			UnityEngine.Vector3 arg0 = ToLua.ToVector3(L, 2);
-			Sango.Render.MapData.VertexData arg1 = StackTraits<Sango.Render.MapData.VertexData>.Check(L, 3);
+			Sango.Render.MapData.VertexData arg1 = (Sango.Render.MapData.VertexData)ToLua.CheckObject<Sango.Render.MapData.VertexData>(L, 3);
 			int arg2 = (int)LuaDLL.luaL_checkinteger(L, 4);
 			int arg3 = (int)LuaDLL.luaL_checkinteger(L, 5);
 			bool o = obj.Do(arg0, ref arg1, arg2, arg3);
+			LuaDLL.lua_pushboolean(L, o);
+			ToLua.PushObject(L, arg1);
 			return 2;
 		}
 		catch (Exception e)

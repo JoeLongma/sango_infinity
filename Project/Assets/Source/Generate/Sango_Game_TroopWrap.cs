@@ -16,10 +16,14 @@ public class Sango_Game_TroopWrap
 		L.RegFunction("ForEachMember", new LuaCSFunction(ForEachMember));
 		L.RegFunction("ForEachPerson", new LuaCSFunction(ForEachPerson));
 		L.RegFunction("CalculateAttribute", new LuaCSFunction(CalculateAttribute));
+		L.RegFunction("CalculateMaxTroops", new LuaCSFunction(CalculateMaxTroops));
 		L.RegFunction("MoveCost", new LuaCSFunction(MoveCost));
 		L.RegFunction("IsAlliance", new LuaCSFunction(IsAlliance));
 		L.RegFunction("IsEnemy", new LuaCSFunction(IsEnemy));
 		L.RegFunction("IsSameForce", new LuaCSFunction(IsSameForce));
+		L.RegFunction("IsTransport", new LuaCSFunction(IsTransport));
+		L.RegFunction("IsMachine", new LuaCSFunction(IsMachine));
+		L.RegFunction("IsHelepolis", new LuaCSFunction(IsHelepolis));
 		L.RegFunction("GetAttackBackFactor", new LuaCSFunction(GetAttackBackFactor));
 		L.RegFunction("AttackBuilding", new LuaCSFunction(AttackBuilding));
 		L.RegFunction("CalculateSkillDamage", new LuaCSFunction(CalculateSkillDamage));
@@ -59,17 +63,29 @@ public class Sango_Game_TroopWrap
 		L.RegVar("woundedTroops", new LuaCSFunction(get_woundedTroops), new LuaCSFunction(set_woundedTroops));
 		L.RegVar("energy", new LuaCSFunction(get_energy), new LuaCSFunction(set_energy));
 		L.RegVar("morale", new LuaCSFunction(get_morale), new LuaCSFunction(set_morale));
+		L.RegVar("waterMoveAbility", new LuaCSFunction(get_waterMoveAbility), new LuaCSFunction(set_waterMoveAbility));
+		L.RegVar("landMoveAbility", new LuaCSFunction(get_landMoveAbility), new LuaCSFunction(set_landMoveAbility));
 		L.RegVar("food", new LuaCSFunction(get_food), new LuaCSFunction(set_food));
 		L.RegVar("gold", new LuaCSFunction(get_gold), new LuaCSFunction(set_gold));
 		L.RegVar("population", new LuaCSFunction(get_population), new LuaCSFunction(set_population));
 		L.RegVar("itemStore", new LuaCSFunction(get_itemStore), new LuaCSFunction(set_itemStore));
 		L.RegVar("missionType", new LuaCSFunction(get_missionType), new LuaCSFunction(set_missionType));
 		L.RegVar("missionTarget", new LuaCSFunction(get_missionTarget), new LuaCSFunction(set_missionTarget));
-		L.RegVar("missionParamas1", new LuaCSFunction(get_missionParamas1), new LuaCSFunction(set_missionParamas1));
-		L.RegVar("missionParamas2", new LuaCSFunction(get_missionParamas2), new LuaCSFunction(set_missionParamas2));
+		L.RegVar("missionParams1", new LuaCSFunction(get_missionParams1), new LuaCSFunction(set_missionParams1));
+		L.RegVar("missionParams2", new LuaCSFunction(get_missionParams2), new LuaCSFunction(set_missionParams2));
 		L.RegVar("missionTargetCell", new LuaCSFunction(get_missionTargetCell), new LuaCSFunction(set_missionTargetCell));
-		L.RegVar("skills", new LuaCSFunction(get_skills), new LuaCSFunction(set_skills));
+		L.RegVar("waterSkills", new LuaCSFunction(get_waterSkills), new LuaCSFunction(set_waterSkills));
+		L.RegVar("landSkills", new LuaCSFunction(get_landSkills), new LuaCSFunction(set_landSkills));
+		L.RegVar("waterDamageTroopExtraFactor", new LuaCSFunction(get_waterDamageTroopExtraFactor), new LuaCSFunction(set_waterDamageTroopExtraFactor));
+		L.RegVar("landDamageTroopExtraFactor", new LuaCSFunction(get_landDamageTroopExtraFactor), new LuaCSFunction(set_landDamageTroopExtraFactor));
+		L.RegVar("waterDamageBuildingExtraFactor", new LuaCSFunction(get_waterDamageBuildingExtraFactor), new LuaCSFunction(set_waterDamageBuildingExtraFactor));
+		L.RegVar("landDamageBuildingExtraFactor", new LuaCSFunction(get_landDamageBuildingExtraFactor), new LuaCSFunction(set_landDamageBuildingExtraFactor));
+		L.RegVar("waterAttack", new LuaCSFunction(get_waterAttack), new LuaCSFunction(set_waterAttack));
+		L.RegVar("landAttack", new LuaCSFunction(get_landAttack), new LuaCSFunction(set_landAttack));
+		L.RegVar("waterDefence", new LuaCSFunction(get_waterDefence), new LuaCSFunction(set_waterDefence));
+		L.RegVar("landDefence", new LuaCSFunction(get_landDefence), new LuaCSFunction(set_landDefence));
 		L.RegVar("foodCost", new LuaCSFunction(get_foodCost), new LuaCSFunction(set_foodCost));
+		L.RegVar("actionList", new LuaCSFunction(get_actionList), new LuaCSFunction(set_actionList));
 		L.RegVar("MoveRange", new LuaCSFunction(get_MoveRange), new LuaCSFunction(set_MoveRange));
 		L.RegVar("ObjectType", new LuaCSFunction(get_ObjectType), null);
 		L.RegVar("AIFinished", new LuaCSFunction(get_AIFinished), new LuaCSFunction(set_AIFinished));
@@ -80,17 +96,22 @@ public class Sango_Game_TroopWrap
 		L.RegVar("Leader", new LuaCSFunction(get_Leader), new LuaCSFunction(set_Leader));
 		L.RegVar("Member1", new LuaCSFunction(get_Member1), new LuaCSFunction(set_Member1));
 		L.RegVar("Member2", new LuaCSFunction(get_Member2), new LuaCSFunction(set_Member2));
-		L.RegVar("TroopType", new LuaCSFunction(get_TroopType), new LuaCSFunction(set_TroopType));
-		L.RegVar("TroopTypeLv", new LuaCSFunction(get_TroopTypeLv), null);
-		L.RegVar("WaterTroopType", new LuaCSFunction(get_WaterTroopType), new LuaCSFunction(set_WaterTroopType));
-		L.RegVar("WaterTroopTypeLv", new LuaCSFunction(get_WaterTroopTypeLv), null);
 		L.RegVar("Name", new LuaCSFunction(get_Name), null);
 		L.RegVar("x", new LuaCSFunction(get_x), null);
 		L.RegVar("y", new LuaCSFunction(get_y), null);
-		L.RegVar("MaxTroops", new LuaCSFunction(get_MaxTroops), null);
+		L.RegVar("MaxTroops", new LuaCSFunction(get_MaxTroops), new LuaCSFunction(set_MaxTroops));
 		L.RegVar("IsFull", new LuaCSFunction(get_IsFull), null);
+		L.RegVar("MaxMorale", new LuaCSFunction(get_MaxMorale), new LuaCSFunction(set_MaxMorale));
 		L.RegVar("MoveAbility", new LuaCSFunction(get_MoveAbility), null);
 		L.RegVar("ActionOver", new LuaCSFunction(get_ActionOver), new LuaCSFunction(set_ActionOver));
+		L.RegVar("TroopType", new LuaCSFunction(get_TroopType), new LuaCSFunction(set_TroopType));
+		L.RegVar("TroopTypeLv", new LuaCSFunction(get_TroopTypeLv), null);
+		L.RegVar("WaterTroopType", new LuaCSFunction(get_WaterTroopType), new LuaCSFunction(set_WaterTroopType));
+		L.RegVar("LandTroopType", new LuaCSFunction(get_LandTroopType), new LuaCSFunction(set_LandTroopType));
+		L.RegVar("WaterTroopTypeLv", new LuaCSFunction(get_WaterTroopTypeLv), null);
+		L.RegVar("LandTroopTypeLv", new LuaCSFunction(get_LandTroopTypeLv), null);
+		L.RegVar("IsInWater", new LuaCSFunction(get_IsInWater), null);
+		L.RegVar("skills", new LuaCSFunction(get_skills), null);
 		L.RegVar("NormalSkill", new LuaCSFunction(get_NormalSkill), null);
 		L.RegVar("NormalRangeSkill", new LuaCSFunction(get_NormalRangeSkill), null);
 		L.RegVar("DamageTroopExtraFactor", new LuaCSFunction(get_DamageTroopExtraFactor), null);
@@ -98,11 +119,11 @@ public class Sango_Game_TroopWrap
 		L.RegVar("SpearLv", new LuaCSFunction(get_SpearLv), null);
 		L.RegVar("HalberdLv", new LuaCSFunction(get_HalberdLv), null);
 		L.RegVar("CrossbowLv", new LuaCSFunction(get_CrossbowLv), null);
-		L.RegVar("HorseLv", new LuaCSFunction(get_HorseLv), null);
+		L.RegVar("RideLv", new LuaCSFunction(get_RideLv), null);
 		L.RegVar("WaterLv", new LuaCSFunction(get_WaterLv), null);
 		L.RegVar("MachineLv", new LuaCSFunction(get_MachineLv), null);
-		L.RegVar("Attack", new LuaCSFunction(get_Attack), new LuaCSFunction(set_Attack));
-		L.RegVar("Defence", new LuaCSFunction(get_Defence), new LuaCSFunction(set_Defence));
+		L.RegVar("Attack", new LuaCSFunction(get_Attack), null);
+		L.RegVar("Defence", new LuaCSFunction(get_Defence), null);
 		L.RegVar("BuildPower", new LuaCSFunction(get_BuildPower), null);
 		L.RegVar("Command", new LuaCSFunction(get_Command), null);
 		L.RegVar("Strength", new LuaCSFunction(get_Strength), null);
@@ -312,6 +333,22 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int CalculateMaxTroops(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
+			obj.CalculateMaxTroops();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int MoveCost(IntPtr L)
 	{
 		try
@@ -459,6 +496,57 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int IsTransport(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
+			bool o = obj.IsTransport();
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int IsMachine(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
+			bool o = obj.IsMachine();
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int IsHelepolis(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
+			bool o = obj.IsHelepolis();
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int GetAttackBackFactor(IntPtr L)
 	{
 		try
@@ -468,7 +556,7 @@ public class Sango_Game_TroopWrap
 			Sango.Game.Skill arg0 = (Sango.Game.Skill)ToLua.CheckObject<Sango.Game.Skill>(L, 2);
 			int arg1 = (int)LuaDLL.luaL_checkinteger(L, 3);
 			int o = obj.GetAttackBackFactor(arg0, arg1);
-			LuaDLL.lua_pushnumber(L, o);
+			LuaDLL.lua_pushinteger(L, o);
 			return 1;
 		}
 		catch (Exception e)
@@ -663,9 +751,12 @@ public class Sango_Game_TroopWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
+			ToLua.CheckArgsCount(L, 3);
 			Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
 			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			int arg1 = (int)LuaDLL.luaL_checkinteger(L, 3);
+			int o = obj.TroopsLevelBoost(arg0, arg1);
+			LuaDLL.lua_pushinteger(L, o);
 			return 1;
 		}
 		catch (Exception e)
@@ -786,27 +877,15 @@ public class Sango_Game_TroopWrap
 	{
 		try
 		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 3)
-			{
-				Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
-				int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
-				Sango.Game.SangoObject arg1 = (Sango.Game.SangoObject)ToLua.CheckObject<Sango.Game.SangoObject>(L, 3);
-				return 1;
-			}
-			else if (count == 4)
-			{
-				Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
-				int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
-				Sango.Game.SangoObject arg1 = (Sango.Game.SangoObject)ToLua.CheckObject<Sango.Game.SangoObject>(L, 3);
-				bool arg2 = LuaDLL.luaL_checkboolean(L, 4);
-				return 1;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to method: Sango.Game.Troop.ChangeTroops");
-			}
+			ToLua.CheckArgsCount(L, 5);
+			Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			Sango.Game.SangoObject arg1 = (Sango.Game.SangoObject)ToLua.CheckObject<Sango.Game.SangoObject>(L, 3);
+			Sango.Game.Skill arg2 = (Sango.Game.Skill)ToLua.CheckObject<Sango.Game.Skill>(L, 4);
+			int arg3 = (int)LuaDLL.luaL_checkinteger(L, 5);
+			bool o = obj.ChangeTroops(arg0, arg1, arg2, arg3);
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
 		}
 		catch (Exception e)
 		{
@@ -1263,6 +1342,44 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_waterMoveAbility(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int ret = obj.waterMoveAbility;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index waterMoveAbility on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_landMoveAbility(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int ret = obj.landMoveAbility;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index landMoveAbility on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_food(IntPtr L)
 	{
 		object o = null;
@@ -1377,7 +1494,7 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_missionParamas1(IntPtr L)
+	static int get_missionParams1(IntPtr L)
 	{
 		object o = null;
 
@@ -1391,12 +1508,12 @@ public class Sango_Game_TroopWrap
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index missionParamas1 on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index missionParams1 on a nil value");
 		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_missionParamas2(IntPtr L)
+	static int get_missionParams2(IntPtr L)
 	{
 		object o = null;
 
@@ -1404,11 +1521,13 @@ public class Sango_Game_TroopWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int ret = obj.missionParams2;
+			LuaDLL.lua_pushinteger(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index missionParamas2 on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index missionParams2 on a nil value");
 		}
 	}
 
@@ -1432,7 +1551,7 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_skills(IntPtr L)
+	static int get_waterSkills(IntPtr L)
 	{
 		object o = null;
 
@@ -1440,13 +1559,184 @@ public class Sango_Game_TroopWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			System.Collections.Generic.List<Sango.Game.SkillInstance> ret = obj.skills;
+			System.Collections.Generic.List<Sango.Game.SkillInstance> ret = obj.waterSkills;
 			ToLua.PushSealed(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index skills on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index waterSkills on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_landSkills(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			System.Collections.Generic.List<Sango.Game.SkillInstance> ret = obj.landSkills;
+			ToLua.PushSealed(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index landSkills on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_waterDamageTroopExtraFactor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			float ret = obj.waterDamageTroopExtraFactor;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index waterDamageTroopExtraFactor on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_landDamageTroopExtraFactor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			float ret = obj.landDamageTroopExtraFactor;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index landDamageTroopExtraFactor on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_waterDamageBuildingExtraFactor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			float ret = obj.waterDamageBuildingExtraFactor;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index waterDamageBuildingExtraFactor on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_landDamageBuildingExtraFactor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			float ret = obj.landDamageBuildingExtraFactor;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index landDamageBuildingExtraFactor on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_waterAttack(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int ret = obj.waterAttack;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index waterAttack on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_landAttack(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int ret = obj.landAttack;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index landAttack on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_waterDefence(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int ret = obj.waterDefence;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index waterDefence on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_landDefence(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int ret = obj.landDefence;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index landDefence on a nil value");
 		}
 	}
 
@@ -1466,6 +1756,25 @@ public class Sango_Game_TroopWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index foodCost on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_actionList(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			System.Collections.Generic.List<Sango.Game.ActionBase> ret = obj.actionList;
+			ToLua.PushSealed(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index actionList on a nil value");
 		}
 	}
 
@@ -1660,82 +1969,6 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_TroopType(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			Sango.Game.TroopType ret = obj.TroopType;
-			ToLua.PushObject(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index TroopType on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_TroopTypeLv(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			int ret = obj.TroopTypeLv;
-			LuaDLL.lua_pushinteger(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index TroopTypeLv on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_WaterTroopType(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			Sango.Game.TroopType ret = obj.WaterTroopType;
-			ToLua.PushObject(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index WaterTroopType on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_WaterTroopTypeLv(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			int ret = obj.WaterTroopTypeLv;
-			LuaDLL.lua_pushinteger(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index WaterTroopTypeLv on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_Name(IntPtr L)
 	{
 		object o = null;
@@ -1831,6 +2064,25 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_MaxMorale(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int ret = obj.MaxMorale;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index MaxMorale on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_MoveAbility(IntPtr L)
 	{
 		object o = null;
@@ -1865,6 +2117,158 @@ public class Sango_Game_TroopWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index ActionOver on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_TroopType(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			Sango.Game.TroopType ret = obj.TroopType;
+			ToLua.PushObject(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index TroopType on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_TroopTypeLv(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int ret = obj.TroopTypeLv;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index TroopTypeLv on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_WaterTroopType(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			Sango.Game.TroopType ret = obj.WaterTroopType;
+			ToLua.PushObject(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index WaterTroopType on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_LandTroopType(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			Sango.Game.TroopType ret = obj.LandTroopType;
+			ToLua.PushObject(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index LandTroopType on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_WaterTroopTypeLv(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int ret = obj.WaterTroopTypeLv;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index WaterTroopTypeLv on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_LandTroopTypeLv(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int ret = obj.LandTroopTypeLv;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index LandTroopTypeLv on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_IsInWater(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			bool ret = obj.IsInWater;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index IsInWater on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_skills(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			System.Collections.Generic.List<Sango.Game.SkillInstance> ret = obj.skills;
+			ToLua.PushSealed(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index skills on a nil value");
 		}
 	}
 
@@ -2002,7 +2406,7 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_HorseLv(IntPtr L)
+	static int get_RideLv(IntPtr L)
 	{
 		object o = null;
 
@@ -2016,7 +2420,7 @@ public class Sango_Game_TroopWrap
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index HorseLv on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index RideLv on a nil value");
 		}
 	}
 
@@ -2363,6 +2767,44 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_waterMoveAbility(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			obj.waterMoveAbility = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index waterMoveAbility on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_landMoveAbility(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			obj.landMoveAbility = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index landMoveAbility on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_food(IntPtr L)
 	{
 		object o = null;
@@ -2477,7 +2919,7 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_missionParamas1(IntPtr L)
+	static int set_missionParams1(IntPtr L)
 	{
 		object o = null;
 
@@ -2491,12 +2933,12 @@ public class Sango_Game_TroopWrap
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index missionParamas1 on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index missionParams1 on a nil value");
 		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_missionParamas2(IntPtr L)
+	static int set_missionParams2(IntPtr L)
 	{
 		object o = null;
 
@@ -2505,11 +2947,12 @@ public class Sango_Game_TroopWrap
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)o;
 			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			obj.missionParams2 = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index missionParamas2 on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index missionParams2 on a nil value");
 		}
 	}
 
@@ -2533,7 +2976,7 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_skills(IntPtr L)
+	static int set_waterSkills(IntPtr L)
 	{
 		object o = null;
 
@@ -2541,11 +2984,184 @@ public class Sango_Game_TroopWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			System.Collections.Generic.List<Sango.Game.SkillInstance> arg0 = (System.Collections.Generic.List<Sango.Game.SkillInstance>)ToLua.CheckObject(L, 2, TypeTraits<System.Collections.Generic.List<Sango.Game.SkillInstance>>.type);
+			obj.waterSkills = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index skills on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index waterSkills on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_landSkills(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			System.Collections.Generic.List<Sango.Game.SkillInstance> arg0 = (System.Collections.Generic.List<Sango.Game.SkillInstance>)ToLua.CheckObject(L, 2, TypeTraits<System.Collections.Generic.List<Sango.Game.SkillInstance>>.type);
+			obj.landSkills = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index landSkills on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_waterDamageTroopExtraFactor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.waterDamageTroopExtraFactor = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index waterDamageTroopExtraFactor on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_landDamageTroopExtraFactor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.landDamageTroopExtraFactor = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index landDamageTroopExtraFactor on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_waterDamageBuildingExtraFactor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.waterDamageBuildingExtraFactor = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index waterDamageBuildingExtraFactor on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_landDamageBuildingExtraFactor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.landDamageBuildingExtraFactor = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index landDamageBuildingExtraFactor on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_waterAttack(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			obj.waterAttack = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index waterAttack on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_landAttack(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			obj.landAttack = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index landAttack on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_waterDefence(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			obj.waterDefence = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index waterDefence on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_landDefence(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			obj.landDefence = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index landDefence on a nil value");
 		}
 	}
 
@@ -2565,6 +3181,25 @@ public class Sango_Game_TroopWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index foodCost on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_actionList(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			System.Collections.Generic.List<Sango.Game.ActionBase> arg0 = (System.Collections.Generic.List<Sango.Game.ActionBase>)ToLua.CheckObject(L, 2, TypeTraits<System.Collections.Generic.List<Sango.Game.ActionBase>>.type);
+			obj.actionList = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index actionList on a nil value");
 		}
 	}
 
@@ -2683,6 +3318,63 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_MaxTroops(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			obj.MaxTroops = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index MaxTroops on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_MaxMorale(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			obj.MaxMorale = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index MaxMorale on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_ActionOver(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.ActionOver = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index ActionOver on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_TroopType(IntPtr L)
 	{
 		object o = null;
@@ -2691,6 +3383,8 @@ public class Sango_Game_TroopWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)o;
+			Sango.Game.TroopType arg0 = (Sango.Game.TroopType)ToLua.CheckObject<Sango.Game.TroopType>(L, 2);
+			obj.TroopType = arg0;
 			return 0;
 		}
 		catch(Exception e)
@@ -2719,7 +3413,7 @@ public class Sango_Game_TroopWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_ActionOver(IntPtr L)
+	static int set_LandTroopType(IntPtr L)
 	{
 		object o = null;
 
@@ -2727,45 +3421,13 @@ public class Sango_Game_TroopWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			Sango.Game.Troop obj = (Sango.Game.Troop)o;
-			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
-			obj.ActionOver = arg0;
+			Sango.Game.TroopType arg0 = (Sango.Game.TroopType)ToLua.CheckObject<Sango.Game.TroopType>(L, 2);
+			obj.LandTroopType = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index ActionOver on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_Attack(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Attack on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_Defence(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Defence on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index LandTroopType on a nil value");
 		}
 	}
 }

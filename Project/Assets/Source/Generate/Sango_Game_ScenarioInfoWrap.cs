@@ -21,6 +21,7 @@ public class Sango_Game_ScenarioInfoWrap
 		L.RegVar("turnCount", new LuaCSFunction(get_turnCount), new LuaCSFunction(set_turnCount));
 		L.RegVar("priority", new LuaCSFunction(get_priority), new LuaCSFunction(set_priority));
 		L.RegVar("isSave", new LuaCSFunction(get_isSave), new LuaCSFunction(set_isSave));
+		L.RegVar("playerForceList", new LuaCSFunction(get_playerForceList), new LuaCSFunction(set_playerForceList));
 		L.EndClass();
 	}
 
@@ -277,6 +278,25 @@ public class Sango_Game_ScenarioInfoWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_playerForceList(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioInfo obj = (Sango.Game.ScenarioInfo)o;
+			int[] ret = obj.playerForceList;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index playerForceList on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_id(IntPtr L)
 	{
 		object o = null;
@@ -501,6 +521,25 @@ public class Sango_Game_ScenarioInfoWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index isSave on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_playerForceList(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.ScenarioInfo obj = (Sango.Game.ScenarioInfo)o;
+			int[] arg0 = ToLua.CheckNumberArray<int>(L, 2);
+			obj.playerForceList = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index playerForceList on a nil value");
 		}
 	}
 }

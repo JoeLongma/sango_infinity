@@ -15,6 +15,7 @@ public class Sango_Render_MapGrid_GridDataWrap
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
 		L.RegVar("terrainType", new LuaCSFunction(get_terrainType), new LuaCSFunction(set_terrainType));
 		L.RegVar("terrainState", new LuaCSFunction(get_terrainState), new LuaCSFunction(set_terrainState));
+		L.RegVar("areaId", new LuaCSFunction(get_areaId), new LuaCSFunction(set_areaId));
 		L.EndClass();
 	}
 
@@ -152,6 +153,25 @@ public class Sango_Render_MapGrid_GridDataWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_areaId(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapGrid.GridData obj = (Sango.Render.MapGrid.GridData)o;
+			ushort ret = obj.areaId;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index areaId on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_terrainType(IntPtr L)
 	{
 		object o = null;
@@ -186,6 +206,25 @@ public class Sango_Render_MapGrid_GridDataWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index terrainState on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_areaId(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Render.MapGrid.GridData obj = (Sango.Render.MapGrid.GridData)o;
+			ushort arg0 = (ushort)LuaDLL.luaL_checkinteger(L, 2);
+			obj.areaId = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index areaId on a nil value");
 		}
 	}
 }

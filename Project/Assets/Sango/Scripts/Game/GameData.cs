@@ -25,6 +25,9 @@ namespace Sango.Game
 
         public ScenarioCommonData LoadCommonData()
         {
+            if (ScenarioCommonData != null)
+                return ScenarioCommonData;
+
             ScenarioCommonData = new ScenarioCommonData();
             string commonDataFileName = "Data/Common/Common.json";
             ModManager.Instance.LoadFile(commonDataFileName, file =>
@@ -39,6 +42,9 @@ namespace Sango.Game
 
         public SangoObjectMap<ModelConfig> LoadModelConfig()
         {
+            if (ModelConfigs != null)
+                return ModelConfigs;
+
             ModelConfigs = new SangoObjectMap<ModelConfig>();
             string commonDataFileName = "Data/Model/ModelConfig.json";
             ModManager.Instance.LoadFile(commonDataFileName, file =>

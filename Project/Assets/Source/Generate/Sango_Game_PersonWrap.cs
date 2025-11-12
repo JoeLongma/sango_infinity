@@ -59,17 +59,18 @@ public class Sango_Game_PersonWrap
 		L.RegVar("spearLv", new LuaCSFunction(get_spearLv), new LuaCSFunction(set_spearLv));
 		L.RegVar("halberdLv", new LuaCSFunction(get_halberdLv), new LuaCSFunction(set_halberdLv));
 		L.RegVar("crossbowLv", new LuaCSFunction(get_crossbowLv), new LuaCSFunction(set_crossbowLv));
-		L.RegVar("horseLv", new LuaCSFunction(get_horseLv), new LuaCSFunction(set_horseLv));
+		L.RegVar("rideLv", new LuaCSFunction(get_rideLv), new LuaCSFunction(set_rideLv));
 		L.RegVar("waterLv", new LuaCSFunction(get_waterLv), new LuaCSFunction(set_waterLv));
 		L.RegVar("machineLv", new LuaCSFunction(get_machineLv), new LuaCSFunction(set_machineLv));
 		L.RegVar("actionFlag", new LuaCSFunction(get_actionFlag), new LuaCSFunction(set_actionFlag));
-		L.RegVar("FeatureList", new LuaCSFunction(get_FeatureList), new LuaCSFunction(set_FeatureList));
 		L.RegVar("itemStore", new LuaCSFunction(get_itemStore), new LuaCSFunction(set_itemStore));
 		L.RegVar("troopsLimitExtra", new LuaCSFunction(get_troopsLimitExtra), new LuaCSFunction(set_troopsLimitExtra));
 		L.RegVar("skill", new LuaCSFunction(get_skill), new LuaCSFunction(set_skill));
 		L.RegVar("missionType", new LuaCSFunction(get_missionType), new LuaCSFunction(set_missionType));
 		L.RegVar("missionTarget", new LuaCSFunction(get_missionTarget), new LuaCSFunction(set_missionTarget));
 		L.RegVar("missionCounter", new LuaCSFunction(get_missionCounter), new LuaCSFunction(set_missionCounter));
+		L.RegVar("missionParams1", new LuaCSFunction(get_missionParams1), new LuaCSFunction(set_missionParams1));
+		L.RegVar("missionParams2", new LuaCSFunction(get_missionParams2), new LuaCSFunction(set_missionParams2));
 		L.RegVar("rewardOver", new LuaCSFunction(get_rewardOver), new LuaCSFunction(set_rewardOver));
 		L.RegVar("ObjectType", new LuaCSFunction(get_ObjectType), null);
 		L.RegVar("BelongForce", new LuaCSFunction(get_BelongForce), new LuaCSFunction(set_BelongForce));
@@ -85,6 +86,7 @@ public class Sango_Game_PersonWrap
 		L.RegVar("BrotherList", new LuaCSFunction(get_BrotherList), null);
 		L.RegVar("LikePersonList", new LuaCSFunction(get_LikePersonList), null);
 		L.RegVar("HatePersonList", new LuaCSFunction(get_HatePersonList), null);
+		L.RegVar("FeatureList", new LuaCSFunction(get_FeatureList), null);
 		L.RegVar("SpearLv", new LuaCSFunction(get_SpearLv), null);
 		L.RegVar("HalberdLv", new LuaCSFunction(get_HalberdLv), null);
 		L.RegVar("CrossbowLv", new LuaCSFunction(get_CrossbowLv), null);
@@ -366,13 +368,42 @@ public class Sango_Game_PersonWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 4);
-			Sango.Game.Person obj = (Sango.Game.Person)ToLua.CheckObject<Sango.Game.Person>(L, 1);
-			Sango.Game.MissionType arg0 = (Sango.Game.MissionType)ToLua.CheckObject(L, 2, TypeTraits<Sango.Game.MissionType>.type);
-			Sango.Game.SangoObject arg1 = (Sango.Game.SangoObject)ToLua.CheckObject<Sango.Game.SangoObject>(L, 3);
-			int arg2 = (int)LuaDLL.luaL_checkinteger(L, 4);
-			obj.SetMission(arg0, arg1, arg2);
-			return 0;
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 4)
+			{
+				Sango.Game.Person obj = (Sango.Game.Person)ToLua.CheckObject<Sango.Game.Person>(L, 1);
+				Sango.Game.MissionType arg0 = (Sango.Game.MissionType)ToLua.CheckObject(L, 2, TypeTraits<Sango.Game.MissionType>.type);
+				Sango.Game.SangoObject arg1 = (Sango.Game.SangoObject)ToLua.CheckObject<Sango.Game.SangoObject>(L, 3);
+				int arg2 = (int)LuaDLL.luaL_checkinteger(L, 4);
+				obj.SetMission(arg0, arg1, arg2);
+				return 0;
+			}
+			else if (count == 5)
+			{
+				Sango.Game.Person obj = (Sango.Game.Person)ToLua.CheckObject<Sango.Game.Person>(L, 1);
+				Sango.Game.MissionType arg0 = (Sango.Game.MissionType)ToLua.CheckObject(L, 2, TypeTraits<Sango.Game.MissionType>.type);
+				Sango.Game.SangoObject arg1 = (Sango.Game.SangoObject)ToLua.CheckObject<Sango.Game.SangoObject>(L, 3);
+				int arg2 = (int)LuaDLL.luaL_checkinteger(L, 4);
+				int arg3 = (int)LuaDLL.luaL_checkinteger(L, 5);
+				obj.SetMission(arg0, arg1, arg2, arg3);
+				return 0;
+			}
+			else if (count == 6)
+			{
+				Sango.Game.Person obj = (Sango.Game.Person)ToLua.CheckObject<Sango.Game.Person>(L, 1);
+				Sango.Game.MissionType arg0 = (Sango.Game.MissionType)ToLua.CheckObject(L, 2, TypeTraits<Sango.Game.MissionType>.type);
+				Sango.Game.SangoObject arg1 = (Sango.Game.SangoObject)ToLua.CheckObject<Sango.Game.SangoObject>(L, 3);
+				int arg2 = (int)LuaDLL.luaL_checkinteger(L, 4);
+				int arg3 = (int)LuaDLL.luaL_checkinteger(L, 5);
+				int arg4 = (int)LuaDLL.luaL_checkinteger(L, 6);
+				obj.SetMission(arg0, arg1, arg2, arg3, arg4);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: Sango.Game.Person.SetMission");
+			}
 		}
 		catch (Exception e)
 		{
@@ -1157,7 +1188,7 @@ public class Sango_Game_PersonWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_horseLv(IntPtr L)
+	static int get_rideLv(IntPtr L)
 	{
 		object o = null;
 
@@ -1171,7 +1202,7 @@ public class Sango_Game_PersonWrap
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index horseLv on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index rideLv on a nil value");
 		}
 	}
 
@@ -1229,25 +1260,6 @@ public class Sango_Game_PersonWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index actionFlag on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_FeatureList(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Person obj = (Sango.Game.Person)o;
-			Sango.Game.SangoObjectList<Sango.Game.Feature> ret = obj.FeatureList;
-			ToLua.PushObject(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index FeatureList on a nil value");
 		}
 	}
 
@@ -1362,6 +1374,44 @@ public class Sango_Game_PersonWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index missionCounter on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_missionParams1(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Person obj = (Sango.Game.Person)o;
+			int ret = obj.missionParams1;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index missionParams1 on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_missionParams2(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Person obj = (Sango.Game.Person)o;
+			int ret = obj.missionParams2;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index missionParams2 on a nil value");
 		}
 	}
 
@@ -1647,6 +1697,25 @@ public class Sango_Game_PersonWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index HatePersonList on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_FeatureList(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Person obj = (Sango.Game.Person)o;
+			Sango.Game.SangoObjectList<Sango.Game.Feature> ret = obj.FeatureList;
+			ToLua.PushObject(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index FeatureList on a nil value");
 		}
 	}
 
@@ -2677,7 +2746,7 @@ public class Sango_Game_PersonWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_horseLv(IntPtr L)
+	static int set_rideLv(IntPtr L)
 	{
 		object o = null;
 
@@ -2691,7 +2760,7 @@ public class Sango_Game_PersonWrap
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index horseLv on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index rideLv on a nil value");
 		}
 	}
 
@@ -2749,23 +2818,6 @@ public class Sango_Game_PersonWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index actionFlag on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_FeatureList(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			Sango.Game.Person obj = (Sango.Game.Person)o;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index FeatureList on a nil value");
 		}
 	}
 
@@ -2880,6 +2932,44 @@ public class Sango_Game_PersonWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index missionCounter on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_missionParams1(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Person obj = (Sango.Game.Person)o;
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			obj.missionParams1 = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index missionParams1 on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_missionParams2(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Person obj = (Sango.Game.Person)o;
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			obj.missionParams2 = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index missionParams2 on a nil value");
 		}
 	}
 

@@ -13,6 +13,7 @@ public class Sango_Game_GameRandomWrap
 		L.RegFunction("Range", new LuaCSFunction(Range));
 		L.RegFunction("RandomGaussian", new LuaCSFunction(RandomGaussian));
 		L.RegFunction("RandomGaussianRange", new LuaCSFunction(RandomGaussianRange));
+		L.RegFunction("RandomWeightIndex", new LuaCSFunction(RandomWeightIndex));
 		L.EndStaticLibs();
 	}
 
@@ -158,6 +159,39 @@ public class Sango_Game_GameRandomWrap
 			int o = Sango.Game.GameRandom.RandomGaussianRange(arg0, arg1);
 			LuaDLL.lua_pushinteger(L, o);
 			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int RandomWeightIndex(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 1)
+			{
+				int[] arg0 = ToLua.CheckNumberArray<int>(L, 1);
+				int o = Sango.Game.GameRandom.RandomWeightIndex(arg0);
+				LuaDLL.lua_pushinteger(L, o);
+				return 1;
+			}
+			else if (count == 2)
+			{
+				int[] arg0 = ToLua.CheckNumberArray<int>(L, 1);
+				int arg1 = (int)LuaDLL.luaL_checkinteger(L, 2);
+				int o = Sango.Game.GameRandom.RandomWeightIndex(arg0, arg1);
+				LuaDLL.lua_pushinteger(L, o);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: Sango.Game.GameRandom.RandomWeightIndex");
+			}
 		}
 		catch (Exception e)
 		{

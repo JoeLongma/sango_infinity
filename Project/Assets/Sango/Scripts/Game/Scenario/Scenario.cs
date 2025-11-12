@@ -86,6 +86,8 @@ namespace Sango.Game
         #endregion Data
         public static Scenario Cur { get; private set; }
         public static List<Scenario> all_scenario_list = new List<Scenario>();
+        public static Scenario CurSelected{ get; set; }
+
         public string FilePath { internal set; get; }
         private Queue<Force> runForces = new Queue<Force>();
         public Force CurRunForce { get; private set; }
@@ -369,9 +371,22 @@ namespace Sango.Game
                 }
             }
         }
+
         public void LoadContent()
         {
             LoadContent(FilePath);
+        }
+
+        public void LoadBaseContent(string path)
+        {
+            if (!Info.isSave)
+            {
+                if (CommonData == null)
+                    CommonData = GameData.Instance.LoadCommonData();
+            }
+
+            JsonConvert.PopulateObject(File.ReadAllText(path), this);
+            GameEvent.OnScenarioPrepare = null;
         }
 
         public void LoadContent(string path)

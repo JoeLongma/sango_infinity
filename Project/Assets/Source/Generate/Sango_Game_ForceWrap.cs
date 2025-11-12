@@ -15,6 +15,8 @@ public class Sango_Game_ForceWrap
 		L.RegFunction("OnForceTurnStart", new LuaCSFunction(OnForceTurnStart));
 		L.RegFunction("OnForceTurnEnd", new LuaCSFunction(OnForceTurnEnd));
 		L.RegFunction("OnMonthStart", new LuaCSFunction(OnMonthStart));
+		L.RegFunction("OnSeasonStart", new LuaCSFunction(OnSeasonStart));
+		L.RegFunction("ForcePersonLoyaltyChange", new LuaCSFunction(ForcePersonLoyaltyChange));
 		L.RegFunction("ForEachCity", new LuaCSFunction(ForEachCity));
 		L.RegFunction("ForEachGate", new LuaCSFunction(ForEachGate));
 		L.RegFunction("ForEachPort", new LuaCSFunction(ForEachPort));
@@ -43,6 +45,7 @@ public class Sango_Game_ForceWrap
 		L.RegVar("TechniquePoint", new LuaCSFunction(get_TechniquePoint), null);
 		L.RegVar("PolicyType", new LuaCSFunction(get_PolicyType), new LuaCSFunction(set_PolicyType));
 		L.RegVar("ResearchTechnique", new LuaCSFunction(get_ResearchTechnique), new LuaCSFunction(set_ResearchTechnique));
+		L.RegVar("ResearchLeftCounter", new LuaCSFunction(get_ResearchLeftCounter), new LuaCSFunction(set_ResearchLeftCounter));
 		L.RegVar("PersonCount", new LuaCSFunction(get_PersonCount), new LuaCSFunction(set_PersonCount));
 		L.RegVar("CityCount", new LuaCSFunction(get_CityCount), new LuaCSFunction(set_CityCount));
 		L.EndClass();
@@ -225,6 +228,40 @@ public class Sango_Game_ForceWrap
 			bool o = obj.OnMonthStart(arg0);
 			LuaDLL.lua_pushboolean(L, o);
 			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OnSeasonStart(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Game.Force obj = (Sango.Game.Force)ToLua.CheckObject<Sango.Game.Force>(L, 1);
+			Sango.Game.Scenario arg0 = (Sango.Game.Scenario)ToLua.CheckObject<Sango.Game.Scenario>(L, 2);
+			bool o = obj.OnSeasonStart(arg0);
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ForcePersonLoyaltyChange(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			Sango.Game.Force obj = (Sango.Game.Force)ToLua.CheckObject<Sango.Game.Force>(L, 1);
+			obj.ForcePersonLoyaltyChange();
+			return 0;
 		}
 		catch (Exception e)
 		{
@@ -710,6 +747,25 @@ public class Sango_Game_ForceWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_ResearchLeftCounter(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Force obj = (Sango.Game.Force)o;
+			int ret = obj.ResearchLeftCounter;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index ResearchLeftCounter on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_PersonCount(IntPtr L)
 	{
 		object o = null;
@@ -1010,6 +1066,25 @@ public class Sango_Game_ForceWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index ResearchTechnique on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_ResearchLeftCounter(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Sango.Game.Force obj = (Sango.Game.Force)o;
+			int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
+			obj.ResearchLeftCounter = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index ResearchLeftCounter on a nil value");
 		}
 	}
 

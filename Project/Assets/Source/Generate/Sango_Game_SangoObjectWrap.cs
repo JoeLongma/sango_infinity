@@ -8,6 +8,7 @@ public class Sango_Game_SangoObjectWrap
 	{
 		L.BeginClass(typeof(Sango.Game.SangoObject), typeof(System.Object));
 		L.RegFunction("GetRender", new LuaCSFunction(GetRender));
+		L.RegFunction("ToString", new LuaCSFunction(ToString));
 		L.RegFunction("DoAI", new LuaCSFunction(DoAI));
 		L.RegFunction("Run", new LuaCSFunction(Run));
 		L.RegFunction("OnScenarioPrepare", new LuaCSFunction(OnScenarioPrepare));
@@ -73,6 +74,23 @@ public class Sango_Game_SangoObjectWrap
 			Sango.Game.SangoObject obj = (Sango.Game.SangoObject)ToLua.CheckObject<Sango.Game.SangoObject>(L, 1);
 			Sango.Game.Render.ObjectRender o = obj.GetRender();
 			ToLua.PushObject(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ToString(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			Sango.Game.SangoObject obj = (Sango.Game.SangoObject)ToLua.CheckObject<Sango.Game.SangoObject>(L, 1);
+			string o = obj.ToString();
+			LuaDLL.lua_pushstring(L, o);
 			return 1;
 		}
 		catch (Exception e)

@@ -347,7 +347,7 @@ public class Sango_Render_MapDataWrap
 		{
 			ToLua.CheckArgsCount(L, 4);
 			Sango.Render.MapData obj = (Sango.Render.MapData)ToLua.CheckObject<Sango.Render.MapData>(L, 1);
-			Sango.Render.MapData.VertexData arg0 = StackTraits<Sango.Render.MapData.VertexData>.Check(L, 2);
+			Sango.Render.MapData.VertexData arg0 = (Sango.Render.MapData.VertexData)ToLua.CheckObject<Sango.Render.MapData.VertexData>(L, 2);
 			int arg1 = (int)LuaDLL.luaL_checkinteger(L, 3);
 			int arg2 = (int)LuaDLL.luaL_checkinteger(L, 4);
 			UnityEngine.Vector2 o = obj.VertexUV(arg0, arg1, arg2);
@@ -367,7 +367,7 @@ public class Sango_Render_MapDataWrap
 		{
 			ToLua.CheckArgsCount(L, 4);
 			Sango.Render.MapData obj = (Sango.Render.MapData)ToLua.CheckObject<Sango.Render.MapData>(L, 1);
-			Sango.Render.MapData.VertexData arg0 = StackTraits<Sango.Render.MapData.VertexData>.Check(L, 2);
+			Sango.Render.MapData.VertexData arg0 = (Sango.Render.MapData.VertexData)ToLua.CheckObject<Sango.Render.MapData.VertexData>(L, 2);
 			int arg1 = (int)LuaDLL.luaL_checkinteger(L, 3);
 			int arg2 = (int)LuaDLL.luaL_checkinteger(L, 4);
 			UnityEngine.Vector3 o = obj.VertexPosition(arg0, arg1, arg2);
@@ -387,7 +387,7 @@ public class Sango_Render_MapDataWrap
 		{
 			ToLua.CheckArgsCount(L, 4);
 			Sango.Render.MapData obj = (Sango.Render.MapData)ToLua.CheckObject<Sango.Render.MapData>(L, 1);
-			Sango.Render.MapData.VertexData arg0 = StackTraits<Sango.Render.MapData.VertexData>.Check(L, 2);
+			Sango.Render.MapData.VertexData arg0 = (Sango.Render.MapData.VertexData)ToLua.CheckObject<Sango.Render.MapData.VertexData>(L, 2);
 			int arg1 = (int)LuaDLL.luaL_checkinteger(L, 3);
 			int arg2 = (int)LuaDLL.luaL_checkinteger(L, 4);
 			UnityEngine.Vector3 o = obj.VertexWaterPosition(arg0, arg1, arg2);
@@ -407,7 +407,7 @@ public class Sango_Render_MapDataWrap
 		{
 			ToLua.CheckArgsCount(L, 4);
 			Sango.Render.MapData obj = (Sango.Render.MapData)ToLua.CheckObject<Sango.Render.MapData>(L, 1);
-			Sango.Render.MapData.VertexData arg0 = StackTraits<Sango.Render.MapData.VertexData>.Check(L, 2);
+			Sango.Render.MapData.VertexData arg0 = (Sango.Render.MapData.VertexData)ToLua.CheckObject<Sango.Render.MapData.VertexData>(L, 2);
 			int arg1 = (int)LuaDLL.luaL_checkinteger(L, 3);
 			int arg2 = (int)LuaDLL.luaL_checkinteger(L, 4);
 			UnityEngine.Vector3 o = obj.VertexNormal(arg0, arg1, arg2);
@@ -483,6 +483,8 @@ public class Sango_Render_MapDataWrap
 			Sango.Render.MapData obj = (Sango.Render.MapData)ToLua.CheckObject<Sango.Render.MapData>(L, 1);
 			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
 			float arg1 = (float)LuaDLL.luaL_checknumber(L, 3);
+			Sango.Render.MapData.VertexData o = obj.GetVertexData(arg0, arg1);
+			ToLua.PushObject(L, o);
 			return 1;
 		}
 		catch (Exception e)

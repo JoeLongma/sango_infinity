@@ -12,6 +12,8 @@ public class Sango_Render_MapGridWrap
 		L.RegFunction("Create", new LuaCSFunction(Create));
 		L.RegFunction("ClearGridData", new LuaCSFunction(ClearGridData));
 		L.RegFunction("SetGridTexture", new LuaCSFunction(SetGridTexture));
+		L.RegFunction("SaveTo311GridData", new LuaCSFunction(SaveTo311GridData));
+		L.RegFunction("LoadFrom311GridData", new LuaCSFunction(LoadFrom311GridData));
 		L.RegFunction("ShowGrid", new LuaCSFunction(ShowGrid));
 		L.RegFunction("SetDarkMask", new LuaCSFunction(SetDarkMask));
 		L.RegFunction("SetGridEnable", new LuaCSFunction(SetGridEnable));
@@ -141,6 +143,40 @@ public class Sango_Render_MapGridWrap
 			Sango.Render.MapGrid obj = (Sango.Render.MapGrid)ToLua.CheckObject<Sango.Render.MapGrid>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
 			obj.SetGridTexture(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SaveTo311GridData(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Render.MapGrid obj = (Sango.Render.MapGrid)ToLua.CheckObject<Sango.Render.MapGrid>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.SaveTo311GridData(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int LoadFrom311GridData(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Sango.Render.MapGrid obj = (Sango.Render.MapGrid)ToLua.CheckObject<Sango.Render.MapGrid>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.LoadFrom311GridData(arg0);
 			return 0;
 		}
 		catch (Exception e)

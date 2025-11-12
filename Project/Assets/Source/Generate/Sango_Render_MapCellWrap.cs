@@ -130,10 +130,25 @@ public class Sango_Render_MapCellWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 1);
-			Sango.Render.MapCell obj = (Sango.Render.MapCell)ToLua.CheckObject<Sango.Render.MapCell>(L, 1);
-			obj.PrepareDatas();
-			return 0;
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 1)
+			{
+				Sango.Render.MapCell obj = (Sango.Render.MapCell)ToLua.CheckObject<Sango.Render.MapCell>(L, 1);
+				obj.PrepareDatas();
+				return 0;
+			}
+			else if (count == 2)
+			{
+				Sango.Render.MapCell obj = (Sango.Render.MapCell)ToLua.CheckObject<Sango.Render.MapCell>(L, 1);
+				bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+				obj.PrepareDatas(arg0);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: Sango.Render.MapCell.PrepareDatas");
+			}
 		}
 		catch (Exception e)
 		{
