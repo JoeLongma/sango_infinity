@@ -1,6 +1,4 @@
-﻿using System;
-using static Sango.Game.City;
-using static Sango.Game.TroopAIUtility;
+﻿using static Sango.Game.TroopAIUtility;
 
 namespace Sango.Game
 {
@@ -9,12 +7,11 @@ namespace Sango.Game
         public override MissionType MissionType { get { return MissionType.TroopMovetoCity; } }
         public override bool IsMissionComplete { get { return !TargetCity.IsSameForce(Troop); } }
 
-        PriorityActionData priorityActionData;
-
         public override void Prepare(Troop troop, Scenario scenario)
         {
             if (Troop != troop) Troop = troop;
             if (TargetCity == null || TargetCity.Id != troop.missionTarget) TargetCity = scenario.citySet.Get(Troop.missionTarget);
+            priorityActionData = null;
 
             // 任务完成后,如果城池被友军拿取则回到创建城池,否则将进入己方目标城池
             if (IsMissionComplete)
@@ -33,7 +30,7 @@ namespace Sango.Game
                     Cell road = Troop.tempCellList[i];
                     if (road.building != null && !road.building.IsCity() && !road.building.IsSameForce(Troop))
                     {
-                        priorityActionData = TroopAIUtility.PriorityAction(Troop, (Cell)null, scenario, SkillAttackPriority);
+                        priorityActionData = TroopAIUtility.PriorityAction(Troop, (Cell)null, scenario, SkillStatusPriority);
                         return;
                     }
                 }

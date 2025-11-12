@@ -57,7 +57,7 @@ namespace Sango.Game
 
                 // 效果范围
                 effectCells = new System.Collections.Generic.List<Cell>();
-                scenario.Map.GetDirectSpiral(CenterCell, BuildingType.radius, BuildingType.atkRange, effectCells);
+                scenario.Map.GetDirectSpiral(CenterCell, BuildingType.radius + 1, BuildingType.radius + BuildingType.atkRange, effectCells);
 
             }
             OnPrepareRender();
@@ -65,7 +65,7 @@ namespace Sango.Game
 
         public override bool OnForceTurnStart(Scenario scenario)
         {
-            
+
             if (!isComplte && Builders != null)
             {
                 int totalValue = (BuildingType.durabilityLimit - durability) / BuidlLefCounter;
@@ -95,7 +95,7 @@ namespace Sango.Game
                 }
             }
 
-            if(BuidlLefCounter > 0)
+            if (BuidlLefCounter > 0)
                 BuidlLefCounter--;
 
             // 暂时写死
@@ -147,7 +147,7 @@ namespace Sango.Game
 #if SANGO_DEBUG
             Sango.Log.Print($"[{BelongCity.Name}]{stringBuilder}完成{Name}建造!!");
 #endif
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(techniquePointGain);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(techniquePointGain);
             GameEvent.OnCityJobGainTechniquePoint?.Invoke(BelongCity, jobId, Builders.objects.ToArray(), overrideData);
             techniquePointGain = overrideData.Value;
 
@@ -181,7 +181,7 @@ namespace Sango.Game
 #if SANGO_DEBUG
             Sango.Log.Print($"[{BelongCity.Name}]{stringBuilder}完成{Name}建造!!");
 #endif
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(techniquePointGain);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(techniquePointGain);
             GameEvent.OnCityJobGainTechniquePoint?.Invoke(BelongCity, jobId, Builders.objects.ToArray(), overrideData);
             techniquePointGain = overrideData.Value;
 
@@ -218,7 +218,7 @@ namespace Sango.Game
 #if SANGO_DEBUG
             Sango.Log.Print($"[{BelongCity.Name}]{stringBuilder}完成{Name}升级!!");
 #endif
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(techniquePointGain);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(techniquePointGain);
             GameEvent.OnCityJobGainTechniquePoint?.Invoke(BelongCity, jobId, Builders.objects.ToArray(), overrideData);
             techniquePointGain = overrideData.Value;
 

@@ -174,6 +174,11 @@ namespace Sango.Game
         public static EventDelegate<Troop, Scenario> OnTroopCalculateAttribute;
 
         /// <summary>
+        /// 部队计算反击的时候
+        /// </summary>
+        public static EventDelegate<Troop, Troop, Skill, Scenario, OverrideData<int>> OnTroopCalculateAttackBack;
+
+        /// <summary>
         /// 当城池沦陷的时候
         /// </summary>
         public static EventDelegate<City, Troop> OnCityFall;
@@ -283,6 +288,12 @@ namespace Sango.Game
         /// City, Skill, spellCell,  OverrideFunc
         /// </summary>
         public static EventDelegate<Troop, Skill, Cell, OverrideData<int>> OnTroopCalculateSkillCriticalFactor;
+
+
+        /// <summary>
+        /// 当部队兵力变化时
+        /// </summary>
+        public static EventDelegate<Troop, SangoObject, Skill, int, OverrideData<int>> OnTroopChangeTroops;
 
         #endregion Game
 

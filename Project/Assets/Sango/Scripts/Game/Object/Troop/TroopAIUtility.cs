@@ -188,54 +188,54 @@ namespace Sango.Game
             return wightList.RandomGet();
         }
 
-        public static PriorityActionData PriorityAction(Troop troop, List<Cell> enemyCells, Scenario scenario, SkillAttackPriorityCalculateMethod prioritySkillAtkMethod = null, SkillDefencePriorityCalculateMethod prioritySkillDefMethod = null)
-        {
-            List<SkillInstance> skill_list = troop.skills;
-            List<Cell> moveRange = null;
-            prioritySkillAtkMethod = prioritySkillAtkMethod ?? SkillAttackPriority;
-            prioritySkillDefMethod = prioritySkillDefMethod ?? SkillDefencePriority;
-            wightList.Clear();
-            for (int i = 0, count = skill_list.Count; i < count; i++)
-            {
-                Skill skill = skill_list[i].Skill;
-                if (skill.CanBeSpell(troop))
-                {
-                    for (int j = 0; j < enemyCells.Count; j++)
-                    {
-                        Cell dest = enemyCells[j];
-                        int atk_priority = 0;
-                        skill.GetAttackCells(troop, dest, attackCells);
-                        for (int m = 0; m < attackCells.Count; m++)
-                        {
-                            Cell atkCell = attackCells[m];
-                            atk_priority += prioritySkillAtkMethod?.Invoke(troop, skill, atkCell, dest, dest) ?? 0;
-                            //if (target != null && !atkCell.IsEmpty() && (atkCell.building == target || atkCell.troop == target))
-                            //    atk_priority += 10000;
-                        }
-                        int def_priority = prioritySkillDefMethod?.Invoke(troop, skill, dest, dest, dest) ?? 0;
-                        int s_p = atk_priority + def_priority;
-                        if (s_p > 0)
-                        {
-                            PriorityActionData priorityActionData = new PriorityActionData()
-                            {
-                                prioriry = s_p,
-                                skill = skill,
-                                movetoCell = dest,
-                                spellCell = dest,
-                                atkCells = attackCells.ToArray()
-                            };
-                            wightList.Push(priorityActionData, s_p / 100);
-                        }
-                    }
-                }
-            }
+        //public static PriorityActionData PriorityAction(Troop troop, List<Cell> enemyCells, Scenario scenario, SkillAttackPriorityCalculateMethod prioritySkillAtkMethod = null, SkillDefencePriorityCalculateMethod prioritySkillDefMethod = null)
+        //{
+        //    List<SkillInstance> skill_list = troop.skills;
+        //    List<Cell> moveRange = null;
+        //    prioritySkillAtkMethod = prioritySkillAtkMethod ?? SkillAttackPriority;
+        //    prioritySkillDefMethod = prioritySkillDefMethod ?? SkillDefencePriority;
+        //    wightList.Clear();
+        //    for (int i = 0, count = skill_list.Count; i < count; i++)
+        //    {
+        //        Skill skill = skill_list[i].Skill;
+        //        if (skill.CanBeSpell(troop))
+        //        {
+        //            for (int j = 0; j < enemyCells.Count; j++)
+        //            {
+        //                Cell dest = enemyCells[j];
+        //                int atk_priority = 0;
+        //                skill.GetAttackCells(troop, dest, attackCells);
+        //                for (int m = 0; m < attackCells.Count; m++)
+        //                {
+        //                    Cell atkCell = attackCells[m];
+        //                    atk_priority += prioritySkillAtkMethod?.Invoke(troop, skill, atkCell, dest, dest) ?? 0;
+        //                    //if (target != null && !atkCell.IsEmpty() && (atkCell.building == target || atkCell.troop == target))
+        //                    //    atk_priority += 10000;
+        //                }
+        //                int def_priority = prioritySkillDefMethod?.Invoke(troop, skill, dest, dest, dest) ?? 0;
+        //                int s_p = atk_priority + def_priority;
+        //                if (s_p > 0)
+        //                {
+        //                    PriorityActionData priorityActionData = new PriorityActionData()
+        //                    {
+        //                        prioriry = s_p,
+        //                        skill = skill,
+        //                        movetoCell = dest,
+        //                        spellCell = dest,
+        //                        atkCells = attackCells.ToArray()
+        //                    };
+        //                    wightList.Push(priorityActionData, s_p / 100);
+        //                }
+        //            }
+        //        }
+        //    }
 
-            if (wightList.Count == 0)
-                return null;
+        //    if (wightList.Count == 0)
+        //        return null;
 
-            // 现在是给了一个随机优先级行动
-            return wightList.RandomGet();
-        }
+        //    // 现在是给了一个随机优先级行动
+        //    return wightList.RandomGet();
+        //}
 
 
         public static void RangeEnemyCell(Troop troop, int range, List<Cell> cells, Scenario scenario)
@@ -247,61 +247,61 @@ namespace Sango.Game
             });
         }
 
-        /// <summary>
-        /// 技能攻击评分
-        /// </summary>
-        /// <param name="troop"></param>
-        /// <param name="skill"></param>
-        /// <param name="target"></param>
-        /// <param name="movetoCell"></param>
-        /// <param name="spellCell"></param>
-        /// <returns></returns>
-        public static int SkillAttackPriority(Troop troop, Skill skill, Cell target, Cell movetoCell, Cell spellCell)
-        {
-            if (target.IsEmpty()) return 0;
-            if (target.troop != null && skill.canDamageTroop)
-            {
-                if (troop.IsEnemy(target.troop))
-                {
-                    int damage = Troop.CalculateSkillDamage(troop, target.troop, skill);
-                    float hitBack = target.troop.GetAttackBackFactor(skill, Scenario.Cur.Map.Distance(target, movetoCell));
-                    if (hitBack > 0)
-                    {
-                        int hitBackDmg = (int)System.Math.Ceiling(hitBack * Troop.CalculateSkillDamage(target.troop, troop, null));
-                        return damage - hitBackDmg;
-                    }
-                    else
-                        return damage;
-                }
-                else if (skill.canDamageTeam)
-                {
-                    int damage = Troop.CalculateSkillDamage(troop, target.troop, skill);
-                    return -damage;
-                }
-            }
-            else if (target.building != null && skill.canDamageBuilding)
-            {
-                //TODO: 对建筑的攻击评分
-                if (troop.IsEnemy(target.building))
-                {
-                    int damage = Troop.CalculateSkillDamage(troop, target.building, skill);
-                    //float hitBack = target.building.GetAttackBackFactor(skill, Scenario.Cur.Map.Distance(target, movetoCell));
-                    //if (hitBack > 0)
-                    //{
-                    //    int hitBackDmg = (int)math.ceil(hitBack * Troop.CalculateSkillDamage(target.building, troop, null));
-                    //    return (damage - hitBackDmg) * 4;
-                    //}
-                    //else
-                    return damage * 4;
-                }
-                else if (skill.canDamageTeam)
-                {
-                    int damage = Troop.CalculateSkillDamage(troop, target.building, skill);
-                    return -damage * 4;
-                }
-            }
-            return 0;
-        }
+        ///// <summary>
+        ///// 技能攻击评分
+        ///// </summary>
+        ///// <param name="troop"></param>
+        ///// <param name="skill"></param>
+        ///// <param name="target"></param>
+        ///// <param name="movetoCell"></param>
+        ///// <param name="spellCell"></param>
+        ///// <returns></returns>
+        //public static int SkillAttackPriority(Troop troop, Skill skill, Cell target, Cell movetoCell, Cell spellCell)
+        //{
+        //    if (target.IsEmpty()) return 0;
+        //    if (target.troop != null && skill.canDamageTroop)
+        //    {
+        //        if (troop.IsEnemy(target.troop))
+        //        {
+        //            int damage = Troop.CalculateSkillDamage(troop, target.troop, skill);
+        //            float hitBack = target.troop.GetAttackBackFactor(skill, Scenario.Cur.Map.Distance(target, movetoCell));
+        //            if (hitBack > 0)
+        //            {
+        //                int hitBackDmg = (int)System.Math.Ceiling(hitBack * Troop.CalculateSkillDamage(target.troop, troop, null));
+        //                return damage - hitBackDmg;
+        //            }
+        //            else
+        //                return damage;
+        //        }
+        //        else if (skill.canDamageTeam)
+        //        {
+        //            int damage = Troop.CalculateSkillDamage(troop, target.troop, skill);
+        //            return -damage;
+        //        }
+        //    }
+        //    else if (target.building != null && skill.canDamageBuilding)
+        //    {
+        //        //TODO: 对建筑的攻击评分
+        //        if (troop.IsEnemy(target.building))
+        //        {
+        //            int damage = Troop.CalculateSkillDamage(troop, target.building, skill);
+        //            //float hitBack = target.building.GetAttackBackFactor(skill, Scenario.Cur.Map.Distance(target, movetoCell));
+        //            //if (hitBack > 0)
+        //            //{
+        //            //    int hitBackDmg = (int)math.ceil(hitBack * Troop.CalculateSkillDamage(target.building, troop, null));
+        //            //    return (damage - hitBackDmg) * 4;
+        //            //}
+        //            //else
+        //            return damage * 4;
+        //        }
+        //        else if (skill.canDamageTeam)
+        //        {
+        //            int damage = Troop.CalculateSkillDamage(troop, target.building, skill);
+        //            return -damage * 4;
+        //        }
+        //    }
+        //    return 0;
+        //}
 
         //攻击时被反击防守评分
         public static int SkillDefencePriority(Troop troop, Skill skill, Cell target, Cell movetoCell, Cell spellCell)

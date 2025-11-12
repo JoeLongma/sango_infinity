@@ -388,7 +388,7 @@ namespace Sango.Game
 
             // 效果范围
             effectCells = new System.Collections.Generic.List<Cell>();
-            scenario.Map.GetDirectSpiral(CenterCell, BuildingType.radius, BuildingType.atkRange, effectCells);
+            scenario.Map.GetDirectSpiral(CenterCell, BuildingType.radius + 1, BuildingType.radius + BuildingType.atkRange, effectCells);
 
             for (int i = 0; i < areaCellList.Count; i++)
             {
@@ -440,21 +440,21 @@ namespace Sango.Game
         public void UpdateFightPower()
         {
             fightPower = 1000 + troops;
-            //fightPower += UnityEngine.Mathf.Min(troops, allPersons.Count * 5000);
+            fightPower += UnityEngine.Mathf.Min(fightPower, allPersons.Count * 5000);
             isUpdatedFightPower = true;
             virtualFightPower = FightPower;
-            ForeachNeighborCities(x =>
-            {
-                if (x.IsSameForce(this))
-                {
-                    if (!x.isUpdatedFightPower)
-                    {
-                        x.UpdateFightPower();
-                        x.isUpdatedFightPower = true;
-                    }
-                    virtualFightPower += x.FightPower / 3;
-                }
-            });
+            //ForeachNeighborCities(x =>
+            //{
+            //    if (x.IsSameForce(this))
+            //    {
+            //        if (!x.isUpdatedFightPower)
+            //        {
+            //            x.UpdateFightPower();
+            //            x.isUpdatedFightPower = true;
+            //        }
+            //        virtualFightPower += x.FightPower / 3;
+            //    }
+            //});
         }
 
         public void CalculateHarvest()
@@ -549,7 +549,7 @@ namespace Sango.Game
 #endif
 
             // 治安降低
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(scenario.Variables.securityChangeOnSeasonStart);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(scenario.Variables.securityChangeOnSeasonStart);
             GameEvent.OnCitySecurityChangeOnSeasonStart?.Invoke(this, overrideData);
             security += overrideData.Value;
             if (security < 0) security = 0;
@@ -910,6 +910,17 @@ namespace Sango.Game
             Troop atk = atker as Troop;
             if (atk == null) return;
 
+            // 清理火
+            for(int i = 0; i < OccupyCellList.Count; ++i)
+            {
+                Cell cell = OccupyCellList[i];
+                if(cell.fire != null)
+                {
+                    cell.fire.Clear();
+                    cell.fire = null;
+                }
+            }
+
             // 城倒,俘虏逃
             for (int i = 0; i < CaptiveList.Count; i++)
             {
@@ -1001,6 +1012,9 @@ namespace Sango.Game
                     }
                 }
             }
+
+            // 处理缓存队伍信息
+            allAttackTroops.Clear();
 
             for (int i = allPersons.Count - 1; i >= 0; --i)
             {
@@ -1338,7 +1352,7 @@ namespace Sango.Game
 
             int goldNeed = variables.jobCost[jobId] + itemType.cost;
 
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(goldNeed);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
             GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
             goldNeed = overrideData.Value;
 
@@ -1450,7 +1464,7 @@ namespace Sango.Game
 
             Person[] personList = people.ToArray();
 
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(totalValue);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(totalValue);
             overrideData.Value = totalValue;
             GameEvent.OnCityJobResult?.Invoke(this, jobId, personList, overrideData);
             totalValue = overrideData.Value;
@@ -1500,7 +1514,7 @@ namespace Sango.Game
 
             int goldNeed = variables.jobCost[jobId] + itemType.cost;
 
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(goldNeed);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
             GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
             goldNeed = overrideData.Value;
 
@@ -1606,7 +1620,7 @@ namespace Sango.Game
 
             Person[] personList = people.ToArray();
 
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(totalValue);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(totalValue);
             overrideData.Value = totalValue;
             GameEvent.OnCityJobResult?.Invoke(this, jobId, personList, overrideData);
             totalValue = overrideData.Value;
@@ -1646,7 +1660,7 @@ namespace Sango.Game
             // TODO: 特性对开发的影响
             int goldNeed = variables.jobCost[jobId];
 
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(goldNeed);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
             GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
             goldNeed = overrideData.Value;
 
@@ -1719,7 +1733,7 @@ namespace Sango.Game
             // TODO: 特性对开发的影响
             int goldNeed = variables.jobCost[jobId];
 
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(goldNeed);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
             GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
             goldNeed = overrideData.Value;
 
@@ -1793,7 +1807,7 @@ namespace Sango.Game
 
             int goldNeed = variables.jobCost[jobId];
 
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(goldNeed);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
             GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
             goldNeed = overrideData.Value;
 
@@ -1869,7 +1883,7 @@ namespace Sango.Game
 
             int goldNeed = variables.jobCost[jobId];
 
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(goldNeed);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
             GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
             goldNeed = overrideData.Value;
 
@@ -1940,7 +1954,7 @@ namespace Sango.Game
 
             int goldNeed = variables.jobCost[jobId];
 
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(goldNeed);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
             GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
             goldNeed = overrideData.Value;
 
@@ -2077,7 +2091,7 @@ namespace Sango.Game
 
             int goldNeed = variables.jobCost[jobId];
 
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(goldNeed);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
             GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
             goldNeed = overrideData.Value;
 
@@ -2187,7 +2201,7 @@ namespace Sango.Game
 
             int goldNeed = variables.jobCost[jobId] + itemType.cost;
 
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(goldNeed);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
             GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
             goldNeed = overrideData.Value;
 
@@ -2297,7 +2311,7 @@ namespace Sango.Game
 
             int totalValue = GameUtility.Method_Trade(person.Politics);
 
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(totalValue);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(totalValue);
             GameEvent.OnCityJobResult?.Invoke(this, jobId, personList, overrideData);
             totalValue = overrideData.Value;
 
@@ -2722,14 +2736,14 @@ namespace Sango.Game
         public void CalculateMaxMorale()
         {
             int max = 100;
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(max);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(max);
             GameEvent.OnCityCalculateMaxMorale?.Invoke(this, overrideData);
             MaxMorale = overrideData.Value;
         }
 
         public void CalculateLimit()
         {
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(0);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(0);
             GameEvent.OnCityCalculateMaxGold?.Invoke(this, overrideData);
             goldLimitAdd = overrideData.Value;
 

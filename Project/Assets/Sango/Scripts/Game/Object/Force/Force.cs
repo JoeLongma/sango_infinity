@@ -419,7 +419,7 @@ namespace Sango.Game
         }
         public override bool OnSeasonStart(Scenario scenario)
         {
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(100);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(100);
             GameEvent.OnForcePersonLoyaltyChangeProbability?.Invoke(this, overrideData);
             if (GameRandom.Chance(overrideData.Value))
             {

@@ -601,7 +601,7 @@ namespace Sango.Game
                     }
                 }
                 openList.RemoveRange(0, count);
-                if (begin > endLen)
+                if (begin >= endLen)
                 {
                     return;
                 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using static Sango.Game.TroopAIUtility;
 
 namespace Sango.Game
 {
@@ -17,6 +18,8 @@ namespace Sango.Game
         public abstract bool IsMissionComplete { get; }
         public abstract bool DoAI(Troop troop, Scenario scenario);
         public virtual void Prepare(Troop troop, Scenario scenario) { }
+
+        protected PriorityActionData priorityActionData;
 
         public static TroopMissionBehaviour Create(int missionType)
         {
@@ -43,7 +46,7 @@ namespace Sango.Game
                 case (int)MissionType.TroopBuildBuilding:
                     return new TroopBuildBuilding();
                 case (int)MissionType.TroopTransformGoodsToCity:
-                    return new TroopTransformGoodsToCity(); 
+                    return new TroopTransformGoodsToCity();
                 default:
                     return new TroopReturnCity();
             }

@@ -18,7 +18,7 @@ namespace Sango.Game
                 if (city.TroopMissionType == MissionType.TroopOccupyCity)
                 {
                     City targetCity = scenario.citySet.Get(city.TroopMissionTargetId);
-                    if ((targetCity.BelongForce != null && city.AttackTroopsCount < GameRandom.Range(5, 10)) || (targetCity.BelongForce == null && city.AttackTroopsCount < 2))
+                    if ((targetCity.BelongForce != null && city.AttackTroopsCount < GameRandom.Range(8, 20)) || (targetCity.BelongForce == null && city.AttackTroopsCount < 2))
                     {
                         // 白城只去2支部队
                         Troop troop = AIMakeTroop(city, 20, true, scenario);
@@ -106,7 +106,7 @@ namespace Sango.Game
                             if (city.troops > 30000 || city.troops > x.troops - 5000)
                             {
                                 // 范围大约在
-                                int weight = (int)(2500 * (float)city.virtualFightPower / (float)x.virtualFightPower);
+                                int weight = (int)(2500 * (float)city.virtualFightPower / x.virtualFightPower);
                                 weight = weight * x.DurabilityLimit / x.durability;
                                 int relation = scenario.GetRelation(city.BelongForce, x.BelongForce);
                                 // 8000亲密 6000友好 4000普通 2000中立 0冷漠 -2000敌对 -4000厌恶 -6000仇视 -8000不死不休
@@ -920,13 +920,13 @@ namespace Sango.Game
             if (city.itemStore.TotalNumber < Math.Min(20000, city.troops * 3 / 2))
                 return false;
 
-            int cityTroopNeedFood = (int)(scenario.Variables.baseFoodCostInCity * (city.troops - 20000) * 9);
-            int troopNeedFood = (int)(20000 * 20 * scenario.Variables.baseFoodCostInTroop);
-            int needFood = troopNeedFood + cityTroopNeedFood;
+            //int cityTroopNeedFood = (int)(scenario.Variables.baseFoodCostInCity * (city.troops - 20000) * 9);
+            //int troopNeedFood = (int)(20000 * 20 * scenario.Variables.baseFoodCostInTroop);
+            //int needFood = troopNeedFood + cityTroopNeedFood;
 
-            // 粮食检查
-            if (city.food <= needFood)
-                return false;
+            //// 粮食检查
+            //if (city.food <= needFood)
+            //    return false;
 
             List<City> enemiesCities = new List<City>();
             city.ForeachNeighborCities(x =>
@@ -938,7 +938,7 @@ namespace Sango.Game
             if (enemiesCities.Count == 0)
                 return false;
 
-            if (GameRandom.Chance(90))
+            if (GameRandom.Chance(70))
                 return false;
 
             return true;

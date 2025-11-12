@@ -65,7 +65,7 @@ namespace Sango.Game.Render
             if (troop != null && building.IsEnemy(troop))
             {
                 int dmg = Troop.CalculateSkillDamage(building, troop, building.GetAttack());
-                troop.ChangeTroops(-dmg, building);
+                troop.ChangeTroops(-dmg, building, null, 0);
 #if SANGO_DEBUG
                 Sango.Log.Print($"{building.BelongForce.Name}的[{building.Name}] 对 {troop.Name} 造成 {dmg} 伤害:, 目标剩余兵力: {troop.GetTroopsNum()}");
 #endif

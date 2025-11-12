@@ -15,16 +15,26 @@ namespace Sango.Game
         {
             if (GameRandom.Chance(p1, 10000))
             {
-                Fire fire = new Fire()
+                Fire fire = spellCell.fire;
+                if (fire == null)
                 {
-                    damage = 300,
-                    intelligence = troop.Intelligence,
-                    cell = spellCell,
-                    counter = GameRandom.Range(2, Math.Max(2, troop.Intelligence / 20))
-                };
+                    fire = new Fire()
+                    {
+                        damage = 300,
+                        intelligence = troop.Intelligence,
+                        cell = spellCell,
+                        counter = GameRandom.Range(2, Math.Max(2, troop.Intelligence / 20))
+                    };
+                    Scenario.Cur.Add(fire);
+                    fire.Init(Scenario.Cur);
+                }
+                else
+                {
+                    fire.intelligence = troop.Intelligence;
+                    fire.counter = GameRandom.Range(2, Math.Max(2, troop.Intelligence / 20));
+                }
+
                 spellCell.fire = fire;
-                Scenario.Cur.Add(fire);
-                fire.Init(Scenario.Cur);
                 fire.Action();
             }
         }

@@ -25,9 +25,14 @@ namespace Sango.Game
 
             if (Params.Length > 4)
             {
-                int checkTroopTypeKind = Params[1];
-                int isNormalSkill = Params[3];
-                if ((isNormalSkill > 0 && skill.costEnergy > 0) || (isNormalSkill == 0 && skill.costEnergy == 0))
+
+                if (!CheckIsNormalSkill(skill, Params[3]))
+                    return;
+
+                //if (CheckIsRangeSkill(skill, Params[5]))
+                //    return;
+
+                if (!CheckTroopTypeKind(troop, Params[1]))
                     return;
 
                 int conditionId = Params[4];
@@ -35,49 +40,9 @@ namespace Sango.Game
                 if (conditionId > 0)
                     condition = Condition.Get(conditionId);
 
-                if (checkTroopTypeKind == 0)
+                if (condition == null || condition.Check(troop, cell.troop, skill))
                 {
-                    if (condition == null || condition.Check(troop, cell.troop, skill))
-                    {
-                        overrideData.Value += Params[2];
-                    }
-                }
-                else if (checkTroopTypeKind == -1)
-                {
-                    if (!troop.IsInWater)
-                    {
-                        if (condition == null || condition.Check(troop, cell.troop, skill))
-                        {
-                            overrideData.Value += Params[2];
-                        }
-                    }
-                }
-                else if (checkTroopTypeKind == -2)
-                {
-                    if (troop.IsInWater)
-                    {
-                        if (condition == null || condition.Check(troop, cell.troop, skill))
-                        {
-                            overrideData.Value += Params[2];
-                        }
-                    }
-                }
-                else
-                {
-                    if (troop.LandTroopType.kind == checkTroopTypeKind && !troop.IsInWater)
-                    {
-                        if (condition == null || condition.Check(troop, cell.troop, skill))
-                        {
-                            overrideData.Value += Params[2];
-                        }
-                    }
-                    else if (troop.WaterTroopType.kind == checkTroopTypeKind && troop.IsInWater)
-                    {
-                        if (condition == null || condition.Check(troop, cell.troop, skill))
-                        {
-                            overrideData.Value += Params[2];
-                        }
-                    }
+                    overrideData.Value += Params[2];
                 }
 
             }

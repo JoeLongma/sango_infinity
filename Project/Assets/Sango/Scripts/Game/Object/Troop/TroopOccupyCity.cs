@@ -10,8 +10,6 @@ namespace Sango.Game
 {
     public class TroopOccupyCity : TroopMissionBehaviour
     {
-        PriorityActionData priorityActionData;
-
         public override MissionType MissionType { get { return MissionType.TroopOccupyCity; } }
 
         public override bool IsMissionComplete

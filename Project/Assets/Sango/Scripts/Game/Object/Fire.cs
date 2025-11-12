@@ -40,12 +40,7 @@ namespace Sango.Game
             counter--;
             if (counter <= 0)
             {
-                cell.fire = null;
-                Render.Clear();
-                Render = null;
-                scenario.fireSet.Remove(this);
-                ActionOver = true;
-                IsAlive = false;
+                Clear();
             }
             return true;
         }
@@ -57,6 +52,17 @@ namespace Sango.Game
                 Action();
             }
             return true;
+        }
+
+        public override void Clear()
+        {
+            base.Clear();
+            cell.fire = null;
+            Render.Clear();
+            Render = null;
+            Scenario.Cur.Remove(this);
+            ActionOver = true;
+            IsAlive = false;
         }
 
         public void Action()
@@ -76,7 +82,7 @@ namespace Sango.Game
             if (troop == null) return;
 
             int dmg = damage + intelligence * 2 - troop.Intelligence - troop.Defence;
-            if (troop.ChangeTroops(-dmg, this, false))
+           // if (troop.ChangeTroops(-dmg, this, false))
             {
                 FireDamageEvent @event = new FireDamageEvent()
                 {
@@ -86,22 +92,6 @@ namespace Sango.Game
                 };
                 RenderEvent.Instance.Add(@event);
             }
-        }
-
-        public void BurnTroopFast(Troop troop)
-        {
-            if (troop == null) return;
-
-            int dmg = intelligence * 4;
-            troop.ChangeTroops(-dmg, this, false);
-            FireDamageEvent @event = new FireDamageEvent()
-            {
-                fire = this,
-                targetTroop = troop,
-                damage = -dmg,
-                actTime = 0f
-            };
-            RenderEvent.Instance.Add(@event);
         }
 
         public void BurnBuildiong(BuildingBase building)
@@ -114,7 +104,7 @@ namespace Sango.Game
                 dmg = building.durability - 1;
             if (dmg > 0)
             {
-                building.ChangeDurability(-dmg, this, false);
+                //building.ChangeDurability(-dmg, this, false);
                 FireDamageEvent @event = new()
                 {
                     fire = this,

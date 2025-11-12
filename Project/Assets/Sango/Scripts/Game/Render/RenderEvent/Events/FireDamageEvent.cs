@@ -16,6 +16,14 @@ namespace Sango.Game.Render
         public override void Enter(Scenario scenario)
         {
             time = 0;
+            if(targetTroop != null)
+            {
+                targetTroop.ChangeTroops(-damage, fire, null, 0);
+            }
+            else if(targetBuilding != null)
+            {
+                targetBuilding.ChangeDurability(-damage, fire);
+            }
         }
 
         public override void Exit(Scenario scenario)
@@ -47,15 +55,15 @@ namespace Sango.Game.Render
             if (time < actTime)
                 return false;
 
-            if (targetTroop != null)
-            {
-                targetTroop.Render.ShowInfo(damage, (int)InfoTyoe.Troop);
-            }
+            //if (targetTroop != null)
+            //{
+            //    targetTroop.Render.ShowInfo(damage, (int)InfoTyoe.Troop);
+            //}
 
-            if (targetBuilding != null)
-            {
-                targetBuilding.Render.ShowInfo(damage, (int)InfoTyoe.Durability);
-            }
+            //if (targetBuilding != null)
+            //{
+            //    targetBuilding.Render.ShowInfo(damage, (int)InfoTyoe.Durability);
+            //}
 
             IsDone = true;
             return IsDone;

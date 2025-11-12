@@ -1,10 +1,14 @@
-﻿using System;
+﻿using Sango.Game.Tools;
+using System;
 using System.Collections.Generic;
 
 namespace Sango.Game
 {
     public class GameUtility
     {
+
+        public static OverrideData<int> IntOverrideData = new OverrideData<int>(0);
+        public static OverrideData<float> FloatOverrideData = new OverrideData<float>(0);
         public static System.Random RandomDigit = new System.Random();
         public static int Random(int maxValue)
         {

@@ -53,6 +53,11 @@
                     return new TroopSkillCalculateCriticalAction();
                 case ActionType.TroopSkillCalculateSuccessAction:
                     return new TroopSkillCalculateSuccessAction();
+                case ActionType.TroopSkillCalculateAttackBackAction:
+                    return new TroopSkillCalculateAttackBackAction();
+                case ActionType.TroopChangeTroopsAction:
+                    return new TroopChangeTroopsAction();
+
             }
             return null;
         }

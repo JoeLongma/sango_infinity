@@ -467,7 +467,7 @@ public class Sango_Game_TroopWrap
 			Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
 			Sango.Game.Skill arg0 = (Sango.Game.Skill)ToLua.CheckObject<Sango.Game.Skill>(L, 2);
 			int arg1 = (int)LuaDLL.luaL_checkinteger(L, 3);
-			float o = obj.GetAttackBackFactor(arg0, arg1);
+			int o = obj.GetAttackBackFactor(arg0, arg1);
 			LuaDLL.lua_pushnumber(L, o);
 			return 1;
 		}
@@ -793,8 +793,6 @@ public class Sango_Game_TroopWrap
 				Sango.Game.Troop obj = (Sango.Game.Troop)ToLua.CheckObject<Sango.Game.Troop>(L, 1);
 				int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
 				Sango.Game.SangoObject arg1 = (Sango.Game.SangoObject)ToLua.CheckObject<Sango.Game.SangoObject>(L, 3);
-				bool o = obj.ChangeTroops(arg0, arg1);
-				LuaDLL.lua_pushboolean(L, o);
 				return 1;
 			}
 			else if (count == 4)
@@ -803,8 +801,6 @@ public class Sango_Game_TroopWrap
 				int arg0 = (int)LuaDLL.luaL_checkinteger(L, 2);
 				Sango.Game.SangoObject arg1 = (Sango.Game.SangoObject)ToLua.CheckObject<Sango.Game.SangoObject>(L, 3);
 				bool arg2 = LuaDLL.luaL_checkboolean(L, 4);
-				bool o = obj.ChangeTroops(arg0, arg1, arg2);
-				LuaDLL.lua_pushboolean(L, o);
 				return 1;
 			}
 			else

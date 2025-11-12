@@ -6,7 +6,6 @@ namespace Sango.Game
     public class TroopProtectCity : TroopMissionBehaviour
     {
         public override MissionType MissionType { get { return MissionType.TroopProtectCity; } }
-        PriorityActionData priorityActionData;
         Troop nearestEnemy;
         bool isNoEnemyAlive = false;
         public override bool IsMissionComplete

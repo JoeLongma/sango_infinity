@@ -283,7 +283,7 @@ namespace Sango.Game
             int baseSuccessRate = successRate + Math.Max(0, troop.TroopTypeLv - 1) * Scenario.Cur.Variables.skillSuccessRateAddByAbility;
 
             // TODO: 其他加成
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(baseSuccessRate);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(baseSuccessRate);
             GameEvent.OnTroopCalculateSkillSuccess?.Invoke(troop, this, spellCell, overrideData);
             baseSuccessRate = overrideData.Value;
 
@@ -322,7 +322,7 @@ namespace Sango.Game
             basCriticalRate += Math.Max(0, (troop.Strength - 60) * scenarioVariables.skillCriticalRateAddByStength / 10);
 
             // TODO: 其他加成
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(basCriticalRate);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(basCriticalRate);
             GameEvent.OnTroopCalculateSkillCritical?.Invoke(troop, this, spellCell, overrideData);
             basCriticalRate = overrideData.Value;
 
@@ -330,7 +330,7 @@ namespace Sango.Game
             if (GameRandom.Chance(basCriticalRate))
             {
                 criticalFactor = scenarioVariables.skillCriticalFactor;
-                overrideData = new Tools.OverrideData<int>(criticalFactor);
+                overrideData = GameUtility.IntOverrideData.Set(criticalFactor);
                 GameEvent.OnTroopCalculateSkillCriticalFactor?.Invoke(troop, this, spellCell, overrideData);
                 criticalFactor = overrideData.Value;
             }
@@ -360,8 +360,8 @@ namespace Sango.Game
 
         public void Action(Troop troop, Cell spellCell, int criticalFactor)
         {
-
-            ScenarioVariables scenarioVariables = Scenario.Cur.Variables;
+            Scenario scenario = Scenario.Cur;
+            ScenarioVariables scenarioVariables = scenario.Variables;
             Troop targetTroop = spellCell.troop;
             BuildingBase targetBuilding = spellCell.building;
 
@@ -382,7 +382,7 @@ namespace Sango.Game
                     {
                         damage = 0;
                     }
-                    beAtkTroop.ChangeTroops(-damage, troop);
+                    beAtkTroop.ChangeTroops(-damage, troop, this, 0);
                     int ep = damage / 100;
                     if (!beAtkTroop.IsAlive) ep += 50;
                     troop.ForEachPerson(p =>
@@ -397,13 +397,17 @@ namespace Sango.Game
                     if (beAtkTroop.IsAlive && targetTroop == beAtkTroop)
                     {
                         targetDamage = damage;
-                        float hitBack = beAtkTroop.GetAttackBackFactor(this, Scenario.Cur.Map.Distance(troop.cell, atkCell));
+                        int hitBack = beAtkTroop.GetAttackBackFactor(this, Scenario.Cur.Map.Distance(troop.cell, spellCell));
+                        Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(hitBack);
+                        GameEvent.OnTroopCalculateAttackBack?.Invoke(troop, beAtkTroop, this, scenario, overrideData);
+                        hitBack = overrideData.Value;
+
                         if (hitBack > 0)
                         {
                             if (this.IsRange())
                             {
-                                int hitBackDmg = (int)System.Math.Ceiling(hitBack * Troop.CalculateSkillDamage(beAtkTroop, troop, beAtkTroop.NormalRangeSkill?.Skill));
-                                troop.ChangeTroops(-hitBackDmg, beAtkTroop);
+                                int hitBackDmg = hitBack * Troop.CalculateSkillDamage(beAtkTroop, troop, beAtkTroop.NormalRangeSkill?.Skill) / 100;
+                                troop.ChangeTroops(-hitBackDmg, beAtkTroop, beAtkTroop.NormalRangeSkill?.Skill, hitBack);
 #if SANGO_DEBUG
                                 Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 受到 {beAtkTroop.BelongForce.Name}的[{beAtkTroop.Name} - {beAtkTroop.TroopType.Name}]反击伤害:{hitBackDmg}, 目标剩余兵力: {troop.GetTroopsNum()}");
 #endif
@@ -417,8 +421,8 @@ namespace Sango.Game
                             }
                             else
                             {
-                                int hitBackDmg = (int)System.Math.Ceiling(hitBack * Troop.CalculateSkillDamage(beAtkTroop, troop, beAtkTroop.NormalSkill?.Skill));
-                                troop.ChangeTroops(-hitBackDmg, beAtkTroop);
+                                int hitBackDmg = hitBack * Troop.CalculateSkillDamage(beAtkTroop, troop, beAtkTroop.NormalSkill?.Skill) / 100;
+                                troop.ChangeTroops(-hitBackDmg, beAtkTroop, beAtkTroop.NormalSkill?.Skill, hitBack);
 #if SANGO_DEBUG
                                 Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 受到 {beAtkTroop.BelongForce.Name}的[{beAtkTroop.Name} - {beAtkTroop.TroopType.Name}]反击伤害:{hitBackDmg}, 目标剩余兵力: {troop.GetTroopsNum()}");
 #endif
@@ -518,13 +522,13 @@ namespace Sango.Game
                             if (hitBack > 0)
                             {
                                 int atkBack = beAtkBuildingBase.GetAttackBack();
-                                Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(atkBack);
+                                Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(atkBack);
                                 GameEvent.OnBuildCalculateAttackBack?.Invoke(troop, spellCell, beAtkBuildingBase, this, overrideData);
                                 atkBack = overrideData.Value;
                                 if (atkBack > 0)
                                 {
                                     int hitBackDmg = (int)System.Math.Ceiling(hitBack * Troop.CalculateSkillDamage(beAtkBuildingBase, troop, atkBack));
-                                    troop.ChangeTroops(-hitBackDmg, beAtkBuildingBase);
+                                    troop.ChangeTroops(-hitBackDmg, beAtkBuildingBase, null, atkBack);
 #if SANGO_DEBUG
                                     Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 受到 {beAtkBuildingBase.BelongForce?.Name}的[{beAtkBuildingBase.Name}]反击伤害:{hitBackDmg}, 目标剩余兵力: {troop.GetTroopsNum()}");
 #endif
@@ -612,7 +616,7 @@ namespace Sango.Game
                                         if (this.blockFactor > 0 && blockTroop != null && blockTroop.IsEnemy(troop))
                                         {
                                             int blockDmg = targetDamage * this.blockFactor / 100;
-                                            blockTroop.ChangeTroops(-blockDmg, troop);
+                                            blockTroop.ChangeTroops(-blockDmg, troop, this, -blockFactor);
                                             int ep = blockDmg / 100;
                                             if (!blockTroop.IsAlive) ep += 50;
                                             troop.ForEachPerson(p =>
@@ -643,7 +647,7 @@ namespace Sango.Game
                                         if (this.blockFactor > 0 && blockTroop != null && blockTroop.IsEnemy(troop))
                                         {
                                             int blockDmg = targetDamage * this.blockFactor / 100;
-                                            blockTroop.ChangeTroops(-blockDmg, troop);
+                                            blockTroop.ChangeTroops(-blockDmg, troop, this, -blockFactor);
                                             int ep = blockDmg / 100;
                                             if (!blockTroop.IsAlive) ep += 50;
                                             troop.ForEachPerson(p =>

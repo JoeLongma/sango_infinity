@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Sango.Game.Render;
+using Sango.Game.Tools;
 using Sango.Tools;
 using System;
 using System.Collections.Generic;
@@ -530,7 +531,7 @@ namespace Sango.Game
         public void CalculateMaxTroops()
         {
             int max = Leader.TroopsLimit;
-            Tools.OverrideData<int> overrideData = new Tools.OverrideData<int>(max);
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(max);
             GameEvent.OnTroopCalculateMaxTroops?.Invoke(Leader.BelongCity, this, overrideData);
             MaxTroops = overrideData.Value;
         }
@@ -583,14 +584,14 @@ namespace Sango.Game
             return LandTroopType.kind == 8;
         }
 
-        public float GetAttackBackFactor(Skill skill, int distance)
+        public int GetAttackBackFactor(Skill skill, int distance)
         {
             if (IsMachine())
                 return 0;
             if (skill.IsRange() && distance > 1)
                 return 0;
             else if (!skill.IsRange() && distance == 1)
-                return 0.9f;
+                return 90;
             return 0;
         }
 
@@ -1156,9 +1157,20 @@ namespace Sango.Game
             return false;
         }
 
-        public bool ChangeTroops(int num, SangoObject atk, bool showDamage = true)
+
+
+        public bool ChangeTroops(int num, SangoObject atk, Skill skill, int atkBack)
         {
-            if (showDamage && Render != null)
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(num);
+            GameEvent.OnTroopChangeTroops?.Invoke(this, atk, skill, atkBack, overrideData);
+            num = overrideData.Value;
+
+            if (num == 0)
+            {
+                return IsAlive;
+            }
+
+            if (Render != null)
                 Render.ShowInfo(num, (int)InfoTyoe.Troop);
 
             troops = troops + num;
@@ -1502,12 +1514,13 @@ namespace Sango.Game
 
             GameEvent.OnTroopEnterCell?.Invoke(destCell, lastCell);
 
-            if (destCell.fire != null)
-                destCell.fire.BurnTroopFast(this);
 
 #if SANGO_DEBUG
             Sango.Log.Print($"{BelongForce.Name}的[{Name} 部队 移动=> ({destCell.x},{destCell.y})]");
 #endif
+
+            if (destCell.fire != null)
+                destCell.fire.BurnTroop(this);
 
             Render.UpdateModelByCell(destCell);
 
