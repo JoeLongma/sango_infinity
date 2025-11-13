@@ -57,7 +57,7 @@ namespace Sango.Game
                     property = property,
                     objectType = objectType
                 });
-                return new T() { Id = id };
+                return null;
             }
             //return null;
         }

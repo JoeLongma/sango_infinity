@@ -22,6 +22,12 @@ namespace Sango.Game
         public HexWorld HexWorld { get; internal set; }
         public string FileName { get; internal set; }
 
+        public void Clear()
+        {
+            CellSet.Clear();
+            CellSet = null;
+        }
+
         public void Load(Scenario scenario)
         {
             string mapName = scenario.Info.mapType;

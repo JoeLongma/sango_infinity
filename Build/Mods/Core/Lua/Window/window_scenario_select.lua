@@ -4,7 +4,7 @@ local Window = require "Window/window"
 ---@param self Window_Scenario_Select
 Window_Scenario_Select = Class(Window)
 
-function Window_Scenario_Select:Awake()
+function Window_Scenario_Select:OnShow()
     local scenarioList = Sango.Game.Scenario.all_scenario_list;
     local count = scenarioList.Count;
     local item = self:GetObject("ScenarioItem");

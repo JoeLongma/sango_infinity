@@ -43,6 +43,12 @@ namespace Sango.Game.Render.UI
 
         float gameSpeed = 1;
 
+        public override void OnShow()
+        {
+            base.OnShow();
+            Window.Instance.HideWindow("window_loading");
+        }
+
         public GameObject GetObject(int index)
         {
             if (pool.Count == 0)

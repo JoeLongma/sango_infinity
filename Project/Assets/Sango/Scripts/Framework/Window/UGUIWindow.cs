@@ -407,7 +407,14 @@ namespace Sango
                 this.gameObject.SetActive(true);
             }
             CallFunction("OnShow");
+            OnShow();
         }
+
+        public virtual void OnShow()
+        {
+
+        }
+
 
         public virtual void Hide()
         {
@@ -416,6 +423,12 @@ namespace Sango
                 this.gameObject.SetActive(false);
             }
             CallFunction("OnHide");
+            OnHide();
+        }
+
+        public virtual void OnHide()
+        {
+
         }
 
         public void SetText(string path, string content)

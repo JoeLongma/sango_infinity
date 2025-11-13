@@ -59,6 +59,10 @@ namespace Sango.Game
             }
         }
 
+        public void Clear()
+        {
+            Cells = null;
+        }
         public void SetTerrainTypeAndState(int x, int y, TerrainType terrainType, int terrainState, City belongCity)
         {
             Cell c = Cells[x][y];

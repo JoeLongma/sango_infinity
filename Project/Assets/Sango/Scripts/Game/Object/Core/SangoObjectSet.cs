@@ -158,7 +158,7 @@ namespace Sango.Game
 
         public override void Clear()
         {
-            objects = null;
+            Reset(objects.Length);
         }
 
         public override T Find(int id)

@@ -86,7 +86,7 @@ namespace Sango.Game
         #endregion Data
         public static Scenario Cur { get; private set; }
         public static List<Scenario> all_scenario_list = new List<Scenario>();
-        public static Scenario CurSelected{ get; set; }
+        public static Scenario CurSelected { get; set; }
 
         public string FilePath { internal set; get; }
         private Queue<Force> runForces = new Queue<Force>();
@@ -377,26 +377,14 @@ namespace Sango.Game
             LoadContent(FilePath);
         }
 
-        public void LoadBaseContent(string path)
+        public void LoadBaseContent()
         {
-            if (!Info.isSave)
-            {
-                if (CommonData == null)
-                    CommonData = GameData.Instance.LoadCommonData();
-            }
+            Cur = this;
+            IsAlive = false;
 
-            JsonConvert.PopulateObject(File.ReadAllText(path), this);
-            GameEvent.OnScenarioPrepare = null;
-        }
-
-        public void LoadContent(string path)
-        {
-            //FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
-            //BinaryReader reader = new BinaryReader(fs);
-            //LoadFromStream(reader);
-            //reader.Close();
-            //fs.Close();
-            FilePath = path;
+            // 由此来判断是否加载过base了
+            if (Map != null && Map.CellSet != null)
+                return;
 
             if (!Info.isSave)
             {
@@ -411,6 +399,13 @@ namespace Sango.Game
             JsonConvert.PopulateObject(File.ReadAllText(FilePath), this);
 
             Map.Load(this);
+
+            GameEvent.OnScenarioPrepare?.Invoke(this);
+        }
+
+        public void LoadContent(string path)
+        {
+            LoadBaseContent();
 
             // 玩家确定
             if (Info.playerForceList != null && Info.playerForceList.Length > 0)
@@ -524,6 +519,22 @@ namespace Sango.Game
         {
             IsAlive = false;
             base.Clear();
+            CommonData = null;
+            Variables = null;
+            if (Map != null)
+            {
+                Map.Clear();
+                Map = null;
+            }
+            forceSet.Clear();
+            corpsSet.Clear();
+            citySet.Clear();
+            personSet.Clear();
+            troopsSet.Clear();
+            buildingSet.Clear();
+            fireSet.Clear();
+            allianceSet.Clear();
+            RelationMap = null;
         }
 
         public void OnGameShutdown()

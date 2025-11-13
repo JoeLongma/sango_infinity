@@ -367,7 +367,6 @@ public class Sango_Game_ScenarioWrap
 			ToLua.CheckArgsCount(L, 2);
 			Sango.Game.Scenario obj = (Sango.Game.Scenario)ToLua.CheckObject<Sango.Game.Scenario>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
-			obj.LoadBaseContent(arg0);
 			return 0;
 		}
 		catch (Exception e)
