@@ -7,30 +7,11 @@ using System.Threading.Tasks;
 
 namespace Sango.Game.Player
 {
-    public class Player
+    public class Player : Singletion<Player>
     {
-        public Scenario scenario { get; private set; }
-        public Player(Scenario scenario)
-        { 
-            this.scenario = scenario;
-        }
-
-        public void OnMonthUpdate(Scenario scenario)
+        public void Init()
         {
-            ScenarioInfo info = scenario.Info;
-        }
-
-        public void OnSeasonUpdate(Scenario scenario)
-        {
-            ScenarioInfo info = scenario.Info;
-            SeasonType cur_season = GameDefine.SeasonInMonth[info.month];
-            if(cur_season == SeasonType.Autumn || cur_season == SeasonType.Spring)
-            {
-            }
-        }
-
-        public void OnYearUpdate(Scenario scenario)
-        {
+            CityRecruitTroops.Instance.Init();
         }
     }
 }

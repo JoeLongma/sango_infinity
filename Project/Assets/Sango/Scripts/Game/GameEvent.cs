@@ -85,6 +85,11 @@ namespace Sango.Game
         /// ContextMenu激活的时候,可以监听来添加自定义按钮
         /// </summary>
         public static EventDelegate<ContextMenuData> OnContextMenuShow;
+
+        public static EventDelegate<ContextMenuData, BuildingBase> OnBuildingContextMenuShow;
+        public static EventDelegate<ContextMenuData, City> OnCityContextMenuShow;
+        public static EventDelegate<ContextMenuData, Troop> OnTroopContextMenuShow;
+
         #endregion Window
 
         #region Game

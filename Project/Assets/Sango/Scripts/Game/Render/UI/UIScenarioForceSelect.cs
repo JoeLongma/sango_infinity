@@ -95,7 +95,7 @@ namespace Sango.Game.Render.UI
             for (int i = 0; i < playerList.Count; i++)
             {
                 stringBuilder.Append(playerList[i].Name);
-                if(i < playerList.Count - 1)
+                if (i < playerList.Count - 1)
                     stringBuilder.Append(",");
             }
 
@@ -103,9 +103,16 @@ namespace Sango.Game.Render.UI
 
             if (!b)
             {
-                forceHead.sprite = null;
-                forceInfo.text = "";
-                return;
+                if (playerList.Count == 0)
+                {
+                    forceHead.sprite = null;
+                    forceInfo.text = "";
+                    return;
+                }
+                else
+                {
+                    force = playerList[playerList.Count - 1];
+                }
             }
 
             int personCount = 0;

@@ -1,41 +1,45 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Sango.Game.Render.UI
 {
     public class ContextMenuData
     {
-        public string title;
-        public int order;
-        public int depth;
-        public Action<ContextMenuData> action;
-        public object customData;
+        public static ContextMenuData MenuData = new ContextMenuData();
 
-        public void OnClick(UIMenuItem item)
+        public List<ContextMenuItem> headList = new List<ContextMenuItem>();
+        public void Add(string title, int order, object custom, Action<ContextMenuItem> action)
         {
-            if (action == null)
+            string[] menuPath = title.Split('/');
+            List<ContextMenuItem> checkList = headList;
+            ContextMenuItem checkItem;
+            for (int i = 0; i < menuPath.Length; ++i)
             {
-
-                RectTransform rect = item.GetComponent<RectTransform>();
-                Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(null, rect.position);
-                ContextMenu.Show(this, screenPos);
-                return;
+                string depthTitle = menuPath[i];
+                checkItem = checkList.Find(x => x.title == depthTitle);
+                if (checkItem == null)
+                {
+                    ContextMenuItem contextMenuItem = new()
+                    {
+                        title = depthTitle,
+                        depth = i,
+                    };
+                    if (i == menuPath.Length - 1)
+                    {
+                        contextMenuItem.order = order;
+                        contextMenuItem.customData = custom;
+                        contextMenuItem.action = action;
+                    }
+                    checkList.Add(contextMenuItem);
+                    checkItem = contextMenuItem;
+                    checkList = checkItem.children;
+                }
+                else
+                {
+                    checkList = checkItem.children;
+                }
             }
-            action.Invoke(this);
-        }
-
-        public void Add(string title, int order, object custom, Action<ContextMenuData> action)
-        {
-            ContextMenuData contextMenuData = new()
-            {
-                title = title,
-                order = order,
-                depth = depth + 1,
-                customData = custom,
-                action = action
-            };
-
-            ContextMenu.Add(contextMenuData);
         }
 
         public void Add(string title, int order, object custom)
@@ -53,6 +57,15 @@ namespace Sango.Game.Render.UI
         public void AddLine()
         {
             Add(null, -1, null, null);
+        }
+        public void Clear()
+        {
+            headList.Clear();
+        }
+
+        public bool IsEmpty()
+        {
+            return headList.Count == 0;
         }
     }
 }

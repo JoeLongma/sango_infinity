@@ -1,0 +1,69 @@
+﻿using Sango.Game.Render.UI;
+using UnityEngine;
+using ContextMenu = Sango.Game.Render.UI.ContextMenu;
+
+namespace Sango.Game.Player
+{
+    public class BuildingSystem : CommandSystemBase<BuildingSystem>
+    {
+        public BuildingBase TargetBuilding { get; set; }
+
+        public void Start(BuildingBase building, Vector3 startPoint)
+        {
+            if (building.IsCity())
+            {
+                CitySystem.Instance.Start((City)building, startPoint);
+                return;
+            }
+
+            if (building.BelongForce == Scenario.Cur.CurRunForce && building.BelongForce.IsPlayer)
+            {
+                ContextMenuData.MenuData.Clear();
+                GameEvent.OnBuildingContextMenuShow?.Invoke(ContextMenuData.MenuData, building);
+                if (!ContextMenuData.MenuData.IsEmpty())
+                {
+                    TargetBuilding = building;
+                    ContextMenu.Show(ContextMenuData.MenuData, startPoint);
+                    PlayerCommand.Instance.Push(this);
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 进入当前命令的时候触发
+        /// </summary>
+        public override void OnEnter()
+        {
+
+
+        }
+
+        /// <summary>
+        /// 离开当前命令的时候触发
+        /// </summary>
+        public override void OnExit() {; }
+
+        /// <summary>
+        /// 当前命令被重新拾起的时候触发(返回)
+        /// </summary>
+        public override void OnBack() {; }
+
+        /// <summary>
+        /// 当前命令被舍弃的时候触发
+        /// </summary>
+        public override void OnDestroy() {; }
+
+        /// <summary>
+        /// 结束整个命令链的时候触发
+        /// </summary>
+        public override void OnDone() {; }
+
+        /// <summary>
+        /// 每帧更新
+        /// </summary>
+        public override void Update() {; }
+
+        public override void HandleEvent(CommandEventType eventType, Cell cell) {; }
+    }
+}

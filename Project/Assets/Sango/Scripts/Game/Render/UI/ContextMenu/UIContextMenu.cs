@@ -56,7 +56,7 @@ namespace Sango.Game.Render.UI
         }
 
         public int showDepth = -1;
-        public void Show(Vector2 screenPoint, int depth, List<ContextMenuData> contextMenuDatas)
+        public void Show(Vector2 screenPoint, int depth, List<ContextMenuItem> menuItems)
         {
             showDepth = depth;
             RectTransform root = menuRoot[showDepth];
@@ -68,9 +68,9 @@ namespace Sango.Game.Render.UI
                 if(depth > 0)
                     screenPoint += new Vector2(rectTransform.sizeDelta.x + 2, 0);
                 root.anchoredPosition = screenPoint;
-                for (int i = 0; i < contextMenuDatas.Count; i++)
+                for (int i = 0; i < menuItems.Count; i++)
                 {
-                    ContextMenuData contextMenuData = contextMenuDatas[i];
+                    ContextMenuItem contextMenuData = menuItems[i];
                     if (!string.IsNullOrEmpty(contextMenuData.title))
                     {
                         UIMenuItem obj = CreteNode(showDepth);

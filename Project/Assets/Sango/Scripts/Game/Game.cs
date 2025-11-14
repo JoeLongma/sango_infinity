@@ -51,7 +51,6 @@ namespace Sango.Game
             GameState.Instance.ChangeState((int)GameState.State.GAME_START_MENU);
             Window.Instance.ShowWindow("window_start");
             Window.Instance.HideWindow("window_loading");
-
             //Scenario scenario = new Scenario();
             //string path = Path.FindFile("Data/Scenario/Scenario.json");
             //scenario.FilePath = path;
@@ -59,7 +58,7 @@ namespace Sango.Game
             ////EnterMapEdior();
             //Scenario.Start(scenario);
             ////scenario.Save(Path.ContentRootPath + "/Save/Scenario.xml");
-
+            Player.Player.Instance.Init();
         }
 
         public void EnterMapEditor()

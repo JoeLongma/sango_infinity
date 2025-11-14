@@ -1,4 +1,5 @@
-﻿using Sango.Game.Render.UI;
+﻿using Sango.Game.Player;
+using Sango.Game.Render.UI;
 using Sango.Render;
 using System;
 using UnityEngine;
@@ -20,66 +21,70 @@ namespace Sango.Game
         //public delegate void OnClickCell(Cell cell);
         //public delegate void OnDoubleClickCell(Cell cell);
 
-        //public delegate void OnMouseOverEnter(Cell cell);
-        //public delegate void OnMouseOverExit(Cell cell);
+        public delegate void OnCellOverEnter(Cell cell);
+        public delegate void OnCellOverExit(Cell cell);
 
-        //public delegate void OnCancel();
+        public delegate void OnCancelHandle();
+        public delegate void OnClickHandle(Cell cell);
         //public delegate void OnKeyDown(KeyCode keyCode);
 
         //public OnClickCell onClickCell;
         //public OnDoubleClickCell onDoubleClickCell;
-        //public OnCancel onCancel;
-        //public OnKeyDown onKeyDown;
+        public OnCellOverEnter onCellOverEnter;
+        public OnCellOverExit onCellOverExit;
+        public OnCancelHandle onCancelHandle;
+        public OnClickHandle onClickHandle;
+        public OnClickHandle onRClickHandle;
 
         private Plane viewPlane = new Plane(Vector3.up, Vector3.zero);
 
         public GameController()
         {
-            GameEvent.OnContextMenuShow += OnContextMenuShow;
+           //GameEvent.OnContextMenuShow += OnContextMenuShow;
         }
 
-        public void OnContextMenuShow(ContextMenuData contextMenuData)
-        {
-            if (contextMenuData.depth == -1)
-            {
-                contextMenuData.Add("开发");
-                contextMenuData.Add("军事");
-                contextMenuData.Add("政治");
-                contextMenuData.AddLine();
-                contextMenuData.Add("合批");
-                contextMenuData.Add("发发发");
-                contextMenuData.Add("啊啊啊啊");
-            }
-            else if (contextMenuData.depth == 0)
-            {
-                contextMenuData.Add("煩煩煩");
-                contextMenuData.Add("哈哈哈");
-            }
-            else if (contextMenuData.depth == 1)
-            {
-                contextMenuData.Add("急急急");
-                contextMenuData.Add("酷酷酷是");
-            }
-        }
+        //public void OnContextMenuShow(ContextMenuData contextMenuData)
+        //{
+        //    if (contextMenuData.depth == -1)
+        //    {
+        //        contextMenuData.Add("开发");
+        //        contextMenuData.Add("军事");
+        //        contextMenuData.Add("政治");
+        //        contextMenuData.AddLine();
+        //        contextMenuData.Add("合批");
+        //        contextMenuData.Add("发发发");
+        //        contextMenuData.Add("啊啊啊啊");
+        //    }
+        //    else if (contextMenuData.depth == 0)
+        //    {
+        //        contextMenuData.Add("煩煩煩");
+        //        contextMenuData.Add("哈哈哈");
+        //    }
+        //    else if (contextMenuData.depth == 1)
+        //    {
+        //        contextMenuData.Add("急急急");
+        //        contextMenuData.Add("酷酷酷是");
+        //    }
+        //}
 
-        public void OnSelectMapObject(MapObject mapObject, Vector3 selectPoint)
-        {
-            Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(Camera.main, selectPoint);
-            Player.PlayerCommand.Instance.Push(new Player.ShowContextMenu()
-            {
-                screenPos = screenPos
+        //public void OnSelectMapObject(MapObject mapObject, Vector3 selectPoint)
+        //{
+        //    Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(Camera.main, selectPoint);
+        //    Player.PlayerCommand.Instance.Push(new Player.ShowContextMenu()
+        //    {
+        //        screenPos = screenPos
 
-            }); ;
+        //    }); ;
 
-            //Sango.Log.Error(mapObject.gameObject.name);
-            //Sango.Game.Render.UI.ContextMenu.Close();
-            //Sango.Game.Render.UI.ContextMenu.Show(screenPos);
-        }
+        //    //Sango.Log.Error(mapObject.gameObject.name);
+        //    //Sango.Game.Render.UI.ContextMenu.Close();
+        //    //Sango.Game.Render.UI.ContextMenu.Show(screenPos);
+        //}
 
-        public void OnSelectTerrain(Vector3 point)
-        {
+        //public void OnSelectTerrain(Vector3 point)
+        //{
 
-        }
+        //}
 
         public bool IsOverUI()
         {
@@ -90,26 +95,28 @@ namespace Sango.Game
             return (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(fingerId))/* || FairyGUI.Stage.isTouchOnUI*/;
         }
 
-        public MapObject mouseOverMapObject;
         public Cell mouseOverCell;
+        public Cell touchBeganCell;
+        public Vector3 clickPosition;
         private Ray ray;
         private RaycastHit hit;
-        private int rayCastLayer = LayerMask.GetMask("Map", "Building", "Troops");
+        private int rayCastLayer = LayerMask.GetMask("Map");
 
-        public MapObject CheckMouseIsOnMapObject(Vector3 mousePosition, out Vector3 hitPiont)
+        public Cell CheckMouseIsOnMapCell(Ray ray, out Vector3 hitPoint)
         {
-            ray = Camera.main.ScreenPointToRay(mousePosition);
             if (Physics.Raycast(ray, out hit, 2000, rayCastLayer))
             {
-                hitPiont = hit.point;
-                MapObject mapObjcet = hit.collider.gameObject.GetComponentInParent<MapObject>();
-                if (mapObjcet != null)
-                {
-                    return mapObjcet;
-                }
+                hitPoint = hit.point;
+                return Scenario.Cur.Map.GetCell(hitPoint);
             }
-            hitPiont = Vector3.zero;
+            hitPoint = Vector3.zero;
             return null;
+        }
+
+        public Cell CheckMouseIsOnMapCell(Vector3 mousePosition, out Vector3 hitPoint)
+        {
+            ray = Camera.main.ScreenPointToRay(mousePosition);
+            return CheckMouseIsOnMapCell(ray, out hitPoint);
         }
 
         private Vector2[] touchPos = new Vector2[2];
@@ -122,37 +129,18 @@ namespace Sango.Game
 
         public void HandleWindowsEvent()
         {
-            MapObject mapObject = CheckMouseIsOnMapObject(Input.mousePosition, out Vector3 hitPoint);
-            Cell overCell;
-            if (mapObject != null)
-                overCell = Scenario.Cur.Map.GetCell(mapObject.position);
-            else
-                overCell = Scenario.Cur.Map.GetCell(hitPoint);
-
+            Cell overCell = CheckMouseIsOnMapCell(Input.mousePosition, out Vector3 hitPoint);
             if (overCell != mouseOverCell)
             {
                 if (mouseOverCell != null)
-                    OnCellOverExit(mouseOverCell);
+                    onCellOverExit?.Invoke(mouseOverCell);
                 mouseOverCell = overCell;
                 if (mouseOverCell != null)
-                    OnCellOverExit(mouseOverCell);
+                    onCellOverEnter?.Invoke(mouseOverCell);
             }
             else if (overCell != null && overCell == mouseOverCell)
             {
-                OnCellOverExit(overCell);
-            }
-
-            if (mapObject != mouseOverMapObject)
-            {
-                if (mouseOverMapObject != null)
-                    OnMapObjectOverExit(mouseOverMapObject);
-                mouseOverMapObject = mapObject;
-                if (mouseOverMapObject != null)
-                    OnMapObjectOverEnter(mouseOverMapObject);
-            }
-            else if (mapObject != null && mapObject == mouseOverMapObject)
-            {
-                OnMapObjectOverStay(mapObject);
+                onCellOverExit?.Invoke(overCell);
             }
 
             if (Input.GetMouseButton(0) && !isRotateMoving)
@@ -166,7 +154,7 @@ namespace Sango.Game
 
                     if (IsOverUI()) return;
 
-                    if (mouseOverMapObject != null)
+                    if (mouseOverCell != null && !mouseOverCell.IsEmpty())
                         return;
 
                     //downSelectMapObject = CheckMouseIsOnMapObject(Input.mousePosition, out Vector3 hitPiont);
@@ -201,14 +189,15 @@ namespace Sango.Game
             }
             else if (Input.GetMouseButtonUp(0) && !isRotateMoving)
             {
-                if (controlType != ControlType.Move)
-                    return;
+                //if (controlType != ControlType.Move)
+                //    return;
                 controlType = ControlType.None;
                 if (isDragMoving)
                 {
                     isDragMoving = false;
                     return;
                 }
+                clickPosition = Input.mousePosition;
                 OnClickWorld();
             }
             else if (Input.GetMouseButton(1) && !isDragMoving)
@@ -221,7 +210,7 @@ namespace Sango.Game
 
                     if (IsOverUI()) return;
 
-                    if (mouseOverMapObject != null)
+                    if (mouseOverCell != null && !mouseOverCell.IsEmpty())
                         return;
 
                     //downSelectMapObject = CheckMouseIsOnMapObject(Input.mousePosition, out Vector3 hitPiont);
@@ -280,36 +269,9 @@ namespace Sango.Game
 
                     if (IsOverUI(touch.fingerId)) return;
 
-                    MapObject mapObject = CheckMouseIsOnMapObject(touch.position, out Vector3 hitPoint);
-                    Cell overCell;
-                    if (mapObject != null)
-                        overCell = Scenario.Cur.Map.GetCell(mapObject.position);
-                    else
-                        overCell = Scenario.Cur.Map.GetCell(hitPoint);
-
-                    if (overCell != mouseOverCell)
+                    touchBeganCell = CheckMouseIsOnMapCell(touch.position, out Vector3 hitPoint);
+                    if (touchBeganCell != null && !touchBeganCell.IsEmpty())
                     {
-                        if (mouseOverCell != null)
-                            OnCellOverExit(mouseOverCell);
-                        mouseOverCell = overCell;
-                        if (mouseOverCell != null)
-                            OnCellOverExit(mouseOverCell);
-                    }
-                    else if (overCell != null && overCell == mouseOverCell)
-                    {
-                        OnCellOverExit(overCell);
-                    }
-
-                    if (mapObject != null)
-                    {
-                        if (mapObject != mouseOverMapObject)
-                        {
-                            if (mouseOverMapObject != null)
-                                OnMapObjectOverExit(mouseOverMapObject);
-                            mouseOverMapObject = mapObject;
-                            if (mouseOverMapObject != null)
-                                OnMapObjectOverEnter(mouseOverMapObject);
-                        }
                         return;
                     }
 
@@ -350,8 +312,20 @@ namespace Sango.Game
                         return;
                     }
 
-
-
+                    touchBeganCell = CheckMouseIsOnMapCell(touch.position, out Vector3 hitPoint);
+                    if (touchBeganCell != mouseOverCell)
+                    {
+                        if (mouseOverCell != null)
+                            onCellOverExit?.Invoke(mouseOverCell);
+                        mouseOverCell = touchBeganCell;
+                        if (mouseOverCell != null)
+                            onCellOverEnter?.Invoke(mouseOverCell);
+                    }
+                    else if (touchBeganCell != null && touchBeganCell == mouseOverCell)
+                    {
+                        onCellOverExit?.Invoke(touchBeganCell);
+                    }
+                    clickPosition = touch.position;
                     OnClickWorld();
                 }
             }
@@ -401,7 +375,8 @@ namespace Sango.Game
                         return;
                     }
 
-                    OnRClickWorld();
+                    // 移动端不提供右键
+                    //OnRClickWorld();
                 }
                 else if (touch1.phase == TouchPhase.Moved || touch2.phase == TouchPhase.Moved)
                 {
@@ -460,6 +435,11 @@ namespace Sango.Game
                 hasKey = true;
             }
 
+            if (Input.GetKeyUp(KeyCode.Escape))
+            {
+                OnCancel();
+            }
+
             if (hasKey)
             {
                 MapRender.Instance.MoveCameraKeyBoard(keyFlags);
@@ -481,44 +461,36 @@ namespace Sango.Game
         }
         public void OnClickWorld()
         {
-            //Sango.Log.Error("OnClickWorld");
-
+            if (onClickHandle != null && mouseOverCell != null)
+            {
+                onClickHandle.Invoke(mouseOverCell);
+                return;
+            }
+            if (mouseOverCell != null)
+                PlayerCommand.Instance.HandleEvent(CommandEventType.Click, mouseOverCell, clickPosition);
         }
 
         public void OnRClickWorld()
         {
-            //Sango.Log.Error("OnRClickWorld");
-        }
+            if (onRClickHandle != null && mouseOverCell != null)
+            {
+                onRClickHandle.Invoke(mouseOverCell);
+                return;
+            }
 
-        public void OnMapObjectOverEnter(MapObject mapObject)
-        {
-
-        }
-        public void OnMapObjectOverExit(MapObject mapObject)
-        {
-
-        }
-
-        public void OnMapObjectOverStay(MapObject mapObject)
-        {
-
-        }
-        public void OnCellOverEnter(Cell cell)
-        {
-
-        }
-        public void OnCellOverExit(Cell cell)
-        {
-
-        }
-
-        public void OnCellOverStay(Cell cell)
-        {
-
+            if (mouseOverCell != null)
+                PlayerCommand.Instance.HandleEvent(CommandEventType.RClick, mouseOverCell, clickPosition);
         }
 
         public void OnCancel()
         {
+            if (onCancelHandle != null)
+            {
+                onCancelHandle.Invoke();
+                return;
+            }
+
+            PlayerCommand.Instance.HandleEvent(CommandEventType.Cancel, null, clickPosition);
             //Sango.Game.Render.UI.ContextMenu.Close();
         }
     }
