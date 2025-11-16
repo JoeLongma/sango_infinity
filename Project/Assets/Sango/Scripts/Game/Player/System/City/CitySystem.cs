@@ -54,6 +54,19 @@ namespace Sango.Game.Player
         /// </summary>
         public override void Update() {; }
 
-        public override void HandleEvent(CommandEventType eventType, Cell cell) {; }
+        public override void HandleEvent(CommandEventType eventType, Cell cell)
+        {
+            switch (eventType)
+            {
+                case CommandEventType.Cancel:
+                case CommandEventType.RClick:
+                    {
+                        if (ContextMenu.Close())
+                            PlayerCommand.Instance.Back();
+                        break;
+                    }
+
+            }
+        }
     }
 }

@@ -397,6 +397,11 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public int securityChangeOnSeasonStart = -5;
 
+        /// <summary>
+        /// 适应名称
+        /// </summary>
+        [JsonProperty] public string[] personAbilityName = new string[] { "Ｃ", "Ｂ", "Ａ", "Ｓ", "Ｓ2", "Ｓ3", "Ｓ4", "Ｓ5" };
+
 
         public float DifficultyDamageFactor
         {
@@ -408,6 +413,14 @@ namespace Sango.Game
                 }
                 return 1;
             }
+        }
+
+        public string GetAbilityName(int lvl)
+        {
+            if (lvl < personAbilityName.Length)
+                return personAbilityName[lvl];
+            else
+                return personAbilityName[personAbilityName.Length - 1];
         }
     }
 }

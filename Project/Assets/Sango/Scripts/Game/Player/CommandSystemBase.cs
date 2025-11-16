@@ -45,6 +45,14 @@
 
         }
 
+        public virtual void Exit()
+        {
+            if(PlayerCommand.Instance.CurrentCommand == this)
+            {
+                PlayerCommand.Instance.Back();
+            }
+        }
+
         public virtual bool IsDone { get; protected set; }
     }
 }

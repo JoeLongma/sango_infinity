@@ -286,17 +286,59 @@ namespace Sango.Game
             return itemStore.GetNumber(itemTypeId) > 0;
         }
 
+        /// <summary>
+        /// 枪兵适应
+        /// </summary>
         public int SpearLv => spearLv.value;
+
+        /// <summary>
+        /// 盾兵适应
+        /// </summary>
         public int HalberdLv => halberdLv.value;
+
+        /// <summary>
+        /// 弓兵适应
+        /// </summary>
         public int CrossbowLv => crossbowLv.value;
+
+        /// <summary>
+        /// 骑兵适应
+        /// </summary>
         public int HorseLv => rideLv.value;
+
+        /// <summary>
+        /// 水军适应
+        /// </summary>
         public int WaterLv => waterLv.value;
+
+        /// <summary>
+        /// 兵器适应
+        /// </summary>
         public int MachineLv => machineLv.value;
 
+        /// <summary>
+        /// 统率
+        /// </summary>
         public int Command => command.value;
+
+        /// <summary>
+        /// 武力
+        /// </summary>
         public int Strength => strength.value;
+
+        /// <summary>
+        /// 智力
+        /// </summary>
         public int Intelligence => intelligence.value;
+
+        /// <summary>
+        /// 政治
+        /// </summary>
         public int Politics => politics.value;
+
+        /// <summary>
+        /// 魅力
+        /// </summary>
         public int Glamour => glamour.value;
 
         /// <summary>

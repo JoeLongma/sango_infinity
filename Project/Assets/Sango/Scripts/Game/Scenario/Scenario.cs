@@ -632,6 +632,8 @@ namespace Sango.Game
         bool isThreadPause = false;
         public void Start()
         {
+            MapRender.Instance.SetCamera(Info.cameraPosition, Info.cameraRotation, Info.cameraDistance);
+
             GameEvent.OnScenarioStart?.Invoke(this);
 
             Window.Instance.HideWindow("window_start");
@@ -1017,7 +1019,11 @@ namespace Sango.Game
 
         public void Save(string path)
         {
+            
             Info.isSave = true;
+            Info.cameraPosition = MapRender.Instance.mapCamera.position;
+            Info.cameraRotation = MapRender.Instance.mapCamera.lookRotate;
+            Info.cameraDistance = MapRender.Instance.mapCamera.distance;
             Sango.Directory.Create(path, false);
             JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings();
             jsonSerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;

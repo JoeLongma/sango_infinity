@@ -17,15 +17,23 @@ namespace Sango.Game.Player
             command.OnEnter();
             CurrentCommand?.OnExit();
             CurrentCommand = command;
-           GameController.Instance.Enabled = false;
+            GameController.Instance.Enabled = false;
         }
 
         public void Back()
         {
             ICommandEvent command = commads.Pop();
             command.OnDestroy();
-            CurrentCommand = commads.Peek();
-            CurrentCommand.OnBack();
+            if (commads.Count > 0)
+            {
+                CurrentCommand = commads.Peek();
+                CurrentCommand.OnBack();
+            }
+            else
+            {
+                CurrentCommand = null;
+                GameController.Instance.Enabled = true;
+            }
         }
 
         public void Done()
@@ -43,7 +51,7 @@ namespace Sango.Game.Player
 
         public void HandleEvent(CommandEventType eventType, Cell clickCell, Vector3 clickPosition)
         {
-            if(CurrentCommand != null)
+            if (CurrentCommand != null)
             {
                 CurrentCommand.HandleEvent(eventType, clickCell);
                 return;
@@ -59,37 +67,15 @@ namespace Sango.Game.Player
                         }
                         else if (clickCell.troop != null)
                         {
-                           TroopSystem.Instance.Start(clickCell.troop, clickPosition);
+                            TroopSystem.Instance.Start(clickCell.troop, clickPosition);
                         }
                     }
-                    break;
-                case CommandEventType.RClick:
                     break;
                 case CommandEventType.Cancel:
                     break;
             }
-
-            //StringBuilder stringBuilder = new StringBuilder();
-
-            //stringBuilder.Append("eventType =");
-            //stringBuilder.Append(eventType.ToString());
-            //stringBuilder.Append(" x =");
-            //stringBuilder.Append(clickCell.x);
-            //stringBuilder.Append(" y =");
-            //stringBuilder.Append(clickCell.y);
-            //stringBuilder.Append(" 地形:");
-            //stringBuilder.Append(clickCell.TerrainType.Name);
-            //stringBuilder.Append(" ");
-            //if (!clickCell.IsEmpty())
-            //{
-            //    if (clickCell.troop != null)
-            //        stringBuilder.Append(clickCell.troop.Name);
-            //    else
-            //        stringBuilder.Append(clickCell.building.Name);
-            //}
-
-            //Sango.Log.Error(stringBuilder);
         }
+
     }
 
 }

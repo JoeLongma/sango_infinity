@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
-
+using UnityEngine;
 
 namespace Sango.Game
 {
@@ -33,5 +33,11 @@ namespace Sango.Game
         public bool isSave;
         [JsonProperty]
         public int[] playerForceList;
+        [JsonProperty]
+        public Vector3 cameraPosition;
+        [JsonProperty]
+        public Vector3 cameraRotation;
+        [JsonProperty]
+        public float cameraDistance;
     }
 }

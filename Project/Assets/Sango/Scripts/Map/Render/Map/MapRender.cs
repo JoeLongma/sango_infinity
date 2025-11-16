@@ -633,6 +633,13 @@ namespace Sango.Render
             mapCamera.MoveCameraTo(pos);
         }
 
+        public void SetCamera(Vector3 pos, Vector3 rot, float dis)
+        {
+            mapCamera.position = pos;
+            mapCamera.lookRotate = rot;
+            mapCamera.distance = dis;
+        }
+
         public void MoveCameraKeyBoard(bool[] keyFlags)
         {
             mapCamera.MoveCameraKeyBoard(keyFlags);

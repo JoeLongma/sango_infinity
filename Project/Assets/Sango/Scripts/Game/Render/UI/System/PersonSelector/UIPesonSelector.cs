@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Render.UI
 {
@@ -43,12 +44,12 @@ namespace Sango.Game.Render.UI
             personSelectSystem = PersonSelectSystem.Instance;
             for (int i = 0; i < toggleGroup.Length; i++)
             {
-                toggleGroup[i].gameObject.SetActive(i < (int)PersonSelectSystem.PersonSortGroupType.Max);
+                toggleGroup[i].gameObject.SetActive(i < (int)PersonSortGroupType.Max);
             }
 
             for (int i = 0; i < personSelectSystem.sorltItems.Count; i++)
             {
-                PersonSelectSystem.SortTitle sortTitle = personSelectSystem.sorltItems[i];
+                SortTitle sortTitle = personSelectSystem.sorltItems[i];
                 UIPersonSortButton uIPersonSortButton;
                 if (i < sortButtonPool.Count)
                     uIPersonSortButton = sortButtonPool[i];

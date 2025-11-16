@@ -40,7 +40,7 @@ namespace Sango.Game
 
         public GameController()
         {
-           //GameEvent.OnContextMenuShow += OnContextMenuShow;
+            //GameEvent.OnContextMenuShow += OnContextMenuShow;
         }
 
         //public void OnContextMenuShow(ContextMenuData contextMenuData)
@@ -127,7 +127,7 @@ namespace Sango.Game
 
         Vector3 worldPlaneDragPosition;
 
-        public void HandleWindowsEvent()
+        public void HandleOverCell()
         {
             Cell overCell = CheckMouseIsOnMapCell(Input.mousePosition, out Vector3 hitPoint);
             if (overCell != mouseOverCell)
@@ -142,6 +142,10 @@ namespace Sango.Game
             {
                 onCellOverExit?.Invoke(overCell);
             }
+        }
+
+        public void HandleWindowsEvent()
+        {
 
             if (Input.GetMouseButton(0) && !isRotateMoving)
             {
@@ -449,15 +453,75 @@ namespace Sango.Game
 
             return hasKey;
         }
+
+        public void HandleWindowsCommandEvent()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (IsOverUI()) return;
+                if (mouseOverCell != null)
+                    return;
+
+                clickPosition = Input.mousePosition;
+                PlayerCommand.Instance.HandleEvent(CommandEventType.Click, mouseOverCell, clickPosition);
+            }
+            else if (Input.GetMouseButtonDown(1))
+            {
+                clickPosition = Input.mousePosition;
+                PlayerCommand.Instance.HandleEvent(CommandEventType.Cancel, mouseOverCell, clickPosition);
+            }
+        }
+
+        public void HandleMobileCommandEvent()
+        {
+            if (Input.touchCount == 1)
+            {
+                Touch touch = Input.GetTouch(0);
+                if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+                {
+                    clickPosition = touch.position;
+                    PlayerCommand.Instance.HandleEvent(CommandEventType.Click, mouseOverCell, clickPosition);
+                }
+            }
+            else if (Input.touchCount == 2)
+            {
+                Touch touch1 = Input.GetTouch(0);
+                Touch touch2 = Input.GetTouch(1);
+                if (touch1.phase == TouchPhase.Ended || touch1.phase == TouchPhase.Canceled)
+                {
+                    clickPosition = touch1.position;
+                    PlayerCommand.Instance.HandleEvent(CommandEventType.Cancel, mouseOverCell, clickPosition);
+                }
+                else if (touch2.phase == TouchPhase.Ended || touch2.phase == TouchPhase.Canceled)
+                {
+                    clickPosition = touch2.position;
+                    PlayerCommand.Instance.HandleEvent(CommandEventType.Cancel, mouseOverCell, clickPosition);
+                }
+            }
+        }
+
         public void Update()
         {
-            if (!Enabled) return;
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
-            HandleWindowsEvent();
-            MoveCameraKeyBoard();
-#else
-            HandleMobileEvent();
+            HandleOverCell();
 #endif
+            if (Enabled)
+            {
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+                HandleWindowsEvent();
+                MoveCameraKeyBoard();
+#else
+                HandleMobileEvent();
+#endif
+            }
+            else
+            {
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+                HandleWindowsCommandEvent();
+#else
+                HandleMobileCommandEvent();
+#endif
+            }
         }
         public void OnClickWorld()
         {
@@ -493,6 +557,8 @@ namespace Sango.Game
             PlayerCommand.Instance.HandleEvent(CommandEventType.Cancel, null, clickPosition);
             //Sango.Game.Render.UI.ContextMenu.Close();
         }
+
+
     }
 
 }

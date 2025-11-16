@@ -1,50 +1,30 @@
-﻿using Newtonsoft.Json.Serialization;
-using Sango.Game.Render.UI;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
-using ContextMenu = Sango.Game.Render.UI.ContextMenu;
+using static Sango.Game.PersonSortFunction;
+
 namespace Sango.Game.Player
 {
     public class PersonSelectSystem : CommandSystemBase<PersonSelectSystem>
     {
-        public delegate string PersonValueStrGet(Person person);
 
-        public class SortTitle
-        {
-            public string name;
-            public int width;
-            public PersonValueStrGet valueGetCall;
-        }
-
-        public enum PersonSortGroupType
-        {
-            None = 0,
-            Base,
-            Max
-        }
 
         public List<Person> People;
         public List<Person> selected = new List<Person>();
         Action<List<Person>> sureAction;
         PersonSortGroupType personSortGroupType;
         public List<SortTitle> sorltItems;
+        public int selectLimit = 0;
 
         public Troop TargetTroop { get; set; }
-        public void Start(List<Person> persons, Action<List<Person>> action, PersonSortGroupType personSortGroupType = PersonSortGroupType.None)
+        public void Start(List<Person> persons, List<Person> resultList, int limit, Action<List<Person>> action, PersonSortGroupType personSortGroupType = PersonSortGroupType.Custom)
         {
+            selectLimit = limit;
             People = new List<Person>(persons);
             sureAction = action;
+            selected = resultList;
             this.personSortGroupType = personSortGroupType;
+            PlayerCommand.Instance.Push(this);
         }
-
-        public void Start(Person[] persons, Action<List<Person>> action, PersonSortGroupType personSortGroupType = PersonSortGroupType.None)
-        {
-            People = new List<Person>(persons);
-            sureAction = action;
-            this.personSortGroupType = personSortGroupType;
-        }
-
         public void OnSure()
         {
             sureAction?.Invoke(selected);
@@ -61,8 +41,7 @@ namespace Sango.Game.Player
         /// </summary>
         public override void OnEnter()
         {
-
-
+            Window.Instance.ShowWindow("window_person_selector");
         }
 
         /// <summary>
@@ -78,7 +57,10 @@ namespace Sango.Game.Player
         /// <summary>
         /// 当前命令被舍弃的时候触发
         /// </summary>
-        public override void OnDestroy() {; }
+        public override void OnDestroy()
+        {
+            Window.Instance.HideWindow("window_person_selector");
+        }
 
         /// <summary>
         /// 结束整个命令链的时候触发

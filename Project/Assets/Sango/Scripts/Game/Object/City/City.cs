@@ -1327,7 +1327,6 @@ namespace Sango.Game
             return building;
         }
 
-
         /// <summary>
         /// 生产船
         /// </summary>
@@ -2087,7 +2086,7 @@ namespace Sango.Game
             Scenario scenario = Scenario.Cur;
 
             ScenarioVariables variables = scenario.Variables;
-            int jobId = (int)CityJobType.TrainTroop;
+            int jobId = (int)CityJobType.RecuritTroop;
 
             int goldNeed = variables.jobCost[jobId];
 
@@ -2153,7 +2152,7 @@ namespace Sango.Game
             // 治安对征兵的影响
             totalValue = (int)(totalValue * (1f - Math.Max(0, (100 - security)) * variables.securityInfluenceRecruitTroops));
 
-            overrideData.Value = totalValue;
+            overrideData.Value = totalValue / 100;
             GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
             techniquePointGain = overrideData.Value;
 

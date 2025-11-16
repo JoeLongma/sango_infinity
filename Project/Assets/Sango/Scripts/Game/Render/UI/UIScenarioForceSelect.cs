@@ -164,6 +164,27 @@ namespace Sango.Game.Render.UI
             List<int> forceIds = new List<int>();
             for (int i = 0; i < playerList.Count; i++)
                 forceIds.Add(playerList[i].Id);
+
+            // 确定第一个视角
+            for (int i = 0; i < Scenario.CurSelected.forceSet.Count; i++)
+            {
+                bool isFind = false;
+                for (int j = 0; j < playerList.Count; j++)
+                {
+                    if (playerList[j] == Scenario.CurSelected.forceSet[i])
+                    {
+                        City city = playerList[j].Governor.BelongCity;
+                        Vector3 position = Scenario.CurSelected.Map.Coords2Position(city.x, city.y);
+                        Scenario.CurSelected.Info.cameraPosition = position;
+                        Scenario.CurSelected.Info.cameraRotation = new Vector3(40f, -50f, 0f);
+                        Scenario.CurSelected.Info.cameraDistance = 400f;
+                        isFind = true;
+                        break;
+                    }
+                }
+                if (isFind) break;
+            }
+
             Scenario.CurSelected.Info.playerForceList = forceIds.ToArray();
             Window.Instance.ShowWindow("window_loading");
             Window.Instance.HideWindow("window_scenario_force_select");
