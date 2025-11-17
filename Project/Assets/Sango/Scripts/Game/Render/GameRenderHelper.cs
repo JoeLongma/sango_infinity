@@ -7,6 +7,8 @@ namespace Sango.Game
 {
     public class GameRenderHelper
     {
+        public static string BuildingTypeIconPath = "Assets/UI/AtlasTexture/facilities";
+
         public static string HeadIconPath = "Assets/UI/AtlasTexture/Face";
         public static string TroopHeadbarRes = "Assets/UI/Prefab/window_troop_bar.prefab";
         public static string CityHeadbarRes = "Assets/UI/Prefab/window_city_bar.prefab";
@@ -39,6 +41,18 @@ namespace Sango.Game
             if (type < 0 || type >= CityResPath.Length)
                 type = 0;
             return CityResPath[type];
+        }
+
+        public static UnityEngine.Sprite LoadBuildingTypeIcon(string name)
+        {
+            string headPath = $"{BuildingTypeIconPath}/{name}.png";
+            UnityEngine.Sprite headSpr = ObjectLoader.LoadObject<UnityEngine.Sprite>(headPath);
+            if (headSpr == null)
+            {
+                headPath = $"{BuildingTypeIconPath}/4845_5_22.png";
+                headSpr = ObjectLoader.LoadObject<UnityEngine.Sprite>(headPath);
+            }
+            return headSpr;
         }
     }
 }

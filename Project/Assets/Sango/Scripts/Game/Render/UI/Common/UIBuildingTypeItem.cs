@@ -6,6 +6,9 @@ namespace Sango.Game.Render.UI
 {
     public class UIBuildingTypeItem : MonoBehaviour
     {
+        public Image icon;
+        public Text nameLabel;
+        public Text costLabel;
         public Image select;
         public int index;
         public delegate void OnSelect(UIBuildingTypeItem item);
@@ -29,6 +32,9 @@ namespace Sango.Game.Render.UI
 
         public UIBuildingTypeItem SetBuildingType(BuildingType buildingType)
         {
+            nameLabel.text = buildingType.Name;
+            costLabel.text = buildingType.cost.ToString();
+            icon.sprite = GameRenderHelper.LoadBuildingTypeIcon(buildingType.icon);
             return this;
         }
 

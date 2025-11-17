@@ -6,6 +6,10 @@ namespace Sango.Game.Render.UI
 {
     public class UICityBuildingSlot : MonoBehaviour
     {
+        public UIBuildingTypeItem uIBuildingTypeItem;
+        public UIPersonItem[] uIPersonItems;
+        public Text leftLabel;
+        public Text infoLabel;
         public Image select;
         public int index;
         public delegate void OnSelect(UICityBuildingSlot item);
@@ -29,6 +33,7 @@ namespace Sango.Game.Render.UI
 
         public UICityBuildingSlot SetBuilding(Building building)
         {
+
             return this;
         }
 

@@ -18,6 +18,11 @@ namespace Sango.Game.Player
             PersonSortFunction.SortByPolitics,
         };
 
+        public List<BuildingType> canSelectBuildingTypes = new List<BuildingType>();
+        public int CurSelectBuildingTypeIndex { get; set; }
+        public int CurSelectSlotIndex { get; set; }
+        public BuildingType TargetBuildingType { get; set; }
+
         public override void Init()
         {
             GameEvent.OnCityContextMenuShow += OnCityContextMenuShow;
@@ -31,7 +36,7 @@ namespace Sango.Game.Player
         void OnCityContextMenuShow(ContextMenuData menuData, City city)
         {
             if (city.BelongForce != null && city.BelongForce.IsPlayer && city.BelongForce == Scenario.Cur.CurRunForce)
-                menuData.Add("都市/城建", 1, city, OnClickMenuItem);
+                menuData.Add("都市/城建", 0, city, OnClickMenuItem);
         }
 
         void OnClickMenuItem(ContextMenuItem contextMenuItem)
@@ -42,34 +47,25 @@ namespace Sango.Game.Player
 
         public void UpdateJobValue()
         {
-
+            TargetBuildingType = canSelectBuildingTypes[CurSelectBuildingTypeIndex];
+            int buildAbility = GameUtility.Method_PersonBuildAbility(personList.ToArray());
+            int turnCount = TargetBuildingType.durabilityLimit % buildAbility == 0 ? 0 : 1;
+            wonderBuildCounter = Math.Min(Scenario.Cur.Variables.BuildMaxTurn, TargetBuildingType.durabilityLimit / buildAbility + turnCount);
         }
 
         public override void OnEnter()
         {
-            personList.Clear();
-            Person[] people = ForceAI.CounsellorRecommendRecuritTroop(TargetCity.freePersons);
-            if (people != null)
-            {
-                for (int i = 0; i < people.Length; ++i)
-                {
-                    Person p = people[i];
-                    if (p != null)
-                        personList.Add(p);
-                }
-            }
-            UpdateJobValue();
-            Window.Instance.ShowWindow("window_city_recurit_troops");
+            Window.Instance.ShowWindow("window_city_building");
         }
 
         public override void OnDestroy()
         {
-            Window.Instance.HideWindow("window_city_recurit_troops");
+            Window.Instance.HideWindow("window_city_building");
         }
 
         public override void OnDone()
         {
-            Window.Instance.HideWindow("window_city_recurit_troops");
+            Window.Instance.HideWindow("window_city_building");
         }
 
         public void DoJob()
