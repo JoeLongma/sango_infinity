@@ -9,6 +9,7 @@ namespace Sango.Game
     public class Game : App<Game>
     {
         public Camera UICamera { get; internal set; }
+        public RectTransform UIRoot { get; internal set; }
 
         public override void Init(MonoBehaviour start, Platform.PlatformName targetPlatform)
         {

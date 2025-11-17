@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5956971697537447266}
   - component: {fileID: 6040505966785960}
   - component: {fileID: 9010271449503537046}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 6062729483653480700}
   - component: {fileID: 9052719636587470253}
   - component: {fileID: 5525775613626989128}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: win_frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 7175181193469252479}
   - component: {fileID: 5562703605107289791}
   - component: {fileID: 8145107261436835383}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: titleframe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,7 +244,7 @@ GameObject:
   - component: {fileID: 1605951977640189192}
   - component: {fileID: 2952306590412944044}
   - component: {fileID: 265541815624306437}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: title
   m_TagString: Untagged
   m_Icon: {fileID: 0}

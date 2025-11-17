@@ -12,6 +12,7 @@ namespace Sango.Game.Player
         public void Init()
         {
             CityRecruitTroops.Instance.Init();
+            CityBuildBuilding.Instance.Init();
         }
     }
 }

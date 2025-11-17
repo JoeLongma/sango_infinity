@@ -2063,11 +2063,11 @@ namespace Sango.Game
         /// </summary>
         /// <param name="personList"></param>
         /// <returns></returns>
-        public bool JobRecuritTroop(Person[] personList)
+        public int JobRecuritTroop(Person[] personList, bool isTest = false)
         {
             int barracksNum = GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.Barracks);
-            if (barracksNum <= 0) return true;
-            return JobRecuritTroop(personList, barracksNum);
+            if (barracksNum <= 0) return 0;
+            return JobRecuritTroop(personList, barracksNum, isTest);
         }
 
 
@@ -2076,12 +2076,11 @@ namespace Sango.Game
         /// </summary>
         /// <param name="personList"></param>
         /// <returns></returns>
-        public bool JobRecuritTroop(Person[] personList, int barracksNum)
+        public int JobRecuritTroop(Person[] personList, int barracksNum, bool isTest = false)
         {
-
-            if (personList == null || personList.Length == 0) return false;
+            if (personList == null || personList.Length == 0) return 0;
             // 城池满了不再招募
-            if (TroopsIsFull) return false;
+            if (TroopsIsFull) return 0;
 
             Scenario scenario = Scenario.Cur;
 
@@ -2095,15 +2094,11 @@ namespace Sango.Game
             goldNeed = overrideData.Value;
 
             if (gold < goldNeed)
-                return false;
+                return 0;
 
             int meritGain = variables.jobMaxPersonCount[jobId];
             int techniquePointGain = variables.jobTechniquePoint[jobId];
 
-#if SANGO_DEBUG
-            StringBuilder stringBuilder = new StringBuilder();
-            int lastTroops = troops;
-#endif
             int totalValue = 0;
             int maxValue = 0;
             Person maxPerson = null;
@@ -2116,16 +2111,6 @@ namespace Sango.Game
                     maxPerson = person;
                     maxValue = person.BaseRecruitmentAbility;
                 }
-
-                person.merit += meritGain;
-                person.GainExp(meritGain);
-
-                freePersons.Remove(person);
-#if SANGO_DEBUG
-                stringBuilder.Append(person.Name);
-                stringBuilder.Append(",");
-#endif
-                person.ActionOver = true;
             }
 
             // 最高属性武将获得100%加成,其余两个获取50%加成
@@ -2159,12 +2144,38 @@ namespace Sango.Game
             if (Scenario.Cur.Variables.populationEnable)
             {
                 totalValue = Math.Min(totalValue, troopPopulation);
-                troopPopulation -= totalValue;
-                population -= totalValue;
             }
 
             if (totalValue + troops > TroopsLimit)
                 totalValue = TroopsLimit - troops;
+
+            if(isTest)
+                return totalValue;
+
+#if SANGO_DEBUG
+            StringBuilder stringBuilder = new StringBuilder();
+            int lastTroops = troops;
+#endif
+
+            for (int i = 0; i < personList.Length; i++)
+            {
+                Person person = personList[i];
+                if (person == null) continue;
+                person.merit += meritGain;
+                person.GainExp(meritGain);
+                freePersons.Remove(person);
+#if SANGO_DEBUG
+                stringBuilder.Append(person.Name);
+                stringBuilder.Append(",");
+#endif
+                person.ActionOver = true;
+            }
+
+            if (Scenario.Cur.Variables.populationEnable)
+            {
+                troopPopulation -= totalValue;
+                population -= totalValue;
+            }
 
             //士气减少
             morale = (troops * morale + totalValue * 30) / (troops + totalValue);
@@ -2177,7 +2188,7 @@ namespace Sango.Game
 #if SANGO_DEBUG
             Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了招募!共招募到{troops - lastTroops}人, 当前士兵人数提升到了:{troops}");
 #endif
-            return true;
+            return totalValue;
         }
 
         /// <summary>

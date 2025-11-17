@@ -835,11 +835,7 @@ namespace Sango.Game
 
             Person[] people = ForceAI.CounsellorRecommendRecuritTroop(city.freePersons);
             if (people == null) return true;
-
-            if (city.JobRecuritTroop(people, barracksNum))
-            {
-
-            }
+            city.JobRecuritTroop(people, barracksNum);
             return true;
         }
 

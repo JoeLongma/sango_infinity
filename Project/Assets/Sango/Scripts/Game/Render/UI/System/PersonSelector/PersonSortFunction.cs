@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
-using static Sango.Game.Player.PersonSelectSystem;
 
 namespace Sango.Game
 {
@@ -49,11 +45,82 @@ namespace Sango.Game
             public PersonSortFunc personSortFunc;
         }
 
-
-        List<SortTitle> GetSortTitleGroup(PersonSortGroupType personSortTileGroupType)
+        public void GetSortTitleGroup(PersonSortGroupType personSortTileGroupType, List<SortTitle> titleList)
         {
-            return null;
+            switch (personSortTileGroupType)
+            {
+                case PersonSortGroupType.Belong:
+                    {
+                        titleList.Add(SortByName);
+                        break;
+                    }
+                case PersonSortGroupType.Attribute:
+                    {
+                        titleList.Add(SortByName);
+                        titleList.Add(SortByTroopsLimit);
+                        titleList.Add(SortByCommand);
+                        titleList.Add(SortByStrength);
+                        titleList.Add(SortByIntelligence);
+                        titleList.Add(SortByPolitics);
+                        titleList.Add(SortByGlamour);
+                        titleList.Add(SortByFeatureList);
+                        break;
+                    }
+                case PersonSortGroupType.Feature:
+                    {
+                        titleList.Add(SortByName);
+                        titleList.Add(SortByFeatureList);
+                        break;
+                    }
+                case PersonSortGroupType.Ability:
+                    {
+                        titleList.Add(SortByName);
+                        titleList.Add(SortByHalberdLv);
+                        titleList.Add(SortByCrossbowLv);
+                        titleList.Add(SortBySpearLv);
+                        titleList.Add(SortByHorseLv);
+                        titleList.Add(SortByWaterLv);
+                        titleList.Add(SortByMachineLv);
+                        titleList.Add(SortByFeatureList);
+                        break;
+                    }
+                case PersonSortGroupType.Mission:
+                    {
+
+                        titleList.Add(SortByName);
+                        break;
+                    }
+                case PersonSortGroupType.Personal:
+                    {
+
+                        titleList.Add(SortByName);
+                        break;
+                    }
+                case PersonSortGroupType.Consanguinity:
+                    {
+
+                        titleList.Add(SortByName);
+                        break;
+                    }
+            }
         }
+
+        public string GetSortTitleGroupName(PersonSortGroupType personSortTileGroupType)
+        {
+            switch (personSortTileGroupType)
+            {
+                case PersonSortGroupType.Belong:        return "所属";
+                case PersonSortGroupType.Attribute:     return "能力";
+                case PersonSortGroupType.Feature:       return "特技";
+                case PersonSortGroupType.Ability:       return "适应";
+                case PersonSortGroupType.Mission:       return "任务";
+                case PersonSortGroupType.Personal:      return "个人";
+                case PersonSortGroupType.Consanguinity: return "血缘";
+            }
+
+            return "";
+        }
+
 
         public static SortTitle SortByName = new SortTitle()
         {
@@ -159,7 +226,36 @@ namespace Sango.Game
             personSortFunc = (a, b) => a.MachineLv.CompareTo(b.MachineLv),
         };
 
+        public static SortTitle SortByFeatureList = new SortTitle()
+        {
+            name = "特技",
+            width = 50,
+            valueGetCall = x =>
+            {
 
+                StringBuilder sb = new StringBuilder();
+                if (x.FeatureList != null)
+                {
+                    for (int i = 0; i < x.FeatureList.Count; i++)
+                    {
+                        sb.Append(x.FeatureList[i].Name);
+                        if (i < x.FeatureList.Count - 1)
+                            sb.Append(", ");
+                    }
+                }
+                return sb.ToString();
+            },
+            personSortFunc = (a, b) =>
+            {
+                if (a.FeatureList == null && b.FeatureList == null)
+                    return 0;
+                if (a.FeatureList != null && b.FeatureList == null)
+                    return -1;
+                if (a.FeatureList == null && b.FeatureList != null)
+                    return 1;
+                return a.FeatureList.Count.CompareTo(b.FeatureList.Count);
+            }
+        };
 
     }
 

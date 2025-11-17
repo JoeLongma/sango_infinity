@@ -3,6 +3,7 @@ using Sango.Loader;
 using Sango.Render;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static Sango.Game.PersonSortFunction;
@@ -15,6 +16,7 @@ namespace Sango.Game.Render.UI
         public GameObject personItemObject;
         public LoopScrollRect loopScrollRect;
 
+        public List<SortTitle> sortItems;
 
         public Toggle[] toggleGroup;
 
@@ -24,44 +26,74 @@ namespace Sango.Game.Render.UI
         public RectTransform sorltTitleTransform;
         PersonSelectSystem personSelectSystem;
 
-
-
-        void Start()
+        void Awake()
         {
-            loopScrollRect.prefabSource = this;
-            loopScrollRect.dataSource = this;
             //loopScrollRect.totalCount = totalCount;
             //loopScrollRect.RefillCells();
+            for (int i = 0; i < toggleGroup.Length; i++)
+            {
+                toggleGroup[i].onValueChanged.RemoveAllListeners();
+                toggleGroup[i].onValueChanged.AddListener((b) => OnSortGroupChanged(i, b));
+            }
         }
 
         UIPersonSortButton CreateSortButtonItem()
         {
-            return new UIPersonSortButton();
+            GameObject btn = GameObject.Instantiate(sortTitleItem.gameObject, sortTitleItem.transform.parent);
+            UIPersonSortButton sortBtn = btn.GetComponent<UIPersonSortButton>();
+            sortButtonPool.Add(sortBtn);
+            return sortBtn;
         }
 
         public override void OnShow()
         {
+            loopScrollRect.prefabSource = this;
+            loopScrollRect.dataSource = this;
+
             personSelectSystem = PersonSelectSystem.Instance;
-            for (int i = 0; i < toggleGroup.Length; i++)
+
+            toggleGroup[0].GetComponentInChildren<Text>(true).text = personSelectSystem.customSortTitleName;
+            sortItems = personSelectSystem.customSortItems;
+            toggleGroup[0].isOn = true;
+            for (int i = 1; i < toggleGroup.Length; i++)
             {
-                toggleGroup[i].gameObject.SetActive(i < (int)PersonSortGroupType.Max);
+                toggleGroup[i].GetComponentInChildren<Text>(true).text = PersonSortFunction.Instance.GetSortTitleGroupName((PersonSortGroupType)i);
             }
 
-            for (int i = 0; i < personSelectSystem.sorltItems.Count; i++)
+            loopScrollRect.totalCount = personSelectSystem.People.Count;
+
+            UpdateSortContent();
+        }
+
+        public void UpdateSortContent()
+        {
+            for (int i = 0; i < sortItems.Count; i++)
             {
-                SortTitle sortTitle = personSelectSystem.sorltItems[i];
+                SortTitle sortTitle = sortItems[i];
                 UIPersonSortButton uIPersonSortButton;
                 if (i < sortButtonPool.Count)
                     uIPersonSortButton = sortButtonPool[i];
                 else
                     uIPersonSortButton = CreateSortButtonItem();
 
+                uIPersonSortButton.gameObject.SetActive(true);
                 uIPersonSortButton.Clear().SetWidth(sortTitle.width).SetName(sortTitle.name);
             }
 
-            loopScrollRect.totalCount = personSelectSystem.People.Count;
+            for (int i = sortItems.Count; i < sortButtonPool.Count; i++)
+                sortButtonPool[i].gameObject.SetActive(false);
+
             loopScrollRect.RefillCells();
         }
+
+
+        public override void OnHide()
+        {
+            base.OnHide();
+            for (int i = 0; i < sortButtonPool.Count; i++)
+                sortButtonPool[i].gameObject.SetActive(false);
+        }
+
 
         public void OnSure()
         {
@@ -104,14 +136,55 @@ namespace Sango.Game.Render.UI
             transform.SendMessage("ScrollCellIndex", idx);
         }
 
-        public void OnPersonListSelected(int index)
+        public void OnSortGroupChanged(int index, bool b)
         {
+            if (b)
+            {
+                if (index == 0)
+                {
+                    sortItems = personSelectSystem.customSortItems;
+                }
+                else
+                {
+                    sortItems = new List<SortTitle>();
+                    PersonSortFunction.Instance.GetSortTitleGroup((PersonSortGroupType)index, sortItems);
+                }
+                UpdateSortContent();
+            }
 
+        }
+
+        public void OnPersonListSelected(UIPersonListItem item)
+        {
+            if (!item.IsSelected() && PersonSelectSystem.Instance.IsPersonLimit())
+                return;
+
+            item.SetSelected(!item.IsSelected());
+            if (item.IsSelected())
+            {
+                PersonSelectSystem.Instance.Add(item.index);
+            }
+            else
+            {
+                PersonSelectSystem.Instance.Remove(item.index);
+            }
         }
 
         public void OnPersonListShow(UIPersonListItem item)
         {
+            RectTransform rectTransform = item.GetComponent<RectTransform>();
+            rectTransform.anchoredPosition = Vector2.zero;
+            Person person = PersonSelectSystem.Instance.People[item.index];
 
+            bool isSelected = PersonSelectSystem.Instance.selected.Contains(person);
+            item.Clear();
+            for (int i = 0; i < sortItems.Count; i++)
+            {
+                SortTitle sortTitle = sortItems[i];
+                item.Add(sortTitle.valueGetCall.Invoke(person), sortTitle.width);
+            }
+
+            item.SetSelected(isSelected);
         }
 
 

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2184729811625120502}
   - component: {fileID: 3381638541912662324}
   - component: {fileID: 2763841473071958759}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: menuSubItem2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 3540999825413924294}
   - component: {fileID: 8769593600391195434}
   - component: {fileID: 5439197788166193267}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 4264208048277095953}
   - component: {fileID: 6841386725564932219}
   - component: {fileID: 4020955142070259457}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: menuItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -382,7 +382,7 @@ GameObject:
   - component: {fileID: 5833260578989095832}
   - component: {fileID: 6761291178004926335}
   - component: {fileID: 2916014005888294436}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: menuLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -503,7 +503,7 @@ GameObject:
   - component: {fileID: 3821502990895235361}
   - component: {fileID: 475071571790529254}
   - component: {fileID: 1215174853302262807}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -600,7 +600,7 @@ GameObject:
   - component: {fileID: 1868779983743934136}
   - component: {fileID: 6953424568196829703}
   - component: {fileID: 3439697124873459230}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: subRoot2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -719,7 +719,7 @@ GameObject:
   - component: {fileID: 9100348847159160473}
   - component: {fileID: 6037201108527361767}
   - component: {fileID: 6829028875620942515}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: subRoot1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -837,7 +837,7 @@ GameObject:
   - component: {fileID: 7233450549581191620}
   - component: {fileID: 3648803517623711216}
   - component: {fileID: 9047402018302573834}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -934,7 +934,7 @@ GameObject:
   - component: {fileID: 3286283045735642932}
   - component: {fileID: 2432912017840543498}
   - component: {fileID: 2399979394483932615}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: menuSubItem1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1071,7 +1071,7 @@ GameObject:
   - component: {fileID: 5758196291159785329}
   - component: {fileID: 5284125486027471571}
   - component: {fileID: 7946022037988302929}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: menuRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1190,7 +1190,7 @@ GameObject:
   - component: {fileID: 227613633725753443}
   - component: {fileID: 576643473640125865}
   - component: {fileID: 8926363950934941540}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: window_contextMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1230,7 +1230,7 @@ Canvas:
   m_GameObject: {fileID: 9039031632039893254}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 2
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -1240,7 +1240,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 229738569
+  m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &227613633725753443
@@ -1265,7 +1265,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &576643473640125865
 MonoBehaviour:
   m_ObjectHideFlags: 0

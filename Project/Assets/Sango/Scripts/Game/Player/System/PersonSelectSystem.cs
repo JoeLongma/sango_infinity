@@ -6,23 +6,25 @@ namespace Sango.Game.Player
 {
     public class PersonSelectSystem : CommandSystemBase<PersonSelectSystem>
     {
-
-
         public List<Person> People;
         public List<Person> selected = new List<Person>();
         Action<List<Person>> sureAction;
         PersonSortGroupType personSortGroupType;
-        public List<SortTitle> sorltItems;
+
+        public string customSortTitleName;
+        public List<SortTitle> customSortItems;
+
         public int selectLimit = 0;
 
         public Troop TargetTroop { get; set; }
-        public void Start(List<Person> persons, List<Person> resultList, int limit, Action<List<Person>> action, PersonSortGroupType personSortGroupType = PersonSortGroupType.Custom)
+        public void Start(List<Person> persons, List<Person> resultList, int limit, Action<List<Person>> action, List<SortTitle> customSortTitles, string cutomSortTitleName)
         {
             selectLimit = limit;
             People = new List<Person>(persons);
             sureAction = action;
             selected = resultList;
-            this.personSortGroupType = personSortGroupType;
+            customSortItems = customSortTitles;
+            this.customSortTitleName = cutomSortTitleName;
             PlayerCommand.Instance.Push(this);
         }
         public void OnSure()
@@ -34,6 +36,21 @@ namespace Sango.Game.Player
         public void OnCancel()
         {
             PlayerCommand.Instance.Back();
+        }
+
+        public bool IsPersonLimit()
+        {
+            return selectLimit <= selected.Count;
+        }
+
+        public void Add(int index)
+        {
+            selected.Add(People[index]);
+        }
+
+        public void Remove(int index)
+        {
+            selected.Remove(People[index]);
         }
 
         /// <summary>

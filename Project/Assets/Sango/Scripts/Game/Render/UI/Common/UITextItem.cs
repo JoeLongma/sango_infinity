@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Sango.Loader;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
@@ -6,29 +7,39 @@ namespace Sango.Game.Render.UI
     public class UITextItem : MonoBehaviour
     {
         public Text label;
-
-        public void SetWidth(int width)
+        public Image image;
+        public UITextItem SetWidth(int width)
         {
             RectTransform rectTransform = GetComponent<RectTransform>();
             rectTransform.sizeDelta = new Vector2(width, rectTransform.sizeDelta.y);
             LayoutElement layoutElement = GetComponent<LayoutElement>();
             if (layoutElement != null)
                 layoutElement.preferredWidth = width;
+            return this;
         }
 
-        public void SetText(string lab)
+        public UITextItem SetSelected(bool b)
+        {
+            image.enabled = b;
+            return this;
+        }
+
+        public UITextItem SetText(string lab)
         {
             label.text = lab;
+            return this;
         }
 
-        public void SetColor(Color c)
+        public UITextItem SetColor(Color c)
         {
             label.color = c;
+            return this;
         }
 
-        public void SetAlignment(TextAnchor c)
+        public UITextItem SetAlignment(TextAnchor c)
         {
             label.alignment = c;
+            return this;
         }
     }
 }

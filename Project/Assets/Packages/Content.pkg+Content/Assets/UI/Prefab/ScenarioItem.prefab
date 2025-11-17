@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 264690518210310175}
   - component: {fileID: 5657186239941172111}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ScenarioItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ GameObject:
   - component: {fileID: 1163599907083898352}
   - component: {fileID: 5087847844289702564}
   - component: {fileID: 3014561069216346963}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 3522167196321421701}
   - component: {fileID: 6561313433980787994}
   - component: {fileID: 5051862550007627848}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: info
   m_TagString: Untagged
   m_Icon: {fileID: 0}

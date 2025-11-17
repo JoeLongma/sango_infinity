@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9042488575494512024}
   - component: {fileID: 8013327680080261397}
   - component: {fileID: 1795917409339929542}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (Legacy)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 7732581655081793103}
   - component: {fileID: 2747264536939139455}
   - component: {fileID: 8836235109150663766}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: newGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 1000329246849370072}
   - component: {fileID: 4003680545910083700}
   - component: {fileID: 9182555020107513809}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (Legacy)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 9152326210426715478}
   - component: {fileID: 7140967891674408191}
   - component: {fileID: 7212794297111838314}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -415,7 +415,7 @@ GameObject:
   - component: {fileID: 3640564434431012960}
   - component: {fileID: 4886754380188860181}
   - component: {fileID: 3077469896467252950}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -491,7 +491,7 @@ GameObject:
   - component: {fileID: 8112661406354916524}
   - component: {fileID: 31816153778584800}
   - component: {fileID: 5758196291159785329}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -567,7 +567,7 @@ GameObject:
   - component: {fileID: 9002682880594639754}
   - component: {fileID: 7813015541124969590}
   - component: {fileID: 5950256491360564787}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (Legacy)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -648,7 +648,7 @@ GameObject:
   - component: {fileID: 1889851004820150934}
   - component: {fileID: 2404314415711408784}
   - component: {fileID: 4498933998493236499}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: mapEditor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -771,7 +771,7 @@ GameObject:
   - component: {fileID: 227613633725753443}
   - component: {fileID: 576643473640125865}
   - component: {fileID: -9159462744481052588}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: window_start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -812,7 +812,7 @@ Canvas:
   m_GameObject: {fileID: 9039031632039893254}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 2
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -822,7 +822,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 229738569
+  m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &227613633725753443
@@ -847,7 +847,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &576643473640125865
 MonoBehaviour:
   m_ObjectHideFlags: 0

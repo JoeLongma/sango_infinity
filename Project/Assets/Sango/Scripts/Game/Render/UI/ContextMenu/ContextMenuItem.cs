@@ -18,7 +18,7 @@ namespace Sango.Game.Render.UI
             if (action == null)
             {
                 RectTransform rect = item.GetComponent<RectTransform>();
-                Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(null, rect.position);
+                Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(Game.Instance.UICamera, rect.position);
                 ContextMenu.Show(children, screenPos);
                 return;
             }

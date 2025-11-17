@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 998465028955055932}
   - component: {fileID: 543751347724778860}
   - component: {fileID: 1179874219326482857}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Scrollbar Horizontal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 8203500457913656219}
   - component: {fileID: 7966514965404687945}
   - component: {fileID: 2750271153557023791}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: return
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 2784400994737580610}
   - component: {fileID: 1949573474619590325}
   - component: {fileID: 8499953535207654322}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Scrollbar Vertical
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -385,7 +385,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2990250179699257813}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Sliding Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -424,7 +424,7 @@ GameObject:
   - component: {fileID: 7660098974024186355}
   - component: {fileID: 3321158547887008383}
   - component: {fileID: 2543051141915291854}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -501,7 +501,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3214155307479515723}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Sliding Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -540,7 +540,7 @@ GameObject:
   - component: {fileID: 6351398397367283130}
   - component: {fileID: 4929544845509906812}
   - component: {fileID: 5930648911986129442}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Viewport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -601,7 +601,7 @@ GameObject:
   - component: {fileID: 5864363249956466561}
   - component: {fileID: 5070860492624819114}
   - component: {fileID: 2516580895354060166}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (Legacy)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -681,7 +681,7 @@ GameObject:
   - component: {fileID: 4811311489434229917}
   - component: {fileID: 2421344471425966265}
   - component: {fileID: 6934718337219663194}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -759,7 +759,7 @@ GameObject:
   - component: {fileID: 6857155783993741806}
   - component: {fileID: 7298077461538877782}
   - component: {fileID: 6765327031358625380}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -835,7 +835,7 @@ GameObject:
   - component: {fileID: 282335961226800713}
   - component: {fileID: 5045934514206436421}
   - component: {fileID: 2080822289121962667}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: info
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -915,7 +915,7 @@ GameObject:
   - component: {fileID: 7708500320625231776}
   - component: {fileID: 2280308853311506656}
   - component: {fileID: 3552832312552506532}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -991,7 +991,7 @@ GameObject:
   - component: {fileID: 3640564434431012960}
   - component: {fileID: 4886754380188860181}
   - component: {fileID: 3077469896467252950}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: poster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1067,7 +1067,7 @@ GameObject:
   - component: {fileID: 8112661406354916524}
   - component: {fileID: 31816153778584800}
   - component: {fileID: 5758196291159785329}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1143,7 +1143,7 @@ GameObject:
   - component: {fileID: 5887419921453325116}
   - component: {fileID: 5401181910875149861}
   - component: {fileID: 4643682586883844732}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: desc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1224,7 +1224,7 @@ GameObject:
   - component: {fileID: 8884021607481490955}
   - component: {fileID: 6021499386989900583}
   - component: {fileID: 2356902545104445467}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: enter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1345,7 +1345,7 @@ GameObject:
   - component: {fileID: 2558565329205411223}
   - component: {fileID: 6913977766620790002}
   - component: {fileID: 3567163007361523705}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (Legacy)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1427,7 +1427,7 @@ GameObject:
   - component: {fileID: 227613633725753443}
   - component: {fileID: 576643473640125865}
   - component: {fileID: -9159462744481052588}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: window_scenario_load
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1471,7 +1471,7 @@ Canvas:
   m_GameObject: {fileID: 9039031632039893254}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 2
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -1480,8 +1480,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 229738569
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &227613633725753443
@@ -1506,7 +1506,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &576643473640125865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1632,8 +1632,20 @@ PrefabInstance:
       value: ScenarioItem
       objectReference: {fileID: 0}
     - target: {fileID: 4406602380684479817, guid: ad9d59d406bc8ab4eb780704d695ed6e, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4406602380684479817, guid: ad9d59d406bc8ab4eb780704d695ed6e, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6796115248534869679, guid: ad9d59d406bc8ab4eb780704d695ed6e, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162152516960791591, guid: ad9d59d406bc8ab4eb780704d695ed6e, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad9d59d406bc8ab4eb780704d695ed6e, type: 3}

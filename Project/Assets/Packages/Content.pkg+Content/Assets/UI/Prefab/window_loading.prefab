@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3392329996016507104}
   - component: {fileID: 6137139255251189166}
   - component: {fileID: 5631851353100237706}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (Legacy)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 4886754380188860181}
   - component: {fileID: 3077469896467252950}
   - component: {fileID: 8633015986094710670}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 8112661406354916524}
   - component: {fileID: 31816153778584800}
   - component: {fileID: 5758196291159785329}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 227613633725753443}
   - component: {fileID: 576643473640125865}
   - component: {fileID: -9159462744481052588}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: window_loading
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,7 +301,7 @@ Canvas:
   m_GameObject: {fileID: 9039031632039893254}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 2
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -336,7 +336,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &576643473640125865
 MonoBehaviour:
   m_ObjectHideFlags: 0

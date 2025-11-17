@@ -13,6 +13,7 @@ public class GameStart : MonoBehaviour
     [NoToLua]
     public bool Debug = false;
     public Camera uiCamera;
+    public RectTransform uiRoot;
 
     void Awake()
     {
@@ -73,6 +74,7 @@ public class GameStart : MonoBehaviour
         UnityEditor.EditorApplication.pauseStateChanged += OnEditorPause;
 #endif
         Game.Instance.UICamera = uiCamera;
+        Game.Instance.UIRoot = uiRoot;
         /// <summary>
         /// 目标平台
         /// </summary>

@@ -290,6 +290,14 @@ namespace Sango
                     GameObject uguiWinObj = GameObject.Instantiate(winObj) as GameObject;
                     if (uguiWinObj != null)
                     {
+                        Canvas canvas = uguiWinObj.GetComponent<Canvas>();
+                        if (canvas != null)
+                        {
+                            canvas.renderMode = RenderMode.ScreenSpaceCamera;
+                            canvas.worldCamera = Sango.Game.Game.Instance.UICamera;
+                        }
+                        uguiWinObj.transform.SetParent(Sango.Game.Game.Instance.UIRoot);
+
                         UGUIWindow uGUIWindow = uguiWinObj.GetComponent<UGUIWindow>();
                         if (uGUIWindow == null)
                             uGUIWindow = uguiWinObj.AddComponent<UGUIWindow>();

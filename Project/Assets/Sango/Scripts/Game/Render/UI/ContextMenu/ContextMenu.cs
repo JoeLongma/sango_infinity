@@ -24,7 +24,7 @@ namespace Sango.Game.Render.UI
                 {
                     Vector2 anchorPos;
                     RectTransformUtility.ScreenPointToLocalPointInRectangle(uIContextMenu.GetComponent<RectTransform>(),
-                        position, null, out anchorPos);
+                        position, Game.Instance.UICamera, out anchorPos);
 
                     ContextMenuItem item = menuItems[0];
                     uIContextMenu.Close(item.depth);

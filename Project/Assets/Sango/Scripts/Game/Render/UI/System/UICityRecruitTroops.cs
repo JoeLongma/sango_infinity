@@ -49,7 +49,7 @@ namespace Sango.Game.Render.UI
         public void OnSelectPerson()
         {
             PersonSelectSystem.Instance.Start(recruitTroopsSys.TargetCity.freePersons,
-                recruitTroopsSys.personList, 3, OnPersonChange);
+                recruitTroopsSys.personList, 3, OnPersonChange, recruitTroopsSys.customTitleList, recruitTroopsSys.customTitleName);
         }
     }
 }

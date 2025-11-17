@@ -8,10 +8,10 @@ namespace Sango.Game.Render.UI
     {
         public UITextItem textItem;
         public UISelectItem selectItem;
-        List<UITextItem> items = new List<UITextItem>();
-
+        List<UITextItem> pool = new List<UITextItem>();
+        List<UITextItem> usedItems = new List<UITextItem>();
         public int index;
-        public delegate void OnSelect(int idx);
+        public delegate void OnSelect(UIPersonListItem item);
         public delegate void OnShow(UIPersonListItem item);
         public OnSelect onSelected;
         public OnShow onShow;
@@ -23,7 +23,47 @@ namespace Sango.Game.Render.UI
         }
         public void OnClick()
         {
-            onSelected?.Invoke(index);
+            onSelected?.Invoke(this);
+        }
+
+        public void Clear()
+        {
+            for (int i = 0; i < usedItems.Count; i++)
+            {
+                usedItems[i].gameObject.SetActive(false);
+                pool.Add(usedItems[i]);
+            }
+        }
+
+        public void Add(string content, int width)
+        {
+            UITextItem item;
+            if (pool.Count == 0)
+            {
+                GameObject obj = GameObject.Instantiate(textItem.gameObject, textItem.transform.parent);
+                item = obj.GetComponent<UITextItem>();
+            }
+            else
+            {
+                item = pool[0];
+                pool.RemoveAt(0);
+            }
+            usedItems.Add(item);
+            item.gameObject.SetActive(true);
+            item.SetWidth(width).SetText(content);
+        }
+
+        public void SetSelected(bool b)
+        {
+            selectItem.SetSelected(b);
+            for (int i = 0; i < usedItems.Count; i++)
+            {
+                usedItems[i].SetSelected(b);
+            }
+        }
+        public bool IsSelected()
+        {
+            return selectItem.IsSelected();
         }
     }
 }

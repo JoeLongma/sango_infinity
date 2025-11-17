@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Sango.Loader;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
@@ -7,11 +8,17 @@ namespace Sango.Game.Render.UI
     {
         public Image select;
 
+        public bool IsSelected()
+        {
+            return select.gameObject.activeSelf;
+        }
+
         public UISelectItem SetSelected(bool b)
         {
-            select.enabled = b;
+            select.gameObject.SetActive(b);
             return this;
         }
+
         public UISelectItem SetWidth(int width)
         {
             RectTransform rectTransform = GetComponent<RectTransform>();

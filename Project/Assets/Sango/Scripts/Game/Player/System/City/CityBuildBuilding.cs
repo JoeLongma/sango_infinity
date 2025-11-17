@@ -5,17 +5,17 @@ using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Player
 {
-    public class CityRecruitTroops : CommandSystemBase<CityRecruitTroops>
+    public class CityBuildBuilding : CommandSystemBase<CityBuildBuilding>
     {
         public City TargetCity { get; set; }
         public List<Person> personList = new List<Person>();
-        public int wonderTroopsAddNumber = 0;
+        public int wonderBuildCounter = 0;
 
-        public string customTitleName = "征兵";
+        public string customTitleName = "城建";
         public List<SortTitle> customTitleList = new List<SortTitle>()
         {
             PersonSortFunction.SortByName,
-            PersonSortFunction.SortByGlamour,
+            PersonSortFunction.SortByPolitics,
         };
 
         public override void Init()
@@ -31,7 +31,7 @@ namespace Sango.Game.Player
         void OnCityContextMenuShow(ContextMenuData menuData, City city)
         {
             if (city.BelongForce != null && city.BelongForce.IsPlayer && city.BelongForce == Scenario.Cur.CurRunForce)
-                menuData.Add("军事/征兵", 1, city, OnClickMenuItem);
+                menuData.Add("都市/城建", 1, city, OnClickMenuItem);
         }
 
         void OnClickMenuItem(ContextMenuItem contextMenuItem)
@@ -42,7 +42,7 @@ namespace Sango.Game.Player
 
         public void UpdateJobValue()
         {
-            wonderTroopsAddNumber = TargetCity.JobRecuritTroop(personList.ToArray(), true);
+
         }
 
         public override void OnEnter()
