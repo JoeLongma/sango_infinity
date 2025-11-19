@@ -551,7 +551,7 @@ namespace Sango.Game
         /// <summary>
         /// 军师训练推荐
         /// </summary>
-        public static Person[] CounsellorRecommendTrainTroop(List<Person> personList)
+        public static Person[] CounsellorRecommendTrainTroops(List<Person> personList)
         {
             return CounsellorRecommend3Person(personList, (ref int[] maxValue, Person check1, Person check2, Person check3) =>
             {
@@ -560,7 +560,7 @@ namespace Sango.Game
                 if (check2 != null) buildAbility += check2.BaseTrainTroopAbility;
                 if (check3 != null) buildAbility += check3.BaseTrainTroopAbility;
 
-                buildAbility = GameUtility.Method_TrainTroop(buildAbility, 1);
+                buildAbility = GameUtility.Method_TrainTroops(buildAbility, 1);
 
                 if (buildAbility > maxValue[0])
                 {

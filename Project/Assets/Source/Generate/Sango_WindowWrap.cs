@@ -6,7 +6,7 @@ public class Sango_WindowWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(Sango.Window), typeof(Sango.Singletion<Sango.Window>));
+		L.BeginClass(typeof(Sango.Window), typeof(Sango.Singleton<Sango.Window>));
 		L.RegFunction("AddPackage", new LuaCSFunction(AddPackage));
 		L.RegFunction("FindPackage", new LuaCSFunction(FindPackage));
 		L.RegFunction("RegisterWindow", new LuaCSFunction(RegisterWindow));

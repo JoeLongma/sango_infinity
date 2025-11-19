@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Sango.Game.Player
 {
-    public class Player : Singletion<Player>
+    public class Player : Singleton<Player>
     {
         public void Init()
         {
-            CityRecruitTroops.Instance.Init();
-            CityBuildBuilding.Instance.Init();
+            Singleton<CityRecruitTroops>.Instance.Init();
+            Singleton<CityBuildBuilding>.Instance.Init();
         }
     }
 }

@@ -6,7 +6,7 @@ public class Sango_Singletion_Sango_Game_Render_RenderEventWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(Sango.Singletion<Sango.Game.Render.RenderEvent>), typeof(System.Object), "Singletion_Sango_Game_Render_RenderEvent");
+		L.BeginClass(typeof(Sango.Singleton<Sango.Game.Render.RenderEvent>), typeof(System.Object), "Singletion_Sango_Game_Render_RenderEvent");
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
 		L.RegVar("Instance", new LuaCSFunction(get_Instance), null);
 		L.EndClass();
@@ -17,7 +17,7 @@ public class Sango_Singletion_Sango_Game_Render_RenderEventWrap
 	{
 		try
 		{
-			ToLua.PushObject(L, Sango.Singletion<Sango.Game.Render.RenderEvent>.Instance);
+			ToLua.PushObject(L, Sango.Singleton<Sango.Game.Render.RenderEvent>.Instance);
 			return 1;
 		}
 		catch (Exception e)

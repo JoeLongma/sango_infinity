@@ -5,6 +5,8 @@ namespace Sango.Game
     [JsonObject(MemberSerialization.OptIn)]
     public class PersonLevel : SangoObject
     {
+        public override string Name => $"Lv.{Id}";
+
         [JsonProperty] public int exp;
         [JsonProperty] public int troops;
 

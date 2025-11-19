@@ -115,7 +115,20 @@ namespace Sango.Game
             if (forceB == null) return false;
             return forceA.IsAlliance(forceB);
         }
+        public static int Compare(SangoObject a, SangoObject b)
+        {
+            if (a != null && b != null)
+            {
+                return a.Id.CompareTo(b.Id);
+            }
 
+            if (a != null)
+                return 1;
 
+            if (b != null)
+                return -1;
+
+            return 0;
+        }
     }
 }

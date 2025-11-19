@@ -6,7 +6,7 @@ public class Sango_Game_GameStateWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(Sango.Game.GameState), typeof(Sango.Singletion<Sango.Game.GameState>));
+		L.BeginClass(typeof(Sango.Game.GameState), typeof(Sango.Singleton<Sango.Game.GameState>));
 		L.RegFunction("GetCurState", new LuaCSFunction(GetCurState));
 		L.RegFunction("ChangeState", new LuaCSFunction(ChangeState));
 		L.RegFunction("New", new LuaCSFunction(_CreateSango_Game_GameState));

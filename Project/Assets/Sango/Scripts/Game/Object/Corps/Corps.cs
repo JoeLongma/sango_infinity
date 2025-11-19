@@ -8,7 +8,7 @@ namespace Sango.Game
     public class Corps : SangoObject
     {
         public override SangoObjectType ObjectType { get { return SangoObjectType.Corps; } }
-        public virtual bool IsPlayer { get; set; }
+        public virtual bool IsPlayer => BelongForce.IsPlayer;
         public virtual bool AIFinished { get; set; }
         public virtual bool AIPrepared { get; set; }
         public override string Name { get { return Comander?.Name; } }
@@ -159,14 +159,15 @@ namespace Sango.Game
             if (ActionOver)
                 return true;
 
-            if (!DoAI(scenario))
-                return false;
-
-            if (IsPlayer)
+            // 主军团永远不是委任军团,除此之外全是委任军团
+            if (IsPlayer && Comander == BelongForce.Governor)
             {
-                GameEvent.OnPlayerControl(this, scenario);
+                GameEvent.OnPlayerControl?.Invoke(this, scenario);
                 return false;
             }
+
+            if (!DoAI(scenario))
+                return false;
 
             ActionOver = true;
             return true;

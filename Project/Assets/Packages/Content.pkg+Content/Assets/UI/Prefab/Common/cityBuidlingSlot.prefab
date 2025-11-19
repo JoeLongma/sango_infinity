@@ -237,6 +237,7 @@ MonoBehaviour:
   infoLabel: {fileID: 3407695285294136859}
   select: {fileID: 4835811166165130505}
   index: 0
+  personNode: {fileID: 59680407232048995}
 --- !u!114 &7867473243609876784
 MonoBehaviour:
   m_ObjectHideFlags: 0

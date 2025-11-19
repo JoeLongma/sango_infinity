@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Sango.Game
 {
-    public class GameAIDebug : Singletion<GameAIDebug>
+    public class GameAIDebug : Singleton<GameAIDebug>
     {
         public static bool Enabled = false;
 

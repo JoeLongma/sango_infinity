@@ -6,7 +6,7 @@ public class Sango_Loader_AssetStoreWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(Sango.Loader.AssetStore), typeof(Sango.Singletion<Sango.Loader.AssetStore>));
+		L.BeginClass(typeof(Sango.Loader.AssetStore), typeof(Sango.Singleton<Sango.Loader.AssetStore>));
 		L.RegFunction("StoreAsset", new LuaCSFunction(StoreAsset));
 		L.RegFunction("GetAsset", new LuaCSFunction(GetAsset));
 		L.RegFunction("New", new LuaCSFunction(_CreateSango_Loader_AssetStore));

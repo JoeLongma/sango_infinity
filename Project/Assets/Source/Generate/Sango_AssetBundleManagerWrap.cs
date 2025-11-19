@@ -6,7 +6,7 @@ public class Sango_AssetBundleManagerWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(Sango.AssetBundleManager), typeof(Sango.Singletion<Sango.AssetBundleManager>));
+		L.BeginClass(typeof(Sango.AssetBundleManager), typeof(Sango.Singleton<Sango.AssetBundleManager>));
 		L.RegFunction("CreateFromFile", new LuaCSFunction(CreateFromFile));
 		L.RegFunction("GetAssetBundle", new LuaCSFunction(GetAssetBundle));
 		L.RegFunction("Load", new LuaCSFunction(Load));

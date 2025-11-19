@@ -948,18 +948,13 @@ namespace Sango.Game
             {
                 Person[] people = ForceAI.CounsellorRecommendFarming(city.freePersons);
                 if (people == null) return true;
-                if (city.JobFarming(people))
-                {
-
-                }
+                city.JobFarming(people);
             }
             else
             {
                 Person[] people = ForceAI.CounsellorRecommendDevelop(city.freePersons);
                 if (people == null) return true;
-                if (city.JobDevelop(people))
-                {
-                }
+                city.JobDevelop(people);
             }
             return true;
         }
@@ -976,9 +971,7 @@ namespace Sango.Game
             {
                 Person[] people = ForceAI.CounsellorRecommendDevelop(city.freePersons);
                 if (people == null) return true;
-                if (city.JobInspection(people))
-                {
-                }
+                city.JobInspection(people);
             }
             return true;
         }
@@ -993,21 +986,17 @@ namespace Sango.Game
 
             if (city.morale < 50)
             {
-                Person[] people = ForceAI.CounsellorRecommendTrainTroop(city.freePersons);
+                Person[] people = ForceAI.CounsellorRecommendTrainTroops(city.freePersons);
                 if (people == null) return true;
-                if (city.JobTrainTroop(people))
-                {
-                }
+                city.JobTrainTroops(people);
             }
             else
             {
                 if (GameRandom.Chance((95 - city.morale) * 3 / 2))
                 {
-                    Person[] people = ForceAI.CounsellorRecommendTrainTroop(city.freePersons);
+                    Person[] people = ForceAI.CounsellorRecommendTrainTroops(city.freePersons);
                     if (people == null) return true;
-                    if (city.JobTrainTroop(people))
-                    {
-                    }
+                    city.JobTrainTroops(people);
                 }
             }
             return true;
@@ -1064,10 +1053,7 @@ namespace Sango.Game
                     Person[] people = ForceAI.CounsellorRecommendCreateItems(city.freePersons);
                     if (people == null) return true;
                     ItemType itemType = Scenario.Cur.GetObject<ItemType>(itemTypeId);
-                    if (city.JobCreateItems(people, itemType, itemTypeId == 5 ? StableNum : BlacksmithShopnum))
-                    {
-
-                    }
+                    city.JobCreateItems(people, itemType, itemTypeId == 5 ? StableNum : BlacksmithShopnum);
                     return true;
                 }
             }
@@ -1102,10 +1088,7 @@ namespace Sango.Game
 
             Person[] people = ForceAI.CounsellorRecommendCreateItems(city.freePersons);
             if (people == null) return true;
-            if (city.JobCreateBoat(people, targetItemType, BoatFactoryNum))
-            {
-
-            }
+            city.JobCreateBoat(people, targetItemType, BoatFactoryNum);
             return true;
         }
 
@@ -1148,10 +1131,7 @@ namespace Sango.Game
 
             Person[] people = ForceAI.CounsellorRecommendCreateItems(city.freePersons);
             if (people == null) return true;
-            if (city.JobCreateMachine(people, targetItemType, MechineFactoryNum))
-            {
-
-            }
+            city.JobCreateMachine(people, targetItemType, MechineFactoryNum);
             return true;
         }
 

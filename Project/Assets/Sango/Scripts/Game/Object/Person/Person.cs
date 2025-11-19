@@ -855,5 +855,14 @@ namespace Sango.Game
                     break;
             }
         }
+
+        public bool HasFeatrue(int id)
+        {
+            if (FeatureList == null || FeatureList.Count == 0) return false;
+            return FeatureList.Contains(id);
+        }
+
+       
+
     }
 }

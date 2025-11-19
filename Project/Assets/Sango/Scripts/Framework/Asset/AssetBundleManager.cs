@@ -14,7 +14,7 @@ namespace Sango
     /// <summary>
     /// 所有会返回ab索引的地方，都会增加资源引用，必须保存ab索引并手动释放
     /// </summary>
-    public class AssetBundleManager : Singletion<AssetBundleManager>
+    public class AssetBundleManager : Singleton<AssetBundleManager>
     {
         public static readonly int InvalidId = -1;
 

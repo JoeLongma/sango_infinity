@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Sango.Mod
 {
-    public class ModManager : Singletion<ModManager>
+    public class ModManager : Singleton<ModManager>
     {
         public static string EditModName { get; set; }
         public static string MOD_ROOT_DIR = "Mods";

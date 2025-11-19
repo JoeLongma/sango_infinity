@@ -6,7 +6,7 @@ public class Sango_Mod_ModManagerWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(Sango.Mod.ModManager), typeof(Sango.Singletion<Sango.Mod.ModManager>));
+		L.BeginClass(typeof(Sango.Mod.ModManager), typeof(Sango.Singleton<Sango.Mod.ModManager>));
 		L.RegFunction("GetEnabledMods", new LuaCSFunction(GetEnabledMods));
 		L.RegFunction("Init", new LuaCSFunction(Init));
 		L.RegFunction("LoadMod", new LuaCSFunction(LoadMod));

@@ -1,51 +1,38 @@
-﻿using Sango.Game.Render.UI;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Player
 {
-    public class CityRecruitTroops : CommandSystemBase<CityRecruitTroops>
+    public class CityRecruitTroops : CityComandBase
     {
-        public City TargetCity { get; set; }
-        public List<Person> personList = new List<Person>();
-        public int wonderTroopsAddNumber = 0;
-
-        public string customTitleName = "征兵";
-        public List<SortTitle> customTitleList = new List<SortTitle>()
+        public CityRecruitTroops()
         {
-            PersonSortFunction.SortByName,
-            PersonSortFunction.SortByGlamour,
-        };
-
-        public override void Init()
-        {
-            GameEvent.OnCityContextMenuShow += OnCityContextMenuShow;
+            customTitleName = "征兵";
+            customTitleList = new List<SortTitle>()
+            {
+                PersonSortFunction.SortByName,
+                PersonSortFunction.SortByGlamour,
+            };
+            customMenuName = "军事/征兵";
+            customMenuOrder = 100;
+            windowName = "window_city_command_base";
         }
 
-        public override void Clear()
+        public override bool IsValid
         {
-            GameEvent.OnCityContextMenuShow -= OnCityContextMenuShow;
+            get
+            {
+                return TargetCity.GetIntriorBuildingComplateNumber((int)BuildingKindType.Barracks) > 0 && 
+                    TargetCity.CheckJobCost(CityJobType.RecuritTroops);
+            }
         }
 
-        void OnCityContextMenuShow(ContextMenuData menuData, City city)
+        public override int CalculateWonderNumber()
         {
-            if (city.BelongForce != null && city.BelongForce.IsPlayer && city.BelongForce == Scenario.Cur.CurRunForce)
-                menuData.Add("军事/征兵", 1, city, OnClickMenuItem);
+            return TargetCity.JobRecuritTroop(personList.ToArray(), true);
         }
 
-        void OnClickMenuItem(ContextMenuItem contextMenuItem)
-        {
-            TargetCity = contextMenuItem.customData as City;
-            PlayerCommand.Instance.Push(this);
-        }
-
-        public void UpdateJobValue()
-        {
-            wonderTroopsAddNumber = TargetCity.JobRecuritTroop(personList.ToArray(), true);
-        }
-
-        public override void OnEnter()
+        public override void InitPersonList()
         {
             personList.Clear();
             Person[] people = ForceAI.CounsellorRecommendRecuritTroop(TargetCity.freePersons);
@@ -58,23 +45,15 @@ namespace Sango.Game.Player
                         personList.Add(p);
                 }
             }
-            UpdateJobValue();
-            Window.Instance.ShowWindow("window_city_recurit_troops");
         }
 
-        public override void OnDestroy()
+        public override void DoJob()
         {
-            Window.Instance.HideWindow("window_city_recurit_troops");
-        }
-
-        public override void OnDone()
-        {
-            Window.Instance.HideWindow("window_city_recurit_troops");
-        }
-
-        public void DoJob()
-        {
-
+            if (personList.Count > 0)
+            {
+                TargetCity.JobRecuritTroop(personList.ToArray());
+                Done();
+            }
         }
     }
 }

@@ -6,7 +6,7 @@ public class Sango_Singletion_Sango_AssetBundleManagerWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(Sango.Singletion<Sango.AssetBundleManager>), typeof(System.Object), "Singletion_Sango_AssetBundleManager");
+		L.BeginClass(typeof(Sango.Singleton<Sango.AssetBundleManager>), typeof(System.Object), "Singletion_Sango_AssetBundleManager");
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
 		L.RegVar("Instance", new LuaCSFunction(get_Instance), null);
 		L.EndClass();
@@ -17,7 +17,7 @@ public class Sango_Singletion_Sango_AssetBundleManagerWrap
 	{
 		try
 		{
-			ToLua.PushObject(L, Sango.Singletion<Sango.AssetBundleManager>.Instance);
+			ToLua.PushObject(L, Sango.Singleton<Sango.AssetBundleManager>.Instance);
 			return 1;
 		}
 		catch (Exception e)

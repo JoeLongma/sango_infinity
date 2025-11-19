@@ -8,7 +8,7 @@ using Sango.Mod;
 
 namespace Sango
 {
-    public class PackageManager : Singletion<PackageManager>
+    public class PackageManager : Singleton<PackageManager>
     {
         class PackageInfo
         {

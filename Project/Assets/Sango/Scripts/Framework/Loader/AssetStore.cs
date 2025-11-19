@@ -8,7 +8,7 @@ namespace Sango.Loader
     /// <summary>
     /// 通过弱引用缓存资源
     /// </summary>
-    public class AssetStore : Singletion<AssetStore>
+    public class AssetStore : Singleton<AssetStore>
     {
         private Dictionary<string, WeakReference<UnityEngine.Object>> assetsMap = new Dictionary<string, WeakReference<UnityEngine.Object>>();
         Transform root;

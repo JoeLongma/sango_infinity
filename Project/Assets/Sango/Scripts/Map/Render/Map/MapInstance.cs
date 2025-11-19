@@ -1,6 +1,6 @@
 ﻿namespace Sango.Render
 {
-    public class MapInstance : Singletion<MapInstance>
+    public class MapInstance : Singleton<MapInstance>
     {
 
     }

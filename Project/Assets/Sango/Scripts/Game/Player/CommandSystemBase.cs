@@ -1,6 +1,6 @@
 ﻿namespace Sango.Game.Player
 {
-    public class CommandSystemBase<T> : System<T>, ICommandEvent where T : Module, new()
+    public class CommandSystemBase : Module, ICommandEvent
     {
         public virtual void Init() {; }
         public virtual void Clear() {; }
@@ -28,7 +28,7 @@
         /// <summary>
         /// 结束整个命令链的时候触发
         /// </summary>
-        public virtual void OnDone() {; }
+        public virtual void OnDone() { OnDestroy(); }
 
         /// <summary>
         /// 每帧更新
@@ -53,6 +53,16 @@
             }
         }
 
+        public virtual void Done()
+        {
+            if (PlayerCommand.Instance.CurrentCommand == this)
+            {
+                PlayerCommand.Instance.Done();
+            }
+        }
+
         public virtual bool IsDone { get; protected set; }
+
+        public virtual bool IsValid{ get; protected set; }
     }
 }

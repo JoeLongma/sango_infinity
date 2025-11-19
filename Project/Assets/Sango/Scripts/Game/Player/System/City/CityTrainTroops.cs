@@ -1,12 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using static Sango.Game.PersonSortFunction;
 
-namespace Assets.Sango.Scripts.Game.Player.System.City
+namespace Sango.Game.Player
 {
-    internal class CityTrainTroops
+    public class CityTrainTroops : CityComandBase
     {
+        public CityTrainTroops()
+        {
+            customTitleName = "训练";
+            customTitleList = new List<SortTitle>()
+            {
+                PersonSortFunction.SortByName,
+                PersonSortFunction.SortByStrength,
+            };
+            customMenuName = "军事/训练";
+            customMenuOrder = 101;
+            windowName = "window_city_command_base";
+        }
+
+        public override bool IsValid
+        {
+            get
+            {
+                return TargetCity.GetIntriorBuildingComplateNumber((int)BuildingKindType.Barracks) > 0 && TargetCity.CheckJobCost(CityJobType.TrainTroops);
+            }
+        }
+
+        public override int CalculateWonderNumber()
+        {
+            return TargetCity.JobTrainTroops(personList.ToArray(), true);
+        }
+
+        public override void InitPersonList()
+        {
+            personList.Clear();
+            Person[] people = ForceAI.CounsellorRecommendTrainTroops(TargetCity.freePersons);
+            if (people != null)
+            {
+                for (int i = 0; i < people.Length; ++i)
+                {
+                    Person p = people[i];
+                    if (p != null)
+                        personList.Add(p);
+                }
+            }
+        }
+
+        public override void DoJob()
+        {
+            if (personList.Count > 0)
+            {
+                TargetCity.JobTrainTroops(personList.ToArray());
+                Done();
+            }
+        }
     }
 }

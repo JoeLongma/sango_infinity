@@ -7,7 +7,7 @@ using Sango.Mod;
 
 namespace Sango
 {
-    public class ContentManager : Singletion<ContentManager>
+    public class ContentManager : Singleton<ContentManager>
     {
         public List<string> SearchPath = new List<string>();
 

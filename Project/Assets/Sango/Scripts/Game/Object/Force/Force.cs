@@ -99,6 +99,8 @@ namespace Sango.Game
         public int PersonCount { get; set; }
         public int CityCount { get; set; }
 
+        public Corps CurRunCorps { get; set; }
+
 
         public override void OnScenarioPrepare(Scenario scenario)
         {
@@ -184,10 +186,7 @@ namespace Sango.Game
                 Corps corps = scenario.corpsSet[i];
                 if (corps != null && corps.IsAlive && corps.BelongForce == this && !corps.ActionOver)
                 {
-                    // 主军团永远不是委任军团,除此之外全是委任军团
-                    if (IsPlayer && corps.Comander == this.Governor)
-                        return false;
-
+                    CurRunCorps = corps;
                     if (!corps.Run(scenario))
                         return false;
                 }

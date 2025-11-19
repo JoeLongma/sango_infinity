@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace Sango.Game
 {
-    public class GameController : Singletion<GameController>
+    public class GameController : Singleton<GameController>
     {
         public bool Enabled { get; set; }
         enum ControlType : byte

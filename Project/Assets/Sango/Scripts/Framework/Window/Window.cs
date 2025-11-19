@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Sango
 {
 
-    public class Window : Singletion<Window>
+    public class Window : Singleton<Window>
     {
 
         public class WindowInterface

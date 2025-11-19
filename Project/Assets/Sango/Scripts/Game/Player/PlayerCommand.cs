@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Sango.Game.Player
 {
 
-    public class PlayerCommand : Singletion<PlayerCommand>
+    public class PlayerCommand : Singleton<PlayerCommand>
     {
         Stack<ICommandEvent> commads = new Stack<ICommandEvent>();
         public ICommandEvent CurrentCommand { get; private set; }
@@ -38,9 +38,9 @@ namespace Sango.Game.Player
 
         public void Done()
         {
-            CurrentCommand.OnDone();
             CurrentCommand = null;
-            commads.Clear();
+            while (commads.Count > 0)
+                commads.Pop().OnDone();
             GameController.Instance.Enabled = true;
         }
 
@@ -63,11 +63,11 @@ namespace Sango.Game.Player
                     {
                         if (clickCell.building != null)
                         {
-                            BuildingSystem.Instance.Start(clickCell.building, clickPosition);
+                            Singleton<BuildingSystem>.Instance.Start(clickCell.building, clickPosition);
                         }
                         else if (clickCell.troop != null)
                         {
-                            TroopSystem.Instance.Start(clickCell.troop, clickPosition);
+                            Singleton<TroopSystem>.Instance.Start(clickCell.troop, clickPosition);
                         }
                     }
                     break;

@@ -6,7 +6,7 @@ public class Sango_Game_Render_RenderEventWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(Sango.Game.Render.RenderEvent), typeof(Sango.Singletion<Sango.Game.Render.RenderEvent>));
+		L.BeginClass(typeof(Sango.Game.Render.RenderEvent), typeof(Sango.Singleton<Sango.Game.Render.RenderEvent>));
 		L.RegFunction("Add", new LuaCSFunction(Add));
 		L.RegFunction("Update", new LuaCSFunction(Update));
 		L.RegFunction("New", new LuaCSFunction(_CreateSango_Game_Render_RenderEvent));

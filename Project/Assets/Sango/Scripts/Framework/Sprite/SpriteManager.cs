@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Sango.Sprite
 {
 
-    public class SpriteManager : Sango.Singletion<SpriteManager>
+    public class SpriteManager : Sango.Singleton<SpriteManager>
     {
         public delegate void OnSpriteLoaded(string fileName, UnityEngine.Sprite[] obj);
 

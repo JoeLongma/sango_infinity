@@ -6,7 +6,7 @@ public class Sango_Singletion_Sango_ScriptsWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(Sango.Singletion<Sango.Scripts>), typeof(System.Object), "Singletion_Sango_Scripts");
+		L.BeginClass(typeof(Sango.Singleton<Sango.Scripts>), typeof(System.Object), "Singletion_Sango_Scripts");
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
 		L.RegVar("Instance", new LuaCSFunction(get_Instance), null);
 		L.EndClass();
@@ -17,7 +17,7 @@ public class Sango_Singletion_Sango_ScriptsWrap
 	{
 		try
 		{
-			ToLua.PushObject(L, Sango.Singletion<Sango.Scripts>.Instance);
+			ToLua.PushObject(L, Sango.Singleton<Sango.Scripts>.Instance);
 			return 1;
 		}
 		catch (Exception e)

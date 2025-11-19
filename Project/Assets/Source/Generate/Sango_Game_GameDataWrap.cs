@@ -6,7 +6,7 @@ public class Sango_Game_GameDataWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(Sango.Game.GameData), typeof(Sango.Singletion<Sango.Game.GameData>));
+		L.BeginClass(typeof(Sango.Game.GameData), typeof(Sango.Singleton<Sango.Game.GameData>));
 		L.RegFunction("Init", new LuaCSFunction(Init));
 		L.RegFunction("LoadCommonData", new LuaCSFunction(LoadCommonData));
 		L.RegFunction("LoadModelConfig", new LuaCSFunction(LoadModelConfig));

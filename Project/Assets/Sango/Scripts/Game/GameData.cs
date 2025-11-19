@@ -4,7 +4,7 @@ using System.Xml;
 
 namespace Sango.Game
 {
-    public class GameData : Singletion<GameData>
+    public class GameData : Singleton<GameData>
     {
         /// <summary>
         /// 通用配置

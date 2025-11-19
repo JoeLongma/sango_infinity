@@ -6,7 +6,7 @@ public class Sango_Singletion_Sango_Mod_ModManagerWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(Sango.Singletion<Sango.Mod.ModManager>), typeof(System.Object), "Singletion_Sango_Mod_ModManager");
+		L.BeginClass(typeof(Sango.Singleton<Sango.Mod.ModManager>), typeof(System.Object), "Singletion_Sango_Mod_ModManager");
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
 		L.RegVar("Instance", new LuaCSFunction(get_Instance), null);
 		L.EndClass();
@@ -17,7 +17,7 @@ public class Sango_Singletion_Sango_Mod_ModManagerWrap
 	{
 		try
 		{
-			ToLua.PushObject(L, Sango.Singletion<Sango.Mod.ModManager>.Instance);
+			ToLua.PushObject(L, Sango.Singleton<Sango.Mod.ModManager>.Instance);
 			return 1;
 		}
 		catch (Exception e)

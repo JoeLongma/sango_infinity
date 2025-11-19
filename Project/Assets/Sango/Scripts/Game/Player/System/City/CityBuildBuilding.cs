@@ -5,7 +5,7 @@ using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Player
 {
-    public class CityBuildBuilding : CommandSystemBase<CityBuildBuilding>
+    public class CityBuildBuilding : CommandSystemBase
     {
         public City TargetCity { get; set; }
         public List<Person> personList = new List<Person>();
@@ -55,6 +55,8 @@ namespace Sango.Game.Player
 
         public override void OnEnter()
         {
+            CurSelectBuildingTypeIndex = -1;
+            CurSelectSlotIndex = -1;
             Window.Instance.ShowWindow("window_city_building");
         }
 
@@ -63,14 +65,29 @@ namespace Sango.Game.Player
             Window.Instance.HideWindow("window_city_building");
         }
 
-        public override void OnDone()
+        public void DoBuildBuilding()
         {
-            Window.Instance.HideWindow("window_city_building");
+            TargetCity.JobBuildBuilding(CurSelectSlotIndex, personList.ToArray(), TargetBuildingType, wonderBuildCounter);
         }
 
-        public void DoJob()
+        public void DoUpgradeBuilding()
         {
+            int buildingId = TargetCity.innerSlot[CurSelectSlotIndex];
+            if (buildingId > 0)
+            {
+                Building building = Scenario.Cur.GetObject<Building>(buildingId);
+                TargetCity.JobUpgradeBuilding(building, personList.ToArray(), TargetBuildingType, wonderBuildCounter);
+            }
+        }
 
+        public void DoDestroyBuilding()
+        {
+            int buildingId = TargetCity.innerSlot[CurSelectSlotIndex];
+            if (buildingId > 0)
+            {
+                Building building = Scenario.Cur.GetObject<Building>(buildingId);
+                building.OnFall(null);
+            }
         }
     }
 }

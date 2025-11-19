@@ -6,7 +6,7 @@ public class Sango_ScriptsWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(Sango.Scripts), typeof(Sango.Singletion<Sango.Scripts>));
+		L.BeginClass(typeof(Sango.Scripts), typeof(Sango.Singleton<Sango.Scripts>));
 		L.RegFunction("DoFile", new LuaCSFunction(DoFile));
 		L.RegFunction("DoString", new LuaCSFunction(DoString));
 		L.RegFunction("PostMessage", new LuaCSFunction(PostMessage));

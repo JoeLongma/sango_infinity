@@ -178,7 +178,7 @@ namespace Sango.Game
         }
 
         // 这里传入的v是放大了10倍的
-        public static int Method_RecuritTroop(int v, int buildingTotalLevel)
+        public static int Method_RecuritTroops(int v, int buildingTotalLevel)
         {
             int percent = 0;
             for (int i = 1; i <= buildingTotalLevel; ++i)
@@ -188,7 +188,7 @@ namespace Sango.Game
         }
 
         /// 训练值计算公式
-        public static int Method_TrainTroop(int v, int buildingTotalLevel)
+        public static int Method_TrainTroops(int v, int buildingTotalLevel)
         {
             int percent = 0;
             for (int i = 1; i <= buildingTotalLevel; ++i)

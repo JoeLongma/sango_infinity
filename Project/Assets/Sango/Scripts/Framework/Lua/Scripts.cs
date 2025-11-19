@@ -13,7 +13,7 @@ namespace Sango
     /// XEngine脚本管理器
     /// 
     /// </summary>
-    public class Scripts : Singletion<Scripts>
+    public class Scripts : Singleton<Scripts>
     {
         protected SangoLuaClient mScriptHandle;
 

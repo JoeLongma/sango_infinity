@@ -4,6 +4,7 @@ using Sango.Render;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using UnityEngine;
 using Task = System.Threading.Tasks.Task;
@@ -642,11 +643,11 @@ namespace Sango.Game
 #if SANGO_DEBUG_AI
             GameAIDebug.Instance.Init();
 #endif
+            MakeForceQuene();
 
             // 恢复游戏
             if (Info.curForceId > 0)
             {
-                MakeForceQuene();
                 Force force = runForces.Dequeue();
                 while (force != null)
                 {
@@ -690,12 +691,26 @@ namespace Sango.Game
 
         public void MakeForceQuene()
         {
-            forceSet.ForEach(force =>
+            // 玩家排到最前面
+            for (int k = 0; k < Info.playerForceList.Length; k++)
             {
+                Force force = forceSet.Get(Info.playerForceList[k]);
                 if (force.IsAlive)
                 {
                     force.ActionOver = false;
                     runForces.Enqueue(force);
+                }
+            }
+
+            forceSet.ForEach(force =>
+            {
+                if (force.IsAlive)
+                {
+                    if (!Info.playerForceList.Contains(force.Id))
+                    {
+                        force.ActionOver = false;
+                        runForces.Enqueue(force);
+                    }
                 }
             });
         }
@@ -1019,7 +1034,7 @@ namespace Sango.Game
 
         public void Save(string path)
         {
-            
+
             Info.isSave = true;
             Info.cameraPosition = MapRender.Instance.mapCamera.position;
             Info.cameraRotation = MapRender.Instance.mapCamera.lookRotate;

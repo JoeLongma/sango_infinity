@@ -6,7 +6,7 @@ public class Sango_Singletion_Sango_Game_GameDataWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(Sango.Singletion<Sango.Game.GameData>), typeof(System.Object), "Singletion_Sango_Game_GameData");
+		L.BeginClass(typeof(Sango.Singleton<Sango.Game.GameData>), typeof(System.Object), "Singletion_Sango_Game_GameData");
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
 		L.RegVar("Instance", new LuaCSFunction(get_Instance), null);
 		L.EndClass();
@@ -17,7 +17,7 @@ public class Sango_Singletion_Sango_Game_GameDataWrap
 	{
 		try
 		{
-			ToLua.PushObject(L, Sango.Singletion<Sango.Game.GameData>.Instance);
+			ToLua.PushObject(L, Sango.Singleton<Sango.Game.GameData>.Instance);
 			return 1;
 		}
 		catch (Exception e)

@@ -3,7 +3,7 @@ using UnityEngine;
 using ContextMenu = Sango.Game.Render.UI.ContextMenu;
 namespace Sango.Game.Player
 {
-    public class TroopSystem : CommandSystemBase<TroopSystem>
+    public class TroopSystem : CommandSystemBase
     {
         public Troop TargetTroop { get; set; }
         public void Start(Troop troop, Vector3 startPoint)

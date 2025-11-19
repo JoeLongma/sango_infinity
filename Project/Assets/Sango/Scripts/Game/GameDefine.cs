@@ -54,6 +54,8 @@
         ＳＳR,
     }
 
+    //public string ox = "○×";
+
     /// <summary>
     /// 对象枚举类型：宝物类型
     /// </summary>
@@ -89,7 +91,7 @@
         /// <summary>
         /// 训练
         /// </summary>
-        TrainTroop,
+        TrainTroops,
 
         /// <summary>
         /// 搜索
@@ -99,7 +101,7 @@
         /// <summary>
         /// 招募士兵
         /// </summary>
-        RecuritTroop,
+        RecuritTroops,
 
         /// <summary>
         /// 招募武将

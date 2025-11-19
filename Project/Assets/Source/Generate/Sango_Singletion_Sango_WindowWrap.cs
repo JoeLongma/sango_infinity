@@ -6,7 +6,7 @@ public class Sango_Singletion_Sango_WindowWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(Sango.Singletion<Sango.Window>), typeof(System.Object), "Singletion_Sango_Window");
+		L.BeginClass(typeof(Sango.Singleton<Sango.Window>), typeof(System.Object), "Singletion_Sango_Window");
 		L.RegFunction("__tostring", new LuaCSFunction(ToLua.op_ToString));
 		L.RegVar("Instance", new LuaCSFunction(get_Instance), null);
 		L.EndClass();
@@ -17,7 +17,7 @@ public class Sango_Singletion_Sango_WindowWrap
 	{
 		try
 		{
-			ToLua.PushObject(L, Sango.Singletion<Sango.Window>.Instance);
+			ToLua.PushObject(L, Sango.Singleton<Sango.Window>.Instance);
 			return 1;
 		}
 		catch (Exception e)

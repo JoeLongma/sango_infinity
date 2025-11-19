@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sango.Game
 {
-    public class GameState : Singletion<GameState>
+    public class GameState : Singleton<GameState>
     {
         public enum State : int
         {
