@@ -35,7 +35,7 @@
         /// </summary>
         public virtual void Update() {; }
 
-        public virtual void HandleEvent(CommandEventType eventType, Cell cell)
+        public virtual void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition)
         {
             switch (eventType)
             {

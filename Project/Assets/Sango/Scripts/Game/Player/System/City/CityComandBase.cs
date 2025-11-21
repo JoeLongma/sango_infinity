@@ -11,10 +11,12 @@ namespace Sango.Game.Player
         public int wonderNumber = 0;
 
         public string customTitleName;
-        public List<SortTitle> customTitleList;
+        public List<ObjectSortTitle> customTitleList;
         public string customMenuName;
         public int customMenuOrder;
         public string windowName;
+
+        protected UICityComandBase targetUI;
 
         public override void Init()
         {
@@ -24,6 +26,11 @@ namespace Sango.Game.Player
         public override void Clear()
         {
             GameEvent.OnCityContextMenuShow -= OnCityContextMenuShow;
+        }
+
+        protected virtual void OnUIInit()
+        {
+            targetUI.windiwTitle.text = customTitleName;
         }
 
         protected virtual void OnCityContextMenuShow(ContextMenuData menuData, City city)
@@ -64,7 +71,10 @@ namespace Sango.Game.Player
             {
                 UICityComandBase uICityComandBase = windowInterface.ugui_instance as UICityComandBase;
                 if (uICityComandBase != null)
-                    uICityComandBase.Init(this);
+                {
+                    targetUI = uICityComandBase;
+                    uICityComandBase.Init(this, OnUIInit);
+                }
             }
         }
 
@@ -76,6 +86,25 @@ namespace Sango.Game.Player
         public virtual void DoJob()
         {
 
+        }
+
+        public virtual void OnSelectPerson()
+        {
+            Singleton<PersonSelectSystem>.Instance.Start(TargetCity.freePersons,
+               personList, 3, OnPersonChange, customTitleList, customTitleName);
+
+        }
+
+        public virtual void OnSelectCity()
+        {
+            
+        }
+
+        public virtual void OnPersonChange(List<Person> personList)
+        {
+            this.personList = personList;
+            UpdateJobValue();
+            targetUI?.OnInit();
         }
     }
 }

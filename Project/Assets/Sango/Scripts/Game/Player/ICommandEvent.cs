@@ -1,4 +1,6 @@
-﻿namespace Sango.Game.Player
+﻿using System.Numerics;
+
+namespace Sango.Game.Player
 {
     public interface ICommandEvent
     {
@@ -37,6 +39,6 @@
         /// </summary>
         /// <param name="eventType"></param>
         /// <param name="cell"></param>
-        void HandleEvent(CommandEventType eventType, Cell cell);
+        void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition);
     }
 }

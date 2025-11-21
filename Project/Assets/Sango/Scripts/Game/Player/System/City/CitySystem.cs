@@ -28,7 +28,7 @@ namespace Sango.Game.Player
             ContextMenu.CloseAll();
         }
 
-        public override void HandleEvent(CommandEventType eventType, Cell cell)
+        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition)
         {
             switch (eventType)
             {
@@ -40,6 +40,11 @@ namespace Sango.Game.Player
                         break;
                     }
 
+                case CommandEventType.ClickDown:
+                    {
+                        Done();
+                        break;
+                    }
             }
         }
     }
