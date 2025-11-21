@@ -98,7 +98,7 @@ namespace Sango.Game.Render.UI
             value_gold.text = $"{curItemType.cost}/{createItemsSys.TargetCity.gold}";
 
             int totalNum = createItemsSys.TargetCity.itemStore.GetNumber(curItemType.Id);
-            value_cur.text = $"{totalNum}→{totalNum + createItemsSys.TurnAndDestNumber[1]}";
+            value_value.text = $"{totalNum}→{totalNum + createItemsSys.TurnAndDestNumber[1]}";
 
             itemTypeDescLabel.text = curItemType.desc;
             buildingTypeItem.SetSelected(true);
@@ -114,7 +114,7 @@ namespace Sango.Game.Render.UI
             value_gold.text = $"{curItemType.cost}/{createItemsSys.TargetCity.gold}";
 
             int totalNum = createItemsSys.TargetCity.itemStore.GetNumber(curItemType.Id);
-            value_cur.text = $"{totalNum}→{totalNum + createItemsSys.TurnAndDestNumber[1]}";
+            value_value.text = $"{totalNum}→{totalNum + createItemsSys.TurnAndDestNumber[1]}";
 
             for (int i = 0; i < personItems.Length; ++i)
             {

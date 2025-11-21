@@ -53,7 +53,7 @@ namespace Sango.Game.Player
         {
             if (CurrentCommand != null)
             {
-                CurrentCommand.HandleEvent(eventType, clickCell);
+                CurrentCommand.HandleEvent(eventType, clickCell, clickPosition);
                 return;
             }
 

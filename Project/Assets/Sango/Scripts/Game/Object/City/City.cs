@@ -1210,6 +1210,20 @@ namespace Sango.Game
             return gold >= goldNeed;
         }
 
+        public int GetJobCost(CityJobType cityJobType)
+        {
+            Scenario scenario = Scenario.Cur;
+            ScenarioVariables variables = scenario.Variables;
+            int jobId = (int)cityJobType;
+            int goldNeed = variables.jobCost[jobId];
+
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
+            GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, null, overrideData);
+            goldNeed = overrideData.Value;
+            return goldNeed;
+        }
+
+
         public Building BuildBuilding(Cell buildCenter, Troop builder, BuildingType buildingType)
         {
             Building building = new Building();

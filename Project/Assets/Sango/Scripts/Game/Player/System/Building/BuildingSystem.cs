@@ -64,6 +64,6 @@ namespace Sango.Game.Player
         /// </summary>
         public override void Update() {; }
 
-        public override void HandleEvent(CommandEventType eventType, Cell cell) {; }
+        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition) {; }
     }
 }

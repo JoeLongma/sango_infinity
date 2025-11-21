@@ -1,0 +1,75 @@
+﻿using Sango.Game.Render.UI;
+using System.Collections.Generic;
+using static Sango.Game.PersonSortFunction;
+
+namespace Sango.Game.Player
+{
+    public class CityTrade : CityComandBase
+    {
+        public CityTrade()
+        {
+            customTitleName = "交易";
+            customTitleList = new List<ObjectSortTitle>()
+            {
+                PersonSortFunction.SortByName,
+                PersonSortFunction.SortByStrength,
+            };
+            customMenuName = "都市/商人";
+            customMenuOrder = 25;
+            windowName = "window_city_command_base";
+        }
+
+        public override bool IsValid
+        {
+            get
+            {
+                return TargetCity.security < 100 &&
+                    TargetCity.CheckJobCost(CityJobType.Inspection) &&
+                    TargetCity.GetIntriorBuildingComplateNumber((int)BuildingKindType.PatrolBureau) > 0;
+            }
+        }
+
+        protected override void OnUIInit()
+        {
+            base.OnUIInit();
+            targetUI.title_value.gameObject.SetActive(true);
+            targetUI.value_value.gameObject.SetActive(true);
+            targetUI.title_gold.gameObject.SetActive(true);
+            targetUI.value_gold.gameObject.SetActive(true);
+
+            targetUI.title_value.text = "治安";
+            targetUI.title_gold.text = "资金";
+            targetUI.value_value.text = $"{TargetCity.security}→{TargetCity.security + wonderNumber}";
+            targetUI.value_gold.text = $"{TargetCity.GetJobCost(CityJobType.Inspection)}/{TargetCity.gold}";
+        }
+
+        public override int CalculateWonderNumber()
+        {
+            return TargetCity.JobInspection(personList.ToArray(), true);
+        }
+
+        public override void InitPersonList()
+        {
+            personList.Clear();
+            Person[] people = ForceAI.CounsellorRecommendInspection(TargetCity.freePersons);
+            if (people != null)
+            {
+                for (int i = 0; i < people.Length; ++i)
+                {
+                    Person p = people[i];
+                    if (p != null)
+                        personList.Add(p);
+                }
+            }
+        }
+
+        public override void DoJob()
+        {
+            if (personList.Count > 0)
+            {
+                TargetCity.JobInspection(personList.ToArray());
+                Done();
+            }
+        }
+    }
+}

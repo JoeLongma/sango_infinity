@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2416566462595743976}
   - component: {fileID: 2008451308803925379}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: lab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

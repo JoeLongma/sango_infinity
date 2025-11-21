@@ -8,5 +8,8 @@ namespace Sango.Game.Player
         Click,
         RClick,
         Cancel,
+        ClickDown,
+        ClickUp,
+
     }
 }

@@ -459,10 +459,20 @@ namespace Sango.Game
             if (Input.GetMouseButtonDown(0))
             {
                 if (IsOverUI()) return;
-                if (mouseOverCell != null)
+                if (mouseOverCell == null)
                     return;
 
                 clickPosition = Input.mousePosition;
+                PlayerCommand.Instance.HandleEvent(CommandEventType.ClickDown, mouseOverCell, clickPosition);
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                if (IsOverUI()) return;
+                if (mouseOverCell == null)
+                    return;
+
+                clickPosition = Input.mousePosition;
+                PlayerCommand.Instance.HandleEvent(CommandEventType.ClickUp, mouseOverCell, clickPosition);
                 PlayerCommand.Instance.HandleEvent(CommandEventType.Click, mouseOverCell, clickPosition);
             }
             else if (Input.GetMouseButtonDown(1))
@@ -477,9 +487,16 @@ namespace Sango.Game
             if (Input.touchCount == 1)
             {
                 Touch touch = Input.GetTouch(0);
-                if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+
+                if (touch.phase == TouchPhase.Began)
                 {
                     clickPosition = touch.position;
+                    PlayerCommand.Instance.HandleEvent(CommandEventType.ClickDown, mouseOverCell, clickPosition);
+                }
+                else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+                {
+                    clickPosition = touch.position;
+                    PlayerCommand.Instance.HandleEvent(CommandEventType.ClickUp, mouseOverCell, clickPosition);
                     PlayerCommand.Instance.HandleEvent(CommandEventType.Click, mouseOverCell, clickPosition);
                 }
             }
@@ -505,6 +522,15 @@ namespace Sango.Game
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
             HandleOverCell();
 #endif
+            if (!Enabled)
+            {
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+                HandleWindowsCommandEvent();
+#else
+                HandleMobileCommandEvent();
+#endif
+            }
+
             if (Enabled)
             {
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
@@ -512,14 +538,6 @@ namespace Sango.Game
                 MoveCameraKeyBoard();
 #else
                 HandleMobileEvent();
-#endif
-            }
-            else
-            {
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR
-                HandleWindowsCommandEvent();
-#else
-                HandleMobileCommandEvent();
 #endif
             }
         }
