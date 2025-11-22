@@ -47,15 +47,49 @@ namespace Sango.Game.Player
             PlayerCommand.Instance.Push(this);
         }
 
+        public override bool IsValid
+        {
+            get
+            {
+                return TargetCity.troops > 0 && TargetCity.food > 0 && TargetCity.freePersons.Count > 0;
+            }
+        }
         public void UpdateJobValue()
         {
+            if (personList.Count == 0) return;
 
+            TargetTroop.Leader = personList[0];
+
+            if (personList.Count > 1) TargetTroop.Member1 = personList[1];
+            if (personList.Count > 2) TargetTroop.Member2 = personList[2];
+
+            TargetTroop.CalculateMaxTroops();
+            TargetTroop.CalculateAttribute(Scenario.Cur);
         }
 
         public override void OnEnter()
         {
+            TargetTroop = new Troop();
+
+            List<TroopType> activeTroopTypes = new List<TroopType>();
+            TroopType.CheckActivTroopTypeList(TargetCity.freePersons, activeTroopTypes);
+
+            ActivedLandTroopTypes.Clear();
+            ActivedLandTroopTypes.AddRange(activeTroopTypes.FindAll(x => x.isLand));
+
+            ActivedWaterTroopTypes.Clear();
+            ActivedWaterTroopTypes.AddRange(activeTroopTypes.FindAll(x => !x.isLand));
+
             CurSelectLandTrropTypeIndex = 0;
             CurSelectWaterTrropTypeIndex = 0;
+
+            TargetTroop.LandTroopType = ActivedLandTroopTypes[CurSelectLandTrropTypeIndex];
+            TargetTroop.WaterTroopType = ActivedWaterTroopTypes[CurSelectWaterTrropTypeIndex];
+
+            TargetTroop.morale = TargetCity.morale;
+            TargetTroop.MaxMorale = TargetCity.MaxMorale;
+            TargetTroop.energy = TargetCity.energy;
+
             Window.Instance.ShowWindow("window_city_create_troop");
         }
 

@@ -36,17 +36,17 @@ namespace Sango.Game.Render.UI
         public void Init(CityComandBase cityComandBase)
         {
             currentSystem = cityComandBase;
-            title1.gameObject.SetActive(false);
-            value_1.gameObject.SetActive(false);
-            title_value.gameObject.SetActive(false);
-            value_value.gameObject.SetActive(false);
-            title_gold.gameObject.SetActive(false);
-            value_gold.gameObject.SetActive(false);
-            title_extra.gameObject.SetActive(false);
-            value_extra.gameObject.SetActive(false);
-            button_extra.gameObject.SetActive(false);
-            button_extra_value.gameObject.SetActive(false);
-            person_extra_value.gameObject.SetActive(false);
+            title1?.gameObject.SetActive(false);
+            value_1?.gameObject.SetActive(false);
+            title_value?.gameObject.SetActive(false);
+            value_value?.gameObject.SetActive(false);
+            title_gold?.gameObject.SetActive(false);
+            value_gold?.gameObject.SetActive(false);
+            title_extra?.gameObject.SetActive(false);
+            value_extra?.gameObject.SetActive(false);
+            button_extra?.gameObject.SetActive(false);
+            button_extra_value?.gameObject.SetActive(false);
+            person_extra_value?.gameObject.SetActive(false);
             OnInit();
         }
 

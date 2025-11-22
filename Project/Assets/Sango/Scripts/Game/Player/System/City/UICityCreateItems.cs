@@ -18,6 +18,7 @@ namespace Sango.Game.Render.UI
 
         public override void OnInit()
         {
+            base.OnInit();
             createItemsSys = currentSystem as CityCreateItems;
 
             if (createItemsSys is CityCreateBoat)
@@ -49,7 +50,7 @@ namespace Sango.Game.Render.UI
             for (int i = 0; i < len; i++)
             {
                 ItemType itemType = createItemsSys.ItemTypes[i];
-                int totalNum = createItemsSys.TargetCity.itemStore.GetNumber(itemType.kind);
+                int totalNum = createItemsSys.TargetCity.itemStore.GetNumber(itemType.Id);
                 UIBuildingTypeItem cityBuildingSlot = buildingTypeItemPool[i];
                 cityBuildingSlot.SetItemType(itemType).SetIndex(i).SetSelected(itemType == createItemsSys.CurSelectedItemType).SetNum(totalNum);
             }

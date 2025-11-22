@@ -259,7 +259,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5973749658295835790}
   - component: {fileID: 174056003858870177}
-  - component: {fileID: 227613633725753443}
   - component: {fileID: 576643473640125865}
   - component: {fileID: -9159462744481052588}
   m_Layer: 5
@@ -278,7 +277,7 @@ RectTransform:
   m_GameObject: {fileID: 9039031632039893254}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8112661406354916524}
@@ -301,7 +300,7 @@ Canvas:
   m_GameObject: {fileID: 9039031632039893254}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 2
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -314,29 +313,6 @@ Canvas:
   m_SortingLayerID: 229738569
   m_SortingOrder: 32767
   m_TargetDisplay: 0
---- !u!114 &227613633725753443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9039031632039893254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
-  m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1600, y: 900}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0.5
-  m_PhysicalUnit: 3
-  m_FallbackScreenDPI: 96
-  m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
 --- !u!114 &576643473640125865
 MonoBehaviour:
   m_ObjectHideFlags: 0

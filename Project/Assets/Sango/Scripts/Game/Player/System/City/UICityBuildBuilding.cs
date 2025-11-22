@@ -210,13 +210,15 @@ namespace Sango.Game.Render.UI
 
         public void OnPersonChange(List<Person> personList)
         {
+            buildBuildingSys.personList = personList;
+
             buildBuildingSys.UpdateJobValue();
             buildCountLabel.text = $"{buildBuildingSys.wonderBuildCounter}回";
 
             for (int i = 0; i < personItems.Length; ++i)
             {
-                if (i < buildBuildingSys.personList.Count)
-                    personItems[i].SetPerson(buildBuildingSys.personList[i]);
+                if (i < personList.Count)
+                    personItems[i].SetPerson(personList[i]);
 
                 else
                     personItems[i].SetPerson(null);

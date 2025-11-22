@@ -431,8 +431,6 @@ namespace Sango.Game
                 Skill skill = Scenario.Cur.GetObject<Skill>(LandTroopType.skills[i]);
                 if (skill != null && skill.CanAddToTroop(this))
                 {
-
-
                     SkillInstance ins = null;
                     if (skills != null)
                         ins = skills.Find(x => x.Skill == skill);

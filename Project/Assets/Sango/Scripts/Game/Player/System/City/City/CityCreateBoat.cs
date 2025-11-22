@@ -30,7 +30,6 @@ namespace Sango.Game.Player
             CurSelectedItemTypeIndex = 0;
             CurSelectedItemType = ItemTypes[CurSelectedItemTypeIndex];
             TotalBuildingCount = TargetCity.GetIntriorBuildingComplateNumber((int)BuildingKindType.BoatFactory);
-            base.OnEnter();
         }
 
         public override bool IsValid

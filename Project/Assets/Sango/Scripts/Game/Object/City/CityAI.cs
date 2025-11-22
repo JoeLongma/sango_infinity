@@ -1206,7 +1206,7 @@ namespace Sango.Game
             troop.missionType = (int)city.TroopMissionType;
             troop.missionTarget = city.TroopMissionTargetId;
             if (people.Length > 1) troop.Member1 = people[1];
-            if (people.Length > 2) troop.Member1 = people[2];
+            if (people.Length > 2) troop.Member2 = people[2];
 
             // 计算最大兵力
             troop.CalculateMaxTroops();

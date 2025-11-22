@@ -24,41 +24,54 @@ namespace Sango.Game.Render.UI
 
         CityExpedition cityExpeditionSys;
 
+        bool showLand = true;
+
         public override void OnShow()
         {
-            //buildBuildingSys = Singleton<CityBuildBuilding>.Instance;
-            //buildBuildingSys.CurSelectSlotIndex = -1;
-            //int slotLength = buildBuildingSys.TargetCity.innerSlot.Length;
-            //while (buildingSlotPool.Count < slotLength)
-            //{
-            //    GameObject go = GameObject.Instantiate(objUICityBuildingSlot.gameObject, objUICityBuildingSlot.transform.parent);
-            //    UICityBuildingSlot cityBuildingSlot = go.GetComponent<UICityBuildingSlot>();
-            //    buildingSlotPool.Add(cityBuildingSlot);
-            //    cityBuildingSlot.onSelected = OnSelectSlot;
-            //    go.SetActive(true);
-            //}
+            cityExpeditionSys = Singleton<CityExpedition>.Instance;
+            showLand = true;
 
-            //for (int i = slotLength; i < buildingSlotPool.Count; i++)
-            //    buildingSlotPool[i].gameObject.SetActive(false);
+            int slotLength = cityExpeditionSys.ActivedLandTroopTypes.Count;
+            while (landTroopTypePool.Count < slotLength)
+            {
+                GameObject go = GameObject.Instantiate(objUIBuildingTypeItem.gameObject, objUIBuildingTypeItem.transform.parent);
+                UIBuildingTypeItem cityBuildingSlot = go.GetComponent<UIBuildingTypeItem>();
+                landTroopTypePool.Add(cityBuildingSlot);
+                cityBuildingSlot.onSelected = OnSelectLandType;
+                go.SetActive(true);
+            }
 
-            //for (int i = 0; i < slotLength; i++)
-            //{
-            //    int buildingId = buildBuildingSys.TargetCity.innerSlot[i];
-            //    UICityBuildingSlot cityBuildingSlot = buildingSlotPool[i];
-            //    if (buildingId > 0)
-            //    {
-            //        Building building = Scenario.Cur.GetObject<Building>(buildingId);
-            //        cityBuildingSlot.SetBuilding(building).SetIndex(i).SetSelected(false);
-            //    }
-            //    else
-            //    {
-            //        if (buildBuildingSys.CurSelectSlotIndex < 0)
-            //            buildBuildingSys.CurSelectSlotIndex = i;
-            //        cityBuildingSlot.SetBuilding(null).SetIndex(i).SetSelected(false);
-            //    }
-            //}
+            for (int i = slotLength; i < landTroopTypePool.Count; i++)
+                landTroopTypePool[i].gameObject.SetActive(false);
 
-            //OnSelectSlot(buildingSlotPool[buildBuildingSys.CurSelectSlotIndex]);
+            for (int i = 0; i < slotLength; i++)
+            {
+                TroopType troopType = cityExpeditionSys.ActivedLandTroopTypes[i];
+                UIBuildingTypeItem cityBuildingSlot = landTroopTypePool[i];
+                cityBuildingSlot.SetTroopType(troopType).SetIndex(i).SetSelected(cityExpeditionSys.CurSelectLandTrropTypeIndex == i);
+            }
+
+            slotLength = cityExpeditionSys.ActivedWaterTroopTypes.Count;
+            while (waterTroopTypePool.Count < slotLength)
+            {
+                GameObject go = GameObject.Instantiate(objUIBuildingTypeItem.gameObject, objUIBuildingTypeItem.transform.parent);
+                UIBuildingTypeItem cityBuildingSlot = go.GetComponent<UIBuildingTypeItem>();
+                waterTroopTypePool.Add(cityBuildingSlot);
+                cityBuildingSlot.onSelected = OnSelectLandType;
+                go.SetActive(true);
+            }
+
+            for (int i = slotLength; i < waterTroopTypePool.Count; i++)
+                waterTroopTypePool[i].gameObject.SetActive(false);
+
+            for (int i = 0; i < slotLength; i++)
+            {
+                TroopType troopType = cityExpeditionSys.ActivedWaterTroopTypes[i];
+                UIBuildingTypeItem cityBuildingSlot = waterTroopTypePool[i];
+                cityBuildingSlot.SetTroopType(troopType).SetIndex(i).SetSelected(cityExpeditionSys.CurSelectWaterTrropTypeIndex == i);
+            }
+
+            UpdateContent();
         }
 
         /// <summary>
@@ -69,96 +82,90 @@ namespace Sango.Game.Render.UI
             cityExpeditionSys.Done();
         }
 
-    
-        //public void ShowBuildingType()
-        //{
-        //    int len = buildBuildingSys.canSelectBuildingTypes.Count;
-        //    while (buildingTypeItemPool.Count < len)
-        //    {
-        //        GameObject go = GameObject.Instantiate(objUIBuildingTypeItem.gameObject, objUIBuildingTypeItem.transform.parent);
-        //        UIBuildingTypeItem buildingTypeItem = go.GetComponent<UIBuildingTypeItem>();
-        //        buildingTypeItemPool.Add(buildingTypeItem);
-        //        buildingTypeItem.onSelected = OnSelectBuildingType;
-        //        go.SetActive(true);
-        //    }
+        public void UpdateContent()
+        {
+            for (int i = 0; i < personItems.Length; ++i)
+            {
+                if (i < cityExpeditionSys.personList.Count)
+                    personItems[i].SetPerson(cityExpeditionSys.personList[i]);
+                else
+                    personItems[i].SetPerson(null);
+            }
 
-        //    for (int i = len; i < buildingTypeItemPool.Count; i++)
-        //        buildingTypeItemPool[i].gameObject.SetActive(false);
+            UpdateTroopStatus();
+            
+        }
 
-        //    for (int i = 0; i < len; i++)
-        //    {
-        //        BuildingType buildingType = buildBuildingSys.canSelectBuildingTypes[i];
+        void UpdateTroopStatus()
+        {
+            int atk, def, intel, build, move;
+            bool hasPeson = cityExpeditionSys.personList.Count > 0;
+            if (showLand)
+            {
+                if(hasPeson)
+                {
+                    atk = cityExpeditionSys.TargetTroop.landAttack;
+                    def = cityExpeditionSys.TargetTroop.landDefence;
+                    intel = cityExpeditionSys.TargetTroop.Intelligence;
+                    build = cityExpeditionSys.TargetTroop.BuildPower;
+                    move = cityExpeditionSys.TargetTroop.landMoveAbility;
+                }
+                else
+                {
+                    atk = cityExpeditionSys.TargetTroop.LandTroopType.atk;
+                    def = cityExpeditionSys.TargetTroop.LandTroopType.def;
+                    intel = cityExpeditionSys.TargetTroop.Intelligence;
+                    build = cityExpeditionSys.TargetTroop.BuildPower;
+                    move = cityExpeditionSys.TargetTroop.LandTroopType.move;
+                }
+            }
+            else
+            {
+                if (hasPeson)
+                {
+                    atk = cityExpeditionSys.TargetTroop.waterAttack;
+                    def = cityExpeditionSys.TargetTroop.waterDefence;
+                    intel = cityExpeditionSys.TargetTroop.Intelligence;
+                    build = cityExpeditionSys.TargetTroop.BuildPower;
+                    move = cityExpeditionSys.TargetTroop.waterMoveAbility;
+                }
+                else
+                {
+                    atk = cityExpeditionSys.TargetTroop.WaterTroopType.atk;
+                    def = cityExpeditionSys.TargetTroop.WaterTroopType.def;
+                    intel = cityExpeditionSys.TargetTroop.Intelligence;
+                    build = cityExpeditionSys.TargetTroop.BuildPower;
+                    move = cityExpeditionSys.TargetTroop.WaterTroopType.move;
+                }
+            }
+        }
 
-        //        if (buildBuildingSys.CurSelectBuildingTypeIndex < 0)
-        //            buildBuildingSys.CurSelectBuildingTypeIndex = i;
+        public void OnSelectWaterType(UIBuildingTypeItem buildingTypeItem)
+        {
+            if (cityExpeditionSys.CurSelectWaterTrropTypeIndex >= 0)
+                waterTroopTypePool[cityExpeditionSys.CurSelectWaterTrropTypeIndex].SetSelected(false);
+            cityExpeditionSys.CurSelectWaterTrropTypeIndex = buildingTypeItem.index;
+            buildingTypeItem.SetSelected(true);
+            cityExpeditionSys.UpdateJobValue();
+            UpdateContent();
+        }
 
-
-        //        int totalNum = buildBuildingSys.TargetCity.GetIntriorBuildingComplateNumber(buildingType.kind);
-
-        //        UIBuildingTypeItem cityBuildingSlot = buildingTypeItemPool[i];
-        //        cityBuildingSlot.SetBuildingType(buildingType).SetIndex(i).SetSelected(false).SetNum(totalNum);
-        //    }
-
-        //    OnSelectBuildingType(buildingTypeItemPool[buildBuildingSys.CurSelectBuildingTypeIndex]);
-        //}
-
-        //public void OnSelectBuildingType(UIBuildingTypeItem buildingTypeItem)
-        //{
-        //    if (buildBuildingSys.CurSelectBuildingTypeIndex >= 0)
-        //    {
-        //        buildingTypeItemPool[buildBuildingSys.CurSelectBuildingTypeIndex].SetSelected(false);
-        //    }
-
-        //    buildBuildingSys.CurSelectBuildingTypeIndex = buildingTypeItem.index;
-        //    buildBuildingSys.TargetBuildingType = buildBuildingSys.canSelectBuildingTypes[buildingTypeItem.index];
-
-        //    Person[] builder = ForceAI.CounsellorRecommendBuild(buildBuildingSys.TargetCity.freePersons, buildBuildingSys.TargetBuildingType);
-        //    buildBuildingSys.personList.Clear();
-        //    if (builder == null || builder.Length == 0)
-        //    {
-        //        for (int i = 0; i < personItems.Length; ++i)
-        //            personItems[i].SetPerson(null);
-        //    }
-        //    else
-        //    {
-        //        for (int i = 0; i < personItems.Length; ++i)
-        //        {
-        //            if (i < builder.Length)
-        //            {
-        //                Person person = builder[i];
-        //                personItems[i].SetPerson(person);
-        //                buildBuildingSys.personList.Add(person);
-        //            }
-        //            else
-        //            {
-        //                personItems[i].SetPerson(null);
-        //            }
-        //        }
-        //    }
-        //    buildBuildingSys.UpdateJobValue();
-        //    buildCountLabel.text = $"{buildBuildingSys.wonderBuildCounter}回";
-        //    cityGoldLabel.text = $"{buildBuildingSys.TargetBuildingType.cost}/{buildBuildingSys.TargetCity.gold}";
-
-        //    int totalNum = buildBuildingSys.TargetCity.GetIntriorBuildingComplateNumber(buildBuildingSys.TargetBuildingType.kind);
-        //    buildingNumberLabel.text = totalNum.ToString();
-
-        //    buildingTypeDescLabel.text = buildBuildingSys.TargetBuildingType.desc;
-        //    buildingTypeItem.SetSelected(true);
-        //}
+        public void OnSelectLandType(UIBuildingTypeItem buildingTypeItem)
+        {
+            if (cityExpeditionSys.CurSelectLandTrropTypeIndex >= 0)
+                landTroopTypePool[cityExpeditionSys.CurSelectLandTrropTypeIndex].SetSelected(false);
+            cityExpeditionSys.CurSelectLandTrropTypeIndex = buildingTypeItem.index;
+            buildingTypeItem.SetSelected(true);
+            cityExpeditionSys.UpdateJobValue();
+            UpdateContent();
+        }
 
         public void OnPersonChange(List<Person> personList)
         {
-            //buildBuildingSys.UpdateJobValue();
-            //buildCountLabel.text = $"{buildBuildingSys.wonderBuildCounter}回";
-
-            //for (int i = 0; i < personItems.Length; ++i)
-            //{
-            //    if (i < buildBuildingSys.personList.Count)
-            //        personItems[i].SetPerson(buildBuildingSys.personList[i]);
-
-            //    else
-            //        personItems[i].SetPerson(null);
-            //}
+            cityExpeditionSys.personList = personList;
+            cityExpeditionSys.UpdateJobValue();
+           
+            UpdateContent();
         }
 
         public void OnSelectPerson()

@@ -89,6 +89,25 @@ namespace Sango.Game.Render.UI
             return this;
         }
 
+        public UIBuildingTypeItem SetTroopType(TroopType troopType)
+        {
+            if (troopType == null)
+            {
+                icon.enabled = false;
+                nameLabel.text = "";
+                costLabel.text = "";
+                numLabel.text = "";
+            }
+            else
+            {
+                icon.enabled = true;
+                nameLabel.text = troopType.Name;
+                costLabel.text = "";
+                icon.sprite = GameRenderHelper.LoadBuildingTypeIcon(troopType.icon);
+                numLabel.text = "";
+            }
+            return this;
+        }
         public void OnClick()
         {
             onSelected?.Invoke(this);
