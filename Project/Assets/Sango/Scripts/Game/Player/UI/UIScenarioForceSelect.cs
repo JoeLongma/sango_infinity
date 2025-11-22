@@ -155,8 +155,8 @@ namespace Sango.Game.Render.UI
         public void OnReturn()
         {
             Scenario.CurSelected.Clear();
-            Window.Instance.ShowWindow("window_scenario_select");
-            Window.Instance.HideWindow("window_scenario_force_select");
+            Window.Instance.Open("window_scenario_select");
+            Window.Instance.Close("window_scenario_force_select");
         }
 
         public void OnNext()
@@ -203,8 +203,8 @@ namespace Sango.Game.Render.UI
             }
 
             Scenario.CurSelected.Info.playerForceList = forceIds.ToArray();
-            Window.Instance.ShowWindow("window_loading");
-            Window.Instance.HideWindow("window_scenario_force_select");
+            Window.Instance.Open("window_loading");
+            Window.Instance.Close("window_scenario_force_select");
             Scenario.StartScenario(Scenario.CurSelected);
         }
 

@@ -16,7 +16,7 @@ namespace Sango.Game.Render.UI
             if (menuItems.Count == 0)
                 return;
 
-            WindowInterface windowInterface = Window.Instance.ShowWindow("window_contextMenu");
+            WindowInterface windowInterface = Window.Instance.Open("window_contextMenu");
             if (windowInterface != null)
             {
                 UIContextMenu uIContextMenu = windowInterface.ugui_instance as UIContextMenu;
@@ -47,7 +47,7 @@ namespace Sango.Game.Render.UI
                 UIContextMenu uIContextMenu = windowInterface.ugui_instance as UIContextMenu;
                 if (uIContextMenu.Close())
                 {
-                    Window.Instance.HideWindow("window_contextMenu");
+                    Window.Instance.Close("window_contextMenu");
                     return true;
                 }
             }
@@ -61,7 +61,7 @@ namespace Sango.Game.Render.UI
             {
                 UIContextMenu uIContextMenu = windowInterface.ugui_instance as UIContextMenu;
                 uIContextMenu.Close(0);
-                Window.Instance.HideWindow("window_contextMenu");
+                Window.Instance.Close("window_contextMenu");
             }
         }
 

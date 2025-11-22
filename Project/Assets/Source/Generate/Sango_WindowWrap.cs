@@ -183,7 +183,7 @@ public class Sango_WindowWrap
 			ToLua.CheckArgsCount(L, 2);
 			Sango.Window obj = (Sango.Window)ToLua.CheckObject<Sango.Window>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
-			Sango.Window.WindowInterface o = obj.ShowWindow(arg0);
+			Sango.Window.WindowInterface o = obj.Open(arg0);
 			ToLua.PushObject(L, o);
 			return 1;
 		}
@@ -219,7 +219,7 @@ public class Sango_WindowWrap
 			ToLua.CheckArgsCount(L, 2);
 			Sango.Window obj = (Sango.Window)ToLua.CheckObject<Sango.Window>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
-			obj.HideWindow(arg0);
+			obj.Close(arg0);
 			return 0;
 		}
 		catch (Exception e)

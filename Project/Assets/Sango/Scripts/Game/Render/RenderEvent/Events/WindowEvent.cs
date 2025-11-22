@@ -12,7 +12,7 @@
         public object arg7;
         public override void Enter(Scenario scenario)
         {
-            Window.WindowInterface window = Window.Instance.ShowWindow(windowName);
+            Window.WindowInterface window = Window.Instance.Open(windowName);
             if (window == null) return;
             if (arg7 != null)
             {
@@ -53,7 +53,7 @@
 
         public override void Exit(Scenario scenario)
         {
-            Window.Instance.HideWindow(windowName);
+            Window.Instance.Close(windowName);
         }
     }
 }

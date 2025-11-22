@@ -10,6 +10,7 @@ namespace Sango.Game.Player
         public City TargetCity { get; set; }
         public List<Person> personList = new List<Person>();
 
+        string windowName = "window_city_create_troop";
         public string customTitleName = "出征";
         public List<ObjectSortTitle> customTitleList = new List<ObjectSortTitle>()
         {
@@ -93,17 +94,28 @@ namespace Sango.Game.Player
             TargetTroop.MaxMorale = TargetCity.MaxMorale;
             TargetTroop.energy = TargetCity.energy;
 
-            Window.Instance.ShowWindow("window_city_create_troop");
+            Window.Instance.Open(windowName);
         }
 
         public override void OnDestroy()
         {
-            Window.Instance.HideWindow("window_city_create_troop");
+            Window.Instance.Close(windowName);
         }
 
         public void MakeTroop()
         {
+            if (personList.Count == 0) return;
 
+            TargetCity.EnsureTroop(TargetTroop, Scenario.Cur);
+            Window.Instance.SetVisible(windowName, false);
+            Singleton<TroopMove>.Instance.Start(TargetTroop);
+        }
+
+        public override void OnBack()
+        {
+            base.OnBack();
+            Window.Instance.SetVisible(windowName, true);
+            TargetTroop.EnterCity(TargetCity);
         }
 
     }

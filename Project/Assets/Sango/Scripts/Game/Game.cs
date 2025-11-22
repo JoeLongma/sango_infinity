@@ -43,15 +43,15 @@ namespace Sango.Game
 
         IEnumerator GameInit()
         {
-            Window.Instance.ShowWindow("window_loading");
+            Window.Instance.Open("window_loading");
             //yield return new WaitForSeconds(0.5f);
             yield return null;
             ModManager.Instance.InitMods();
             GameData.Instance.Init();
             GameEvent.OnGameInit?.Invoke();
             GameState.Instance.ChangeState((int)GameState.State.GAME_START_MENU);
-            Window.Instance.ShowWindow("window_start");
-            Window.Instance.HideWindow("window_loading");
+            Window.Instance.Open("window_start");
+            Window.Instance.Close("window_loading");
             //Scenario scenario = new Scenario();
             //string path = Path.FindFile("Data/Scenario/Scenario.json");
             //scenario.FilePath = path;
@@ -64,15 +64,15 @@ namespace Sango.Game
 
         public void EnterMapEditor()
         {
-            Window.Instance.HideWindow("window_start");
+            Window.Instance.Close("window_start");
             GameObject map = new GameObject("map");
             MapEditor mapEditor = map.AddComponent<MapEditor>();
         }
 
         public void StartNewGame()
         {
-            Window.Instance.ShowWindow("window_scenario_select");
-            Window.Instance.HideWindow("window_start");
+            Window.Instance.Open("window_scenario_select");
+            Window.Instance.Close("window_start");
         }
 
         public void StartGame(Scenario target)

@@ -637,9 +637,9 @@ namespace Sango.Game
 
             GameEvent.OnScenarioStart?.Invoke(this);
 
-            Window.Instance.HideWindow("window_start");
-            Window.Instance.HideWindow("window_loading");
-            Window.Instance.ShowWindow("window_game");
+            Window.Instance.Close("window_start");
+            Window.Instance.Close("window_loading");
+            Window.Instance.Open("window_game");
 #if SANGO_DEBUG_AI
             GameAIDebug.Instance.Init();
 #endif

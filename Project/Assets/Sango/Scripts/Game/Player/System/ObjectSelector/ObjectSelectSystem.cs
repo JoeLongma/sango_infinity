@@ -60,7 +60,7 @@ namespace Sango.Game.Player
         /// </summary>
         public override void OnEnter()
         {
-            Window.WindowInterface win = Window.Instance.ShowWindow("window_object_selector");
+            Window.WindowInterface win = Window.Instance.Open("window_object_selector");
             if (win != null)
             {
                 UIObjectSelector uIObjectSelector = win.ugui_instance as UIObjectSelector;
@@ -76,7 +76,7 @@ namespace Sango.Game.Player
         /// </summary>
         public override void OnDestroy()
         {
-            Window.Instance.HideWindow("window_object_selector");
+            Window.Instance.Close("window_object_selector");
         }
 
         public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition) {; }

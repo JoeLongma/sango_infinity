@@ -66,7 +66,7 @@ namespace Sango.Game.Player
         {
             InitPersonList();
             UpdateJobValue();
-            Window.WindowInterface windowInterface = Window.Instance.ShowWindow(windowName);
+            Window.WindowInterface windowInterface = Window.Instance.Open(windowName);
             if (windowInterface != null)
             {
                 UICityComandBase uICityComandBase = windowInterface.ugui_instance as UICityComandBase;
@@ -80,7 +80,7 @@ namespace Sango.Game.Player
 
         public override void OnDestroy()
         {
-            Window.Instance.HideWindow(windowName);
+            Window.Instance.Close(windowName);
         }
 
         public virtual void DoJob()

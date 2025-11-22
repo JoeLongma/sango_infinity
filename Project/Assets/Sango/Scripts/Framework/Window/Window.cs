@@ -21,6 +21,11 @@ namespace Sango
                 return ugui_instance != null;
             }
 
+            public void SetVisible(bool b)
+            {
+                ugui_instance?.gameObject.SetActive(b);
+            }
+
             public void Show()
             {
                 //fgui_instance?.Show();
@@ -329,7 +334,7 @@ namespace Sango
             //GRoot.inst.SetContentScaleFactor(screenX, screenY);
         }
 
-        public WindowInterface ShowWindow(string windowName)
+        public WindowInterface Open(string windowName)
         {
 #if SANGO_DEBUG
             UnityEngine.Debug.Log($"显示窗口:{windowName}");
@@ -351,7 +356,7 @@ namespace Sango
             return null;
         }
 
-        public void HideWindow(string windowName)
+        public void Close(string windowName)
         {
 #if SANGO_DEBUG
             UnityEngine.Debug.Log($"隐藏窗口:{windowName}");
@@ -368,6 +373,17 @@ namespace Sango
                 }
             }
         }
+
+        public void SetVisible(string windowName, bool b)
+        {
+            WindowInfo info;
+            if (!windowMap.TryGetValue(windowName, out info))
+                return;
+
+            info.instance.SetVisible(b);
+
+        }
+
 
         //public static FairyGUI.Window CreateWindow(string pkgName, string resName, LuaTable luaTable, bool fullScreen = true)
         //{

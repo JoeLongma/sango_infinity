@@ -46,7 +46,7 @@ namespace Sango.Game.Render.UI
         public override void OnShow()
         {
             base.OnShow();
-            Window.Instance.HideWindow("window_loading");
+            Window.Instance.Close("window_loading");
         }
 
         public GameObject GetObject(int index)

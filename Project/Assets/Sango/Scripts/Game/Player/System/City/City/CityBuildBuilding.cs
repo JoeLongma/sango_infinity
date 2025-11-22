@@ -57,12 +57,12 @@ namespace Sango.Game.Player
         {
             CurSelectBuildingTypeIndex = -1;
             CurSelectSlotIndex = -1;
-            Window.Instance.ShowWindow("window_city_building");
+            Window.Instance.Open("window_city_building");
         }
 
         public override void OnDestroy()
         {
-            Window.Instance.HideWindow("window_city_building");
+            Window.Instance.Close("window_city_building");
         }
 
         public void DoBuildBuilding()
