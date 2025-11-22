@@ -63,6 +63,9 @@ namespace Sango.Game.Player
             if (personList.Count > 1) TargetTroop.Member1 = personList[1];
             if (personList.Count > 2) TargetTroop.Member2 = personList[2];
 
+            TargetTroop.LandTroopType = ActivedLandTroopTypes[CurSelectLandTrropTypeIndex];
+            TargetTroop.WaterTroopType = ActivedWaterTroopTypes[CurSelectWaterTrropTypeIndex];
+
             TargetTroop.CalculateMaxTroops();
             TargetTroop.CalculateAttribute(Scenario.Cur);
         }
@@ -96,6 +99,11 @@ namespace Sango.Game.Player
         public override void OnDestroy()
         {
             Window.Instance.HideWindow("window_city_create_troop");
+        }
+
+        public void MakeTroop()
+        {
+
         }
 
     }

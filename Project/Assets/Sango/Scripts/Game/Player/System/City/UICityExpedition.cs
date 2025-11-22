@@ -8,19 +8,42 @@ namespace Sango.Game.Render.UI
 {
     public class UICityExpedition : UGUIWindow
     {
-        public UIBuildingTypeItem objUIBuildingTypeItem;
+        public UIBuildingTypeItem objUIBuildingTypeItemLand;
+        public UIBuildingTypeItem objUIBuildingTypeItemWater;
         List<UIBuildingTypeItem> landTroopTypePool = new List<UIBuildingTypeItem>();
         List<UIBuildingTypeItem> waterTroopTypePool = new List<UIBuildingTypeItem>();
 
         public UIPersonItem[] personItems;
 
-        public Text landTroopTypeDescLabel;
-        public Text waterTroopTypeDescLabel;
+        public UITextField landTroopTypeDescLabel;
+        public UITextField waterTroopTypeDescLabel;
 
 
-        public UITextField buildCountLabel;
-        public UITextField cityGoldLabel;
-        public UITextField buildingNumberLabel;
+        public UITextField troopsLabel;
+        public UITextField goldLabel;
+        public UITextField foodLabel;
+        public UITextField dayTurnLabel;
+
+
+        public UITextField atkLaebl;
+        public UITextField defLaebl;
+        public UITextField intLaebl;
+        public UITextField buildLaebl;
+        public UITextField moveLaebl;
+        public UITextField typeLaebl;
+        public UITextField abilityLaebl;
+        public UITextField energyLaebl;
+        public UITextField[] skillLabel;
+
+        public UITextField[] itemLabels;
+
+        public UITextField itemTroopsLabel;
+        public UITextField itemGoldLabel;
+        public UITextField itemFoodLabel;
+
+        public Slider troopsSlider;
+        public Slider goldSlider;
+        public Slider foodSlider;
 
         CityExpedition cityExpeditionSys;
 
@@ -34,7 +57,7 @@ namespace Sango.Game.Render.UI
             int slotLength = cityExpeditionSys.ActivedLandTroopTypes.Count;
             while (landTroopTypePool.Count < slotLength)
             {
-                GameObject go = GameObject.Instantiate(objUIBuildingTypeItem.gameObject, objUIBuildingTypeItem.transform.parent);
+                GameObject go = GameObject.Instantiate(objUIBuildingTypeItemLand.gameObject, objUIBuildingTypeItemLand.transform.parent);
                 UIBuildingTypeItem cityBuildingSlot = go.GetComponent<UIBuildingTypeItem>();
                 landTroopTypePool.Add(cityBuildingSlot);
                 cityBuildingSlot.onSelected = OnSelectLandType;
@@ -54,7 +77,7 @@ namespace Sango.Game.Render.UI
             slotLength = cityExpeditionSys.ActivedWaterTroopTypes.Count;
             while (waterTroopTypePool.Count < slotLength)
             {
-                GameObject go = GameObject.Instantiate(objUIBuildingTypeItem.gameObject, objUIBuildingTypeItem.transform.parent);
+                GameObject go = GameObject.Instantiate(objUIBuildingTypeItemWater.gameObject, objUIBuildingTypeItemWater.transform.parent);
                 UIBuildingTypeItem cityBuildingSlot = go.GetComponent<UIBuildingTypeItem>();
                 waterTroopTypePool.Add(cityBuildingSlot);
                 cityBuildingSlot.onSelected = OnSelectLandType;
@@ -82,6 +105,76 @@ namespace Sango.Game.Render.UI
             cityExpeditionSys.Done();
         }
 
+        public void OnOK()
+        {
+            cityExpeditionSys.MakeTroop();
+        }
+
+        public void OnBuildTroopType1()
+        {
+
+        }
+
+        public void OnBuildTroopType2()
+        {
+
+        }
+
+        public void OnBuildTroopType3()
+        {
+
+        }
+
+        public void OnBuildTroopType4()
+        {
+
+        }
+
+        public void OnBuildTroopType5()
+        {
+
+        }
+
+        public void OpenNumberPanel_troops()
+        {
+
+        }
+
+        public void OpenNumberPanel_gold()
+        {
+
+        }
+
+        public void OpenNumberPanel_food()
+        {
+
+        }
+
+        public void OnTroopTypeShowLand(bool b)
+        {
+
+        }
+
+        public void OnTroopTypeShowWater(bool b)
+        {
+
+        }
+
+        public void OnTroopsSliderValueChanged(float p)
+        {
+
+        }
+
+        public void OnGoldSliderValueChanged(float p)
+        {
+
+        }
+
+        public void OnFoodSliderValueChanged(float p)
+        {
+
+        }
+
         public void UpdateContent()
         {
             for (int i = 0; i < personItems.Length; ++i)
@@ -93,51 +186,65 @@ namespace Sango.Game.Render.UI
             }
 
             UpdateTroopStatus();
-            
+
         }
 
         void UpdateTroopStatus()
         {
             int atk, def, intel, build, move;
             bool hasPeson = cityExpeditionSys.personList.Count > 0;
+            Troop targetTroop = cityExpeditionSys.TargetTroop;
             if (showLand)
             {
-                if(hasPeson)
+                if (hasPeson)
                 {
-                    atk = cityExpeditionSys.TargetTroop.landAttack;
-                    def = cityExpeditionSys.TargetTroop.landDefence;
-                    intel = cityExpeditionSys.TargetTroop.Intelligence;
-                    build = cityExpeditionSys.TargetTroop.BuildPower;
-                    move = cityExpeditionSys.TargetTroop.landMoveAbility;
+                    atk = targetTroop.landAttack;
+                    def = targetTroop.landDefence;
+                    intel = targetTroop.Intelligence;
+                    build = targetTroop.BuildPower;
+                    move = targetTroop.landMoveAbility;
                 }
                 else
                 {
-                    atk = cityExpeditionSys.TargetTroop.LandTroopType.atk;
-                    def = cityExpeditionSys.TargetTroop.LandTroopType.def;
-                    intel = cityExpeditionSys.TargetTroop.Intelligence;
-                    build = cityExpeditionSys.TargetTroop.BuildPower;
-                    move = cityExpeditionSys.TargetTroop.LandTroopType.move;
+                    atk = targetTroop.LandTroopType.atk;
+                    def = targetTroop.LandTroopType.def;
+                    intel = targetTroop.Intelligence;
+                    build = targetTroop.BuildPower;
+                    move = targetTroop.LandTroopType.move;
                 }
+
+                typeLaebl.text = targetTroop.LandTroopType.Name;
+                abilityLaebl.text = Scenario.Cur.Variables.GetAbilityName(targetTroop.LandTroopTypeLv);
             }
             else
             {
                 if (hasPeson)
                 {
-                    atk = cityExpeditionSys.TargetTroop.waterAttack;
-                    def = cityExpeditionSys.TargetTroop.waterDefence;
-                    intel = cityExpeditionSys.TargetTroop.Intelligence;
-                    build = cityExpeditionSys.TargetTroop.BuildPower;
-                    move = cityExpeditionSys.TargetTroop.waterMoveAbility;
+                    atk = targetTroop.waterAttack;
+                    def = targetTroop.waterDefence;
+                    intel = targetTroop.Intelligence;
+                    build = targetTroop.BuildPower;
+                    move = targetTroop.waterMoveAbility;
                 }
                 else
                 {
-                    atk = cityExpeditionSys.TargetTroop.WaterTroopType.atk;
-                    def = cityExpeditionSys.TargetTroop.WaterTroopType.def;
-                    intel = cityExpeditionSys.TargetTroop.Intelligence;
-                    build = cityExpeditionSys.TargetTroop.BuildPower;
-                    move = cityExpeditionSys.TargetTroop.WaterTroopType.move;
+                    atk = targetTroop.WaterTroopType.atk;
+                    def = targetTroop.WaterTroopType.def;
+                    intel = targetTroop.Intelligence;
+                    build = targetTroop.BuildPower;
+                    move = targetTroop.WaterTroopType.move;
                 }
+
+                typeLaebl.text = targetTroop.WaterTroopType.Name;
+                abilityLaebl.text = Scenario.Cur.Variables.GetAbilityName(targetTroop.WaterTroopTypeLv);
             }
+
+            atkLaebl.text = atk.ToString();
+            defLaebl.text = def.ToString();
+            intLaebl.text = intel.ToString();
+            buildLaebl.text = build.ToString();
+            moveLaebl.text = move.ToString();
+            energyLaebl.text = targetTroop.morale.ToString();
         }
 
         public void OnSelectWaterType(UIBuildingTypeItem buildingTypeItem)
@@ -164,7 +271,7 @@ namespace Sango.Game.Render.UI
         {
             cityExpeditionSys.personList = personList;
             cityExpeditionSys.UpdateJobValue();
-           
+
             UpdateContent();
         }
 
