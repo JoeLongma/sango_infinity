@@ -18,10 +18,16 @@ namespace Sango.Game.Player
         }
         ControlType CurrentControlType { get; set; }
 
+        public void Start(Troop troop)
+        {
+            Start(troop, Vector3.zero);
+        }
+
         public void Start(Troop troop, Vector3 startPoint)
         {
             if (!troop.IsAlive) return;
-            if(!troop.ActionOver && troop.BelongForce.IsPlayer && troop.BelongForce == Scenario.Cur.CurRunForce)
+            TargetTroop = troop;
+            if (!troop.ActionOver && troop.BelongForce.IsPlayer && troop.BelongForce == Scenario.Cur.CurRunForce)
             {
                 CurrentControlType = ControlType.Move;
                 moveRange.Clear();
@@ -65,6 +71,7 @@ namespace Sango.Game.Player
 
             ContextMenu.CloseAll();
         }
+
 
         public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition)
         {

@@ -30,6 +30,10 @@ namespace Sango.Game.Player
             Singleton<CityCallPerson>.Instance.Init();
             Singleton<CityTransformPerson>.Instance.Init();
 
+
+            // 部队
+            Singleton<TroopCommandEnd>.Instance.Init();
+            
         }
     }
 }

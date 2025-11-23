@@ -80,7 +80,7 @@ namespace Sango.Game.Render.UI
                 GameObject go = GameObject.Instantiate(objUIBuildingTypeItemWater.gameObject, objUIBuildingTypeItemWater.transform.parent);
                 UIBuildingTypeItem cityBuildingSlot = go.GetComponent<UIBuildingTypeItem>();
                 waterTroopTypePool.Add(cityBuildingSlot);
-                cityBuildingSlot.onSelected = OnSelectLandType;
+                cityBuildingSlot.onSelected = OnSelectWaterType;
                 go.SetActive(true);
             }
 

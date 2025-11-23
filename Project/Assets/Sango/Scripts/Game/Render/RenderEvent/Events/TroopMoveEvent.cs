@@ -1,4 +1,5 @@
 ﻿using Sango.Render;
+using System;
 using UnityEngine;
 
 
@@ -10,6 +11,7 @@ namespace Sango.Game.Render
         public Cell start;
         public Cell dest;
         public bool isLastMove;
+        public Action doneAction;
 
         public override void Enter(Scenario scenario)
         {
@@ -43,6 +45,7 @@ namespace Sango.Game.Render
             if(!troop.IsAlive)
             {
                 IsDone = true;
+                doneAction?.Invoke();
                 return IsDone;
             }
 
@@ -51,6 +54,7 @@ namespace Sango.Game.Render
                 troop.Render.SetForward(dir);
                 troop.UpdateCell(dest, start, isLastMove);
                 IsDone = true;
+                doneAction?.Invoke();
                 return IsDone;
             }
 
@@ -68,6 +72,7 @@ namespace Sango.Game.Render
                 troop.Render.SetPosition(newPos);
                 troop.UpdateCell(dest, start, isLastMove);
                 IsDone = true;
+                doneAction?.Invoke();
                 return IsDone;
             }
             else

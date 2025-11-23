@@ -105,10 +105,10 @@ namespace Sango.Game.Player
         public void MakeTroop()
         {
             if (personList.Count == 0) return;
-
+            ContextMenu.CloseAll();
             TargetCity.EnsureTroop(TargetTroop, Scenario.Cur);
             Window.Instance.SetVisible(windowName, false);
-            Singleton<TroopMove>.Instance.Start(TargetTroop);
+            Singleton<TroopSystem>.Instance.Start(TargetTroop);
         }
 
         public override void OnBack()
