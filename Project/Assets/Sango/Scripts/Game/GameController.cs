@@ -519,6 +519,8 @@ namespace Sango.Game
 
         public void Update()
         {
+            PlayerCommand.Instance.Update();
+
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
             HandleOverCell();
 #endif

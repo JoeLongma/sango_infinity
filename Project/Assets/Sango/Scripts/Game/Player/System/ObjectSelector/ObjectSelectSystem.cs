@@ -5,7 +5,7 @@ using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Player
 {
-    public class ObjectSelectSystem : CommandSystemBase
+    public class ObjectSelectSystem
     {
         public List<SangoObject> Objects;
         public List<SangoObject> selected = new List<SangoObject>();
@@ -27,17 +27,18 @@ namespace Sango.Game.Player
             selected = resultList;
             customSortItems = customSortTitles;
             this.customSortTitleName = cutomSortTitleName;
-            PlayerCommand.Instance.Push(this);
+
+            OnEnter();
         }
         public void OnSure()
         {
+            Window.Instance.Close("window_object_selector");
             sureAction?.Invoke(selected);
-            PlayerCommand.Instance.Back();
         }
 
         public void OnCancel()
         {
-            PlayerCommand.Instance.Back();
+            Window.Instance.Close("window_object_selector");
         }
 
         public bool IsPersonLimit()
@@ -58,7 +59,7 @@ namespace Sango.Game.Player
         /// <summary>
         /// 进入当前命令的时候触发
         /// </summary>
-        public override void OnEnter()
+        public virtual void OnEnter()
         {
             Window.WindowInterface win = Window.Instance.Open("window_object_selector");
             if (win != null)
@@ -70,16 +71,6 @@ namespace Sango.Game.Player
                 }
             }
         }
-
-        /// <summary>
-        /// 当前命令被舍弃的时候触发
-        /// </summary>
-        public override void OnDestroy()
-        {
-            Window.Instance.Close("window_object_selector");
-        }
-
-        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition) {; }
 
         public virtual List<ObjectSortTitle> GetSortTitleGroup(int index)
         {

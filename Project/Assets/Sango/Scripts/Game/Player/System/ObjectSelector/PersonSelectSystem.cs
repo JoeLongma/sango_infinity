@@ -17,7 +17,7 @@ namespace Sango.Game.Player
             selected = new List<SangoObject>(resultList);
             customSortItems = customSortTitles;
             this.customSortTitleName = cutomSortTitleName;
-            PlayerCommand.Instance.Push(this);
+            OnEnter();
         }
 
         public void OnBaseSure(List<SangoObject> objects)

@@ -370,7 +370,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6765327031358625380}
   m_HandleRect: {fileID: 6857155783993741806}
   m_Direction: 2
-  m_Value: 0.6385854
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1475,7 +1475,7 @@ Canvas:
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
-  m_OverrideSorting: 0
+  m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0

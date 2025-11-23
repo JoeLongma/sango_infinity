@@ -200,7 +200,7 @@ namespace Sango.Game
         /// 是否在水中
         /// </summary>
         /// <returns></returns>
-        public bool IsInWater => cell.TerrainType.isWater;
+        public bool IsInWater => cell?.TerrainType.isWater??false;
 
 
         public List<SkillInstance> skills => IsInWater ? waterSkills : landSkills;
