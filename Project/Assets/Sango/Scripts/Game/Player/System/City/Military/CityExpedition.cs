@@ -74,7 +74,6 @@ namespace Sango.Game.Player
         public override void OnEnter()
         {
             TargetTroop = new Troop();
-
             List<TroopType> activeTroopTypes = new List<TroopType>();
             TroopType.CheckActivTroopTypeList(TargetCity.freePersons, activeTroopTypes);
 
@@ -93,6 +92,7 @@ namespace Sango.Game.Player
             TargetTroop.morale = TargetCity.morale;
             TargetTroop.MaxMorale = TargetCity.MaxMorale;
             TargetTroop.energy = TargetCity.energy;
+            TargetTroop.troops = 1;
 
             Window.Instance.Open(windowName);
         }
