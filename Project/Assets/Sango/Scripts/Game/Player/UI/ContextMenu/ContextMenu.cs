@@ -34,6 +34,23 @@ namespace Sango.Game.Render.UI
             }
         }
 
+        public static void SetVisible(bool b)
+        {
+            WindowInterface windowInterface = Window.Instance.GetWindow("window_contextMenu");
+            if (windowInterface != null)
+            {
+                windowInterface.SetVisible(b);
+            }
+        }
+
+        public static bool IsVisible()
+        {
+            WindowInterface windowInterface = Window.Instance.GetWindow("window_contextMenu");
+            if (windowInterface == null) return false;
+            return windowInterface.IsVisible();
+        }
+
+
         public static void Add(ContextMenuData itemData)
         {
             //ContenDatas[itemData.depth].Add(itemData);

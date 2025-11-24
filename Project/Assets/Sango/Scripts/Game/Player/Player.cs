@@ -32,7 +32,7 @@ namespace Sango.Game.Player
 
 
             // 部队
-            Singleton<TroopCommandEnd>.Instance.Init();
+            Singleton<TroopCommandStay>.Instance.Init();
             
         }
     }

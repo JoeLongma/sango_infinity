@@ -9,6 +9,7 @@ namespace Sango.Game.Player
     {
         public List<Cell> moveRange = new List<Cell>();
         public List<Cell> movePath = new List<Cell>();
+        public List<Cell> spellRangeCell = new List<Cell>();
         public Troop TargetTroop { get; set; }
 
         enum ControlType
@@ -62,16 +63,26 @@ namespace Sango.Game.Player
         public override void OnDestroy()
         {
             MapRender mapRender = MapRender.Instance;
+            for (int i = 0, count = spellRangeCell.Count; i < count; ++i)
+            {
+                Cell c = spellRangeCell[i];
+                mapRender.SetGridMaskColor(c.x, c.y, Color.black);
+            }
+
             for (int i = 0, count = moveRange.Count; i < count; ++i)
             {
                 Cell cell = moveRange[i];
                 mapRender.SetGridMaskColor(cell.x, cell.y, Color.black);
             }
             mapRender.EndSetGridMask();
-
+            mapRender.SetDarkMask(false);
             ContextMenu.CloseAll();
         }
 
+        public override void OnExit()
+        {
+            OnDestroy();
+        }
 
         public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition)
         {
@@ -94,6 +105,13 @@ namespace Sango.Game.Player
                                     if (moveRange.Contains(cell))
                                     {
                                         MapRender mapRender = MapRender.Instance;
+                                        for (int i = 0, count = spellRangeCell.Count; i < count; ++i)
+                                        {
+                                            Cell c = spellRangeCell[i];
+                                            mapRender.SetGridMaskColor(c.x, c.y, Color.black);
+                                        }
+                                        spellRangeCell.Clear();
+                                      
                                         for (int i = 0, count = movePath.Count; i < count; ++i)
                                         {
                                             Cell c = movePath[i];
@@ -109,6 +127,32 @@ namespace Sango.Game.Player
                                         mapRender.EndSetGridMask();
 
                                         ContextMenu.CloseAll();
+
+                                        
+                                        mapRender.SetDarkMask(true);
+                                        List<SkillInstance> list;
+                                        if (cell.TerrainType.isWater)
+                                        {
+                                            list = TargetTroop.waterSkills;
+                                        }
+                                        else
+                                        {
+                                            list = TargetTroop.landSkills;
+                                        }
+
+                                        for (int i = 0, count = list.Count; i < count; ++i)
+                                        {
+                                            Skill skill = list[i].Skill;
+                                            if (skill.CanBeSpell(TargetTroop))
+                                                skill.GetSpellRange(TargetTroop, cell, spellRangeCell);
+                                        }
+
+                                        for (int i = 0, count = spellRangeCell.Count; i < count; ++i)
+                                        {
+                                            Cell c = spellRangeCell[i];
+                                            mapRender.SetGridMaskColor(c.x, c.y, Color.red);
+                                        }
+                                        mapRender.EndSetGridMask();
 
                                         // 显示确认菜单
                                         ContextMenuData.MenuData.Clear();

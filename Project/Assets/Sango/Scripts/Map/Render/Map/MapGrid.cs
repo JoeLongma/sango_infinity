@@ -173,6 +173,7 @@ namespace Sango.Render
                 Create(quadSize);
             SetGridTexture("grid");
             ShowGrid(true);
+            SetDarkMask(false);
         }
         public override void Clear()
         {

@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
-    public class TroopCommandEnd : TroopComandBase
+    public class TroopCommandSkill : TroopComandBase
     {
         List<Cell> MovePath { get; set; }
 
-        public TroopCommandEnd()
+        public TroopCommandSkill()
         {
-            customMenuName = "待命";
+            customMenuName = "战法";
             customMenuOrder = 0;
         }
 

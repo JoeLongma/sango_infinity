@@ -107,6 +107,8 @@ namespace Sango.Game.Player
         {
             if (personList.Count == 0) return;
             ContextMenu.CloseAll();
+            TargetTroop.ActionOver = false;
+            TargetTroop.IsAlive = true;
             TargetCity.EnsureTroop(TargetTroop, Scenario.Cur);
             Window.Instance.SetVisible(windowName, false);
             Singleton<TroopSystem>.Instance.Start(TargetTroop);

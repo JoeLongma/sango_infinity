@@ -26,6 +26,12 @@ namespace Sango
                 ugui_instance?.gameObject.SetActive(b);
             }
 
+            public bool IsVisible()
+            {
+                if(ugui_instance == null) return false;
+                return ugui_instance.gameObject.activeSelf;
+            }
+
             public void Show()
             {
                 //fgui_instance?.Show();
