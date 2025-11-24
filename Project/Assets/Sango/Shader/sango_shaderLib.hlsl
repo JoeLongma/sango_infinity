@@ -283,7 +283,8 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 	half4 gridMaskColor = SAMPLE_TEXTURE2D(_GridMask, smpPoint, gridMaskUV);
 	half4 rangeMaskColor = SAMPLE_TEXTURE2D(_RangeMask, smpPoint, gridMaskUV);
 	half flag = saturate(gridColor.a * _GridFlag);
-	diffuse = lerp(diffuse, gridColor.rgb, gridColor.a * _GridFlag * gridMaskColor.a * 1);
+
+	diffuse = lerp(diffuse, gridColor.rgb, gridColor.a * _GridFlag * gridMaskColor.a * 0.5);
 	diffuse = lerp(diffuse, half3(0, 1, 0), flag * gridMaskColor.g);
 	diffuse = lerp(diffuse, half3(0, 0, 1), flag * gridMaskColor.b);
 	diffuse = lerp(diffuse, half3(1, 0, 0), flag * gridMaskColor.r);

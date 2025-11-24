@@ -10,6 +10,12 @@ namespace Sango.Game
     public class GameController : Singleton<GameController>
     {
         public bool Enabled { get; set; }
+
+        public bool KeyboardMoveEnabled { get; set; }
+        public bool RotateViewEnabled { get; set; }
+        public bool DragMoveViewEnabled { get; set; }
+        public bool ZoomViewEnabled { get; set; }
+
         enum ControlType : byte
         {
             None = 0,
@@ -40,51 +46,11 @@ namespace Sango.Game
 
         public GameController()
         {
-            //GameEvent.OnContextMenuShow += OnContextMenuShow;
+            KeyboardMoveEnabled = true;
+            RotateViewEnabled = true;
+            DragMoveViewEnabled = true;
+            ZoomViewEnabled = true;
         }
-
-        //public void OnContextMenuShow(ContextMenuData contextMenuData)
-        //{
-        //    if (contextMenuData.depth == -1)
-        //    {
-        //        contextMenuData.Add("开发");
-        //        contextMenuData.Add("军事");
-        //        contextMenuData.Add("政治");
-        //        contextMenuData.AddLine();
-        //        contextMenuData.Add("合批");
-        //        contextMenuData.Add("发发发");
-        //        contextMenuData.Add("啊啊啊啊");
-        //    }
-        //    else if (contextMenuData.depth == 0)
-        //    {
-        //        contextMenuData.Add("煩煩煩");
-        //        contextMenuData.Add("哈哈哈");
-        //    }
-        //    else if (contextMenuData.depth == 1)
-        //    {
-        //        contextMenuData.Add("急急急");
-        //        contextMenuData.Add("酷酷酷是");
-        //    }
-        //}
-
-        //public void OnSelectMapObject(MapObject mapObject, Vector3 selectPoint)
-        //{
-        //    Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(Camera.main, selectPoint);
-        //    Player.PlayerCommand.Instance.Push(new Player.ShowContextMenu()
-        //    {
-        //        screenPos = screenPos
-
-        //    }); ;
-
-        //    //Sango.Log.Error(mapObject.gameObject.name);
-        //    //Sango.Game.Render.UI.ContextMenu.Close();
-        //    //Sango.Game.Render.UI.ContextMenu.Show(screenPos);
-        //}
-
-        //public void OnSelectTerrain(Vector3 point)
-        //{
-
-        //}
 
         public bool IsOverUI()
         {
@@ -179,13 +145,17 @@ namespace Sango.Game
                     if (dragPosition != Input.mousePosition)
                     {
                         isDragMoving = true;
-                        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                        float dis;
-                        if (viewPlane.Raycast(ray, out dis))
+
+                        if (DragMoveViewEnabled)
                         {
-                            Vector3 newDragPos = ray.GetPoint(dis);
-                            Vector3 offset = worldPlaneDragPosition - newDragPos;
-                            MapRender.Instance.OffsetCamera(offset);
+                            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                            float dis;
+                            if (viewPlane.Raycast(ray, out dis))
+                            {
+                                Vector3 newDragPos = ray.GetPoint(dis);
+                                Vector3 offset = worldPlaneDragPosition - newDragPos;
+                                MapRender.Instance.OffsetCamera(offset);
+                            }
                         }
                         dragPosition = Input.mousePosition;
                     }
@@ -231,8 +201,11 @@ namespace Sango.Game
                     if (rotatePosition != Input.mousePosition)
                     {
                         isRotateMoving = true;
-                        Vector3 delta = Input.mousePosition - rotatePosition;
-                        MapRender.Instance.RotateCamera(delta);
+                        if (RotateViewEnabled)
+                        {
+                            Vector3 delta = Input.mousePosition - rotatePosition;
+                            MapRender.Instance.RotateCamera(delta);
+                        }
                         rotatePosition = Input.mousePosition;
                     }
                 }
@@ -293,13 +266,17 @@ namespace Sango.Game
                     if (!dragPosition.Equals(touch.position))
                     {
                         isDragMoving = true;
-                        ray = Camera.main.ScreenPointToRay(touch.position);
-                        float dis;
-                        if (viewPlane.Raycast(ray, out dis))
+
+                        if (DragMoveViewEnabled)
                         {
-                            Vector3 newDragPos = ray.GetPoint(dis);
-                            Vector3 offset = worldPlaneDragPosition - newDragPos;
-                            MapRender.Instance.OffsetCamera(offset);
+                            ray = Camera.main.ScreenPointToRay(touch.position);
+                            float dis;
+                            if (viewPlane.Raycast(ray, out dis))
+                            {
+                                Vector3 newDragPos = ray.GetPoint(dis);
+                                Vector3 offset = worldPlaneDragPosition - newDragPos;
+                                MapRender.Instance.OffsetCamera(offset);
+                            }
                         }
                         dragPosition = touch.position;
                     }
@@ -394,7 +371,8 @@ namespace Sango.Game
                     if (dotAngle > 0)
                     {
                         // rotate
-                        MapRender.Instance.RotateCamera(touch1.deltaPosition);
+                        if (RotateViewEnabled)
+                            MapRender.Instance.RotateCamera(touch1.deltaPosition);
                     }
                     else
                     {
@@ -403,7 +381,8 @@ namespace Sango.Game
                         float delta = Mathf.Max(Mathf.Abs(touch2.deltaPosition.x), Mathf.Abs(touch1.deltaPosition.x));
                         if (len < srcLen)
                             delta = -delta;
-                        MapRender.Instance.ZoomCamera(delta / 100f);
+                        if (ZoomViewEnabled)
+                            MapRender.Instance.ZoomCamera(delta / 100f);
                     }
                     touchPos[0] = touch1.position;
                     touchPos[1] = touch2.position;
@@ -415,6 +394,8 @@ namespace Sango.Game
         bool[] keyFlags = new bool[4];
         private bool MoveCameraKeyBoard()
         {
+            if (!KeyboardMoveEnabled) return true;
+
             Array.Clear(keyFlags, 0, 4);
             bool hasKey = false;
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))//(Input.GetAxis("Horizontal")<0)

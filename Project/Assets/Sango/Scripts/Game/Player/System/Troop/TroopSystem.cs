@@ -28,20 +28,17 @@ namespace Sango.Game.Player
         {
             if (!troop.IsAlive) return;
             TargetTroop = troop;
-            if (!troop.ActionOver && troop.BelongForce.IsPlayer && troop.BelongForce == Scenario.Cur.CurRunForce)
+            if (troop.BelongForce.IsPlayer && troop.BelongForce == Scenario.Cur.CurRunForce)
             {
-                CurrentControlType = ControlType.Move;
-                moveRange.Clear();
-                movePath.Clear();
-                Scenario.Cur.Map.GetMoveRange(TargetTroop, moveRange);
-                MapRender mapRender = MapRender.Instance;
-                for (int i = 0, count = moveRange.Count; i < count; ++i)
+                if (!troop.ActionOver)
                 {
-                    Cell cell = moveRange[i];
-                    mapRender.SetGridMaskColor(cell.x, cell.y, Color.green);
+                    CurrentControlType = ControlType.Move;
+                    moveRange.Clear();
+                    movePath.Clear();
+                    Scenario.Cur.Map.GetMoveRange(TargetTroop, moveRange);
+                    ShowMoveRange();
+                    PlayerCommand.Instance.Push(this);
                 }
-                mapRender.EndSetGridMask();
-                PlayerCommand.Instance.Push(this);
             }
             else
             {
@@ -84,6 +81,24 @@ namespace Sango.Game.Player
             OnDestroy();
         }
 
+        public void ShowMoveRange()
+        {
+            MapRender mapRender = MapRender.Instance;
+            for (int i = 0, count = spellRangeCell.Count; i < count; ++i)
+            {
+                Cell c = spellRangeCell[i];
+                mapRender.SetGridMaskColor(c.x, c.y, Color.black);
+            }
+            spellRangeCell.Clear();
+            for (int i = 0, count = moveRange.Count; i < count; ++i)
+            {
+                Cell cell = moveRange[i];
+                mapRender.SetGridMaskColor(cell.x, cell.y, Color.green);
+            }
+            mapRender.EndSetGridMask();
+            mapRender.SetDarkMask(false);
+        }
+
         public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition)
         {
             switch (eventType)
@@ -91,8 +106,16 @@ namespace Sango.Game.Player
                 case CommandEventType.Cancel:
                 case CommandEventType.RClick:
                     {
-                        ContextMenu.CloseAll();
-                        PlayerCommand.Instance.Back();
+                        if(!ContextMenu.IsVisible())
+                        {
+                            ContextMenu.CloseAll();
+                            PlayerCommand.Instance.Back();
+                        }
+                        else
+                        {
+                            ContextMenu.CloseAll();
+                            ShowMoveRange();
+                        }
                         break;
                     }
 

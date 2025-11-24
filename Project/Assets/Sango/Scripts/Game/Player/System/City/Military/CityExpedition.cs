@@ -92,8 +92,13 @@ namespace Sango.Game.Player
             TargetTroop.morale = TargetCity.morale;
             TargetTroop.MaxMorale = TargetCity.MaxMorale;
             TargetTroop.energy = TargetCity.energy;
-            TargetTroop.troops = 1;
-            TargetTroop.MaxTroops = 5000;
+            if (TargetTroop.troops == 0)
+            {
+                TargetTroop.troops = 1;
+                TargetTroop.MaxTroops = 5000;
+            }
+
+            UpdateJobValue();
 
             Window.Instance.Open(windowName);
         }
