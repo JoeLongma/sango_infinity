@@ -1,4 +1,5 @@
-﻿using Sango.Game.Player;
+﻿using Newtonsoft.Json.Utilities.LinqBridge;
+using Sango.Game.Player;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -48,10 +49,13 @@ namespace Sango.Game.Render.UI
         CityExpedition cityExpeditionSys;
 
         bool showLand = true;
-
+        City targetCity;
+        Troop targetTroop;
         public override void OnShow()
         {
             cityExpeditionSys = Singleton<CityExpedition>.Instance;
+            targetCity = cityExpeditionSys.TargetCity;
+            targetTroop = cityExpeditionSys.TargetTroop;
             showLand = true;
 
             int slotLength = cityExpeditionSys.ActivedLandTroopTypes.Count;
@@ -113,26 +117,58 @@ namespace Sango.Game.Render.UI
         public void OnBuildTroopType1()
         {
 
+            UIBuildingTypeItem cityBuildingSlot = landTroopTypePool[cityExpeditionSys.CurSelectLandTrropTypeIndex];
+            cityBuildingSlot.SetSelected(false);
+            cityExpeditionSys.AutoMakeTroop(3);
+            cityBuildingSlot = landTroopTypePool[cityExpeditionSys.CurSelectLandTrropTypeIndex];
+            cityBuildingSlot.SetSelected(true);
+
+
+            UpdateContent();
         }
 
         public void OnBuildTroopType2()
         {
+            UIBuildingTypeItem cityBuildingSlot = landTroopTypePool[cityExpeditionSys.CurSelectLandTrropTypeIndex];
+            cityBuildingSlot.SetSelected(false);
+            cityExpeditionSys.AutoMakeTroop(1);
+            cityBuildingSlot = landTroopTypePool[cityExpeditionSys.CurSelectLandTrropTypeIndex];
+            cityBuildingSlot.SetSelected(true);
 
+            UpdateContent();
         }
 
         public void OnBuildTroopType3()
         {
+            UIBuildingTypeItem cityBuildingSlot = landTroopTypePool[cityExpeditionSys.CurSelectLandTrropTypeIndex];
+            cityBuildingSlot.SetSelected(false);
+            cityExpeditionSys.AutoMakeTroop(2);
+            cityBuildingSlot = landTroopTypePool[cityExpeditionSys.CurSelectLandTrropTypeIndex];
+            cityBuildingSlot.SetSelected(true);
 
+            UpdateContent();
         }
 
         public void OnBuildTroopType4()
         {
+            UIBuildingTypeItem cityBuildingSlot = landTroopTypePool[cityExpeditionSys.CurSelectLandTrropTypeIndex];
+            cityBuildingSlot.SetSelected(false);
+            cityExpeditionSys.AutoMakeTroop(4);
+            cityBuildingSlot = landTroopTypePool[cityExpeditionSys.CurSelectLandTrropTypeIndex];
+            cityBuildingSlot.SetSelected(true);
 
+            UpdateContent();
         }
 
         public void OnBuildTroopType5()
         {
+            UIBuildingTypeItem cityBuildingSlot = landTroopTypePool[cityExpeditionSys.CurSelectLandTrropTypeIndex];
+            cityBuildingSlot.SetSelected(false);
+            cityExpeditionSys.AutoMakeBuildTroop();
+            cityBuildingSlot = landTroopTypePool[cityExpeditionSys.CurSelectLandTrropTypeIndex];
+            cityBuildingSlot.SetSelected(true);
 
+            UpdateContent();
         }
 
         public void OpenNumberPanel_troops()
@@ -152,27 +188,58 @@ namespace Sango.Game.Render.UI
 
         public void OnTroopTypeShowLand(bool b)
         {
-
+            if (b)
+            {
+                showLand = true;
+                UpdateTroopStatus();
+            }
         }
 
         public void OnTroopTypeShowWater(bool b)
         {
-
+            if (b)
+            {
+                showLand = false;
+                UpdateTroopStatus();
+            }
         }
 
         public void OnTroopsSliderValueChanged(float p)
         {
+            if (cityExpeditionSys.personList.Count == 0)
+                return;
 
+            int troop = (int)Math.Ceiling(targetTroop.MaxTroops * p);
+            troop = Math.Min(troop, targetCity.troops);
+            troop = targetCity.itemStore.CheckCostMin(targetTroop.LandTroopType.costItems, troop);
+            troop = targetCity.itemStore.CheckCostMin(targetTroop.WaterTroopType.costItems, troop);
+
+            int wonderFood = (int)(troop * Scenario.Cur.Variables.baseFoodCostInTroop * 20);
+            int food = Math.Min(wonderFood, targetCity.food);
+            targetTroop.food = food;
+            targetTroop.troops = troop;
+
+            UpdateTroopsInfo();
         }
 
         public void OnGoldSliderValueChanged(float p)
         {
+            if (cityExpeditionSys.personList.Count == 0)
+                return;
 
+            int gold = (int)Math.Ceiling(targetCity.gold * p);
+            targetTroop.gold = gold;
+            UpdateTroopsInfo();
         }
 
         public void OnFoodSliderValueChanged(float p)
         {
+            if (cityExpeditionSys.personList.Count == 0)
+                return;
 
+            int food = (int)Math.Ceiling(targetCity.food * p);
+            targetTroop.food = food;
+            UpdateTroopsInfo();
         }
 
         public void UpdateContent()
@@ -186,7 +253,7 @@ namespace Sango.Game.Render.UI
             }
 
             UpdateTroopStatus();
-
+            UpdateTroopsInfo();
         }
 
         void UpdateTroopStatus()
@@ -245,6 +312,84 @@ namespace Sango.Game.Render.UI
             buildLaebl.text = build.ToString();
             moveLaebl.text = move.ToString();
             energyLaebl.text = targetTroop.morale.ToString();
+        }
+
+        void SetItemLabel(UITextField label, int all, int ues)
+        {
+            int left = all - ues;
+            if (left > 0)
+            {
+                if (ues == 0)
+                    label.text = all.ToString();
+                else
+                    label.text = $"{all}→{left}";
+            }
+            else
+            {
+                if (all == 0)
+                    label.text = $"<color=#ff0000>{all}</color>";
+                else
+                    label.text = $"{all}→<color=#ff0000>{left}</color>";
+            }
+        }
+
+        void UpdateTroopsInfo()
+        {
+            troopsSlider.SetValueWithoutNotify((float)targetTroop.troops / targetTroop.MaxTroops);
+            goldSlider.SetValueWithoutNotify((float)targetTroop.gold / targetCity.gold);
+            foodSlider.SetValueWithoutNotify((float)targetTroop.food / targetCity.food);
+            troopsLabel.text = $"{targetTroop.troops}/{targetTroop.MaxTroops}";
+            goldLabel.text = $"{targetTroop.gold}/{targetCity.gold}";
+            foodLabel.text = $"{targetTroop.food}/{targetCity.food}";
+            int turnCount = (int)(targetTroop.food / (targetTroop.troops * Scenario.Cur.Variables.baseFoodCostInTroop));
+            dayTurnLabel.text = $"{turnCount * 10}日";
+
+            SetItemLabel(itemTroopsLabel, targetCity.troops, targetTroop.troops);
+            SetItemLabel(itemGoldLabel, targetCity.gold, targetTroop.gold);
+            SetItemLabel(itemFoodLabel, targetCity.food, targetTroop.food);
+
+            int itemCount = Scenario.Cur.CommonData.ItemTypes.Count;
+            int showIndex = 0;
+            for (int i = 1; i < itemCount; i++)
+            {
+                ItemType itemType = Scenario.Cur.CommonData.ItemTypes.Get(i);
+                if (itemType == null || itemType.cost == 0) continue;
+                itemLabels[showIndex].gameObject.SetActive(true);
+                int has = targetCity.itemStore.GetNumber(itemType.Id);
+                int use = 0;
+                if (targetTroop.LandTroopType.costItems != null)
+                {
+                    for (int j = 0; j < targetTroop.LandTroopType.costItems.Length; j += 2)
+                    {
+                        int itemId = targetTroop.LandTroopType.costItems[j];
+                        if (itemId == i)
+                        {
+                            int need = targetTroop.LandTroopType.costItems[j + 1];
+                            use = need * targetTroop.troops / 1000;
+                        }
+                    }
+                }
+                if (targetTroop.WaterTroopType.costItems != null)
+                {
+                    for (int j = 0; j < targetTroop.WaterTroopType.costItems.Length; j += 2)
+                    {
+                        int itemId = targetTroop.WaterTroopType.costItems[j];
+                        if (itemId == i)
+                        {
+                            int need = targetTroop.WaterTroopType.costItems[j + 1];
+                            use = need * targetTroop.troops / 1000;
+                        }
+                    }
+                }
+                itemLabels[showIndex].SetTitle(itemType.Name);
+                SetItemLabel(itemLabels[showIndex], has, use);
+                showIndex++;
+            }
+
+            for (int i = showIndex; i < itemLabels.Length; i++)
+            {
+                itemLabels[i].gameObject.SetActive(false);
+            }
         }
 
         public void OnSelectWaterType(UIBuildingTypeItem buildingTypeItem)

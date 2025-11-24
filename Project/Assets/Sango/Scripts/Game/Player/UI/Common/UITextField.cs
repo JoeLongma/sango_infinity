@@ -8,8 +8,16 @@ namespace Sango.Game.Render.UI
     {
         public Text label;
         public Image image;
+        public Text titleLabel;
 
         public string text { get { return label.text; } set { label.text = value; } }
+
+        public UITextField SetTitle(string title)
+        {
+            if(titleLabel != null)
+                titleLabel.text = title;
+            return this;
+        }
 
         public UITextField SetWidth(int width)
         {

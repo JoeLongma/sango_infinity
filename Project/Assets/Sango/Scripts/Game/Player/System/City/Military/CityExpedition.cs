@@ -93,6 +93,7 @@ namespace Sango.Game.Player
             TargetTroop.MaxMorale = TargetCity.MaxMorale;
             TargetTroop.energy = TargetCity.energy;
             TargetTroop.troops = 1;
+            TargetTroop.MaxTroops = 5000;
 
             Window.Instance.Open(windowName);
         }
@@ -116,6 +117,85 @@ namespace Sango.Game.Player
             base.OnBack();
             Window.Instance.SetVisible(windowName, true);
             TargetTroop.EnterCity(TargetCity);
+        }
+
+        public void AutoMakeTroop(int troopTypeKind)
+        {
+            List<TroopType> troopTypes = ActivedLandTroopTypes.FindAll(x => x.kind == troopTypeKind);
+            TroopType targetTroopType = troopTypes[troopTypes.Count - 1];
+            CurSelectLandTrropTypeIndex = ActivedLandTroopTypes.FindIndex(x => x == targetTroopType);
+            AutoMakeTroop(targetTroopType);
+        }
+
+        public void AutoMakeTroop(TroopType troopType)
+        {
+            personList.Clear();
+            Person[] people = ForceAI.CounsellorRecommendMakeTroop(TargetCity.freePersons, troopType);
+            if (people == null || people.Length == 0)
+                return;
+            for (int i = 0; i < people.Length; i++)
+            {
+                Person person = people[i];
+                if (person == null) continue;
+                personList.Add(person);
+            }
+
+            TargetTroop.LandTroopType = troopType;
+            TargetTroop.WaterTroopType = ActivedWaterTroopTypes[CurSelectWaterTrropTypeIndex];
+
+            TargetTroop.Leader = personList[0];
+
+            if (personList.Count > 1) TargetTroop.Member1 = personList[1];
+            if (personList.Count > 2) TargetTroop.Member2 = personList[2];
+
+            TargetTroop.CalculateMaxTroops();
+            TargetTroop.CalculateAttribute(Scenario.Cur);
+
+            SetTroops(TargetTroop.MaxTroops);
+        }
+
+        public void AutoMakeBuildTroop()
+        {
+            personList.Clear();
+            Scenario scenario = Scenario.Cur;
+            BuildingType buildingType = scenario.GetObject<BuildingType>(31);
+            Person[] people = ForceAI.CounsellorRecommendBuild(TargetCity.freePersons, buildingType);
+            if (people == null || people.Length == 0)
+                return;
+            for (int i = 0; i < people.Length; i++)
+            {
+                Person person = people[i];
+                if (person == null) continue;
+                personList.Add(person);
+            }
+
+            TargetTroop.LandTroopType = scenario.GetObject<TroopType>(1); ;
+            TargetTroop.WaterTroopType = ActivedWaterTroopTypes[CurSelectWaterTrropTypeIndex];
+            CurSelectLandTrropTypeIndex = 0;
+
+            TargetTroop.Leader = personList[0];
+
+            if (personList.Count > 1) TargetTroop.Member1 = personList[1];
+            if (personList.Count > 2) TargetTroop.Member2 = personList[2];
+
+            TargetTroop.CalculateMaxTroops();
+            TargetTroop.CalculateAttribute(scenario);
+
+            SetTroops(3000);
+            TargetTroop.gold = 1000;
+        }
+
+
+        public void SetTroops(int num)
+        {
+            int maxTroopNum = Math.Min(num, TargetCity.troops);
+            maxTroopNum = TargetCity.itemStore.CheckCostMin(TargetTroop.LandTroopType.costItems, maxTroopNum);
+            maxTroopNum = TargetCity.itemStore.CheckCostMin(TargetTroop.WaterTroopType.costItems, maxTroopNum);
+            int wonderFood = (int)(maxTroopNum * Scenario.Cur.Variables.baseFoodCostInTroop * 20);
+            int food = Math.Min(wonderFood, TargetCity.food);
+
+            TargetTroop.troops = maxTroopNum;
+            TargetTroop.food = food;
         }
 
     }
