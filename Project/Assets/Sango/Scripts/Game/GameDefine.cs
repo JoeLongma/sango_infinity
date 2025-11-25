@@ -142,7 +142,7 @@
     }
 
 
-    public enum InfoTyoe : int
+    public enum InfoType : int
     {
         Gold = 0,
         Spear,

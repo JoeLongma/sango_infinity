@@ -39,6 +39,6 @@ namespace Sango.Game.Player
         /// </summary>
         /// <param name="eventType"></param>
         /// <param name="cell"></param>
-        void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition);
+        void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI);
     }
 }

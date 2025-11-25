@@ -15,7 +15,20 @@ namespace Sango.Game.Player
         public List<ObjectSortTitle> customTitleList = new List<ObjectSortTitle>()
         {
             PersonSortFunction.SortByName,
+            PersonSortFunction.SortByLevel,
+            PersonSortFunction.SortByTroopsLimit,
+            PersonSortFunction.SortByCommand,
+            PersonSortFunction.SortByStrength,
+            PersonSortFunction.SortByIntelligence,
             PersonSortFunction.SortByPolitics,
+            PersonSortFunction.SortByGlamour,
+            PersonSortFunction.SortBySpearLv,
+            PersonSortFunction.SortByHalberdLv,
+            PersonSortFunction.SortByCrossbowLv,
+            PersonSortFunction.SortByHorseLv,
+            PersonSortFunction.SortByWaterLv,
+            PersonSortFunction.SortByMachineLv,
+            PersonSortFunction.SortByFeatureList,
         };
 
         public List<TroopType> ActivedLandTroopTypes = new List<TroopType>();

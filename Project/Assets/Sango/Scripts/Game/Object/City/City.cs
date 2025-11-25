@@ -542,7 +542,7 @@ namespace Sango.Game
                 return true;
 
             int harvest = GameRandom.Random(totalGainFood, 0.05f);
-            Render?.ShowInfo(harvest, (int)InfoTyoe.Food);
+            Render?.ShowInfo(harvest, (int)InfoType.Food);
             food += harvest;
 #if SANGO_DEBUG
             Sango.Log.Print($"城市：{Name}, 收获粮食：{harvest}, 现有粮食: {food}");
@@ -584,7 +584,7 @@ namespace Sango.Game
 
             int inComingGold = GameRandom.Random(totalGainGold, 0.05f);
             inComingGold -= GoldCost(scenario);
-            Render?.ShowInfo(inComingGold, (int)InfoTyoe.Gold);
+            Render?.ShowInfo(inComingGold, (int)InfoType.Gold);
 
             AddGold(inComingGold);
 
@@ -890,7 +890,7 @@ namespace Sango.Game
         public bool ChangeTroops(int num, SangoObject atk, bool showDamage = true)
         {
             if (showDamage)
-                Render?.ShowInfo(num, (int)InfoTyoe.Troop);
+                Render?.ShowInfo(num, (int)InfoType.Troop);
 
             troops = troops + num;
             if (troops < 0)
@@ -1772,6 +1772,8 @@ namespace Sango.Game
             if (agriculture > AgricultureLimit)
                 agriculture = AgricultureLimit;
 
+            Render?.ShowInfo(totalValue, (int)InfoType.Food);
+
 #if SANGO_DEBUG
             Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了开垦!农业值达到了:{agriculture}");
 #endif
@@ -1851,6 +1853,8 @@ namespace Sango.Game
             commerce += totalValue;
             if (commerce > CommerceLimit)
                 commerce = CommerceLimit;
+
+            Render?.ShowInfo(totalValue, (int)InfoType.Gold);
 
 #if SANGO_DEBUG
             Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了开发!商业值达到了:{commerce}");
@@ -1938,6 +1942,8 @@ namespace Sango.Game
             if (security > 100)
                 security = 100;
 
+            Render?.ShowInfo(totalValue, (int)InfoType.Security);
+
 #if SANGO_DEBUG
             Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了巡视!治安提升到了:{security}");
 #endif
@@ -2018,6 +2024,8 @@ namespace Sango.Game
             morale += totalValue;
             if (morale > MaxMorale)
                 morale = MaxMorale;
+
+            Render?.ShowInfo(totalValue, (int)InfoType.Morale);
 
 #if SANGO_DEBUG
             Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了训练!士气提升到了:{morale}");

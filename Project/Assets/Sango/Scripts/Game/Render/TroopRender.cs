@@ -10,15 +10,41 @@ namespace Sango.Game.Render
     public class TroopRender : ObjectRender
     {
         Troop Troop { get; set; }
-        UnityEngine.UI.Text textInfo { get; set; }
         UGUIWindow HeadBar { get; set; }
         TroopModel TroopModel { get; set; }
 
+        bool headbarCreate;
         public TroopRender(Troop troop)
         {
             Owener = troop;
             Troop = troop;
+            headbarCreate = true;
+            MapObject = MapObject.Create(Troop.Name + "队", "Troops");
+            MapObject.objType = Troop.TroopType.Id;
+            MapObject.modelId = Troop.TroopType.Id;
+            MapObject.modelAsset = Troop.TroopType.model;
+            MapObject.transform.position = troop.cell.Position;
+            MapObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            MapObject.transform.localScale = Vector3.one;
+            MapObject.bounds = new Sango.Tools.Rect(0, 0, 32, 32);
+            MapObject.onModelLoadedCallback = OnModelLoaded;
+            MapObject.onModelVisibleChange = OnModelVisibleChange;
+            MapObject.onModelAssetCheck = OnModelAssetCheck;
+            MapRender.Instance.AddDynamic(MapObject);
 
+            //GameObject obj = GameObject.Instantiate(Resources.Load<GameObject>("TroopName")) as GameObject;
+            //obj.transform.SetParent(MapObject.transform, false);
+            //obj.transform.localPosition = new Vector3(0, 20, 0);
+            //UnityEngine.UI.Text text = obj.GetComponent<UnityEngine.UI.Text>();
+            //textInfo = text;
+            UpdateInfo();
+        }
+
+        public TroopRender(Troop troop, bool headbar)
+        {
+            Owener = troop;
+            Troop = troop;
+            headbarCreate = headbar;
             MapObject = MapObject.Create(Troop.Name + "队", "Troops");
             MapObject.objType = Troop.TroopType.Id;
             MapObject.modelId = Troop.TroopType.Id;
@@ -69,6 +95,8 @@ namespace Sango.Game.Render
                 PoolManager.Recycle(HeadBar.gameObject);
                 HeadBar = null;
             }
+
+            if (!headbarCreate) return;
 
             GameObject headBar = PoolManager.Create(GameRenderHelper.TroopHeadbarRes);
             if (headBar != null)

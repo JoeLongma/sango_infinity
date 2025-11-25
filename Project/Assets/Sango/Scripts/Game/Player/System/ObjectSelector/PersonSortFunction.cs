@@ -133,7 +133,7 @@ namespace Sango.Game
         public static SortTitle SortByName = new SortTitle()
         {
             name = "武将",
-            width = 100,
+            width = 80,
             valueGetCall = x => x.Name,
             personSortFunc = (a, b) => a.Name.CompareTo(b.Name),
         };
@@ -141,7 +141,7 @@ namespace Sango.Game
         public static SortTitle SortByTroopsLimit = new SortTitle()
         {
             name = "指挥",
-            width = 60,
+            width = 100,
             valueGetCall = x => x.TroopsLimit.ToString(),
             personSortFunc = (a, b) => a.TroopsLimit.CompareTo(b.TroopsLimit),
         };
@@ -149,7 +149,7 @@ namespace Sango.Game
         public static SortTitle SortByCommand = new SortTitle()
         {
             name = "统率",
-            width = 60,
+            width = 50,
             valueGetCall = x => x.Command.ToString(),
             personSortFunc = (a, b) => a.Command.CompareTo(b.Command),
         };
@@ -157,7 +157,7 @@ namespace Sango.Game
         public static SortTitle SortByStrength = new SortTitle()
         {
             name = "武力",
-            width = 60,
+            width = 50,
             valueGetCall = x => x.Strength.ToString(),
             personSortFunc = (a, b) => a.Strength.CompareTo(b.Strength),
         };
@@ -165,7 +165,7 @@ namespace Sango.Game
         public static SortTitle SortByIntelligence = new SortTitle()
         {
             name = "智力",
-            width = 60,
+            width = 50,
             valueGetCall = x => x.Intelligence.ToString(),
             personSortFunc = (a, b) => a.Intelligence.CompareTo(b.Intelligence),
         };
@@ -173,7 +173,7 @@ namespace Sango.Game
         public static SortTitle SortByPolitics = new SortTitle()
         {
             name = "政治",
-            width = 60,
+            width = 50,
             valueGetCall = x => x.Politics.ToString(),
             personSortFunc = (a, b) => a.Politics.CompareTo(b.Politics),
         };
@@ -181,7 +181,7 @@ namespace Sango.Game
         public static SortTitle SortByGlamour = new SortTitle()
         {
             name = "魅力",
-            width = 60,
+            width = 50,
             valueGetCall = x => x.Glamour.ToString(),
             personSortFunc = (a, b) => a.Glamour.CompareTo(b.Glamour),
         };
@@ -189,7 +189,7 @@ namespace Sango.Game
         public static SortTitle SortByMilitaryAbility = new SortTitle()
         {
             name = "军事",
-            width = 60,
+            width = 50,
             valueGetCall = x => x.MilitaryAbility.ToString(),
             personSortFunc = (a, b) => a.MilitaryAbility.CompareTo(b.MilitaryAbility),
         };
@@ -197,7 +197,7 @@ namespace Sango.Game
         public static SortTitle SortByBaseCommerceAbility = new SortTitle()
         {
             name = "商业",
-            width = 60,
+            width = 50,
             valueGetCall = x => x.BaseCommerceAbility.ToString(),
             personSortFunc = (a, b) => a.BaseCommerceAbility.CompareTo(b.BaseCommerceAbility),
         };
@@ -205,7 +205,7 @@ namespace Sango.Game
         public static SortTitle SortByBaseSecurityAbility = new SortTitle()
         {
             name = "治安",
-            width = 60,
+            width = 50,
             valueGetCall = x => x.BaseSecurityAbility.ToString(),
             personSortFunc = (a, b) => a.BaseSecurityAbility.CompareTo(b.BaseSecurityAbility),
         };
@@ -213,7 +213,7 @@ namespace Sango.Game
         public static SortTitle SortByBaseTrainTroopAbility = new SortTitle()
         {
             name = "训练",
-            width = 60,
+            width = 50,
             valueGetCall = x => x.BaseTrainTroopAbility.ToString(),
             personSortFunc = (a, b) => a.BaseTrainTroopAbility.CompareTo(b.BaseTrainTroopAbility),
         };
@@ -221,7 +221,7 @@ namespace Sango.Game
         public static SortTitle SortByBaseAgricultureAbility = new SortTitle()
         {
             name = "农业",
-            width = 60,
+            width = 50,
             valueGetCall = x => x.BaseAgricultureAbility.ToString(),
             personSortFunc = (a, b) => a.BaseAgricultureAbility.CompareTo(b.BaseAgricultureAbility),
         };
@@ -229,7 +229,7 @@ namespace Sango.Game
         public static SortTitle SortByBaseBuildAbility = new SortTitle()
         {
             name = "建设",
-            width = 60,
+            width = 50,
             valueGetCall = x => x.BaseBuildAbility.ToString(),
             personSortFunc = (a, b) => a.BaseBuildAbility.CompareTo(b.BaseBuildAbility),
         };
@@ -237,7 +237,7 @@ namespace Sango.Game
         public static SortTitle SortByBaseCreativeAbility = new SortTitle()
         {
             name = "生产",
-            width = 60,
+            width = 50,
             valueGetCall = x => x.BaseCreativeAbility.ToString(),
             personSortFunc = (a, b) => a.BaseCreativeAbility.CompareTo(b.BaseCreativeAbility),
         };
@@ -245,7 +245,7 @@ namespace Sango.Game
         public static SortTitle SortByBaseSearchingAbility = new SortTitle()
         {
             name = "搜寻",
-            width = 60,
+            width = 50,
             valueGetCall = x => x.BaseSearchingAbility.ToString(),
             personSortFunc = (a, b) => a.BaseSearchingAbility.CompareTo(b.BaseSearchingAbility),
         };
@@ -253,7 +253,7 @@ namespace Sango.Game
         public static SortTitle SortByBaseRecruitmentAbility = new SortTitle()
         {
             name = "招募",
-            width = 60,
+            width = 50,
             valueGetCall = x => x.BaseRecruitmentAbility.ToString(),
             personSortFunc = (a, b) => a.BaseRecruitmentAbility.CompareTo(b.BaseRecruitmentAbility),
         };
@@ -309,7 +309,7 @@ namespace Sango.Game
         public static SortTitle SortByFeatureList = new SortTitle()
         {
             name = "特技",
-            width = 50,
+            width = 150,
             valueGetCall = x =>
             {
 

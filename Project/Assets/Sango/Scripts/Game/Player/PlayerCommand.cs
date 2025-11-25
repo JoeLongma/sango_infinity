@@ -13,11 +13,19 @@ namespace Sango.Game.Player
 
         public void Push(ICommandEvent command)
         {
+            if(CurrentCommand == null)
+            {
+                GameController.Instance.KeyboardMoveEnabled = false;
+                GameController.Instance.RotateViewEnabled = false;
+                GameController.Instance.DragMoveViewEnabled = false;
+                GameController.Instance.ZoomViewEnabled = false;
+                GameController.Instance.BorderMoveViewEnabled = false;
+            }
+
             commads.Push(command);
             command.OnEnter();
             CurrentCommand?.OnExit();
             CurrentCommand = command;
-            GameController.Instance.Enabled = false;
         }
 
         public void Back()
@@ -32,7 +40,11 @@ namespace Sango.Game.Player
             else
             {
                 CurrentCommand = null;
-                GameController.Instance.Enabled = true;
+                GameController.Instance.KeyboardMoveEnabled = true;
+                GameController.Instance.RotateViewEnabled = true;
+                GameController.Instance.DragMoveViewEnabled = true;
+                GameController.Instance.ZoomViewEnabled = true;
+                GameController.Instance.BorderMoveViewEnabled = true;
             }
         }
 
@@ -41,7 +53,11 @@ namespace Sango.Game.Player
             CurrentCommand = null;
             while (commads.Count > 0)
                 commads.Pop().OnDone();
-            GameController.Instance.Enabled = true;
+            GameController.Instance.KeyboardMoveEnabled = true;
+            GameController.Instance.RotateViewEnabled = true;
+            GameController.Instance.DragMoveViewEnabled = true;
+            GameController.Instance.ZoomViewEnabled = true;
+            GameController.Instance.BorderMoveViewEnabled = true;
         }
 
         public void Update()
@@ -49,11 +65,11 @@ namespace Sango.Game.Player
             CurrentCommand?.Update();
         }
 
-        public void HandleEvent(CommandEventType eventType, Cell clickCell, Vector3 clickPosition)
+        public void HandleEvent(CommandEventType eventType, Cell clickCell, Vector3 clickPosition, bool isOverUI)
         {
             if (CurrentCommand != null)
             {
-                CurrentCommand.HandleEvent(eventType, clickCell, clickPosition);
+                CurrentCommand.HandleEvent(eventType, clickCell, clickPosition, isOverUI);
                 return;
             }
 

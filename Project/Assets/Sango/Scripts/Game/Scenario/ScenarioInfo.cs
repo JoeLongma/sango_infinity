@@ -34,8 +34,10 @@ namespace Sango.Game
         [JsonProperty]
         public int[] playerForceList;
         [JsonProperty]
+        [JsonConverter(typeof(Vector3Converter))]
         public Vector3 cameraPosition;
         [JsonProperty]
+        [JsonConverter(typeof(Vector3Converter))]
         public Vector3 cameraRotation;
         [JsonProperty]
         public float cameraDistance;

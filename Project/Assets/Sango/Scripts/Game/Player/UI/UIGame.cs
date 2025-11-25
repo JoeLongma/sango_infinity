@@ -272,15 +272,16 @@ namespace Sango.Game.Render.UI
 
         public void OnSave()
         {
-            if (Sango.Game.Scenario.Cur.PauseTrunCount == Sango.Game.Scenario.Cur.Info.turnCount)
-            {
-                Save();
-            }
-            else
-            {
-                needSave = true;
-                OnBtnNextTurn();
-            }
+            Save();
+            //if (Sango.Game.Scenario.Cur.PauseTrunCount == Sango.Game.Scenario.Cur.Info.turnCount)
+            //{
+            //    Save();
+            //}
+            //else
+            //{
+            //    needSave = true;
+            //    OnBtnNextTurn();
+            //}
         }
 
         public void OnLoad()

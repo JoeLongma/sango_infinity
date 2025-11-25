@@ -192,7 +192,7 @@ namespace Sango.Game
             if (showDamage)
             {
                 if (Render != null)
-                    Render.ShowInfo(num, (int)InfoTyoe.Durability);
+                    Render.ShowInfo(num, (int)InfoType.Durability);
             }
 
             durability = durability + num;

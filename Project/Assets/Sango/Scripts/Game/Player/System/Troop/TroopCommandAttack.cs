@@ -9,12 +9,12 @@ namespace Sango.Game.Player
 {
     public class TroopCommandAttack : TroopComandBase
     {
-        List<Cell> MovePath { get; set; }
-        List<Cell> spellRangeCell = new List<Cell>();
-        Cell spellCell;
-        Skill spellSkill;
-        bool isShow = false;
-        bool isMoving = false;
+        protected List<Cell> MovePath { get; set; }
+        protected List<Cell> spellRangeCell = new List<Cell>();
+        protected Cell spellCell;
+        protected Skill spellSkill;
+        protected bool isShow = false;
+        protected bool isMoving = false;
         public TroopCommandAttack()
         {
             customMenuName = "攻击";
@@ -32,13 +32,14 @@ namespace Sango.Game.Player
         public override void OnEnter()
         {
             base.OnEnter();
+            spellSkill = null;
             isShow = false;
             isMoving = false;
             spellRangeCell.Clear();
             ContextMenu.SetVisible(false);
             MovePath = Singleton<TroopSystem>.Instance.movePath;
             MapRender mapRender = MapRender.Instance;
-            Cell stayCell = MovePath[MovePath.Count - 1];
+            Cell stayCell = ActionCell;
             if (TargetTroop.NormalSkill != null)
             {
                 Skill skill = TargetTroop.NormalSkill.Skill;
@@ -63,7 +64,33 @@ namespace Sango.Game.Player
             mapRender.SetDarkMask(true);
         }
 
-        public void OnMoveDone()
+        protected void ShowSpellRange()
+        {
+            if (spellRangeCell.Count == 0) return;
+            MapRender mapRender = MapRender.Instance;
+            for (int i = 0, count = spellRangeCell.Count; i < count; ++i)
+            {
+                Cell c = spellRangeCell[i];
+                mapRender.SetGridMaskColor(c.x, c.y, Color.red);
+            }
+            mapRender.EndSetGridMask();
+            mapRender.SetDarkMask(true);
+        }
+
+        protected void ClearShowSpellRange()
+        {
+            if (spellRangeCell.Count == 0) return;
+            MapRender mapRender = MapRender.Instance;
+            for (int i = 0, count = spellRangeCell.Count; i < count; ++i)
+            {
+                Cell c = spellRangeCell[i];
+                mapRender.SetGridMaskColor(c.x, c.y, Color.black);
+            }
+            mapRender.EndSetGridMask();
+            mapRender.SetDarkMask(false);
+        }
+
+        protected void OnMoveDone()
         {
             isMoving = false;
         }
@@ -83,7 +110,7 @@ namespace Sango.Game.Player
             }
         }
 
-        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition)
+        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)
         {
             if (isShow) return;
 
@@ -92,44 +119,31 @@ namespace Sango.Game.Player
                 case CommandEventType.Cancel:
                 case CommandEventType.RClick:
                     {
-                        if (!ContextMenu.IsVisible())
-                        {
-                            ContextMenu.SetVisible(true);
-                            return;
-                        }
-                        ContextMenu.CloseAll();
                         PlayerCommand.Instance.Back();
                         break;
                     }
 
                 case CommandEventType.Click:
                     {
+                        if (isOverUI) return;
+
                         if (spellRangeCell.Contains(cell))
                         {
                             Cell stayCell = MovePath[MovePath.Count - 1];
                             spellCell = cell;
-                            if (spellCell.Distance(stayCell) == 1)
+                            if (spellSkill == null)
                             {
-                                spellSkill = TargetTroop.NormalSkill.Skill;
-                            }
-                            else
-                            {
-                                spellSkill = TargetTroop.NormalRangeSkill.Skill;
+                                if (spellCell.Distance(stayCell) == 1)
+                                    spellSkill = TargetTroop.NormalSkill.Skill;
+                                else
+                                    spellSkill = TargetTroop.NormalRangeSkill.Skill;
                             }
 
                             if (!spellSkill.CanSpeellToHere(TargetTroop, cell))
                                 return;
 
-                            MapRender mapRender = MapRender.Instance;
-                            for (int i = 0, count = spellRangeCell.Count; i < count; ++i)
-                            {
-                                Cell c = spellRangeCell[i];
-                                mapRender.SetGridMaskColor(c.x, c.y, Color.black);
-                            }
-                            spellRangeCell.Clear();
+                            ClearShowSpellRange();
                             ContextMenu.CloseAll();
-                            mapRender.SetDarkMask(false);
-
                             Cell start = TargetTroop.cell;
                             for (int i = 1; i < MovePath.Count; i++)
                             {

@@ -6,6 +6,28 @@ namespace Sango.Game.Player
 {
     public class CitySystem : CommandSystemBase
     {
+        public override void Init()
+        {
+            base.Init();
+            Singleton<CityBuildBuilding>.Instance.Init();
+            Singleton<CityRecruitTroops>.Instance.Init();   // 征兵
+            Singleton<CityCreateBoat>.Instance.Init();
+            Singleton<CityCreateItems>.Instance.Init();
+            Singleton<CityCreateMachine>.Instance.Init();
+            Singleton<CityDevelop>.Instance.Init();
+            Singleton<CityFarming>.Instance.Init();
+            Singleton<CityInspection>.Instance.Init();
+            Singleton<CityTrade>.Instance.Init();
+
+            //军事
+            Singleton<CityExpedition>.Instance.Init();      // 出征
+            Singleton<CityTrainTroops>.Instance.Init();     // 训练
+
+            //人事
+            Singleton<CityCallPerson>.Instance.Init();
+            Singleton<CityTransformPerson>.Instance.Init();
+        }
+
         public City TargetCity { get; set; }
 
         public void Start(City city, Vector3 startPoint)
@@ -23,25 +45,29 @@ namespace Sango.Game.Player
         /// <summary>
         /// 离开当前命令的时候触发
         /// </summary>
-        public override void OnDestroy() {
+        public override void OnDestroy()
+        {
 
             ContextMenu.CloseAll();
         }
 
-        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition)
+        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)
         {
             switch (eventType)
             {
                 case CommandEventType.Cancel:
-                case CommandEventType.RClick:
+                case CommandEventType.RClickDown:
                     {
                         if (ContextMenu.Close())
                             PlayerCommand.Instance.Back();
+
                         break;
                     }
 
                 case CommandEventType.ClickDown:
                     {
+                        if (isOverUI) return;
+
                         Done();
                         break;
                     }

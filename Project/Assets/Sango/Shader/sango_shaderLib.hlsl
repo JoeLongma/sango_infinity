@@ -288,7 +288,7 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 	diffuse = lerp(diffuse, half3(0, 1, 0), flag * gridMaskColor.g);
 	diffuse = lerp(diffuse, half3(0, 0, 1), flag * gridMaskColor.b);
 	diffuse = lerp(diffuse, half3(1, 0, 0), flag * gridMaskColor.r);
-	diffuse = lerp(diffuse, diffuse * half3(0.33, 0.27, 0.21), saturate(_DarkFlag * (1 - gridMaskColor.r)));
+	diffuse = lerp(diffuse, diffuse * half3(0.35, 0.30, 0.30), saturate(_DarkFlag * (1 - gridMaskColor.r)));
 	diffuse = lerp(diffuse, diffuse * rangeMaskColor.rgb, rangeMaskColor.a);
 #endif
 

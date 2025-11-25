@@ -1127,7 +1127,7 @@ namespace Sango.Game
         {
             if (num != 0)
             {
-                Render?.ShowInfo(num, (int)InfoTyoe.Gold);
+                Render?.ShowInfo(num, (int)InfoType.Gold);
             }
 
             gold += num;
@@ -1143,7 +1143,7 @@ namespace Sango.Game
         {
             if (showInfo && num != 0)
             {
-                Render?.ShowInfo(num, (int)InfoTyoe.Food);
+                Render?.ShowInfo(num, (int)InfoType.Food);
             }
 
             food += num;
@@ -1169,7 +1169,7 @@ namespace Sango.Game
             }
 
             if (Render != null)
-                Render.ShowInfo(num, (int)InfoTyoe.Troop);
+                Render.ShowInfo(num, (int)InfoType.Troop);
 
             troops = troops + num;
             if (num < 0)

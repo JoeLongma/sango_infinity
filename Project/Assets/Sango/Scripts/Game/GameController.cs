@@ -10,11 +10,11 @@ namespace Sango.Game
     public class GameController : Singleton<GameController>
     {
         public bool Enabled { get; set; }
-
         public bool KeyboardMoveEnabled { get; set; }
         public bool RotateViewEnabled { get; set; }
         public bool DragMoveViewEnabled { get; set; }
         public bool ZoomViewEnabled { get; set; }
+        public bool BorderMoveViewEnabled { get; set; }
 
         enum ControlType : byte
         {
@@ -50,6 +50,7 @@ namespace Sango.Game
             RotateViewEnabled = true;
             DragMoveViewEnabled = true;
             ZoomViewEnabled = true;
+            BorderMoveViewEnabled = true;
         }
 
         public bool IsOverUI()
@@ -110,6 +111,8 @@ namespace Sango.Game
             }
         }
 
+
+
         public void HandleWindowsEvent()
         {
 
@@ -117,14 +120,25 @@ namespace Sango.Game
             {
                 if (Input.GetMouseButtonDown(0))
                 {
+                    bool isOverUI = IsOverUI();
+
+                    PlayerCommand.Instance.HandleEvent(CommandEventType.ClickDown, mouseOverCell, dragPosition, isOverUI);
+
                     if (controlType != ControlType.None)
                         return;
 
                     dragPosition = Input.mousePosition;
 
-                    if (IsOverUI()) return;
+                    if (isOverUI)
+                    {
+                        isDragMoving = true;
+                        return;
+                    }
 
-                    if (mouseOverCell != null && !mouseOverCell.IsEmpty())
+                    if (mouseOverCell == null) return;
+
+
+                    if (!mouseOverCell.IsEmpty())
                         return;
 
                     //downSelectMapObject = CheckMouseIsOnMapObject(Input.mousePosition, out Vector3 hitPiont);
@@ -166,6 +180,10 @@ namespace Sango.Game
                 //if (controlType != ControlType.Move)
                 //    return;
                 controlType = ControlType.None;
+                bool isOverUI = IsOverUI();
+
+                PlayerCommand.Instance.HandleEvent(CommandEventType.ClickUp, mouseOverCell, dragPosition, isOverUI);
+
                 if (isDragMoving)
                 {
                     isDragMoving = false;
@@ -178,11 +196,14 @@ namespace Sango.Game
             {
                 if (Input.GetMouseButtonDown(1))
                 {
+                    bool isOverUI = IsOverUI();
+                    PlayerCommand.Instance.HandleEvent(CommandEventType.RClickDown, mouseOverCell, dragPosition, isOverUI);
+
                     rotatePosition = Input.mousePosition;
                     if (controlType != ControlType.None)
                         return;
 
-                    if (IsOverUI()) return;
+                    if (isOverUI) return;
 
                     if (mouseOverCell != null && !mouseOverCell.IsEmpty())
                         return;
@@ -212,6 +233,9 @@ namespace Sango.Game
             }
             else if (Input.GetMouseButtonUp(1) && !isDragMoving)
             {
+                bool isOverUI = IsOverUI();
+                PlayerCommand.Instance.HandleEvent(CommandEventType.RClickUp, mouseOverCell, dragPosition, isOverUI);
+
                 if (controlType != ControlType.Rotate)
                     return;
 
@@ -227,10 +251,13 @@ namespace Sango.Game
             }
             else
             {
-                Vector2 scrollWheel = Input.mouseScrollDelta;
-                if (scrollWheel.y != 0)
+                if (ZoomViewEnabled)
                 {
-                    MapRender.Instance.ZoomCamera(scrollWheel.y);
+                    Vector2 scrollWheel = Input.mouseScrollDelta;
+                    if (scrollWheel.y != 0)
+                    {
+                        MapRender.Instance.ZoomCamera(scrollWheel.y);
+                    }
                 }
             }
         }
@@ -241,10 +268,17 @@ namespace Sango.Game
                 Touch touch = Input.GetTouch(0);
                 if (touch.phase == TouchPhase.Began)
                 {
+                    bool isOverUI = IsOverUI(touch.fingerId);
+                    PlayerCommand.Instance.HandleEvent(CommandEventType.ClickDown, mouseOverCell, dragPosition, isOverUI);
+
                     dragPosition = touch.position;
                     isDragMoving = false;
 
-                    if (IsOverUI(touch.fingerId)) return;
+                    if (isOverUI)
+                    {
+                        isDragMoving = true;
+                        return;
+                    }
 
                     touchBeganCell = CheckMouseIsOnMapCell(touch.position, out Vector3 hitPoint);
                     if (touchBeganCell != null && !touchBeganCell.IsEmpty())
@@ -285,6 +319,9 @@ namespace Sango.Game
                 {
                     if (controlType != ControlType.Move)
                         return;
+
+                    bool isOverUI = IsOverUI(touch.fingerId);
+                    PlayerCommand.Instance.HandleEvent(CommandEventType.ClickUp, mouseOverCell, dragPosition, isOverUI);
 
                     controlType = ControlType.None;
                     if (isDragMoving)
@@ -392,12 +429,17 @@ namespace Sango.Game
 
 
         bool[] keyFlags = new bool[4];
+        bool hasKey = false;
         private bool MoveCameraKeyBoard()
         {
             if (!KeyboardMoveEnabled) return true;
 
-            Array.Clear(keyFlags, 0, 4);
-            bool hasKey = false;
+            if (hasKey)
+            {
+                Array.Clear(keyFlags, 0, 4);
+                hasKey = false;
+            }
+
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))//(Input.GetAxis("Horizontal")<0)
             {
                 keyFlags[0] = true;
@@ -435,67 +477,55 @@ namespace Sango.Game
             return hasKey;
         }
 
-        public void HandleWindowsCommandEvent()
+        float boderWidth = 10;
+        public void HandleBorderMoveCamera()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (IsOverUI()) return;
-                if (mouseOverCell == null)
-                    return;
+            if (!BorderMoveViewEnabled) return;
 
-                clickPosition = Input.mousePosition;
-                PlayerCommand.Instance.HandleEvent(CommandEventType.ClickDown, mouseOverCell, clickPosition);
-            }
-            else if (Input.GetMouseButtonUp(0))
-            {
-                if (IsOverUI()) return;
-                if (mouseOverCell == null)
-                    return;
+            int sWidth = UnityEngine.Screen.width;
+            int sHeight = UnityEngine.Screen.height;
 
-                clickPosition = Input.mousePosition;
-                PlayerCommand.Instance.HandleEvent(CommandEventType.ClickUp, mouseOverCell, clickPosition);
-                PlayerCommand.Instance.HandleEvent(CommandEventType.Click, mouseOverCell, clickPosition);
-            }
-            else if (Input.GetMouseButtonDown(1))
+            if (hasKey)
             {
-                clickPosition = Input.mousePosition;
-                PlayerCommand.Instance.HandleEvent(CommandEventType.Cancel, mouseOverCell, clickPosition);
+                Array.Clear(keyFlags, 0, 4);
+                hasKey = false;
             }
-        }
 
-        public void HandleMobileCommandEvent()
-        {
-            if (Input.touchCount == 1)
+            // 左下0,0 右上max max
+            // 上 height > 
+            if (Input.mousePosition.y > sHeight - boderWidth)
             {
-                Touch touch = Input.GetTouch(0);
+                // 上
+                keyFlags[2] = true;
+                hasKey = true;
+            }
+            else if (Input.mousePosition.y < boderWidth)
+            {
+                // 下
+                keyFlags[3] = true;
+                hasKey = true;
+            }
 
-                if (touch.phase == TouchPhase.Began)
-                {
-                    clickPosition = touch.position;
-                    PlayerCommand.Instance.HandleEvent(CommandEventType.ClickDown, mouseOverCell, clickPosition);
-                }
-                else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
-                {
-                    clickPosition = touch.position;
-                    PlayerCommand.Instance.HandleEvent(CommandEventType.ClickUp, mouseOverCell, clickPosition);
-                    PlayerCommand.Instance.HandleEvent(CommandEventType.Click, mouseOverCell, clickPosition);
-                }
-            }
-            else if (Input.touchCount == 2)
+            if (Input.mousePosition.x > sWidth - boderWidth)
             {
-                Touch touch1 = Input.GetTouch(0);
-                Touch touch2 = Input.GetTouch(1);
-                if (touch1.phase == TouchPhase.Ended || touch1.phase == TouchPhase.Canceled)
-                {
-                    clickPosition = touch1.position;
-                    PlayerCommand.Instance.HandleEvent(CommandEventType.Cancel, mouseOverCell, clickPosition);
-                }
-                else if (touch2.phase == TouchPhase.Ended || touch2.phase == TouchPhase.Canceled)
-                {
-                    clickPosition = touch2.position;
-                    PlayerCommand.Instance.HandleEvent(CommandEventType.Cancel, mouseOverCell, clickPosition);
-                }
+                // 右
+                keyFlags[1] = true;
+                hasKey = true;
             }
+            else if (Input.mousePosition.x < boderWidth)
+            {
+                // 左
+                keyFlags[0] = true;
+                hasKey = true;
+            }
+
+            if (hasKey)
+            {
+                MapRender.Instance.MoveCameraKeyBoard(keyFlags);
+                if (controlType == ControlType.Move)
+                    controlType = ControlType.None;
+            }
+
         }
 
         public void Update()
@@ -505,24 +535,15 @@ namespace Sango.Game
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
             HandleOverCell();
 #endif
-            if (!Enabled)
-            {
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR
-                HandleWindowsCommandEvent();
-#else
-                HandleMobileCommandEvent();
-#endif
-            }
+            if (!Enabled) return;
 
-            if (Enabled)
-            {
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
-                HandleWindowsEvent();
-                MoveCameraKeyBoard();
+            HandleWindowsEvent();
+            MoveCameraKeyBoard();
+            HandleBorderMoveCamera();
 #else
-                HandleMobileEvent();
+            HandleMobileEvent();
 #endif
-            }
         }
         public void OnClickWorld()
         {
@@ -532,7 +553,7 @@ namespace Sango.Game
                 return;
             }
             if (mouseOverCell != null)
-                PlayerCommand.Instance.HandleEvent(CommandEventType.Click, mouseOverCell, clickPosition);
+                PlayerCommand.Instance.HandleEvent(CommandEventType.Click, mouseOverCell, clickPosition, false);
         }
 
         public void OnRClickWorld()
@@ -544,7 +565,7 @@ namespace Sango.Game
             }
 
             if (mouseOverCell != null)
-                PlayerCommand.Instance.HandleEvent(CommandEventType.RClick, mouseOverCell, clickPosition);
+                PlayerCommand.Instance.HandleEvent(CommandEventType.RClick, mouseOverCell, clickPosition, false);
         }
 
         public void OnCancel()
@@ -555,7 +576,7 @@ namespace Sango.Game
                 return;
             }
 
-            PlayerCommand.Instance.HandleEvent(CommandEventType.Cancel, null, clickPosition);
+            PlayerCommand.Instance.HandleEvent(CommandEventType.Cancel, null, clickPosition, false);
             //Sango.Game.Render.UI.ContextMenu.Close();
         }
 

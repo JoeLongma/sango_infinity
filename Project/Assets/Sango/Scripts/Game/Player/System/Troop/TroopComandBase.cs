@@ -5,37 +5,40 @@ namespace Sango.Game.Player
     public class TroopComandBase : CommandSystemBase
     {
         public Troop TargetTroop { get; set; }
+        public Cell ActionCell { get; set; }
 
         public string customMenuName;
         public int customMenuOrder;
 
         public override void Init()
         {
-            GameEvent.OnTroopContextMenuShow += OnTroopContextMenuShow;
+            GameEvent.OnTroopActionContextMenuShow += OnTroopActionContextMenuShow;
         }
 
         public override void Clear()
         {
-            GameEvent.OnTroopContextMenuShow -= OnTroopContextMenuShow;
+            GameEvent.OnTroopActionContextMenuShow -= OnTroopActionContextMenuShow;
         }
 
-        protected virtual void OnTroopContextMenuShow(ContextMenuData menuData, Troop troop)
+        protected virtual void OnTroopActionContextMenuShow(ContextMenuData menuData, Troop troop, Cell actionCell)
         {
             if (troop.BelongForce != null && troop.BelongForce.IsPlayer && troop.BelongForce == Scenario.Cur.CurRunForce)
             {
                 TargetTroop = troop;
-                menuData.Add(customMenuName, customMenuOrder, troop, OnClickMenuItem, IsValid);
+                ActionCell = actionCell;
+                menuData.Add(customMenuName, customMenuOrder, actionCell, OnClickMenuItem, IsValid);
             }
         }
 
         protected virtual void OnClickMenuItem(ContextMenuItem contextMenuItem)
         {
-            Start(contextMenuItem.customData as Troop);
+            Start(TargetTroop, ActionCell);
         }
 
-        public virtual void Start(Troop troop)
+        public virtual void Start(Troop troop, Cell actionCell)
         {
             TargetTroop = troop;
+            ActionCell = actionCell;
             PlayerCommand.Instance.Push(this);
         }
     }

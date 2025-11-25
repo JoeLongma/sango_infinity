@@ -7,17 +7,18 @@ namespace Sango.Game.Player
 {
     public class TroopSystem : CommandSystemBase
     {
+        public override void Init()
+        {
+            base.Init();
+            Singleton<TroopCommandStay>.Instance.Init();
+            Singleton<TroopCommandSkill>.Instance.Init();
+            Singleton<TroopCommandAttack>.Instance.Init();
+        }
+
         public List<Cell> moveRange = new List<Cell>();
         public List<Cell> movePath = new List<Cell>();
-        public List<Cell> spellRangeCell = new List<Cell>();
-        public Troop TargetTroop { get; set; }
 
-        enum ControlType
-        {
-            OtherMenu,
-            Move
-        }
-        ControlType CurrentControlType { get; set; }
+        public Troop TargetTroop { get; set; }
 
         public void Start(Troop troop)
         {
@@ -28,30 +29,35 @@ namespace Sango.Game.Player
         {
             if (!troop.IsAlive) return;
             TargetTroop = troop;
-            if (troop.BelongForce.IsPlayer && troop.BelongForce == Scenario.Cur.CurRunForce)
-            {
-                if (!troop.ActionOver)
-                {
-                    CurrentControlType = ControlType.Move;
-                    moveRange.Clear();
-                    movePath.Clear();
-                    Scenario.Cur.Map.GetMoveRange(TargetTroop, moveRange);
-                    ShowMoveRange();
-                    PlayerCommand.Instance.Push(this);
-                }
+            if (!troop.ActionOver && troop.BelongForce.IsPlayer && troop.BelongForce == Scenario.Cur.CurRunForce)
+            {               
+                PlayerCommand.Instance.Push(this);
             }
             else
             {
-                ContextMenuData.MenuData.Clear();
-                GameEvent.OnTroopContextMenuShow?.Invoke(ContextMenuData.MenuData, troop);
-                if (!ContextMenuData.MenuData.IsEmpty())
-                {
-                    TargetTroop = troop;
-                    ContextMenu.Show(ContextMenuData.MenuData, startPoint);
-                    CurrentControlType = ControlType.OtherMenu;
-                    PlayerCommand.Instance.Push(this);
-                }
+                Singleton<TroopMenu>.Instance.Start(troop, startPoint); 
             }
+        }
+
+        public override void OnEnter()
+        {
+            moveRange.Clear();
+            Scenario.Cur.Map.GetMoveRange(TargetTroop, moveRange);
+            OnBack();
+        }
+
+        public override void OnExit()
+        {
+            GameController.Instance.RotateViewEnabled = false;
+            GameController.Instance.ZoomViewEnabled = false;
+            ClearShowMoveRange();
+        }
+
+        public override void OnBack()
+        {
+            GameController.Instance.RotateViewEnabled = true;
+            GameController.Instance.ZoomViewEnabled = true;
+            ShowMoveRange();
         }
 
         /// <summary>
@@ -59,134 +65,77 @@ namespace Sango.Game.Player
         /// </summary>
         public override void OnDestroy()
         {
-            MapRender mapRender = MapRender.Instance;
-            for (int i = 0, count = spellRangeCell.Count; i < count; ++i)
-            {
-                Cell c = spellRangeCell[i];
-                mapRender.SetGridMaskColor(c.x, c.y, Color.black);
-            }
-
-            for (int i = 0, count = moveRange.Count; i < count; ++i)
-            {
-                Cell cell = moveRange[i];
-                mapRender.SetGridMaskColor(cell.x, cell.y, Color.black);
-            }
-            mapRender.EndSetGridMask();
-            mapRender.SetDarkMask(false);
-            ContextMenu.CloseAll();
-        }
-
-        public override void OnExit()
-        {
-            OnDestroy();
+            // 这个一定先清理
+            ClearShowMovePath();
+            ClearShowMoveRange();
         }
 
         public void ShowMoveRange()
         {
             MapRender mapRender = MapRender.Instance;
-            for (int i = 0, count = spellRangeCell.Count; i < count; ++i)
-            {
-                Cell c = spellRangeCell[i];
-                mapRender.SetGridMaskColor(c.x, c.y, Color.black);
-            }
-            spellRangeCell.Clear();
             for (int i = 0, count = moveRange.Count; i < count; ++i)
             {
                 Cell cell = moveRange[i];
                 mapRender.SetGridMaskColor(cell.x, cell.y, Color.green);
             }
             mapRender.EndSetGridMask();
-            mapRender.SetDarkMask(false);
         }
 
-        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition)
+        public void ClearShowMoveRange()
+        {
+            if (moveRange.Count == 0) return;
+            MapRender mapRender = MapRender.Instance;
+            for (int i = 0, count = moveRange.Count; i < count; ++i)
+            {
+                Cell cell = moveRange[i];
+                mapRender.SetGridMaskColor(cell.x, cell.y, Color.black);
+            }
+            mapRender.EndSetGridMask();
+        }
+        public void ShowMovePath()
+        {
+            MapRender mapRender = MapRender.Instance;
+            for (int i = 0, count = movePath.Count; i < count; ++i)
+            {
+                Cell c = movePath[i];
+                mapRender.SetGridMaskColor(c.x, c.y, Color.blue);
+            }
+            mapRender.EndSetGridMask();
+        }
+
+        public void ClearShowMovePath()
+        {
+            if (movePath.Count == 0) return;
+            MapRender mapRender = MapRender.Instance;
+            for (int i = 0, count = movePath.Count; i < count; ++i)
+            {
+                Cell c = movePath[i];
+                mapRender.SetGridMaskColor(c.x, c.y, Color.green);
+            }
+            mapRender.EndSetGridMask();
+        }
+
+        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)
         {
             switch (eventType)
             {
                 case CommandEventType.Cancel:
                 case CommandEventType.RClick:
                     {
-                        if(!ContextMenu.IsVisible())
-                        {
-                            ContextMenu.CloseAll();
-                            PlayerCommand.Instance.Back();
-                        }
-                        else
-                        {
-                            ContextMenu.CloseAll();
-                            ShowMoveRange();
-                        }
+                        PlayerCommand.Instance.Back();
                         break;
                     }
 
                 case CommandEventType.Click:
                     {
-                        switch (CurrentControlType)
+                        if (isOverUI) return;
+
+                        if (moveRange.Contains(cell))
                         {
-                            case ControlType.Move:
-                                {
-                                    if (moveRange.Contains(cell))
-                                    {
-                                        MapRender mapRender = MapRender.Instance;
-                                        for (int i = 0, count = spellRangeCell.Count; i < count; ++i)
-                                        {
-                                            Cell c = spellRangeCell[i];
-                                            mapRender.SetGridMaskColor(c.x, c.y, Color.black);
-                                        }
-                                        spellRangeCell.Clear();
-                                      
-                                        for (int i = 0, count = movePath.Count; i < count; ++i)
-                                        {
-                                            Cell c = movePath[i];
-                                            mapRender.SetGridMaskColor(c.x, c.y, Color.green);
-                                        }
-                                        movePath.Clear();
-                                        Scenario.Cur.Map.GetMovePath(TargetTroop, cell, movePath);
-                                        for (int i = 0, count = movePath.Count; i < count; ++i)
-                                        {
-                                            Cell c = movePath[i];
-                                            mapRender.SetGridMaskColor(c.x, c.y, Color.blue);
-                                        }
-                                        mapRender.EndSetGridMask();
-
-                                        ContextMenu.CloseAll();
-
-                                        
-                                        mapRender.SetDarkMask(true);
-                                        List<SkillInstance> list;
-                                        if (cell.TerrainType.isWater)
-                                        {
-                                            list = TargetTroop.waterSkills;
-                                        }
-                                        else
-                                        {
-                                            list = TargetTroop.landSkills;
-                                        }
-
-                                        for (int i = 0, count = list.Count; i < count; ++i)
-                                        {
-                                            Skill skill = list[i].Skill;
-                                            if (skill.CanBeSpell(TargetTroop))
-                                                skill.GetSpellRange(TargetTroop, cell, spellRangeCell);
-                                        }
-
-                                        for (int i = 0, count = spellRangeCell.Count; i < count; ++i)
-                                        {
-                                            Cell c = spellRangeCell[i];
-                                            mapRender.SetGridMaskColor(c.x, c.y, Color.red);
-                                        }
-                                        mapRender.EndSetGridMask();
-
-                                        // 显示确认菜单
-                                        ContextMenuData.MenuData.Clear();
-                                        GameEvent.OnTroopContextMenuShow?.Invoke(ContextMenuData.MenuData, TargetTroop);
-                                        if (!ContextMenuData.MenuData.IsEmpty())
-                                        {
-                                            ContextMenu.Show(ContextMenuData.MenuData, clickPosition);
-                                        }
-                                    }
-                                }
-                                break;
+                            movePath.Clear();
+                            Scenario.Cur.Map.GetMovePath(TargetTroop, cell, movePath);
+                            ShowMovePath();
+                            Singleton<TroopActionMenu>.Instance.Start(TargetTroop, cell, clickPosition);
                         }
                         break;
                     }

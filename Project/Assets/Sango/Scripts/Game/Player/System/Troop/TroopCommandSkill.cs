@@ -1,61 +1,65 @@
 ﻿using Sango.Game.Render;
 using Sango.Game.Render.UI;
+using Sango.Render;
 using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
-    public class TroopCommandSkill : TroopComandBase
+    public class TroopCommandSkill : TroopCommandAttack
     {
-        List<Cell> MovePath { get; set; }
-
         public TroopCommandSkill()
         {
             customMenuName = "战法";
             customMenuOrder = 0;
         }
 
-        public override bool IsValid
+        protected override void OnTroopActionContextMenuShow(ContextMenuData menuData, Troop troop, Cell actionCell)
         {
-            get
+            if (troop.BelongForce != null && troop.BelongForce.IsPlayer && troop.BelongForce == Scenario.Cur.CurRunForce)
             {
-                return true;
+                TargetTroop = troop;
+                ActionCell = actionCell;
+
+                List<SkillInstance> list;
+                if (ActionCell.TerrainType.isWater)
+                    list = TargetTroop.waterSkills;
+                else
+                    list = TargetTroop.landSkills;
+                for (int i = 0, count = list.Count; i < count; ++i)
+                {
+                    Skill skill = list[i].Skill;
+                    if (skill.costEnergy > 0)
+                    {
+                        bool isValid = skill.CanBeSpell(TargetTroop);
+                        menuData.Add($"战法/{skill.Name}({skill.costEnergy})", skill.costEnergy, skill, OnClickMenuItem, isValid);
+                    }
+                }
             }
+        }
+
+
+        protected override void OnClickMenuItem(ContextMenuItem contextMenuItem)
+        {
+            Start(TargetTroop, ActionCell, contextMenuItem.customData as Skill);
+        }
+
+        public void Start(Troop troop, Cell actionCell, Skill skill)
+        {
+            spellSkill = skill;
+            base.Start(troop, actionCell);
         }
 
         public override void OnEnter()
         {
-            base.OnEnter();
-            ContextMenu.CloseAll();
-
+            isShow = false;
+            isMoving = false;
+            spellRangeCell.Clear();
+            ContextMenu.SetVisible(false);
             MovePath = Singleton<TroopSystem>.Instance.movePath;
-            Cell start = TargetTroop.cell;
-            for (int i = 1; i < MovePath.Count; i++)
-            {
-                bool isLast = i == MovePath.Count - 1;
-                Cell dest = MovePath[i];
-                TroopMoveEvent @event = new TroopMoveEvent()
-                {
-                    troop = TargetTroop,
-                    dest = dest,
-                    start = start,
-                    isLastMove = isLast
-                };
-
-                if (isLast)
-                {
-                    @event.doneAction = OnMoveDone;
-                }
-
-                RenderEvent.Instance.Add(@event);
-                start = dest;
-            }
-
-        }
-
-        public void OnMoveDone()
-        {
-            TargetTroop.ActionOver = true;
-            Done();
+            Cell stayCell = ActionCell;
+            if (spellSkill.CanBeSpell(TargetTroop))
+                spellSkill.GetSpellRange(TargetTroop, stayCell, spellRangeCell);
+            ShowSpellRange();
         }
     }
 }

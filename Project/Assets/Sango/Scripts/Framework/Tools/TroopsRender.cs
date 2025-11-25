@@ -61,6 +61,11 @@ namespace Sango
         public ParticleSystem smoke;
         private bool isAniEnabled = false;
 
+        public void ResetPoisitonCheck()
+        {
+            lastPosition = Vector3.zero;
+        }
+
         public void SetShowCount(int count)
         {
             if (count < 0 || count > elementCount)
