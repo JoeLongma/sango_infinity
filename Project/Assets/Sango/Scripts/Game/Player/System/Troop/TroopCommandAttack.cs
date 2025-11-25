@@ -145,6 +145,14 @@ namespace Sango.Game.Player
                             ClearShowSpellRange();
                             ContextMenu.CloseAll();
                             Cell start = TargetTroop.cell;
+
+                            if(start  == stayCell)
+                            {
+                                isShow = true;
+                                isMoving = false;
+                                return;
+                            }
+
                             for (int i = 1; i < MovePath.Count; i++)
                             {
                                 bool isLast = i == MovePath.Count - 1;

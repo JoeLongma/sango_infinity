@@ -110,7 +110,7 @@ namespace Sango.Game
             {
                 for (int i = 0; i < spellRanges.Length; i++)
                 {
-                    Scenario.Cur.Map.GetRing(where, spellRanges[i], cells);
+                    Scenario.Cur.Map.GetRing(where, spellRanges[i], cells, true);
                 }
             }
         }
@@ -155,7 +155,7 @@ namespace Sango.Game
                                     cells.Add(spell);
                                     return;
                                 }
-                                spell.Ring(radius, (cell) => { cells.Add(cell); });
+                                spell.Ring(radius, (cell) => { if (cell.moveAble) cells.Add(cell); });
                             }
                             else
                                 Sango.Log.Error("技能命中配置不正确!!");
@@ -175,7 +175,8 @@ namespace Sango.Game
 
                                 atker.cell.DirectionLine(spell, length, (cell) =>
                                 {
-                                    cells.Add(cell);
+                                    if (cell.moveAble)
+                                        cells.Add(cell);
                                 });
                             }
                             else
@@ -193,7 +194,7 @@ namespace Sango.Game
                                     cells.Add(spell);
                                     return;
                                 }
-                                atker.cell.Ring(radius, (cell) => { cells.Add(cell); });
+                                atker.cell.Ring(radius, (cell) => { if (cell.moveAble) cells.Add(cell); });
                             }
                             else
                                 Sango.Log.Error("技能命中配置不正确!!");
@@ -204,8 +205,12 @@ namespace Sango.Game
                         {
                             int dir = atker.cell.Cub.DirectionTo(spell.Cub);
                             cells.Add(spell);
-                            cells.Add(atker.cell.GetNrighbor(dir + 1));
-                            cells.Add(atker.cell.GetNrighbor(dir - 1));
+                            Cell nCell = atker.cell.GetNrighbor(dir + 1);
+                            if (nCell.moveAble)
+                                cells.Add(nCell);
+                            nCell = atker.cell.GetNrighbor(dir - 1);
+                            if (nCell.moveAble)
+                                cells.Add(nCell);
                         }
                         break;
                     // 5
@@ -219,7 +224,7 @@ namespace Sango.Game
                                     cells.Add(spell);
                                     return;
                                 }
-                                spell.Spiral(radius, (cell) => { cells.Add(cell); });
+                                spell.Spiral(radius, (cell) => { if (cell.moveAble) cells.Add(cell); });
                             }
                             else
                                 Sango.Log.Error("技能命中配置不正确!!");

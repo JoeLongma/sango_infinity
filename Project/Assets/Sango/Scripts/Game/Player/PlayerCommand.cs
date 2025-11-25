@@ -23,9 +23,9 @@ namespace Sango.Game.Player
             }
 
             commads.Push(command);
-            command.OnEnter();
             CurrentCommand?.OnExit();
             CurrentCommand = command;
+            command.OnEnter();
         }
 
         public void Back()

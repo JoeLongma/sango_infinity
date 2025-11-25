@@ -145,21 +145,24 @@ namespace Sango.Game
         {
             return Distance(Coord.OffsetToCube(ax, ay), Coord.OffsetToCube(bx, by));
         }
-        public void GetRing(int x, int y, int radius, List<Cell> cellList)
+        public void GetRing(int x, int y, int radius, List<Cell> cellList, bool checkMoveAble = false)
         {
-            GetRing(Coord.OffsetToCube(x, y), radius, cellList);
+            GetRing(Coord.OffsetToCube(x, y), radius, cellList, checkMoveAble);
         }
-        public void GetRing(Cell start, int radius, List<Cell> cellList)
+        public void GetRing(Cell start, int radius, List<Cell> cellList, bool checkMoveAble = false)
         {
-            GetRing(start.Cub, radius, cellList);
+            GetRing(start.Cub, radius, cellList, checkMoveAble);
         }
-        public void GetRing(Hexagon.Hex cub, int radius, List<Cell> cellList)
+        public void GetRing(Hexagon.Hex cub, int radius, List<Cell> cellList, bool checkMoveAble = false)
         {
             cub.Ring(radius, (c =>
             {
                 Cell find = GetCell(c);
                 if (find != null)
-                    cellList.Add(find);
+                {
+                    if(checkMoveAble && find.moveAble)
+                        cellList.Add(find);
+                }
             }));
         }
 

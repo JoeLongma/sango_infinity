@@ -53,6 +53,7 @@ namespace Sango.Game.Player
             troopRender.Clear();
             troopRender = null;
             ClearShowSpellRange();
+            spellRangeCell.Clear();
             ContextMenu.CloseAll();
         }
 
@@ -74,8 +75,7 @@ namespace Sango.Game.Player
             for (int i = 0, count = spellRangeCell.Count; i < count; ++i)
             {
                 Cell c = spellRangeCell[i];
-                if(c.moveAble)
-                    mapRender.SetGridMaskColor(c.x, c.y, Color.red);
+                mapRender.SetGridMaskColor(c.x, c.y, Color.red);
             }
             mapRender.EndSetGridMask();
             mapRender.SetDarkMask(true);
