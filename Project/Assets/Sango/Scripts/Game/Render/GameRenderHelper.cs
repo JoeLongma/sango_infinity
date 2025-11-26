@@ -8,6 +8,7 @@ namespace Sango.Game
     public class GameRenderHelper
     {
         public static string BuildingTypeIconPath = "Assets/UI/AtlasTexture/facilities";
+        public static string TroopStatePath = "Assets/UI/AtlasTexture/Troopstate";
 
         public static string HeadIconPath = "Assets/UI/AtlasTexture/Face";
         public static string TroopHeadbarRes = "Assets/UI/Prefab/window_troop_bar.prefab";
@@ -53,6 +54,11 @@ namespace Sango.Game
                 headSpr = ObjectLoader.LoadObject<UnityEngine.Sprite>(headPath);
             }
             return headSpr;
+        }
+
+        public static UnityEngine.Sprite LoadTroopStateIcon(string name)
+        {
+            return ObjectLoader.LoadObject<UnityEngine.Sprite>($"{TroopStatePath}/{name}.png");
         }
     }
 }

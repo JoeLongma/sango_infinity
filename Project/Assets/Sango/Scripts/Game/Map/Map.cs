@@ -160,7 +160,7 @@ namespace Sango.Game
                 Cell find = GetCell(c);
                 if (find != null)
                 {
-                    if(checkMoveAble && find.moveAble)
+                    if(!checkMoveAble || (checkMoveAble && find.moveAble))
                         cellList.Add(find);
                 }
             }));

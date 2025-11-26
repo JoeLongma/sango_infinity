@@ -31,6 +31,7 @@ namespace Sango.Game.Player
         {
             troopRender = new TroopRender(TargetTroop, false);
             troopRender.SetPosition(TargetCell.Position);
+            troopRender.SetForward(TargetTroop.Render.GetForward());
             List<SkillInstance> list;
             if (TargetCell.TerrainType.isWater)
                 list = TargetTroop.waterSkills;
@@ -50,8 +51,11 @@ namespace Sango.Game.Player
         /// </summary>
         public override void OnDestroy()
         {
-            troopRender.Clear();
-            troopRender = null;
+            if (troopRender != null)
+            {
+                troopRender.Clear();
+                troopRender = null;
+            }
             ClearShowSpellRange();
             spellRangeCell.Clear();
             ContextMenu.CloseAll();
@@ -59,6 +63,11 @@ namespace Sango.Game.Player
 
         public override void OnExit()
         {
+            if (troopRender != null)
+            {
+                troopRender.Clear();
+                troopRender = null;
+            }
             ClearShowSpellRange();
             ContextMenu.SetVisible(false);
         }
@@ -76,8 +85,10 @@ namespace Sango.Game.Player
             {
                 Cell c = spellRangeCell[i];
                 mapRender.SetGridMaskColor(c.x, c.y, Color.red);
+                mapRender.SetDarkMaskColor(c.x, c.y, Color.black);
             }
             mapRender.EndSetGridMask();
+            mapRender.EndSetDarkMask();
             mapRender.SetDarkMask(true);
         }
 
@@ -89,8 +100,10 @@ namespace Sango.Game.Player
             {
                 Cell c = spellRangeCell[i];
                 mapRender.SetGridMaskColor(c.x, c.y, Color.black);
+                mapRender.SetDarkMaskColor(c.x, c.y, Color.clear);
             }
             mapRender.EndSetGridMask();
+            mapRender.EndSetDarkMask();
             mapRender.SetDarkMask(false);
         }
 

@@ -503,6 +503,16 @@ namespace Sango.Render
             mapGrid.SetDarkMask(b);
         }
 
+        public void SetDarkMaskColor(int x, int y, Color c)
+        {
+            mapGrid.SetDarkMaskColor(x, y, c);
+        }
+
+        public void EndSetDarkMask()
+        {
+            mapGrid.ApplyDarkMask();
+        }
+
         public void EndSetGridMask()
         {
             mapGrid.ApplyGridMask();

@@ -55,6 +55,7 @@ namespace Sango.Game.Player
         public void OnMoveDone()
         {
             TargetTroop.ActionOver = true;
+            TargetTroop.Render?.UpdateRender();
             Done();
         }
     }

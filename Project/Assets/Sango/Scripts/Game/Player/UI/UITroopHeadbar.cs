@@ -24,11 +24,55 @@ namespace Sango.Game.Render.UI
             headIcon.sprite = GameRenderHelper.LoadHeadIcon(troop.Leader.headIconID);
             skillText.Clear();
             UpdateState(troop);
+            GameEvent.OnForceStart += OnForceStart;
+        }
+
+        public override void OnHide()
+        {
+            GameEvent.OnForceStart -= OnForceStart;
+        }
+
+        void OnForceStart(Force force, Scenario scenario)
+        {
+            // 玩家回合,更新状态
+            if (force.IsPlayer)
+            {
+                UpdateTroopState();
+            }
+        }
+
+        public void UpdateTroopState()
+        {
+            // 除开自己以外全部不显示
+            if (troop.BelongForce == Scenario.Cur.CurRunForce && troop.BelongForce.IsPlayer)
+            {
+                string spName = troop.ActionOver ? "4845_8_17" : "4845_8_18";
+                if (state.sprite == null || !state.sprite.name.Equals(spName))
+                    state.sprite = GameRenderHelper.LoadTroopStateIcon(spName);
+                state.enabled = true;
+            }
+            else
+            {
+                Alliance alliance = troop.BelongForce.CheckAlliance(Scenario.Cur.CurRunForce);
+                if (alliance != null)
+                {
+                    //TODO: 根据联盟类型显示(同盟或者停战)
+                    string spName = "4845_8_20";
+                    if (state.sprite == null || !state.sprite.name.Equals(spName))
+                        state.sprite = GameRenderHelper.LoadTroopStateIcon(spName);
+                    state.enabled = true;
+                }
+                else
+                {
+                    state.enabled = false;
+                }
+            }
         }
 
         public void UpdateState(Troop troop)
         {
-            state.enabled = false;
+            //TODO: 这里需要拆开刷新,增加刷新标记后在Update刷新
+            UpdateTroopState();
             energy.fillAmount = (float)troop.morale / troop.MaxMorale;
             angry.fillAmount = 0;
             number.text = troop.troops.ToString();

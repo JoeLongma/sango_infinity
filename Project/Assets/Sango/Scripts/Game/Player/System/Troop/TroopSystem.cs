@@ -51,6 +51,7 @@ namespace Sango.Game.Player
             GameController.Instance.RotateViewEnabled = false;
             GameController.Instance.ZoomViewEnabled = false;
             ClearShowMoveRange();
+            ShowMovePath();
         }
 
         public override void OnBack()
@@ -134,7 +135,6 @@ namespace Sango.Game.Player
                         {
                             movePath.Clear();
                             Scenario.Cur.Map.GetMovePath(TargetTroop, cell, movePath);
-                            ShowMovePath();
                             Singleton<TroopActionMenu>.Instance.Start(TargetTroop, cell, clickPosition);
                         }
                         break;

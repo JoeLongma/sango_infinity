@@ -20,6 +20,7 @@ namespace Sango.Game.Render.UI
         List<UIBuildingTypeItem> buildingTypeItemPool = new List<UIBuildingTypeItem>();
 
         public Text infoLabel;
+        public Text slotInfoLabel;
 
         public UIPersonItem[] personItems;
 
@@ -64,8 +65,15 @@ namespace Sango.Game.Render.UI
                     cityBuildingSlot.SetBuilding(null).SetIndex(i).SetSelected(false);
                 }
             }
-
             OnSelectSlot(buildingSlotPool[buildBuildingSys.CurSelectSlotIndex]);
+            UpdateSlotInfo();
+        }
+
+        public void UpdateSlotInfo()
+        {
+            int total = buildBuildingSys.TargetCity.InsideSlot;
+            int builded = buildBuildingSys.TargetCity.GetIntriorBuildingUsedNumber();
+            slotInfoLabel.text = $"({builded}/{total})";
         }
 
         /// <summary>

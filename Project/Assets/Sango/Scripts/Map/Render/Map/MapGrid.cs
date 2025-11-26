@@ -20,6 +20,8 @@ namespace Sango.Render
         private int quadSize = 20;
         public Texture2D GridMaskTexture;   // a为是否显示r红色格子g绿色格子b蓝色格子
         public Texture2D RangeMaskTexture;  // a为是否显示r为当前选择地格g为我方范围b为敌方范围
+        public Texture2D DarkMaskTexture;  // a为是否显示
+
         private GridData[][] gridDatas;
         public enum GridState : int
         {
@@ -226,9 +228,26 @@ namespace Sango.Render
             }
             RangeMaskTexture.Apply(false);
 
+
+            DarkMaskTexture = new Texture2D(bounds.x, bounds.y, TextureFormat.ARGB32, false);
+            DarkMaskTexture.wrapMode = TextureWrapMode.Clamp;
+            DarkMaskTexture.filterMode = FilterMode.Point;
+
+            for (int i = 0; i < bounds.x; ++i)
+            {
+                for (int j = 0; j < bounds.y; ++j)
+                {
+                    DarkMaskTexture.SetPixel(i, j, Color.clear);
+                }
+            }
+            DarkMaskTexture.Apply(false);
+
             Shader.SetGlobalTexture("_GridMask", GridMaskTexture);
             Shader.SetGlobalTexture("_RangeMask", RangeMaskTexture);
+            Shader.SetGlobalTexture("_DarkMask", DarkMaskTexture);
             Shader.SetGlobalFloat("_GridSize", gridSize);
+
+
 
 
             gridDatas = new GridData[bounds.x][];
@@ -487,6 +506,16 @@ namespace Sango.Render
         {
             RangeMaskTexture.Apply(false);
         }
+        public void SetDarkMaskColor(int x, int y, Color c)
+        {
+            y = DarkMaskTexture.height - y - 1;
+            DarkMaskTexture.SetPixel(x, y, c);
+        }
+        public void ApplyDarkMask()
+        {
+            DarkMaskTexture.Apply(false);
+        }
+
         public GridData GetGridData(int x, int y)
         {
             return gridDatas[x][y];

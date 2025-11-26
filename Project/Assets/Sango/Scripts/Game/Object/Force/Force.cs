@@ -118,6 +118,17 @@ namespace Sango.Game
             return false;
         }
 
+        public Alliance CheckAlliance(Force other)
+        {
+            for (int i = 0; i < AllianceList.Count; ++i)
+            {
+                Alliance alliance = AllianceList[i];
+                if (alliance.Contains(other))
+                    return alliance;
+            }
+            return null;
+        }
+
         //public Corps Add(Corps corps)
         //{
         //    allCorps.Add(Scenario.Cur.Add(corps));

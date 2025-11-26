@@ -201,6 +201,7 @@ namespace Sango.Game.Render
             TroopModel = null;
             if (HeadBar != null)
             {
+                HeadBar.OnHide();
                 PoolManager.Recycle(HeadBar.gameObject);
                 HeadBar = null;
             }

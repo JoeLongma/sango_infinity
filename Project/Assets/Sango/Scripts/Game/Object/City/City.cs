@@ -2828,6 +2828,20 @@ namespace Sango.Game
             return complateNum;
         }
 
+        public int GetIntriorBuildingUsedNumber()
+        {
+            int complateNum = 0;
+            for (int i = 0; i < innerSlot.Length; i++)
+            {
+                if (innerSlot[i] > 0)
+                {
+                    complateNum++;
+                }
+            }
+            return complateNum;
+        }
+
+
         /// <summary>
         /// 获取已建造完成的建筑类型数量
         /// </summary>

@@ -86,6 +86,7 @@ namespace Sango.Game.Player
 
         public override void OnEnter()
         {
+            personList.Clear();
             TargetTroop = new Troop();
             List<TroopType> activeTroopTypes = new List<TroopType>();
             TroopType.CheckActivTroopTypeList(TargetCity.freePersons, activeTroopTypes);
@@ -218,5 +219,15 @@ namespace Sango.Game.Player
             TargetTroop.food = food;
         }
 
+        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)
+        {
+            switch (eventType)
+            {
+                case CommandEventType.Cancel:
+                case CommandEventType.RClickUp:
+                    PlayerCommand.Instance.Back(); break;
+            }
+
+        }
     }
 }

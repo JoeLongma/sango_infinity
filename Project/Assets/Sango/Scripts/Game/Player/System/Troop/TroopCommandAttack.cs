@@ -61,7 +61,6 @@ namespace Sango.Game.Player
             }
 
             mapRender.EndSetGridMask();
-            mapRender.SetDarkMask(true);
         }
 
         protected void ShowSpellRange()
@@ -74,7 +73,6 @@ namespace Sango.Game.Player
                 mapRender.SetGridMaskColor(c.x, c.y, Color.red);
             }
             mapRender.EndSetGridMask();
-            mapRender.SetDarkMask(true);
         }
 
         protected void ClearShowSpellRange()
@@ -87,7 +85,6 @@ namespace Sango.Game.Player
                 mapRender.SetGridMaskColor(c.x, c.y, Color.black);
             }
             mapRender.EndSetGridMask();
-            mapRender.SetDarkMask(false);
         }
 
         protected void OnMoveDone()
@@ -104,6 +101,7 @@ namespace Sango.Game.Player
                     if (TargetTroop.SpellSkill(spellSkill, spellCell))
                     {
                         TargetTroop.ActionOver = true;
+                        TargetTroop.Render?.UpdateRender();
                         Done();
                     }
                 }
