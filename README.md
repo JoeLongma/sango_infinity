@@ -1,8 +1,13 @@
 # 无限三国
 一个基于三国志11的重置项目  
 
+## Unity3D版本以及依赖包
+需要使用**Unity3D 2021.3.40f1**以上版本打开Project文件夹项目，需要导入**2DSprite**, **Universal RP**, **Burst**包。  
+
+增加对HybridCLR支持
+## 安装HybridCLR参考[https://www.hybridclr.cn/docs/basic/install](https://www.hybridclr.cn/docs/basic/install)
+
 ## 第一次启动
-需要使用Unity 2021.3.40f1以上版本打开Project文件夹项目，需要导入2DSprite, Universal RP, Burst包。  
 初始启动会有一个弹窗需要选择到Build文件夹，打包直接生成在Build文件夹即可。  
 
 打包前需要选择菜单Sango->模组->资源包导出 会在Build/Package下生成资源包  
