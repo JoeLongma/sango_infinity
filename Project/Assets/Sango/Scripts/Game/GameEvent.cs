@@ -161,8 +161,8 @@ namespace Sango.Game
         public static EventDelegate<Troop, Scenario> OnTroopAIEnd;
 
 
-        public static EventDelegate<Cell, Cell> OnTroopLeaveCell;
-        public static EventDelegate<Cell, Cell> OnTroopEnterCell;
+        public static EventDelegate<Troop, Cell, Cell> OnTroopLeaveCell;
+        public static EventDelegate<Troop, Cell, Cell> OnTroopEnterCell;
 
         /// <summary>
         /// 部队组建的时候

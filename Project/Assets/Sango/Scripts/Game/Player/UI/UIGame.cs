@@ -13,6 +13,11 @@ namespace Sango.Game.Render.UI
         public Text dateText;
         public Text fpsText;
 
+        public Text cellInfoLabel;
+        public Image seasonImg;
+        public Text actionNumberLabel;
+        public Text teachPointLabel;
+
         public Text frameBtnText;
         public Text speedBtnText;
 
@@ -47,7 +52,27 @@ namespace Sango.Game.Render.UI
         {
             base.OnShow();
             Window.Instance.Close("window_loading");
+            GameController.Instance.onCellOverEnter += OnCellOverEnter;
+            GameController.Instance.onCellOverExit += OnCellOverExit;
         }
+
+        public override void OnHide()
+        {
+            GameController.Instance.onCellOverEnter -= OnCellOverEnter;
+            GameController.Instance.onCellOverExit -= OnCellOverExit;
+            base.OnHide();
+        }
+
+        void OnCellOverEnter(Cell cell)
+        {
+
+        }
+
+        void OnCellOverExit(Cell cell)
+        {
+
+        }
+
 
         public GameObject GetObject(int index)
         {

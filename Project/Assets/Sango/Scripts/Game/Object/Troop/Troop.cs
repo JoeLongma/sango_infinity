@@ -1508,9 +1508,9 @@ namespace Sango.Game
         {
             //TODO: 地格更新,需要处理一些事件
             if (lastCell != null)
-                GameEvent.OnTroopLeaveCell?.Invoke(lastCell, destCell);
+                GameEvent.OnTroopLeaveCell?.Invoke(this, lastCell, destCell);
 
-            GameEvent.OnTroopEnterCell?.Invoke(destCell, lastCell);
+            GameEvent.OnTroopEnterCell?.Invoke(this, destCell, lastCell);
 
 
 #if SANGO_DEBUG
