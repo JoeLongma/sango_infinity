@@ -1,7 +1,7 @@
 //using System.Collections.Generic;
 //using UnityEngine;
 //using Sango.Loader;
-//using LuaInterface;
+//
 //using System.IO;
 //using FairyGUI;
 //using Sango;

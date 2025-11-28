@@ -1,4 +1,4 @@
-﻿using LuaInterface;
+﻿
 using Sango.Game;
 using Sango.Loader;
 using System;
@@ -11,6 +11,10 @@ namespace Sango.Render
     public class MapRender : System<MapRender>
     {
         public delegate void OnMapLoadedCall();
+        public delegate void OnLoadModelCall(MapObject mapObject);
+        public delegate void OnInitGridCall(int gridSize, int boundx, int boundy);
+        public delegate void OnBindGridDataCall(int x, int y, MapGrid.GridData data);
+
         // 2022/10/20 add to 4
         // 2025/3/8 add to 5
         // 2025/3/14 add to 6
@@ -45,10 +49,10 @@ namespace Sango.Render
         public string WorkContent { set; get; }
         public string DefaultContentName { get { return "Default"; } }
 
-        private LuaFunction loadModelFunc;
-        private LuaFunction bindModelFunc;
-        private LuaFunction initGridFunc;
-        private LuaFunction bindGridFunc;
+        public OnLoadModelCall replaceLoadModelFunc;
+        public OnLoadModelCall replaceBindModelFunc;
+        public OnInitGridCall initGridFunc;
+        public OnBindGridDataCall bindGridFunc;
 
         public static Transform terrainRoot;
         public static Transform modelRoot;
@@ -87,17 +91,17 @@ namespace Sango.Render
 
         protected void OnInitFunctions()
         {
-            loadModelFunc = GetFunction("OnCreateModel");
-            bindModelFunc = GetFunction("OnModelBind");
-            initGridFunc = GetFunction("OnGridInit");
-            bindGridFunc = GetFunction("OnGridBind");
+            //loadModelFunc = GetFunction("OnCreateModel");
+            //bindModelFunc = GetFunction("OnModelBind");
+            //initGridFunc = GetFunction("OnGridInit");
+            //bindGridFunc = GetFunction("OnGridBind");
         }
 
         public void LoadModel(MapObject obj)
         {
-            if (loadModelFunc != null)
+            if (replaceLoadModelFunc != null)
             {
-                CallMethod(loadModelFunc, obj);
+                replaceLoadModelFunc.Invoke(obj);
             }
             else
             {
@@ -461,26 +465,17 @@ namespace Sango.Render
 
         internal void BindModel(MapObject mapObject)
         {
-            if (bindModelFunc != null)
-            {
-                CallMethod(bindModelFunc, mapObject.bindId, mapObject);
-            }
+            replaceBindModelFunc?.Invoke(mapObject);
         }
 
         internal void OnInitGrid()
         {
-            if (initGridFunc != null)
-            {
-                CallMethod(initGridFunc, mapGrid.gridSize, mapGrid.bounds.x, mapGrid.bounds.y);
-            }
+            initGridFunc?.Invoke(mapGrid.gridSize, mapGrid.bounds.x, mapGrid.bounds.y);
         }
 
         internal void OnBindGridData(int x, int y, MapGrid.GridData data)
         {
-            if (bindGridFunc != null)
-            {
-                CallMethod(bindGridFunc, x, y, data);
-            }
+            bindGridFunc?.Invoke(x, y, data);
         }
 
         public void SetGridMask(int x, int y, bool b)

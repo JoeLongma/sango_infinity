@@ -201,7 +201,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2747264536939139455}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5149108134032039960}
+        m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIStart, Assembly-CSharp
+        m_MethodName: OnNewGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6318832484257046986
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,7 +415,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7140967891674408191}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5149108134032039960}
+        m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIStart, Assembly-CSharp
+        m_MethodName: OnTest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7419038523204452938
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,7 +781,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2404314415711408784}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5149108134032039960}
+        m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIStart, Assembly-CSharp
+        m_MethodName: OnMapEditor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &9039031632039893254
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,7 +805,7 @@ GameObject:
   - component: {fileID: 5973749658295835790}
   - component: {fileID: 174056003858870177}
   - component: {fileID: 576643473640125865}
-  - component: {fileID: -9159462744481052588}
+  - component: {fileID: 5149108134032039960}
   m_Layer: 5
   m_Name: window_start
   m_TagString: Untagged
@@ -841,7 +877,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 32
---- !u!114 &-9159462744481052588
+--- !u!114 &5149108134032039960
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -850,6 +886,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 9039031632039893254}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c98c14ab5e7b3b4e8704671ba65ea8d, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f9e84ccf85d98d418a1e29b9e0847ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

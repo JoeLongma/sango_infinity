@@ -18,7 +18,6 @@ namespace Sango
         /// <summary>
         /// 配置保存文件地址,仅支持编辑器
         /// </summary>
-        [LuaInterface.NoToLua]
         public static string settingSavePath = Application.dataPath + "/../FrameworkProjectDataDir";
 #endif
 

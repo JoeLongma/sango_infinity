@@ -1,4 +1,4 @@
-﻿using LuaInterface;
+﻿
 using System;
 using System.Collections;
 using UnityEngine;
@@ -36,7 +36,7 @@ namespace Sango.Loader
             }
         }
 
-        private static void LoadFromFile(string filePath, object customData, bool textureNeedCompress, bool needMipmap, LuaFunction onLoadedFunc, OnObjectLoaded onCharpLoadedFunc = null)
+        private static void LoadFromFile(string filePath, object customData, bool textureNeedCompress, bool needMipmap, OnObjectLoaded onCharpLoadedFunc = null)
         {
             CheckHelper();
 
@@ -45,7 +45,6 @@ namespace Sango.Loader
             LoadData loadData = CheckExistLoader(filePath);
             if (loadData != null)
             {
-                loadData.AddCall(onLoadedFunc, customData);
                 loadData.AddCall(onCharpLoadedFunc, customData);
                 return;
             }
@@ -75,7 +74,6 @@ namespace Sango.Loader
                 };
             }
 
-            loadData.AddCall(onLoadedFunc, customData);
             loadData.AddCall(onCharpLoadedFunc, customData);
 
             usingList.Add(loadData);
@@ -89,13 +87,9 @@ namespace Sango.Loader
             Sango.Game.Game.Instance.StartCoroutine(LoadImage(filePath, OnLoaded, loadData));
 
         }
-        public static void LoadFromFile(string filePath, object customData, LuaFunction onLoadedFunc, bool textureNeedCompress = true, bool needMipmap = true)
-        {
-            LoadFromFile(filePath, customData, textureNeedCompress, needMipmap, onLoadedFunc, null);
-        }
         public static void LoadFromFile(string filePath, object customData, OnObjectLoaded onLoadedFunc, bool textureNeedCompress = true, bool needMipmap = true)
         {
-            LoadFromFile(filePath, customData, textureNeedCompress, needMipmap, null, onLoadedFunc);
+            LoadFromFile(filePath, customData, textureNeedCompress, needMipmap, onLoadedFunc);
         }
 
         protected static IEnumerator LoadImage(string filePath, Action<Texture2D, LoadData> loadEnd, LoadData loadData)

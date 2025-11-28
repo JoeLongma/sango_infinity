@@ -1,4 +1,4 @@
-﻿using LuaInterface;
+﻿
 using Sango.Game;
 using System.Collections.Generic;
 using System.IO;
@@ -25,7 +25,7 @@ namespace Sango.Mod
             string path = Path.ContentRootPath + "/Package";
             Directory.EnumFiles(path, "*.pkg", SearchOption.AllDirectories, (file) =>
             {
-                Debugger.Log($"LoadPackage: {file}");
+                Sango.Log.Print($"LoadPackage: {file}");
                 string packageName = System.IO.Path.GetFileNameWithoutExtension(file).Split('_')[0];
                 PackageManager.Instance.AddPackage(packageName, file, true);
             });
@@ -175,7 +175,6 @@ namespace Sango.Mod
             }
 
             //最终可以通过MOD/Lua/名字去查代码
-            LuaFileUtils.Instance.AddSearchPath(MOD_ROOT_DIR);
             for (int i = 0; i < mModList.Count; i++)
                 mModList[i].LoadScenario();
             for (int i = 0; i < mModList.Count; i++)
@@ -186,32 +185,9 @@ namespace Sango.Mod
                 mModList[i].LoadData();
             for (int i = 0; i < mModList.Count; i++)
                 Path.AddSearchPath($"{mModList[i].ModDir}/Assets", true);
-
+            // 加载dll
             for (int i = 0; i < mModList.Count; i++)
-            {
-                Mod mod = mModList[i];
-                LuaFileUtils.Instance.AddSearchPath($"{mod.ModDir}/Lua", true);
-                mod.LoadLua();
-            }
-
-            for (int i = 0; i < mModList.Count; i++)
-            {
-                Mod mod = mModList[i];
-                LuaTable modTable = LuaClient.GetTable(mod.ModDirName);
-                if (modTable == null)
-                {
-                    modTable = LuaClient.GetTable(mod.ModDirName.ToLower());
-                }
-
-                if (modTable != null)
-                {
-                    LuaFunction luaFunction = modTable.GetLuaFunction("Init");
-                    if (luaFunction != null)
-                    {
-                        luaFunction.Call(modTable);
-                    }
-                }
-            }
+                mModList[i].LoadAssembly();
 
             Scenario.OnModInitEnd();
         }

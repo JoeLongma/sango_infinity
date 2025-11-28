@@ -151,7 +151,6 @@ namespace Sango
 #if UNITY_EDITOR
 
         [UnityEditor.MenuItem("Sango/打包/压缩资源包至StreamingAssets", false, 0)]
-        [LuaInterface.NoToLua]
         public static void ZipContentToStreamingAssets()
         {
             Sango.Path.Init();

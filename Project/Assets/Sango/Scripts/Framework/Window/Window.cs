@@ -1,5 +1,5 @@
 ﻿//using FairyGUI;
-using LuaInterface;
+
 using Sango.Loader;
 using System.Collections.Generic;
 using UnityEngine;
@@ -42,70 +42,6 @@ namespace Sango
             {
                 //fgui_instance?.Hide();
                 ugui_instance?.Hide();
-            }
-
-            public void Call<T1>(string funcName, T1 arg1)
-            {
-                if (ugui_instance == null) return;
-                LuaFunction func = ugui_instance.GetFunction(funcName);
-                if (func != null)
-                    func.Call(ugui_instance.GetTable(), arg1);
-            }
-
-            public void Call<T1, T2>(string funcName, T1 arg1, T2 arg2)
-            {
-                if (ugui_instance == null) return;
-                LuaFunction func = ugui_instance.GetFunction(funcName);
-                if (func != null)
-                    func.Call(ugui_instance.GetTable(), arg1, arg2);
-            }
-
-            public void Call<T1, T2, T3>(string funcName, T1 arg1, T2 arg2, T3 arg3)
-            {
-                if (ugui_instance == null) return;
-                LuaFunction func = ugui_instance.GetFunction(funcName);
-                if (func != null)
-                    func.Call(ugui_instance.GetTable(), arg1, arg2, arg3);
-            }
-
-            public void Call<T1, T2, T3, T4>(string funcName, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
-            {
-                if (ugui_instance == null) return;
-                LuaFunction func = ugui_instance.GetFunction(funcName);
-                if (func != null)
-                    func.Call(ugui_instance.GetTable(), arg1, arg2, arg3, arg4);
-            }
-
-            public void Call<T1, T2, T3, T4, T5>(string funcName, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
-            {
-                if (ugui_instance == null) return;
-                LuaFunction func = ugui_instance.GetFunction(funcName);
-                if (func != null)
-                    func.Call(ugui_instance.GetTable(), arg1, arg2, arg3, arg4, arg5);
-            }
-
-            public void Call<T1, T2, T3, T4, T5, T6>(string funcName, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
-            {
-                if (ugui_instance == null) return;
-                LuaFunction func = ugui_instance.GetFunction(funcName);
-                if (func != null)
-                    func.Call(ugui_instance.GetTable(), arg1, arg2, arg3, arg4, arg5, arg6);
-            }
-
-            public void Call<T1, T2, T3, T4, T5, T6, T7>(string funcName, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
-            {
-                if (ugui_instance == null) return;
-                LuaFunction func = ugui_instance.GetFunction(funcName);
-                if (func != null)
-                    func.Call(ugui_instance.GetTable(), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
-            }
-
-            public void Call<T1, T2, T3, T4, T5, T6, T7, T8>(string funcName, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)
-            {
-                if (ugui_instance == null) return;
-                LuaFunction func = ugui_instance.GetFunction(funcName);
-                if (func != null)
-                    func.Call(ugui_instance.GetTable(), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
             }
         }
 
@@ -236,44 +172,6 @@ namespace Sango
             }
             return split;
         }
-
-        public LuaTable FindPeerTable(WindowInfo info)
-        {
-            LuaTable table = null;
-            if (!string.IsNullOrEmpty(info.scriptName))
-            {
-                table = LuaClient.GetTable(info.scriptName);
-            }
-            if (!string.IsNullOrEmpty(info.name))
-            {
-                if (table == null)
-                {
-                    // ---aa_bb_cc
-                    table = LuaClient.GetTable(info.name);
-                }
-
-                string[] split_s = upperFirstChar(info.name, "_");
-
-                if (table == null)
-                {
-                    // ---Aa_Bb_Cc
-                    table = LuaClient.GetTable(string.Join("_", split_s));
-                }
-
-                if (table == null)
-                {
-                    // ---AaBbCc
-                    table = LuaClient.GetTable(string.Join("", split_s));
-                }
-            }
-            if (table == null && !string.IsNullOrEmpty(info.resName))
-            {
-                table = LuaClient.GetTable(info.resName);
-            }
-
-            return table;
-        }
-
         public WindowInterface CreateWindow(string windowName)
         {
             WindowInfo info;
@@ -323,10 +221,6 @@ namespace Sango
                             instance = new WindowInterface() { ugui_instance = uGUIWindow }
                         };
                         windowMap.Add(windowName, info1);
-                        LuaTable table = FindPeerTable(info1);
-                        if (table != null)
-                            uGUIWindow.AttachScript(table);
-
                         return info1.instance;
                     }
                 }

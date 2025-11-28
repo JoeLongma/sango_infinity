@@ -1,6 +1,6 @@
 
 //using FairyGUI;
-//using LuaInterface;
+//
 //using System.Collections.Generic;
 //using UnityEngine;
 //using Sango;

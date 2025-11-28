@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.EventSystems;
 using System.IO;
-using LuaInterface;
+
 using Sango.Render;
 
 namespace Sango
@@ -16,7 +16,6 @@ namespace Sango
         public float curDistance;
         public Vector3 lookRotate;
         public bool changed = false;
-        public LuaFunction OnClickCall;
         private int rayCastLayer;
         bool isPressedUI = false;
         bool isMouseMoving = false;
@@ -258,12 +257,6 @@ namespace Sango
                     isMouseMoving = false;
                     return;
                 }
-                if (OnClickCall != null) {
-                    OnClickCall.BeginPCall();
-                    OnClickCall.Push(3);
-                    OnClickCall.PCall();
-                    OnClickCall.EndPCall();
-                }
             }
 
 
@@ -315,7 +308,7 @@ namespace Sango
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 2000, rayCastLayer)) {
                     MapObject mapObjcet = hit.collider.gameObject.GetComponentInParent<MapObject>();
-                    if (OnClickCall != null) {
+                    //if (OnClickCall != null) {
                         //if (mapObjcet != null) {
                         //    Debug.LogError(string.Format("mapObject: {0}, {1}", mapObjcet.type, mapObjcet.id));
 
@@ -337,7 +330,7 @@ namespace Sango
                         //    OnClickCall.PCall();
                         //    OnClickCall.EndPCall();
                         //}
-                    }
+                   // }
                 }
             }
         }

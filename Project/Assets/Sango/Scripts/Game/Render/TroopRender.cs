@@ -1,4 +1,4 @@
-﻿using LuaInterface;
+﻿
 using Sango.Game.Render.Model;
 using Sango.Game.Render.UI;
 using Sango.Loader;
@@ -114,34 +114,10 @@ namespace Sango.Game.Render
                 if (uGUIWindow != null)
                 {
                     string windowName = System.IO.Path.GetFileNameWithoutExtension(GameRenderHelper.TroopHeadbarRes);
-                    LuaTable table = Window.Instance.FindPeerTable(new Window.WindowInfo()
+                    UITroopHeadbar uITroopHeadbar = uGUIWindow as UITroopHeadbar;
+                    if (uITroopHeadbar != null)
                     {
-                        name = windowName,
-                        packageName = null,
-                        resName = null,
-                        scriptName = null
-                    });
-
-                    if (table != null)
-                    {
-                        LuaFunction call = uGUIWindow.GetFunction("Create");
-                        if (call != null)
-                        {
-                            LuaTable instance = call.Invoke<LuaTable>();
-                            if (instance != null)
-                            {
-                                uGUIWindow.AttachScript(instance, true);
-                                uGUIWindow.CallFunction("Init", Troop);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        UITroopHeadbar uITroopHeadbar = uGUIWindow as UITroopHeadbar;
-                        if (uITroopHeadbar != null)
-                        {
-                            uITroopHeadbar.Init(Troop);
-                        }
+                        uITroopHeadbar.Init(Troop);
                     }
                 }
                 HeadBar = uGUIWindow;
@@ -170,17 +146,10 @@ namespace Sango.Game.Render
 
             if (HeadBar != null)
             {
-                if (HeadBar.HasScript())
+                UITroopHeadbar uITroopHeadbar = HeadBar as UITroopHeadbar;
+                if (uITroopHeadbar != null)
                 {
-                    HeadBar.CallFunction("UpdateState", Troop);
-                }
-                else
-                {
-                    UITroopHeadbar uITroopHeadbar = HeadBar as UITroopHeadbar;
-                    if (uITroopHeadbar != null)
-                    {
-                        uITroopHeadbar.UpdateState(Troop);
-                    }
+                    uITroopHeadbar.UpdateState(Troop);
                 }
             }
 

@@ -1,5 +1,5 @@
 ﻿
-using LuaInterface;
+
 using Sango.Loader;
 using System.Collections.Generic;
 using UnityEngine;
@@ -137,26 +137,23 @@ namespace Sango
                 srcObject = null;
             }
 
-            public void OnCreate(ref GameObject node)
+            public virtual void OnCreate(ref GameObject node)
             {
-                manager.CallMethod(manager.onObjectCreate, node, headNode.key, headNode.customDesc);
             }
 
-            public void OnDestroy(ref GameObject node)
+            public virtual void OnDestroy(ref GameObject node)
             {
-                manager.CallMethod(manager.onObjectDestroy, node, headNode.key, headNode.customDesc);
                 GameObject.Destroy(node);
             }
 
-            public void OnRecycle(ref GameObject node)
+            public virtual void OnRecycle(ref GameObject node)
             {
-                manager.CallMethod(manager.onObjectRecycle, node, headNode.key, headNode.customDesc);
             }
         }
         Dictionary<object, PoolNode<GameObject, GameObjectPoolObject>> all_pools = new Dictionary<object, PoolNode<GameObject, GameObjectPoolObject>>();
-        protected LuaFunction onObjectRecycle;
-        protected LuaFunction onObjectCreate;
-        protected LuaFunction onObjectDestroy;
+
+        public delegate GameObjectPoolObject OnCreatePoolObject(PoolManager manager, UnityEngine.Object obj);
+        public OnCreatePoolObject onCreatePoolObject;
         GameObject poolNode;
 
         public PoolManager()
@@ -164,16 +161,6 @@ namespace Sango
             poolNode = new GameObject("pool_node");
             poolNode.SetActive(false);
             GameObject.DontDestroyOnLoad(poolNode);
-        }
-
-        protected override void OnInitFunctions()
-        {
-
-
-            base.OnInitFunctions();
-            onObjectRecycle = GetFunction("OnObjectRecycle");
-            onObjectCreate = GetFunction("OnObjectCreate");
-            onObjectDestroy = GetFunction("OnObjectDestroy");
         }
 
         protected GameObject _Get(object key)
@@ -195,7 +182,11 @@ namespace Sango
             if (all_pools.TryGetValue(key, out info))
                 return false;
 
-            GameObjectPoolObject goNode = new GameObjectPoolObject(this, obj);
+            GameObjectPoolObject goNode;
+            if (onCreatePoolObject != null)
+                goNode = onCreatePoolObject.Invoke(this, obj);
+            else
+                goNode = new GameObjectPoolObject(this, obj);
             info = new PoolNode<GameObject, GameObjectPoolObject>(key, customDesc, goNode, 1);
             all_pools.Add(key, info);
             return true;

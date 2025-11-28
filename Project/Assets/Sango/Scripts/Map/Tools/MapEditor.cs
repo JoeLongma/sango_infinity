@@ -91,7 +91,7 @@ namespace Sango.Tools
             return map;
         }
 
-        protected override void Start()
+        protected void Start()
         {
             GameObject l = GameObject.Find("Directional Light");
             if (l != null) l.SetActive(false);
@@ -124,8 +124,6 @@ namespace Sango.Tools
             SetGizmoCameraEnable(false);
             EditorCameraExtend.Instance.Camera.farClipPlane = 30000;
 
-            base.Start();
-
             Invoke("DelaySetFreeCamera", 0.1f);
         }
 
@@ -142,7 +140,7 @@ namespace Sango.Tools
 
         }
 
-        protected override void OnDestroy()
+        protected void OnDestroy()
         {
             IsEditOn = false;
             Shader.DisableKeyword("SANGO_EDITOR");
@@ -150,7 +148,6 @@ namespace Sango.Tools
                 EditorObjectSelection.Instance.SelectionDeleted -= SelectionDeletedHandler;
             if (EditorObjectSelection.Instance != null)
                 EditorObjectSelection.Instance.SelectionChanged -= SelectionChangedHandler;
-            base.OnDestroy();
         }
 
         /// <summary>

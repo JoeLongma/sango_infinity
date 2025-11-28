@@ -3,7 +3,7 @@
 'Tank Framework
 '*******************************************************************
 */
-using LuaInterface;
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -331,7 +331,7 @@ namespace Sango
         /// <param name="namePath"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        [NoToLua]
+        
         public static Component GetComponent(Transform transform, string namePath, string typeName)
         {
             Transform trans = GetTransform(transform, namePath);
@@ -351,7 +351,7 @@ namespace Sango
         /// <param name="namePath"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        [NoToLua]
+        
         public static Component GetComponent(GameObject obj, string namePath, string typeName)
         {
             Transform trans = GetTransform(obj, namePath);

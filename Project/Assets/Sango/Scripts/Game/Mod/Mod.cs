@@ -1,6 +1,11 @@
-﻿using LuaInterface;
+﻿using HybridCLR;
+
 using Sango.Game;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 
 namespace Sango.Mod
 {
@@ -39,9 +44,13 @@ namespace Sango.Mod
         /// </summary>
         public string ModDir { internal set; get; }
         /// <summary>
-        /// Mod文件夹名字
+        /// Assembly名字
         /// </summary>
+        public string EntryAssembly { internal set; get; }
+
         public string ModDirName { internal set; get; }
+
+        public Assembly Assembly { internal set; get; }
 
         public void LoadData()
         {
@@ -49,37 +58,56 @@ namespace Sango.Mod
             Directory.EnumFiles(path, "*.json", SearchOption.AllDirectories, (file) =>
             {
 #if SANGO_DEBUG
-                Debugger.Log($"LoadData: {file}");
+                Sango.Log.Print($"LoadData: {file}");
 #endif
             });
             //Directory.EnumFiles(path, "*.txt", SearchOption.AllDirectories, (file) =>
             //{
-            //    Debugger.Log($"LoadData: {file}");
+            //    Sango.Log.Print($"LoadData: {file}");
             //    Game.GameData.Load(file);
             //});
 
             //Game.GameData.LoadBin(path);
         }
-        public void LoadLua()
+     
+        public void LoadAssembly()
         {
-            string path = GetFullPath("Lua");
-            ToLua.push_script_evn(path);
-            Directory.EnumFiles(path, "*.lua", SearchOption.AllDirectories, (file) =>
+            string path = GetFullPath("Metadata");
+            HomologousImageMode mode = HomologousImageMode.SuperSet;
+            Directory.EnumFiles(path, "*.dll", SearchOption.AllDirectories, (file) =>
             {
 #if SANGO_DEBUG
-                Debugger.Log($"LoadLua: {file}");
+                Sango.Log.Print($"LoadMetadataAssembly: {file}");
 #endif
-                SangoLuaClient.Require(file);
+                byte[] dllBytes = File.ReadAllBytes(file);
+                // 加载assembly对应的dll，会自动为它hook。一旦aot泛型函数的native函数不存在，用解释器版本代码
+                LoadImageErrorCode err = RuntimeApi.LoadMetadataForAOTAssembly(dllBytes, mode);
+#if SANGO_DEBUG
+                Sango.Log.Print($"LoadMetadataForAOTAssembly:{file}. mode:{mode} ret:{err}");
+#endif
             });
-            ToLua.remove_script_evn();
+
+            path = GetFullPath($"{EntryAssembly}.dll");
+            if(File.Exists(path))
+            {
+#if !UNITY_EDITOR
+                Assembly = Assembly.Load(File.ReadAllBytes(path));
+#else
+                Assembly = System.AppDomain.CurrentDomain.GetAssemblies().First(a => a.GetName().Name == EntryAssembly);
+#endif
+                // 执行入口函数
+                Type entryType = Assembly.GetType("Entry");
+                entryType.GetMethod("Start").Invoke(null, null);
+            }
         }
+
         public void LoadUI()
         {
             string path = GetFullPath("UI");
             Directory.EnumFiles(path, "*.bytes", SearchOption.AllDirectories, (file) =>
             {
 #if SANGO_DEBUG
-                Debugger.Log($"LoadUI: {file}");
+                Sango.Log.Print($"LoadUI: {file}");
 #endif
                 string packageName = System.IO.Path.GetFileNameWithoutExtension(file).Split('_')[0];
                 Window.Instance.AddPackage(file, packageName);
@@ -91,7 +119,7 @@ namespace Sango.Mod
             Directory.EnumFiles(path, "*.pkg", SearchOption.AllDirectories, (file) =>
             {
 #if SANGO_DEBUG
-                Debugger.Log($"LoadPackage: {file}");
+                Sango.Log.Print($"LoadPackage: {file}");
 #endif
                 string packageName = System.IO.Path.GetFileNameWithoutExtension(file).Split('_')[0];
                 PackageManager.Instance.AddPackage(packageName, file, true);
@@ -104,7 +132,7 @@ namespace Sango.Mod
             Directory.EnumFiles(path, "*.json", SearchOption.AllDirectories, (file) =>
             {
 #if SANGO_DEBUG
-                Debugger.Log($"Find Scenario: {file}");
+                Sango.Log.Print($"Find Scenario: {file}");
 #endif
                 Scenario.Add(file);
             });

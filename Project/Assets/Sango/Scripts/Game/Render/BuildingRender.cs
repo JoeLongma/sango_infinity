@@ -1,4 +1,4 @@
-﻿using LuaInterface;
+﻿
 using Sango.Game.Render.Model;
 using Sango.Game.Render.UI;
 using Sango.Loader;
@@ -60,34 +60,11 @@ namespace Sango.Game.Render
                 if (uGUIWindow != null)
                 {
                     string windowName = System.IO.Path.GetFileNameWithoutExtension(GameRenderHelper.BuildingHeadbarRes);
-                    LuaTable table = Window.Instance.FindPeerTable(new Window.WindowInfo()
-                    {
-                        name = windowName,
-                        packageName = null,
-                        resName = null,
-                        scriptName = null
-                    });
 
-                    if (table != null)
+                    UIBuildingHeadbar uITroopHeadbar = uGUIWindow as UIBuildingHeadbar;
+                    if (uITroopHeadbar != null)
                     {
-                        LuaFunction call = uGUIWindow.GetFunction("Create");
-                        if (call != null)
-                        {
-                            LuaTable instance = call.Invoke<LuaTable>();
-                            if (instance != null)
-                            {
-                                uGUIWindow.AttachScript(instance, true);
-                                uGUIWindow.CallFunction("Init", Building);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        UIBuildingHeadbar uITroopHeadbar = uGUIWindow as UIBuildingHeadbar;
-                        if (uITroopHeadbar != null)
-                        {
-                            uITroopHeadbar.Init(Building);
-                        }
+                        uITroopHeadbar.Init(Building);
                     }
                 }
                 HeadBar = uGUIWindow;
@@ -113,17 +90,10 @@ namespace Sango.Game.Render
         {
             if (HeadBar != null)
             {
-                if (HeadBar.HasScript())
+                UIBuildingHeadbar uITroopHeadbar = HeadBar as UIBuildingHeadbar;
+                if (uITroopHeadbar != null)
                 {
-                    HeadBar.CallFunction("UpdateState", Building);
-                }
-                else
-                {
-                    UIBuildingHeadbar uITroopHeadbar = HeadBar as UIBuildingHeadbar;
-                    if (uITroopHeadbar != null)
-                    {
-                        uITroopHeadbar.UpdateState(Building);
-                    }
+                    uITroopHeadbar.UpdateState(Building);
                 }
             }
 
@@ -131,7 +101,7 @@ namespace Sango.Game.Render
             //{
             //    BuildingModel.Init(Building);
             //}
-            if(isComplate == false && Building.isComplte)
+            if (isComplate == false && Building.isComplte)
             {
                 isComplate = Building.isComplte;
                 MapObject.ChangeModel(Building.BuildingType.model);

@@ -1,4 +1,4 @@
-﻿using LuaInterface;
+﻿
 using Sango.Game.Render.Model;
 using Sango.Game.Render.UI;
 using Sango.Loader;
@@ -77,35 +77,10 @@ namespace Sango.Game.Render
                 UGUIWindow uGUIWindow = headBar.GetComponent<UGUIWindow>();
                 if (uGUIWindow != null)
                 {
-                    string windowName = System.IO.Path.GetFileNameWithoutExtension(headbarAsset);
-                    LuaTable table = Window.Instance.FindPeerTable(new Window.WindowInfo()
+                    UIBuildingBaseHeadbar uITroopHeadbar = uGUIWindow as UIBuildingBaseHeadbar;
+                    if (uITroopHeadbar != null)
                     {
-                        name = windowName,
-                        packageName = null,
-                        resName = null,
-                        scriptName = null
-                    });
-
-                    if (table != null)
-                    {
-                        LuaFunction call = uGUIWindow.GetFunction("Create");
-                        if (call != null)
-                        {
-                            LuaTable instance = call.Invoke<LuaTable>();
-                            if (instance != null)
-                            {
-                                uGUIWindow.AttachScript(instance, true);
-                                uGUIWindow.CallFunction("Init", Building);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        UIBuildingBaseHeadbar uITroopHeadbar = uGUIWindow as UIBuildingBaseHeadbar;
-                        if (uITroopHeadbar != null)
-                        {
-                            uITroopHeadbar.Init(Building);
-                        }
+                        uITroopHeadbar.Init(Building);
                     }
                 }
                 HeadBar = uGUIWindow;
@@ -131,17 +106,10 @@ namespace Sango.Game.Render
         {
             if (HeadBar != null)
             {
-                if (HeadBar.HasScript())
+                UIBuildingBaseHeadbar uITroopHeadbar = HeadBar as UIBuildingBaseHeadbar;
+                if (uITroopHeadbar != null)
                 {
-                    HeadBar.CallFunction("UpdateState", Building);
-                }
-                else
-                {
-                    UIBuildingBaseHeadbar uITroopHeadbar = HeadBar as UIBuildingBaseHeadbar;
-                    if (uITroopHeadbar != null)
-                    {
-                        uITroopHeadbar.UpdateState(Building);
-                    }
+                    uITroopHeadbar.UpdateState(Building);
                 }
             }
 

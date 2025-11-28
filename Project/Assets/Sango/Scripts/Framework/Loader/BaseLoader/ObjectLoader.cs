@@ -1,4 +1,4 @@
-﻿using LuaInterface;
+﻿
 using System.Collections.Generic;
 using UnityEngine;
 using Sango;
@@ -48,34 +48,11 @@ namespace Sango.Loader
             public bool textureNeedCompress;
             public bool textureNeedMipmap;
             public bool shareMaterial;
-            public List<LuaFunction> onLoadedFuncs;
-            public List<object> lua_customData;
             public List<OnObjectLoaded> onCSharpLoadedFuncs;
             public List<object> c_customData;
             public UnityEngine.Object rsObject;
             public void Call()
             {
-                if (onLoadedFuncs != null)
-                {
-                    for (int i = 0; i < onLoadedFuncs.Count; ++i)
-                    {
-                        LuaFunction onLoadedFunc = onLoadedFuncs[i];
-                        if (onLoadedFunc != null)
-                        {
-                            onLoadedFunc.BeginPCall();
-                            onLoadedFunc.Push(rsObject);
-                            object customData = lua_customData[i];
-                            if (customData != null)
-                                onLoadedFunc.Push(customData);
-                            onLoadedFunc.PCall();
-                            onLoadedFunc.EndPCall();
-                        }
-                    }
-
-                    onLoadedFuncs.Clear();
-                    lua_customData.Clear();
-                }
-
                 if (onCSharpLoadedFuncs != null)
                 {
                     for (int i = 0; i < onCSharpLoadedFuncs.Count; ++i)
@@ -95,18 +72,6 @@ namespace Sango.Loader
 
                 reusedQueue.Enqueue(this);
                 usingList.Remove(this);
-            }
-
-            public void AddCall(LuaFunction func, object customData)
-            {
-                if (onLoadedFuncs == null)
-                {
-                    onLoadedFuncs = new List<LuaFunction>();
-                    lua_customData = new List<object>();
-                }
-
-                onLoadedFuncs.Add(func);
-                lua_customData.Add(customData);
             }
 
             public void AddCall(OnObjectLoaded func, object customData)

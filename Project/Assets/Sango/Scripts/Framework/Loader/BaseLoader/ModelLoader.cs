@@ -1,4 +1,4 @@
-﻿using LuaInterface;
+﻿
 using UnityEngine;
 
 namespace Sango.Loader
@@ -45,7 +45,6 @@ namespace Sango.Loader
             public bool shareMaterial;
             public Material mat;
             public LoadData lastLoadData;
-            public LuaFunction onLoadedFunc;
             public OnObjectLoaded onCSharpLoadedFunc;
             public object customData;
             public UnityEngine.Object rsObject;
@@ -109,17 +108,6 @@ namespace Sango.Loader
                     {
                         _data.mat.SetTexture("_MainTex", tex as Texture);
                     }
-                    //Debug.Log("Model successfully loaded.");
-                    if (_data.onLoadedFunc != null)
-                    {
-                        _data.onLoadedFunc.BeginPCall();
-                        _data.onLoadedFunc.Push(_data.rsObject);
-                        if (_data.customData != null)
-                            _data.onLoadedFunc.Push(_data.customData);
-                        _data.onLoadedFunc.PCall();
-                        _data.onLoadedFunc.EndPCall();
-                    }
-
                     if (_data.onCSharpLoadedFunc != null)
                     {
                         _data.onCSharpLoadedFunc(_data.rsObject, _data.customData);
@@ -130,16 +118,6 @@ namespace Sango.Loader
             }
             else
             {
-                if (data.onLoadedFunc != null)
-                {
-                    data.onLoadedFunc.BeginPCall();
-                    data.onLoadedFunc.Push(data.rsObject);
-                    if (data.customData != null)
-                        data.onLoadedFunc.Push(data.customData);
-                    data.onLoadedFunc.PCall();
-                    data.onLoadedFunc.EndPCall();
-                }
-
                 if (data.onCSharpLoadedFunc != null)
                 {
                     data.onCSharpLoadedFunc(data.rsObject, data.customData);
@@ -147,7 +125,7 @@ namespace Sango.Loader
             }
         }
 
-        private static ModelLoadData CreateModelLoadData(string texturePath, bool textureNeedCompress, string matName, bool shareMaterial, object customData, LuaFunction onLoadedFunc, OnObjectLoaded onCSharpLoadedFunc)
+        private static ModelLoadData CreateModelLoadData(string texturePath, bool textureNeedCompress, string matName, bool shareMaterial, object customData, OnObjectLoaded onCSharpLoadedFunc)
         {
             return new ModelLoadData
             {
@@ -156,19 +134,18 @@ namespace Sango.Loader
                 matName = matName,
                 shareMaterial = shareMaterial,
                 customData = customData,
-                onLoadedFunc = onLoadedFunc,
                 onCSharpLoadedFunc = onCSharpLoadedFunc,
             };
         }
 
-        private static void LoadFromFile(string filePath, string texturePath, bool textureNeedCompress, string matName, bool shareMaterial, object customData, LuaFunction onLoadedFunc, OnObjectLoaded onCSharpLoadedFunc = null)
+        public static void LoadFromFile(string filePath, string texturePath, bool textureNeedCompress, string matName, bool shareMaterial, object customData, OnObjectLoaded onCSharpLoadedFunc = null)
         {
             CheckHelper();
 
             LoadData loadData = CheckExistLoader(filePath);
             if (loadData != null)
             {
-                loadData.c_customData.Add(CreateModelLoadData(texturePath, textureNeedCompress, matName, shareMaterial, customData, onLoadedFunc, onCSharpLoadedFunc));
+                loadData.c_customData.Add(CreateModelLoadData(texturePath, textureNeedCompress, matName, shareMaterial, customData, onCSharpLoadedFunc));
                 loadData.onCSharpLoadedFuncs.Add(OnModelObjectLoaded);
                 return;
             }
@@ -177,7 +154,7 @@ namespace Sango.Loader
             if (obj != null)
             {
                 GameObject rsObject = GameObject.Instantiate(obj);
-                OnModelObjectLoaded(rsObject, CreateModelLoadData(texturePath, textureNeedCompress, matName, shareMaterial, customData, onLoadedFunc, onCSharpLoadedFunc));
+                OnModelObjectLoaded(rsObject, CreateModelLoadData(texturePath, textureNeedCompress, matName, shareMaterial, customData, onCSharpLoadedFunc));
                 return;
             }
 
@@ -208,7 +185,7 @@ namespace Sango.Loader
             }
 
             loadData.AddCall(OnModelObjectLoaded,
-                CreateModelLoadData(texturePath, textureNeedCompress, matName, shareMaterial, customData, onLoadedFunc, onCSharpLoadedFunc));
+                CreateModelLoadData(texturePath, textureNeedCompress, matName, shareMaterial, customData, onCSharpLoadedFunc));
 
             usingList.Add(loadData);
 
@@ -216,21 +193,10 @@ namespace Sango.Loader
            // AssetLoaderContext context = AssetLoader.LoadModelFromFile(finalPath, null, OnModelFullyLoad, null, OnError, null, null, loadData);
 
         }
-        public static void LoadFromFile(string filePath, string texturePath, bool textureNeedCompress, string matName, bool shareMaterial, object customData, LuaFunction onLoadedFunc)
-        {
-            LoadFromFile(filePath, texturePath, textureNeedCompress, matName, shareMaterial, customData, onLoadedFunc, null);
-        }
-        public static void LoadFromFile(string filePath, string texturePath, bool textureNeedCompress, string matName, bool shareMaterial, object customData, OnObjectLoaded onLoadedFunc)
-        {
-            LoadFromFile(filePath, texturePath, textureNeedCompress, matName, shareMaterial, customData, null, onLoadedFunc);
-        }
-        public static void LoadFromFile(string filePath, string matName, bool shareMaterial, object customData, LuaFunction onLoadedFunc)
-        {
-            LoadFromFile(filePath, "", false, matName, shareMaterial, customData, onLoadedFunc, null);
-        }
+       
         public static void LoadFromFile(string filePath, string matName, bool shareMaterial, object customData, OnObjectLoaded onLoadedFunc)
         {
-            LoadFromFile(filePath, "", false, matName, shareMaterial, customData, null, onLoadedFunc);
+            LoadFromFile(filePath, "", false, matName, shareMaterial, customData, onLoadedFunc);
         }
 
         public static GameObject LoadFromFileSync(string filePath, string texturePath, bool textureNeedCompress, string matName, bool shareMaterial)

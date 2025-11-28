@@ -9,6 +9,9 @@ using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
 {
+    /// <summary>
+    /// 剧本势力选择界面
+    /// </summary>
     public class UIScenarioForceSelect : UGUIWindow
     {
         public Image forceHead;

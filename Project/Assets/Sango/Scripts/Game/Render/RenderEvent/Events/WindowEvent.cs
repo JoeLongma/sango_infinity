@@ -14,41 +14,6 @@
         {
             Window.WindowInterface window = Window.Instance.Open(windowName);
             if (window == null) return;
-            if (arg7 != null)
-            {
-                window.Call("InitEvent", this, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
-                return;
-            }
-            if (arg6 != null)
-            {
-                window.Call("InitEvent", this, arg1, arg2, arg3, arg4, arg5, arg6);
-                return;
-            }
-            if (arg5 != null)
-            {
-                window.Call("InitEvent", this, arg1, arg2, arg3, arg4, arg5);
-                return;
-            }
-            if (arg4 != null)
-            {
-                window.Call("InitEvent", this, arg1, arg2, arg3, arg4);
-                return;
-            }
-            if (arg3 != null)
-            {
-                window.Call("InitEvent", this, arg1, arg2, arg3);
-                return;
-            }
-            if (arg2 != null)
-            {
-                window.Call("InitEvent", this, arg1, arg2);
-                return;
-            }
-            if (arg1 != null)
-            {
-                window.Call("InitEvent", this, arg1);
-                return;
-            }
         }
 
         public override void Exit(Scenario scenario)

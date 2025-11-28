@@ -13,13 +13,11 @@ namespace Sango
     /// </summary>
     public class PlatformListener : Behaviour
     {
-        [LuaInterface.NoToLua]
         public const string LISTENER_NAME = "Platform Listener";
 
         public delegate void PlatformCall(string code);
         private static Dictionary<int, PlatformCall> mDelegates = new Dictionary<int, PlatformCall>();
 
-        [LuaInterface.NoToLua]
         public static void Init()
         {
             GameObject obj = new GameObject(LISTENER_NAME);

@@ -3,7 +3,7 @@
 'Tank Framework
 '*******************************************************************
 */
-using LuaInterface;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,11 +19,11 @@ namespace Sango
         public static readonly int InvalidId = -1;
 
         public static float ASSETBUNDLELIFE = 20;
-        [NoToLua]
+        
         public delegate void AsyncCreateFinishCall(int index);
-        [NoToLua]
+        
         public delegate void AsyncLoadAssetFinishCall(UnityEngine.Object obj, int abIndex);
-        [NoToLua]
+        
         public delegate void AsyncLoadAllAssetFinishCall(UnityEngine.Object[] obj, int abIndex);
 
         /// <summary>
@@ -37,10 +37,10 @@ namespace Sango
             public float life = 0;
 #if UNITY_EDITOR
             [System.NonSerialized]
-            [NoToLua]
+            
             public int _direct_refCount = 0;
             [System.NonSerialized]
-            [NoToLua]
+            
             public int _depend_refCount = 0;
 #endif
             public int refCount
@@ -57,7 +57,6 @@ namespace Sango
             public AssetBundleCreateRequest request;
             public AssetBundle ab;
             public List<AsyncCreateFinishCall> asyncCreateCalls = new List<AsyncCreateFinishCall>();
-            public List<LuaFunction> asyncCreateCallsForLua = new List<LuaFunction>();
             public List<AssetBundleLoadAssetInfo> asyncLoadTask = new List<AssetBundleLoadAssetInfo>();
             public List<AssetBundleInfo> depends = null;
             public void Run()
@@ -104,7 +103,6 @@ namespace Sango
                     if (info.refCount <= 0)
                     {
                         info.asyncCreateCalls.Clear();
-                        info.asyncCreateCallsForLua.Clear();
                         info.asyncLoadTask.Clear();
                         continue;
                     }
@@ -126,23 +124,6 @@ namespace Sango
                             }
                         }
                         info.asyncCreateCalls.Clear();
-
-                        foreach (LuaFunction call in info.asyncCreateCallsForLua)
-                        {
-                            try
-                            {
-                                call.BeginPCall();
-                                call.Push(info.index);
-                                call.PCall();
-                                call.EndPCall();
-                            }
-                            catch (Exception e)
-                            {
-                                Debug.LogError(e.Message + e.StackTrace);
-                            }
-                        }
-                        info.asyncCreateCallsForLua.Clear();
-
                         // 继续读取任务
                         foreach (AssetBundleLoadAssetInfo task in info.asyncLoadTask)
                         {
@@ -349,8 +330,6 @@ namespace Sango
             public Type loadType;
             public AsyncLoadAssetFinishCall asyncCall;
             public AsyncLoadAllAssetFinishCall asyncAllCall;
-            public LuaFunction asyncCallForLua;
-            public LuaFunction asyncAllCallForLua;
             public AssetBundleRequest request;
             public AssetBundleLoadAssetInfo(AssetBundleInfo abInfo, string resName, AsyncLoadAssetFinishCall asyncCall, Type loadType = null)
             {
@@ -359,13 +338,7 @@ namespace Sango
                 this.asyncCall = asyncCall;
                 this.loadType = loadType;
             }
-            public AssetBundleLoadAssetInfo(AssetBundleInfo abInfo, string resName, LuaFunction asyncCall, Type loadType = null)
-            {
-                this.abInfo = abInfo;
-                this.resName = resName;
-                this.asyncCallForLua = asyncCall;
-                this.loadType = loadType;
-            }
+           
             public AssetBundleLoadAssetInfo(AssetBundleInfo abInfo, AsyncLoadAllAssetFinishCall asyncAllCall, Type loadType = null)
             {
                 this.abInfo = abInfo;
@@ -373,14 +346,7 @@ namespace Sango
                 this.asyncAllCall = asyncAllCall;
                 this.loadType = loadType;
             }
-            public AssetBundleLoadAssetInfo(AssetBundleInfo abInfo, LuaFunction asyncAllCall, Type loadType = null)
-            {
-                this.abInfo = abInfo;
-                resName = null;
-                this.asyncAllCallForLua = asyncAllCall;
-                this.loadType = loadType;
-
-            }
+            
             void Clear()
             {
                 abInfo = null;
@@ -388,8 +354,6 @@ namespace Sango
                 asyncAllCall = null;
                 resName = null;
                 request = null;
-                asyncCallForLua = null;
-                asyncAllCallForLua = null;
             }
             public void Run()
             {
@@ -401,7 +365,7 @@ namespace Sango
                 AssetBundle ab = abInfo.ab;
 
                 // 这里判断该用那种加载函数
-                if (asyncAllCall != null || asyncAllCallForLua != null)
+                if (asyncAllCall != null)
                 {
                     if (loadType != null)
                         request = ab.LoadAllAssetsAsync(loadType);
@@ -436,38 +400,7 @@ namespace Sango
 
                 abInfo.asyncLoadTask.Remove(this);
 
-                // 这个情况说明该资源已被手动卸载
-                if (asyncCallForLua != null)
-                {
-                    try
-                    {
-                        asyncCallForLua.BeginPCall();
-                        asyncCallForLua.Push(abr != null ? abr.asset : (object)null);
-                        asyncCallForLua.Push(abInfo.index);
-                        asyncCallForLua.PCall();
-                        asyncCallForLua.EndPCall();
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.LogError(e.Message + e.StackTrace);
-                    }
-                }
-                else if (asyncAllCallForLua != null)
-                {
-                    try
-                    {
-                        asyncAllCallForLua.BeginPCall();
-                        asyncAllCallForLua.Push(abr != null ? abr.allAssets : (object)null);
-                        asyncAllCallForLua.Push(abInfo.index);
-                        asyncAllCallForLua.PCall();
-                        asyncAllCallForLua.EndPCall();
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.LogError(e.Message + e.StackTrace);
-                    }
-                }
-                else if (asyncAllCall != null)
+               if (asyncAllCall != null)
                 {
                     try
                     {
@@ -496,12 +429,12 @@ namespace Sango
         public const string MANIFEST_NAME = "assetsinfo";
 
 
-        [NoToLua]
+        
         public static AssetBundleInfo[] GetInfos()
         {
             return Instance.loadedAssetBundles;
         }
-        [NoToLua]
+        
         public static AssetBundleInfo GetInfo(int index)
         {
             return Instance._GetAssetBundleInfo(index);
@@ -511,7 +444,7 @@ namespace Sango
         protected Dictionary<string, AssetBundleInfo> loadedAssetBundlesMap = new Dictionary<string, AssetBundleInfo>();
 
         protected int _AssetBundleIndex = 0;
-        [NoToLua]
+        
         protected UnityEngine.AssetBundleManifest abManifest;
         private List<string> fileNames = new List<string>();
 #if UNITY_EDITOR
@@ -725,7 +658,7 @@ namespace Sango
         }
 
 #if UNITY_EDITOR
-        [NoToLua]
+        
         public string CheckLoop(string fileName)
         {
             string[] loops = abManifest.GetAllDependencies(fileName);
@@ -894,62 +827,22 @@ namespace Sango
         private class AsyncCreateCall
         {
             AsyncCreateFinishCall call;
-            LuaFunction luacall;
             AssetBundleInfo info;
-            public AsyncCreateCall(AssetBundleInfo info, AsyncCreateFinishCall call, LuaFunction luacall)
-            {
-                this.call = call;
-                this.luacall = luacall;
-                this.info = info;
-            }
+           
             public void Call()
             {
                 int abIndex = info != null ? info.index : AssetBundleManager.InvalidId;
                 if (call != null)
                     call(abIndex);
-
-                if (luacall != null)
-                {
-                    luacall.BeginPCall();
-                    luacall.Push(abIndex);
-                    luacall.PCall();
-                    luacall.EndPCall();
-                }
             }
         }
         List<AsyncCreateCall> asyncCreateCall = new List<AsyncCreateCall>();
 
-        int _LoadAsync(string fileName, AsyncCreateFinishCall call, LuaFunction luacall)
-        {
-
-#if USE_RUNTIME_ASSETS && UNITY_EDITOR
-            asyncCreateCall.Add(new AsyncCreateCall(null, call, luacall));
-            return XAssetBundleManager.InvalidId;
-#else
-            AssetBundleInfo info = _CreateInfoFromFileAsync(fileName);
-            if (info != null && info.request != null)
-            {
-                if (call != null)
-                    info.asyncCreateCalls.Add(call);
-                if (luacall != null)
-                    info.asyncCreateCallsForLua.Add(luacall);
-            }
-            else
-            {
-                asyncCreateCall.Add(new AsyncCreateCall(info, call, luacall));
-            }
-            return info != null ? info.index : AssetBundleManager.InvalidId;
-#endif
-        }
         int _LoadAsync(string fileName, AsyncCreateFinishCall call)
         {
-            return _LoadAsync(fileName, call, null);
+            return _LoadAsync(fileName, call);
         }
-        int _LoadAsync(string fileName, LuaFunction call)
-        {
-            return _LoadAsync(fileName, null, call);
-
-        }
+       
         void _Load(string fileName, AsyncCreateFinishCall call, bool async = true)
         {
             AssetBundleInfo info = async ? _CreateInfoFromFile(fileName) : _CreateInfoFromFileAsync(fileName);
@@ -1053,15 +946,12 @@ namespace Sango
         {
             return Instance._Load(fileName);
         }
-        [NoToLua]
+        
         public static int LoadAsync(string fileName, AsyncCreateFinishCall completed)
         {
             return Instance._LoadAsync(fileName, completed);
         }
-        public static int LoadAsync(string fileName, LuaFunction completed)
-        {
-            return Instance._LoadAsync(fileName, completed);
-        }
+       
         public static void Unload(int index)
         {
             Instance._Unload(index);
@@ -1163,12 +1053,12 @@ namespace Sango
                 completed(null, abIndex);
 #endif
         }
-        [NoToLua]
+        
         public static void LoadAssetAsync(int abIndex, string resName, AsyncLoadAssetFinishCall completed)
         {
             LoadAssetAsync(abIndex, resName, completed, null);
         }
-        [NoToLua]
+        
         public static int LoadAllAssetsAsync(string fileName, AsyncLoadAllAssetFinishCall completed, Type t)
         {
             AssetBundleInfo info = Instance._CreateInfoFromFileAsync(fileName);
@@ -1184,12 +1074,12 @@ namespace Sango
                 completed(null, info.index);
             return info.index;
         }
-        [NoToLua]
+        
         public static int LoadAllAssetsAsync(string fileName, AsyncLoadAllAssetFinishCall completed)
         {
             return LoadAllAssetsAsync(fileName, completed, null);
         }
-        [NoToLua]
+        
         public static void LoadAllAssetsAsync(int abIndex, AsyncLoadAllAssetFinishCall completed, Type t)
         {
             AssetBundleInfo info = Instance._GetAssetBundleInfo(abIndex);
@@ -1204,108 +1094,11 @@ namespace Sango
             else
                 completed(null, info.index);
         }
-        [NoToLua]
+        
         public static void LoadAllAssetsAsync(int abIndex, AsyncLoadAllAssetFinishCall completed)
         {
             LoadAllAssetsAsync(abIndex, completed, null);
         }
-
-        //----------------------------------------------
-        public static void LoadAssetAsync(int abIndex, string resName, LuaFunction completed, Type t)
-        {
-#if USE_RUNTIME_ASSETS && UNITY_EDITOR
-            EditorLoadAssetInfo elai = new EditorLoadAssetInfo();
-            elai.asyncCallForLua = completed;
-            string assetPath = XRuntimeManifest.Instance.GetAssetPath(resName);
-            // sprite特殊处理
-            if (t == typeof(Sprite))
-            {
-                UnityEngine.Object[] sprites = UnityEditor.AssetDatabase.LoadAllAssetRepresentationsAtPath(assetPath);
-                elai.obj = Array.Find(sprites, x => x.name.Equals(resName));
-            }
-            else if (t == null)
-                elai.obj = UnityEditor.AssetDatabase.LoadAssetAtPath(assetPath, typeof(UnityEngine.Object));
-            else
-                elai.obj = UnityEditor.AssetDatabase.LoadAssetAtPath(assetPath, t);
-            Instance.editorAsyncLoad.Add(elai);
-#else
-            AssetBundleInfo info = Instance._GetAssetBundleInfo(abIndex);
-            if (info.IsValid())
-            {
-                AssetBundleLoadAssetInfo ablai = new AssetBundleLoadAssetInfo(info, resName, completed, t);
-                info.asyncLoadTask.Add(ablai);
-                ablai.Run();
-            }
-            else if (info.request != null)
-            {
-                info.asyncLoadTask.Add(new AssetBundleLoadAssetInfo(info, resName, completed, t));
-            }
-            else
-            {
-                completed.BeginPCall();
-                completed.Push((object)null);
-                completed.Push(info.index);
-                completed.PCall();
-                completed.EndPCall();
-            }
-#endif
-
-        }
-        public static void LoadAssetAsync(int abIndex, string resName, LuaFunction completed)
-        {
-            LoadAssetAsync(abIndex, resName, completed, null);
-        }
-
-        public static int LoadAllAssetsAsync(string fileName, LuaFunction completed, Type t)
-        {
-            AssetBundleInfo info = Instance._CreateInfoFromFileAsync(fileName);
-            if (info.IsValid())
-            {
-                new AssetBundleLoadAssetInfo(info, completed, t).Run();
-            }
-            else if (info.request != null)
-            {
-                info.asyncLoadTask.Add(new AssetBundleLoadAssetInfo(info, completed, t));
-            }
-            else
-            {
-                completed.BeginPCall();
-                completed.Push((object)null);
-                completed.Push(info.index);
-                completed.PCall();
-                completed.EndPCall();
-            }
-            return info.index;
-        }
-        public static int LoadAllAssetsAsync(string fileName, LuaFunction completed)
-        {
-            return LoadAllAssetsAsync(fileName, completed, null);
-        }
-        public static void LoadAllAssetsAsync(int abIndex, LuaFunction completed, Type t)
-        {
-            AssetBundleInfo info = Instance._GetAssetBundleInfo(abIndex);
-            if (info.IsValid())
-            {
-                new AssetBundleLoadAssetInfo(info, completed, t).Run();
-            }
-            else if (info.request != null)
-            {
-                info.asyncLoadTask.Add(new AssetBundleLoadAssetInfo(info, completed, t));
-            }
-            else
-            {
-                completed.BeginPCall();
-                completed.Push((object)null);
-                completed.Push(info.index);
-                completed.PCall();
-                completed.EndPCall();
-            }
-        }
-        public static void LoadAllAssetsAsync(int abIndex, LuaFunction completed)
-        {
-            LoadAllAssetsAsync(abIndex, completed, null);
-        }
-
         //--- ------------------------ --- //
 
         public static string[] GetAllDependencies(string fileName)

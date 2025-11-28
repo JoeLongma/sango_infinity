@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.EventSystems;
 using System.IO;
-using LuaInterface;
+
 
 namespace Sango.Tools
 {
@@ -16,7 +16,6 @@ namespace Sango.Tools
         public float curDistance = 500;
         public Vector3 lookRotate;
         public bool changed = false;
-        public LuaFunction OnClickCall;
         private int rayCastLayer;
         bool isPressedUI = false;
         bool isMouseMoving = false;

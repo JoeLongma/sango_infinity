@@ -69,8 +69,6 @@ namespace Sango
             Path.Init();
             Platform.targetPlatform = targetPlatform;
             Platform.Init();
-            Scripts.Instance.Init();
-
         }
 
         public virtual void Update()

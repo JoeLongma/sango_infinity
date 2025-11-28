@@ -1,4 +1,4 @@
-using LuaInterface;
+
 using Sango;
 using Sango.Game;
 using System.Collections;
@@ -10,7 +10,7 @@ using UnityEngine;
 /// </summary>
 public class GameStart : MonoBehaviour
 {
-    [NoToLua]
+    
     public bool Debug = false;
     public Camera uiCamera;
     public RectTransform uiRoot;
@@ -58,16 +58,6 @@ public class GameStart : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
         //Sango.Tools.MapEditor.IsEditOn = true;
-        //// 设置回调创建代理
-        DelegateProxy.CreateProxy = DelegateFactory.CreateDelegate;
-        DelegateProxy.CreateProxyEx = DelegateFactory.CreateDelegate;
-        DelegateProxy.RemoveProxy = DelegateFactory.RemoveDelegate;
-        DelegateProxy.RemoveProxyEx = DelegateFactory.RemoveDelegate;
-        DelegateProxy.InitProxy = DelegateFactory.Init;
-
-        //// 设置绑定代理
-        BinderProxy.proxy = LuaBinder.Bind;
-
         Config.isDebug = Debug;
 
 #if UNITY_EDITOR

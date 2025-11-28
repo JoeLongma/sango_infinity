@@ -1,5 +1,5 @@
 ﻿//using FairyGUI;
-//using LuaInterface;
+//
 //using Sango.Game;
 //using Sango.Loader;
 //using System;

@@ -1,4 +1,4 @@
-﻿using LuaInterface;
+﻿
 using Sango.Game;
 using Sango.Tools;
 using System.Collections.Generic;
@@ -85,15 +85,15 @@ namespace Sango.Render
             public ushort areaId;
 
 #if SANGO_DEBUG
-            [NoToLua]
+            
             public UnityEngine.UI.Text textObj;
-            [NoToLua]
+            
             public bool visible;
 #endif
 
             //public int terrainState;
 #if UNITY_EDITOR
-            [NoToLua]
+            
             public San11GridData san11GridData;
 #endif
             public GridData()
@@ -553,7 +553,7 @@ namespace Sango.Render
 
         int switchIndex = 1;
         Transform textROOT;
-        [NoToLua]
+        
         public void Update(Tools.Rect rect)
         {
             if (MapEditor.IsEditOn) return;

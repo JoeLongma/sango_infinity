@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using LuaInterface;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -107,7 +107,7 @@ namespace UnityEngine.UI
         }
 
 #if UNITY_EDITOR
-        [NoToLua]
+        
         public void Dump()
         {
             Create(label.text + Random.Range(1, 10000).ToString(), label.color, label.rectTransform.localScale.x);

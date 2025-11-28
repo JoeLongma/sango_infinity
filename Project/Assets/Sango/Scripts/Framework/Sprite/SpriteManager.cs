@@ -1,4 +1,4 @@
-using LuaInterface;
+
 using Sango.Loader;
 using System.Collections.Generic;
 using System.IO;
@@ -17,7 +17,6 @@ namespace Sango.Sprite
             public string fileName;
             public string name;
             public List<SpriteData> spriteDatas = new List<SpriteData>();
-            public LuaFunction onLoadedCall;
             public OnSpriteLoaded onCSharpCall;
             public void Add(string spriteName, Rect rect)
             {
@@ -131,11 +130,7 @@ namespace Sango.Sprite
             data.fileName = fileName;
             return data;
         }
-        public static void LoadSprite(CustomData data, LuaFunction onLoadedCall, bool needCompress = true)
-        {
-            data.onLoadedCall = onLoadedCall;
-            TextureLoader.LoadFromFile(data.fileName, data, OnTextureLoaded, needCompress);
-        }
+       
         public static void LoadSprite(CustomData data, OnSpriteLoaded onLoadedCall, bool needCompress = true)
         {
             data.onCSharpCall = onLoadedCall;
@@ -161,14 +156,6 @@ namespace Sango.Sprite
 
                 if (data.onCSharpCall != null) {
                     data.onCSharpCall(data.fileName, sprites.ToArray());
-                }
-
-                if (data.onLoadedCall != null) {
-                    data.onLoadedCall.BeginPCall();
-                    data.onLoadedCall.Push(data.fileName);
-                    data.onLoadedCall.Push(sprites.ToArray());
-                    data.onLoadedCall.PCall();
-                    data.onLoadedCall.EndPCall();
                 }
             }
         }

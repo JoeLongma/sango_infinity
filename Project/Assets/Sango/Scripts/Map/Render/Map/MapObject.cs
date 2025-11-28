@@ -1,4 +1,4 @@
-using LuaInterface;
+
 using Sango.Loader;
 using System.Collections;
 using UnityEngine;
@@ -182,23 +182,6 @@ namespace Sango.Render
             transCache = transform;
         }
 
-        LuaFunction visibleChangeFunction;
-        LuaFunction clickFunction;
-        LuaFunction pointerEnterFunciton;
-        LuaFunction pointerExitFunciton;
-        LuaFunction onModelLoadedFunction;
-
-        protected override void OnInitFunctions()
-        {
-            base.OnInitFunctions();
-            visibleChangeFunction = GetFunction("OnVisibleChange");
-            clickFunction = GetFunction("OnClick");
-            pointerEnterFunciton = GetFunction("OnPointerEnter");
-            pointerExitFunciton = GetFunction("OnPointerExit");
-            onModelLoadedFunction = GetFunction("OnModelLoaded");
-            CallMethod(visibleChangeFunction, visible);
-        }
-
         public virtual void OnSelectableChange()
         {
             if (selectable)
@@ -244,7 +227,6 @@ namespace Sango.Render
                         ClearModels();
                 }
             }
-            CallMethod(visibleChangeFunction, visible);
             onModelVisibleChange?.Invoke(this);
         }
 
@@ -256,15 +238,12 @@ namespace Sango.Render
 
         public virtual void OnClick()
         {
-            CallMethod(clickFunction);
         }
         public virtual void OnPointerEnter()
         {
-            CallMethod(pointerEnterFunciton);
         }
         public virtual void OnPointerExit()
         {
-            CallMethod(pointerExitFunciton);
         }
 
         public virtual void SetOutlineShow(Material material)
@@ -296,13 +275,6 @@ namespace Sango.Render
             OnModelInit(model, dontAsyncCall);
 
             OnSelectableChange();
-        }
-
-        IEnumerator AsyncCallBack(GameObject model)
-        {
-            yield return null;
-            CallMethod(onModelLoadedFunction, model);
-            yield break;
         }
 
         protected virtual void OnModelInit(GameObject model, bool dontAsyncCall = true)
@@ -348,10 +320,6 @@ namespace Sango.Render
                 onModelLoadedCallback?.Invoke(model);
             }
             loadedModel = model;
-            if (dontAsyncCall)
-                CallMethod(onModelLoadedFunction, model);
-            else
-                StartCoroutine(AsyncCallBack(model));
         }
         public void CreateModel(string meshFile, string textureFile, string shaderName, bool isShareMat = true)
         {
@@ -516,28 +484,6 @@ namespace Sango.Render
         public void Destroy()
         {
             Clear();
-
-            if (visibleChangeFunction != null)
-            {
-                visibleChangeFunction.Dispose();
-                visibleChangeFunction = null;
-            }
-            if (clickFunction != null)
-            {
-                clickFunction.Dispose();
-                clickFunction = null;
-            }
-            if (pointerEnterFunciton != null)
-            {
-                pointerEnterFunciton.Dispose();
-                pointerEnterFunciton = null;
-            }
-            if (pointerExitFunciton != null)
-            {
-                pointerExitFunciton.Dispose();
-                pointerExitFunciton = null;
-            }
-
             if (gameObject != null)
                 GameObject.Destroy(gameObject);
         }
