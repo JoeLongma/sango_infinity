@@ -609,6 +609,18 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 811260703086046233, guid: d547d3c586bdeee4498011fa52962edc, type: 3}
+      propertyPath: m_Transition
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 811260703086046233, guid: d547d3c586bdeee4498011fa52962edc, type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c08f932454aa91446aac7cd3561c9171, type: 3}
+    - target: {fileID: 811260703086046233, guid: d547d3c586bdeee4498011fa52962edc, type: 3}
+      propertyPath: m_SpriteState.m_DisabledSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8fa0ed02bb306cb4da64c307d438d38b, type: 3}
     - target: {fileID: 1739087298855653091, guid: d547d3c586bdeee4498011fa52962edc, type: 3}
       propertyPath: m_FontData.m_FontSize
       value: 20
@@ -850,6 +862,18 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8042580273630034020, guid: 46ca761bda6ebc544a41ee17cad34ddc, type: 3}
+      propertyPath: m_Transition
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8042580273630034020, guid: 46ca761bda6ebc544a41ee17cad34ddc, type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 854d7c08d4669fa479ddb5b266f5761b, type: 3}
+    - target: {fileID: 8042580273630034020, guid: 46ca761bda6ebc544a41ee17cad34ddc, type: 3}
+      propertyPath: m_SpriteState.m_DisabledSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8fa0ed02bb306cb4da64c307d438d38b, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46ca761bda6ebc544a41ee17cad34ddc, type: 3}
 --- !u!224 &1444440297078063397 stripped
@@ -875,6 +899,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8112661406354916524}
     m_Modifications:
+    - target: {fileID: 4513177651704284250, guid: af3d85f7ccf0d224eab07c862fe9c977, type: 3}
+      propertyPath: m_Transition
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4513177651704284250, guid: af3d85f7ccf0d224eab07c862fe9c977, type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ca27667e67fba704086fc48673f14c20, type: 3}
+    - target: {fileID: 4513177651704284250, guid: af3d85f7ccf0d224eab07c862fe9c977, type: 3}
+      propertyPath: m_SpriteState.m_DisabledSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3d113214ca88a864c84feb5ce5949268, type: 3}
     - target: {fileID: 9119580197716258250, guid: af3d85f7ccf0d224eab07c862fe9c977, type: 3}
       propertyPath: m_Name
       value: menuItem

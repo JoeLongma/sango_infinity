@@ -38,7 +38,8 @@ namespace Sango.Render
 
         internal override void OnSave(BinaryWriter writer)
         {
-            for (int i = 0; i < light_direction.Length; ++i) {
+            for (int i = 0; i < light_direction.Length; ++i)
+            {
                 writer.Write(light_direction[i].x);
                 writer.Write(light_direction[i].y);
                 writer.Write(light_direction[i].z);
@@ -55,7 +56,8 @@ namespace Sango.Render
         }
         internal override void OnLoad(int versionCode, BinaryReader reader)
         {
-            for (int i = 0; i < light_direction.Length; ++i) {
+            for (int i = 0; i < light_direction.Length; ++i)
+            {
                 light_direction[i] = new Vector3((float)reader.ReadSingle(), (float)reader.ReadSingle(), (float)reader.ReadSingle());
                 light_color[i] = new Color((float)reader.ReadSingle(), (float)reader.ReadSingle(), (float)reader.ReadSingle());
                 light_intensity[i] = reader.ReadSingle();
@@ -72,6 +74,7 @@ namespace Sango.Render
             light.transform.rotation = Quaternion.Euler(light_direction[curSeason]);
             light.color = light_color[curSeason];
             light.intensity = light_intensity[curSeason];
+            light.intensity = 1.2f;
             Shader.SetGlobalColor("_ShadowColor", shadow_color[curSeason]);
             Shader.SetGlobalFloat("_ShadowStrength", shadow_strength[curSeason]);
         }

@@ -26,7 +26,8 @@ namespace Sango.Game.Player
         {
             base.OnEnter();
             ContextMenu.CloseAll();
-
+            Singleton<TroopActionMenu>.Instance.ShowSpellRange();
+            Singleton<TroopActionMenu>.Instance.troopRender.Clear();
             MovePath = Singleton<TroopSystem>.Instance.movePath;
             Cell start = TargetTroop.cell;
             for (int i = 1; i < MovePath.Count; i++)
@@ -50,6 +51,11 @@ namespace Sango.Game.Player
                 start = dest;
             }
 
+        }
+
+        public override void OnDestroy()
+        {
+            ContextMenu.CloseAll();
         }
 
         public void OnMoveDone()

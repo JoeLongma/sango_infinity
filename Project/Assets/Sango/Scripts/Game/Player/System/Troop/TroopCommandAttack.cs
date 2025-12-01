@@ -25,7 +25,47 @@ namespace Sango.Game.Player
         {
             get
             {
-                return true;
+                bool hasTarget = false;
+                // 攻击范围内必须有可攻击目标
+                Cell stayCell = ActionCell;
+                spellRangeCell.Clear();
+                List<Cell> rangeCell = new List<Cell>();
+                if (TargetTroop.NormalSkill != null)
+                {
+                    Skill skill = TargetTroop.NormalSkill.Skill;
+                    if (skill.CanBeSpell(TargetTroop))
+                    {
+                        skill.GetSpellRange(TargetTroop, stayCell, rangeCell);
+                        foreach (Cell c in rangeCell)
+                        {
+                            if (skill.CanSpeellToHere(TargetTroop, c))
+                            {
+                                spellRangeCell.Add(c);
+                                hasTarget = true;
+                            }
+                        }
+                    }   
+                }
+                rangeCell.Clear();
+                if (TargetTroop.NormalRangeSkill != null)
+                {
+                    Skill skill = TargetTroop.NormalRangeSkill.Skill;
+                    if (skill.CanBeSpell(TargetTroop))
+                    {
+                      
+                        skill.GetSpellRange(TargetTroop, stayCell, rangeCell);
+                        foreach(Cell c in rangeCell)
+                        {
+                            if (skill.CanSpeellToHere(TargetTroop, c))
+                            {
+                                spellRangeCell.Add(c);
+                                hasTarget = true;
+                            }
+                        }
+                    }   
+                }
+
+                return hasTarget;
             }
         }
 
@@ -35,32 +75,9 @@ namespace Sango.Game.Player
             spellSkill = null;
             isShow = false;
             isMoving = false;
-            spellRangeCell.Clear();
             ContextMenu.SetVisible(false);
             MovePath = Singleton<TroopSystem>.Instance.movePath;
-            MapRender mapRender = MapRender.Instance;
-            Cell stayCell = ActionCell;
-            if (TargetTroop.NormalSkill != null)
-            {
-                Skill skill = TargetTroop.NormalSkill.Skill;
-                if (skill.CanBeSpell(TargetTroop))
-                    skill.GetSpellRange(TargetTroop, stayCell, spellRangeCell);
-            }
-
-            if (TargetTroop.NormalRangeSkill != null)
-            {
-                Skill skill = TargetTroop.NormalRangeSkill.Skill;
-                if (skill.CanBeSpell(TargetTroop))
-                    skill.GetSpellRange(TargetTroop, stayCell, spellRangeCell);
-            }
-
-            for (int i = 0, count = spellRangeCell.Count; i < count; ++i)
-            {
-                Cell c = spellRangeCell[i];
-                mapRender.SetGridMaskColor(c.x, c.y, Color.red);
-            }
-
-            mapRender.EndSetGridMask();
+            ShowSpellRange();
         }
 
         protected void ShowSpellRange()
@@ -70,9 +87,13 @@ namespace Sango.Game.Player
             for (int i = 0, count = spellRangeCell.Count; i < count; ++i)
             {
                 Cell c = spellRangeCell[i];
-                mapRender.SetGridMaskColor(c.x, c.y, Color.red);
+                if (!MovePath.Contains(c))
+                    mapRender.SetGridMaskColor(c.x, c.y, Color.red);
+                mapRender.SetDarkMaskColor(c.x, c.y, Color.black);
             }
             mapRender.EndSetGridMask();
+            mapRender.EndSetDarkMask();
+            mapRender.SetDarkMask(true);
         }
 
         protected void ClearShowSpellRange()
@@ -82,9 +103,20 @@ namespace Sango.Game.Player
             for (int i = 0, count = spellRangeCell.Count; i < count; ++i)
             {
                 Cell c = spellRangeCell[i];
-                mapRender.SetGridMaskColor(c.x, c.y, Color.black);
+                if (!MovePath.Contains(c))
+                    mapRender.SetGridMaskColor(c.x, c.y, Color.black);
+                mapRender.SetDarkMaskColor(c.x, c.y, Color.clear);
+
             }
             mapRender.EndSetGridMask();
+            mapRender.EndSetDarkMask();
+            mapRender.SetDarkMask(false);
+        }
+
+        public override void OnDestroy()
+        {
+            ClearShowSpellRange();
+            spellRangeCell.Clear();
         }
 
         protected void OnMoveDone()
@@ -127,6 +159,8 @@ namespace Sango.Game.Player
 
                         if (spellRangeCell.Contains(cell))
                         {
+
+
                             Cell stayCell = MovePath[MovePath.Count - 1];
                             spellCell = cell;
                             if (spellSkill == null)
@@ -140,7 +174,7 @@ namespace Sango.Game.Player
                             if (!spellSkill.CanSpeellToHere(TargetTroop, cell))
                                 return;
 
-                            ClearShowSpellRange();
+                            Singleton<TroopActionMenu>.Instance.troopRender.Clear();
                             ContextMenu.CloseAll();
                             Cell start = TargetTroop.cell;
 

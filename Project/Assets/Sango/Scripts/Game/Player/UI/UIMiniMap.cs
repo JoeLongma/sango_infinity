@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Sango.Render;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -72,10 +73,14 @@ namespace Sango.Game.Render.UI
             }
         }
 
+
+        public DrawLineComponent drawLine;
         public GameObject troopObj;
         public GameObject cityObj;
         public GameObject miniCityObj;
         public RectTransform mapBounds;
+
+        public RectTransform[] cameraCorners;
 
         List<MapCityNodeData> mapCityNodes = new List<MapCityNodeData>();
         List<MapTroopNodeData> mapTroopNodes = new List<MapTroopNodeData>();
@@ -83,10 +88,37 @@ namespace Sango.Game.Render.UI
 
         public void Start()
         {
+            GameEvent.OnTroopEnterCell += OnTroopEnterCell;
             GameEvent.OnTroopCreated += OnTroopCreated;
             GameEvent.OnTroopDestroyed += OnTroopDestroyed;
             GameEvent.OnCityFall += OnCityFall;
             InitCities();
+            MapRender.Instance.mapCamera.onValueChanged = OnCameraValueChanged;
+        }
+
+        Vector2 WorldPos2MiniMapPos(Vector3 worldPos)
+        {
+            float x = worldPos.z * mapBounds.sizeDelta.x / (Scenario.Cur.Map.Width * Scenario.Cur.Map.GridSize) - mapBounds.sizeDelta.x / 2;
+            float y = mapBounds.sizeDelta.y / 2 - worldPos.x * mapBounds.sizeDelta.y / (Scenario.Cur.Map.Height * Scenario.Cur.Map.GridSize);
+            return new Vector2(x, y); ;
+        }
+
+
+        private Vector3[] corners = new Vector3[4];
+        public void OnCameraValueChanged(MapCamera camera)
+        {
+            Vector3 rot = mapBounds.localRotation.eulerAngles;
+            rot.z = camera.lookRotate.y + 90;
+            mapBounds.localRotation = Quaternion.Euler(rot);
+            if (CameraPlaneView.GetPlaneCorners(Vector3.up, Vector3.zero, camera.camera, MapRender.Instance.showLimitLength, out corners))
+            {
+                drawLine.line.dataPoints[0] = WorldPos2MiniMapPos(corners[0]);
+                drawLine.line.dataPoints[1] = WorldPos2MiniMapPos(corners[1]);
+                drawLine.line.dataPoints[2] = WorldPos2MiniMapPos(corners[2]);
+                drawLine.line.dataPoints[3] = WorldPos2MiniMapPos(corners[3]);
+                drawLine.line.dataPoints[4] = drawLine.line.dataPoints[0];
+                drawLine.RefreshChart();
+            }
         }
 
         public void OnDestroy()
@@ -126,6 +158,7 @@ namespace Sango.Game.Render.UI
             }
 
             data.Init(troop);
+            data.UpdateCell(troop.cell, mapBounds);
             mapTroopNodes.Add(data);
         }
 

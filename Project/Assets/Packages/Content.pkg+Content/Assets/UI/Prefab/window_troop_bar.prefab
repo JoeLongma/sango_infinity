@@ -1326,8 +1326,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initScale: {x: -1, y: 1, z: 1}
-  scaleFactor: {x: 0.23, y: 0.4}
-  offsetFactor: {x: 0, y: -6, z: 0}
+  scaleFactor: {x: 0.15, y: 0.35}
+  offsetFactor: {x: 0, y: -12, z: 0}
   cacheOffset: {x: 0, y: 30, z: 0}
 --- !u!114 &7523167001694398416
 MonoBehaviour:

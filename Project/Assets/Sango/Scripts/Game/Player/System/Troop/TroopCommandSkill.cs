@@ -31,6 +31,20 @@ namespace Sango.Game.Player
                     if (skill.costEnergy > 0)
                     {
                         bool isValid = skill.CanBeSpell(TargetTroop);
+                        if(isValid)
+                        {
+                            isValid = false;
+                            spellRangeCell.Clear();
+                            skill.GetSpellRange(TargetTroop, ActionCell, spellRangeCell);
+                            foreach (Cell c in spellRangeCell)
+                            {
+                                if (skill.CanSpeellToHere(TargetTroop, c))
+                                {
+                                    isValid = true;
+                                    break;
+                                }
+                            }
+                        }
                         menuData.Add($"战法/{skill.Name}({skill.costEnergy})", skill.costEnergy, skill, OnClickMenuItem, isValid);
                     }
                 }
@@ -58,7 +72,17 @@ namespace Sango.Game.Player
             MovePath = Singleton<TroopSystem>.Instance.movePath;
             Cell stayCell = ActionCell;
             if (spellSkill.CanBeSpell(TargetTroop))
-                spellSkill.GetSpellRange(TargetTroop, stayCell, spellRangeCell);
+            {
+                List<Cell> rangeCell = new List<Cell>();
+                spellSkill.GetSpellRange(TargetTroop, stayCell, rangeCell);
+                foreach (Cell c in rangeCell)
+                {
+                    if (spellSkill.CanSpeellToHere(TargetTroop, c))
+                    {
+                        spellRangeCell.Add(c);
+                    }
+                }
+            }
             ShowSpellRange();
         }
     }

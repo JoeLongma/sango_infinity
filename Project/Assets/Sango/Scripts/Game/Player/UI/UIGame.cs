@@ -16,7 +16,7 @@ namespace Sango.Game.Render.UI
         public Text cellInfoLabel;
         public Image seasonImg;
         public Text actionNumberLabel;
-        public Text teachPointLabel;
+        public Text techPointLabel;
 
         public Text frameBtnText;
         public Text speedBtnText;
@@ -65,7 +65,19 @@ namespace Sango.Game.Render.UI
 
         void OnCellOverEnter(Cell cell)
         {
-
+            if (cell == null)
+            {
+                cellInfoLabel.text = "";
+                return;
+            }
+            if (cell.moveAble)
+            {
+                cellInfoLabel.text = $"坐标: ({cell.x}, {cell.y})   地形: {cell.TerrainType.Name}  ";
+            }
+            else
+            {
+                cellInfoLabel.text = $"坐标: ({cell.x}, {cell.y})   地形: {cell.TerrainType.Name}  <color=#ff0000>不可进入</color>";
+            }
         }
 
         void OnCellOverExit(Cell cell)
@@ -113,6 +125,7 @@ namespace Sango.Game.Render.UI
             GameEvent.OnForceStart += OnForceStart;
             GameEvent.OnDayUpdate += OnDayUpdate;
             GameEvent.OnCityFall += OnCityFall;
+            GameEvent.OnSeasonUpdate += OnSeasonUpdate;
 
             loopScrollRect.prefabSource = this;
             loopScrollRect.dataSource = this;
@@ -123,6 +136,9 @@ namespace Sango.Game.Render.UI
             InvokeRepeating("UpdateFPS", 1f, 1f);
             //loopScrollRect.totalCount = totalCount;
             //loopScrollRect.RefillCells();
+            OnForceStart(Scenario.Cur.CurRunForce, Scenario.Cur);
+            OnDayUpdate(Scenario.Cur);
+            OnSeasonUpdate(Scenario.Cur);
         }
 
         public void OnCityFall(City city, Troop atker)
@@ -148,10 +164,19 @@ namespace Sango.Game.Render.UI
             forceText.text = force.Name;
         }
 
-        string[] seasonText = new string[] { "(秋)", "(春)", "(夏)", "(冬)" };
+        string[] seasonIconPath = new string[] {
+            "Assets/UI/AtlasTexture/mainframe/4845_5_10.png",
+            "Assets/UI/AtlasTexture/mainframe/4845_5_8.png",
+            "Assets/UI/AtlasTexture/mainframe/4845_5_9.png",
+            "Assets/UI/AtlasTexture/mainframe/4845_5_11.png",
+        };
         public void OnDayUpdate(Scenario scenario)
         {
-            dateText.text = scenario.GetDateStr() + seasonText[(int)scenario.CurSeason];
+            dateText.text = scenario.GetDateStr();
+        }
+        public void OnSeasonUpdate(Scenario scenario)
+        {
+            seasonImg.sprite = ObjectLoader.LoadObject<UnityEngine.Sprite>(seasonIconPath[(int)scenario.CurSeason]);
         }
 
         public void OnBtnPause()

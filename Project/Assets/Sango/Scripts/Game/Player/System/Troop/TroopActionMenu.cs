@@ -8,11 +8,13 @@ namespace Sango.Game.Player
 {
     public class TroopActionMenu : CommandSystemBase
     {
+        public List<Cell> MovePath;
+
         public List<Cell> spellRangeCell = new List<Cell>();
         public Troop TargetTroop { get; set; }
         public Cell TargetCell { get; set; }
 
-        TroopRender troopRender;
+        public TroopRender troopRender;
 
         public void Start(Troop troop, Cell targetCell, Vector3 startPoint)
         {
@@ -32,6 +34,7 @@ namespace Sango.Game.Player
             troopRender = new TroopRender(TargetTroop, false);
             troopRender.SetPosition(TargetCell.Position);
             troopRender.SetForward(TargetTroop.Render.GetForward());
+            MovePath = Singleton<TroopSystem>.Instance.movePath;
             List<SkillInstance> list;
             if (TargetCell.TerrainType.isWater)
                 list = TargetTroop.waterSkills;
@@ -63,11 +66,6 @@ namespace Sango.Game.Player
 
         public override void OnExit()
         {
-            if (troopRender != null)
-            {
-                troopRender.Clear();
-                troopRender = null;
-            }
             ClearShowSpellRange();
             ContextMenu.SetVisible(false);
         }
@@ -84,7 +82,8 @@ namespace Sango.Game.Player
             for (int i = 0, count = spellRangeCell.Count; i < count; ++i)
             {
                 Cell c = spellRangeCell[i];
-                mapRender.SetGridMaskColor(c.x, c.y, Color.red);
+                if (!MovePath.Contains(c))
+                    mapRender.SetGridMaskColor(c.x, c.y, Color.red);
                 mapRender.SetDarkMaskColor(c.x, c.y, Color.black);
             }
             mapRender.EndSetGridMask();
@@ -99,7 +98,8 @@ namespace Sango.Game.Player
             for (int i = 0, count = spellRangeCell.Count; i < count; ++i)
             {
                 Cell c = spellRangeCell[i];
-                mapRender.SetGridMaskColor(c.x, c.y, Color.black);
+                if (!MovePath.Contains(c))
+                    mapRender.SetGridMaskColor(c.x, c.y, Color.black);
                 mapRender.SetDarkMaskColor(c.x, c.y, Color.clear);
             }
             mapRender.EndSetGridMask();

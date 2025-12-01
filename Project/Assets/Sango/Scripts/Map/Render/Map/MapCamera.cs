@@ -1,4 +1,5 @@
 ﻿using Sango.Tools;
+using System;
 using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,7 +11,7 @@ namespace Sango.Render
     {
         Transform lookAt;
         Transform transform;
-        Camera camera;
+        public Camera camera;
 
         public float fov = 30f;
         public float near_clip = 0.3f;
@@ -27,6 +28,8 @@ namespace Sango.Render
         public float rotSpeed = 0.1f;
 
         bool changed = false;
+
+        public Action<MapCamera> onValueChanged;
 
         public MapCamera(MapRender map) : base(map)
         {
@@ -406,6 +409,7 @@ namespace Sango.Render
                 transform.rotation = Quaternion.Euler(look_rotate);
                 transform.position = lookAt.position - transform.forward * cur_distance;
                 transform.LookAt(lookAt);
+                onValueChanged?.Invoke(this);
             }
 
             oldMousePos = Input.mousePosition;

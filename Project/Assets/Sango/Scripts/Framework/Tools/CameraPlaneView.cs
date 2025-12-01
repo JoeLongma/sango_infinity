@@ -21,7 +21,7 @@ public class CameraPlaneView : MonoBehaviour
             Debug.DrawLine(corners[1], corners[2], Color.green);    // right
             Debug.DrawLine(corners[2], corners[3], Color.green);    // top
             Debug.DrawLine(corners[3], corners[0], Color.green);    // left
-            
+
 
         }
 
@@ -53,7 +53,7 @@ public class CameraPlaneView : MonoBehaviour
         {
             DrawRect(r);
         }
-       
+
     }
 #endif
 
@@ -121,6 +121,14 @@ public class CameraPlaneView : MonoBehaviour
         }
     }
 
+
+    public static bool GetPlaneCorners(Vector3 normal, Vector3 planePoint, Camera camera, float limitLen, out Vector3[] corners)
+    {
+        Plane plane = new Plane(normal, planePoint);
+        corners = new Vector3[4];
+        return GetPlaneCorners(ref plane, camera, limitLen, ref corners);
+    }
+
     public static bool GetPlaneCorners(ref Plane plane, Camera camera, float limitLen, ref Vector3[] corners)
     {
 #if UNITY_EDITOR
@@ -135,10 +143,12 @@ public class CameraPlaneView : MonoBehaviour
         if (!GetRayPlaneIntersection(ref plane, rayBL, limitLen, out corners[0])
             || !GetRayPlaneIntersection(ref plane, rayBR, limitLen, out corners[1])
             || !GetRayPlaneIntersection(ref plane, rayTR, limitLen, out corners[2])
-            || !GetRayPlaneIntersection(ref plane, rayTL, limitLen, out corners[3])) {
+            || !GetRayPlaneIntersection(ref plane, rayTL, limitLen, out corners[3]))
+        {
             return false;
         }
-        else {
+        else
+        {
             return true;
         }
     }
