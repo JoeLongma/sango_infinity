@@ -1,4 +1,6 @@
-﻿namespace Sango.Game.Render
+﻿using UnityEngine;
+
+namespace Sango.Game.Render
 {
     public class TroopSpellSkillEvent : RenderEventBase
     {
@@ -34,7 +36,7 @@
 
         public override bool Update(Scenario scenario, float deltaTime)
         {
-            if (!IsVisible())
+            if (!IsVisible() || Input.GetMouseButtonDown(0))
             {
                 Action();
                 IsDone = true;

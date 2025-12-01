@@ -69,7 +69,6 @@ namespace Sango.Game
         public static EventDelegate<Scenario, float> OnScenarioTick;
         #endregion Scenario
 
-
         #region Window
         /// <summary>
         /// 在window创建之后
@@ -94,6 +93,17 @@ namespace Sango.Game
         #endregion Window
 
         #region Game
+
+        /// <summary>
+        /// 游戏保存
+        /// </summary>
+        public static EventDelegate<Scenario, int> OnGameSave;
+
+        /// <summary>
+        /// 游戏加载
+        /// </summary>
+        public static EventDelegate<Scenario> OnGameLoad;
+
         /// <summary>
         /// 新天开始
         /// </summary>
@@ -124,6 +134,8 @@ namespace Sango.Game
         /// </summary>
         public static EventDelegate<Scenario> OnTurnEnd;
 
+
+        #region Force
         /// <summary>
         /// 势力逻辑开始
         /// </summary>
@@ -145,6 +157,14 @@ namespace Sango.Game
         public static EventDelegate<Force, Scenario> OnForceAIPrepare;
         public static EventDelegate<Force, Scenario> OnForceAIStart;
         public static EventDelegate<Force, Scenario> OnForceAIEnd;
+
+        /// <summary>
+        /// 当势力灭亡的时候
+        /// </summary>
+        public static EventDelegate<Force, City, Troop> OnForceFall;
+
+        #endregion Force
+
 
         /// <summary>
         /// 城池AI
@@ -303,8 +323,5 @@ namespace Sango.Game
 
         #endregion Game
 
-        #region Override
-
-        #endregion
     }
 }

@@ -11,7 +11,7 @@ namespace Sango
     public class UGUIWindow : MonoBehaviour
     {
         protected UnityEngine.Canvas[] panels;
-
+        public bool IsOpen { get; set; }
         protected virtual void Awake()
         {
         }
@@ -128,11 +128,27 @@ namespace Sango
 
         public virtual void Show()
         {
+            IsOpen = true;
             if (!this.gameObject.activeInHierarchy)
             {
                 this.gameObject.SetActive(true);
             }
             OnShow();
+        }
+
+        public virtual void Show(params object[] objects)
+        {
+            IsOpen = true;
+            if (!this.gameObject.activeInHierarchy)
+            {
+                this.gameObject.SetActive(true);
+            }
+            OnShow(objects);
+        }
+
+        public virtual void OnShow(params object[] objects)
+        {
+
         }
 
         public virtual void OnShow()
@@ -148,6 +164,7 @@ namespace Sango
                 this.gameObject.SetActive(false);
             }
             OnHide();
+            IsOpen = false;
         }
 
         public virtual void OnHide()

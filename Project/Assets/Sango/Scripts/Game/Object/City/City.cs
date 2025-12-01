@@ -1076,12 +1076,8 @@ namespace Sango.Game
 #endif
                 Scenario.Cur.forceSet.Remove(BelongForce);
 
-                WindowEvent windowEvent = new WindowEvent()
-                {
-                    windowName = "window_dialog",
-                    arg1 = $"{BelongForce.Name} 灭亡!!!"
-                };
-                RenderEvent.Instance.Add(windowEvent);
+                // 势力灭亡事件
+                GameEvent.OnForceFall?.Invoke(BelongForce, this, atk);
 
                 if (Scenario.Cur.forceSet.DataCount == 1)
                 {

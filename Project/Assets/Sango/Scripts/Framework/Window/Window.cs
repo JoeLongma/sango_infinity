@@ -1,6 +1,7 @@
 ﻿//using FairyGUI;
 
 using Sango.Loader;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace Sango
         {
             //public FairyGUI.Window fgui_instance;
             public UGUIWindow ugui_instance;
+            public Action OnHideAction;
 
             public bool HasValid()
             {
@@ -38,6 +40,14 @@ namespace Sango
                 ugui_instance?.Show();
 
             }
+
+            public void Show(params object[] objects)
+            {
+                //fgui_instance?.Show();
+                ugui_instance?.Show(objects);
+
+            }
+
             public void Hide()
             {
                 //fgui_instance?.Hide();
@@ -248,6 +258,21 @@ namespace Sango
             return win;
         }
 
+        public WindowInterface Open(string windowName, params object[] objects)
+        {
+#if SANGO_DEBUG
+            UnityEngine.Debug.Log($"显示窗口:{windowName}");
+#endif
+            WindowInterface win = CreateWindow(windowName);
+            if (win != null)
+            {
+                win.Show(objects);
+                Sango.Game.GameEvent.OnWindowCreate?.Invoke(windowName, win);
+            }
+            return win;
+        }
+
+
         public WindowInterface GetWindow(string windowName)
         {
             WindowInfo info;
@@ -272,6 +297,20 @@ namespace Sango
                     //    info.instance.fgui_instance.Hide();
                 }
             }
+        }
+
+        public bool IsOpen(string windowName)
+        {
+            WindowInfo info;
+            if (windowMap.TryGetValue(windowName, out info))
+            {
+                if (info.instance != null)
+                {
+                    if (info.instance.ugui_instance != null)
+                        return info.instance.ugui_instance.IsOpen;
+                }
+            }
+            return false;
         }
 
         public void SetVisible(string windowName, bool b)

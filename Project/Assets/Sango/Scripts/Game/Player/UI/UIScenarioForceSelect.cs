@@ -48,33 +48,24 @@ namespace Sango.Game.Render.UI
                 }
 
                 i++;
-                Toggle toggle = cityObj.GetComponent<Toggle>();
+                UIMapCitySelectItem toggle = cityObj.GetComponent<UIMapCitySelectItem>();
                 if (toggle != null)
                 {
-                    toggle.isOn = false;
-                    toggle.onValueChanged.RemoveAllListeners();
-                    toggle.onValueChanged.AddListener((b) =>
+                    toggle.city = city;
+                    if (city.BelongForce == null)
                     {
-                        SetPlayer(city, b);
-                    });
+                        toggle.SetSelected(false).SetInavtive(true);
+                    }
+                    else
+                    {
+                        toggle.SetSelected(false).SetInavtive(false).SetColor(city.BelongForce.Flag.color).onSelectAction = SetPlayer;
+                    }
                 }
 
                 RectTransform rectTransform = cityObj.GetComponent<RectTransform>();
                 float x = city.x * mapBounds.sizeDelta.x / scenario.Map.Width - mapBounds.sizeDelta.x / 2;
                 float y = mapBounds.sizeDelta.y / 2 - city.y * mapBounds.sizeDelta.y / scenario.Map.Height;
                 rectTransform.anchoredPosition = new Vector2(x, y);
-
-                Image bgImg = cityObj.transform.GetChild(1).GetComponent<Image>();
-                if (city.BelongForce != null)
-                {
-                    bgImg.color = city.BelongForce.Flag.color;
-                    toggle.interactable = true;
-                }
-                else
-                {
-                    toggle.interactable = false;
-                    bgImg.color = Color.white;
-                }
 
                 cityObj.SetActive(true);
             });

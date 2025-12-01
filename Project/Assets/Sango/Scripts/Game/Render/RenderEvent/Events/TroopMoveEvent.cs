@@ -49,7 +49,7 @@ namespace Sango.Game.Render
                 return IsDone;
             }
 
-            if (!IsVisible())
+            if (!IsVisible() || Input.GetMouseButtonDown(0))
             {
                 troop.Render.SetForward(dir);
                 troop.UpdateCell(dest, start, isLastMove);

@@ -40,7 +40,7 @@ namespace Sango.Game.Render
 
         public override bool Update(Scenario scenario, float deltaTime)
         {
-            if (!IsVisible())
+            if (!IsVisible() || Input.GetMouseButtonDown(0))
             {
                 Action();
                 IsDone = true;

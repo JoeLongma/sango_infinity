@@ -1,24 +1,23 @@
-﻿namespace Sango.Game.Render
+﻿using Sango.Game.Render.UI;
+
+namespace Sango.Game.Render
 {
     public class WindowEvent : RenderEventBase
     {
         public string windowName;
-        public object arg1;
-        public object arg2;
-        public object arg3;
-        public object arg4;
-        public object arg5;
-        public object arg6;
-        public object arg7;
+        public object[] args;
+
+        Window.WindowInterface targetWindow;
         public override void Enter(Scenario scenario)
         {
-            Window.WindowInterface window = Window.Instance.Open(windowName);
-            if (window == null) return;
+            targetWindow = Window.Instance.Open(windowName, args);
+            if (targetWindow == null) return;
+            targetWindow.OnHideAction = OnWindowHide;
         }
 
-        public override void Exit(Scenario scenario)
+        void OnWindowHide()
         {
-            Window.Instance.Close(windowName);
+            targetWindow.OnHideAction = null;
         }
     }
 }

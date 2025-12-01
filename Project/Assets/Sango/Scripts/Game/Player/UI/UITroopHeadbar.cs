@@ -44,7 +44,7 @@ namespace Sango.Game.Render.UI
         public void UpdateTroopState()
         {
             // 除开自己以外全部不显示
-            if (troop.BelongForce == Scenario.Cur.CurRunForce && troop.BelongForce.IsPlayer)
+            if (troop.BelongForce.IsPlayer)
             {
                 string spName = troop.ActionOver ? "4845_8_17" : "4845_8_18";
                 if (state.sprite == null || !state.sprite.name.Equals(spName))
