@@ -24,5 +24,25 @@ namespace Sango.Game.Render.UI
         {
             cancelAction?.Invoke();
         }
+
+        public static UIDialog Open(string content, Action sureAction)
+        {
+            Window.WindowInterface windowInterface = Window.Instance.Open("window_dialog");
+            if (windowInterface.ugui_instance == null)
+                return null;
+
+            UIDialog uIDialog = windowInterface.ugui_instance.GetComponent<UIDialog>();
+            if (uIDialog == null) return null;
+
+            uIDialog.content.text = content;
+            uIDialog.sureAction = sureAction;
+            uIDialog.cancelAction = Close;
+            return uIDialog;
+        }
+
+        public static void Close()
+        {
+            Window.Instance.Close("window_dialog");
+        }
     }
 }

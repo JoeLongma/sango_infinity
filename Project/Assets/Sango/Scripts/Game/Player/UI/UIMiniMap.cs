@@ -103,6 +103,12 @@ namespace Sango.Game.Render.UI
             return new Vector2(x, y); ;
         }
 
+        Vector3 MiniMapPos2WorldPos(Vector2 minimapPos)
+        {
+            float z = (minimapPos.x + mapBounds.sizeDelta.x / 2) * (Scenario.Cur.Map.Width * Scenario.Cur.Map.GridSize) / mapBounds.sizeDelta.x;
+            float x = (mapBounds.sizeDelta.y / 2 - minimapPos.y) * (Scenario.Cur.Map.Height * Scenario.Cur.Map.GridSize) / mapBounds.sizeDelta.y;
+            return new Vector3(x, 0, z);
+        }
 
         private Vector3[] corners = new Vector3[4];
         public void OnCameraValueChanged(MapCamera camera)
@@ -209,6 +215,27 @@ namespace Sango.Game.Render.UI
                     mapCityNodes.Add(new MapCityNodeData(city, image).UpdateCell(mapBounds));
                 }
             });
+        }
+
+        public void OnClickMap()
+        {
+            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(mapBounds, Input.mousePosition, Game.Instance.UICamera, out Vector2 localPoint))
+            {
+                Vector3 worldPos = MiniMapPos2WorldPos(localPoint);
+                MapRender.Instance.MoveCameraTo(worldPos);
+            }
+        }
+
+        public void OnSwitchPortShow()
+        {
+            for (int i = 0; i < mapCityNodes.Count; i++)
+            {
+                MapCityNodeData data = mapCityNodes[i];
+                if (!data.city.IsCity())
+                {
+                    data.image.gameObject.SetActive(!data.image.gameObject.activeSelf);
+                }
+            }
         }
 
     }

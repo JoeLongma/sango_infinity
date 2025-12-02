@@ -19,6 +19,7 @@ namespace Sango.Game.Render.UI
         public Text forceDesc;
         public RectTransform mapBounds;
 
+        public Button nextBtn;
         public GameObject cityObject;
 
         List<GameObject> cityList = new List<GameObject>();
@@ -28,7 +29,7 @@ namespace Sango.Game.Render.UI
         {
             Scenario scenario = Scenario.CurSelected;
             scenario.LoadBaseContent();
-
+            nextBtn.interactable = false;
             int i = 0;
             scenario.citySet.ForEach(city =>
             {
@@ -85,6 +86,8 @@ namespace Sango.Game.Render.UI
                 playerList.Remove(force);
             }
 
+            nextBtn.interactable = playerList.Count > 0;
+
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < playerList.Count; i++)
             {
@@ -133,7 +136,7 @@ namespace Sango.Game.Render.UI
                 }
             });
 
-            forceHead.sprite = GameRenderHelper.LoadHeadIcon(force.Governor.headIconID);
+            forceHead.sprite = GameRenderHelper.LoadHeadIcon(force.Governor.headIconID, 1);
             forceInfo.text = $"{force.Name}\n城池:{cityCount} 武将:{personCount} \n士兵: {troopsCount} 粮食:{foodCount} 金钱:{goldCount}";
         }
 

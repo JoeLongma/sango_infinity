@@ -162,6 +162,7 @@ namespace Sango.Game
         /// 当势力灭亡的时候
         /// </summary>
         public static EventDelegate<Force, City, Troop> OnForceFall;
+        public static EventDelegate<Force, int> OnForceGainTechniquePoint;
 
         #endregion Force
 

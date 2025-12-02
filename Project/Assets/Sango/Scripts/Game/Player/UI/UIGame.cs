@@ -21,6 +21,10 @@ namespace Sango.Game.Render.UI
         public Text frameBtnText;
         public Text speedBtnText;
 
+        public GameObject miniMapObj;
+        public GameObject miniMapBtnObj;
+
+
         public bool gridShow = true;
         public bool troopListShow = false;
         public GameObject troopListObj;
@@ -72,11 +76,11 @@ namespace Sango.Game.Render.UI
             }
             if (cell.moveAble)
             {
-                cellInfoLabel.text = $"坐标: ({cell.x}, {cell.y})   地形: {cell.TerrainType.Name}  ";
+                cellInfoLabel.text = $"地形: {cell.TerrainType.Name}({cell.BelongCity.Name})  坐标: ({cell.x}, {cell.y})     ";
             }
             else
             {
-                cellInfoLabel.text = $"坐标: ({cell.x}, {cell.y})   地形: {cell.TerrainType.Name}  <color=#ff0000>不可进入</color>";
+                cellInfoLabel.text = $"地形: <color=#ff0000>不可进入</color>  坐标: ({cell.x}, {cell.y})     ";
             }
         }
 
@@ -126,6 +130,7 @@ namespace Sango.Game.Render.UI
             GameEvent.OnDayUpdate += OnDayUpdate;
             GameEvent.OnCityFall += OnCityFall;
             GameEvent.OnSeasonUpdate += OnSeasonUpdate;
+            GameEvent.OnForceGainTechniquePoint += OnForceGainTechniquePoint;
 
             loopScrollRect.prefabSource = this;
             loopScrollRect.dataSource = this;
@@ -162,6 +167,13 @@ namespace Sango.Game.Render.UI
         public void OnForceStart(Force force, Scenario scenario)
         {
             forceText.text = force.Name;
+            techPointLabel.text = force.TechniquePoint.ToString();
+        }
+
+        public void OnForceGainTechniquePoint(Force force, int value)
+        {
+            if (!force.IsPlayer) return;
+            techPointLabel.text = force.TechniquePoint.ToString();
         }
 
         string[] seasonIconPath = new string[] {
@@ -335,7 +347,12 @@ namespace Sango.Game.Render.UI
 
         public void OnEndPlayerTurn()
         {
-            Scenario.Cur.CurRunForce.CurRunCorps.ActionOver = true;
+            ContextMenu.CloseAll();
+            UIDialog.Open("是否需要结束玩家回合", () =>
+            {
+                Scenario.Cur.CurRunForce.CurRunCorps.ActionOver = true;
+                UIDialog.Close();
+            });
         }
 
         public void OnSwitchCityInfoShow()
@@ -343,6 +360,13 @@ namespace Sango.Game.Render.UI
             UICityHeadbar.showIndo = !UICityHeadbar.showIndo;
             GameEvent.OnCityHeadbarShowInfoChange?.Invoke();
         }
+
+        public void OnSwitchMiniMapShow()
+        {
+            miniMapObj.SetActive(!miniMapObj.activeSelf);
+            miniMapBtnObj.SetActive(!miniMapBtnObj.activeSelf);
+        }
+
 
         public void OnSpeedChange()
         {

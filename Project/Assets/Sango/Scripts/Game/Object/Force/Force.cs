@@ -555,6 +555,7 @@ namespace Sango.Game
         public void GainTechniquePoint(int value)
         {
             TechniquePoint += value;
+            GameEvent.OnForceGainTechniquePoint?.Invoke(this, value);
         }
 
         public bool HasTechnique(int techId)
