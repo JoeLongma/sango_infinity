@@ -53,6 +53,15 @@ namespace Sango.Game
             BorderMoveViewEnabled = true;
         }
 
+        public void Reset()
+        {
+            KeyboardMoveEnabled = true;
+            RotateViewEnabled = true;
+            DragMoveViewEnabled = true;
+            ZoomViewEnabled = true;
+            BorderMoveViewEnabled = true;
+        }
+
         public bool IsOverUI()
         {
             return (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())/* || FairyGUI.Stage.isTouchOnUI*/;

@@ -14,10 +14,20 @@ namespace Sango.Game.Render.UI
         public City city;
         public Action<City, bool> onSelectAction;
 
+        public ShortCity shortCity;
+        public Action<ShortCity, bool> onSelectShortAction;
+
         public void OnSelect()
         {
             selectedObj.SetActive(!selectedObj.activeSelf);
-            onSelectAction?.Invoke(city, selectedObj.activeSelf);
+            if(city != null)
+            {
+                onSelectAction?.Invoke(city, selectedObj.activeSelf);
+            }
+            if (shortCity != null)
+            {
+                onSelectShortAction?.Invoke(shortCity, selectedObj.activeSelf);
+            }
         }
 
         public UIMapCitySelectItem SetInavtive(bool b)

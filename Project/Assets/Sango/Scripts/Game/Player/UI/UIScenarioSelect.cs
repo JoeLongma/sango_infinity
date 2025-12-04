@@ -24,10 +24,10 @@ namespace Sango.Game.Render.UI
         public override void OnShow()
         {
             curSelectIndex = 0;
-            int count = Scenario.all_scenario_list.Count;
+            int count = ShortScenario.all_scenario_info_list.Count;
             for (int i = 0; i < count; i++)
             {
-                Scenario scenario = Scenario.all_scenario_list[i];
+                ShortScenario scenario = ShortScenario.all_scenario_info_list[i];
                 UIScenarioItem item;
                 if (i < selectedItems.Count)
                 {
@@ -40,7 +40,7 @@ namespace Sango.Game.Render.UI
                 }
                 item.gameObject.SetActive(true);
                 int selIndex = i;
-                item.SetName(scenario.Name).SetSelected(i == curSelectIndex).BindCall(() => { OnSelectScenario(selIndex); });
+                item.SetName(scenario.Info.name).SetSelected(i == curSelectIndex).BindCall(() => { OnSelectScenario(selIndex); });
             }
 
             for (int i = count; i < selectedItems.Count; i++)
@@ -67,15 +67,16 @@ namespace Sango.Game.Render.UI
 
         public void ShowScenario(int index)
         {
-            Scenario scenario = Scenario.all_scenario_list[curSelectIndex];
+
+            ShortScenario scenario = ShortScenario.all_scenario_info_list[curSelectIndex];
             ScenarioInfo scenarioInfo = scenario.Info;
             scenarioInfoText.text = $"{scenarioInfo.year} 年 {scenarioInfo.month}月 {scenarioInfo.day}日  {scenarioInfo.name}";
             scenarioDescText.text = scenarioInfo.description;
-            scenario.LoadBaseContent();
             int i = 0;
-            scenario.citySet.ForEach(city =>
+            foreach (var city in scenario.citySet.Values)
             {
-                if (!city.IsCity()) return;
+
+                if (city.BuildingType > 1) continue;
 
                 GameObject cityObj;
                 if (i >= cityList.Count)
@@ -97,9 +98,11 @@ namespace Sango.Game.Render.UI
                 rectTransform.anchoredPosition = new Vector2(x, y);
 
                 Image bgImg = cityObj.transform.GetChild(0).GetComponent<Image>();
-                if (city.BelongForce != null)
+                if (city.BelongForce > 0)
                 {
-                    bgImg.color = city.BelongForce.Flag.color;
+                    ShortForce shortForce = scenario.forceSet[city.BelongForce];
+                    Flag flag = scenario.CommonData.Flags[shortForce.Flag];
+                    bgImg.color = flag.color;
                 }
                 else
                 {
@@ -107,7 +110,7 @@ namespace Sango.Game.Render.UI
                 }
 
                 cityObj.SetActive(true);
-            });
+            }
 
             for (int j = i; j < cityList.Count; j++)
             {
@@ -126,8 +129,10 @@ namespace Sango.Game.Render.UI
         public void OnNext()
         {
             Clear();
-            Scenario scenario = Scenario.all_scenario_list[curSelectIndex];
-            Scenario.CurSelected = scenario;
+            ShortScenario scenario = ShortScenario.all_scenario_info_list[curSelectIndex];
+            ShortScenario.CurSelected = scenario;
+            Scenario.CurSelected = Scenario.all_scenario_list[curSelectIndex];
+
             Window.Instance.Open("window_scenario_force_select");
             Window.Instance.Close("window_scenario_select");
         }

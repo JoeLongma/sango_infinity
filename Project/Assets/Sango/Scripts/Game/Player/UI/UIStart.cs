@@ -15,6 +15,11 @@
             Game.Instance.EnterMapEditor();
         }
 
+        public void OnLoadGame()
+        {
+            Window.Instance.Open("window_scenario_save", false);
+        }
+
         public void OnTest()
         {
             string path = Sango.Path.FindFile("Scenario/Scenario.json");

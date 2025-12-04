@@ -79,7 +79,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6D4B\u8BD5"
+  m_Text: "\u52A0\u8F7D\u6E38\u620F"
 --- !u!1 &3136650698702520325
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,7 +293,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u5F00\u59CB\u6E38\u620F"
+  m_Text: "\u65B0\u5EFA\u6E38\u620F"
 --- !u!1 &7172264845921674537
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,7 +307,7 @@ GameObject:
   - component: {fileID: 7140967891674408191}
   - component: {fileID: 7212794297111838314}
   m_Layer: 5
-  m_Name: test
+  m_Name: load
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -418,7 +418,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5149108134032039960}
         m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIStart, Assembly-CSharp
-        m_MethodName: OnTest
+        m_MethodName: OnLoadGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

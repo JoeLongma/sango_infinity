@@ -134,7 +134,7 @@ namespace Sango.Mod
 #if SANGO_DEBUG
                 Sango.Log.Print($"Find Scenario: {file}");
 #endif
-                Scenario.Add(file);
+                ShortScenario.Add(file);
             });
         }
         public string GetFullPath(string path)

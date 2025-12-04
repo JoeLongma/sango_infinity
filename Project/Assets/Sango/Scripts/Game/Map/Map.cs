@@ -64,7 +64,10 @@ namespace Sango.Game
                         CellSet.SetTerrainTypeAndState(x, y, terrainType, terrainState, city);
                     }
                 }
-
+                reader.Close();
+                fs.Close();
+                reader.Dispose();
+                fs.Dispose();
             }
         }
         public void Init(Scenario scenario)

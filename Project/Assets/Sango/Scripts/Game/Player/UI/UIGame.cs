@@ -1,4 +1,5 @@
-﻿using Sango.Loader;
+﻿using Sango.Game.Player;
+using Sango.Loader;
 using Sango.Render;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace Sango.Game.Render.UI
         public GameObject miniMapObj;
         public GameObject miniMapBtnObj;
 
+        public RectTransform gameSettingRect;
 
         public bool gridShow = true;
         public bool troopListShow = false;
@@ -367,6 +369,11 @@ namespace Sango.Game.Render.UI
             miniMapBtnObj.SetActive(!miniMapBtnObj.activeSelf);
         }
 
+        public void OnGameSetting()
+        {
+            Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(Game.Instance.UICamera, gameSettingRect.position);
+            Singleton<GameSettingSystem>.Instance.Start(screenPos + new Vector2(0, -gameSettingRect.sizeDelta.y - 5));
+        }
 
         public void OnSpeedChange()
         {

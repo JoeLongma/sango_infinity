@@ -42,13 +42,23 @@ namespace Sango.Game.Player
             }
         }
 
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            Window.Instance.Open("window_city_info_panel", TargetCity);
+        }
+
         /// <summary>
         /// 离开当前命令的时候触发
         /// </summary>
         public override void OnDestroy()
         {
-
             ContextMenu.CloseAll();
+        }
+        public override void OnDone()
+        {
+            ContextMenu.CloseAll();
+            Window.Instance.Close("window_city_info_panel");
         }
 
         public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)

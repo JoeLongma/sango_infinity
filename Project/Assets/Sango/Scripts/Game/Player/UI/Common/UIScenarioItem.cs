@@ -20,7 +20,11 @@ namespace Sango.Game.Render.UI
             select.gameObject.SetActive(b);
             return this;
         }
-
+        public UIScenarioItem SetColor(Color c)
+        {
+            select.color = c;
+            return this;
+        }
         public UIScenarioItem SetName(string n)
         {
             name.text = n;

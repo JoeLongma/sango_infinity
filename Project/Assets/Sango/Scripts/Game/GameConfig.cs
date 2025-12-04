@@ -5,10 +5,16 @@ using UnityEngine;
 
 namespace Sango.Game
 {
-    public class GameConfig
+    public static class GameConfig
     {
-        public int windowWidth;
-        public int windowHeight;
-        public int language;
+        public static int WindowWidth;
+        public static int WindowHeight;
+        public static int Language;
+        public static string SavePath;
+        
+        public static void Init()
+        {
+            SavePath = Path.ContentRootPath + "/Save";
+        }
     }
 }

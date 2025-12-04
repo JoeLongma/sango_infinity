@@ -30,7 +30,7 @@ namespace Sango
 
             public bool IsVisible()
             {
-                if(ugui_instance == null) return false;
+                if (ugui_instance == null) return false;
                 return ugui_instance.gameObject.activeSelf;
             }
 
@@ -295,6 +295,18 @@ namespace Sango
                         info.instance.ugui_instance.Hide();
                     //if (info.instance.fgui_instance != null)
                     //    info.instance.fgui_instance.Hide();
+                }
+            }
+        }
+
+        public void CloseAll()
+        {
+            foreach (WindowInfo info in windowMap.Values)
+            {
+                if (info.instance != null)
+                {
+                    if (info.instance.ugui_instance != null)
+                        info.instance.ugui_instance.Hide();
                 }
             }
         }

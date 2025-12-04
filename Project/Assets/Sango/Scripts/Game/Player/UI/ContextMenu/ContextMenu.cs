@@ -6,17 +6,32 @@ namespace Sango.Game.Render.UI
 {
     public class ContextMenu
     {
+        static string[] windowNames = new string[] {
+            "window_contextMenu",
+            "window_contextMenu_city",
+            "window_contextMenu_troop",
+            "window_contextMenu_building",
+            "window_contextMenu_setting",
+        };
+
+        static string currentWindowName;
+
         public static void Show(ContextMenuData itemData, Vector2 position)
         {
-            Show(itemData.headList, position);
+            Show(itemData.headList, position, ContextMenuType.Common);
+        }
+        public static void Show(List<ContextMenuItem> menuItems, Vector2 position)
+        {
+            Show(menuItems, position, ContextMenuType.Common);
         }
 
-        internal static void Show(List<ContextMenuItem> menuItems, Vector2 position)
+        public static void Show(List<ContextMenuItem> menuItems, Vector2 position, ContextMenuType contentMenuType)
         {
             if (menuItems.Count == 0)
                 return;
 
-            WindowInterface windowInterface = Window.Instance.Open("window_contextMenu");
+            currentWindowName = windowNames[(int)contentMenuType];
+            WindowInterface windowInterface = Window.Instance.Open(currentWindowName);
             if (windowInterface != null)
             {
                 UIContextMenu uIContextMenu = windowInterface.ugui_instance as UIContextMenu;
@@ -36,7 +51,7 @@ namespace Sango.Game.Render.UI
 
         public static void SetVisible(bool b)
         {
-            WindowInterface windowInterface = Window.Instance.GetWindow("window_contextMenu");
+            WindowInterface windowInterface = Window.Instance.GetWindow(currentWindowName);
             if (windowInterface != null)
             {
                 windowInterface.SetVisible(b);
@@ -45,7 +60,7 @@ namespace Sango.Game.Render.UI
 
         public static bool IsVisible()
         {
-            WindowInterface windowInterface = Window.Instance.GetWindow("window_contextMenu");
+            WindowInterface windowInterface = Window.Instance.GetWindow(currentWindowName);
             if (windowInterface == null) return false;
             return windowInterface.IsVisible();
         }
@@ -58,13 +73,13 @@ namespace Sango.Game.Render.UI
 
         public static bool Close()
         {
-            WindowInterface windowInterface = Window.Instance.GetWindow("window_contextMenu");
+            WindowInterface windowInterface = Window.Instance.GetWindow(currentWindowName);
             if (windowInterface != null)
             {
                 UIContextMenu uIContextMenu = windowInterface.ugui_instance as UIContextMenu;
                 if (uIContextMenu.Close())
                 {
-                    Window.Instance.Close("window_contextMenu");
+                    Window.Instance.Close(currentWindowName);
                     return true;
                 }
             }
@@ -73,12 +88,12 @@ namespace Sango.Game.Render.UI
 
         public static void CloseAll()
         {
-            WindowInterface windowInterface = Window.Instance.GetWindow("window_contextMenu");
+            WindowInterface windowInterface = Window.Instance.GetWindow(currentWindowName);
             if (windowInterface != null)
             {
                 UIContextMenu uIContextMenu = windowInterface.ugui_instance as UIContextMenu;
                 uIContextMenu.Close(0);
-                Window.Instance.Close("window_contextMenu");
+                Window.Instance.Close(currentWindowName);
             }
         }
 

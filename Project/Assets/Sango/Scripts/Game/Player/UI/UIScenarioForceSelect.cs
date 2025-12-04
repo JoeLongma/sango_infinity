@@ -23,17 +23,17 @@ namespace Sango.Game.Render.UI
         public GameObject cityObject;
 
         List<GameObject> cityList = new List<GameObject>();
-        List<Force> playerList = new List<Force>();
+        List<ShortForce> playerList = new List<ShortForce>();
 
         public override void OnShow()
         {
-            Scenario scenario = Scenario.CurSelected;
-            scenario.LoadBaseContent();
+            ShortScenario scenario = ShortScenario.CurSelected;
             nextBtn.interactable = false;
             int i = 0;
-            scenario.citySet.ForEach(city =>
+
+            foreach (var city in scenario.citySet.Values)
             {
-                if (!city.IsCity()) return;
+                if (city.BuildingType > 1) return;
 
                 GameObject cityObj;
                 if (i >= cityList.Count)
@@ -52,14 +52,16 @@ namespace Sango.Game.Render.UI
                 UIMapCitySelectItem toggle = cityObj.GetComponent<UIMapCitySelectItem>();
                 if (toggle != null)
                 {
-                    toggle.city = city;
-                    if (city.BelongForce == null)
+                    toggle.shortCity = city;
+                    if (city.BelongForce == 0)
                     {
                         toggle.SetSelected(false).SetInavtive(true);
                     }
                     else
                     {
-                        toggle.SetSelected(false).SetInavtive(false).SetColor(city.BelongForce.Flag.color).onSelectAction = SetPlayer;
+                        ShortForce shortForce = scenario.forceSet[city.BelongForce];
+                        Flag flag = scenario.CommonData.Flags[shortForce.Flag];
+                        toggle.SetSelected(false).SetInavtive(false).SetColor(flag.color).onSelectShortAction = SetPlayer;
                     }
                 }
 
@@ -69,12 +71,13 @@ namespace Sango.Game.Render.UI
                 rectTransform.anchoredPosition = new Vector2(x, y);
 
                 cityObj.SetActive(true);
-            });
+            }
         }
 
-        public void SetPlayer(City city, bool b)
+        public void SetPlayer(ShortCity city, bool b)
         {
-            Force force = city.BelongForce;
+            ShortScenario scenario = ShortScenario.CurSelected;
+            ShortForce force = scenario.forceSet[city.BelongForce];
             if (force == null) return;
 
             if (b)
@@ -113,30 +116,32 @@ namespace Sango.Game.Render.UI
             }
 
             int personCount = 0;
-            Scenario.CurSelected.personSet.ForEach(x =>
+
+            foreach (var x in ShortScenario.CurSelected.personSet.Values)
             {
-                if (x.BelongForce == force)
+                if (x.BelongForce == force.Id)
                 {
                     personCount++;
                 }
-            });
+            }
 
             int cityCount = 0;
             int foodCount = 0;
             int troopsCount = 0;
             int goldCount = 0;
-            Scenario.CurSelected.citySet.ForEach(x =>
+
+            foreach (var x in ShortScenario.CurSelected.citySet.Values)
             {
-                if (x.BelongForce == force && x.IsCity())
+                if (x.BelongForce == force.Id && x.BuildingType == 1)
                 {
                     cityCount++;
                     foodCount += x.food;
                     troopsCount += x.troops;
                     goldCount += x.gold;
                 }
-            });
+            }
 
-            forceHead.sprite = GameRenderHelper.LoadHeadIcon(force.Governor.headIconID, 1);
+            forceHead.sprite = GameRenderHelper.LoadHeadIcon(ShortScenario.CurSelected.personSet[force.Governor].headIconID, 1);
             forceInfo.text = $"{force.Name}\n城池:{cityCount} 武将:{personCount} \n士兵: {troopsCount} 粮食:{foodCount} 金钱:{goldCount}";
         }
 
@@ -162,16 +167,19 @@ namespace Sango.Game.Render.UI
             for (int i = 0; i < playerList.Count; i++)
                 forceIds.Add(playerList[i].Id);
 
+
+
             // 确定第一个视角
-            for (int i = 0; i < Scenario.CurSelected.forceSet.Count; i++)
+            foreach (var x in ShortScenario.CurSelected.forceSet.Values)
             {
                 bool isFind = false;
                 for (int j = 0; j < playerList.Count; j++)
                 {
-                    if (playerList[j] == Scenario.CurSelected.forceSet[i])
+                    if (playerList[j].Id == x.Id)
                     {
-                        City city = playerList[j].Governor.BelongCity;
-                        Vector3 position = Scenario.CurSelected.Map.Coords2Position(city.x, city.y);
+                        ShortPerson person = ShortScenario.CurSelected.personSet[playerList[j].Governor];
+                        ShortCity city = ShortScenario.CurSelected.citySet[person.BelongCity];
+                        Vector3 position = ShortScenario.CurSelected.Map.Coords2Position(city.x, city.y);
                         Scenario.CurSelected.Info.cameraPosition = position;
                         Scenario.CurSelected.Info.cameraRotation = new Vector3(40f, -50f, 0f);
                         Scenario.CurSelected.Info.cameraDistance = 400f;
@@ -182,15 +190,16 @@ namespace Sango.Game.Render.UI
                 if (isFind) break;
             }
 
-            if(playerList.Count == 0)
+            if (playerList.Count == 0)
             {
-                for (int i = 0; i < Scenario.CurSelected.forceSet.Count; i++)
+                foreach (var x in ShortScenario.CurSelected.forceSet.Values)
                 {
-                    Force force = Scenario.CurSelected.forceSet[i];
+                    ShortForce force = x;
                     if (force != null)
                     {
-                        City city = force.Governor.BelongCity;
-                        Vector3 position = Scenario.CurSelected.Map.Coords2Position(city.x, city.y);
+                        ShortPerson person = ShortScenario.CurSelected.personSet[force.Governor];
+                        ShortCity city = ShortScenario.CurSelected.citySet[person.BelongCity];
+                        Vector3 position = ShortScenario.CurSelected.Map.Coords2Position(city.x, city.y);
                         Scenario.CurSelected.Info.cameraPosition = position;
                         Scenario.CurSelected.Info.cameraRotation = new Vector3(40f, -50f, 0f);
                         Scenario.CurSelected.Info.cameraDistance = 400f;

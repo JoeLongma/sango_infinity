@@ -450,7 +450,9 @@ namespace Sango.Game
             this.Map.Init(this);
             this.Prepare();
             this.Init(this);
+            GameController.Instance.Reset();
             this.Start();
+            MapRender.Instance.OnMapLoaded -= OnWorldLoaded;
         }
 
         //public override void Load(BinaryReader reader)
@@ -483,6 +485,7 @@ namespace Sango.Game
             {
                 Sango.Log.Print($"Find Scenario: {file}");
                 Add(file);
+                ShortScenario.Add(file);
             });
         }
 
@@ -518,6 +521,10 @@ namespace Sango.Game
 
         public override void Clear()
         {
+            GameEvent.OnGameShutdown -= OnGameShutdown;
+            GameEvent.OnGamePause -= OnGamePause;
+            GameEvent.OnGameResume -= OnGameResume;
+            MapRender.Instance.OnMapLoaded -= OnWorldLoaded;
             IsAlive = false;
             base.Clear();
             CommonData = null;
@@ -541,6 +548,7 @@ namespace Sango.Game
         public void OnGameShutdown()
         {
             Clear();
+            Cur = null;
         }
         public void OnGamePause()
         {
