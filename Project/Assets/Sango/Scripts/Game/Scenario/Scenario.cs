@@ -94,6 +94,8 @@ namespace Sango.Game
         public Force CurRunForce { get; private set; }
         public SeasonType CurSeason { get { return GameDefine.SeasonInMonth[Info.month - 1]; } }
 
+        List<int> startPlayerList;
+
         /// <summary>
         /// 调试用
         /// </summary>
@@ -408,6 +410,12 @@ namespace Sango.Game
         {
             LoadBaseContent();
 
+            if (startPlayerList != null)
+            {
+                Info.playerForceList = startPlayerList.ToArray();
+                startPlayerList = null;
+            }
+
             // 玩家确定
             if (Info.playerForceList != null && Info.playerForceList.Length > 0)
             {
@@ -423,6 +431,9 @@ namespace Sango.Game
                     }
                 });
             }
+
+
+
 
             prepareList.Add(forceSet);
             prepareList.Add(corpsSet);
@@ -502,6 +513,12 @@ namespace Sango.Game
                     return a.Info.priority.CompareTo(b.Info.priority);
                 }
             });
+        }
+
+        public static void StartScenario(Scenario scenario, List<int> playerList)
+        {
+            scenario.startPlayerList = playerList;
+            StartScenario(scenario);
         }
 
         public static void StartScenario(Scenario scenario)

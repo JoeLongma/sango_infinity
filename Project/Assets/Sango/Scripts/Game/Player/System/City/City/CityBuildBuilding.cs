@@ -33,10 +33,20 @@ namespace Sango.Game.Player
             GameEvent.OnCityContextMenuShow -= OnCityContextMenuShow;
         }
 
+        public override bool IsValid
+        {
+            get
+            {
+
+                return TargetCity.freePersons.Count > 0 && TargetCity.gold > 500;
+            }
+        }
+
         void OnCityContextMenuShow(ContextMenuData menuData, City city)
         {
+            TargetCity = city;
             if (city.BelongForce != null && city.BelongForce.IsPlayer && city.BelongForce == Scenario.Cur.CurRunForce)
-                menuData.Add("都市/城建", 0, city, OnClickMenuItem);
+                menuData.Add("都市/城建", 0, city, OnClickMenuItem, IsValid);
         }
 
         void OnClickMenuItem(ContextMenuItem contextMenuItem)

@@ -167,8 +167,6 @@ namespace Sango.Game.Render.UI
             for (int i = 0; i < playerList.Count; i++)
                 forceIds.Add(playerList[i].Id);
 
-
-
             // 确定第一个视角
             foreach (var x in ShortScenario.CurSelected.forceSet.Values)
             {
@@ -208,10 +206,10 @@ namespace Sango.Game.Render.UI
                 }
             }
 
-            Scenario.CurSelected.Info.playerForceList = forceIds.ToArray();
+            //Scenario.CurSelected.Info.playerForceList = forceIds.ToArray();
             Window.Instance.Open("window_loading");
             Window.Instance.Close("window_scenario_force_select");
-            Scenario.StartScenario(Scenario.CurSelected);
+            Scenario.StartScenario(Scenario.CurSelected, forceIds);
         }
 
         public void Update()

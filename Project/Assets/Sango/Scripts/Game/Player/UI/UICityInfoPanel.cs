@@ -43,13 +43,14 @@ namespace Sango.Game.Render.UI
             base.OnShow();
             City city = (City)objects[0];
 
+            float dep = (float)Screen.width / Screen.height;
             Vector2 pos = Camera.main.WorldToScreenPoint(city.CenterCell.Position);
             bool showLeft = pos.x > (Screen.width / 2 - 100);
             pos = root.anchoredPosition;
             if (showLeft)
-                pos.x = -(Screen.width - root.sizeDelta.x) / 2;
+                pos.x = -(dep * 1080f - root.sizeDelta.x) / 2;
             else
-                pos.x = (Screen.width - root.sizeDelta.x) / 2;
+                pos.x = (dep * 1080f - root.sizeDelta.x) / 2;
             root.anchoredPosition = pos;
 
             name.text = city.Name;
