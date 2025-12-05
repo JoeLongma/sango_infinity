@@ -27,6 +27,10 @@ namespace Sango.Game.Render.UI
 
         public override void OnShow()
         {
+            forceDesc.text = "";
+            forceHead.sprite = null;
+            forceInfo.text = "";
+            playerList.Clear();
             ShortScenario scenario = ShortScenario.CurSelected;
             nextBtn.interactable = false;
             int i = 0;
@@ -96,7 +100,8 @@ namespace Sango.Game.Render.UI
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < playerList.Count; i++)
             {
-                stringBuilder.Append(playerList[i].Name);
+                ShortForce force_sel = playerList[i];
+                stringBuilder.Append(ShortScenario.CurSelected.personSet[force_sel.Governor].Name);
                 if (i < playerList.Count - 1)
                     stringBuilder.Append(",");
             }

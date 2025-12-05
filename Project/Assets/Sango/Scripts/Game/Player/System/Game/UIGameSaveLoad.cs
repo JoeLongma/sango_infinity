@@ -133,6 +133,12 @@ namespace Sango.Game.Render.UI
 
         public void ShowScenario(int index)
         {
+
+            if (isSave)
+            {
+                Save(index);
+            }
+
             curSelectIndex = index;
             ShortScenario scenario = Player.Player.Instance.all_saved_scenario_list[index];
             if (scenario == null)

@@ -57,6 +57,8 @@ namespace Sango.Game.Player
 
         public void UpdateJobValue()
         {
+            if (personList.Count <= 0)
+                return;
             TargetBuildingType = canSelectBuildingTypes[CurSelectBuildingTypeIndex];
             int buildAbility = GameUtility.Method_PersonBuildAbility(personList.ToArray());
             int turnCount = TargetBuildingType.durabilityLimit % buildAbility == 0 ? 0 : 1;
@@ -77,6 +79,8 @@ namespace Sango.Game.Player
 
         public void DoBuildBuilding()
         {
+            if (personList.Count <= 0)
+                return;
             TargetCity.JobBuildBuilding(CurSelectSlotIndex, personList.ToArray(), TargetBuildingType, wonderBuildCounter);
         }
 

@@ -413,6 +413,14 @@ namespace Sango.Game
         {
             base.Init(scenario);
 
+            // 空闲人员判断
+            freePersons.Clear();
+            allPersons.ForEach(person =>
+            {
+                if (!person.ActionOver && person.IsFree)
+                    freePersons.Add(person);
+            });
+
             if (IsPort())
                 BelongCity.portList.Add((Port)this);
             else if (IsGate())
@@ -683,13 +691,13 @@ namespace Sango.Game
             if (Render != null)
                 Render.UpdateRender();
 
-            return base.OnDayStart(scenario);
+            return base.OnForceTurnStart(scenario);
         }
         public override bool OnForceTurnEnd(Scenario scenario)
         {
             CurActiveTroop = null;
             isUpdatedFightPower = false;
-            return base.OnDayStart(scenario);
+            return base.OnForceTurnEnd(scenario);
         }
 
         public void FoodCost(Scenario scenario)

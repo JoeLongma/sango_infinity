@@ -51,6 +51,7 @@ namespace Sango.Game.Render.UI
             usedItems.Add(item);
             item.gameObject.SetActive(true);
             item.SetWidth(width).SetText(content);
+            item.transform.SetAsLastSibling();
         }
 
         public void SetSelected(bool b)

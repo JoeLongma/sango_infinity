@@ -31,7 +31,8 @@ namespace Sango.Game.Render.UI
             for (int i = 0; i < toggleGroup.Length; i++)
             {
                 toggleGroup[i].onValueChanged.RemoveAllListeners();
-                toggleGroup[i].onValueChanged.AddListener((b) => OnSortGroupChanged(i, b));
+                int btIndex = i;
+                toggleGroup[i].onValueChanged.AddListener((b) => OnSortGroupChanged(btIndex, b));
             }
         }
 

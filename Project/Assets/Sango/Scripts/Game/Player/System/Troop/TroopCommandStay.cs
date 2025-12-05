@@ -22,6 +22,19 @@ namespace Sango.Game.Player
             }
         }
 
+        protected override void OnTroopActionContextMenuShow(ContextMenuData menuData, Troop troop, Cell actionCell)
+        {
+            if (troop.BelongForce != null && troop.BelongForce.IsPlayer && troop.BelongForce == Scenario.Cur.CurRunForce)
+            {
+                TargetTroop = troop;
+                ActionCell = actionCell;
+                if (actionCell.building != null && actionCell.building.IsSameForce(troop) && actionCell.building.IsCityBase())
+                    menuData.Add("进入", customMenuOrder, actionCell, OnClickMenuItem, IsValid);
+                else
+                    menuData.Add("待命", customMenuOrder, actionCell, OnClickMenuItem, IsValid);
+            }
+        }
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -62,6 +75,10 @@ namespace Sango.Game.Player
         {
             TargetTroop.ActionOver = true;
             TargetTroop.Render?.UpdateRender();
+
+            if (ActionCell.building != null && ActionCell.building.IsSameForce(TargetTroop) && ActionCell.building.IsCityBase())
+                TargetTroop.EnterCity(ActionCell.building as City);
+
             Done();
         }
     }

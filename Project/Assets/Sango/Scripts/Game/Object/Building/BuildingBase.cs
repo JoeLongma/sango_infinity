@@ -94,6 +94,11 @@ namespace Sango.Game
         /// </summary>
         public List<Cell> effectCells;// = new List<Cell>();
 
+        public bool IsCityBase()
+        {
+            return IsCity() || IsPort() || IsGate();
+        }
+
         public bool IsCity()
         {
             return BuildingType.kind == (int)BuildingKindType.City;

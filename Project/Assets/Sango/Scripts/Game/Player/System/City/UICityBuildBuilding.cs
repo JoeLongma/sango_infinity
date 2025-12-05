@@ -65,6 +65,7 @@ namespace Sango.Game.Render.UI
                     cityBuildingSlot.SetBuilding(null).SetIndex(i).SetSelected(false);
                 }
             }
+            if (buildBuildingSys.CurSelectSlotIndex < 0) buildBuildingSys.CurSelectSlotIndex = 0;
             OnSelectSlot(buildingSlotPool[buildBuildingSys.CurSelectSlotIndex]);
             UpdateSlotInfo();
         }
@@ -103,6 +104,12 @@ namespace Sango.Game.Render.UI
                     upgradeButtonObj.SetActive(false);
                     buildButtonObj.SetActive(false);
                     selectPersonButtonObj.SetActive(false);
+
+                    if (building.BuildingType.nextId != 0)
+                    {
+                        BuildingType nextBuildingType = Scenario.Cur.GetObject<BuildingType>(building.BuildingType.nextId);
+                        buildBuildingSys.canSelectBuildingTypes.Add(nextBuildingType);
+                    }
                 }
                 else if (building.isUpgrading)
                 {
@@ -130,6 +137,7 @@ namespace Sango.Game.Render.UI
                 destroyButtonObj.SetActive(false);
                 upgradeButtonObj.SetActive(false);
                 selectPersonButtonObj.SetActive(true);
+                buildButtonObj.SetActive(true);
                 buildBuildingSys.canSelectBuildingTypes.Clear();
                 for (int i = (int)BuildingKindType.Farm; i < (int)BuildingKindType.ArrowTower; ++i)
                 {
@@ -158,7 +166,7 @@ namespace Sango.Game.Render.UI
             for (int i = 0; i < len; i++)
             {
                 BuildingType buildingType = buildBuildingSys.canSelectBuildingTypes[i];
-
+                buildingTypeItemPool[i].gameObject.SetActive(true);
                 if (buildBuildingSys.CurSelectBuildingTypeIndex < 0)
                     buildBuildingSys.CurSelectBuildingTypeIndex = i;
 

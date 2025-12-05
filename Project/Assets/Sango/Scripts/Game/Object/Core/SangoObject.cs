@@ -34,7 +34,11 @@ namespace Sango.Game
         [JsonProperty(Order = -98)]
         public virtual string Name { get; set; }
         public virtual string Tag { get; set; }
+
+        [JsonProperty]
         public virtual bool IsAlive { get; set; }
+
+        [JsonProperty]
         public virtual bool ActionOver { get; set; }
         public virtual ObjectRender GetRender() { return null; }
 

@@ -26,6 +26,7 @@ namespace Sango.Game
         /// <summary>
         /// 占用槽位ID
         /// </summary>
+        [JsonProperty]
         public int SlotId { get; set; }
 
         public int cellHarvestTotalFood = 0;

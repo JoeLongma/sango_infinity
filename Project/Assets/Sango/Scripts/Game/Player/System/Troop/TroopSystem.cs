@@ -30,12 +30,12 @@ namespace Sango.Game.Player
             if (!troop.IsAlive) return;
             TargetTroop = troop;
             if (!troop.ActionOver && troop.BelongForce.IsPlayer && troop.BelongForce == Scenario.Cur.CurRunForce)
-            {               
+            {
                 PlayerCommand.Instance.Push(this);
             }
             else
             {
-                Singleton<TroopMenu>.Instance.Start(troop, startPoint); 
+                Singleton<TroopMenu>.Instance.Start(troop, startPoint);
             }
         }
 
@@ -131,7 +131,7 @@ namespace Sango.Game.Player
                     {
                         if (isOverUI) return;
 
-                        if (moveRange.Contains(cell))
+                        if (moveRange.Contains(cell) && (cell.IsEmpty() || (cell.building.IsCityBase() && cell.building.IsSameForce(TargetTroop))))
                         {
                             movePath.Clear();
                             Scenario.Cur.Map.GetMovePath(TargetTroop, cell, movePath);
