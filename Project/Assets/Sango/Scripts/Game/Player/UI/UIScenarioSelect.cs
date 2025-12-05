@@ -77,6 +77,8 @@ namespace Sango.Game.Render.UI
             {
 
                 if (city.BuildingType > 1) continue;
+                if (city.Id == 0) continue;
+
 
                 GameObject cityObj;
                 if (i >= cityList.Count)

@@ -54,10 +54,6 @@ namespace Sango.Game.Player
         public override void OnDestroy()
         {
             ContextMenu.CloseAll();
-        }
-        public override void OnDone()
-        {
-            ContextMenu.CloseAll();
             Window.Instance.Close("window_city_info_panel");
         }
 

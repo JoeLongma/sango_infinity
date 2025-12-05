@@ -1064,6 +1064,7 @@ namespace Sango.Game
             Info.cameraPosition = MapRender.Instance.mapCamera.position;
             Info.cameraRotation = MapRender.Instance.mapCamera.lookRotate;
             Info.cameraDistance = MapRender.Instance.mapCamera.distance;
+            Info.dateTime = DateTime.Now.ToFileTime();
             Sango.Directory.Create(path, false);
             JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings();
             jsonSerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;

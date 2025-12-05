@@ -105,6 +105,8 @@ namespace Sango.Game
 
         public void HandleOverCell()
         {
+            if (Scenario.Cur == null) return;
+
             Cell overCell = CheckMouseIsOnMapCell(Input.mousePosition, out Vector3 hitPoint);
             if (overCell != mouseOverCell)
             {

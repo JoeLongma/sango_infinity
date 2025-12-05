@@ -32,5 +32,16 @@ namespace Sango.Game.Player
             ContextMenu.CloseAll();
             PlayerCommand.Instance.Push(this);
         }
+
+        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)
+        {
+            switch (eventType)
+            {
+                case CommandEventType.RClickUp:
+                    PlayerCommand.Instance.Back(); break;
+            }
+
+            base.HandleEvent(eventType, cell, clickPosition, isOverUI);
+        }
     }
 }

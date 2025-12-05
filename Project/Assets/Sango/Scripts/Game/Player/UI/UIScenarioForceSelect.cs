@@ -34,6 +34,8 @@ namespace Sango.Game.Render.UI
             foreach (var city in scenario.citySet.Values)
             {
                 if (city.BuildingType > 1) return;
+                if (city.Id == 0) continue;
+
 
                 GameObject cityObj;
                 if (i >= cityList.Count)

@@ -10,8 +10,7 @@ namespace Sango.Game.Player
 {
     public class Player : Singleton<Player>
     {
-        public Scenario[] all_saved_scenario_list = new Scenario[50];
-
+        public ShortScenario[] all_saved_scenario_list = new ShortScenario[50];
 
         public void Init()
         {
@@ -35,7 +34,7 @@ namespace Sango.Game.Player
 #if SANGO_DEBUG
                     Sango.Log.Print($"Find Saved data : {fileName}");
 #endif
-                    Scenario scenario = new Scenario(fileName);
+                    ShortScenario scenario = new ShortScenario(fileName);
                     all_saved_scenario_list[i - 1] = scenario;
                 }
             }
@@ -43,9 +42,9 @@ namespace Sango.Game.Player
 
         public void Save(int index)
         {
-            string fileName = $"{Path.SaveRootPath}/Save/save{index}.json";
+            string fileName = $"{Path.SaveRootPath}/Save/save{index+1}.json";
             Scenario.Cur.Save(fileName);
-            all_saved_scenario_list[index] = new Scenario(fileName);
+            all_saved_scenario_list[index] = new ShortScenario(fileName);
             GameEvent.OnGameSave?.Invoke(Scenario.Cur, index);
         }
 

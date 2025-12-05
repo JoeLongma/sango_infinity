@@ -41,5 +41,7 @@ namespace Sango.Game
         public Vector3 cameraRotation;
         [JsonProperty]
         public float cameraDistance;
+        [JsonProperty]
+        public long dateTime;
     }
 }

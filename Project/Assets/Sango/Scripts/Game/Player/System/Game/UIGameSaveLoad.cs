@@ -1,4 +1,5 @@
 ﻿using Sango.Game.Player;
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -14,57 +15,94 @@ namespace Sango.Game.Render.UI
         bool isSave = false;
         public int curShowPage;
         public int CountInPage = 10;
+        public int curSelectIndex = 0;
 
         public Text titleLabel;
 
-        public Text scenarioDescText;
-        public Text scenarioInfoText;
-        public RawImage scenarioPosterImg;
+        public UITextField id;
+        public UITextField name;
+        public Image head;
+        public UITextField forceName;
+        public UITextField playYear;
+        public UITextField playNum;
+        public UITextField time;
+        public UITextField playTime;
+        public UITextField desc;
 
-        public UIScenarioItem[] selectedItems;
+        public UIScenarioSaveItem[] selectedItems;
 
         public GameObject cityObject;
         public RectTransform mapBounds;
         List<GameObject> cityList = new List<GameObject>();
-
+        ShortScenario newestData;
+        UIScenarioSaveItem curSelectedItem;
         public override void OnShow(params object[] objects)
         {
             isSave = (bool)objects[0];
             titleLabel.text = isSave ? "存档" : "读档";
+
+            long t = 0;
+            for (int k = 0; k < Player.Player.Instance.all_saved_scenario_list.Length; k++)
+            {
+                ShortScenario scenario = Player.Player.Instance.all_saved_scenario_list[k];
+                if (scenario != null)
+                {
+                    if (scenario.Info.dateTime > t)
+                    {
+                        newestData = scenario;
+                        t = scenario.Info.dateTime;
+                    }
+                }
+            }
             ShowPage(0);
         }
 
         public void ShowPage(int curShowPage)
         {
+            curSelectedItem = null;
+            curSelectIndex = -1;
+            id.SetText("");
+            name.SetText("");
+            forceName.SetText("");
+            playYear.SetText("");
+            playNum.SetText("");
+            time.SetText("");
+            playTime.SetText("");
+            desc.SetText("");
+            head.sprite = null;
             this.curShowPage = curShowPage;
             for (int i = 0; i < CountInPage; i++)
             {
                 int index = curShowPage * CountInPage + i;
-
-                Scenario scenario = Player.Player.Instance.all_saved_scenario_list[index];
-                UIScenarioItem item = selectedItems[i];
-
+                ShortScenario scenario = Player.Player.Instance.all_saved_scenario_list[index];
+                UIScenarioSaveItem item = selectedItems[i];
+                item.SetIsLoad(!isSave);
+                item.SetSelected(false);
                 if (scenario == null)
                 {
-                    item.SetName("空");
+                    item.SetId(-1).SetInactive(true).SetName("").SetTime(-1).SetNew(false);
                 }
                 else
                 {
-                    item.SetName(scenario.Name);
+                    item.SetId(index + 1).SetInactive(false).SetName(scenario.forceSet[scenario.Info.curForceId].Name).SetTime(scenario.Info.dateTime).SetNew(newestData == scenario);
                 }
-                item.SetColor(isSave ? Color.green : Color.red);
                 item.BindCall(() =>
                 {
-                    if (isSave)
+                    if (curSelectedItem != null)
+                        curSelectedItem.SetSelected(false);
+                    curSelectedItem = null;
+                    ShortScenario scenario1 = Player.Player.Instance.all_saved_scenario_list[index];
+                    if (scenario1 != null)
                     {
-                        Save(index);
+                        curSelectedItem = item;
+                        curSelectedItem.SetSelected(true);
                     }
-                    else
-                    {
-                        Load(index);
-                    }
+                    ShowScenario(index);
                 });
-
+                item.BindSureCall(() =>
+                {
+                    Load(index);
+                });
             }
         }
 
@@ -75,7 +113,7 @@ namespace Sango.Game.Render.UI
 
         public void Save(int index)
         {
-            Scenario scenario = Player.Player.Instance.all_saved_scenario_list[index];
+            ShortScenario scenario = Player.Player.Instance.all_saved_scenario_list[index];
             string content = scenario != null ? $"是否覆盖{index + 1}号存档" : $"是否保存至{index + 1}号存档";
             UIDialog.Open(content, () =>
             {
@@ -87,7 +125,7 @@ namespace Sango.Game.Render.UI
 
         public void Load(int index)
         {
-            Scenario scenario = Player.Player.Instance.all_saved_scenario_list[index];
+            ShortScenario scenario = Player.Player.Instance.all_saved_scenario_list[index];
             if (scenario == null) return;
             PlayerCommand.Instance.Done();
             Player.Player.Instance.Load(index);
@@ -95,22 +133,40 @@ namespace Sango.Game.Render.UI
 
         public void ShowScenario(int index)
         {
-            Scenario scenario = Player.Player.Instance.all_saved_scenario_list[index];
+            curSelectIndex = index;
+            ShortScenario scenario = Player.Player.Instance.all_saved_scenario_list[index];
             if (scenario == null)
             {
-                scenarioInfoText.text = "";
-                scenarioDescText.text = "";
+                id.SetText("");
+                name.SetText("");
+                forceName.SetText("");
+                playYear.SetText("");
+                playNum.SetText("");
+                time.SetText("");
+                playTime.SetText("");
+                desc.SetText("");
+                head.sprite = null;
                 return;
             }
 
             ScenarioInfo scenarioInfo = scenario.Info;
-            scenarioInfoText.text = $"{scenarioInfo.year} 年 {scenarioInfo.month}月 {scenarioInfo.day}日  {scenarioInfo.name}";
-            scenarioDescText.text = scenarioInfo.description;
-            scenario.LoadBaseContent();
+            id.SetText((index + 1).ToString());
+            name.SetText($"{scenarioInfo.year} 年 {scenarioInfo.month}月 {scenarioInfo.day}日   {scenarioInfo.name}");
+
+            ShortForce force = scenario.forceSet[scenarioInfo.playerForceList[0]];
+            head.sprite = GameRenderHelper.LoadHeadIcon(scenario.personSet[force.Governor].headIconID);
+            forceName.SetText(force.Name);
+            playYear.SetText($"{scenarioInfo.year} 年 {scenarioInfo.month}月 {scenarioInfo.day}日");
+            playNum.SetText($"{scenarioInfo.playerForceList.Length.ToString()}人游玩");
+            DateTime date = DateTime.FromFileTime(scenarioInfo.dateTime);
+            time.SetText(date.ToString("yyyy-MM-dd HH:mm:ss"));
+            playTime.SetText("");
+            desc.SetText(scenarioInfo.description);
             int i = 0;
-            scenario.citySet.ForEach(city =>
+            foreach (var city in scenario.citySet.Values)
             {
-                if (!city.IsCity()) return;
+                if (city.BuildingType > 1) return;
+                if (city.Id == 0) continue;
 
                 GameObject cityObj;
                 if (i >= cityList.Count)
@@ -132,9 +188,11 @@ namespace Sango.Game.Render.UI
                 rectTransform.anchoredPosition = new Vector2(x, y);
 
                 Image bgImg = cityObj.transform.GetChild(0).GetComponent<Image>();
-                if (city.BelongForce != null)
+                if (city.BelongForce > 0)
                 {
-                    bgImg.color = city.BelongForce.Flag.color;
+                    ShortForce shortForce = scenario.forceSet[city.BelongForce];
+                    Flag flag = scenario.CommonData.Flags[shortForce.Flag];
+                    bgImg.color = flag.color;
                 }
                 else
                 {
@@ -142,13 +200,25 @@ namespace Sango.Game.Render.UI
                 }
 
                 cityObj.SetActive(true);
-            });
+            }
 
             for (int j = i; j < cityList.Count; j++)
             {
                 cityList[j].SetActive(false);
             }
 
+        }
+
+        public void OnSure()
+        {
+            if (isSave)
+            {
+                Save(curSelectIndex);
+            }
+            else
+            {
+                Load(curSelectIndex);
+            }
         }
 
         public void OnClose()

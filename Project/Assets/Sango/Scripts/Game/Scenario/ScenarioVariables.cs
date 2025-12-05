@@ -265,6 +265,14 @@ namespace Sango.Game
         public int[] jobTechniquePoint = new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 };
 
         /// <summary>
+        /// 工作获取的技巧点 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
+        /// </summary>
+        [JsonProperty]
+        public int[] jobCostActionPoint= new int[] { 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20 };
+
+
+
+        /// <summary>
         /// 建筑最大回合数
         /// </summary>
         [JsonProperty]

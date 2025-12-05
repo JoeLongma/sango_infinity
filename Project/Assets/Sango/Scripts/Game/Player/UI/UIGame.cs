@@ -371,6 +371,7 @@ namespace Sango.Game.Render.UI
 
         public void OnGameSetting()
         {
+            Window.Instance.Close("window_city_info_panel");
             Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(Game.Instance.UICamera, gameSettingRect.position);
             Singleton<GameSettingSystem>.Instance.Start(screenPos + new Vector2(0, -gameSettingRect.sizeDelta.y - 5));
         }
