@@ -131,7 +131,7 @@ namespace Sango.Game.Player
                     {
                         if (isOverUI) return;
 
-                        if (moveRange.Contains(cell) && (cell.IsEmpty() || (cell.building.IsCityBase() && cell.building.IsSameForce(TargetTroop))))
+                        if (moveRange.Contains(cell) && (cell == TargetTroop.cell || cell.IsEmpty() || (cell.building.IsCityBase() && cell.building.IsSameForce(TargetTroop))))
                         {
                             movePath.Clear();
                             Scenario.Cur.Map.GetMovePath(TargetTroop, cell, movePath);
