@@ -39,7 +39,12 @@ namespace Sango.Game.Player
 
             targetUI.title_value.text = "治安";
             targetUI.title_gold.text = "资金";
-            targetUI.value_value.text = $"{TargetCity.security}→{TargetCity.security + wonderNumber}";
+
+            int destValue = TargetCity.security + wonderNumber;
+            if (destValue > 100)
+                destValue = 100;
+
+            targetUI.value_value.text = $"{TargetCity.security}→{destValue}";
             targetUI.value_gold.text = $"{TargetCity.GetJobCost(CityJobType.Inspection)}/{TargetCity.gold}";
         }
 

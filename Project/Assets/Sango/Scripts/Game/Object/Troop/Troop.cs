@@ -4,6 +4,7 @@ using Sango.Game.Tools;
 using Sango.Tools;
 using System;
 using System.Collections.Generic;
+using UnityEngine.AI;
 
 namespace Sango.Game
 {
@@ -200,7 +201,7 @@ namespace Sango.Game
         /// 是否在水中
         /// </summary>
         /// <returns></returns>
-        public bool IsInWater => cell?.TerrainType.isWater??false;
+        public bool IsInWater => cell?.TerrainType.isWater ?? false;
 
 
         public List<SkillInstance> skills => IsInWater ? waterSkills : landSkills;
@@ -317,6 +318,7 @@ namespace Sango.Game
             CalculateAttribute(scenario);
             if (LandTroopType.isFight && LandTroopType.Id != 1)
                 BelongCity.allAttackTroops.Add(this);
+            cell.troop = this;
             Render = new TroopRender(this);
             foodCost = (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
         }
@@ -1545,8 +1547,12 @@ namespace Sango.Game
             city.AddTroops(troops);
 
             // 返还兵装
-            city.itemStore.Gain(TroopType.costItems, troops);
+            city.itemStore.Gain(LandTroopType.costItems, troops);
+            city.itemStore.Gain(WaterTroopType.costItems, troops);
             city.woundedTroops += woundedTroops;
+
+            // 中和士气
+            city.morale = (city.morale * city.troops + morale * troops) / (city.troops + troops);
 
             ForEachPerson((person) =>
             {

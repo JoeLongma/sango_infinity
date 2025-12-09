@@ -11,7 +11,7 @@ namespace Sango.Game.Player
         public List<Person> personList = new List<Person>();
         public int wonderBuildCounter = 0;
 
-        public string customTitleName = "城建";
+        public string customTitleName = "内城";
         public List<ObjectSortTitle> customTitleList = new List<ObjectSortTitle>()
         {
             PersonSortFunction.SortByName,
@@ -38,15 +38,16 @@ namespace Sango.Game.Player
             get
             {
 
-                return TargetCity.freePersons.Count > 0 && TargetCity.gold > 500;
+                //return TargetCity.freePersons.Count > 0 && TargetCity.gold > 500;
+                return true;
             }
         }
 
         void OnCityContextMenuShow(ContextMenuData menuData, City city)
         {
             TargetCity = city;
-            if (city.BelongForce != null && city.BelongForce.IsPlayer && city.BelongForce == Scenario.Cur.CurRunForce)
-                menuData.Add("都市/城建", 0, city, OnClickMenuItem, IsValid);
+            if (city.IsCity() && city.BelongForce != null && city.BelongForce.IsPlayer && city.BelongForce == Scenario.Cur.CurRunForce)
+                menuData.Add("都市/内城", 0, city, OnClickMenuItem, IsValid);
         }
 
         void OnClickMenuItem(ContextMenuItem contextMenuItem)

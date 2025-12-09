@@ -7,7 +7,7 @@ namespace Sango.Game.Player
     public class CityTransformPerson : CityComandBase
     {
         List<City> TransformTo = new List<City>();
-
+       
         public CityTransformPerson()
         {
             customTitleName = "移动";
@@ -28,6 +28,10 @@ namespace Sango.Game.Player
                 // 需要至少两座城
                 return TargetCity.BelongForce.CityCount > 1;
             }
+        }
+        protected override bool CityOnly()
+        {
+            return false;
         }
 
         protected override void OnUIInit()
@@ -87,6 +91,12 @@ namespace Sango.Game.Player
                 personList[i].TransformToCity(TransformTo[0]);
             }
             Done();
+        }
+
+        public override void OnSelectPerson()
+        {
+            Singleton<PersonSelectSystem>.Instance.Start(TargetCity.freePersons,
+              personList, TargetCity.freePersons.Count, OnPersonChange, customTitleList, customTitleName);
         }
     }
 }

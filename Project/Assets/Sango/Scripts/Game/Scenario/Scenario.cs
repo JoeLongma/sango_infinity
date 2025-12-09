@@ -560,6 +560,8 @@ namespace Sango.Game
             fireSet.Clear();
             allianceSet.Clear();
             RelationMap = null;
+            prepareList.Clear();
+            eventReciveList.Clear();
         }
 
         public void OnGameShutdown()

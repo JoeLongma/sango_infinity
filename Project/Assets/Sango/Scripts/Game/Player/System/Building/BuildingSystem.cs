@@ -10,7 +10,7 @@ namespace Sango.Game.Player
 
         public void Start(BuildingBase building, Vector3 startPoint)
         {
-            if (building.IsCity())
+            if (building.IsCityBase())
             {
                 Singleton<CitySystem>.Instance.Start((City)building, startPoint);
                 return;

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Player
 {
@@ -19,13 +18,15 @@ namespace Sango.Game.Player
             windowName = "window_city_create_items";
         }
 
-        public override void OnEnter()
+        protected override void InitItem()
         {
             ItemTypes.Clear();
             Scenario scenario = Scenario.Cur;
             for (int i = 10; i <= 12; i++)
             {
-                ItemTypes.Add(scenario.GetObject<ItemType>(i));
+                ItemType itemType = scenario.GetObject<ItemType>(i);
+                if (itemType.cost > 0)
+                    ItemTypes.Add(itemType);
             }
             CurSelectedItemTypeIndex = 0;
             CurSelectedItemType = ItemTypes[CurSelectedItemTypeIndex];

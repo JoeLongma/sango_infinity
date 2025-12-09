@@ -88,7 +88,7 @@ namespace Sango.Game
                 {
                     fire = this,
                     targetTroop = troop,
-                    damage = -dmg
+                    damage = dmg
                 };
                 RenderEvent.Instance.Add(@event);
             }
@@ -109,7 +109,7 @@ namespace Sango.Game
                 {
                     fire = this,
                     targetBuilding = building,
-                    damage = -dmg
+                    damage = dmg
                 };
                 RenderEvent.Instance.Add(@event);
             }

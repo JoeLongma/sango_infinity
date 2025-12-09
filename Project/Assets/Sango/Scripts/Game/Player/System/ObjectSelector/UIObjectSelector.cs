@@ -75,6 +75,13 @@ namespace Sango.Game.Render.UI
 
                 uIPersonSortButton.gameObject.SetActive(true);
                 uIPersonSortButton.Clear().SetWidth(sortTitle.width).SetName(sortTitle.name);
+
+                uIPersonSortButton.onClick = (up) =>
+                {
+                    objectSelectSystem.Objects.Sort(sortTitle.Sort);
+                    if (!up) objectSelectSystem.Objects.Reverse();
+                    loopScrollRect.RefillCells();
+                };
             }
 
             for (int i = sortItems.Count; i < sortButtonPool.Count; i++)

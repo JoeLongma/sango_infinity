@@ -65,6 +65,7 @@ namespace Sango.Game.Render.UI
                 UIBuildingTypeItem cityBuildingSlot = go.GetComponent<UIBuildingTypeItem>();
                 landTroopTypePool.Add(cityBuildingSlot);
                 cityBuildingSlot.onSelected = OnSelectLandType;
+
                 go.SetActive(true);
             }
 
@@ -76,6 +77,7 @@ namespace Sango.Game.Render.UI
                 TroopType troopType = cityExpeditionSys.ActivedLandTroopTypes[i];
                 UIBuildingTypeItem cityBuildingSlot = landTroopTypePool[i];
                 cityBuildingSlot.SetTroopType(troopType).SetIndex(i).SetSelected(cityExpeditionSys.CurSelectLandTrropTypeIndex == i);
+                cityBuildingSlot.SetValid(cityExpeditionSys.TargetCity.itemStore.CheckItemEnough(troopType.costItems, 1));
             }
 
             slotLength = cityExpeditionSys.ActivedWaterTroopTypes.Count;
@@ -96,6 +98,7 @@ namespace Sango.Game.Render.UI
                 TroopType troopType = cityExpeditionSys.ActivedWaterTroopTypes[i];
                 UIBuildingTypeItem cityBuildingSlot = waterTroopTypePool[i];
                 cityBuildingSlot.SetTroopType(troopType).SetIndex(i).SetSelected(cityExpeditionSys.CurSelectWaterTrropTypeIndex == i);
+                cityBuildingSlot.SetValid(cityExpeditionSys.TargetCity.itemStore.CheckItemEnough(troopType.costItems, 1));
             }
 
             UpdateContent();

@@ -18,7 +18,10 @@ namespace Sango.Game.Player
             customMenuOrder = 201;
             windowName = "window_city_command_base";
         }
-
+        protected override bool CityOnly()
+        {
+            return false;
+        }
         public override bool IsValid
         {
             get

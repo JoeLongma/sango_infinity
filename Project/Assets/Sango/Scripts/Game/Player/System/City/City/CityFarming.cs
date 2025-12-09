@@ -12,7 +12,7 @@ namespace Sango.Game.Player
             customTitleList = new List<ObjectSortTitle>()
             {
                 PersonSortFunction.SortByName,
-                PersonSortFunction.SortByStrength,
+                PersonSortFunction.SortByPolitics,
             };
             customMenuName = "都市/农业";
             customMenuOrder = 10;
@@ -37,7 +37,12 @@ namespace Sango.Game.Player
 
             targetUI.title_value.text = "农业";
             targetUI.title_gold.text = "资金";
-            targetUI.value_value.text = $"{TargetCity.agriculture}→{TargetCity.agriculture + wonderNumber}";
+
+            int destValue = TargetCity.agriculture + wonderNumber;
+            if (destValue > TargetCity.AgricultureLimit)
+                destValue = TargetCity.AgricultureLimit;
+
+            targetUI.value_value.text = $"{TargetCity.agriculture}→{destValue}";
             targetUI.value_gold.text = $"{TargetCity.GetJobCost(CityJobType.Farming)}/{TargetCity.gold}";
         }
 

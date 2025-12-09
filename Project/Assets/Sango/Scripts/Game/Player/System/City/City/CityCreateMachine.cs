@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Sango.Game.Render.UI;
+using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
-    public class CityCreateMachine : CityCreateBoat
+    public class CityCreateMachine : CityCreateItems
     {
         public CityCreateMachine()
         {
@@ -19,7 +20,7 @@ namespace Sango.Game.Player
            
         }
 
-        public override void OnEnter()
+        protected override void InitItem()
         {
             ItemTypes.Clear();
             Scenario scenario = Scenario.Cur;
@@ -30,7 +31,6 @@ namespace Sango.Game.Player
             CurSelectedItemTypeIndex = 0;
             CurSelectedItemType = ItemTypes[CurSelectedItemTypeIndex];
             TotalBuildingCount = TargetCity.GetIntriorBuildingComplateNumber((int)BuildingKindType.MechineFactory);
-            base.OnEnter();
         }
 
         public override bool IsValid

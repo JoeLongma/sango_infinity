@@ -12,7 +12,7 @@ namespace Sango.Game.Player
             customTitleList = new List<ObjectSortTitle>()
             {
                 PersonSortFunction.SortByName,
-                PersonSortFunction.SortByStrength,
+                PersonSortFunction.SortByIntelligence,
             };
             customMenuName = "都市/商业";
             customMenuOrder = 5;
@@ -37,7 +37,12 @@ namespace Sango.Game.Player
 
             targetUI.title_value.text = "商业";
             targetUI.title_gold.text = "资金";
-            targetUI.value_value.text = $"{TargetCity.commerce}→{TargetCity.commerce + wonderNumber}";
+
+            int destValue = TargetCity.commerce + wonderNumber;
+            if (destValue > TargetCity.CommerceLimit)
+                destValue = TargetCity.CommerceLimit;
+
+            targetUI.value_value.text = $"{TargetCity.commerce}→{destValue}";
             targetUI.value_gold.text = $"{TargetCity.GetJobCost(CityJobType.Develop)}/{TargetCity.gold}";
         }
 

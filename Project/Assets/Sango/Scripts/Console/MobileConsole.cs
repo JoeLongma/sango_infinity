@@ -43,16 +43,17 @@ namespace SKFramework
         void Update()
         {
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
-            if (Input.GetMouseButton(0) && Input.GetMouseButton(1) && Time.time - CoolDown_ > 2.0f)
+            //if (Input.GetMouseButton(0) && Input.GetMouseButton(1) && Time.time - CoolDown_ > 2.0f)
 #else
             if (Input.touchCount > 3 && Time.time - CoolDown_ > 2.0f)
-#endif
             {
                 Visible = !Visible;
                 CoolDown_ = Time.time;
             }
+#endif
+
         }
-#endregion // 开关
+        #endregion // 开关
 
         private Rect rcWindow_;
         void OnGUI()

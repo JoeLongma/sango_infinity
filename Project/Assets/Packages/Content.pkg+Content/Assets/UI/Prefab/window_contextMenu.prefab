@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 1868779983743934136}
   - component: {fileID: 6953424568196829703}
   - component: {fileID: 3439697124873459230}
+  - component: {fileID: 8644411189992001108}
   m_Layer: 5
   m_Name: subRoot2
   m_TagString: Untagged
@@ -240,6 +241,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &8644411189992001108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6121520172477516993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1245b4da1b56ef04ea4e29e03bce86ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  judgmentWidth: 1
+  judgmentHeight: 1
+  offset: {x: 0, y: 0}
+  delayTime: 0
+  cachePosition: {x: 0, y: 0}
 --- !u!1 &7211813485333440191
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,6 +271,7 @@ GameObject:
   - component: {fileID: 9100348847159160473}
   - component: {fileID: 6037201108527361767}
   - component: {fileID: 6829028875620942515}
+  - component: {fileID: 4853143920859062127}
   m_Layer: 5
   m_Name: subRoot1
   m_TagString: Untagged
@@ -359,6 +378,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &4853143920859062127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7211813485333440191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1245b4da1b56ef04ea4e29e03bce86ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  judgmentWidth: 1
+  judgmentHeight: 1
+  offset: {x: 0, y: 0}
+  delayTime: 0
+  cachePosition: {x: 0, y: 0}
 --- !u!1 &7981012108448172643
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,6 +408,7 @@ GameObject:
   - component: {fileID: 5758196291159785329}
   - component: {fileID: 5284125486027471571}
   - component: {fileID: 7946022037988302929}
+  - component: {fileID: 8749090539390931892}
   m_Layer: 5
   m_Name: menuRoot
   m_TagString: Untagged
@@ -478,6 +515,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &8749090539390931892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7981012108448172643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1245b4da1b56ef04ea4e29e03bce86ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  judgmentWidth: 1
+  judgmentHeight: 1
+  offset: {x: 0, y: 0}
+  delayTime: 0
+  cachePosition: {x: 0, y: 0}
 --- !u!1 &9039031632039893254
 GameObject:
   m_ObjectHideFlags: 0

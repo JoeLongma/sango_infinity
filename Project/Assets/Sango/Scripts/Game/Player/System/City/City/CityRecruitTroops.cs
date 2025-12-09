@@ -38,7 +38,13 @@ namespace Sango.Game.Player
 
             targetUI.title_value.text = "士兵";
             targetUI.title_gold.text = "资金";
-            targetUI.value_value.text = $"{TargetCity.troops}→{TargetCity.troops + wonderNumber}";
+
+
+            int destValue = TargetCity.troops + wonderNumber;
+            if (destValue > TargetCity.TroopsLimit)
+                destValue = TargetCity.TroopsLimit;
+
+            targetUI.value_value.text = $"{TargetCity.troops}→{destValue}";
             targetUI.value_gold.text = $"{TargetCity.GetJobCost(CityJobType.RecuritTroops)}/{TargetCity.gold}";
         }
 

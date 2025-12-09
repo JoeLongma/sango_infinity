@@ -33,6 +33,7 @@ namespace Sango.Game.Render.UI
                 usedItems[i].gameObject.SetActive(false);
                 pool.Add(usedItems[i]);
             }
+            usedItems.Clear();
         }
 
         public void Add(string content, int width)

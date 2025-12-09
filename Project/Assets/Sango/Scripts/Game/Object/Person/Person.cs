@@ -372,7 +372,7 @@ namespace Sango.Game
         /// <summary>
         /// 商业能力
         /// </summary>
-        public int BaseCommerceAbility => Politics;
+        public int BaseCommerceAbility => Intelligence;
 
         /// <summary>
         /// 巡视能力
@@ -493,7 +493,7 @@ namespace Sango.Game
 
                     if (missionType != (int)MissionType.PersonInCityCaptive && missionType != (int)MissionType.PersonInTroopCaptive)
                     {
-                        BelongCity.allPersons.Add(this);
+                        BelongCity.Add(this);
                         if (BelongForce != BelongCity.BelongForce || BelongCorps != BelongCity.BelongCorps)
                         {
                             Sango.Log.Error($"[{Id}]{Name}归属force:{BelongForce.Name} corps:{BelongCorps.Name}, 但在city[{BelongCity.Id}] force:{BelongCity.BelongForce.Name} corps:{BelongCity.BelongCorps.Name}");

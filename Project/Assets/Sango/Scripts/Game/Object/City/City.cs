@@ -372,6 +372,7 @@ namespace Sango.Game
             //y *= 2;
 
             base.OnScenarioPrepare(scenario);
+            isComplte = true;
 
             innerSlot = new int[InsideSlot];
             if (durability <= 0)
@@ -1448,6 +1449,8 @@ namespace Sango.Game
                 return new int[] { turnCount, totalValue };
             }
 
+            gold -= goldNeed;
+
             for (int i = 0; i < personList.Length; i++)
             {
                 Person person = personList[i];
@@ -1624,6 +1627,9 @@ namespace Sango.Game
                 totalValue = overrideData.Value;
                 return new int[] { turnCount, totalValue };
             }
+
+            gold -= goldNeed;
+            Render?.UpdateRender();
 
             for (int i = 0; i < personList.Length; i++)
             {
@@ -2026,6 +2032,7 @@ namespace Sango.Game
 
             gold -= goldNeed;
             morale += totalValue;
+            gold -= goldNeed;
             if (morale > MaxMorale)
                 morale = MaxMorale;
 
@@ -2279,6 +2286,8 @@ namespace Sango.Game
             //士气减少
             morale = (troops * morale + totalValue * 30) / (troops + totalValue);
             troops += totalValue;
+            gold -= goldNeed;
+
             //治安减少
             security -= Math.Min(6, 4 * totalValue / 1000);
 
@@ -2392,6 +2401,8 @@ namespace Sango.Game
             overrideData.Value = totalValue;
             GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
             techniquePointGain = overrideData.Value;
+
+            gold -= goldNeed;
 
             BelongForce.GainTechniquePoint(techniquePointGain);
 

@@ -1,6 +1,5 @@
 ﻿using Sango.Game.Render.UI;
 using System.Collections.Generic;
-using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Player
 {
@@ -33,11 +32,16 @@ namespace Sango.Game.Player
             targetUI.windiwTitle.text = customTitleName;
         }
 
+        protected virtual bool CityOnly()
+        {
+            return TargetCity.IsCity();
+        }
+
         protected virtual void OnCityContextMenuShow(ContextMenuData menuData, City city)
         {
-            if (city.BelongForce != null && city.BelongForce.IsPlayer && city.BelongForce == Scenario.Cur.CurRunForce)
+            TargetCity = city;
+            if (CityOnly() && city.BelongForce != null && city.BelongForce.IsPlayer && city.BelongForce == Scenario.Cur.CurRunForce)
             {
-                TargetCity = city;
                 menuData.Add(customMenuName, customMenuOrder, city, OnClickMenuItem, IsValid);
             }
         }

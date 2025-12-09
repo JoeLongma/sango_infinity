@@ -5,13 +5,13 @@ using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Player
 {
-    public class CityExpedition : CommandSystemBase
+    public class CityTransport : CommandSystemBase
     {
         public City TargetCity { get; set; }
         public List<Person> personList = new List<Person>();
 
         string windowName = "window_city_create_troop";
-        public string customTitleName = "出征";
+        public string customTitleName = "运输";
         public List<ObjectSortTitle> customTitleList = new List<ObjectSortTitle>()
         {
             PersonSortFunction.SortByName,
@@ -52,7 +52,7 @@ namespace Sango.Game.Player
         void OnCityContextMenuShow(ContextMenuData menuData, City city)
         {
             if (city.BelongForce != null && city.BelongForce.IsPlayer && city.BelongForce == Scenario.Cur.CurRunForce)
-                menuData.Add("军事/出征", 100, city, OnClickMenuItem);
+                menuData.Add("军事/运输", 100, city, OnClickMenuItem);
         }
 
         void OnClickMenuItem(ContextMenuItem contextMenuItem)

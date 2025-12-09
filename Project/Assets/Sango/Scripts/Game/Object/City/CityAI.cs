@@ -1232,7 +1232,8 @@ namespace Sango.Game
                 food = turnCostFood * minTurn;
             }
 
-            spType.Cost(city, maxTroopNum);
+            troop.LandTroopType.Cost(city, maxTroopNum);
+            troop.WaterTroopType.Cost(city, maxTroopNum);
             city.troops -= maxTroopNum;
             city.food -= food;
             for (int p = 0; p < people.Length; p++)

@@ -22,11 +22,11 @@ namespace Sango.Game.Render
             MapObject.objType = Building.BuildingType.kind;
             MapObject.modelId = Building.BuildingType.Id;
 
+            isComplate = building.isComplte;
             if (!string.IsNullOrEmpty(building.model))
                 MapObject.modelAsset = building.model;
             else
             {
-                isComplate = building.isComplte;
                 if (building.isComplte)
                     MapObject.modelAsset = building.BuildingType.model;
                 else

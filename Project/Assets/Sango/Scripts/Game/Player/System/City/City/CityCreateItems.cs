@@ -5,11 +5,22 @@ namespace Sango.Game.Player
 {
     public class CityCreateItems : CityComandBase
     {
+        public enum CreateType
+        {
+            Weapon,
+            Horse,
+            Machine,
+            Boat
+        }
+
         public List<ItemType> ItemTypes = new List<ItemType>();
         public int CurSelectedItemTypeIndex { get; set; }
         public ItemType CurSelectedItemType { get; set; }
         public int TotalBuildingCount { get; set; }
         public int[] TurnAndDestNumber { get; set; }
+
+        public CreateType CurCreateType = CreateType.Weapon;
+
         public CityCreateItems()
         {
             customTitleName = "生产兵装";
@@ -26,24 +37,31 @@ namespace Sango.Game.Player
 
         public override void OnEnter()
         {
+            InitItem();
+            base.OnEnter();
+        }
+
+        protected virtual void InitItem()
+        {
             ItemTypes.Clear();
             Scenario scenario = Scenario.Cur;
-            for (int i = 2; i <= 5; i++)
+            for (int i = 2; i < 5; i++)
             {
                 ItemTypes.Add(scenario.GetObject<ItemType>(i));
             }
+
+            TotalBuildingCount = TargetCity.GetIntriorBuildingComplateNumber((int)BuildingKindType.BlacksmithShop);
             CurSelectedItemTypeIndex = 0;
             CurSelectedItemType = ItemTypes[CurSelectedItemTypeIndex];
-            TotalBuildingCount = TargetCity.GetIntriorBuildingComplateNumber((int)BuildingKindType.BlacksmithShop);
-            base.OnEnter();
         }
+
 
         public override bool IsValid
         {
             get
             {
                 return TargetCity.itemStore.TotalNumber < TargetCity.StoreLimit && TargetCity.CheckJobCost(CityJobType.CreateItems)
-                    && TargetCity.GetIntriorBuildingComplateNumber((int)BuildingKindType.BlacksmithShop) > 0;
+                    && (TargetCity.GetIntriorBuildingComplateNumber((int)BuildingKindType.BlacksmithShop) > 0 || TargetCity.GetIntriorBuildingComplateNumber((int)BuildingKindType.Stable) > 0);
             }
         }
 

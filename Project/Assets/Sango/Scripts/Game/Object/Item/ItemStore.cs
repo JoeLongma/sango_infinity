@@ -105,7 +105,7 @@ namespace Sango.Game
 
         public int Remove(ItemStore itemStore)
         {
-            if(itemStore == null) return TotalNumber;
+            if (itemStore == null) return TotalNumber;
 
             foreach (int itemTypeId in itemStore.Items.Keys)
             {
@@ -137,7 +137,13 @@ namespace Sango.Game
                 int itemTypeId = cost[i];
                 int costN = cost[i + 1];
                 int have = GetNumber(itemTypeId);
-                if (have < costN * number / 1000)
+                int need = costN * number;
+                if (need % 1000 == 0)
+                    need = need / 1000;
+                else
+                    need = need / 1000 + 1;
+
+                if (have < need)
                     return false;
             }
             return true;
@@ -198,7 +204,7 @@ namespace Sango.Game
                 }
             }
 
-            if(!keep)
+            if (!keep)
             {
                 foreach (int itemTypeId in itemStore.Items.Keys)
                 {

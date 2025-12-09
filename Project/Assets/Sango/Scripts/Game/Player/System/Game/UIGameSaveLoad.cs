@@ -95,7 +95,8 @@ namespace Sango.Game.Render.UI
                     if (scenario1 != null)
                     {
                         curSelectedItem = item;
-                        curSelectedItem.SetSelected(true);
+                        if(!isSave)
+                            curSelectedItem.SetSelected(true);
                     }
                     ShowScenario(index);
                 });

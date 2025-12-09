@@ -18,6 +18,8 @@ namespace Sango.Game.Player
             Singleton<CityFarming>.Instance.Init();
             Singleton<CityInspection>.Instance.Init();
             Singleton<CityTrade>.Instance.Init();
+            Singleton<CityCreateHorse>.Instance.Init();
+            
 
             //军事
             Singleton<CityExpedition>.Instance.Init();      // 出征

@@ -19,11 +19,16 @@ namespace Sango.Game.Player
             windowName = "window_city_command_base";
         }
 
+        protected override bool CityOnly()
+        {
+            return true;
+        }
+
         public override bool IsValid
         {
             get
             {
-                return TargetCity.GetIntriorBuildingComplateNumber((int)BuildingKindType.Barracks) > 0 && TargetCity.CheckJobCost(CityJobType.TrainTroops);
+                return TargetCity.GetIntriorBuildingComplateNumber((int)BuildingKindType.Barracks) > 0 && TargetCity.CheckJobCost(CityJobType.TrainTroops) && TargetCity.morale < TargetCity.MaxMorale  ;
             }
         }
 
@@ -33,8 +38,12 @@ namespace Sango.Game.Player
             targetUI.title_value.gameObject.SetActive(true);
             targetUI.value_value.gameObject.SetActive(true);
 
+            int destValue = TargetCity.morale + wonderNumber;
+            if(destValue > TargetCity.MaxMorale)
+                destValue = TargetCity.MaxMorale;
+
             targetUI.title_value.text = "士气";
-            targetUI.value_value.text = $"{TargetCity.morale}→{TargetCity.morale + wonderNumber}";
+            targetUI.value_value.text = $"{TargetCity.morale}→{destValue}";
         }
 
         public override int CalculateWonderNumber()

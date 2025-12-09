@@ -42,6 +42,13 @@ namespace Sango.Game.Player
             Singleton<TroopActionMenu>.Instance.ShowSpellRange();
             Singleton<TroopActionMenu>.Instance.troopRender.Clear();
             MovePath = Singleton<TroopSystem>.Instance.movePath;
+
+            if(MovePath.Count <= 1)
+            {
+                OnMoveDone();
+                return;
+            }
+
             Cell start = TargetTroop.cell;
             for (int i = 1; i < MovePath.Count; i++)
             {
