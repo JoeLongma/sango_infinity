@@ -19,10 +19,10 @@ using System.Collections;
 public static class SangeEditorTools
 {
 
-    [MenuItem("Sango/Í·Ïñ±à¼­¹¤¾ßµ¼³öÍ·ÏñÃû×ÖÅú´¦Àí")]
+    [MenuItem("Sango/å¤´åƒç¼–è¾‘å·¥å…·å¯¼å‡ºå¤´åƒåå­—æ‰¹å¤„ç†")]
     public static void RenameHeadIconName()
     {
-        string savedir = EditorUtility.OpenFolderPanel("Ñ¡ÔñÍ·ÏñÎÄ¼ş¼Ğ", Application.dataPath, "");
+        string savedir = EditorUtility.OpenFolderPanel("é€‰æ‹©å¤´åƒæ–‡ä»¶å¤¹", Application.dataPath, "");
         string[] files = Sango.Directory.GetFiles(savedir, "*.png", System.IO.SearchOption.AllDirectories);
         foreach (string f in files)
         {
@@ -39,11 +39,11 @@ public static class SangeEditorTools
 
     }
 
-    [MenuItem("Sango/µØĞÎÌùÍ¼ÎÄ¼ş¼ĞÎÄ¼şÃû×ÖÌæ»»")]
+    [MenuItem("Sango/åœ°å½¢è´´å›¾æ–‡ä»¶å¤¹æ–‡ä»¶åå­—æ›¿æ¢")]
     public static void RenameTerrainTexName()
     {
         Sango.Path.Init();
-        string savedir = EditorUtility.OpenFolderPanel("Ñ¡ÔñÌùÍ¼ÎÄ¼ş¼Ğ", Sango.Path.ContentRootPath, "");
+        string savedir = EditorUtility.OpenFolderPanel("é€‰æ‹©è´´å›¾æ–‡ä»¶å¤¹", Sango.Path.ContentRootPath, "");
         string[] files = Sango.Directory.GetFiles(savedir, "*.png", System.IO.SearchOption.AllDirectories);
         foreach (string f in files)
         {
@@ -60,10 +60,10 @@ public static class SangeEditorTools
     }
 
 
-    [MenuItem("Sango/Ä£ĞÍWKMD->WKM")]
+    [MenuItem("Sango/æ¨¡å‹WKMD->WKM")]
     public static void RenameWKMD2WKM()
     {
-        string savedir = EditorUtility.OpenFolderPanel("Ñ¡ÔñÎÄ¼ş¼Ğ", Application.dataPath, "");
+        string savedir = EditorUtility.OpenFolderPanel("é€‰æ‹©æ–‡ä»¶å¤¹", Application.dataPath, "");
         string[] files = Sango.Directory.GetFiles(savedir, "*.WKMD", System.IO.SearchOption.AllDirectories);
         foreach (string f in files)
         {
@@ -74,28 +74,28 @@ public static class SangeEditorTools
 
     }
 
-    [MenuItem("Sango/Ñ¡ÖĞÍ¼¼¯²ğĞ¡Í¼")]
+    [MenuItem("Sango/é€‰ä¸­å›¾é›†æ‹†å°å›¾")]
     static void ProcessToSprite()
     {
-        Texture2D image = Selection.activeObject as Texture2D;//»ñÈ¡Ğı×ªµÄ¶ÔÏó
-        string rootPath = System.IO.Path.GetDirectoryName(AssetDatabase.GetAssetPath(image));//»ñÈ¡Â·¾¶Ãû³Æ
-        string path = rootPath + "/" + image.name + ".png";//Í¼Æ¬Â·¾¶Ãû³Æ
+        Texture2D image = Selection.activeObject as Texture2D;//è·å–æ—‹è½¬çš„å¯¹è±¡
+        string rootPath = System.IO.Path.GetDirectoryName(AssetDatabase.GetAssetPath(image));//è·å–è·¯å¾„åç§°
+        string path = rootPath + "/" + image.name + ".png";//å›¾ç‰‡è·¯å¾„åç§°
 
         TextureImporter texImp = AssetImporter.GetAtPath(path) as TextureImporter;
 
-        AssetDatabase.CreateFolder(rootPath, image.name);//´´½¨ÎÄ¼ş¼Ğ
+        AssetDatabase.CreateFolder(rootPath, image.name);//åˆ›å»ºæ–‡ä»¶å¤¹
 
-        foreach (SpriteMetaData metaData in texImp.spritesheet)//±éÀúĞ¡Í¼¼¯
+        foreach (SpriteMetaData metaData in texImp.spritesheet)//éå†å°å›¾é›†
         {
             Texture2D myimage = new Texture2D((int)metaData.rect.width, (int)metaData.rect.height);
 
-            for (int y = (int)metaData.rect.y; y < metaData.rect.y + metaData.rect.height; y++)//YÖáÏñËØ
+            for (int y = (int)metaData.rect.y; y < metaData.rect.y + metaData.rect.height; y++)//Yè½´åƒç´ 
             {
                 for (int x = (int)metaData.rect.x; x < metaData.rect.x + metaData.rect.width; x++)
                     myimage.SetPixel(x - (int)metaData.rect.x, y - (int)metaData.rect.y, image.GetPixel(x, y));
             }
 
-            //×ª»»ÎÆÀíµ½EncodeToPNG¼æÈİ¸ñÊ½
+            //è½¬æ¢çº¹ç†åˆ°EncodeToPNGå…¼å®¹æ ¼å¼
             if (myimage.format != TextureFormat.ARGB32 && myimage.format != TextureFormat.RGB24)
             {
                 Texture2D newTexture = new Texture2D(myimage.width, myimage.height);
@@ -112,16 +112,16 @@ public static class SangeEditorTools
     [MenuItem("Assets/Sprite Sheet Packer/Process to Sprites Info")]
     static void ProcessToSpriteInfo()
     {
-        Texture2D image = Selection.activeObject as Texture2D;//»ñÈ¡Ğı×ªµÄ¶ÔÏó
-        string rootPath = System.IO.Path.GetDirectoryName(AssetDatabase.GetAssetPath(image));//»ñÈ¡Â·¾¶Ãû³Æ
-        string path = rootPath + "/" + image.name + ".png";//Í¼Æ¬Â·¾¶Ãû³Æ
+        Texture2D image = Selection.activeObject as Texture2D;//è·å–æ—‹è½¬çš„å¯¹è±¡
+        string rootPath = System.IO.Path.GetDirectoryName(AssetDatabase.GetAssetPath(image));//è·å–è·¯å¾„åç§°
+        string path = rootPath + "/" + image.name + ".png";//å›¾ç‰‡è·¯å¾„åç§°
 
         TextureImporter texImp = AssetImporter.GetAtPath(path) as TextureImporter;
 
-        AssetDatabase.CreateFolder(rootPath, image.name);//´´½¨ÎÄ¼ş¼Ğ
+        AssetDatabase.CreateFolder(rootPath, image.name);//åˆ›å»ºæ–‡ä»¶å¤¹
 
         StringBuilder sb = new StringBuilder();
-        foreach (SpriteMetaData metaData in texImp.spritesheet)//±éÀúĞ¡Í¼¼¯
+        foreach (SpriteMetaData metaData in texImp.spritesheet)//éå†å°å›¾é›†
         {
             sb.AppendLine(string.Format("{0};{1};{2};{3};{4}; {5};{6}; {7};{8};{9};{10}",
                 metaData.name, metaData.rect.x, metaData.rect.y, metaData.rect.width, metaData.rect.height,
@@ -133,6 +133,30 @@ public static class SangeEditorTools
 
     }
 
+    [MenuItem("Sango/è´´å›¾åç¼€å°å†™")]
+    public static void RenamePNG2png()
+    {
+        string savedir = EditorUtility.OpenFolderPanel("é€‰æ‹©æ–‡ä»¶å¤¹", Application.dataPath, "");
+        string[] files = Sango.Directory.GetFiles(savedir, "*.PNG", System.IO.SearchOption.AllDirectories);
+        foreach (string f in files)
+        {
+            string newFileName = f.Remove(f.Length - 3) + "png";
+            Debug.Log(newFileName);
+            Sango.File.Move(f, newFileName + "1");
+            Sango.File.Move(newFileName + "1", newFileName);
+        }
+
+        files = Sango.Directory.GetFiles(savedir, "*.PNG.meta", System.IO.SearchOption.AllDirectories);
+        foreach (string f in files)
+        {
+            string newFileName = f.Remove(f.Length - 8) + "png.meta";
+            Debug.Log(newFileName);
+            Sango.File.Move(f, newFileName + "1");
+            Sango.File.Move(newFileName + "1", newFileName);
+        }
+    }
+
+
     class ModelDataaa
     {
         public int Id;
@@ -141,10 +165,10 @@ public static class SangeEditorTools
         public string texture;
     }
 
-    [MenuItem("Sango/×Ô¶¯Éú³ÉÄ£ĞÍÔ¤ÖÆ¼ş")]
+    [MenuItem("Sango/è‡ªåŠ¨ç”Ÿæˆæ¨¡å‹é¢„åˆ¶ä»¶")]
     public static void AutoMakeModelPrefab()
     {
-        string savedir = EditorUtility.OpenFilePanel("Ñ¡ÔñÄ£ĞÍĞÅÏ¢", Application.dataPath, "");
+        string savedir = EditorUtility.OpenFilePanel("é€‰æ‹©æ¨¡å‹ä¿¡æ¯", Application.dataPath, "");
         string data = System.IO.File.ReadAllText(savedir);
 
         Dictionary<int, ModelDataaa> datas = new Dictionary<int, ModelDataaa>();
@@ -170,4 +194,5 @@ public static class SangeEditorTools
 
     }
 
+   
 }
