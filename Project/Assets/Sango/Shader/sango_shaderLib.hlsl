@@ -34,7 +34,7 @@ float _BlendPower;
 half4 _Color;
 #endif
 
-#if SANGO_Flash
+#if SANGO_FLASH
 float _FlashFactor;
 #endif
 
@@ -334,7 +334,7 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 	#endif
 #endif
 
-#if SANGO_Flash
+#if SANGO_FLASH
 	diffuse = diffuse * _FlashFactor;
 #endif
 	//

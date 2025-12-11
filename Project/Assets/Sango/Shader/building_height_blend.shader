@@ -2,47 +2,80 @@
 Shader "Sango/building_height_blend" {
 	Properties{
 		_MainTex("MainTex", 2D) = "white" {}
+		_Color("Color", Color) = (1,1,1,1)
 		_BlendHeight("BlendHeight", float) = -0.8
 		_BlendPower("BlendPower", float) = 25
 		_OutlineWidth("width", float) = 3.5
 		_BaseColorIntensity("BaseColorFactor", float) = 0.6
+		_FlashFactor("FlashFactor", float) = 1
 		}
 		SubShader{
 			Tags { "RenderPipeline" = "UniversalPipeline" "Queue" = "Transparent" "RenderType" = "TransparentCutout" }
 			LOD 300
 
-		//	Pass
-		//	{
-		//		Name "OUTLINEPASS"
-		//		Tags {
-		//			"LightMode" = "SRPDefaultUnlit"
-		//		}
-		//		Fog { Mode Off }
-		//		ZWrite On
-		//		Cull Front
-		//		Blend SrcAlpha OneMinusSrcAlpha
-		//		HLSLPROGRAM
-		//		#define SANGO_BASE_COLOR_ADD 1
-		//		#define SANGO_COLOR 1
-		//		#define SANGO_FOG 1
-		//		#define SANGO_ALPHA_TEST 1
-		//		#define SANGO_TERRAIN_TYPE 1
-		//		#include "sango_outlineLib.hlsl"
-		//	//#pragma multi_compile_fwdbase
-		//	//#pragma multi_compile_fog
-		//	#pragma skip_variants SHADOWS_SOFT DIRLIGHTMAP_COMBINED
-		//	//#pragma multi_compile LIGHTMAP_OFF LIGHTMAP_ON
-		//	#pragma multi_compile _ SANGO_EDITOR
-		//	#pragma skip_variants FOG_EXP FOG_EXP2
-		//	#pragma exclude_renderers xbox360 ps3 
-		//	#pragma target 3.0
-		//	#pragma vertex outline_vert
-		//	#pragma fragment outline_frag
-		//	#pragma multi_compile_instancing
-		//	#pragma multi_compile_fog
+				Pass
+				{
+					Name "OUTLINEPASS"
+					Tags {
+						"LightMode" = "SRPDefaultUnlit"
+					}
+					Fog { Mode Off }
+					ZWrite On
+					Cull front
+					Blend SrcAlpha OneMinusSrcAlpha
+					HLSLPROGRAM
+					#define SANGO_FOG 1
+					#include "sango_outlineLib.hlsl"
+				//#pragma multi_compile_fwdbase
+				//#pragma multi_compile_fog
+				#pragma skip_variants SHADOWS_SOFT DIRLIGHTMAP_COMBINED
+				//#pragma multi_compile LIGHTMAP_OFF LIGHTMAP_ON
+				#pragma multi_compile _ SANGO_EDITOR
+				#pragma skip_variants FOG_EXP FOG_EXP2
+				#pragma exclude_renderers xbox360 ps3 
+				#pragma target 3.0
+				#pragma vertex outline_vert
+				#pragma fragment outline_frag
+				#pragma multi_compile_instancing
+				#pragma multi_compile_fog
 
-		//	ENDHLSL
-		//}
+				ENDHLSL
+			}
+
+		Pass {
+				Name "FORWARD"
+				Tags {
+					"LightMode" = "UniversalForward"
+				}
+				Blend SrcAlpha OneMinusSrcAlpha
+				HLSLPROGRAM
+				#define SANGO_BASE_COLOR 1
+				#define SANGO_FOG 1
+				#define SANGO_BLEND_HEIGHT 1
+				#define SANGO_ALPHA_TEST 1
+				#define SANGO_TERRAIN_TYPE 1
+				#define SANGO_LIT_SHADOW 1
+				#define SANGO_FLASH 1	
+				#define SANGO_COLOR 1
+
+				#include "sango_shaderLib.hlsl"
+			//#pragma multi_compile_fwdbase
+			//#pragma multi_compile_fog
+			#pragma skip_variants SHADOWS_SOFT DIRLIGHTMAP_COMBINED
+			//#pragma multi_compile LIGHTMAP_OFF LIGHTMAP_ON
+			#pragma multi_compile _ SANGO_EDITOR
+			#pragma skip_variants FOG_EXP FOG_EXP2
+			#pragma exclude_renderers xbox360 ps3 
+			#pragma target 3.0
+			#pragma vertex sango_vert
+			#pragma fragment sango_frag
+			#pragma multi_compile_instancing
+			#pragma multi_compile_fog
+
+
+			ENDHLSL
+		}
+
 
 
 			pass {

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7278993836840020515}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 4608
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 447900775906638838}
   - component: {fileID: 5894468121581334703}
   - component: {fileID: 155444911226215722}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}

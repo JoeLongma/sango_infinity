@@ -28,6 +28,7 @@ namespace Sango.Game
         public BuildingBase building;
         public Fire fire;
         public bool moveAble;
+        public MapObject interiorModel;
 
         internal int _cost = 0;
         internal bool _isZOC = false;
@@ -185,5 +186,20 @@ namespace Sango.Game
             return (terrainState & stateValue) == stateValue;
         }
 
+        public void CreateInteriorModel()
+        {
+            if (interiorModel == null)
+            {
+                interiorModel = MapObject.Create($"内政地{x}-{y}");
+                interiorModel.objType = 0;
+                interiorModel.modelId = 0;
+                interiorModel.modelAsset = $"Assets/Model/Prefab/4622.prefab";
+                interiorModel.transform.position = Position + new Vector3(0, 1, 0);
+                interiorModel.transform.rotation = Quaternion.Euler(new Vector3(0, GameRandom.Range(0,10) * 90, 0));
+                interiorModel.transform.localScale = Vector3.one;
+                interiorModel.bounds = new Sango.Tools.Rect(0, 0, 32, 32);
+                MapRender.Instance.AddStatic(interiorModel);
+            }
+        }
     }
 }

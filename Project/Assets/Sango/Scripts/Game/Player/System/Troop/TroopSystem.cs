@@ -54,6 +54,7 @@ namespace Sango.Game.Player
         {
             GameController.Instance.RotateViewEnabled = false;
             GameController.Instance.ZoomViewEnabled = false;
+            GameController.Instance.KeyboardMoveEnabled = false;
             ClearShowMoveRange();
             ShowMovePath();
         }
@@ -62,6 +63,7 @@ namespace Sango.Game.Player
         {
             GameController.Instance.RotateViewEnabled = true;
             GameController.Instance.ZoomViewEnabled = true;
+            GameController.Instance.KeyboardMoveEnabled = true;
             ShowMoveRange();
         }
 

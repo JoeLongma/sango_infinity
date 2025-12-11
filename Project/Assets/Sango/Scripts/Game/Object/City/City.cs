@@ -287,6 +287,7 @@ namespace Sango.Game
         public List<System.Func<City, Scenario, bool>> AICommandList = new List<System.Func<City, Scenario, bool>>();
 
         public List<Cell> defenceCellList = new List<Cell>();
+        public List<Cell> interiorCellList = new List<Cell>();
 
         public int AttackTroopsCount
         {
@@ -396,6 +397,9 @@ namespace Sango.Game
                 Cell cell = areaCellList[i];
                 if (cell.HasGridState(Sango.Render.MapGrid.GridState.Defence))
                     defenceCellList.Add(cell);
+
+                if (cell.HasGridState(Sango.Render.MapGrid.GridState.Interior))
+                    interiorCellList.Add(cell);
             }
 
             foreach (Person person in CaptiveList)
@@ -437,6 +441,12 @@ namespace Sango.Game
             {
                 UpdateActiveTroopTypes();
                 UpdateFightPower();
+            }
+
+            for(int i = 0; i < interiorCellList.Count; i++)
+            {
+                Cell c = interiorCellList[i];
+                c.CreateInteriorModel();
             }
 
             //计算最大士气
