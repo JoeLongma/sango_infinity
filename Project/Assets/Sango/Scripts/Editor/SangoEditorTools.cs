@@ -176,23 +176,51 @@ public static class SangeEditorTools
 
         string matDir = "Assets/Packages/Content.pkg+Content/Assets/Model/Materials/";
 
+        string goSaveDir = "Assets/Packages/Content.pkg+Content/Assets/Model/Prefab/Auto";
+
         foreach (ModelDataaa model in datas.Values)
         {
             string modelFile = model.model.Replace("Model/", "Assets/Packages/Content.pkg+Content/Assets/Model/Mesh/");
             string texFile = "Assets/Packages/Content.pkg+Content/Assets/Model/" + model.texture;
+            string modelName = System.IO.Path.GetFileNameWithoutExtension(model.model);
+
+            GameObject modelObj = AssetDatabase.LoadAssetAtPath<GameObject>($"{goSaveDir}{modelName}.prefab");
+            if (modelObj != null)
+                continue;
 
             GameObject obj = AssetDatabase.LoadAssetAtPath<GameObject>(modelFile);
             if (obj == null)
                 continue;
 
+            obj = GameObject.Instantiate(obj);
+            obj.name = modelName;
+
             string texName = System.IO.Path.GetFileNameWithoutExtension(texFile);
+            string matFile = $"{matDir}{texName}.mat";
 
-            string matName_up = $"{matDir}{texName}.PNG";
-            string matName_low = $"{matDir}{texName}.png";
+            Material mat = AssetDatabase.LoadAssetAtPath<Material>(matFile);
+            if (mat == null)
+            {
+                mat = new Material(Shader.Find("Sango/building_urp"));
+                mat.name = texName;
+                Texture texture = AssetDatabase.LoadAssetAtPath<Texture>(texFile);
+                mat.SetTexture("_MainTex", texture);
+                AssetDatabase.CreateAsset(mat, matFile);
+            }
 
+            MeshRenderer meshRender = obj.GetComponentInChildren<MeshRenderer>();
+            if (meshRender != null)
+            {
+                meshRender.sharedMaterial = mat;
+            }
+
+            PrefabUtility.SaveAsPrefabAsset(obj, $"{goSaveDir}/{modelName}.prefab");
+            GameObject.DestroyImmediate(obj);
         }
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
 
     }
 
-   
+
 }
