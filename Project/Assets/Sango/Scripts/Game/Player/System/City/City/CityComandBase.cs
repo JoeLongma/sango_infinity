@@ -32,7 +32,7 @@ namespace Sango.Game.Player
             targetUI.windiwTitle.text = customTitleName;
         }
 
-        protected virtual bool CityOnly()
+        protected virtual bool MenuCanShow()
         {
             return TargetCity.IsCity();
         }
@@ -40,7 +40,7 @@ namespace Sango.Game.Player
         protected virtual void OnCityContextMenuShow(ContextMenuData menuData, City city)
         {
             TargetCity = city;
-            if (CityOnly() && city.BelongForce != null && city.BelongForce.IsPlayer && city.BelongForce == Scenario.Cur.CurRunForce)
+            if (MenuCanShow() && city.BelongForce != null && city.BelongForce.IsPlayer && city.BelongForce == Scenario.Cur.CurRunForce)
             {
                 menuData.Add(customMenuName, customMenuOrder, city, OnClickMenuItem, IsValid);
             }

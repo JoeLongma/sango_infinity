@@ -1256,6 +1256,7 @@ namespace Sango.Game
             troop.energy = city.energy;
             troop.morale = city.morale;
             troop.MaxMorale = city.MaxMorale;
+
             troop.Leader = leader;
             troop.TroopType = troopType;
             city.troops -= troops;

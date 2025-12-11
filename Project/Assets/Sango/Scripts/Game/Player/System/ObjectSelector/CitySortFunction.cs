@@ -113,7 +113,7 @@ namespace Sango.Game
         public static SortTitle SortByName = new SortTitle()
         {
             name = "城池",
-            width = 50,
+            width = 100,
             valueGetCall = x => x.Name,
             citySortFunc = (a, b) => a.Name.CompareTo(b.Name),
         };
@@ -121,7 +121,7 @@ namespace Sango.Game
         public static SortTitle SortByPersonCount = new SortTitle()
         {
             name = "现役",
-            width = 50,
+            width = 60,
             valueGetCall = x => x.allPersons.Count.ToString(),
             citySortFunc = (a, b) => a.allPersons.Count.CompareTo(b.allPersons.Count),
         };
@@ -129,7 +129,7 @@ namespace Sango.Game
         public static SortTitle SortByTroops = new SortTitle()
         {
             name = "士兵",
-            width = 50,
+            width = 100,
             valueGetCall = x => x.troops.ToString(),
             citySortFunc = (a, b) => a.troops.CompareTo(b.troops),
         };
@@ -137,7 +137,7 @@ namespace Sango.Game
         public static SortTitle SortByTroopsLimit = new SortTitle()
         {
             name = "士兵上限",
-            width = 50,
+            width = 100,
             valueGetCall = x => x.TroopsLimit.ToString(),
             citySortFunc = (a, b) => a.TroopsLimit.CompareTo(b.TroopsLimit),
         };
@@ -145,7 +145,7 @@ namespace Sango.Game
         public static SortTitle SortByGold = new SortTitle()
         {
             name = "资金",
-            width = 50,
+            width = 100,
             valueGetCall = x => x.gold.ToString(),
             citySortFunc = (a, b) => a.gold.CompareTo(b.gold),
         };
@@ -153,7 +153,7 @@ namespace Sango.Game
         public static SortTitle SortByGoldLimit = new SortTitle()
         {
             name = "资金上限",
-            width = 50,
+            width = 100,
             valueGetCall = x => x.GoldLimit.ToString(),
             citySortFunc = (a, b) => a.GoldLimit.CompareTo(b.GoldLimit),
         };
@@ -161,7 +161,7 @@ namespace Sango.Game
         public static SortTitle SortByFood = new SortTitle()
         {
             name = "兵粮",
-            width = 50,
+            width = 100,
             valueGetCall = x => x.food.ToString(),
             citySortFunc = (a, b) => a.food.CompareTo(b.food),
         };
@@ -169,7 +169,7 @@ namespace Sango.Game
         public static SortTitle SortByFoodLimit = new SortTitle()
         {
             name = "兵粮上限",
-            width = 50,
+            width = 100,
             valueGetCall = x => x.FoodLimit.ToString(),
             citySortFunc = (a, b) => a.FoodLimit.CompareTo(b.FoodLimit),
         };
@@ -177,7 +177,7 @@ namespace Sango.Game
         public static SortTitle SortByLevel = new SortTitle()
         {
             name = "等级",
-            width = 50,
+            width = 60,
             valueGetCall = x => x.CityLevelType.Name,
             citySortFunc = (a, b) => a.CityLevelType.Id.CompareTo(b.CityLevelType.Id),
         };
@@ -185,7 +185,7 @@ namespace Sango.Game
         public static SortTitle SortByIsFree = new SortTitle()
         {
             name = "空闲",
-            width = 50,
+            width = 60,
             valueGetCall = x => x.freePersons.Count.ToString(),
             citySortFunc = (a, b) => a.freePersons.Count.CompareTo(b.freePersons.Count),
         };
@@ -193,7 +193,7 @@ namespace Sango.Game
         public static SortTitle SortByIsWild = new SortTitle()
         {
             name = "在野",
-            width = 50,
+            width = 60,
             valueGetCall = x => x.wildPersons.Count.ToString(),
             citySortFunc = (a, b) => a.wildPersons.Count.CompareTo(b.wildPersons.Count),
         };
@@ -201,7 +201,7 @@ namespace Sango.Game
         public static SortTitle SortByBelongForce = new SortTitle()
         {
             name = "势力",
-            width = 50,
+            width = 60,
             valueGetCall = x => x.BelongForce?.Name ?? "无",
             citySortFunc = (a, b) => SangoObject.Compare(a.BelongForce, b.BelongForce),
         };
@@ -209,7 +209,7 @@ namespace Sango.Game
         public static SortTitle SortByBelongCorps = new SortTitle()
         {
             name = "军团",
-            width = 50,
+            width = 100,
             valueGetCall = x => x.BelongCorps?.Name ?? "无",
             citySortFunc = (a, b) => SangoObject.Compare(a.BelongCorps, b.BelongCorps),
         };
@@ -217,7 +217,7 @@ namespace Sango.Game
         public static SortTitle SortByBelongCity = new SortTitle()
         {
             name = "所属",
-            width = 50,
+            width = 60,
             valueGetCall = x => x.BelongCity?.Name ?? "无",
             citySortFunc = (a, b) => SangoObject.Compare(a.BelongCity, b.BelongCity),
         };

@@ -19,11 +19,12 @@ namespace Sango.Game.Player
             Singleton<CityInspection>.Instance.Init();
             Singleton<CityTrade>.Instance.Init();
             Singleton<CityCreateHorse>.Instance.Init();
-            
+
 
             //军事
             Singleton<CityExpedition>.Instance.Init();      // 出征
             Singleton<CityTrainTroops>.Instance.Init();     // 训练
+            Singleton<CityTransport>.Instance.Init();     // 训练
 
             //人事
             Singleton<CityCallPerson>.Instance.Init();
@@ -48,6 +49,7 @@ namespace Sango.Game.Player
         {
             base.OnEnter();
             Window.Instance.Open("window_city_info_panel", TargetCity);
+            TargetCity.Render?.SetFlash(true);
         }
 
         /// <summary>
@@ -55,6 +57,7 @@ namespace Sango.Game.Player
         /// </summary>
         public override void OnDestroy()
         {
+            TargetCity.Render?.SetFlash(false);
             ContextMenu.CloseAll();
             Window.Instance.Close("window_city_info_panel");
         }

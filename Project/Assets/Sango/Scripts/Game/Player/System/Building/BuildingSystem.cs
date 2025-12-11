@@ -6,6 +6,12 @@ namespace Sango.Game.Player
 {
     public class BuildingSystem : CommandSystemBase
     {
+        public override void Init()
+        {
+            base.Init();
+            Singleton<BuildingActionDestroy>.Instance.Init(); // 拆除
+        }
+
         public BuildingBase TargetBuilding { get; set; }
 
         public void Start(BuildingBase building, Vector3 startPoint)

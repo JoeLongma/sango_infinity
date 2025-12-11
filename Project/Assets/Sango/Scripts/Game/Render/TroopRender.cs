@@ -241,5 +241,9 @@ namespace Sango.Game.Render
             }
         }
 
+        public override void SetFlash(bool b)
+        {
+            TroopModel?.SetFlash(b);
+        }
     }
 }

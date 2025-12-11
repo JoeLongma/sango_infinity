@@ -231,7 +231,14 @@ namespace Sango.Game.Render.UI
         public void OnClose()
         {
             Clear();
-            Hide();
+            if (isSave)
+            {
+                Singleton<GameSave>.Instance.Done();
+            }
+            else
+            {
+                Singleton<GameLoad>.Instance.Done();
+            }
         }
 
         public void OnPage1(bool select)

@@ -34,6 +34,10 @@ float _BlendPower;
 half4 _Color;
 #endif
 
+#if SANGO_Flash
+float _FlashFactor;
+#endif
+
 #if SANGO_BASE_COLOR || SANGO_BASE_COLOR_ADD
 float _BaseColorIntensity;
 #endif
@@ -237,7 +241,7 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 	half3 baseDiffuse = lerp(diffuse, baseColor.rgb*diffuse,  _BaseColorIntensity);
 	diffuse = baseDiffuse;
 	#endif
-	
+
 	#if SANGO_BASE_COLOR_ADD
 	float2 baseUV = float2(i.posWorld.z / (_MapWidth), 1 - i.posWorld.x / (_MapHeight));
 	half4 baseColor = SAMPLE_TEXTURE2D(_BaseTex, smp, baseUV);
@@ -330,6 +334,9 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 	#endif
 #endif
 
+#if SANGO_Flash
+	diffuse = diffuse * _FlashFactor;
+#endif
 	//
 	// light
 	// 雾效处理

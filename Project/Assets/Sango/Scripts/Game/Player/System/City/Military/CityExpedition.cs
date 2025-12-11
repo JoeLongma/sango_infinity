@@ -51,8 +51,9 @@ namespace Sango.Game.Player
 
         void OnCityContextMenuShow(ContextMenuData menuData, City city)
         {
+            TargetCity = city;
             if (city.BelongForce != null && city.BelongForce.IsPlayer && city.BelongForce == Scenario.Cur.CurRunForce)
-                menuData.Add("军事/出征", 100, city, OnClickMenuItem);
+                menuData.Add("军事/出征", 100, city, OnClickMenuItem, IsValid);
         }
 
         void OnClickMenuItem(ContextMenuItem contextMenuItem)
@@ -147,6 +148,7 @@ namespace Sango.Game.Player
             TargetTroop.WaterTroopType.Cost(TargetCity, TargetTroop.troops);
             TargetCity.troops -= TargetTroop.troops;
             TargetCity.food -= TargetTroop.food;
+            TargetCity.gold -= TargetTroop.gold;
 
             TargetTroop.ForEachPerson(person =>
             {

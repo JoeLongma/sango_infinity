@@ -4,6 +4,7 @@ Shader "Sango/building_urp" {
 		_MainTex("MainTex", 2D) = "white" {}
 		_OutlineWidth("width", float) = 3.5
 		_BaseColorIntensity("BaseColorFactor", float) = 1
+		_FlashFactor("FlashFactor", float) = 1
 		}
 		SubShader{
 			Tags { "RenderPipeline" = "UniversalPipeline" "Queue" = "Transparent" "RenderType" = "TransparentCutout" }
@@ -54,7 +55,8 @@ Shader "Sango/building_urp" {
 				#define SANGO_ALPHA_TEST 1
 				#define SANGO_TERRAIN_TYPE 1
 				#define SANGO_LIT_SHADOW 1
-				
+				#define SANGO_Flash 1	
+
 				#include "sango_shaderLib.hlsl"
 				//#pragma multi_compile_fwdbase
 				//#pragma multi_compile_fog

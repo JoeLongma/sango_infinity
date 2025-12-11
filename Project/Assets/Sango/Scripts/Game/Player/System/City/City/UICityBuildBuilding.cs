@@ -42,7 +42,7 @@ namespace Sango.Game.Render.UI
                 GameObject go = GameObject.Instantiate(objUICityBuildingSlot.gameObject, objUICityBuildingSlot.transform.parent);
                 UICityBuildingSlot cityBuildingSlot = go.GetComponent<UICityBuildingSlot>();
                 buildingSlotPool.Add(cityBuildingSlot);
-                cityBuildingSlot.onSelected = OnSelectSlot;
+                //cityBuildingSlot.onSelected = OnSelectSlot;
                 go.SetActive(true);
             }
 
@@ -56,13 +56,13 @@ namespace Sango.Game.Render.UI
                 if (buildingId > 0)
                 {
                     Building building = Scenario.Cur.GetObject<Building>(buildingId);
-                    cityBuildingSlot.SetBuilding(building).SetIndex(i).SetSelected(false);
+                    //cityBuildingSlot.SetBuilding(building).SetIndex(i).SetSelected(false);
                 }
                 else
                 {
                     if (buildBuildingSys.CurSelectSlotIndex < 0)
                         buildBuildingSys.CurSelectSlotIndex = i;
-                    cityBuildingSlot.SetBuilding(null).SetIndex(i).SetSelected(false);
+                    //cityBuildingSlot.SetBuilding(null).SetIndex(i).SetSelected(false);
                 }
             }
             if (buildBuildingSys.CurSelectSlotIndex < 0) buildBuildingSys.CurSelectSlotIndex = 0;
@@ -87,8 +87,8 @@ namespace Sango.Game.Render.UI
 
         public void OnSelectSlot(UICityBuildingSlot slot)
         {
-            if (buildBuildingSys.CurSelectSlotIndex >= 0)
-                buildingSlotPool[buildBuildingSys.CurSelectSlotIndex].SetSelected(false);
+            //if (buildBuildingSys.CurSelectSlotIndex >= 0)
+                //buildingSlotPool[buildBuildingSys.CurSelectSlotIndex].SetSelected(false);
 
             buildBuildingSys.CurSelectSlotIndex = slot.index;
 
@@ -145,7 +145,7 @@ namespace Sango.Game.Render.UI
                 }
             }
             ShowBuildingType();
-            slot.SetSelected(true);
+            //slot.SetSelected(true);
         }
 
         public void ShowBuildingType()

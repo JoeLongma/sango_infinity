@@ -147,6 +147,12 @@ MonoBehaviour:
   flags:
   - {fileID: 7120964136965238614}
   - {fileID: 6189212027841409035}
+  flashRenderers:
+  - {fileID: 9216969983627444382}
+  flashFalg: 0
+  flashFactor: {x: -3, y: 0.3}
+  flashTime: 1
+  propertyName: _BaseColorIntensity
 --- !u!1001 &5365318099325116531
 PrefabInstance:
   m_ObjectHideFlags: 0

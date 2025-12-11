@@ -45,7 +45,10 @@ namespace Sango.Game.Render.UI
 
         public UIBuildingTypeItem SetNum(int c)
         {
-            numLabel.text = c.ToString();
+            if (c < 0)
+                numLabel.text = "";
+            else
+                numLabel.text = c.ToString();
             return this;
         }
 

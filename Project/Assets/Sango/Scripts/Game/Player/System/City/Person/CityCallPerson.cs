@@ -1,33 +1,48 @@
-﻿using Sango.Game.Render.UI;
-using System.Collections.Generic;
-using static Sango.Game.PersonSortFunction;
+﻿using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
     public class CityCallPerson : CityComandBase
     {
+        List<ObjectSortTitle> citySortTitleList;
         public CityCallPerson()
         {
             customTitleName = "召唤";
             customTitleList = new List<ObjectSortTitle>()
             {
                 PersonSortFunction.SortByName,
+                PersonSortFunction.SortByBelongCity,
+                PersonSortFunction.SortByBelongCorps,
+                PersonSortFunction.SortByLevel,
+                PersonSortFunction.SortByTroopsLimit,
+                PersonSortFunction.SortByCommand,
                 PersonSortFunction.SortByStrength,
+                PersonSortFunction.SortByIntelligence,
+                PersonSortFunction.SortByPolitics,
+                PersonSortFunction.SortByGlamour,
+                PersonSortFunction.SortBySpearLv,
+                PersonSortFunction.SortByHalberdLv,
+                PersonSortFunction.SortByCrossbowLv,
+                PersonSortFunction.SortByHorseLv,
+                PersonSortFunction.SortByWaterLv,
+                PersonSortFunction.SortByMachineLv,
+                PersonSortFunction.SortByFeatureList,
             };
             customMenuName = "人事/召唤";
             customMenuOrder = 201;
             windowName = "window_city_command_base";
+
         }
-        protected override bool CityOnly()
+        protected override bool MenuCanShow()
         {
-            return false;
+            return true;
         }
         public override bool IsValid
         {
             get
             {
                 // 需要至少两座城
-                return TargetCity.BelongForce.CityCount > 1;
+                return TargetCity.BelongForce.CityBaseCount > 1;
             }
         }
 
@@ -62,7 +77,7 @@ namespace Sango.Game.Player
         public override void OnSelectPerson()
         {
             List<Person> list = new List<Person>();
-            TargetCity.BelongForce.ForEachCity(city =>
+            TargetCity.BelongForce.ForEachCityBase(city =>
             {
                 if (city != TargetCity)
                 {

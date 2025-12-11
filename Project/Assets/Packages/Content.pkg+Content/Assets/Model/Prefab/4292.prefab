@@ -131,6 +131,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flags:
   - {fileID: 6226711682989643179}
+  flashRenderers:
+  - {fileID: 7408338758499269747}
+  flashFalg: 0
+  flashFactor: {x: -3, y: 0.3}
+  flashTime: 1
+  propertyName: _BaseColorIntensity
 --- !u!1001 &5330210985782265299
 PrefabInstance:
   m_ObjectHideFlags: 0

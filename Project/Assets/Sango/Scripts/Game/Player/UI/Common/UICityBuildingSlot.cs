@@ -1,4 +1,5 @@
 ﻿using Sango.Loader;
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,26 +10,20 @@ namespace Sango.Game.Render.UI
         public UIBuildingTypeItem uIBuildingTypeItem;
         public UIPersonItem[] uIPersonItems;
         public Text leftLabel;
-        public Text infoLabel;
-        public Image select;
         public int index;
-        public delegate void OnSelect(UICityBuildingSlot item);
+        public delegate void OnClickAction(UICityBuildingSlot item);
         public Transform personNode;
-        public OnSelect onSelected;
-        public bool IsSelected()
-        {
-            return select.gameObject.activeSelf;
-        }
+        public Button upgradeBtn;
+        public Transform emptyNode;
+        public Image buildImage;
+        public Text nameLabel;
+        public OnClickAction onClickCall;
+        public Transform progress;
+        public Image progressImg;
 
         public UICityBuildingSlot SetIndex(int i)
         {
             index = i;
-            return this;
-        }
-
-        public UICityBuildingSlot SetSelected(bool b)
-        {
-            select.gameObject.SetActive(b);
             return this;
         }
 
@@ -37,19 +32,24 @@ namespace Sango.Game.Render.UI
             if (building == null)
             {
                 leftLabel.text = "";
-                infoLabel.text = "";
-                uIBuildingTypeItem.SetBuildingType(null);
-                uIBuildingTypeItem.nameLabel.text = "-(空地)-";
+                nameLabel.enabled = false;
+                emptyNode.gameObject.SetActive(true);
+                buildImage.enabled = false;
+                upgradeBtn.gameObject.SetActive(false);
                 personNode.gameObject.SetActive(false);
             }
             else
             {
-                uIBuildingTypeItem.SetBuildingType(building.BuildingType);
+                emptyNode.gameObject.SetActive(false);
+                buildImage.enabled = true;
+                nameLabel.enabled = true;
+
+                nameLabel.text = building.BuildingType.Name;
+                buildImage.sprite = GameRenderHelper.LoadBuildingTypeIcon(building.BuildingType.icon);
                 if (!building.isComplte)
                 {
                     personNode.gameObject.SetActive(true);
                     leftLabel.text = $"剩:{building.BuidlLefCounter}回";
-                    infoLabel.text = "修建中..";
                     for (int i = 0; i < uIPersonItems.Length; i++)
                     {
                         UIPersonItem uIPersonItem = uIPersonItems[i];
@@ -58,12 +58,14 @@ namespace Sango.Game.Render.UI
                         else
                             uIPersonItem.SetPerson(null);
                     }
+
+                    progressImg.fillAmount = building.durability / building.DurabilityLimit;
+                    progressImg.color = new Color(0.6023496f, 0.8811504f, 0.9056604f);
                 }
                 else if (building.isUpgrading)
                 {
                     personNode.gameObject.SetActive(true);
                     leftLabel.text = $"剩:{building.BuidlLefCounter}回";
-                    infoLabel.text = "升级中..";
                     for (int i = 0; i < uIPersonItems.Length; i++)
                     {
                         UIPersonItem uIPersonItem = uIPersonItems[i];
@@ -72,11 +74,15 @@ namespace Sango.Game.Render.UI
                         else
                             uIPersonItem.SetPerson(null);
                     }
+
+                    progressImg.fillAmount = building.durability / building.DurabilityLimit;
+                    progressImg.color = new Color(0.9176471f, 0.7882354f, 0.1686275f);
                 }
                 else
                 {
+
+                    upgradeBtn.gameObject.SetActive(building.BuildingType.nextId > 0);
                     leftLabel.text = "";
-                    infoLabel.text = "";
                     personNode.gameObject.SetActive(false);
                 }
             }
@@ -85,7 +91,7 @@ namespace Sango.Game.Render.UI
 
         public void OnClick()
         {
-            onSelected?.Invoke(this);
+            onClickCall?.Invoke(this);
         }
 
     }

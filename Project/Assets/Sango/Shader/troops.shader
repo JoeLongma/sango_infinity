@@ -10,6 +10,8 @@ Shader "Sango/troops_urp" {
 		_VerticalAmount("Vertical Amount", Float) = 8
 		_VerticalIndex("Vertical Index", Float) = 8
 		_Speed("Speed", Float) = 10
+		_FlashFactor("FlashFactor", float) = 1
+
 	}
 		SubShader{
 			Tags { "RenderPipeline" = "UniversalPipeline" "Queue" = "Transparent" "RenderType" = "TransparentCutout" }
@@ -48,6 +50,7 @@ Shader "Sango/troops_urp" {
 				float _HorizontalMax;
 				float _VerticalIndex;
 				float _VerticalAmount;
+				float _FlashFactor;
 				float _Speed;
 				half4 _MaskColor;
 				float4 _MainTex_ST;
@@ -161,6 +164,8 @@ Shader "Sango/troops_urp" {
 					clip( _MainTex_var.a - 0.5f);
 					
 					half3 diffuse = lerp(_MainTex_var.rgb, _MaskColor.rgb, _MaskTex_var.r);
+
+					diffuse = diffuse * _FlashFactor;
 
 					//half3 lightDirection = normalize(_WorldSpaceLightPos0.xyz);
 					//float  atten = LIGHT_ATTENUATION(i);

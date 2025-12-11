@@ -1,0 +1,128 @@
+﻿using Sango.Game.Player;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace Sango.Game.Render.UI
+{
+    public class UITroopCommandBuild : UGUIWindow
+    {
+        List<BuildingType> BuildingTypes { get; set; }
+        public UIBuildingTypeItem[] buildingTypeItems;
+        public RectTransform rootTrans;
+        int maxPage;
+        int curPage;
+        int lastSelectIndex = -1;
+
+        public Text pageLabel;
+        public GameObject buildButtonObj;
+        public UITextField buildCountLabel;
+        public UITextField cityGoldLabel;
+
+        public Text buildingTypeDescLabel;
+
+        TroopActionBuild troopCommandBuildSys;
+
+        public override void OnShow()
+        {
+            buildCountLabel.text = "";
+            cityGoldLabel.text = "";
+            buildCountLabel.text = "";
+            buildButtonObj.SetActive(false);
+            troopCommandBuildSys = Singleton<TroopActionBuild>.Instance;
+            BuildingTypes = troopCommandBuildSys.canBuildBuildingType;
+            curPage = 0;
+            maxPage = BuildingTypes.Count / buildingTypeItems.Length;
+            if (BuildingTypes.Count % buildingTypeItems.Length != 0)
+                maxPage += 1;
+
+            for (int i = 0; i < buildingTypeItems.Length; i++)
+            {
+                UIBuildingTypeItem item = buildingTypeItems[i];
+                item.onSelected = OnSelectBuildingType;
+            }
+
+            ShowPage(curPage);
+        }
+
+        public void ShowPage(int index)
+        {
+            if (index < 0 || index >= maxPage)
+                return;
+            curPage = index;
+
+            for (int i = 0; i < buildingTypeItems.Length; i++)
+            {
+                UIBuildingTypeItem item = buildingTypeItems[i];
+                int id = curPage * buildingTypeItems.Length + i;
+                if (id < BuildingTypes.Count)
+                {
+                    BuildingType buildingType = BuildingTypes[id];
+                    item.gameObject.SetActive(true);
+                    item.SetBuildingType(buildingType).SetIndex(id).SetSelected(buildingType == troopCommandBuildSys.targetBuildingType).SetNum(-1);
+                }
+                else
+                {
+                    item.gameObject.SetActive(false);
+                }
+            }
+        }
+
+        public void NextPage()
+        {
+            ShowPage(curPage - 1);
+        }
+
+        public void PrevPage()
+        {
+            ShowPage(curPage + 1);
+        }
+
+        /// <summary>
+        /// 退出
+        /// </summary>
+        public void OnCancel()
+        {
+            troopCommandBuildSys.Done();
+        }
+
+        public void OnSelectBuildingType(UIBuildingTypeItem buildingTypeItem)
+        {
+            if (lastSelectIndex == -1)
+                lastSelectIndex = buildingTypeItem.index;
+            else
+            {
+                if(lastSelectIndex >= curPage * buildingTypeItems.Length)
+                {
+                    int idx = lastSelectIndex - curPage * buildingTypeItems.Length;
+                    buildingTypeItems[idx].SetSelected(false);
+                }
+            }
+
+            lastSelectIndex = buildingTypeItem.index;
+            buildingTypeItem.SetSelected(true);
+            BuildingType targetBuildingType = BuildingTypes[buildingTypeItem.index];
+            troopCommandBuildSys.targetBuildingType = targetBuildingType;
+            buildButtonObj.SetActive(true);
+
+            int buildAbility = GameUtility.Method_TroopBuildAbility(troopCommandBuildSys.TargetTroop);
+            int turnCount = targetBuildingType.durabilityLimit % buildAbility == 0 ? 0 : 1;
+            int wonderBuildCounter = targetBuildingType.durabilityLimit / buildAbility + turnCount;
+
+            buildCountLabel.text = $"{wonderBuildCounter}回";
+            cityGoldLabel.text = $"{targetBuildingType.cost}/{troopCommandBuildSys.TargetTroop.gold}";
+
+            buildingTypeDescLabel.text = targetBuildingType.desc;
+            buildingTypeItem.SetSelected(true);
+        }
+
+        /// <summary>
+        /// 新建建筑
+        /// </summary>
+        public void OnBuild()
+        {
+            troopCommandBuildSys.OnSlectedBuildingType(troopCommandBuildSys.targetBuildingType);
+        }
+    }
+}

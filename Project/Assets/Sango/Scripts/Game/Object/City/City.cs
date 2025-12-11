@@ -422,6 +422,13 @@ namespace Sango.Game
                     freePersons.Add(person);
             });
 
+            if (BelongForce != null)
+            {
+                BelongForce.CityBaseCount++;
+                if (IsCity())
+                    BelongForce.CityCount++;
+            }
+
             if (IsPort())
                 BelongCity.portList.Add((Port)this);
             else if (IsGate())
@@ -963,6 +970,8 @@ namespace Sango.Game
                 return;
             }
 
+
+            BelongForce.CityBaseCount--;
             if (IsCity())
             {
                 BelongForce.CityCount--;
@@ -1095,6 +1104,12 @@ namespace Sango.Game
             }
 
             ChangeCorps(atk.BelongCorps);
+
+            atk.BelongForce.CityBaseCount++;
+            if (IsCity())
+            {
+                atk.BelongForce.CityCount++;
+            }
 
             // 处理库存和钱粮,兵力
             food = food * (GameRandom.RandomWeightIndex(scenarioVariables.cityFallCanKeepFoodFactor) * 10 + 10) / 100;

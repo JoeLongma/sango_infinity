@@ -60,6 +60,13 @@ MonoBehaviour:
   - {fileID: 2274616802507563455}
   - {fileID: 2274616802976524137}
   - {fileID: 2274616802426485384}
+  flashRenderers:
+  - {fileID: 7480586214732819220}
+  - {fileID: 8330517524465360179}
+  flashFalg: 0
+  flashFactor: {x: -3, y: 0.3}
+  flashTime: 1
+  propertyName: _BaseColorIntensity
 --- !u!65 &3122031020833688078
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1147,6 +1154,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 291e2a7acb7b884449c3e4d497aa38d7, type: 3}
   m_PrefabInstance: {fileID: 7319450828998039134}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &8330517524465360179 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7635826562936255635, guid: 291e2a7acb7b884449c3e4d497aa38d7, type: 3}
+  m_PrefabInstance: {fileID: 7319450828998039134}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8203440542997291129
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1228,6 +1240,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 363efc30ef8fc994fb668f6e84b42dbd, type: 3}
+--- !u!23 &7480586214732819220 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7635826562936255635, guid: 363efc30ef8fc994fb668f6e84b42dbd, type: 3}
+  m_PrefabInstance: {fileID: 8203440542997291129}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8526089012809123730 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 363efc30ef8fc994fb668f6e84b42dbd, type: 3}

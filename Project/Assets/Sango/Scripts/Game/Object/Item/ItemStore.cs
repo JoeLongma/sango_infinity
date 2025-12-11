@@ -53,6 +53,21 @@ namespace Sango.Game
             return copy;
         }
 
+        public int Set(int itemTypeId, int number)
+        {
+            if (Items.TryGetValue(itemTypeId, out int has))
+            {
+                TotalNumber -= has;
+                Items[itemTypeId] = number;
+                TotalNumber += number;
+                return number;
+            }
+
+            TotalNumber += number;
+            Items.Add(itemTypeId, number);
+            return number;
+        }
+
         public int Add(int itemTypeId, int number)
         {
             if (Items.TryGetValue(itemTypeId, out int has))
@@ -217,6 +232,12 @@ namespace Sango.Game
                 }
             }
             return itemStore;
+        }
+
+        public void Clear()
+        {
+            Items.Clear();
+            TotalNumber = 0;
         }
 
     }

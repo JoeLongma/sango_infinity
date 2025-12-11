@@ -19,7 +19,7 @@ namespace Sango.Game.Player
             windowName = "window_city_command_base";
         }
 
-        protected override bool CityOnly()
+        protected override bool MenuCanShow()
         {
             return true;
         }

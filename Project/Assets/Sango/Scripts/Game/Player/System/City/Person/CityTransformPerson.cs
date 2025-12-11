@@ -1,24 +1,46 @@
-﻿using Sango.Game.Render.UI;
-using System.Collections.Generic;
-using static Sango.Game.PersonSortFunction;
+﻿using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
     public class CityTransformPerson : CityComandBase
     {
         List<City> TransformTo = new List<City>();
-       
+        List<ObjectSortTitle> citySortTitleList;
         public CityTransformPerson()
         {
             customTitleName = "移动";
             customTitleList = new List<ObjectSortTitle>()
             {
                 PersonSortFunction.SortByName,
+                PersonSortFunction.SortByLevel,
+                PersonSortFunction.SortByTroopsLimit,
+                PersonSortFunction.SortByCommand,
                 PersonSortFunction.SortByStrength,
+                PersonSortFunction.SortByIntelligence,
+                PersonSortFunction.SortByPolitics,
+                PersonSortFunction.SortByGlamour,
+                PersonSortFunction.SortBySpearLv,
+                PersonSortFunction.SortByHalberdLv,
+                PersonSortFunction.SortByCrossbowLv,
+                PersonSortFunction.SortByHorseLv,
+                PersonSortFunction.SortByWaterLv,
+                PersonSortFunction.SortByMachineLv,
+                PersonSortFunction.SortByFeatureList,
             };
             customMenuName = "人事/移动";
             customMenuOrder = 202;
             windowName = "window_city_command_base";
+
+            citySortTitleList = new List<ObjectSortTitle>()
+            {
+                CitySortFunction.SortByName,
+                CitySortFunction.SortByPersonCount,
+                CitySortFunction.SortByBelongCity,
+                CitySortFunction.SortByTroops,
+                CitySortFunction.SortByGold,
+                CitySortFunction.SortByFood,
+                CitySortFunction.SortByLevel,
+            };
         }
 
         public override bool IsValid
@@ -26,12 +48,12 @@ namespace Sango.Game.Player
             get
             {
                 // 需要至少两座城
-                return TargetCity.BelongForce.CityCount > 1;
+                return TargetCity.BelongForce.CityBaseCount > 1;
             }
         }
-        protected override bool CityOnly()
+        protected override bool MenuCanShow()
         {
-            return false;
+            return true;
         }
 
         protected override void OnUIInit()
@@ -40,7 +62,7 @@ namespace Sango.Game.Player
 
             targetUI.person_extra_value.gameObject.SetActive(true);
             targetUI.person_extra_value.text = $"{personList.Count}人";
-             
+
             targetUI.button_extra.gameObject.SetActive(true);
             targetUI.button_extra_value.text = "";
 
@@ -61,7 +83,7 @@ namespace Sango.Game.Player
         public override void OnSelectCity()
         {
             List<City> cities = new List<City>();
-            TargetCity.BelongForce.ForEachCity(city =>
+            TargetCity.BelongForce.ForEachCityBase(city =>
             {
                 if (city != TargetCity)
                 {
@@ -70,7 +92,7 @@ namespace Sango.Game.Player
             });
 
             Singleton<CitySelectSystem>.Instance.Start(cities,
-              TransformTo, 1, OnCityChange, customTitleList, customTitleName);
+              TransformTo, 1, OnCityChange, citySortTitleList, "目的城池选择");
         }
 
         public void OnCityChange(List<City> cities)

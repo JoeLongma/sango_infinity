@@ -17,8 +17,13 @@ namespace Sango.Game.Player
             //都市
             Singleton<CitySystem>.Instance.Init();
 
+            // 建筑
+            Singleton<BuildingSystem>.Instance.Init();
+
             // 部队
             Singleton<TroopSystem>.Instance.Init();
+
+            // 其他
             Singleton<GameSettingSystem>.Instance.Init();
 
             InitSaveFile();

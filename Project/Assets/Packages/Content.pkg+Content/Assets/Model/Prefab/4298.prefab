@@ -48,6 +48,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flags:
   - {fileID: 1978797839196852970}
+  flashRenderers:
+  - {fileID: 641801537116509355}
+  flashFalg: 0
+  flashFactor: {x: -3, y: 0.3}
+  flashTime: 1
+  propertyName: _BaseColorIntensity
 --- !u!1 &8046974979012434510
 GameObject:
   m_ObjectHideFlags: 0

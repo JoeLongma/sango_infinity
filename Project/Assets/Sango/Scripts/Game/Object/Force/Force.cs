@@ -98,11 +98,12 @@ namespace Sango.Game
 
         public int PersonCount { get; set; }
         public int CityCount { get; set; }
+        public int CityBaseCount { get; set; }
 
         public Corps CurRunCorps { get; set; }
 
 
-        public override void OnScenarioPrepare(Scenario scenario)
+        public override void Init(Scenario scenario)
         {
 
         }
@@ -306,6 +307,7 @@ namespace Sango.Game
                     c.OnForceTurnStart(scenario);
                     FightPower += c.FightPower;
                     buildingBaseList.Enqueue(c);
+                    CityBaseCount++;
 
                     if (c.IsCity())
                     {
@@ -458,6 +460,19 @@ namespace Sango.Game
             {
                 person.loyalty -= v;
             });
+        }
+
+        public void ForEachCityBase(System.Action<City> action)
+        {
+            Scenario scenario = Scenario.Cur;
+            for (int i = 0; i < scenario.citySet.Count; ++i)
+            {
+                var c = scenario.citySet[i];
+                if (c != null && c.IsAlive && c.BelongForce == this)
+                {
+                    action(c);
+                }
+            }
         }
 
         public void ForEachCity(System.Action<City> action)

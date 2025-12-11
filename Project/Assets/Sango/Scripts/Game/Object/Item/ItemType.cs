@@ -27,6 +27,11 @@ namespace Sango.Game
         [JsonProperty] public string icon;
 
         /// <summary>
+        /// 是否可存储
+        /// </summary>
+        [JsonProperty] public bool store;
+
+        /// <summary>
         /// 额外费用
         /// </summary>
         [JsonProperty] public int cost;

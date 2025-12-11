@@ -60,6 +60,13 @@ MonoBehaviour:
   - {fileID: 7463219581730328733}
   - {fileID: 7463219581886833311}
   - {fileID: 7463219581668198026}
+  flashRenderers:
+  - {fileID: 8133468151099912387}
+  - {fileID: 3979436267075172352}
+  flashFalg: 0
+  flashFactor: {x: -3, y: 0.3}
+  flashTime: 1
+  propertyName: _BaseColorIntensity
 --- !u!65 &7796422026881569626
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -159,6 +166,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 363efc30ef8fc994fb668f6e84b42dbd, type: 3}
   m_PrefabInstance: {fileID: 2391925981979030381}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &3979436267075172352 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7635826562936255635, guid: 363efc30ef8fc994fb668f6e84b42dbd, type: 3}
+  m_PrefabInstance: {fileID: 2391925981979030381}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7410666599565376430
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -243,6 +255,11 @@ PrefabInstance:
 --- !u!4 &7015838008214510661 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: de9b70358b71aae478628906db27b673, type: 3}
+  m_PrefabInstance: {fileID: 7410666599565376430}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8133468151099912387 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7635826562936255635, guid: de9b70358b71aae478628906db27b673, type: 3}
   m_PrefabInstance: {fileID: 7410666599565376430}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8647933025271196285

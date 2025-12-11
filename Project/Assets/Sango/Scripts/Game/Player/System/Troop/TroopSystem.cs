@@ -10,9 +10,11 @@ namespace Sango.Game.Player
         public override void Init()
         {
             base.Init();
-            Singleton<TroopCommandStay>.Instance.Init();
-            Singleton<TroopCommandSkill>.Instance.Init();
-            Singleton<TroopCommandAttack>.Instance.Init();
+            Singleton<TroopActionStay>.Instance.Init();
+            Singleton<TroopActionSkill>.Instance.Init();
+            Singleton<TroopActionAttack>.Instance.Init();
+            Singleton<TroopActionBuild>.Instance.Init();
+            Singleton<TroopActionBuildingFix>.Instance.Init();
         }
 
         public List<Cell> moveRange = new List<Cell>();
@@ -41,6 +43,8 @@ namespace Sango.Game.Player
 
         public override void OnEnter()
         {
+            TargetTroop.Render?.SetFlash(true);
+
             moveRange.Clear();
             Scenario.Cur.Map.GetMoveRange(TargetTroop, moveRange);
             OnBack();
@@ -66,6 +70,8 @@ namespace Sango.Game.Player
         /// </summary>
         public override void OnDestroy()
         {
+            TargetTroop.Render?.SetFlash(false);
+
             // 这个一定先清理
             ClearShowMovePath();
             ClearShowMoveRange();
@@ -131,12 +137,67 @@ namespace Sango.Game.Player
                     {
                         if (isOverUI) return;
 
-                        if (moveRange.Contains(cell) && (cell == TargetTroop.cell || cell.IsEmpty() || (cell.building.IsCityBase() && cell.building.IsSameForce(TargetTroop))))
+                        if (!moveRange.Contains(cell))
+                            return;
+                        
+                        if(cell == TargetTroop.cell || cell.IsEmpty())
                         {
                             movePath.Clear();
                             Scenario.Cur.Map.GetMovePath(TargetTroop, cell, movePath);
                             Singleton<TroopActionMenu>.Instance.Start(TargetTroop, cell, clickPosition);
+                            return;
                         }
+
+                        movePath.Clear();
+                        Scenario.Cur.Map.GetMovePath(TargetTroop, cell, movePath);
+                        // 进入
+                        Singleton<TroopInteractiveMenu>.Instance.Start(TargetTroop, cell, clickPosition);
+                        
+
+                        //if (cell.building != null)
+                        //{
+                        //    if(cell.building.IsCityBase())
+                        //    {
+                        //        if(cell.building.IsSameForce(TargetTroop))
+                        //        {
+                        //                 }
+                        //        else
+                        //        {
+                        //            // 委任攻击
+                        //        }
+                        //    }
+                        //    else
+                        //    {
+                        //        if (cell.building.IsSameForce(TargetTroop) && !cell.building.isComplte)
+                        //        {
+                        //            // 修建
+
+                        //            return;
+                        //        }
+                        //        else if(cell.building.IsEnemy(TargetTroop))
+                        //        {
+                        //            // 委任攻击
+                        //        }
+                        //        else
+                        //        {
+                        //            // 接近
+                        //        }
+                        //    }
+                        //    return;
+                        //}
+
+                        //if (cell.troop != null)
+                        //{
+                        //    if (cell.building.IsEnemy(TargetTroop))
+                        //    {
+                        //        // 歼灭 或者 驱逐
+                        //    }
+                        //    else
+                        //    {
+                        //        // 接近
+                        //    }
+                        //}
+                            
                         break;
                     }
             }

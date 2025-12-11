@@ -581,6 +581,8 @@ namespace Sango.Game
         // 在Prepare之后
         public override void Init(Scenario scenario)
         {
+            CommonData.Init();
+
             GameEvent.OnGameShutdown += OnGameShutdown;
             GameEvent.OnGamePause += OnGamePause;
             GameEvent.OnGameResume += OnGameResume;

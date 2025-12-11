@@ -20,6 +20,7 @@ namespace Sango.Game
         [JsonProperty] public int cost;
         [JsonProperty] public byte radius;
         [JsonProperty] public bool isIntrior;
+        [JsonProperty] public bool isOutside;
         [JsonProperty] public string model;
         [JsonProperty] public string modelBroken;
 
@@ -41,5 +42,15 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public float damageBounds;
         
+        public bool CanBuildToHere(Cell cell)
+        {
+            return true;
+        }
+
+        public bool IsValid(Force force)
+        {
+            return true;
+        }
+
     }
 }

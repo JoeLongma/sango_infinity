@@ -1,79 +1,93 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Sango.Game
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class ScenarioCommonData
     {
         /// <summary>
         /// 地形类型
         /// </summary>
         [JsonConverter(typeof(SangoObjectSetConverter<TerrainType>))]
+        [JsonProperty]
         public SangoObjectSet<TerrainType> TerrainTypes = new SangoObjectSet<TerrainType>();
 
         /// <summary>
         /// 建筑类型
         /// </summary>
         [JsonConverter(typeof(SangoObjectSetConverter<BuildingType>))]
+        [JsonProperty]
         public SangoObjectSet<BuildingType> BuildingTypes = new SangoObjectSet<BuildingType>();
 
         /// <summary>
         /// 特性
         /// </summary>
         [JsonConverter(typeof(SangoObjectSetConverter<Feature>))]
+        [JsonProperty]
         public SangoObjectSet<Feature> Features = new SangoObjectSet<Feature>();
 
         /// <summary>
         /// 兵种类型
         /// </summary>
         [JsonConverter(typeof(SangoObjectMaptConverter<TroopType>))]
+        [JsonProperty]
         public SangoObjectMap<TroopType> TroopTypes = new SangoObjectMap<TroopType>();
 
         /// <summary>
         /// 道具类型
         /// </summary>
         [JsonConverter(typeof(SangoObjectMaptConverter<ItemType>))]
+        [JsonProperty]
         public SangoObjectMap<ItemType> ItemTypes = new SangoObjectMap<ItemType>();
 
         /// <summary>
         /// 兵种动画
         /// </summary>
-        [JsonConverter(typeof(SangoObjectSetConverter<TroopAnimation>))] 
+        [JsonConverter(typeof(SangoObjectSetConverter<TroopAnimation>))]
+        [JsonProperty]
         public SangoObjectSet<TroopAnimation> TroopAnimations = new SangoObjectSet<TroopAnimation>();
 
         /// <summary>
         /// 能力变化类型
         /// </summary>
-        [JsonConverter(typeof(SangoObjectSetConverter<AttributeChangeType>))] 
+        [JsonConverter(typeof(SangoObjectSetConverter<AttributeChangeType>))]
+        [JsonProperty]
         public SangoObjectSet<AttributeChangeType> AttributeChangeTypes = new SangoObjectSet<AttributeChangeType>();
 
         /// <summary>
         /// 属性类型
         /// </summary>
-        [JsonConverter(typeof(SangoObjectSetConverter<PersonAttributeType>))] 
+        [JsonConverter(typeof(SangoObjectSetConverter<PersonAttributeType>))]
+        [JsonProperty]
         public SangoObjectSet<PersonAttributeType> PersonAttributeTypes = new SangoObjectSet<PersonAttributeType>();
 
         /// <summary>
         /// 城市等级
         /// </summary>
         [JsonConverter(typeof(SangoObjectSetConverter<CityLevelType>))]
+        [JsonProperty]
         public SangoObjectSet<CityLevelType> CityLevelTypes = new SangoObjectSet<CityLevelType>();
 
         /// <summary>
         /// 旗帜
         /// </summary>
-        [JsonConverter(typeof(SangoObjectSetConverter<Flag>))] 
+        [JsonConverter(typeof(SangoObjectSetConverter<Flag>))]
+        [JsonProperty]
         public SangoObjectSet<Flag> Flags = new SangoObjectSet<Flag>();
 
         /// <summary>
         /// 州
         /// </summary>
-        [JsonConverter(typeof(SangoObjectSetConverter<State>))] 
+        [JsonConverter(typeof(SangoObjectSetConverter<State>))]
+        [JsonProperty]
         public SangoObjectSet<State> States = new SangoObjectSet<State>();
 
         /// <summary>
         /// 官职
         /// </summary>
-        [JsonConverter(typeof(SangoObjectSetConverter<Official>))] 
+        [JsonConverter(typeof(SangoObjectSetConverter<Official>))]
+        [JsonProperty]
         public SangoObjectSet<Official> Officials = new SangoObjectSet<Official>();
 
         /// <summary>
@@ -86,15 +100,32 @@ namespace Sango.Game
         /// <summary>
         /// 技能
         /// </summary>
-        [JsonConverter(typeof(SangoObjectSetConverter<Skill>))] 
+        [JsonConverter(typeof(SangoObjectSetConverter<Skill>))]
+        [JsonProperty]
         public SangoObjectSet<Skill> Skills = new SangoObjectSet<Skill>();
 
         /// <summary>
         /// 武将等级
         /// </summary>
         [JsonConverter(typeof(SangoObjectSetConverter<PersonLevel>))]
+        [JsonProperty]
         public SangoObjectSet<PersonLevel> PersonLevels = new SangoObjectSet<PersonLevel>();
 
-        
+
+        public List<ItemType> ItemTypeList { get; set; }
+
+        public void Init()
+        {
+            ItemTypeList = new List<ItemType>();
+            ItemTypes.ForEach(type =>
+            {
+                if (type.store)
+                {
+                    ItemTypeList.Add(type);
+                }
+            });
+            ItemTypeList.Sort((a, b) => a.Id.CompareTo(b.Id));
+        }
+
     }
 }

@@ -49,7 +49,7 @@ public static class SangeEditorTools
         {
             string fileName = System.IO.Path.GetFileNameWithoutExtension(f);
             string[] s = fileName.Split("_");
-            if(s.Length > 1)
+            if (s.Length > 1)
             {
                 int id;
                 int.TryParse(s[1], out id);
@@ -130,6 +130,43 @@ public static class SangeEditorTools
         }
 
         System.IO.File.WriteAllText(rootPath + "/" + image.name + "/" + image.name + ".tpsheet", sb.ToString());
+
+    }
+
+    class ModelDataaa
+    {
+        public int Id;
+        public string name;
+        public string model;
+        public string texture;
+    }
+
+    [MenuItem("Sango/自动生成模型预制件")]
+    public static void AutoMakeModelPrefab()
+    {
+        string savedir = EditorUtility.OpenFilePanel("选择模型信息", Application.dataPath, "");
+        string data = System.IO.File.ReadAllText(savedir);
+
+        Dictionary<int, ModelDataaa> datas = new Dictionary<int, ModelDataaa>();
+        datas = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<int, ModelDataaa>>(data);
+
+        string matDir = "Assets/Packages/Content.pkg+Content/Assets/Model/Materials/";
+
+        foreach (ModelDataaa model in datas.Values)
+        {
+            string modelFile = model.model.Replace("Model/", "Assets/Packages/Content.pkg+Content/Assets/Model/Mesh/");
+            string texFile = "Assets/Packages/Content.pkg+Content/Assets/Model/" + model.texture;
+
+            GameObject obj = AssetDatabase.LoadAssetAtPath<GameObject>(modelFile);
+            if (obj == null)
+                continue;
+
+            string texName = System.IO.Path.GetFileNameWithoutExtension(texFile);
+
+            string matName_up = $"{matDir}{texName}.PNG";
+            string matName_low = $"{matDir}{texName}.png";
+
+        }
 
     }
 
