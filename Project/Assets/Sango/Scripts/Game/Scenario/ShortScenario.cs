@@ -127,7 +127,7 @@ namespace Sango.Game
             Cur = this;
             IsAlive = false;
             if (CommonData == null)
-                CommonData = GameData.Instance.LoadCommonData();
+                CommonData = GameData.Instance.LoadNewCommonData();
             if (Variables == null)
                 Variables = new ScenarioVariables();
             if (Map == null)

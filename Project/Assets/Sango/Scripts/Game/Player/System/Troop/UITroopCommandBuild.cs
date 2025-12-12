@@ -52,6 +52,8 @@ namespace Sango.Game.Render.UI
                 return;
             curPage = index;
 
+            pageLabel.text = $"{curPage + 1}/{maxPage}";
+
             for (int i = 0; i < buildingTypeItems.Length; i++)
             {
                 UIBuildingTypeItem item = buildingTypeItems[i];
@@ -71,12 +73,12 @@ namespace Sango.Game.Render.UI
 
         public void NextPage()
         {
-            ShowPage(curPage - 1);
+            ShowPage(curPage + 1);
         }
 
         public void PrevPage()
         {
-            ShowPage(curPage + 1);
+            ShowPage(curPage - 1);
         }
 
         /// <summary>
@@ -93,7 +95,7 @@ namespace Sango.Game.Render.UI
                 lastSelectIndex = buildingTypeItem.index;
             else
             {
-                if(lastSelectIndex >= curPage * buildingTypeItems.Length)
+                if (lastSelectIndex >= curPage * buildingTypeItems.Length)
                 {
                     int idx = lastSelectIndex - curPage * buildingTypeItems.Length;
                     buildingTypeItems[idx].SetSelected(false);

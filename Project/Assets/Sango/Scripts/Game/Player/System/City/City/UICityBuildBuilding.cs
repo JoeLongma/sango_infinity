@@ -150,78 +150,78 @@ namespace Sango.Game.Render.UI
 
         public void ShowBuildingType()
         {
-            int len = buildBuildingSys.canSelectBuildingTypes.Count;
-            while (buildingTypeItemPool.Count < len)
-            {
-                GameObject go = GameObject.Instantiate(objUIBuildingTypeItem.gameObject, objUIBuildingTypeItem.transform.parent);
-                UIBuildingTypeItem buildingTypeItem = go.GetComponent<UIBuildingTypeItem>();
-                buildingTypeItemPool.Add(buildingTypeItem);
-                buildingTypeItem.onSelected = OnSelectBuildingType;
-                go.SetActive(true);
-            }
+            //int len = buildBuildingSys.canSelectBuildingTypes.Count;
+            //while (buildingTypeItemPool.Count < len)
+            //{
+            //    GameObject go = GameObject.Instantiate(objUIBuildingTypeItem.gameObject, objUIBuildingTypeItem.transform.parent);
+            //    UIBuildingTypeItem buildingTypeItem = go.GetComponent<UIBuildingTypeItem>();
+            //    buildingTypeItemPool.Add(buildingTypeItem);
+            //    buildingTypeItem.onSelected = OnSelectBuildingType;
+            //    go.SetActive(true);
+            //}
 
-            for (int i = len; i < buildingTypeItemPool.Count; i++)
-                buildingTypeItemPool[i].gameObject.SetActive(false);
+            //for (int i = len; i < buildingTypeItemPool.Count; i++)
+            //    buildingTypeItemPool[i].gameObject.SetActive(false);
 
-            for (int i = 0; i < len; i++)
-            {
-                BuildingType buildingType = buildBuildingSys.canSelectBuildingTypes[i];
-                buildingTypeItemPool[i].gameObject.SetActive(true);
-                if (buildBuildingSys.CurSelectBuildingTypeIndex < 0)
-                    buildBuildingSys.CurSelectBuildingTypeIndex = i;
+            //for (int i = 0; i < len; i++)
+            //{
+            //    BuildingType buildingType = buildBuildingSys.canSelectBuildingTypes[i];
+            //    buildingTypeItemPool[i].gameObject.SetActive(true);
+            //    if (buildBuildingSys.CurSelectBuildingTypeIndex < 0)
+            //        buildBuildingSys.CurSelectBuildingTypeIndex = i;
 
 
-                int totalNum = buildBuildingSys.TargetCity.GetBuildingComplateNumber(buildingType.kind);
+            //    int totalNum = buildBuildingSys.TargetCity.GetBuildingComplateNumber(buildingType.kind);
 
-                UIBuildingTypeItem cityBuildingSlot = buildingTypeItemPool[i];
-                cityBuildingSlot.SetBuildingType(buildingType).SetIndex(i).SetSelected(false).SetNum(totalNum);
-            }
+            //    UIBuildingTypeItem cityBuildingSlot = buildingTypeItemPool[i];
+            //    cityBuildingSlot.SetBuildingType(buildingType).SetIndex(i).SetSelected(false).SetNum(totalNum);
+            //}
 
-            OnSelectBuildingType(buildingTypeItemPool[buildBuildingSys.CurSelectBuildingTypeIndex]);
+            //OnSelectBuildingType(buildingTypeItemPool[buildBuildingSys.CurSelectBuildingTypeIndex]);
         }
 
         public void OnSelectBuildingType(UIBuildingTypeItem buildingTypeItem)
         {
-            if (buildBuildingSys.CurSelectBuildingTypeIndex >= 0)
-            {
-                buildingTypeItemPool[buildBuildingSys.CurSelectBuildingTypeIndex].SetSelected(false);
-            }
+            //if (buildBuildingSys.CurSelectBuildingTypeIndex >= 0)
+            //{
+            //    buildingTypeItemPool[buildBuildingSys.CurSelectBuildingTypeIndex].SetSelected(false);
+            //}
 
-            buildBuildingSys.CurSelectBuildingTypeIndex = buildingTypeItem.index;
-            buildBuildingSys.TargetBuildingType = buildBuildingSys.canSelectBuildingTypes[buildingTypeItem.index];
+            //buildBuildingSys.CurSelectBuildingTypeIndex = buildingTypeItem.index;
+            //buildBuildingSys.TargetBuildingType = buildBuildingSys.canSelectBuildingTypes[buildingTypeItem.index];
 
-            Person[] builder = ForceAI.CounsellorRecommendBuild(buildBuildingSys.TargetCity.freePersons, buildBuildingSys.TargetBuildingType);
-            buildBuildingSys.personList.Clear();
-            if (builder == null || builder.Length == 0)
-            {
-                for (int i = 0; i < personItems.Length; ++i)
-                    personItems[i].SetPerson(null);
-            }
-            else
-            {
-                for (int i = 0; i < personItems.Length; ++i)
-                {
-                    if (i < builder.Length)
-                    {
-                        Person person = builder[i];
-                        personItems[i].SetPerson(person);
-                        buildBuildingSys.personList.Add(person);
-                    }
-                    else
-                    {
-                        personItems[i].SetPerson(null);
-                    }
-                }
-            }
-            buildBuildingSys.UpdateJobValue();
-            buildCountLabel.text = $"{buildBuildingSys.wonderBuildCounter}回";
-            cityGoldLabel.text = $"{buildBuildingSys.TargetBuildingType.cost}/{buildBuildingSys.TargetCity.gold}";
+            //Person[] builder = ForceAI.CounsellorRecommendBuild(buildBuildingSys.TargetCity.freePersons, buildBuildingSys.TargetBuildingType);
+            //buildBuildingSys.personList.Clear();
+            //if (builder == null || builder.Length == 0)
+            //{
+            //    for (int i = 0; i < personItems.Length; ++i)
+            //        personItems[i].SetPerson(null);
+            //}
+            //else
+            //{
+            //    for (int i = 0; i < personItems.Length; ++i)
+            //    {
+            //        if (i < builder.Length)
+            //        {
+            //            Person person = builder[i];
+            //            personItems[i].SetPerson(person);
+            //            buildBuildingSys.personList.Add(person);
+            //        }
+            //        else
+            //        {
+            //            personItems[i].SetPerson(null);
+            //        }
+            //    }
+            //}
+            //buildBuildingSys.UpdateJobValue();
+            //buildCountLabel.text = $"{buildBuildingSys.wonderBuildCounter}回";
+            //cityGoldLabel.text = $"{buildBuildingSys.TargetBuildingType.cost}/{buildBuildingSys.TargetCity.gold}";
 
-            int totalNum = buildBuildingSys.TargetCity.GetBuildingComplateNumber(buildBuildingSys.TargetBuildingType.kind);
-            buildingNumberLabel.text = totalNum.ToString();
+            //int totalNum = buildBuildingSys.TargetCity.GetBuildingComplateNumber(buildBuildingSys.TargetBuildingType.kind);
+            //buildingNumberLabel.text = totalNum.ToString();
 
-            buildingTypeDescLabel.text = buildBuildingSys.TargetBuildingType.desc;
-            buildingTypeItem.SetSelected(true);
+            //buildingTypeDescLabel.text = buildBuildingSys.TargetBuildingType.desc;
+            //buildingTypeItem.SetSelected(true);
         }
 
         public void OnPersonChange(List<Person> personList)
@@ -261,7 +261,7 @@ namespace Sango.Game.Render.UI
         /// </summary>
         public void OnUpgradeBuilding()
         {
-            buildBuildingSys.DoUpgradeBuilding();
+           // buildBuildingSys.DoUpgradeBuilding();
             OnShow();
         }
 
@@ -270,7 +270,7 @@ namespace Sango.Game.Render.UI
         /// </summary>
         public void OnDestroyBuilding()
         {
-            buildBuildingSys.DoDestroyBuilding();
+            //buildBuildingSys.DoDestroyBuilding();
             OnShow();
         }
     }

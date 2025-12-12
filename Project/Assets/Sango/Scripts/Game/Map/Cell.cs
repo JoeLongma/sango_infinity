@@ -34,6 +34,8 @@ namespace Sango.Game
         internal bool _isZOC = false;
         internal bool _isChecked = false;
 
+        public bool IsInterior => HasGridState(Sango.Render.MapGrid.GridState.Interior);
+
         public Cell()
         {
 

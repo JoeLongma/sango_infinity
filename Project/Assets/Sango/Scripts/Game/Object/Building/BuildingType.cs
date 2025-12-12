@@ -9,6 +9,7 @@ namespace Sango.Game
     public class BuildingType : SangoObject
     {
         [JsonProperty] public string desc;
+        [JsonProperty] public string limitDesc;
         [JsonProperty] public byte majorType;
         [JsonProperty] public byte kind;
         [JsonProperty] public int nextId;
@@ -41,14 +42,17 @@ namespace Sango.Game
         /// 攻击范围
         /// </summary>
         [JsonProperty] public int atkRange;
-        
+
         /// <summary>
         /// 被伤害倍率
         /// </summary>
         [JsonProperty] public float damageBounds;
-        
+
         public bool CanBuildToHere(Cell cell)
         {
+            if (cell.IsInterior)
+                return false;
+
             return true;
         }
 

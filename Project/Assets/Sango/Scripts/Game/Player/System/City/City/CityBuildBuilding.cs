@@ -1,6 +1,9 @@
-﻿using Sango.Game.Render.UI;
+﻿using Sango.Game.Render;
+using Sango.Game.Render.UI;
+using Sango.Render;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Player
@@ -8,6 +11,11 @@ namespace Sango.Game.Player
     public class CityBuildBuilding : CommandSystemBase
     {
         public City TargetCity { get; set; }
+        public Cell TargetCell { get; set; }
+        public BuildingRender SelectBuildingRender { get; set; }
+        public List<Cell> buildRangeCell = new List<Cell>();
+        public List<BuildingType> canBuildBuildingType = new List<BuildingType>();
+
         public List<Person> personList = new List<Person>();
         public int wonderBuildCounter = 0;
 
@@ -18,9 +26,6 @@ namespace Sango.Game.Player
             PersonSortFunction.SortByPolitics,
         };
 
-        public List<BuildingType> canSelectBuildingTypes = new List<BuildingType>();
-        public int CurSelectBuildingTypeIndex { get; set; }
-        public int CurSelectSlotIndex { get; set; }
         public BuildingType TargetBuildingType { get; set; }
 
         public override void Init()
@@ -37,17 +42,19 @@ namespace Sango.Game.Player
         {
             get
             {
+                InitCanBuildingTypes();
 
-                //return TargetCity.freePersons.Count > 0 && TargetCity.gold > 500;
-                return true;
+                return TargetCity.freePersons.Count > 0 && TargetCity.gold > 200 && !TargetCity.IsInteriorBuildFull();
             }
         }
+
+
 
         void OnCityContextMenuShow(ContextMenuData menuData, City city)
         {
             TargetCity = city;
             if (city.IsCity() && city.BelongForce != null && city.BelongForce.IsPlayer && city.BelongForce == Scenario.Cur.CurRunForce)
-                menuData.Add("都市/内城", 0, city, OnClickMenuItem, IsValid);
+                menuData.Add("都市/开发", 0, city, OnClickMenuItem, IsValid);
         }
 
         void OnClickMenuItem(ContextMenuItem contextMenuItem)
@@ -56,11 +63,23 @@ namespace Sango.Game.Player
             PlayerCommand.Instance.Push(this);
         }
 
+        void InitCanBuildingTypes()
+        {
+            canBuildBuildingType.Clear();
+            Scenario.Cur.CommonData.BuildingTypes.ForEach(x =>
+            {
+                if (x.IsIntrior && x.IsValid(TargetCity.BelongForce))
+                {
+                    canBuildBuildingType.Add(x);
+                }
+            });
+        }
+
         public void UpdateJobValue()
         {
             if (personList.Count <= 0)
                 return;
-            TargetBuildingType = canSelectBuildingTypes[CurSelectBuildingTypeIndex];
+
             int buildAbility = GameUtility.Method_PersonBuildAbility(personList.ToArray());
             int turnCount = TargetBuildingType.durabilityLimit % buildAbility == 0 ? 0 : 1;
             wonderBuildCounter = Math.Min(Scenario.Cur.Variables.BuildMaxTurn, TargetBuildingType.durabilityLimit / buildAbility + turnCount);
@@ -68,41 +87,101 @@ namespace Sango.Game.Player
 
         public override void OnEnter()
         {
-            CurSelectBuildingTypeIndex = -1;
-            CurSelectSlotIndex = -1;
             Window.Instance.Open("window_city_building");
+        }
+
+        public void SelectBuildingType(BuildingType buildingType)
+        {
+            TargetBuildingType = buildingType;
+            Person[] ps = ForceAI.CounsellorRecommendBuild(TargetCity.freePersons, TargetBuildingType);
+            if(ps != null)
+            {
+                personList.Clear();
+                foreach (Person person in ps)
+                {
+                    personList.Add(person);
+                }
+            }
+            UpdateJobValue();
         }
 
         public override void OnDestroy()
         {
             Window.Instance.Close("window_city_building");
+            ClearShowBuildRange();
+            buildRangeCell.Clear();
+        }
+
+        public void OnSelectCell()
+        {
+
         }
 
         public void DoBuildBuilding()
         {
             if (personList.Count <= 0)
                 return;
-            //TargetCity.JobBuildBuilding(CurSelectSlotIndex, personList.ToArray(), TargetBuildingType, wonderBuildCounter);
+            TargetCity.JobBuildBuilding(TargetCell, personList.ToArray(), TargetBuildingType, wonderBuildCounter);
         }
 
-        public void DoUpgradeBuilding()
+        protected void ShowBuildRange()
         {
-            //int buildingId = TargetCity.innerSlot[CurSelectSlotIndex];
-            //if (buildingId > 0)
-            //{
-            //    Building building = Scenario.Cur.GetObject<Building>(buildingId);
-            //    TargetCity.JobUpgradeBuilding(building, personList.ToArray(), TargetBuildingType, wonderBuildCounter);
-            //}
+            MapRender mapRender = MapRender.Instance;
+            mapRender.SetDarkMask(true);
+            if (buildRangeCell.Count == 0) return;
+            for (int i = 0, count = buildRangeCell.Count; i < count; ++i)
+            {
+                Cell c = buildRangeCell[i];
+                mapRender.SetGridMaskColor(c.x, c.y, Color.red);
+                mapRender.SetDarkMaskColor(c.x, c.y, Color.black);
+            }
+            mapRender.EndSetGridMask();
+            mapRender.EndSetDarkMask();
         }
 
-        public void DoDestroyBuilding()
+        protected void ClearShowBuildRange()
         {
-            //int buildingId = TargetCity.innerSlot[CurSelectSlotIndex];
-            //if (buildingId > 0)
-            //{
-            //    Building building = Scenario.Cur.GetObject<Building>(buildingId);
-            //    building.OnFall(null);
-            //}
+            MapRender mapRender = MapRender.Instance;
+            mapRender.SetDarkMask(false);
+            if (buildRangeCell.Count == 0) return;
+            for (int i = 0, count = buildRangeCell.Count; i < count; ++i)
+            {
+                Cell c = buildRangeCell[i];
+                mapRender.SetGridMaskColor(c.x, c.y, Color.black);
+                mapRender.SetDarkMaskColor(c.x, c.y, Color.clear);
+
+            }
+            mapRender.EndSetGridMask();
+            mapRender.EndSetDarkMask();
         }
+
+        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)
+        {
+            if (SelectBuildingRender == null) return;
+
+            switch (eventType)
+            {
+                case CommandEventType.Cancel:
+                case CommandEventType.RClick:
+                    {
+                        PlayerCommand.Instance.Back();
+                        break;
+                    }
+
+                case CommandEventType.Click:
+                    {
+                        if (isOverUI) return;
+
+                        if (buildRangeCell.Contains(cell) && cell.building == null)
+                        {
+                            TargetCell = cell;
+                            DoBuildBuilding();
+                            Done();
+                        }
+                        break;
+                    }
+            }
+        }
+
     }
 }

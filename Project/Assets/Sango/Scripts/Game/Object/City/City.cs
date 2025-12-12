@@ -397,7 +397,7 @@ namespace Sango.Game
                 if (cell.HasGridState(Sango.Render.MapGrid.GridState.Defence))
                     defenceCellList.Add(cell);
 
-                if (cell.HasGridState(Sango.Render.MapGrid.GridState.Interior))
+                if (cell.IsInterior)
                 {
                     if (BelongCity != null)
                         BelongCity.interiorCellList.Add(cell);

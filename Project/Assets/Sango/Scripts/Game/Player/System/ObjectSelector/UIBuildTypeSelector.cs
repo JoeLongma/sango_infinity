@@ -8,272 +8,165 @@ namespace Sango.Game.Render.UI
 {
     public class UIBuildTypeSelector : UGUIWindow
     {
-        //List<BuildingType> BuildingTypes {  get; set; }
-        //public UIBuildingTypeItem[] buildingTypeItems;
-        //public RectTransform rootTrans;
-        //bool isUpgrade = false;
-        //public Text pageLabel;
-        //public GameObject selectPersonButtonObj;
-        //public GameObject upgradeButtonObj;
-        //public GameObject buildButtonObj;
+        List<BuildingType> BuildingTypes { get; set; }
+        public UIBuildingTypeItem[] buildingTypeItems;
+        public GameObject buildButtonObj;
+        public UIPersonItem[] personItems;
 
-        //public UIPersonItem[] personItems;
+        public UITextField buildCountLabel;
+        public UITextField cityGoldLabel;
+        public UITextField buildingNumberLabel;
+        public UITextField developNumberLabel;
+        public UITextField emptyNumberLabel;
+        public UITextField buildingTypeDescLabel;
+        public UITextField limitLabel;
+        public UITextField durabilityLabel;
 
-        //public UITextField buildCountLabel;
-        //public UITextField cityGoldLabel;
-        //public UITextField buildingNumberLabel;
+        CityBuildBuilding buildBuildingSys;
+        int maxPage;
+        int curPage;
+        int lastSelectIndex = -1;
+        public Text pageLabel;
 
-        //public Text buildingTypeDescLabel;
-
-        //public override void OnShow(params object[] objects)
-        //{
-        //    BuildingTypes = objects[0] as List<BuildingType>;
-        //    if(objects.Length > 1)
-        //        isUpgrade = (bool)objects[1];
-
-        //    buildCountLabel.text = "";
-        //    buildingNumberLabel.text = "";
-        //    cityGoldLabel.text = "";
-        //    buildCountLabel.text = "";
-
-        //    buildBuildingSys = Singleton<CityBuildBuilding>.Instance;
-        //    buildBuildingSys.CurSelectSlotIndex = -1;
-        //    int slotLength = buildBuildingSys.TargetCity.innerSlot.Length;
-        //    while (buildingSlotPool.Count < slotLength)
-        //    {
-        //        GameObject go = GameObject.Instantiate(objUICityBuildingSlot.gameObject, objUICityBuildingSlot.transform.parent);
-        //        UICityBuildingSlot cityBuildingSlot = go.GetComponent<UICityBuildingSlot>();
-        //        buildingSlotPool.Add(cityBuildingSlot);
-        //        cityBuildingSlot.onSelected = OnSelectSlot;
-        //        go.SetActive(true);
-        //    }
-
-        //    for (int i = slotLength; i < buildingSlotPool.Count; i++)
-        //        buildingSlotPool[i].gameObject.SetActive(false);
-
-        //    for (int i = 0; i < slotLength; i++)
-        //    {
-        //        int buildingId = buildBuildingSys.TargetCity.innerSlot[i];
-        //        UICityBuildingSlot cityBuildingSlot = buildingSlotPool[i];
-        //        if (buildingId > 0)
-        //        {
-        //            Building building = Scenario.Cur.GetObject<Building>(buildingId);
-        //            cityBuildingSlot.SetBuilding(building).SetIndex(i).SetSelected(false);
-        //        }
-        //        else
-        //        {
-        //            if (buildBuildingSys.CurSelectSlotIndex < 0)
-        //                buildBuildingSys.CurSelectSlotIndex = i;
-        //            cityBuildingSlot.SetBuilding(null).SetIndex(i).SetSelected(false);
-        //        }
-        //    }
-        //    if (buildBuildingSys.CurSelectSlotIndex < 0) buildBuildingSys.CurSelectSlotIndex = 0;
-        //    OnSelectSlot(buildingSlotPool[buildBuildingSys.CurSelectSlotIndex]);
-        //    UpdateSlotInfo();
-        //}
-
-        //public void UpdateSlotInfo()
-        //{
-        //    int total = buildBuildingSys.TargetCity.InsideSlot;
-        //    int builded = buildBuildingSys.TargetCity.GetIntriorBuildingUsedNumber();
-        //    slotInfoLabel.text = $"({builded}/{total})";
-        //}
-
-        ///// <summary>
-        ///// 退出
-        ///// </summary>
-        //public void OnCancel()
-        //{
-        //    buildBuildingSys.Done();
-        //}
-
-        //public void OnSelectSlot(UICityBuildingSlot slot)
-        //{
-        //    if (buildBuildingSys.CurSelectSlotIndex >= 0)
-        //        buildingSlotPool[buildBuildingSys.CurSelectSlotIndex].SetSelected(false);
-
-        //    buildBuildingSys.CurSelectSlotIndex = slot.index;
-
-        //    buildBuildingSys.canSelectBuildingTypes.Clear();
-        //    // 根据建筑情况,展示其他信息
-        //    int buildingId = buildBuildingSys.TargetCity.innerSlot[slot.index];
-        //    if (buildingId > 0)
-        //    {
-        //        Building building = Scenario.Cur.GetObject<Building>(buildingId);
-        //        if (!building.isComplte)
-        //        {
-        //            destroyButtonObj.SetActive(true);
-        //            upgradeButtonObj.SetActive(false);
-        //            buildButtonObj.SetActive(false);
-        //            selectPersonButtonObj.SetActive(false);
-
-        //            if (building.BuildingType.nextId != 0)
-        //            {
-        //                BuildingType nextBuildingType = Scenario.Cur.GetObject<BuildingType>(building.BuildingType.nextId);
-        //                buildBuildingSys.canSelectBuildingTypes.Add(nextBuildingType);
-        //            }
-        //        }
-        //        else if (building.isUpgrading)
-        //        {
-        //            destroyButtonObj.SetActive(true);
-        //            upgradeButtonObj.SetActive(false);
-        //            buildButtonObj.SetActive(false);
-        //            selectPersonButtonObj.SetActive(false);
-        //        }
-        //        else
-        //        {
-        //            buildButtonObj.SetActive(false);
-        //            upgradeButtonObj.SetActive(!building.isUpgrading && building.BuildingType.nextId != 0);
-        //            destroyButtonObj.SetActive(true);
-        //            selectPersonButtonObj.SetActive(true);
-
-        //            if (building.BuildingType.nextId != 0)
-        //            {
-        //                BuildingType nextBuildingType = Scenario.Cur.GetObject<BuildingType>(building.BuildingType.nextId);
-        //                buildBuildingSys.canSelectBuildingTypes.Add(nextBuildingType);
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        destroyButtonObj.SetActive(false);
-        //        upgradeButtonObj.SetActive(false);
-        //        selectPersonButtonObj.SetActive(true);
-        //        buildButtonObj.SetActive(true);
-        //        buildBuildingSys.canSelectBuildingTypes.Clear();
-        //        for (int i = (int)BuildingKindType.Farm; i < (int)BuildingKindType.ArrowTower; ++i)
-        //        {
-        //            buildBuildingSys.canSelectBuildingTypes.Add(Scenario.Cur.GetObject<BuildingType>(i));
-        //        }
-        //    }
-        //    ShowBuildingType();
-        //    slot.SetSelected(true);
-        //}
-
-        //public void ShowBuildingType()
-        //{
-        //    int len = buildBuildingSys.canSelectBuildingTypes.Count;
-        //    while (buildingTypeItemPool.Count < len)
-        //    {
-        //        GameObject go = GameObject.Instantiate(objUIBuildingTypeItem.gameObject, objUIBuildingTypeItem.transform.parent);
-        //        UIBuildingTypeItem buildingTypeItem = go.GetComponent<UIBuildingTypeItem>();
-        //        buildingTypeItemPool.Add(buildingTypeItem);
-        //        buildingTypeItem.onSelected = OnSelectBuildingType;
-        //        go.SetActive(true);
-        //    }
-
-        //    for (int i = len; i < buildingTypeItemPool.Count; i++)
-        //        buildingTypeItemPool[i].gameObject.SetActive(false);
-
-        //    for (int i = 0; i < len; i++)
-        //    {
-        //        BuildingType buildingType = buildBuildingSys.canSelectBuildingTypes[i];
-        //        buildingTypeItemPool[i].gameObject.SetActive(true);
-        //        if (buildBuildingSys.CurSelectBuildingTypeIndex < 0)
-        //            buildBuildingSys.CurSelectBuildingTypeIndex = i;
+        public override void OnShow()
+        {
 
 
-        //        int totalNum = buildBuildingSys.TargetCity.GetIntriorBuildingComplateNumber(buildingType.kind);
+            buildCountLabel.text = "";
+            cityGoldLabel.text = "";
+            buildCountLabel.text = "";
+            buildButtonObj.SetActive(false);
+            buildBuildingSys = Singleton<CityBuildBuilding>.Instance;
+            BuildingTypes = buildBuildingSys.canBuildBuildingType;
+            curPage = 0;
+            maxPage = BuildingTypes.Count / buildingTypeItems.Length;
+            if (BuildingTypes.Count % buildingTypeItems.Length != 0)
+                maxPage += 1;
 
-        //        UIBuildingTypeItem cityBuildingSlot = buildingTypeItemPool[i];
-        //        cityBuildingSlot.SetBuildingType(buildingType).SetIndex(i).SetSelected(false).SetNum(totalNum);
-        //    }
+            for (int i = 0; i < buildingTypeItems.Length; i++)
+            {
+                UIBuildingTypeItem item = buildingTypeItems[i];
+                item.onSelected = OnSelectBuildingType;
+            }
+            ShowPage(curPage);
+            buildBuildingSys.SelectBuildingType(BuildingTypes[0]);
+            UpdateContent();
+        }
 
-        //    OnSelectBuildingType(buildingTypeItemPool[buildBuildingSys.CurSelectBuildingTypeIndex]);
-        //}
+        public void ShowPage(int index)
+        {
+            if (index < 0 || index >= maxPage)
+                return;
+            curPage = index;
 
-        //public void OnSelectBuildingType(UIBuildingTypeItem buildingTypeItem)
-        //{
-        //    if (buildBuildingSys.CurSelectBuildingTypeIndex >= 0)
-        //    {
-        //        buildingTypeItemPool[buildBuildingSys.CurSelectBuildingTypeIndex].SetSelected(false);
-        //    }
+            pageLabel.text = $"{curPage + 1}/{maxPage}";
 
-        //    buildBuildingSys.CurSelectBuildingTypeIndex = buildingTypeItem.index;
-        //    buildBuildingSys.TargetBuildingType = buildBuildingSys.canSelectBuildingTypes[buildingTypeItem.index];
+            for (int i = 0; i < buildingTypeItems.Length; i++)
+            {
+                UIBuildingTypeItem item = buildingTypeItems[i];
+                int id = curPage * buildingTypeItems.Length + i;
+                if (id < BuildingTypes.Count)
+                {
+                    BuildingType buildingType = BuildingTypes[id];
+                    item.gameObject.SetActive(true);
+                    item.SetBuildingType(buildingType).SetIndex(id).SetSelected(buildingType == buildBuildingSys.TargetBuildingType).SetNum(-1);
+                }
+                else
+                {
+                    item.gameObject.SetActive(false);
+                }
+            }
+        }
 
-        //    Person[] builder = ForceAI.CounsellorRecommendBuild(buildBuildingSys.TargetCity.freePersons, buildBuildingSys.TargetBuildingType);
-        //    buildBuildingSys.personList.Clear();
-        //    if (builder == null || builder.Length == 0)
-        //    {
-        //        for (int i = 0; i < personItems.Length; ++i)
-        //            personItems[i].SetPerson(null);
-        //    }
-        //    else
-        //    {
-        //        for (int i = 0; i < personItems.Length; ++i)
-        //        {
-        //            if (i < builder.Length)
-        //            {
-        //                Person person = builder[i];
-        //                personItems[i].SetPerson(person);
-        //                buildBuildingSys.personList.Add(person);
-        //            }
-        //            else
-        //            {
-        //                personItems[i].SetPerson(null);
-        //            }
-        //        }
-        //    }
-        //    buildBuildingSys.UpdateJobValue();
-        //    buildCountLabel.text = $"{buildBuildingSys.wonderBuildCounter}回";
-        //    cityGoldLabel.text = $"{buildBuildingSys.TargetBuildingType.cost}/{buildBuildingSys.TargetCity.gold}";
+        public void NextPage()
+        {
+            ShowPage(curPage + 1);
+        }
 
-        //    int totalNum = buildBuildingSys.TargetCity.GetIntriorBuildingComplateNumber(buildBuildingSys.TargetBuildingType.kind);
-        //    buildingNumberLabel.text = totalNum.ToString();
+        public void PrevPage()
+        {
+            ShowPage(curPage - 1);
+        }
 
-        //    buildingTypeDescLabel.text = buildBuildingSys.TargetBuildingType.desc;
-        //    buildingTypeItem.SetSelected(true);
-        //}
+        /// <summary>
+        /// 退出
+        /// </summary>
+        public void OnCancel()
+        {
+            buildBuildingSys.Done();
+        }
 
-        //public void OnPersonChange(List<Person> personList)
-        //{
-        //    buildBuildingSys.personList = personList;
+        public void OnSelectBuildingType(UIBuildingTypeItem buildingTypeItem)
+        {
+            if (lastSelectIndex == -1)
+                lastSelectIndex = buildingTypeItem.index;
+            else
+            {
+                if (lastSelectIndex >= curPage * buildingTypeItems.Length)
+                {
+                    int idx = lastSelectIndex - curPage * buildingTypeItems.Length;
+                    buildingTypeItems[idx].SetSelected(false);
+                }
+            }
 
-        //    buildBuildingSys.UpdateJobValue();
-        //    buildCountLabel.text = $"{buildBuildingSys.wonderBuildCounter}回";
+            lastSelectIndex = buildingTypeItem.index;
+            buildingTypeItem.SetSelected(true);
+            BuildingType targetBuildingType = BuildingTypes[buildingTypeItem.index];
+            buildButtonObj.SetActive(true);
+            buildBuildingSys.SelectBuildingType(targetBuildingType);
 
-        //    for (int i = 0; i < personItems.Length; ++i)
-        //    {
-        //        if (i < personList.Count)
-        //            personItems[i].SetPerson(personList[i]);
+            buildCountLabel.text = $"{buildBuildingSys.wonderBuildCounter}回";
+            cityGoldLabel.text = $"{targetBuildingType.cost}/{buildBuildingSys.TargetCity.gold}";
 
-        //        else
-        //            personItems[i].SetPerson(null);
-        //    }
-        //}
+            buildingTypeDescLabel.text = targetBuildingType.desc;
+            limitLabel.text = targetBuildingType.limitDesc;
+            buildingTypeItem.SetSelected(true);
 
-        //public void OnSelectPerson()
-        //{
-        //    Singleton<PersonSelectSystem>.Instance.Start(buildBuildingSys.TargetCity.freePersons,
-        //        buildBuildingSys.personList, 3, OnPersonChange, buildBuildingSys.customTitleList, buildBuildingSys.customTitleName);
-        //}
+            UpdateContent();
 
-        ///// <summary>
-        ///// 新建建筑
-        ///// </summary>
-        //public void OnBuildBuilding()
-        //{
-        //    buildBuildingSys.DoBuildBuilding();
-        //    OnShow();
-        //}
+        }
 
-        ///// <summary>
-        ///// 升级建筑
-        ///// </summary>
-        //public void OnUpgradeBuilding()
-        //{
-        //    buildBuildingSys.DoUpgradeBuilding();
-        //    OnShow();
-        //}
+        public void UpdateContent()
+        {
+            for (int i = 0; i < personItems.Length; ++i)
+            {
+                if (i < buildBuildingSys.personList.Count)
+                    personItems[i].SetPerson(buildBuildingSys.personList[i]);
+                else
+                    personItems[i].SetPerson(null);
+            }
+        }
 
-        ///// <summary>
-        ///// 拆除建筑
-        ///// </summary>
-        //public void OnDestroyBuilding()
-        //{
-        //    buildBuildingSys.DoDestroyBuilding();
-        //    OnShow();
-        //}
+        /// <summary>
+        /// 新建建筑
+        /// </summary>
+        public void OnBuild()
+        {
+            buildBuildingSys.OnSelectCell();
+            Hide();
+        }
+
+        public void OnPersonChange(List<Person> personList)
+        {
+            buildBuildingSys.personList = personList;
+
+            buildBuildingSys.UpdateJobValue();
+            buildCountLabel.text = $"{buildBuildingSys.wonderBuildCounter}回";
+
+            for (int i = 0; i < personItems.Length; ++i)
+            {
+                if (i < personList.Count)
+                    personItems[i].SetPerson(personList[i]);
+
+                else
+                    personItems[i].SetPerson(null);
+            }
+        }
+
+        public void OnSelectPerson()
+        {
+            Singleton<PersonSelectSystem>.Instance.Start(buildBuildingSys.TargetCity.freePersons,
+                buildBuildingSys.personList, 3, OnPersonChange, buildBuildingSys.customTitleList, buildBuildingSys.customTitleName);
+        }
     }
 }

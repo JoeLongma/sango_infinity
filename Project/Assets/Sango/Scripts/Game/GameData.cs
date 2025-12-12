@@ -23,7 +23,21 @@ namespace Sango.Game
             LoadModelConfig();
         }
 
-        public ScenarioCommonData LoadCommonData()
+        public ScenarioCommonData LoadNewCommonData()
+        {
+            ScenarioCommonData scenarioCommonData = new ScenarioCommonData();
+            string commonDataFileName = "Data/Common/Common.json";
+            ModManager.Instance.LoadFile(commonDataFileName, file =>
+            {
+                scenarioCommonData = Newtonsoft.Json.JsonConvert.DeserializeObject<ScenarioCommonData>(File.ReadAllText(file));
+            });
+            //SimpleJSON.JSONClass node = new SimpleJSON.JSONClass();
+            //ScenarioCommonData.Save(node);
+            //node.SaveToFile("D:/commonData.json");
+            return scenarioCommonData;
+        }
+
+        internal ScenarioCommonData LoadCommonData()
         {
             if (ScenarioCommonData != null)
                 return ScenarioCommonData;

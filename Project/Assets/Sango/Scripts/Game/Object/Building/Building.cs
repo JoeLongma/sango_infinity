@@ -49,7 +49,7 @@ namespace Sango.Game
                 cell.building = this;
             CenterCell = OccupyCellList[0];
 
-            if(CenterCell.HasGridState(Sango.Render.MapGrid.GridState.Interior))
+            if(CenterCell.IsInterior)
                 CenterCell.ClearInteriorModel();
 
             // 效果范围
@@ -284,7 +284,7 @@ namespace Sango.Game
             {
                 CenterCell.building = null;
 
-                if (CenterCell.HasGridState(Sango.Render.MapGrid.GridState.Interior))
+                if (CenterCell.IsInterior)
                     CenterCell.CreateInteriorModel();
 
                 CenterCell = null;
