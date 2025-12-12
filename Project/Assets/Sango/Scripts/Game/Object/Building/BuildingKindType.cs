@@ -4,63 +4,140 @@ using System.Xml;
 
 namespace Sango.Game
 {
+    /// <summary>
+    /// 建筑大类型
+    /// </summary>
+    public enum BuildingMajorType : int
+    {
+        /// <summary>
+        /// 固定设施
+        /// </summary>
+        Fixture = 0,
+
+        /// <summary>
+        /// 军事设施
+        /// </summary>
+        Military,
+        
+        /// <summary>
+        /// 障碍物
+        /// </summary>
+        Obstacle,
+
+        /// <summary>
+        /// 爆炸物
+        /// </summary>
+        Explosive,
+
+        /// <summary>
+        /// 内政设施
+        /// </summary>
+        Interior,
+    }
+        
+    /// <summary>
+    /// 建筑物小类
+    /// </summary>
     public enum BuildingKindType : int
     {
         /// <summary>
         /// 自定义
         /// </summary>
         CustomKind = 0,
+
         /// <summary>
         /// 城市
         /// </summary>
-        City,
+        City = 1,
+
         /// <summary>
         /// 关卡
         /// </summary>
-        Gate,
+        Gate = 2,
+
         /// <summary>
         /// 港口
         /// </summary>
-        Port,
+        Port = 3,
+
         /// <summary>
-        /// 农田
+        /// 箭楼
         /// </summary>
-        Farm,
+        ArrowTower = 7,
+
         /// <summary>
         /// 市场
         /// </summary>
-        Market,
+        Market = 32,
+
         /// <summary>
-        /// 村庄
+        /// 农田
         /// </summary>
-        Village,
+        Farm = 33,
+       
         /// <summary>
         /// 兵营
         /// </summary>
-        Barracks,
+        Barracks = 34,
+
         /// <summary>
         /// 铁匠铺
         /// </summary>
-        BlacksmithShop,
-        /// <summary>
-        /// 工坊
-        /// </summary>
-        MechineFactory,
-        /// <summary>
-        /// 造船厂
-        /// </summary>
-        BoatFactory,
+        BlacksmithShop = 35,
+
         /// <summary>
         /// 马厩
         /// </summary>
-        Stable,
+        Stable = 36,
+
+        /// <summary>
+        /// 工坊
+        /// </summary>
+        MechineFactory = 37,
+
+        /// <summary>
+        /// 造船厂
+        /// </summary>
+        BoatFactory = 38,
+
+        /// <summary>
+        /// 造币厂
+        /// </summary>
+        Mint = 39,
+
+        /// <summary>
+        /// 谷仓
+        /// </summary>
+        Barn = 40,
+
+        /// <summary>
+        /// 大市场
+        /// </summary>
+        BigMarket = 47,
+
+        /// <summary>
+        /// 鱼市
+        /// </summary>
+        FishMarket = 48,
+
+        /// <summary>
+        /// 黑市
+        /// </summary>
+        BlackMarket = 49,
+
+        /// <summary>
+        /// 军屯田
+        /// </summary>
+        MilitaryGarrison = 50,
+
         /// <summary>
         /// 巡查局
         /// </summary>
         PatrolBureau,
+
         /// <summary>
-        /// 箭塔
+        /// 村庄
         /// </summary>
-        ArrowTower,
+        Village,
     }
 }

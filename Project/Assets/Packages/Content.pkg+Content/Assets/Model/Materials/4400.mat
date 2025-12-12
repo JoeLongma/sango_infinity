@@ -27,6 +27,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _BaseColorIntensity: 0.3
+    - _FlashFactor: 1
     - _OutlineWidth: 3.5
     m_Colors: []
   m_BuildTextureStacks: []

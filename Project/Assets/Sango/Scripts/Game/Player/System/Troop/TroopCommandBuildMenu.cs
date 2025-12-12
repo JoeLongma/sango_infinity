@@ -26,7 +26,7 @@ namespace Sango.Game.Player
             canBuildBuildingType.Clear();
             Scenario.Cur.CommonData.BuildingTypes.ForEach(x =>
             {
-                if (x.isOutside && x.kind > 3 && x.IsValid(TargetTroop.BelongForce))
+                if (x.IsOutside && x.IsValid(TargetTroop.BelongForce))
                 {
                     canBuildBuildingType.Add(x);
                 }
@@ -51,7 +51,7 @@ namespace Sango.Game.Player
                     }
                 }
 
-                if(!hasEnoughGold) return false;
+                if (!hasEnoughGold) return false;
 
                 // 周围一格是可以建造的地块
                 Cell stayCell = ActionCell;

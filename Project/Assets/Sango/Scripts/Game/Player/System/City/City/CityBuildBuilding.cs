@@ -82,27 +82,27 @@ namespace Sango.Game.Player
         {
             if (personList.Count <= 0)
                 return;
-            TargetCity.JobBuildBuilding(CurSelectSlotIndex, personList.ToArray(), TargetBuildingType, wonderBuildCounter);
+            //TargetCity.JobBuildBuilding(CurSelectSlotIndex, personList.ToArray(), TargetBuildingType, wonderBuildCounter);
         }
 
         public void DoUpgradeBuilding()
         {
-            int buildingId = TargetCity.innerSlot[CurSelectSlotIndex];
-            if (buildingId > 0)
-            {
-                Building building = Scenario.Cur.GetObject<Building>(buildingId);
-                TargetCity.JobUpgradeBuilding(building, personList.ToArray(), TargetBuildingType, wonderBuildCounter);
-            }
+            //int buildingId = TargetCity.innerSlot[CurSelectSlotIndex];
+            //if (buildingId > 0)
+            //{
+            //    Building building = Scenario.Cur.GetObject<Building>(buildingId);
+            //    TargetCity.JobUpgradeBuilding(building, personList.ToArray(), TargetBuildingType, wonderBuildCounter);
+            //}
         }
 
         public void DoDestroyBuilding()
         {
-            int buildingId = TargetCity.innerSlot[CurSelectSlotIndex];
-            if (buildingId > 0)
-            {
-                Building building = Scenario.Cur.GetObject<Building>(buildingId);
-                building.OnFall(null);
-            }
+            //int buildingId = TargetCity.innerSlot[CurSelectSlotIndex];
+            //if (buildingId > 0)
+            //{
+            //    Building building = Scenario.Cur.GetObject<Building>(buildingId);
+            //    building.OnFall(null);
+            //}
         }
     }
 }

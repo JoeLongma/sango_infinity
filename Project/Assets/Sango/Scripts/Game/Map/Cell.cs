@@ -201,5 +201,14 @@ namespace Sango.Game
                 MapRender.Instance.AddStatic(interiorModel);
             }
         }
+
+        public void ClearInteriorModel()
+        {
+            if (interiorModel != null)
+            {
+                interiorModel.Clear();
+                interiorModel = null;
+            }
+        }
     }
 }

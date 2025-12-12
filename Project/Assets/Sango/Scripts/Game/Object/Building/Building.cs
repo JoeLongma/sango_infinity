@@ -23,11 +23,6 @@ namespace Sango.Game
         //public Person Builder { get; set; }
 
         public Person Worker { get; set; }
-        /// <summary>
-        /// 占用槽位ID
-        /// </summary>
-        [JsonProperty]
-        public int SlotId { get; set; }
 
         public int cellHarvestTotalFood = 0;
         public int cellHarvestTotalGold = 0;
@@ -40,32 +35,32 @@ namespace Sango.Game
 
         public override void OnPrepareRender()
         {
-            if (!BuildingType.isIntrior && Render == null)
+            if (Render == null)
                 Render = new BuildingRender(this);
         }
 
         public override void Init(Scenario scenario)
         {
             BelongCity?.OnBuildingCreate(this);
-            if (!BuildingType.isIntrior)
-            {
-                // 地格占用
-                OccupyCellList = new List<Cell>();
-                scenario.Map.GetSpiral(x, y, BuildingType.radius, OccupyCellList);
-                foreach (Cell cell in OccupyCellList)
-                    cell.building = this;
-                CenterCell = OccupyCellList[0];
+            // 地格占用
+            OccupyCellList = new List<Cell>();
+            scenario.Map.GetSpiral(x, y, BuildingType.radius, OccupyCellList);
+            foreach (Cell cell in OccupyCellList)
+                cell.building = this;
+            CenterCell = OccupyCellList[0];
 
-                // 效果范围
-                effectCells = new System.Collections.Generic.List<Cell>();
-                scenario.Map.GetDirectSpiral(CenterCell, BuildingType.radius + 1, BuildingType.radius + BuildingType.atkRange, effectCells);
+            if(CenterCell.HasGridState(Sango.Render.MapGrid.GridState.Interior))
+                CenterCell.ClearInteriorModel();
 
-            }
+            // 效果范围
+            effectCells = new System.Collections.Generic.List<Cell>();
+            scenario.Map.GetDirectSpiral(CenterCell, BuildingType.radius + 1, BuildingType.radius + BuildingType.atkRange, effectCells);
             OnPrepareRender();
         }
 
         public override bool OnForceTurnStart(Scenario scenario)
         {
+            ActionOver = false;
 
             if (!isComplte && Builders != null)
             {
@@ -118,6 +113,7 @@ namespace Sango.Game
             }
             if (Render != null)
                 Render.UpdateRender();
+
             return base.OnForceTurnStart(scenario);
         }
 
@@ -236,9 +232,8 @@ namespace Sango.Game
                 return;
             }
 
-            BelongCity.allOutterBuildings.Remove(this);
-
-            dest.allOutterBuildings.Add(this);
+            BelongCity.allBuildings.Remove(this);
+            dest.allBuildings.Add(this);
 
             BelongCorps = dest.BelongCorps;
             BelongForce = dest.BelongForce;
@@ -288,6 +283,10 @@ namespace Sango.Game
             if (CenterCell != null)
             {
                 CenterCell.building = null;
+
+                if (CenterCell.HasGridState(Sango.Render.MapGrid.GridState.Interior))
+                    CenterCell.CreateInteriorModel();
+
                 CenterCell = null;
             }
             if (Render != null)

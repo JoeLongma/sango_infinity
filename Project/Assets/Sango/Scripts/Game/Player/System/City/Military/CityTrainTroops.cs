@@ -28,7 +28,7 @@ namespace Sango.Game.Player
         {
             get
             {
-                return TargetCity.GetIntriorBuildingComplateNumber((int)BuildingKindType.Barracks) > 0 && TargetCity.CheckJobCost(CityJobType.TrainTroops) && TargetCity.morale < TargetCity.MaxMorale  ;
+                return TargetCity.GetBuildingComplateNumber((int)BuildingKindType.Barracks) > 0 && TargetCity.CheckJobCost(CityJobType.TrainTroops) && TargetCity.morale < TargetCity.MaxMorale  ;
             }
         }
 

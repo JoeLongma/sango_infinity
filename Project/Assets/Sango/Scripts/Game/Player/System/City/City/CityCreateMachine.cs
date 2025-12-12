@@ -30,7 +30,7 @@ namespace Sango.Game.Player
             }
             CurSelectedItemTypeIndex = 0;
             CurSelectedItemType = ItemTypes[CurSelectedItemTypeIndex];
-            TotalBuildingCount = TargetCity.GetIntriorBuildingComplateNumber((int)BuildingKindType.MechineFactory);
+            TotalBuildingCount = TargetCity.GetBuildingComplateNumber((int)BuildingKindType.MechineFactory);
         }
 
         public override bool IsValid
@@ -38,7 +38,7 @@ namespace Sango.Game.Player
             get
             {
                 return TargetCity.itemStore.TotalNumber < TargetCity.StoreLimit && TargetCity.CheckJobCost(CityJobType.CreateMachine)
-                    && TargetCity.GetIntriorBuildingComplateNumber((int)BuildingKindType.MechineFactory) > 0;
+                    && TargetCity.GetBuildingComplateNumber((int)BuildingKindType.MechineFactory) > 0;
             }
         }
 

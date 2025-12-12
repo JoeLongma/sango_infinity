@@ -721,21 +721,25 @@ namespace Sango.Game
         public void MakeForceQuene()
         {
             // 玩家排到最前面
-            for (int k = 0; k < Info.playerForceList.Length; k++)
+            if (Info.playerForceList != null)
             {
-                Force force = forceSet.Get(Info.playerForceList[k]);
-                if (force.IsAlive)
+                for (int k = 0; k < Info.playerForceList.Length; k++)
                 {
-                    force.ActionOver = false;
-                    runForces.Enqueue(force);
+                    Force force = forceSet.Get(Info.playerForceList[k]);
+                    if (force.IsAlive)
+                    {
+                        force.ActionOver = false;
+                        runForces.Enqueue(force);
+                    }
                 }
+
             }
 
             forceSet.ForEach(force =>
             {
                 if (force.IsAlive)
                 {
-                    if (!Info.playerForceList.Contains(force.Id))
+                    if (Info.playerForceList == null || !Info.playerForceList.Contains(force.Id))
                     {
                         force.ActionOver = false;
                         runForces.Enqueue(force);

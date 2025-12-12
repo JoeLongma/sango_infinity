@@ -113,7 +113,7 @@ namespace Sango.Game
         }
         public bool IsIntorBuilding()
         {
-            return BuildingType.isIntrior;
+            return BuildingType.IsIntrior;
         }
 
         public override void OnScenarioPrepare(Scenario scenario)

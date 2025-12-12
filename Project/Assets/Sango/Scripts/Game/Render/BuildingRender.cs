@@ -13,6 +13,7 @@ namespace Sango.Game.Render
         BuildingModel BuildingModel { get; set; }
         UGUIWindow HeadBar { get; set; }
         bool isComplate = false;
+        bool isUpgrading = false;
         public BuildingRender(Building building)
         {
             Owener = building;
@@ -21,10 +22,11 @@ namespace Sango.Game.Render
             MapObject.objType = Building.BuildingType.kind;
             MapObject.modelId = Building.BuildingType.Id;
             isComplate = building.isComplte;
-            if (building.isComplte)
-                MapObject.modelAsset = building.BuildingType.model;
+            isUpgrading = building.isUpgrading;
+            if (!building.isComplte || building.isUpgrading)
+                MapObject.modelAsset = building.BuildingType.modelCreate;
             else
-                MapObject.modelAsset = building.BuildingType.modelBroken;
+                MapObject.modelAsset = building.BuildingType.model;
 
             MapObject.transform.position = Building.CenterCell.Position;
             MapObject.transform.rotation = Quaternion.Euler(new Vector3(0, Building.rot, 0));
@@ -97,6 +99,12 @@ namespace Sango.Game.Render
                 }
             }
 
+
+            //if (Building.isComplte || Building.isUpgrading)
+            //{
+            //    MapObject.ChangeModel(Building.BuildingType.modelCreate);
+            //}
+
             //if (BuildingModel != null)
             //{
             //    BuildingModel.Init(Building);
@@ -105,6 +113,15 @@ namespace Sango.Game.Render
             {
                 isComplate = Building.isComplte;
                 MapObject.ChangeModel(Building.BuildingType.model);
+            }
+
+            if (isUpgrading != Building.isUpgrading)
+            {
+                isUpgrading = Building.isUpgrading;
+                if(isUpgrading)
+                    MapObject.ChangeModel(Building.BuildingType.modelCreate);
+                else
+                    MapObject.ChangeModel(Building.BuildingType.model);
             }
         }
 

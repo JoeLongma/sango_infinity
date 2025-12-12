@@ -390,7 +390,7 @@ namespace Sango.Game
             if (city.defenceCellList.Count == 0)
                 return true;
 
-            if (city.allIntriorBuildings.Count < city.InsideSlot)
+            if (!city.IsInteriorBuildFull())
                 return true;
 
             if (city.freePersons.Count < 1)
@@ -519,7 +519,7 @@ namespace Sango.Game
                 (int)BuildingKindType.Market,
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Market,
-                (int)BuildingKindType.PatrolBureau,
+               // (int)BuildingKindType.PatrolBureau,
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Stable,
                 (int)BuildingKindType.MechineFactory,// 12小城
@@ -551,7 +551,7 @@ namespace Sango.Game
                 (int)BuildingKindType.Market,
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Farm,
-                (int)BuildingKindType.PatrolBureau,
+               // (int)BuildingKindType.PatrolBureau,
                 (int)BuildingKindType.Stable,
                 (int)BuildingKindType.MechineFactory,
                 (int)BuildingKindType.BoatFactory,// 12小城
@@ -583,7 +583,7 @@ namespace Sango.Game
                 (int)BuildingKindType.Market,
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Market,
-                (int)BuildingKindType.PatrolBureau,
+               // (int)BuildingKindType.PatrolBureau,
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.BoatFactory,
                 (int)BuildingKindType.MechineFactory,// 12小城
@@ -615,7 +615,7 @@ namespace Sango.Game
                 (int)BuildingKindType.Market,
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Farm,
-                (int)BuildingKindType.PatrolBureau,
+               // (int)BuildingKindType.PatrolBureau,
                 (int)BuildingKindType.BoatFactory,
                 (int)BuildingKindType.MechineFactory,
                 (int)BuildingKindType.BoatFactory,// 12小城
@@ -640,7 +640,7 @@ namespace Sango.Game
 
         public static bool AIBuildIntriore(City city, Scenario scenario)
         {
-            if (city.allIntriorBuildings.Count >= city.InsideSlot)
+            if (city.IsInteriorBuildFull())
                 return true;
 
             if (city.freePersons.Count <= 0)
@@ -684,7 +684,7 @@ namespace Sango.Game
                 return true;
 
             Dictionary<int, int> buildingCountMap = new Dictionary<int, int>();
-            foreach (Building building in city.allIntriorBuildings)
+            foreach (Building building in city.allBuildings)
             {
                 if (buildingCountMap.ContainsKey(building.BuildingType.kind))
                 {
@@ -700,7 +700,7 @@ namespace Sango.Game
             int[] buildingFlag = new int[building_list.Length];
 
             // 先排除确定的建筑
-            for (int i = 0; i < city.InsideSlot; i++)
+            for (int i = 0; i < city.InteriorCellCount; i++)
             {
                 int buildKindId = building_list[i];
                 if (buildKindId > 0)
@@ -716,8 +716,9 @@ namespace Sango.Game
                 }
             }
 
+
             // 再排除不确定的建筑
-            for (int i = 0; i < city.InsideSlot; i++)
+            for (int i = 0; i < city.InteriorCellCount; i++)
             {
                 int buildTypeId = building_list[i];
                 if (buildTypeId == 0)
@@ -740,7 +741,7 @@ namespace Sango.Game
             }
 
             // 修建未入坑的
-            for (int i = 0; i < city.InsideSlot; i++)
+            for (int i = 0; i < city.InteriorCellCount; i++)
             {
                 int exsistId = buildingFlag[i];
                 if (exsistId > 0)
@@ -750,14 +751,14 @@ namespace Sango.Game
                 BuildingType buildingType = scenario.GetObject<BuildingType>(buildKindId);
                 if (buildingType == null || buildingType.Id == 0)
                 {
-                    buildingType = scenario.GetObject<BuildingType>(GameRandom.Range((int)BuildingKindType.Market, (int)BuildingKindType.PatrolBureau));
+                    buildingType = scenario.GetObject<BuildingType>(GameRandom.Range((int)BuildingKindType.Market, (int)BuildingKindType.MilitaryGarrison + 1));
                 }
 
                 if (city.gold < buildingType.cost)
                     return true;
 
-                int index = city.GetEmptySlot();
-                if (index < 0)
+                Cell bestPlace = buildingType.GetBestPlace(city);
+                if (bestPlace == null)
                     return true;
 
                 Person[] people = ForceAI.CounsellorRecommendBuild(city.freePersons, buildingType);
@@ -766,7 +767,7 @@ namespace Sango.Game
                     int buildAbility = GameUtility.Method_PersonBuildAbility(people);
                     int turnCount = buildingType.durabilityLimit % buildAbility == 0 ? 0 : 1;
                     int buildCount = Math.Min(Scenario.Cur.Variables.BuildMaxTurn, buildingType.durabilityLimit / buildAbility + turnCount);
-                    city.JobBuildBuilding(index, people, buildingType, buildCount);
+                    city.JobBuildBuilding(bestPlace, people, buildingType, buildCount);
                     return true;
                 }
             }
@@ -783,17 +784,12 @@ namespace Sango.Game
                 return true;
 
             // 需要全部建造完毕
-            for (int i = 0; i < city.innerSlot.Length; ++i)
-            {
-                int buildingId = city.innerSlot[i];
-                if (buildingId <= 0) return true;
-            }
+            if (!city.IsInteriorBuildFull())
+                return true;
 
-            for (int i = 0; i < city.innerSlot.Length; ++i)
+            for (int i = 0; i < city.allBuildings.Count; ++i)
             {
-                int buildingId = city.innerSlot[i];
-                if (buildingId <= 0) return true;
-                Building building = scenario.GetObject<Building>(buildingId);
+                Building building = city.allBuildings[i];
                 if (building.isComplte && !building.isUpgrading && building.BuildingType.nextId > 0)
                 {
                     BuildingType nextBuildingType = scenario.GetObject<BuildingType>(building.BuildingType.nextId);
@@ -830,7 +826,7 @@ namespace Sango.Game
             if (city.security < 70) return true;
             if (city.troops > city.food) return true;
 
-            int barracksNum = city.GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.Barracks);
+            int barracksNum = city.GetIntriorBuildingComplateMaxLevel((int)BuildingKindType.Barracks);
             if (barracksNum <= 0) return true;
 
             Person[] people = ForceAI.CounsellorRecommendRecuritTroop(city.freePersons);
@@ -964,8 +960,8 @@ namespace Sango.Game
             if (city.freePersons.Count < 2 || city.gold < 400)
                 return true;
 
-            int barracksNum = city.GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.PatrolBureau);
-            if (barracksNum <= 0) return true;
+            //int barracksNum = city.GetIntriorBuildingComplateMaxLevel((int)BuildingKindType.PatrolBureau);
+            //if (barracksNum <= 0) return true;
 
             if (GameRandom.Chance((100 - city.security) * 4))
             {
@@ -981,7 +977,7 @@ namespace Sango.Game
             if (city.freePersons.Count < 2)
                 return true;
 
-            int barracksNum = city.GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.PatrolBureau);
+            int barracksNum = city.GetIntriorBuildingComplateMaxLevel((int)BuildingKindType.Barracks);
             if (barracksNum <= 0) return true;
 
             if (city.morale < 50)
@@ -1009,8 +1005,8 @@ namespace Sango.Game
 
             if (city.itemStore.TotalNumber >= city.StoreLimit - 1000) return true;
 
-            int BlacksmithShopnum = city.GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.BlacksmithShop);
-            int StableNum = city.GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.Stable);
+            int BlacksmithShopnum = city.GetIntriorBuildingComplateMaxLevel((int)BuildingKindType.BlacksmithShop);
+            int StableNum = city.GetIntriorBuildingComplateMaxLevel((int)BuildingKindType.Stable);
             if (BlacksmithShopnum <= 0 && StableNum <= 0)
                 return true;
 
@@ -1070,7 +1066,7 @@ namespace Sango.Game
 
             if (city.itemStore.TotalNumber >= city.StoreLimit - 1000) return true;
 
-            int BoatFactoryNum = city.GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.BoatFactory);
+            int BoatFactoryNum = city.GetIntriorBuildingComplateMaxLevel((int)BuildingKindType.BoatFactory);
             if (BoatFactoryNum <= 0)
                 return true;
 
@@ -1099,7 +1095,7 @@ namespace Sango.Game
 
             if (city.itemStore.TotalNumber >= city.StoreLimit - 1000) return true;
 
-            int MechineFactoryNum = city.GetIntriorBuildingComplateTotalLevel((int)BuildingKindType.MechineFactory);
+            int MechineFactoryNum = city.GetIntriorBuildingComplateMaxLevel((int)BuildingKindType.MechineFactory);
             if (MechineFactoryNum <= 0)
                 return true;
 
@@ -1231,7 +1227,7 @@ namespace Sango.Game
 
                 food = turnCostFood * minTurn;
             }
-
+            troop.WaterTroopType = scenario.GetObject<TroopType>(8);
             troop.LandTroopType.Cost(city, maxTroopNum);
             troop.WaterTroopType.Cost(city, maxTroopNum);
             city.troops -= maxTroopNum;

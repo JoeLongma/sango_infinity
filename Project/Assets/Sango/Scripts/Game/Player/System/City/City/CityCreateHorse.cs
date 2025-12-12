@@ -25,7 +25,7 @@ namespace Sango.Game.Player
             ItemTypes.Add(scenario.GetObject<ItemType>(5));
             CurSelectedItemTypeIndex = 0;
             CurSelectedItemType = ItemTypes[CurSelectedItemTypeIndex];
-            TotalBuildingCount = TargetCity.GetIntriorBuildingComplateNumber((int)BuildingKindType.Stable);
+            TotalBuildingCount = TargetCity.GetBuildingComplateNumber((int)BuildingKindType.Stable);
         }
 
         public override bool IsValid
@@ -33,7 +33,7 @@ namespace Sango.Game.Player
             get
             {
                 return TargetCity.itemStore.TotalNumber < TargetCity.StoreLimit && TargetCity.CheckJobCost(CityJobType.CreateItems)
-                    && TargetCity.GetIntriorBuildingComplateNumber((int)BuildingKindType.Stable) > 0;
+                    && TargetCity.GetBuildingComplateNumber((int)BuildingKindType.Stable) > 0;
             }
         }
     }

@@ -9,10 +9,7 @@
     "month": 1,
     "day": 0,
     "turnCount": 0,
-    "curForceId": 0,
-    "playerForceList": [
-      0
-    ]
+    "curForceId": 0
   },
   "Variables": {
     "GateBeginIndex": 43,

@@ -62,7 +62,7 @@ namespace Sango.Game.Render.UI
             population.SetText(city.population.ToString());
             troopPopulation.SetText(city.troopPopulation.ToString());
             popularSupport.SetText(city.popularSupport.ToString());
-            buildingCount.SetText($"{city.GetIntriorBuildingUsedNumber()}/{city.InsideSlot}");
+            buildingCount.SetText($"{city.GetInteriorCellUsedCount()}/{city.InteriorCellCount}");
             durability.SetText(city.durability.ToString());
 
             for (int i = 0; i < 4; i++)

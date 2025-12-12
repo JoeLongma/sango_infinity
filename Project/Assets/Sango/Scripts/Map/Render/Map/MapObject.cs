@@ -364,6 +364,18 @@ namespace Sango.Render
 
         public void ChangeModel(string newAsset)
         {
+            if (newAsset == null)
+            {
+                return;
+            }
+
+            if (modelAsset == null)
+            {
+                return;
+            }
+
+
+
             if (modelAsset.Equals(newAsset)) return;
             ClearModels();
             modelAsset = newAsset;

@@ -50,7 +50,7 @@ namespace Sango.Game.Player
                 ItemTypes.Add(scenario.GetObject<ItemType>(i));
             }
 
-            TotalBuildingCount = TargetCity.GetIntriorBuildingComplateNumber((int)BuildingKindType.BlacksmithShop);
+            TotalBuildingCount = TargetCity.GetBuildingComplateNumber((int)BuildingKindType.BlacksmithShop);
             CurSelectedItemTypeIndex = 0;
             CurSelectedItemType = ItemTypes[CurSelectedItemTypeIndex];
         }
@@ -61,7 +61,7 @@ namespace Sango.Game.Player
             get
             {
                 return TargetCity.itemStore.TotalNumber < TargetCity.StoreLimit && TargetCity.CheckJobCost(CityJobType.CreateItems)
-                    && (TargetCity.GetIntriorBuildingComplateNumber((int)BuildingKindType.BlacksmithShop) > 0 || TargetCity.GetIntriorBuildingComplateNumber((int)BuildingKindType.Stable) > 0);
+                    && (TargetCity.GetBuildingComplateNumber((int)BuildingKindType.BlacksmithShop) > 0 || TargetCity.GetBuildingComplateNumber((int)BuildingKindType.Stable) > 0);
             }
         }
 

@@ -24,6 +24,11 @@
         {
             string path = Sango.Path.FindFile("Scenario/Scenario.json");
             Scenario scenario = new Scenario(path);
+
+            scenario.Info.cameraPosition = new UnityEngine.Vector3(1407, 0, 796);
+            scenario.Info.cameraRotation = new UnityEngine.Vector3(40f, -50f, 0f);
+            scenario.Info.cameraDistance = 400f;
+
             Scenario.StartScenario(scenario);
         }
     }
