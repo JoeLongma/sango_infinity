@@ -1,8 +1,4 @@
-﻿using Sango.Game.Render;
-using Sango.Render;
-using System.Collections.Generic;
-using UnityEngine;
-using ContextMenu = Sango.Game.Render.UI.ContextMenu;
+﻿using ContextMenu = Sango.Game.Render.UI.ContextMenu;
 
 namespace Sango.Game.Player
 {
@@ -11,7 +7,7 @@ namespace Sango.Game.Player
         public BuildingActionDestroy()
         {
             customMenuName = "拆除";
-            customMenuOrder = 0;
+            customMenuOrder = 10000;
         }
         public override bool IsValid
         {
@@ -20,7 +16,7 @@ namespace Sango.Game.Player
                 return true;
             }
         }
-
+       
         public override void OnEnter()
         {
             ContextMenu.CloseAll();

@@ -110,5 +110,18 @@ namespace Sango.Game.Player
             UpdateJobValue();
             targetUI?.OnInit();
         }
+
+        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)
+        {
+            switch (eventType)
+            {
+                case CommandEventType.Cancel:
+                case CommandEventType.RClickUp:
+                    {
+                        PlayerCommand.Instance.Back();
+                        break;
+                    }
+            }
+        }
     }
 }

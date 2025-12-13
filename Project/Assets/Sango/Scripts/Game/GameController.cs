@@ -29,6 +29,7 @@ namespace Sango.Game
 
         public delegate void OnCellOverEnter(Cell cell);
         public delegate void OnCellOverExit(Cell cell);
+        public delegate void OnCellOverStay(Cell cell, Vector3 hitPoint, bool isOverUI);
 
         public delegate void OnCancelHandle();
         public delegate void OnClickHandle(Cell cell);
@@ -38,6 +39,7 @@ namespace Sango.Game
         //public OnDoubleClickCell onDoubleClickCell;
         public OnCellOverEnter onCellOverEnter;
         public OnCellOverExit onCellOverExit;
+        public OnCellOverStay onCellOverStay;
         public OnCancelHandle onCancelHandle;
         public OnClickHandle onClickHandle;
         public OnClickHandle onRClickHandle;
@@ -116,9 +118,13 @@ namespace Sango.Game
                 if (mouseOverCell != null)
                     onCellOverEnter?.Invoke(mouseOverCell);
             }
-            else if (overCell != null && overCell == mouseOverCell)
+            else if (overCell == null && overCell == mouseOverCell)
             {
                 onCellOverExit?.Invoke(overCell);
+            }
+            else
+            {
+                onCellOverStay?.Invoke(overCell, hitPoint, IsOverUI());
             }
         }
 

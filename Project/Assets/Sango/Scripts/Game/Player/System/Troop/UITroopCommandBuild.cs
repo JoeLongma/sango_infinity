@@ -98,7 +98,8 @@ namespace Sango.Game.Render.UI
                 if (lastSelectIndex >= curPage * buildingTypeItems.Length)
                 {
                     int idx = lastSelectIndex - curPage * buildingTypeItems.Length;
-                    buildingTypeItems[idx].SetSelected(false);
+                    if (idx < buildingTypeItems.Length)
+                        buildingTypeItems[idx].SetSelected(false);
                 }
             }
 

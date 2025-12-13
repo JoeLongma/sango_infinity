@@ -1,6 +1,4 @@
-﻿using Sango.Loader;
-using UnityEditor.Build;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI

@@ -10,17 +10,17 @@ namespace Sango.Game.Render.UI
     {
         List<BuildingType> BuildingTypes { get; set; }
         public UIBuildingTypeItem[] buildingTypeItems;
-        public GameObject buildButtonObj;
+        public Button buildButton;
         public UIPersonItem[] personItems;
 
         public UITextField buildCountLabel;
         public UITextField cityGoldLabel;
-        public UITextField buildingNumberLabel;
         public UITextField developNumberLabel;
         public UITextField emptyNumberLabel;
         public UITextField buildingTypeDescLabel;
         public UITextField limitLabel;
         public UITextField durabilityLabel;
+        public UITextField action_value;
 
         CityBuildBuilding buildBuildingSys;
         int maxPage;
@@ -30,12 +30,16 @@ namespace Sango.Game.Render.UI
 
         public override void OnShow()
         {
-
-
             buildCountLabel.text = "";
             cityGoldLabel.text = "";
             buildCountLabel.text = "";
-            buildButtonObj.SetActive(false);
+            buildingTypeDescLabel.text = "";
+            limitLabel.text = "";
+            developNumberLabel.text = "";
+            limitLabel.text = "";
+            durabilityLabel.text = "";
+
+            buildButton.interactable = false;
             buildBuildingSys = Singleton<CityBuildBuilding>.Instance;
             BuildingTypes = buildBuildingSys.canBuildBuildingType;
             curPage = 0;
@@ -48,8 +52,8 @@ namespace Sango.Game.Render.UI
                 UIBuildingTypeItem item = buildingTypeItems[i];
                 item.onSelected = OnSelectBuildingType;
             }
+            //buildBuildingSys.SelectBuildingType(BuildingTypes[0]);
             ShowPage(curPage);
-            buildBuildingSys.SelectBuildingType(BuildingTypes[0]);
             UpdateContent();
         }
 
@@ -105,19 +109,22 @@ namespace Sango.Game.Render.UI
                 if (lastSelectIndex >= curPage * buildingTypeItems.Length)
                 {
                     int idx = lastSelectIndex - curPage * buildingTypeItems.Length;
-                    buildingTypeItems[idx].SetSelected(false);
+                    if(idx < buildingTypeItems.Length)
+                        buildingTypeItems[idx].SetSelected(false);
                 }
             }
 
             lastSelectIndex = buildingTypeItem.index;
             buildingTypeItem.SetSelected(true);
             BuildingType targetBuildingType = BuildingTypes[buildingTypeItem.index];
-            buildButtonObj.SetActive(true);
+            buildButton.interactable = true;
+
             buildBuildingSys.SelectBuildingType(targetBuildingType);
 
             buildCountLabel.text = $"{buildBuildingSys.wonderBuildCounter}回";
             cityGoldLabel.text = $"{targetBuildingType.cost}/{buildBuildingSys.TargetCity.gold}";
 
+            durabilityLabel.text = targetBuildingType.durabilityLimit.ToString();
             buildingTypeDescLabel.text = targetBuildingType.desc;
             limitLabel.text = targetBuildingType.limitDesc;
             buildingTypeItem.SetSelected(true);
@@ -135,6 +142,8 @@ namespace Sango.Game.Render.UI
                 else
                     personItems[i].SetPerson(null);
             }
+
+            emptyNumberLabel.text = $"{buildBuildingSys.TargetCity.InteriorCellCount - buildBuildingSys.TargetCity.GetInteriorCellUsedCount()}/{buildBuildingSys.TargetCity.InteriorCellCount}";
         }
 
         /// <summary>

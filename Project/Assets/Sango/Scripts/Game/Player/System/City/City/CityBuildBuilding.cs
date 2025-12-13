@@ -12,14 +12,14 @@ namespace Sango.Game.Player
     {
         public City TargetCity { get; set; }
         public Cell TargetCell { get; set; }
-        public BuildingRender SelectBuildingRender { get; set; }
+        public MapObject SelectBuildingObject { get; set; }
         public List<Cell> buildRangeCell = new List<Cell>();
         public List<BuildingType> canBuildBuildingType = new List<BuildingType>();
 
         public List<Person> personList = new List<Person>();
         public int wonderBuildCounter = 0;
 
-        public string customTitleName = "内城";
+        public string customTitleName = "开发";
         public List<ObjectSortTitle> customTitleList = new List<ObjectSortTitle>()
         {
             PersonSortFunction.SortByName,
@@ -48,8 +48,6 @@ namespace Sango.Game.Player
             }
         }
 
-
-
         void OnCityContextMenuShow(ContextMenuData menuData, City city)
         {
             TargetCity = city;
@@ -68,7 +66,7 @@ namespace Sango.Game.Player
             canBuildBuildingType.Clear();
             Scenario.Cur.CommonData.BuildingTypes.ForEach(x =>
             {
-                if (x.IsIntrior && x.IsValid(TargetCity.BelongForce))
+                if (x.IsIntrior && x.level == 1 && x.IsValid(TargetCity.BelongForce))
                 {
                     canBuildBuildingType.Add(x);
                 }
@@ -87,14 +85,16 @@ namespace Sango.Game.Player
 
         public override void OnEnter()
         {
-            Window.Instance.Open("window_city_building");
+            TargetBuildingType = null;
+            personList.Clear();
+            Window.Instance.Open("window_building_select");
         }
 
         public void SelectBuildingType(BuildingType buildingType)
         {
             TargetBuildingType = buildingType;
             Person[] ps = ForceAI.CounsellorRecommendBuild(TargetCity.freePersons, TargetBuildingType);
-            if(ps != null)
+            if (ps != null)
             {
                 personList.Clear();
                 foreach (Person person in ps)
@@ -107,14 +107,93 @@ namespace Sango.Game.Player
 
         public override void OnDestroy()
         {
-            Window.Instance.Close("window_city_building");
+            GameController.Instance.RotateViewEnabled = false;
+            GameController.Instance.ZoomViewEnabled = false;
+            GameController.Instance.KeyboardMoveEnabled = false;
+            GameController.Instance.DragMoveViewEnabled = false;
+
+            if (SelectBuildingObject != null)
+            {
+                SelectBuildingObject.Clear();
+                SelectBuildingObject = null;
+            }
+            GameController.Instance.onCellOverEnter -= OnCellOverEnter;
+            GameController.Instance.onCellOverStay -= OnCellOverStay;
+            GameController.Instance.onCellOverExit -= OnCellOverExit;
+            Window.Instance.Close("window_building_select");
             ClearShowBuildRange();
             buildRangeCell.Clear();
         }
 
         public void OnSelectCell()
         {
+            buildRangeCell.Clear();
+            for (int i = 0; i < TargetCity.interiorCellList.Count; i++)
+            {
+                Cell n = TargetCity.interiorCellList[i];
+                if (n != null)
+                {
+                    buildRangeCell.Add(n);
+                }
+            }
+            ShowBuildRange();
+            Render.UI.ContextMenu.SetVisible(false);
+            SelectBuildingObject = MapObject.Create(TargetBuildingType.Name);
+            SelectBuildingObject.objType = TargetBuildingType.kind;
+            SelectBuildingObject.modelId = TargetBuildingType.Id;
+            SelectBuildingObject.modelAsset = TargetBuildingType.model;
+            SelectBuildingObject.transform.rotation = Quaternion.Euler(new Vector3(0, GameRandom.Range(0, 10) * 90, 0));
+            SelectBuildingObject.transform.localScale = Vector3.one;
+            SelectBuildingObject.bounds = new Sango.Tools.Rect(0, 0, 32, 32);
+            MapRender.Instance.AddDynamic(SelectBuildingObject);
 
+            GameController.Instance.onCellOverEnter += OnCellOverEnter;
+            GameController.Instance.onCellOverExit += OnCellOverExit;
+            GameController.Instance.onCellOverStay += OnCellOverStay;
+
+            GameController.Instance.RotateViewEnabled = true;
+            GameController.Instance.ZoomViewEnabled = true;
+            GameController.Instance.KeyboardMoveEnabled = true;
+            GameController.Instance.DragMoveViewEnabled = true;
+
+        }
+
+        void OnCellOverEnter(Cell cell)
+        {
+            if (cell == null)
+                return;
+
+            if (cell.IsInterior && cell.building == null)
+            {
+                SelectBuildingObject.position = (cell.Position);
+                SelectBuildingObject.rotation = cell.interiorModel.rotation;
+                cell.SetInteriorModelVisible(false);
+            }
+        }
+
+        void OnCellOverExit(Cell cell)
+        {
+            if (cell == null)
+                return;
+
+            if (cell.IsInterior && cell.building == null)
+            {
+                cell.SetInteriorModelVisible(true);
+            }
+        }
+
+        void OnCellOverStay(Cell cell, Vector3 point, bool isOverUI)
+        {
+            if (!isOverUI)
+            {
+                if (cell.IsInterior && cell.building == null)
+                {
+                    SelectBuildingObject.position = (cell.Position);
+                    SelectBuildingObject.rotation = cell.interiorModel.rotation;
+                }
+                else
+                    SelectBuildingObject.position = (point);
+            }
         }
 
         public void DoBuildBuilding()
@@ -132,7 +211,7 @@ namespace Sango.Game.Player
             for (int i = 0, count = buildRangeCell.Count; i < count; ++i)
             {
                 Cell c = buildRangeCell[i];
-                mapRender.SetGridMaskColor(c.x, c.y, Color.red);
+                mapRender.SetGridMaskColor(c.x, c.y, Color.green);
                 mapRender.SetDarkMaskColor(c.x, c.y, Color.black);
             }
             mapRender.EndSetGridMask();
@@ -157,14 +236,26 @@ namespace Sango.Game.Player
 
         public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)
         {
-            if (SelectBuildingRender == null) return;
 
             switch (eventType)
             {
                 case CommandEventType.Cancel:
-                case CommandEventType.RClick:
+                case CommandEventType.RClickUp:
                     {
-                        PlayerCommand.Instance.Back();
+                        if (SelectBuildingObject == null)
+                            PlayerCommand.Instance.Back();
+                        else
+                        {
+                            Window.Instance.Open("window_building_select");
+                            if (SelectBuildingObject != null)
+                            {
+                                SelectBuildingObject.Clear();
+                                SelectBuildingObject = null;
+                            }
+                            GameController.Instance.onCellOverEnter -= OnCellOverEnter;
+                            GameController.Instance.onCellOverStay -= OnCellOverStay;
+                            GameController.Instance.onCellOverExit -= OnCellOverExit; 
+                        }
                         break;
                     }
 

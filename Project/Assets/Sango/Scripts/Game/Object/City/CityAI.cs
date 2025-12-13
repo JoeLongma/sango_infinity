@@ -463,7 +463,7 @@ namespace Sango.Game
             }
             if (alreadyBuild) return true;
 
-            BuildingType buildingType = scenario.GetObject<BuildingType>(31);
+            BuildingType buildingType = scenario.GetObject<BuildingType>((int)BuildingKindType.ArrowTower);
 
             TroopType troopType = scenario.GetObject<TroopType>(1);
 

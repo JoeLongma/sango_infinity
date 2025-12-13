@@ -198,6 +198,8 @@ namespace Sango.Game
             BuildingType nextBuildingType = scenario.GetObject<BuildingType>(BuildingType.nextId);
             BuildingType = nextBuildingType;
 
+            durability = DurabilityLimit;
+
 #if SANGO_DEBUG
             StringBuilder stringBuilder = new StringBuilder();
 #endif

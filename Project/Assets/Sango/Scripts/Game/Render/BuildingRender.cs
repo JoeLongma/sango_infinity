@@ -14,6 +14,12 @@ namespace Sango.Game.Render
         UGUIWindow HeadBar { get; set; }
         bool isComplate = false;
         bool isUpgrading = false;
+
+        public BuildingRender()
+        {
+
+        }
+
         public BuildingRender(Building building)
         {
             Owener = building;
@@ -37,6 +43,12 @@ namespace Sango.Game.Render
             MapRender.Instance.AddStatic(MapObject);
             UpdateInfo();
         }
+
+        public void Init()
+        {
+
+        }
+
 
         public void OnModelLoaded(GameObject obj)
         {
@@ -118,7 +130,7 @@ namespace Sango.Game.Render
             if (isUpgrading != Building.isUpgrading)
             {
                 isUpgrading = Building.isUpgrading;
-                if(isUpgrading)
+                if (isUpgrading)
                     MapObject.ChangeModel(Building.BuildingType.modelCreate);
                 else
                     MapObject.ChangeModel(Building.BuildingType.model);
@@ -152,6 +164,10 @@ namespace Sango.Game.Render
                     uITroopHeadbar.ShowInfo(damage, damageType);
                 }
             }
+        }
+        public override void SetFlash(bool b)
+        {
+            BuildingModel.SetFlash(b);
         }
     }
 }

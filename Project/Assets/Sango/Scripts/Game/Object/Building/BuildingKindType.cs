@@ -33,6 +33,11 @@ namespace Sango.Game
         /// 内政设施
         /// </summary>
         Interior,
+
+        /// <summary>
+        /// 其他
+        /// </summary>
+        Other,
     }
         
     /// <summary>

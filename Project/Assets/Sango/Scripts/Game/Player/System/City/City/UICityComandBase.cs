@@ -31,6 +31,8 @@ namespace Sango.Game.Render.UI
 
         public UITextField person_extra_value;
 
+        public UITextField action_value;
+
         public Action initAction;
 
         public void Init(CityComandBase cityComandBase)

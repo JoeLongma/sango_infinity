@@ -212,5 +212,13 @@ namespace Sango.Game
                 interiorModel = null;
             }
         }
+
+        public void SetInteriorModelVisible(bool b)
+        {
+            if (interiorModel != null)
+            {
+                interiorModel.gameObject.SetActive(b);
+            }
+        }
     }
 }

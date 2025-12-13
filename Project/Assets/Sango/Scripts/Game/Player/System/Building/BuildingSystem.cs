@@ -10,6 +10,7 @@ namespace Sango.Game.Player
         {
             base.Init();
             Singleton<BuildingActionDestroy>.Instance.Init(); // 拆除
+            Singleton<BuildingActionUpgrade>.Instance.Init(); // 升级
         }
 
         public BuildingBase TargetBuilding { get; set; }
@@ -32,6 +33,43 @@ namespace Sango.Game.Player
                     ContextMenu.Show(ContextMenuData.MenuData, startPoint);
                     PlayerCommand.Instance.Push(this);
                 }
+            }
+        }
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            //Window.Instance.Open("window_city_info_panel", TargetCity);
+            TargetBuilding.Render?.SetFlash(true);
+        }
+
+        public override void OnDestroy()
+        {
+            TargetBuilding.Render?.SetFlash(false);
+            //Window.Instance.Close("window_city_info_panel");
+            ContextMenu.CloseAll();
+        }
+
+        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)
+        {
+            switch (eventType)
+            {
+                case CommandEventType.Cancel:
+                case CommandEventType.RClickDown:
+                    {
+                        if (ContextMenu.Close())
+                            PlayerCommand.Instance.Back();
+
+                        break;
+                    }
+
+                case CommandEventType.ClickDown:
+                    {
+                        if (isOverUI) return;
+
+                        Done();
+                        break;
+                    }
             }
         }
     }
