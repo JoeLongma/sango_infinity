@@ -112,7 +112,7 @@ namespace Sango.Game.Player
             switch (eventType)
             {
                 case CommandEventType.Cancel:
-                case CommandEventType.RClick:
+                case CommandEventType.RClickUp:
                     {
                         ContextMenu.CloseAll();
                         PlayerCommand.Instance.Back();

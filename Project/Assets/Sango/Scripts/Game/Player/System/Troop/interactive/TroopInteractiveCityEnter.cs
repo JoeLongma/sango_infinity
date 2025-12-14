@@ -10,8 +10,6 @@ namespace Sango.Game.Player
 
         public TroopInteractiveCityEnter()
         {
-            customMenuName = "进入";
-            customMenuOrder = 0;
         }
 
         public override bool IsValid
@@ -22,31 +20,26 @@ namespace Sango.Game.Player
             }
         }
 
-        protected override void OnTroopInteractiveContextMenuShow(ContextMenuData menuData, Troop troop, Cell actionCell)
+        protected override bool Check(Troop troop, Cell actionCell)
         {
-            if (troop.BelongForce != null && troop.BelongForce.IsPlayer && troop.BelongForce == Scenario.Cur.CurRunForce)
-            {
-                TargetTroop = troop;
-                ActionCell = actionCell;
-               if (actionCell.building != null && actionCell.building.IsSameForce(troop) && actionCell.building.IsCityBase())
-                   menuData.Add("进入", customMenuOrder, actionCell, OnClickMenuItem, IsValid);
-            }
+            if (actionCell.building == null || !actionCell.building.IsCityBase()) return false;
+
+            if (actionCell.building.BelongForce != troop.BelongForce) return false;
+
+            content = string.Format("即将往<color=#85B964>{0}</color>进行移动。\n确定吗？", actionCell.building.Name);
+            return true;
+
         }
 
         public override void OnEnter()
         {
             base.OnEnter();
-            ContextMenu.CloseAll();
-            Singleton<TroopActionMenu>.Instance.ShowSpellRange();
-            Singleton<TroopActionMenu>.Instance.troopRender.Clear();
             MovePath = Singleton<TroopSystem>.Instance.movePath;
-
-            if(MovePath.Count <= 1)
+            if (MovePath.Count <= 1)
             {
                 OnMoveDone();
                 return;
             }
-
             Cell start = TargetTroop.cell;
             for (int i = 1; i < MovePath.Count; i++)
             {
@@ -73,7 +66,7 @@ namespace Sango.Game.Player
 
         public override void OnDestroy()
         {
-            ContextMenu.CloseAll();
+
         }
 
         public void OnMoveDone()

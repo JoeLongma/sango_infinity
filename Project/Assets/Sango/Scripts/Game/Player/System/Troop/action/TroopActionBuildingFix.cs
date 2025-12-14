@@ -18,7 +18,7 @@ namespace Sango.Game.Player
         protected bool isMoving = false;
         public TroopActionBuildingFix()
         {
-            customMenuName = "维修";
+            customMenuName = "修补";
             customMenuOrder = 40;
         }
 

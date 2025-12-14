@@ -1,4 +1,5 @@
-﻿using Sango.Game.Render;
+﻿
+using Sango.Game.Render;
 using Sango.Game.Render.UI;
 using System.Collections.Generic;
 
@@ -7,12 +8,9 @@ namespace Sango.Game.Player
     public class TroopInteractiveBuildingFix : TroopInteractiveBase
     {
         List<Cell> MovePath { get; set; }
-        protected bool isMoving = false;
 
         public TroopInteractiveBuildingFix()
         {
-            customMenuName = "修理";
-            customMenuOrder = 0;
         }
 
         public override bool IsValid
@@ -23,38 +21,28 @@ namespace Sango.Game.Player
             }
         }
 
-        protected override void OnTroopInteractiveContextMenuShow(ContextMenuData menuData, Troop troop, Cell actionCell)
+        protected override bool Check(Troop troop, Cell actionCell)
         {
-            if (troop.BelongForce != null && troop.BelongForce.IsPlayer && troop.BelongForce == Scenario.Cur.CurRunForce)
-            {
-                TargetTroop = troop;
-                ActionCell = actionCell;
-                if (actionCell.building != null && actionCell.building.IsSameForce(troop) && !actionCell.building.IsCityBase())
-                {
-                    if(!actionCell.building.isComplte || actionCell.building.durability < actionCell.building.DurabilityLimit)
-                        menuData.Add(customMenuName, customMenuOrder, actionCell, OnClickMenuItem, IsValid);
-                }
-            }
+            if (actionCell.building == null || actionCell.building.IsCityBase() || actionCell.building.BelongForce != troop.BelongForce) return false;
+            if( actionCell.building.isUpgrading || actionCell.building.durability >= actionCell.building.DurabilityLimit) return false;
+
+            content = string.Format("即前往将对{0}进行修补。\n确定吗？", actionCell.building.Name);
+            return true;
         }
 
         public override void OnEnter()
         {
             base.OnEnter();
-            ContextMenu.CloseAll();
-            Singleton<TroopActionMenu>.Instance.ShowSpellRange();
-            Singleton<TroopActionMenu>.Instance.troopRender.Clear();
             MovePath = Singleton<TroopSystem>.Instance.movePath;
-            isMoving = true;
-            if (MovePath.Count <= 2)
+            if (MovePath.Count <= 1)
             {
                 OnMoveDone();
                 return;
             }
-
             Cell start = TargetTroop.cell;
-            for (int i = 1; i < MovePath.Count-1; i++)
+            for (int i = 1; i < MovePath.Count; i++)
             {
-                bool isLast = i == MovePath.Count - 2;
+                bool isLast = i == MovePath.Count - 1;
                 Cell dest = MovePath[i];
                 TroopMoveEvent @event = new TroopMoveEvent()
                 {
@@ -77,25 +65,18 @@ namespace Sango.Game.Player
 
         public override void OnDestroy()
         {
-            ContextMenu.CloseAll();
-        }
 
-        public override void Update()
-        {
-            if (!isMoving)
-            {
-                if (TargetTroop.BuildBuilding(ActionCell, null))
-                {
-                    TargetTroop.ActionOver = true;
-                    TargetTroop.Render?.UpdateRender();
-                    Done();
-                }
-            }
         }
 
         public void OnMoveDone()
         {
-            isMoving = false;
+            TargetTroop.ActionOver = true;
+            TargetTroop.Render?.UpdateRender();
+
+            if (ActionCell.building != null && ActionCell.building.IsSameForce(TargetTroop) && ActionCell.building.IsCityBase())
+                TargetTroop.EnterCity(ActionCell.building as City);
+
+            Done();
         }
     }
 }

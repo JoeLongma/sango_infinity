@@ -15,6 +15,9 @@ namespace Sango.Game.Player
             Singleton<TroopActionAttack>.Instance.Init();
             Singleton<TroopActionBuild>.Instance.Init();
             Singleton<TroopActionBuildingFix>.Instance.Init();
+
+            Singleton<TroopInteractiveBuildingFix>.Instance.Init();
+            Singleton<TroopInteractiveCityEnter>.Instance.Init();
         }
 
         public List<Cell> moveRange = new List<Cell>();
@@ -153,7 +156,7 @@ namespace Sango.Game.Player
                         movePath.Clear();
                         Scenario.Cur.Map.GetMovePath(TargetTroop, cell, movePath);
                         // 进入
-                        Singleton<TroopInteractiveMenu>.Instance.Start(TargetTroop, cell, clickPosition);
+                        Singleton<TroopInteractiveDialog>.Instance.Start(TargetTroop, cell, clickPosition);
                         
 
                         //if (cell.building != null)

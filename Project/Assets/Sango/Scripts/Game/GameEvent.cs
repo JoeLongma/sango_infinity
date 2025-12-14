@@ -89,9 +89,10 @@ namespace Sango.Game
         public static EventDelegate<ContextMenuData, City> OnCityContextMenuShow;
         public static EventDelegate<ContextMenuData, Troop> OnTroopContextMenuShow;
         public static EventDelegate<ContextMenuData, Troop, Cell> OnTroopActionContextMenuShow;
-        public static EventDelegate<ContextMenuData, Troop, Cell> OnTroopInteractiveContextMenuShow;
 
         public static EventDelegate<ContextMenuData> OnGameSettingContextMenuShow;
+
+        public static EventDelegate<TroopInteractiveDialogData, Troop, Cell> OnTroopInteractiveContextDialogShow;
 
 
         #endregion Window

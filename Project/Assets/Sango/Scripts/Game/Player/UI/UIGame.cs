@@ -350,11 +350,7 @@ namespace Sango.Game.Render.UI
         public void OnEndPlayerTurn()
         {
             ContextMenu.CloseAll();
-            UIDialog.Open("是否需要结束玩家回合", () =>
-            {
-                Scenario.Cur.CurRunForce.CurRunCorps.ActionOver = true;
-                UIDialog.Close();
-            });
+            PlayerCommand.Instance.Push(Singleton<PlayerEndTurn>.Instance);
         }
 
         public void OnSwitchCityInfoShow()

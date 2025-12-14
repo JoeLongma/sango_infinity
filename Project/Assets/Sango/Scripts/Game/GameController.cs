@@ -510,42 +510,26 @@ namespace Sango.Game
 
             // 左下0,0 右上max max
             // 上 height > 
-            if (Input.mousePosition.y > sHeight - boderWidth
-#if UNITY_EDITOR
-                && Input.mousePosition.y <= sHeight
-#endif
-                )
+            if (Input.mousePosition.y > sHeight - boderWidth)
             {
                 // 上
                 keyFlags[2] = true;
                 hasKey = true;
             }
-            else if (Input.mousePosition.y < boderWidth
-#if UNITY_EDITOR
-                && Input.mousePosition.y >= 0
-#endif
-                )
+            else if (Input.mousePosition.y < boderWidth)
             {
                 // 下
                 keyFlags[3] = true;
                 hasKey = true;
             }
 
-            if (Input.mousePosition.x > sWidth - boderWidth
-#if UNITY_EDITOR
-                && Input.mousePosition.x <= sWidth
-#endif
-                )
+            if (Input.mousePosition.x > sWidth - boderWidth)
             {
                 // 右
                 keyFlags[1] = true;
                 hasKey = true;
             }
-            else if (Input.mousePosition.x < boderWidth
-#if UNITY_EDITOR
-                && Input.mousePosition.x >= 0
-#endif
-                )
+            else if (Input.mousePosition.x < boderWidth)
             {
                 // 左
                 keyFlags[0] = true;

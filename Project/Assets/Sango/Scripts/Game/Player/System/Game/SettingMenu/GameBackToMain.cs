@@ -2,9 +2,10 @@
 
 namespace Sango.Game.Player
 {
-    public class GameBackToMain : GameComandBase
+    public class GameBackToMain : GameSettingMenuBase
     {
-        public GameBackToMain() {
+        public GameBackToMain()
+        {
             customMenuName = "返回主菜单";
             customMenuOrder = 3;
         }
@@ -17,6 +18,11 @@ namespace Sango.Game.Player
                 UIDialog.Close();
                 Player.Instance.QuitToMainMenu();
             });
+        }
+
+        public override void OnDestroy()
+        {
+            UIDialog.Close();
         }
     }
 }

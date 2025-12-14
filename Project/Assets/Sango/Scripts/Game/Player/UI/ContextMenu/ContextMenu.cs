@@ -88,6 +88,7 @@ namespace Sango.Game.Render.UI
 
         public static void CloseAll()
         {
+            if (string.IsNullOrEmpty(currentWindowName)) return;
             WindowInterface windowInterface = Window.Instance.GetWindow(currentWindowName);
             if (windowInterface != null)
             {

@@ -1,10 +1,8 @@
 ﻿using Sango.Game.Render.UI;
-using System.Collections.Generic;
-using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Player
 {
-    public class GameComandBase : CommandSystemBase
+    public class GameSettingMenuBase : CommandSystemBase
     {
         public string customMenuName;
         public int customMenuOrder;
