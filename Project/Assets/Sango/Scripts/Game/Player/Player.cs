@@ -72,6 +72,7 @@ namespace Sango.Game.Player
         {
             Scenario.Cur?.OnGameShutdown();
             Window.Instance.CloseAll();
+            Window.Instance.DestroyAll();
             Window.Instance.Open("window_start");
 
         }

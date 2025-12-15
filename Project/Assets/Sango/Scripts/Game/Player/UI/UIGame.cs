@@ -148,6 +148,17 @@ namespace Sango.Game.Render.UI
             OnSeasonUpdate(Scenario.Cur);
         }
 
+        void OnDestroy()
+        {
+            GameEvent.OnTroopCreated -= OnTroopChange;
+            GameEvent.OnTroopDestroyed -= OnTroopChange;
+            GameEvent.OnForceStart -= OnForceStart;
+            GameEvent.OnDayUpdate -= OnDayUpdate;
+            GameEvent.OnCityFall -= OnCityFall;
+            GameEvent.OnSeasonUpdate -= OnSeasonUpdate;
+            GameEvent.OnForceGainTechniquePoint -= OnForceGainTechniquePoint;
+        }
+
         public void OnCityFall(City city, Troop atker)
         {
             if (itemType == typeof(City))

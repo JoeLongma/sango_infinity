@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 
 namespace Sango.Game
 {
@@ -646,7 +647,7 @@ namespace Sango.Game
         public void TransformToCity(City dest)
         {
             dest.allPersons.Add(this);
-            SetMission(MissionType.PersonTransform, BelongCity, Scenario.Cur.GetCityDistance(BelongCity, dest));
+            SetMission(MissionType.PersonTransform, BelongCity, Math.Max(1, BelongCity.Distance(dest)));
             BelongCity?.Remove(this);
             BelongCity = dest;
             ActionOver = true;

@@ -5,7 +5,7 @@ using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Player
 {
-    public class ObjectSelectSystem
+    public class ObjectSelectSystem : CommandSystemBase
     {
         public List<SangoObject> Objects;
         public List<SangoObject> selected = new List<SangoObject>();
@@ -28,18 +28,17 @@ namespace Sango.Game.Player
             resultList.RemoveAll(x => x == null);
             customSortItems = customSortTitles;
             this.customSortTitleName = cutomSortTitleName;
-
-            OnEnter();
+            PlayerCommand.Instance.Push(this);
         }
         public void OnSure()
         {
-            Window.Instance.Close("window_object_selector");
             sureAction?.Invoke(selected);
+            PlayerCommand.Instance.Back();
         }
 
         public void OnCancel()
         {
-            Window.Instance.Close("window_object_selector");
+            PlayerCommand.Instance.Back();
         }
 
         public bool IsPersonLimit()
@@ -60,7 +59,7 @@ namespace Sango.Game.Player
         /// <summary>
         /// 进入当前命令的时候触发
         /// </summary>
-        public virtual void OnEnter()
+        public override void OnEnter()
         {
             Window.WindowInterface win = Window.Instance.Open("window_object_selector");
             if (win != null)
@@ -73,6 +72,12 @@ namespace Sango.Game.Player
             }
         }
 
+        public override void OnDestroy()
+        {
+            Window.Instance.Close("window_object_selector");
+        }
+
+
         public virtual List<ObjectSortTitle> GetSortTitleGroup(int index)
         {
            return customSortItems;
@@ -81,6 +86,17 @@ namespace Sango.Game.Player
         public virtual string GetSortTitleGroupName(int index)
         {
             return "";
+        }
+
+        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)
+        {
+            switch (eventType)
+            {
+                case CommandEventType.Cancel:
+                case CommandEventType.RClickUp:
+                    OnCancel(); break;
+            }
+
         }
     }
 }

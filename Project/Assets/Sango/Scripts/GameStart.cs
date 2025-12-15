@@ -3,6 +3,7 @@ using Sango;
 using Sango.Game;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 该文件由X框架自动生成
@@ -34,6 +35,9 @@ public class GameStart : MonoBehaviour
         }
 #endif
 
+#if UNITY_ANDROID && !UNITY_EDITOR
+        uiRoot.GetComponent<CanvasScaler>().referenceResolution = new Vector2(1600, 900);
+#endif
         Screen.sleepTimeout = UnityEngine.SleepTimeout.NeverSleep;
         Sango.Path.Init();
         StartCoroutine(GameInit());

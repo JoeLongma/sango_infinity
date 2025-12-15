@@ -54,6 +54,7 @@ namespace Sango.Game.Render.UI
                 UIBuildingTypeItem cityBuildingSlot = buildingTypeItemPool[i];
                 cityBuildingSlot.SetItemType(itemType).SetIndex(i).SetSelected(itemType == createItemsSys.CurSelectedItemType).SetNum(totalNum);
                 cityBuildingSlot.SetValid(createItemsSys.TotalBuildingCount > 0);
+                buildingTypeItemPool[i].gameObject.SetActive(true);
             }
 
             OnSelectItemType(buildingTypeItemPool[createItemsSys.CurSelectedItemTypeIndex]);

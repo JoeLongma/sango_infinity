@@ -1170,35 +1170,16 @@ namespace Sango.Game
         /// <returns></returns>
         public int Distance(City other)
         {
-            Dictionary<City, int> _distanceMap = new Dictionary<City, int>();
-            List<City> _openList = new List<City>
-            {
-                this
-            };
-            _distanceMap.Add(this, 0);
-            while (_openList.Count > 0)
-            {
-                City current = _openList[0];
-                _openList.RemoveAt(0);
-                int currentLen = _distanceMap[current];
-                if (current.NeighborList != null)
-                {
-                    for (int i = 0, count = current.NeighborList.Count; i < count; i++)
-                    {
-                        City c = current.NeighborList[i];
-                        if (c == other)
-                        {
-                            return _distanceMap[current] + 1;
-                        }
-                        if (!_distanceMap.ContainsKey(c))
-                        {
-                            _distanceMap.Add(c, currentLen + 1);
-                            _openList.Add(c);
-                        }
-                    }
-                }
-            }
-            return 0;
+            if (this == other)
+                return 0;
+
+            if (BelongCity != null)
+                return BelongCity.Distance(other);
+
+            if (other.BelongCity != null)
+                other = other.BelongCity;
+
+            return Scenario.Cur.GetCityDistance(this, other);
         }
 
         public void OnPersonReturnCity(Person person)
@@ -2309,6 +2290,9 @@ namespace Sango.Game
 
             BelongForce.GainTechniquePoint(techniquePointGain);
 
+            Render?.UpdateRender();
+            Render?.ShowInfo(totalValue, (int)InfoType.Troop);
+
 #if SANGO_DEBUG
             Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了招募!共招募到{troops - lastTroops}人, 当前士兵人数提升到了:{troops}");
 #endif
@@ -2500,7 +2484,7 @@ namespace Sango.Game
             }
             else
             {
-                person.SetMission(MissionType.PersonRecruitPerson, dest, Scenario.Cur.GetCityDistance(person.BelongCity, dest.BelongCity));
+                person.SetMission(MissionType.PersonRecruitPerson, dest, Math.Max(1, person.BelongCity.Distance(dest.BelongCity)));
             }
             return true;
         }

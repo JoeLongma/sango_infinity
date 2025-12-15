@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
@@ -56,6 +57,13 @@ namespace Sango.Game.Player
             return true;
         }
 
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            TransformTo.Clear();
+            personList.Clear();
+        }
+
         protected override void OnUIInit()
         {
             base.OnUIInit();
@@ -64,10 +72,29 @@ namespace Sango.Game.Player
             targetUI.person_extra_value.text = $"{personList.Count}人";
 
             targetUI.button_extra.gameObject.SetActive(true);
-            targetUI.button_extra_value.text = "";
+            targetUI.button_extra_value.gameObject.SetActive(true);
 
-            targetUI.title_extra.text = "抵达日数";
-            targetUI.value_extra.text = "";
+            if (TransformTo.Count == 0)
+            {
+                targetUI.button_extra_value.text = "";
+                targetUI.value_1.text = "";
+            }
+            else
+            {
+                City dest = TransformTo[0];
+                targetUI.button_extra_value.text = dest.Name;
+                UpdateJobValue();
+                targetUI.value_1.text = $"{Math.Max(1, TargetCity.Distance(dest)) * 10}日";
+            }
+
+            targetUI.title1.gameObject.SetActive(true);
+            targetUI.title1.text = "抵达日数";
+
+            targetUI.value_1.gameObject.SetActive(true);
+
+
+
+
         }
 
         public override int CalculateWonderNumber()
@@ -100,7 +127,7 @@ namespace Sango.Game.Player
             TransformTo = cities;
             City dest = TransformTo[0];
             targetUI.button_extra_value.text = dest.Name;
-            targetUI.value_extra.text = $"{TargetCity.Distance(dest) * 10}日";
+            targetUI.value_1.text = $"{Math.Max(1, TargetCity.Distance(dest)) * 10}日";
         }
 
         public override void DoJob()

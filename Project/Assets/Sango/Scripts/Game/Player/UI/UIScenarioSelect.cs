@@ -133,7 +133,8 @@ namespace Sango.Game.Render.UI
             Clear();
             ShortScenario scenario = ShortScenario.all_scenario_info_list[curSelectIndex];
             ShortScenario.CurSelected = scenario;
-            Scenario.CurSelected = Scenario.all_scenario_list[curSelectIndex];
+
+            Scenario.CurSelected = new Scenario(Scenario.all_scenario_list[curSelectIndex].FilePath);
 
             Window.Instance.Open("window_scenario_force_select");
             Window.Instance.Close("window_scenario_select");

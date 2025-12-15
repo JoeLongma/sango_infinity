@@ -26,6 +26,9 @@ namespace Sango.Game.Player
         {
             if (troop.BelongForce != null && troop.BelongForce.IsPlayer && troop.BelongForce == Scenario.Cur.CurRunForce)
             {
+                // 兵器没有修复指令
+                if (troop.IsMachine()) return;
+
                 TargetTroop = troop;
                 ActionCell = actionCell;
 
@@ -35,11 +38,12 @@ namespace Sango.Game.Player
                 for (int i = 0; i < stayCell.Neighbors.Length; i++)
                 {
                     Cell n = stayCell.Neighbors[i];
-                    if (n != null && n.building != null && n.building.IsSameForce(TargetTroop) && n.building.durability < n.building.DurabilityLimit)
+                    if (n != null && n.building != null && !n.building.IsCityBase() && n.building.IsSameForce(TargetTroop) && n.building.durability < n.building.DurabilityLimit)
                     {
                         fixBuildingCell.Add(n);
                     }
                 }
+
 
                 if(fixBuildingCell.Count > 0)
                     menuData.Add(customMenuName, customMenuOrder, actionCell, OnClickMenuItem, IsValid);

@@ -20,7 +20,13 @@ namespace Sango.Game.Player
             GameEvent.OnTroopInteractiveContextDialogShow?.Invoke(TroopInteractiveDialogData.InteractiveDialogData, troop, targetCell);
             if (!TroopInteractiveDialogData.InteractiveDialogData.IsEmpty())
             {
-                UIDialog dialog = UIDialog.OpenPersonSay(TroopInteractiveDialogData.InteractiveDialogData.content, TroopInteractiveDialogData.InteractiveDialogData.sureAction);
+                UIDialog dialog = UIDialog.OpenPersonSay(TroopInteractiveDialogData.InteractiveDialogData.content,
+                    TroopInteractiveDialogData.InteractiveDialogData.sureAction);
+                dialog.cancelAction = () =>
+                {
+                    UIDialog.Close();
+                    PlayerCommand.Instance.Back();
+                };
                 dialog.SetPerson(troop.Leader);
                 PlayerCommand.Instance.Push(this);
             }
@@ -43,7 +49,8 @@ namespace Sango.Game.Player
 
         public override void OnDestroy()
         {
-            Singleton<TroopSystem>.Instance.ClearShowMovePath(); 
+            UIDialog.Close();
+            Singleton<TroopSystem>.Instance.ClearShowMovePath();
             Singleton<TroopSystem>.Instance.ClearShowMoveRange();
         }
 

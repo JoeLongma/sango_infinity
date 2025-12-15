@@ -16,7 +16,7 @@ namespace Sango.Game.Render.UI
         int lastSelectIndex = -1;
 
         public Text pageLabel;
-        public GameObject buildButtonObj;
+        public Button buildButtonObj;
         public UITextField buildCountLabel;
         public UITextField cityGoldLabel;
 
@@ -29,7 +29,7 @@ namespace Sango.Game.Render.UI
             buildCountLabel.text = "";
             cityGoldLabel.text = "";
             buildCountLabel.text = "";
-            buildButtonObj.SetActive(false);
+            buildButtonObj.interactable = (false);
             troopCommandBuildSys = Singleton<TroopActionBuild>.Instance;
             BuildingTypes = troopCommandBuildSys.canBuildBuildingType;
             curPage = 0;
@@ -63,6 +63,7 @@ namespace Sango.Game.Render.UI
                     BuildingType buildingType = BuildingTypes[id];
                     item.gameObject.SetActive(true);
                     item.SetBuildingType(buildingType).SetIndex(id).SetSelected(buildingType == troopCommandBuildSys.targetBuildingType).SetNum(-1);
+                    item.SetValid(buildingType.cost <= troopCommandBuildSys.TargetTroop.gold);
                 }
                 else
                 {
@@ -86,7 +87,7 @@ namespace Sango.Game.Render.UI
         /// </summary>
         public void OnCancel()
         {
-            troopCommandBuildSys.Done();
+            PlayerCommand.Instance.Back();
         }
 
         public void OnSelectBuildingType(UIBuildingTypeItem buildingTypeItem)
@@ -107,7 +108,7 @@ namespace Sango.Game.Render.UI
             buildingTypeItem.SetSelected(true);
             BuildingType targetBuildingType = BuildingTypes[buildingTypeItem.index];
             troopCommandBuildSys.targetBuildingType = targetBuildingType;
-            buildButtonObj.SetActive(true);
+            buildButtonObj.interactable = (true);
 
             int buildAbility = GameUtility.Method_TroopBuildAbility(troopCommandBuildSys.TargetTroop);
             int turnCount = targetBuildingType.durabilityLimit % buildAbility == 0 ? 0 : 1;

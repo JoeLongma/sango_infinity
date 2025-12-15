@@ -87,6 +87,17 @@ namespace Sango.Game.Player
         {
             TargetBuildingType = null;
             personList.Clear();
+            // 默认选中一个可以建造的类型
+            for (int i = 0; i < canBuildBuildingType.Count; i++)
+            {
+                BuildingType buildingType = canBuildBuildingType[i];
+                if (buildingType.cost <= TargetCity.gold)
+                {
+                    SelectBuildingType(buildingType);
+                    break;
+                }
+            }
+
             Window.Instance.Open("window_building_select");
         }
 
@@ -244,7 +255,12 @@ namespace Sango.Game.Player
                     {
                         if (SelectBuildingObject == null)
                             PlayerCommand.Instance.Back();
-                        else
+                        break;
+                    }
+
+                case CommandEventType.RClick:
+                    {
+                        if (SelectBuildingObject != null)
                         {
                             Window.Instance.Open("window_building_select");
                             if (SelectBuildingObject != null)
@@ -254,11 +270,10 @@ namespace Sango.Game.Player
                             }
                             GameController.Instance.onCellOverEnter -= OnCellOverEnter;
                             GameController.Instance.onCellOverStay -= OnCellOverStay;
-                            GameController.Instance.onCellOverExit -= OnCellOverExit; 
+                            GameController.Instance.onCellOverExit -= OnCellOverExit;
                         }
                         break;
                     }
-
                 case CommandEventType.Click:
                     {
                         if (isOverUI) return;

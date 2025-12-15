@@ -393,8 +393,10 @@ namespace Sango.Game
             {
                 if (CommonData == null)
                     CommonData = GameData.Instance.LoadNewCommonData();
+
                 if (Variables == null)
                     Variables = new ScenarioVariables();
+
                 if (Map == null)
                     Map = new Map();
             }

@@ -277,6 +277,17 @@ namespace Sango.Game
             Sango.Log.Print($"==={Name} 回合===");
 #endif
 
+
+            for (int i = 0; i < scenario.buildingSet.Count; ++i)
+            {
+                var c = scenario.buildingSet[i];
+                if (c != null && c.IsAlive && c.BelongForce == this)
+                {
+                    c.OnForceTurnStart(scenario);
+                    buildingBaseList.Enqueue(c);
+                }
+            }
+
             for (int i = 0; i < scenario.personSet.Count; ++i)
             {
                 var c = scenario.personSet[i];
@@ -358,15 +369,6 @@ namespace Sango.Game
                 }
             }
 
-            for (int i = 0; i < scenario.buildingSet.Count; ++i)
-            {
-                var c = scenario.buildingSet[i];
-                if (c != null && c.IsAlive && c.BelongForce == this)
-                {
-                    c.OnForceTurnStart(scenario);
-                    buildingBaseList.Enqueue(c);
-                }
-            }
 
             for (int i = 0; i < scenario.troopsSet.Count; ++i)
             {

@@ -311,6 +311,23 @@ namespace Sango
             }
         }
 
+        public void DestroyAll()
+        {
+            foreach (WindowInfo info in windowMap.Values)
+            {
+                if (info.instance != null)
+                {
+                    if (info.instance.ugui_instance != null)
+
+                    {
+                        GameObject.Destroy(info.instance.ugui_instance.gameObject);
+                    }
+                }
+            }
+            windowMap.Clear();
+        }
+
+
         public bool IsOpen(string windowName)
         {
             WindowInfo info;

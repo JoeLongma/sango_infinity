@@ -2881,6 +2881,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8734080045334747305}
     m_Modifications:
+    - target: {fileID: 4047078994823135925, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 717607134691875256}
+    - target: {fileID: 4047078994823135925, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnOK
+      objectReference: {fileID: 0}
+    - target: {fileID: 4047078994823135925, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Sango.Game.Render.UI.UICityTransport, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5788964857443963546, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 717607134691875256}
+    - target: {fileID: 5788964857443963546, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnCancel
+      objectReference: {fileID: 0}
+    - target: {fileID: 5788964857443963546, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Sango.Game.Render.UI.UICityTransport, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 6062729483653480700, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

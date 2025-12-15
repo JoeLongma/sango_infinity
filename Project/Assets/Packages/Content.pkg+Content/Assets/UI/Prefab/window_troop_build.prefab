@@ -931,7 +931,7 @@ MonoBehaviour:
   - {fileID: 198806857359795970}
   rootTrans: {fileID: 8734080045334747305}
   pageLabel: {fileID: 2221179637978222468}
-  buildButtonObj: {fileID: 0}
+  buildButtonObj: {fileID: 2615132759251461884}
   buildCountLabel: {fileID: 2269982220275710621}
   cityGoldLabel: {fileID: 609480756938404559}
   buildingTypeDescLabel: {fileID: 3231695463871889082}
@@ -1502,6 +1502,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+--- !u!114 &2615132759251461884 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4047078994823135925, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+  m_PrefabInstance: {fileID: 2044860201333122121}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5207262687183987893 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6062729483653480700, guid: eba30dda6e43fa247845faa58e681a84, type: 3}

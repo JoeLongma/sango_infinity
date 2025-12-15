@@ -93,10 +93,11 @@ namespace Sango.Game.Player
         {
             targetBuildingType = buildingType;
             Window.Instance.Close("window_troop_build");
+            buildRangeCell.Clear();
             for (int i = 0; i < ActionCell.Neighbors.Length; i++)
             {
                 Cell n = ActionCell.Neighbors[i];
-                if (n != null)
+                if (n != null && n.building == null)
                 {
                     if (targetBuildingType.CanBuildToHere(n))
                     {
@@ -175,7 +176,7 @@ namespace Sango.Game.Player
             switch (eventType)
             {
                 case CommandEventType.Cancel:
-                case CommandEventType.RClick:
+                case CommandEventType.RClickUp:
                     {
                         PlayerCommand.Instance.Back();
                         break;

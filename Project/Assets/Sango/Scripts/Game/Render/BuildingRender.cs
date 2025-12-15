@@ -57,7 +57,7 @@ namespace Sango.Game.Render
             {
                 BuildingModel.Init(Building);
             }
-
+            BuildingModel.SetFlash(false);
             if (HeadBar != null)
             {
                 PoolManager.Recycle(HeadBar.gameObject);

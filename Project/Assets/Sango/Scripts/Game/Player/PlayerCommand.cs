@@ -20,6 +20,8 @@ namespace Sango.Game.Player
                 GameController.Instance.DragMoveViewEnabled = false;
                 GameController.Instance.ZoomViewEnabled = false;
                 GameController.Instance.BorderMoveViewEnabled = false;
+
+                Window.Instance.Open("window_mobile_cancel");
             }
 
             commads.Push(command);
@@ -45,6 +47,7 @@ namespace Sango.Game.Player
                 GameController.Instance.DragMoveViewEnabled = true;
                 GameController.Instance.ZoomViewEnabled = true;
                 GameController.Instance.BorderMoveViewEnabled = true;
+                Window.Instance.Close("window_mobile_cancel");
             }
         }
 
@@ -58,6 +61,7 @@ namespace Sango.Game.Player
             GameController.Instance.DragMoveViewEnabled = true;
             GameController.Instance.ZoomViewEnabled = true;
             GameController.Instance.BorderMoveViewEnabled = true;
+            Window.Instance.Close("window_mobile_cancel");
         }
 
         public void Update()

@@ -166,6 +166,11 @@ namespace Sango.Game.Player
             base.OnBack();
             Window.Instance.SetVisible(windowName, true);
             TargetTroop.EnterCity(TargetCity);
+            TargetTroop.ForEachPerson(person =>
+            {
+                TargetCity.freePersons.Add(person);
+                person.ActionOver = false;
+            });
         }
 
         public void AutoMakeTroop(int troopTypeKind)

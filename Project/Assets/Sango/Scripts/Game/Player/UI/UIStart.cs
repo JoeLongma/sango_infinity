@@ -1,10 +1,20 @@
-﻿namespace Sango.Game.Render.UI
+﻿using UnityEngine;
+using UnityEngine.UI;
+
+namespace Sango.Game.Render.UI
 {
     /// <summary>
     /// 游戏开始界面
     /// </summary>
     public class UIStart : UGUIWindow
     {
+        public Text version;
+
+        private void Start()
+        {
+            version.text = $"版本: {Application.version}";
+        }
+
         public void OnNewGame()
         {
             Game.Instance.StartNewGame();

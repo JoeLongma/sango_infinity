@@ -1,4 +1,5 @@
-﻿using Sango.Render;
+﻿using Sango.Game.Player;
+using Sango.Render;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -136,6 +137,9 @@ namespace Sango.Game.Render.UI
             GameEvent.OnTroopDestroyed -= OnTroopDestroyed;
             GameEvent.OnTroopEnterCell -= OnTroopEnterCell;
             GameEvent.OnCityFall -= OnCityFall;
+
+            MapRender.Instance.mapCamera.onValueChanged = null;
+
         }
 
         void OnCityFall(City city, Troop troop)
@@ -219,6 +223,9 @@ namespace Sango.Game.Render.UI
 
         public void OnClickMap()
         {
+            if (PlayerCommand.Instance.CurrentCommand != null)
+                return;
+
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(mapBounds, Input.mousePosition, Game.Instance.UICamera, out Vector2 localPoint))
             {
                 Vector3 worldPos = MiniMapPos2WorldPos(localPoint);

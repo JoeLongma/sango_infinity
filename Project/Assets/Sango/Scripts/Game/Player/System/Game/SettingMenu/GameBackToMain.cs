@@ -17,7 +17,11 @@ namespace Sango.Game.Player
                 Done();
                 UIDialog.Close();
                 Player.Instance.QuitToMainMenu();
-            });
+            }).cancelAction = () =>
+            {
+                UIDialog.Close();
+                Done();
+            }; ;
         }
 
         public override void OnDestroy()

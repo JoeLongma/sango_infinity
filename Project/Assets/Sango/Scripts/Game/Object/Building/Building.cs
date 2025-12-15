@@ -174,6 +174,7 @@ namespace Sango.Game
                 stringBuilder.Append(" ");
 #endif
                 person.ClearMission();
+                person.ActionOver = false;
             }
 #if SANGO_DEBUG
             Sango.Log.Print($"[{BelongCity.Name}]{stringBuilder}完成{Name}建造!!");

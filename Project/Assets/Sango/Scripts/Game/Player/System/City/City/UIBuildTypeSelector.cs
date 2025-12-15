@@ -39,7 +39,6 @@ namespace Sango.Game.Render.UI
             limitLabel.text = "";
             durabilityLabel.text = "";
 
-            buildButton.interactable = false;
             buildBuildingSys = Singleton<CityBuildBuilding>.Instance;
             BuildingTypes = buildBuildingSys.canBuildBuildingType;
             curPage = 0;
@@ -51,10 +50,15 @@ namespace Sango.Game.Render.UI
             {
                 UIBuildingTypeItem item = buildingTypeItems[i];
                 item.onSelected = OnSelectBuildingType;
+
+                if(buildBuildingSys.TargetBuildingType != null && i < BuildingTypes.Count && BuildingTypes[i] == buildBuildingSys.TargetBuildingType)
+                    lastSelectIndex = i;
             }
             //buildBuildingSys.SelectBuildingType(BuildingTypes[0]);
             ShowPage(curPage);
             UpdateContent();
+            buildButton.interactable = buildBuildingSys.TargetBuildingType != null;
+
         }
 
         public void ShowPage(int index)
@@ -109,7 +113,7 @@ namespace Sango.Game.Render.UI
                 if (lastSelectIndex >= curPage * buildingTypeItems.Length)
                 {
                     int idx = lastSelectIndex - curPage * buildingTypeItems.Length;
-                    if(idx < buildingTypeItems.Length)
+                    if (idx < buildingTypeItems.Length)
                         buildingTypeItems[idx].SetSelected(false);
                 }
             }

@@ -14,7 +14,12 @@ namespace Sango.Game.Player
             {
                 Scenario.Cur.CurRunForce.CurRunCorps.ActionOver = true;
                 UIDialog.Close();
-            });
+                Done();
+            }).cancelAction = ()=>
+            {
+                UIDialog.Close();
+                Done();
+            };
         }
 
         public override void OnDestroy()
