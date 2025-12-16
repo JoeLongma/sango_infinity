@@ -199,15 +199,16 @@ namespace Sango.Game
                 controlType = ControlType.None;
                 bool isOverUI = IsOverUI();
 
-                PlayerCommand.Instance.HandleEvent(CommandEventType.ClickUp, mouseOverCell, dragPosition, isOverUI);
-
                 if (isDragMoving)
                 {
                     isDragMoving = false;
+                    PlayerCommand.Instance.HandleEvent(CommandEventType.ClickUp, mouseOverCell, dragPosition, isOverUI);
                     return;
                 }
                 clickPosition = Input.mousePosition;
                 OnClickWorld();
+                PlayerCommand.Instance.HandleEvent(CommandEventType.ClickUp, mouseOverCell, dragPosition, isOverUI);
+
             }
             else if (Input.GetMouseButton(1) && !isDragMoving)
             {
@@ -342,12 +343,12 @@ namespace Sango.Game
                     //    return;
 
                     bool isOverUI = IsOverUI(touch.fingerId);
-                    PlayerCommand.Instance.HandleEvent(CommandEventType.ClickUp, mouseOverCell, dragPosition, isOverUI);
 
                     controlType = ControlType.None;
                     if (isDragMoving)
                     {
                         isDragMoving = false;
+                        PlayerCommand.Instance.HandleEvent(CommandEventType.ClickUp, mouseOverCell, dragPosition, isOverUI);
                         return;
                     }
 
@@ -366,6 +367,8 @@ namespace Sango.Game
                     }
                     clickPosition = touch.position;
                     OnClickWorld();
+                    PlayerCommand.Instance.HandleEvent(CommandEventType.ClickUp, mouseOverCell, dragPosition, isOverUI);
+
                 }
             }
             else if (Input.touchCount == 2)

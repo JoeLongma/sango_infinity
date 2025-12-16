@@ -20,7 +20,7 @@ namespace Sango.Game.Player
             GameEvent.OnTroopInteractiveContextDialogShow?.Invoke(TroopInteractiveDialogData.InteractiveDialogData, troop, targetCell);
             if (!TroopInteractiveDialogData.InteractiveDialogData.IsEmpty())
             {
-                UIDialog dialog = UIDialog.OpenPersonSay(TroopInteractiveDialogData.InteractiveDialogData.content,
+                UIDialog dialog = UIDialog.Open(UIDialog.DialogStyle.ChoosePersonSay, TroopInteractiveDialogData.InteractiveDialogData.content,
                     TroopInteractiveDialogData.InteractiveDialogData.sureAction);
                 dialog.cancelAction = () =>
                 {

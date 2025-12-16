@@ -45,6 +45,8 @@ namespace Sango.Game.Render.UI
         public GameObject pauseObj;
         public GameObject resumeObj;
 
+        public Button endTurnButton;
+
         public GameObject[] fpaObj;
 
         int destSaveTurn = -1;
@@ -181,6 +183,14 @@ namespace Sango.Game.Render.UI
         {
             forceText.text = force.Name;
             techPointLabel.text = force.TechniquePoint.ToString();
+
+            endTurnButton.interactable = force.IsPlayer;
+
+            if (force.IsPlayer)
+            {
+                Singleton<PlayerTurnStartGreeting>.Instance.Push();
+            }
+
         }
 
         public void OnForceGainTechniquePoint(Force force, int value)
@@ -361,7 +371,7 @@ namespace Sango.Game.Render.UI
         public void OnEndPlayerTurn()
         {
             ContextMenu.CloseAll();
-            PlayerCommand.Instance.Push(Singleton<PlayerEndTurn>.Instance);
+            Singleton<PlayerEndTurn>.Instance.Push();
         }
 
         public void OnSwitchCityInfoShow()

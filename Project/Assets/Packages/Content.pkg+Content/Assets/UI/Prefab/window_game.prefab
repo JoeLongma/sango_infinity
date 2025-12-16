@@ -2564,7 +2564,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 75.3, y: -16.5}
+  m_AnchoredPosition: {x: 78.5, y: -5.7}
   m_SizeDelta: {x: 40, y: 30}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &7200453082426251154
@@ -4912,7 +4912,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 11.199951, y: -8.5}
+  m_AnchoredPosition: {x: 13.099976, y: -0.79999924}
   m_SizeDelta: {x: 58, y: 46}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &4989341981365538630
@@ -7599,6 +7599,7 @@ MonoBehaviour:
   totalCount: -1
   pauseObj: {fileID: 2603407131639681785}
   resumeObj: {fileID: 5332121367877755050}
+  endTurnButton: {fileID: 6258386600210117206}
   fpaObj:
   - {fileID: 4072546484029418320}
 --- !u!1001 &19621295937876750

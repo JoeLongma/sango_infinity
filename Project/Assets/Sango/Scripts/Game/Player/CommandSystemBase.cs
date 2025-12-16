@@ -2,6 +2,11 @@
 {
     public class CommandSystemBase : Module, ICommandEvent
     {
+        public virtual void Push()
+        {
+            PlayerCommand.Instance.Push(this);
+        }
+
         public virtual void Init() {; }
         public virtual void Clear() {; }
 

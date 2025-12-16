@@ -9,6 +9,14 @@ namespace Sango.Game.Render.UI
     /// </summary>
     public class UIDialog : UGUIWindow
     {
+        public enum DialogStyle
+        {
+            Normal,
+            ChoosePersonSay,
+            Window,
+            ClickPersonSay,
+        }
+
         public Text content;
         public Action cancelAction;
         public Action sureAction;
@@ -17,7 +25,7 @@ namespace Sango.Game.Render.UI
         public Image headImg;
         public Text nameText;
 
-         static UIDialog CurInstance;
+        static UIDialog CurInstance;
 
         public void OnSure()
         {
@@ -34,9 +42,19 @@ namespace Sango.Game.Render.UI
             return Open(content, sureAction, Input.mousePosition);
         }
 
-        public static UIDialog OpenPersonSay(string content, Action sureAction)
+        public static UIDialog Open(DialogStyle dialogStyle, string content, Action sureAction)
         {
-            return Open("window_dialog2", content, sureAction, Input.mousePosition);
+            string windowName = "window_dialog";
+            switch (dialogStyle)
+            {
+                case DialogStyle.ChoosePersonSay:
+                    windowName = "window_dialog2"; break;
+                case DialogStyle.Window:
+                    windowName = "window_dialog3"; break;
+                case DialogStyle.ClickPersonSay:
+                    windowName = "window_dialog4"; break;
+            }
+            return Open(windowName, content, sureAction, Input.mousePosition);
         }
 
         public static UIDialog Open(string content, Action sureAction, Vector3 startPoint)
@@ -58,11 +76,14 @@ namespace Sango.Game.Render.UI
             uIDialog.cancelAction = Close;
             CurInstance = uIDialog;
 
-            Vector2 anchorPos;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(uIDialog.GetComponent<RectTransform>(),
-                startPoint, Game.Instance.UICamera, out anchorPos);
+            if (uIDialog.btnRect != null)
+            {
+                Vector2 anchorPos;
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(uIDialog.GetComponent<RectTransform>(),
+                    startPoint, Game.Instance.UICamera, out anchorPos);
 
-            uIDialog.btnRect.anchoredPosition = anchorPos + new Vector2(-74, 0);
+                uIDialog.btnRect.anchoredPosition = anchorPos + new Vector2(-74, 0);
+            }
 
             return uIDialog;
         }
