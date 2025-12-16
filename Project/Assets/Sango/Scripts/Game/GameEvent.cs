@@ -287,6 +287,25 @@ namespace Sango.Game
         /// </summary>
         public static EventDelegate<City, OverrideData<int>> OnCitySecurityChangeOnSeasonStart;
 
+
+        /// <summary>
+        /// 可监听改计算建筑兵粮产出
+        /// City, Troop, lastValue, OverrideFunc
+        /// </summary>
+        public static EventDelegate<BuildingBase, OverrideData<int>> OnBuildingCalculateFoodGain;
+
+        /// <summary>
+        /// 可监听改计算建筑资金产出
+        /// City, Troop, lastValue, OverrideFunc
+        /// </summary>
+        public static EventDelegate<BuildingBase, OverrideData<int>> OnBuildingCalculateGoldGain;
+
+        /// <summary>
+        /// 可监听改计算建筑人口增长率
+        /// City, Troop, lastValue, OverrideFunc
+        /// </summary>
+        public static EventDelegate<BuildingBase, OverrideData<float>> OnBuildingCalculatePopulationGain;
+
         /// <summary>
         /// 可监听改计算建筑反击攻击力
         /// City, Troop, lastValue, OverrideFunc

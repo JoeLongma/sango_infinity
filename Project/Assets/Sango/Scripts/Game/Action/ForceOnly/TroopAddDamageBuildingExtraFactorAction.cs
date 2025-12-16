@@ -1,13 +1,15 @@
 ﻿using Sango.Game.Tools;
+using Newtonsoft.Json.Linq;
 
 namespace Sango.Game
 {
     /// <summary>
-    /// 某兵种战法耐久破坏威力(百分比)增加	p1:兵种kind p2:增加值(百分比)
+    /// 某兵种战法耐久破坏威力(百分比)增加
+    /// value: 增加值(百分比) kinds: 兵种类型
     /// </summary>
-    public class TroopAddDamageBuildingExtraFactorAction : ForceActionBase
+    public class TroopAddDamageBuildingExtraFactorAction : ForceTroopActionBase
     {
-        public override void Init(int[] p, params SangoObject[] sangoObjects)
+        public override void Init(JObject p, params SangoObject[] sangoObjects)
         {
             base.Init(p, sangoObjects);
             GameEvent.OnTroopCalculateAttribute += OnTroopCalculateAttribute;
@@ -20,22 +22,20 @@ namespace Sango.Game
 
         void OnTroopCalculateAttribute(Troop troop, Scenario scenario)
         {
-            if (Force == troop.BelongForce && Params.Length > 2)
+            if (Force != troop.BelongForce) return;
+            float factor = value / 100f;
+            if (kinds == null)
             {
-                float factor = Params[1] / 100f;
-                int checkTroopTypeKind = Params[2];
-                if (checkTroopTypeKind == 0)
-                {
+                troop.landDamageBuildingExtraFactor += factor;
+                troop.waterDamageBuildingExtraFactor += factor;
+            }
+            else
+            {
+                if (kinds.Contains(troop.LandTroopType.kind))
                     troop.landDamageBuildingExtraFactor += factor;
+                if (kinds.Contains(troop.WaterTroopType.kind))
                     troop.waterDamageBuildingExtraFactor += factor;
-                }
-                else
-                {
-                    if (troop.LandTroopType.kind == checkTroopTypeKind)
-                        troop.landDamageBuildingExtraFactor += factor;
-                    if (troop.WaterTroopType.kind == checkTroopTypeKind)
-                        troop.waterDamageBuildingExtraFactor += factor;
-                }
+
             }
         }
     }

@@ -26,7 +26,7 @@ namespace Sango.Game.Player
             canBuildBuildingType.Clear();
             Scenario.Cur.CommonData.BuildingTypes.ForEach(x =>
             {
-                if (x.IsOutside && x.IsValid(TargetTroop.BelongForce))
+                if (x.IsOutside && x.canBuild && x.IsValid(TargetTroop.BelongForce))
                 {
                     canBuildBuildingType.Add(x);
                 }

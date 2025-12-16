@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Sango.Game.Render;
+using Sango.Game.Tools;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -502,9 +503,17 @@ namespace Sango.Game
             {
                 if (x.isComplte)
                 {
-                    population_increase_factor += x.BuildingType.populationGain;
-                    totalGainFood += x.BuildingType.foodGain;
-                    totalGainGold += x.BuildingType.goldGain;
+                    Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(x.BuildingType.foodGain);
+                    GameEvent.OnBuildingCalculateFoodGain?.Invoke(x, overrideData);
+                    totalGainFood += overrideData.Value;
+
+                    overrideData = GameUtility.IntOverrideData.Set(x.BuildingType.goldGain);
+                    GameEvent.OnBuildingCalculateGoldGain?.Invoke(x, overrideData);
+                    totalGainGold += overrideData.Value;
+
+                    Tools.OverrideData<float> float_overrideData = GameUtility.FloatOverrideData.Set(x.BuildingType.populationGain);
+                    GameEvent.OnBuildingCalculatePopulationGain?.Invoke(x, float_overrideData);
+                    population_increase_factor += overrideData.Value;
                 }
             });
 

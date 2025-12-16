@@ -1,13 +1,16 @@
 ﻿using Sango.Game.Tools;
+using Newtonsoft.Json.Linq;
 
 namespace Sango.Game
 {
     /// <summary>
-    /// 某类型城池的最大资金增加	p1:增加值, p2:建筑类型
+    /// 某类型城池的最大资金增加
+    /// value: 值, 
+    /// kinds: 建筑类型
     /// </summary>
-    public class CityGoldLimitAction : ForceActionBase
+    public class CityGoldLimitAction : ForceBuildingActionBase
     {
-        public override void Init(int[] p, params SangoObject[] sangoObjects)
+        public override void Init(JObject p, params SangoObject[] sangoObjects)
         {
             base.Init(p, sangoObjects);
             GameEvent.OnCityCalculateMaxGold += OnCityCalculateMaxGold;
@@ -20,12 +23,8 @@ namespace Sango.Game
 
         void OnCityCalculateMaxGold(City city, OverrideData<int> overrideData)
         {
-            if (Force == city.BelongForce && Params.Length > 2)
-            {
-                int checkBuildingKindType = Params[2];
-                if (checkBuildingKindType == 0 || (checkBuildingKindType > 0 && city.BuildingType.kind == checkBuildingKindType))
-                    overrideData.Value += Params[1];
-            }
+            if (!CheckForceBuilding(city)) return;
+            overrideData.Value += value;
         }
     }
 }

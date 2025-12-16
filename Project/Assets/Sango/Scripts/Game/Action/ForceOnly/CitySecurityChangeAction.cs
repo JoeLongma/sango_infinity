@@ -1,13 +1,15 @@
 ﻿using Sango.Game.Tools;
+using Newtonsoft.Json.Linq;
 
 namespace Sango.Game
 {
     /// <summary>
-    /// 某类型城池的治安下降值比例	p1:城市类型 p2:修改值(百分比)
+    /// 某类型城池的治安下降值比例
+    /// value: 值(百分比) kinds: 城市类型
     /// </summary>
-    public class CitySecurityChangeAction : ForceActionBase
+    public class CitySecurityChangeAction : ForceBuildingActionBase
     {
-        public override void Init(int[] p, params SangoObject[] sangoObjects)
+        public override void Init(JObject p, params SangoObject[] sangoObjects)
         {
             base.Init(p, sangoObjects);
             GameEvent.OnCitySecurityChangeOnSeasonStart += OnCitySecurityChangeOnSeasonStart;
@@ -20,14 +22,9 @@ namespace Sango.Game
 
         void OnCitySecurityChangeOnSeasonStart(City city, OverrideData<int> overrideData)
         {
-            if (Force == city.BelongForce && Params.Length > 2)
-            {
-                int checkBuildingKindType = Params[1];
-                if (checkBuildingKindType == 0 || (checkBuildingKindType > 0 && city.BuildingType.kind == checkBuildingKindType))
-                {
-                    overrideData.Value = (int)System.Math.Ceiling(overrideData.Value * Params[2] / 100f);
-                }
-            }
+            if (!CheckForceBuilding(city)) return;
+            overrideData.Value = (int)System.Math.Ceiling(overrideData.Value * value / 100f);
+
         }
     }
 }

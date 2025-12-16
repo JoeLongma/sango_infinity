@@ -1,13 +1,15 @@
-﻿using Sango.Game.Tools;
+﻿using Newtonsoft.Json.Linq;
+using Sango.Game.Tools;
 
 namespace Sango.Game
 {
     /// <summary>
-    /// 增加势力城池的士气上限  p1:增加值
+    /// 增加势力城池的士气上限 
+    /// value: 值  kinds: 城市类型
     /// </summary>
-    public class ForceCityMaxMoraleAction : ForceActionBase
+    public class ForceCityMaxMoraleAction : ForceBuildingActionBase
     {
-        public override void Init(int[] p, params SangoObject[] sangoObjects)
+        public override void Init(JObject p, params SangoObject[] sangoObjects)
         {
             base.Init(p, sangoObjects);
             GameEvent.OnCityCalculateMaxMorale += OnCityCalculateMaxMorale;
@@ -20,10 +22,8 @@ namespace Sango.Game
 
         void OnCityCalculateMaxMorale(City city, OverrideData<int> overrideData)
         {
-            if (this.Force == city.BelongForce && Params.Length > 1)
-            {
-                overrideData.Value += Params[1];
-            }
+            if (!CheckForceBuilding(city)) return;
+            overrideData.Value += value;
         }
 
     }

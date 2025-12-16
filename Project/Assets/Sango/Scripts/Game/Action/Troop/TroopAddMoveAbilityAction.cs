@@ -1,15 +1,20 @@
 ﻿using Sango.Game.Tools;
+using Newtonsoft.Json.Linq;
 
 namespace Sango.Game
 {
     /// <summary>
-    /// 某兵种攻击力增加	p1:增加值 p2:兵种kind (0全兵种全地形 -1陆地 -2水上)
+    /// 某兵种攻击力增加
+    /// value: 增加值  kinds:兵种kind   checkLand 0:只检查kinds 1:只对landType检查kinds 2只对waterType检查kinds
     /// </summary>
     public class TroopAddMoveAbilityAction : TroopActionBase
     {
-        public override void Init(int[] p, params SangoObject[] sangoObjects)
+        int checkLand;
+
+        public override void Init(JObject p, params SangoObject[] sangoObjects)
         {
             base.Init(p, sangoObjects);
+            checkLand = p.Value<int>("checkLand");
             GameEvent.OnTroopCalculateAttribute += OnTroopCalculateAttribute;
         }
 
@@ -23,28 +28,43 @@ namespace Sango.Game
             if (Force != null && troop.BelongForce != Force) return;
             if (Troop != null && Troop != troop) return;
 
-            if (Params.Length > 2)
+            if (checkLand == 0)
             {
-                int checkTroopTypeKind = Params[2];
-                if (checkTroopTypeKind == 0)
+                if (kinds == null)
                 {
-                    troop.landMoveAbility += Params[1];
-                    troop.waterMoveAbility += Params[1];
-                }
-                else if (checkTroopTypeKind == -1)
-                {
-                    troop.landMoveAbility += Params[1];
-                }
-                else if (checkTroopTypeKind == -2)
-                {
-                    troop.waterMoveAbility += Params[1];
+                    troop.landMoveAbility += value;
+                    troop.waterMoveAbility += value;
                 }
                 else
                 {
-                    if (troop.LandTroopType.kind == checkTroopTypeKind)
-                        troop.landMoveAbility += Params[1];
-                    if (troop.WaterTroopType.kind == checkTroopTypeKind)
-                        troop.waterMoveAbility += Params[1];
+                    if (kinds.Contains(troop.LandTroopType.kind))
+                        troop.landMoveAbility += value;
+                    if (kinds.Contains(troop.WaterTroopType.kind))
+                        troop.waterMoveAbility += value;
+                }
+            }
+            else if (checkLand == 1)
+            {
+                if (kinds == null)
+                {
+                    troop.landMoveAbility += value;
+                }
+                else
+                {
+                    if (kinds.Contains(troop.LandTroopType.kind))
+                        troop.landMoveAbility += value;
+                }
+            }
+            else if (checkLand == 2)
+            {
+                if (kinds == null)
+                {
+                    troop.waterMoveAbility += value;
+                }
+                else
+                {
+                    if (kinds.Contains(troop.WaterTroopType.kind))
+                        troop.waterMoveAbility += value;
                 }
             }
         }

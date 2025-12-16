@@ -1,15 +1,19 @@
 ﻿using Sango.Game.Tools;
+using Newtonsoft.Json.Linq;
 
 namespace Sango.Game
 {
     /// <summary>
-    /// 势力忠诚减少概率  p1:修改值(百分比)
+    /// 势力忠诚减少概率  value:修改值(百分比)
     /// </summary>
     public class ForcePersonLoyaltyChangeAction : ForceActionBase
     {
-        public override void Init(int[] p, params SangoObject[] sangoObjects)
+        protected int value;
+
+        public override void Init(JObject p, params SangoObject[] sangoObjects)
         {
             base.Init(p, sangoObjects);
+            value = p.Value<int>("value");
             GameEvent.OnForcePersonLoyaltyChangeProbability += OnForcePersonLoyaltyChangeProbability;
         }
 
@@ -20,10 +24,8 @@ namespace Sango.Game
 
         void OnForcePersonLoyaltyChangeProbability(Force force, OverrideData<int> overrideData)
         {
-            if (Force == force && Params.Length > 1)
-            {
-                overrideData.Value = (int)System.Math.Ceiling(overrideData.Value * Params[1] / 100f);
-            }
+            if (Force != force) return;
+            overrideData.Value = (int)System.Math.Ceiling(overrideData.Value * value / 100f);
         }
     }
 }

@@ -1,13 +1,15 @@
 ﻿using Sango.Game.Tools;
+using Newtonsoft.Json.Linq;
 
 namespace Sango.Game
 {
     /// <summary>
-    /// 增加势力全队伍的兵力上限  p1:增加值 p2:兵种类型
+    /// 增加势力全队伍的兵力上限 
+    /// value: 增加值 kinds: 兵种类型
     /// </summary>
-    public class ForceTroopMaxTroopAction : ForceActionBase
+    public class ForceTroopMaxTroopAction : ForceTroopActionBase
     {
-        public override void Init(int[] p, params SangoObject[] sangoObjects)
+        public override void Init(JObject p, params SangoObject[] sangoObjects)
         {
             base.Init(p, sangoObjects);
             GameEvent.OnTroopCalculateMaxTroops += OnTroopCalculateMaxTroops;
@@ -20,12 +22,9 @@ namespace Sango.Game
 
         void OnTroopCalculateMaxTroops(City city, Troop troop, OverrideData<int> overrideData)
         {
-            if (this.Force == troop.BelongForce && Params.Length > 2)
-            {
-                int checkTroopTypeKind = Params[2];
-                if (checkTroopTypeKind == 0 || (checkTroopTypeKind > 0 && troop.TroopType.kind == checkTroopTypeKind))
-                    overrideData.Value += Params[1];
-            }
+            if (!CheckForceTroop(troop))
+                return;
+            overrideData.Value += value;
         }
 
     }

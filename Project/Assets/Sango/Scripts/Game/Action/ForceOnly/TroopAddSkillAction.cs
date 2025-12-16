@@ -1,13 +1,15 @@
 ﻿using Sango.Game.Tools;
+using Newtonsoft.Json.Linq;
 
 namespace Sango.Game
 {
     /// <summary>
-    /// 某兵种战法替换成新战法	p1:兵种kind (0全兵种全地形 -1陆地 -2水上)  p2:技能id
+    /// 某兵种战法替换成新战法
+    /// value: 技能id kinds: 兵种类型
     /// </summary>
-    public class TroopAddSkillAction : ForceActionBase
+    public class TroopAddSkillAction : ForceTroopActionBase
     {
-        public override void Init(int[] p, params SangoObject[] sangoObjects)
+        public override void Init(JObject p, params SangoObject[] sangoObjects)
         {
             base.Init(p, sangoObjects);
             GameEvent.OnTroopCalculateAttribute += OnTroopCalculateAttribute;
@@ -20,36 +22,19 @@ namespace Sango.Game
 
         void OnTroopCalculateAttribute(Troop troop, Scenario scenario)
         {
-            if (Force == troop.BelongForce && Params.Length > 2)
+            if (Force != troop.BelongForce) return;
+            Skill skill = scenario.GetObject<Skill>(value);
+            if (kinds == null)
             {
-                int checkTroopTypeKind = Params[1];
-                int skillId = Params[2];
-                Skill skill = scenario.GetObject<Skill>(skillId);
-                if (checkTroopTypeKind == 0)
-                {
+                troop.landSkills.Add(new SkillInstance() { Skill = skill });
+                troop.waterSkills.Add(new SkillInstance() { Skill = skill });
+            }
+            else
+            {
+                if (kinds.Contains(troop.LandTroopType.kind))
                     troop.landSkills.Add(new SkillInstance() { Skill = skill });
+                if (kinds.Contains(troop.WaterTroopType.kind))
                     troop.waterSkills.Add(new SkillInstance() { Skill = skill });
-                }
-                else if (checkTroopTypeKind == -1)
-                {
-                    troop.landSkills.Add(new SkillInstance() { Skill = skill });
-                }
-                else if (checkTroopTypeKind == -2)
-                {
-                    troop.waterSkills.Add(new SkillInstance() { Skill = skill });
-                }
-                else
-                {
-                    if (troop.LandTroopType.kind == checkTroopTypeKind)
-                    {
-                        troop.landSkills.Add(new SkillInstance() { Skill = skill });
-                    }
-                    if (troop.WaterTroopType.kind == checkTroopTypeKind)
-                    {
-                        troop.waterSkills.Add(new SkillInstance() { Skill = skill });
-                    }
-                }
-
             }
         }
     }

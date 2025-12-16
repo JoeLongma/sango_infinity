@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System.Xml;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace Sango.Game
 {
@@ -29,6 +30,8 @@ namespace Sango.Game
         [JsonProperty] public string modelCreate;
         [JsonProperty] public bool canFire;
         [JsonProperty] public short techGain;
+        [JsonProperty] public int needTech;
+        [JsonProperty] public bool canBuild;
 
         /// <summary>
         /// 反击攻击力
@@ -48,16 +51,40 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public float damageBounds;
 
+        /// <summary>
+        /// 效果实体集合
+        /// </summary>
+        [JsonProperty]
+        [JsonConverter(typeof(String2JArrayConverter))]
+        public Newtonsoft.Json.Linq.JArray actionEntities;
+
+        public void InitActions(List<ActionBase> list, params SangoObject[] sangoObjects)
+        {
+            if (actionEntities == null) return;
+            for (int i = 0; i < actionEntities.Count; i++)
+            {
+                JObject valus = actionEntities[i] as JObject;
+                ActionBase action = ActionBase.Create(valus.Value<string>("class"));
+                if (action != null)
+                {
+                    action.Init(valus, sangoObjects);
+                    list.Add(action);
+                }
+            }
+        }
+
         public bool CanBuildToHere(Cell cell)
         {
             if (cell.IsInterior)
-                return false;
+                return IsIntrior;
 
             return true;
         }
 
         public bool IsValid(Force force)
         {
+            if(needTech > 0)
+                return force.HasTechnique(needTech);
             return true;
         }
 

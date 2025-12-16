@@ -1,65 +1,60 @@
-﻿namespace Sango.Game
+﻿using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+
+namespace Sango.Game
 {
     public abstract class ActionBase
     {
-        public abstract void Init(int[] p, params SangoObject[] sangoObjects);
-
+        public abstract void Init(JObject p, params SangoObject[] sangoObjects);
         public abstract void Clear();
 
-        public static ActionBase Create(int actionType)
+        public delegate ActionBase ActionCreator();
+
+        public static Dictionary<string, ActionCreator> CreateMap = new Dictionary<string, ActionCreator>();
+        public static void Register(string name, ActionCreator action)
         {
-            return Create((ActionType)actionType);
+            CreateMap[name] = action;
         }
 
-        public static ActionBase Create(ActionType actionType)
+        public static ActionBase CraeteHandle<T>() where T : ActionBase, new()
         {
-            switch (actionType)
-            {
-                case ActionType.BuildingBaseAttackBack:
-                    return new BuildingBaseAttackBack();
-                case ActionType.CityDurabilityLimitAction:
-                    return new CityDurabilityLimitAction();
-                case ActionType.CityFoodLimitAction:
-                    return new CityFoodLimitAction();
-                case ActionType.CityGoldLimitAction:
-                    return new CityGoldLimitAction();
-                case ActionType.CitySecurityChangeAction:
-                    return new CitySecurityChangeAction();
-                case ActionType.CityStoreLimitAction:
-                    return new CityStoreLimitAction();
-                case ActionType.CityTroopsLimitAction:
-                    return new CityTroopsLimitAction();
-                case ActionType.ForceCityMaxMoraleAction:
-                    return new ForceCityMaxMoraleAction();
-                case ActionType.ForcePersonLoyaltyChangeAction:
-                    return new ForcePersonLoyaltyChangeAction();
-                case ActionType.ForceTroopMaxTroopAction:
-                    return new ForceTroopMaxTroopAction();
-                case ActionType.TroopAddAttackAction:
-                    return new TroopAddAttackAction();
-                case ActionType.TroopAddDamageBuildingExtraFactorAction:
-                    return new TroopAddDamageBuildingExtraFactorAction();
-                case ActionType.TroopAddDamageTroopExtraFactorAction:
-                    return new TroopAddDamageTroopExtraFactorAction();
-                case ActionType.TroopAddDefenceAction:
-                    return new TroopAddDefenceAction();
-                case ActionType.TroopAddMoveAbilityAction:
-                    return new TroopAddMoveAbilityAction();
-                case ActionType.TroopAddSkillAction:
-                    return new TroopAddSkillAction();
-                case ActionType.TroopReplaceSkillAction:
-                    return new TroopReplaceSkillAction();
-                case ActionType.TroopSkillCalculateCriticalAction:
-                    return new TroopSkillCalculateCriticalAction();
-                case ActionType.TroopSkillCalculateSuccessAction:
-                    return new TroopSkillCalculateSuccessAction();
-                case ActionType.TroopSkillCalculateAttackBackAction:
-                    return new TroopSkillCalculateAttackBackAction();
-                case ActionType.TroopChangeTroopsAction:
-                    return new TroopChangeTroopsAction();
-
-            }
+            return new T();
+        }
+        public static ActionBase Create(string name)
+        {
+            ActionCreator actionBaseCreator;
+            if (CreateMap.TryGetValue(name, out actionBaseCreator))
+                return actionBaseCreator();
             return null;
         }
+
+        public static void Init()
+        {
+            Register("BuildingBaseAttackBack", CraeteHandle<BuildingBaseAttackBack>);
+            Register("CityDurabilityLimitAction", CraeteHandle<CityDurabilityLimitAction>);
+            Register("CityFoodLimitAction", CraeteHandle<CityFoodLimitAction>);
+            Register("CityGoldLimitAction", CraeteHandle<CityGoldLimitAction>);
+            Register("CitySecurityChangeAction", CraeteHandle<CitySecurityChangeAction>);
+            Register("CityStoreLimitAction", CraeteHandle<CityStoreLimitAction>);
+            Register("CityTroopsLimitAction", CraeteHandle<CityTroopsLimitAction>);
+            Register("ForceCityMaxMoraleAction", CraeteHandle<ForceCityMaxMoraleAction>);
+            Register("ForcePersonLoyaltyChangeAction", CraeteHandle<ForcePersonLoyaltyChangeAction>);
+            Register("ForceTroopMaxTroopAction", CraeteHandle<ForceTroopMaxTroopAction>);
+            Register("TroopAddAttackAction", CraeteHandle<TroopAddAttackAction>);
+            Register("TroopAddDamageBuildingExtraFactorAction", CraeteHandle<TroopAddDamageBuildingExtraFactorAction>);
+            Register("TroopAddDamageTroopExtraFactorAction", CraeteHandle<TroopAddDamageTroopExtraFactorAction>);
+            Register("TroopAddDefenceAction", CraeteHandle<TroopAddDefenceAction>);
+            Register("TroopAddMoveAbilityAction", CraeteHandle<TroopAddMoveAbilityAction>);
+            Register("TroopAddSkillAction", CraeteHandle<TroopAddSkillAction>);
+            Register("TroopReplaceSkillAction", CraeteHandle<TroopReplaceSkillAction>);
+            Register("TroopSkillCalculateCriticalAction", CraeteHandle<TroopSkillCalculateCriticalAction>);
+            Register("TroopSkillCalculateSuccessAction", CraeteHandle<TroopSkillCalculateSuccessAction>);
+            Register("TroopSkillCalculateAttackBackAction", CraeteHandle<TroopSkillCalculateAttackBackAction>);
+            Register("TroopChangeTroopsAction", CraeteHandle<TroopChangeTroopsAction>);
+            Register("BuildingImproveFoodGain", CraeteHandle<BuildingImproveFoodGain>);
+            Register("BuildingImproveGoldGain", CraeteHandle<BuildingImproveGoldGain>);
+            Register("BuildingImproveFoodGainByCityTroops", CraeteHandle<BuildingImproveFoodGainByCityTroops>);
+        }
+
     }
 }

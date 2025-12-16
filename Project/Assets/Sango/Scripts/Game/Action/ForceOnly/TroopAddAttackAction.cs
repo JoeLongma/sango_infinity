@@ -1,13 +1,15 @@
 ﻿using Sango.Game.Tools;
+using Newtonsoft.Json.Linq;
 
 namespace Sango.Game
 {
     /// <summary>
-    /// 某兵种攻击力增加  p1:增加值 p2:兵种kind
+    /// 某兵种攻击力增加
+    /// value: 增加值 kinds: 兵种类型
     /// </summary>
-    public class TroopAddAttackAction : ForceActionBase
+    public class TroopAddAttackAction : ForceTroopActionBase
     {
-        public override void Init(int[] p, params SangoObject[] sangoObjects)
+        public override void Init(JObject p, params SangoObject[] sangoObjects)
         {
             base.Init(p, sangoObjects);
             GameEvent.OnTroopCalculateAttribute += OnTroopCalculateAttribute;
@@ -20,21 +22,19 @@ namespace Sango.Game
 
         void OnTroopCalculateAttribute(Troop troop, Scenario scenario)
         {
-            if (Force == troop.BelongForce && Params.Length > 2)
+            if (Force != troop.BelongForce) return;
+
+            if (kinds == null)
             {
-                int checkTroopTypeKind = Params[2];
-                if (checkTroopTypeKind == 0)
-                {
-                    troop.landAttack += Params[1];
-                    troop.waterAttack += Params[1];
-                }
-                else
-                {
-                    if (troop.LandTroopType.kind == checkTroopTypeKind)
-                        troop.landAttack += Params[1];
-                    if (troop.WaterTroopType.kind == checkTroopTypeKind)
-                        troop.waterAttack += Params[1];
-                }
+                troop.landAttack += value;
+                troop.waterAttack += value;
+            }
+            else
+            {
+                if (kinds.Contains(troop.LandTroopType.kind))
+                    troop.landAttack += value;
+                if (kinds.Contains(troop.WaterTroopType.kind))
+                    troop.waterAttack += value;
             }
         }
     }

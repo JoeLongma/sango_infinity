@@ -833,7 +833,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -903361245
   m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!114 &576643473640125865
@@ -915,6 +915,7 @@ GameObject:
   - component: {fileID: 8734080045334747305}
   - component: {fileID: 4397544555610224132}
   - component: {fileID: 8525950481273939606}
+  - component: {fileID: 2662530083652992827}
   m_Layer: 5
   m_Name: root
   m_TagString: Untagged
@@ -983,6 +984,19 @@ MonoBehaviour:
   offset: {x: 0, y: 0}
   delayTime: 0
   cachePosition: {x: 0, y: 0}
+--- !u!114 &2662530083652992827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9167501678661684136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d6125d06f1fef4aa9861c00314c119, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalHeight: 800
 --- !u!1 &9194460929382952310
 GameObject:
   m_ObjectHideFlags: 0

@@ -48,8 +48,8 @@ namespace UnityEngine.UI
             if (w)
             {
                 float leftX, rightX;
-                leftX = pos.x - rect.sizeDelta.x * pivotVec.x;
-                rightX = pos.x + rect.sizeDelta.x * (1 - pivotVec.x);
+                leftX = pos.x - rect.sizeDelta.x * pivotVec.x * rect.localScale.x;
+                rightX = pos.x + rect.sizeDelta.x * (1 - pivotVec.x) * rect.localScale.x;
                 float ScreenWidthHalf = uiRoot.sizeDelta.x / 2;
                 if (rightX > ScreenWidthHalf)
                 {
@@ -65,8 +65,8 @@ namespace UnityEngine.UI
             if (h)
             {
                 float upY, downY;
-                downY = pos.y - rect.sizeDelta.y * pivotVec.y;
-                upY = pos.y + rect.sizeDelta.y * (1 - pivotVec.y);
+                downY = pos.y - rect.sizeDelta.y * pivotVec.y * rect.localScale.y;
+                upY = pos.y + rect.sizeDelta.y * (1 - pivotVec.y) * rect.localScale.y;
                 float ScreenHeightHalf = uiRoot.sizeDelta.y / 2;
                 if (upY > ScreenHeightHalf)
                 {

@@ -172,7 +172,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c37d345426e7195409a273b30ca9fccc, type: 3}
   - {fileID: 21300000, guid: b8d1128f88ee21c458b4fdbd96425d64, type: 3}
   image: {fileID: 6992163079377930616}
-  speed: 0
+  speed: 0.15
 --- !u!1 &4617918967374172574
 GameObject:
   m_ObjectHideFlags: 0

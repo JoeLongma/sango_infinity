@@ -26,6 +26,7 @@ namespace Sango.Game
 
         public int cellHarvestTotalFood = 0;
         public int cellHarvestTotalGold = 0;
+        public List<ActionBase> actionList;
 
         public override void OnScenarioPrepare(Scenario scenario)
         {
@@ -52,10 +53,16 @@ namespace Sango.Game
             if(CenterCell.IsInterior)
                 CenterCell.ClearInteriorModel();
 
+            actionList = new List<ActionBase>();
+            BuildingType.InitActions(actionList, this);
+           
             // 效果范围
             effectCells = new System.Collections.Generic.List<Cell>();
             scenario.Map.GetDirectSpiral(CenterCell, BuildingType.radius + 1, BuildingType.radius + BuildingType.atkRange, effectCells);
             OnPrepareRender();
+
+
+
         }
 
         public override bool OnForceTurnStart(Scenario scenario)
@@ -268,8 +275,17 @@ namespace Sango.Game
             return last;
         }
 
-        public void Destroy()
+        public override void Clear()
         {
+            if (actionList != null)
+            {
+                for (int i = 0; i < actionList.Count; i++)
+                    actionList[i].Clear();
+
+                actionList.Clear();
+                actionList = null;
+            }
+
             Scenario.Cur.buildingSet.Remove(this);
 
             if (Builders != null)
@@ -306,7 +322,7 @@ namespace Sango.Game
         public override void OnFall(SangoObject atk)
         {
             BelongCity?.OnBuildingDestroy(this);
-            Destroy();
+            Clear();
         }
     }
 }

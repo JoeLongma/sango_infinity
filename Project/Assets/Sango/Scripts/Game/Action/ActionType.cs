@@ -30,7 +30,9 @@ namespace Sango.Game
         TroopAddSkillAction,
         TroopSkillCalculateSuccessAction,
         TroopSkillCalculateCriticalAction,
-        TroopSkillCalculateAttackBackAction,
-        TroopChangeTroopsAction,
+        TroopSkillCalculateAttackBackAction = 20,
+        TroopChangeTroopsAction = 21,
+
+
     }
 }

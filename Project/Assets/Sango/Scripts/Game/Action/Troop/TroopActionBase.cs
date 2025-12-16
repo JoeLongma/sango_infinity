@@ -1,16 +1,31 @@
-﻿namespace Sango.Game
+﻿using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+
+namespace Sango.Game
 {
     public abstract class TroopActionBase : ActionBase
     {
         protected Force Force { get; set; }
         protected Troop Troop { get; set; }
-        protected int[] Params { get; set; }
-        public override void Init(int[] p, params SangoObject[] sangoObjects)
+        protected JObject Params { get; set; }
+
+        protected int value;
+        protected List<int> kinds;
+
+        public override void Init(JObject p, params SangoObject[] sangoObjects)
         {
             Troop = sangoObjects[0] as Troop;
             if(Troop == null)
                 Force = sangoObjects[0] as Force;
             Params = p;
+            value = p.Value<int>("value");
+            JArray kindsArray = p.Value<JArray>("kinds");
+            if (kindsArray != null)
+            {
+                kinds = new List<int>(kindsArray.Count);
+                for (int i = 0; i < kindsArray.Count; i++)
+                    kinds.Add(kindsArray[i].ToObject<int>());
+            }
         }
 
         /// <summary>

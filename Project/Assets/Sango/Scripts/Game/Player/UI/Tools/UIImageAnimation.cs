@@ -10,11 +10,16 @@ namespace Sango.Game.Player
         public Image image;
         public float speed;
         private int index = 0;
-        private void Awake()
+        private void OnEnable()
         {
             if (image == null)
                 image = GetComponent<Image>();
             InvokeRepeating("UpdateRender", speed, speed);
+        }
+
+        private void OnDisable()
+        {
+            CancelInvoke();
         }
 
         private void UpdateRender()

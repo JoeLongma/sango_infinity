@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
 namespace Sango.Game
@@ -25,19 +26,24 @@ namespace Sango.Game
         [JsonProperty] public int level;
 
         /// <summary>
-        /// 效果参数
+        /// 效果实体集合
         /// </summary>
-        [JsonProperty] public int[][] actionList;
+        [JsonProperty]
+        [JsonConverter(typeof(String2JArrayConverter))]
+        public Newtonsoft.Json.Linq.JArray actionEntities;
 
         public void InitActions(List<ActionBase> list, params SangoObject[] sangoObjects)
         {
-            if (actionList == null) return;
-            for (int i = 0; i < actionList.Length; i++)
+            if (actionEntities == null) return;
+            for (int i = 0; i < actionEntities.Count; i++)
             {
-                int[] valus = actionList[i];
-                ActionBase action = ActionBase.Create(valus[0]);
-                action.Init(valus, sangoObjects);
-                list.Add(action);
+                JObject valus = actionEntities[i] as JObject;
+                ActionBase action = ActionBase.Create(valus.Value<string>("class"));
+                if (action != null)
+                {
+                    action.Init(valus, sangoObjects);
+                    list.Add(action);
+                }
             }
         }
 

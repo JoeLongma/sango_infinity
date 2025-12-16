@@ -1,15 +1,19 @@
-﻿namespace Sango.Game
-{
-    public class BuildingActionBase : ActionBase
-    {
-        public override void Clear()
-        {
-            throw new System.NotImplementedException();
-        }
+﻿using Newtonsoft.Json.Linq;
 
-        public override void Init(int[] p, params SangoObject[] sangoObjects)
+namespace Sango.Game
+{
+    public abstract class BuildingActionBase : ActionBase
+    {
+        protected Force Force { get; set; }
+        public BuildingBase Building { get; set; }
+        protected JObject Params { get; set; }
+
+        public override void Init(JObject p, params SangoObject[] sangoObjects)
         {
-            
+            Building = sangoObjects[0] as BuildingBase;
+            if (Building == null)
+                Force = sangoObjects[0] as Force;
+            Params = p;
         }
     }
 }
