@@ -459,7 +459,7 @@ Transform:
   m_GameObject: {fileID: 3040028824565784827}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.4, y: 1, z: 1.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9021667523159398984}
@@ -1499,11 +1499,12 @@ MonoBehaviour:
   - {fileID: 4133155102284536933}
   - {fileID: 3603713509349450036}
   - {fileID: 2303670627628463348}
-  meshScale: 1
+  meshScale: 1.4
   totalScale: 7
+  elementCount: 36
   showCount: 60
   smoke: {fileID: 5164168828097505112}
-  size: {x: 0.31, y: 0.31}
+  size: {x: 0.41, y: 0.41}
   origin: {x: -0.125, y: -0.125}
   initTroop: {fileID: 3040028824188932091}
   initTroopRoot: {fileID: 3040028824565784828}
@@ -1587,6 +1588,8 @@ MonoBehaviour:
   troopsRender: {fileID: 6334099004971977049}
   animation: {fileID: 0}
   smoke: {fileID: 0}
+  flashRenderers: []
+  flashFalg: 0
 --- !u!111 &6666146117458409640
 Animation:
   m_ObjectHideFlags: 0

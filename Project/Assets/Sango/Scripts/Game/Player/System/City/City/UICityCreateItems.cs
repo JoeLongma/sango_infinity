@@ -20,7 +20,12 @@ namespace Sango.Game.Render.UI
         {
             base.OnInit();
             createItemsSys = currentSystem as CityCreateItems;
-
+            title1?.gameObject.SetActive(true);
+            value_1?.gameObject.SetActive(true);
+            title_value?.gameObject.SetActive(true);
+            value_value?.gameObject.SetActive(true);
+            title_gold?.gameObject.SetActive(true);
+            value_gold?.gameObject.SetActive(true);
             if (createItemsSys is CityCreateBoat)
             {
                 infoLabel.text = "舰船";

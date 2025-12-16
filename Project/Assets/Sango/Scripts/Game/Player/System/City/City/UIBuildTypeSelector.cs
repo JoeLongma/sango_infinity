@@ -51,7 +51,7 @@ namespace Sango.Game.Render.UI
                 UIBuildingTypeItem item = buildingTypeItems[i];
                 item.onSelected = OnSelectBuildingType;
 
-                if(buildBuildingSys.TargetBuildingType != null && i < BuildingTypes.Count && BuildingTypes[i] == buildBuildingSys.TargetBuildingType)
+                if (buildBuildingSys.TargetBuildingType != null && i < BuildingTypes.Count && BuildingTypes[i] == buildBuildingSys.TargetBuildingType)
                     lastSelectIndex = i;
             }
             //buildBuildingSys.SelectBuildingType(BuildingTypes[0]);
@@ -59,6 +59,8 @@ namespace Sango.Game.Render.UI
             UpdateContent();
             buildButton.interactable = buildBuildingSys.TargetBuildingType != null;
 
+            if (buildBuildingSys.TargetBuildingType != null)
+                OnSelectBuildingType(buildBuildingSys.TargetBuildingType);
         }
 
         public void ShowPage(int index)
@@ -76,8 +78,19 @@ namespace Sango.Game.Render.UI
                 if (id < BuildingTypes.Count)
                 {
                     BuildingType buildingType = BuildingTypes[id];
+                    item.SetValid(buildingType.cost <= buildBuildingSys.TargetCity.gold);
                     item.gameObject.SetActive(true);
                     item.SetBuildingType(buildingType).SetIndex(id).SetSelected(buildingType == buildBuildingSys.TargetBuildingType).SetNum(-1);
+                    int buildedNum = buildBuildingSys.TargetCity.GetBuildingNumber(buildingType.kind);
+                    if (buildedNum > 0)
+                    {
+                        item.name = $"{buildingType.Name}({buildedNum})";
+                        if (buildingType.buildNumLimit > 0)
+                        {
+                            if (buildedNum >= buildingType.buildNumLimit)
+                                item.SetValid(false);
+                        }
+                    }
                 }
                 else
                 {
@@ -124,17 +137,21 @@ namespace Sango.Game.Render.UI
             buildButton.interactable = true;
 
             buildBuildingSys.SelectBuildingType(targetBuildingType);
+            OnSelectBuildingType(targetBuildingType);
+            buildingTypeItem.SetSelected(true);
 
+            UpdateContent();
+
+        }
+
+        public void OnSelectBuildingType(BuildingType targetBuildingType)
+        {
             buildCountLabel.text = $"{buildBuildingSys.wonderBuildCounter}回";
             cityGoldLabel.text = $"{targetBuildingType.cost}/{buildBuildingSys.TargetCity.gold}";
 
             durabilityLabel.text = targetBuildingType.durabilityLimit.ToString();
             buildingTypeDescLabel.text = targetBuildingType.desc;
             limitLabel.text = targetBuildingType.limitDesc;
-            buildingTypeItem.SetSelected(true);
-
-            UpdateContent();
-
         }
 
         public void UpdateContent()

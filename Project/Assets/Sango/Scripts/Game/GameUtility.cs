@@ -204,6 +204,9 @@ namespace Sango.Game
             return percent;
         }
 
+
+        static int[] v_factor = new int[] { 0, 100, 120, 150 };
+
         // 这里传入的v是放大了10倍的
         public static int Method_CreateItems(int v, int buildingTotalLevel)
         {
@@ -218,11 +221,8 @@ namespace Sango.Game
                 1.5×[1000＋10×84＋5×(83＋83)]＝4005
              * 
              */
-            int percent = 0;
-            for (int i = 1; i <= buildingTotalLevel; ++i)
-                percent += (int)(Math.Pow(100, 0.5f / i) * 50);
-
-            return (v + 1000) * 15 / 10 * percent / 1000;
+            int percent = v_factor[buildingTotalLevel];
+            return percent * (v + 1000) / 100;
         }
 
         /// <summary>

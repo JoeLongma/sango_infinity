@@ -56,7 +56,7 @@ namespace Sango
 
         public float meshScale = 1;
         public float totalScale = 1;
-        private int elementCount = 60;
+        public int elementCount = 60;
         public int showCount = 60;
         public ParticleSystem smoke;
         private bool isAniEnabled = false;
@@ -326,6 +326,7 @@ namespace Sango
             if (mesh == null || test == true)
             {
                 test = false;
+                SetSize(size);
                 InitMesh();
                 //Add(showCount);
             }

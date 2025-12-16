@@ -521,8 +521,10 @@ namespace Sango.Game
             float popularSupportInfluence = (((float)popularSupport / variables.popularSupportInfluenceMax) - 1) * variables.popularSupportInfluence;
             float leftInfluence = 1.0f + securityInfluence + popularSupportInfluence;
 
-            totalGainFood = Mathf.CeilToInt(leftInfluence * totalGainFood * (variables.foodFactor + extraGainFoodFactor));
-            totalGainGold = Mathf.CeilToInt(leftInfluence * totalGainGold * (variables.goldFactor + extraGainGoldFactor));
+            //totalGainFood = Mathf.CeilToInt(leftInfluence * totalGainFood * (variables.foodFactor + extraGainFoodFactor));
+            //totalGainGold = Mathf.CeilToInt(leftInfluence * totalGainGold * (variables.goldFactor + extraGainGoldFactor));
+            totalGainFood = Mathf.CeilToInt(totalGainFood * (variables.foodFactor + extraGainFoodFactor));
+            totalGainGold = Mathf.CeilToInt(totalGainGold * (variables.goldFactor + extraGainGoldFactor));
 
             population_increase_factor *= extraPopulationFactor;
         }

@@ -50,9 +50,9 @@ namespace Sango.Game
                 if (kinds != null && !kinds.Contains(target.BuildingType.kind))
                     continue;
 
-                gold += target.BuildingType.goldGain * value / 100;
+                gold += target.BuildingType.goldGain * value;
             }
-            overrideData.Value += gold;
+            overrideData.Value += gold / 100;
         }
     }
 }

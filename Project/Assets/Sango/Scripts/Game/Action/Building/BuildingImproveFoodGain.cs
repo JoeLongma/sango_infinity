@@ -50,9 +50,9 @@ namespace Sango.Game
                 if (kinds != null && !kinds.Contains(target.BuildingType.kind))
                     continue;
 
-                food += target.BuildingType.foodGain * value / 100;
+                food += target.BuildingType.foodGain * value;
             }
-            overrideData.Value += food;
+            overrideData.Value += food / 100;
         }
     }
 }
