@@ -9,7 +9,7 @@ namespace Sango.Mod
     {
         public static string EditModName { get; set; }
         public static string MOD_ROOT_DIR = "Mods";
-        public static string[] DEFAULT_MODS = { "Core" };
+        public static string[] DEFAULT_MODS = { };
         //public static string[] DEFAULT_MODS = { };
 
         public List<Mod> mModList;
