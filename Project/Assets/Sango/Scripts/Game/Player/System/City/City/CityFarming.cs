@@ -23,7 +23,7 @@ namespace Sango.Game.Player
         {
             get
             {
-                return TargetCity.agriculture < TargetCity.agricultureLimit && TargetCity.CheckJobCost(CityJobType.Farming);
+                return TargetCity.freePersons.Count > 0 && TargetCity.agriculture < TargetCity.agricultureLimit && TargetCity.CheckJobCost(CityJobType.Farming);
             }
         }
 

@@ -1,7 +1,7 @@
 ﻿using Sango.Game.Tools;
 using Newtonsoft.Json.Linq;
 
-namespace Sango.Game
+namespace Sango.Game.Action
 {
     /// <summary>
     /// 某兵种类型战法的暴击率增加
@@ -11,7 +11,7 @@ namespace Sango.Game
     /// isNormal：  -1都可以 0非 1是 
     /// conditionId： 额外条件 支持参数(troop,troop,skill)
     /// </summary>
-    public class TroopSkillCalculateCriticalAction : TroopTroopActionBase
+    public class TroopSkillCalculateCritical : TroopTroopActionBase
     {
         public override void Init(JObject p, params SangoObject[] sangoObjects)
         {

@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
-namespace Sango.Game
+namespace Sango.Game.Action
 {
     public abstract class ForceTroopActionBase : ForceActionBase
     {

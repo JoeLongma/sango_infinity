@@ -826,12 +826,12 @@ namespace Sango.Game
             if (city.security < 70) return true;
             if (city.troops > city.food) return true;
 
-            int barracksNum = city.GetIntriorBuildingComplateMaxLevel((int)BuildingKindType.Barracks);
-            if (barracksNum <= 0) return true;
+            Building barracks = city.GetFreeBuilding((int)BuildingKindType.Barracks);
+            if (barracks == null) return true;
 
             Person[] people = ForceAI.CounsellorRecommendRecuritTroop(city.freePersons);
             if (people == null) return true;
-            city.JobRecuritTroop(people, barracksNum);
+            city.JobRecuritTroop(people, barracks);
             return true;
         }
 
@@ -960,6 +960,7 @@ namespace Sango.Game
             if (city.freePersons.Count < 2 || city.gold < 400)
                 return true;
 
+            if (city.GetJobCounter((int)CityJobType.Inspection) > 0) return true;
             //int barracksNum = city.GetIntriorBuildingComplateMaxLevel((int)BuildingKindType.PatrolBureau);
             //if (barracksNum <= 0) return true;
 
@@ -977,8 +978,7 @@ namespace Sango.Game
             if (city.freePersons.Count < 2)
                 return true;
 
-            int barracksNum = city.GetIntriorBuildingComplateMaxLevel((int)BuildingKindType.Barracks);
-            if (barracksNum <= 0) return true;
+            if (city.GetJobCounter((int)CityJobType.TrainTroops) > 0) return true;
 
             if (city.morale < 50)
             {
@@ -1005,9 +1005,9 @@ namespace Sango.Game
 
             if (city.itemStore.TotalNumber >= city.StoreLimit - 1000) return true;
 
-            int BlacksmithShopnum = city.GetIntriorBuildingComplateMaxLevel((int)BuildingKindType.BlacksmithShop);
-            int StableNum = city.GetIntriorBuildingComplateMaxLevel((int)BuildingKindType.Stable);
-            if (BlacksmithShopnum <= 0 && StableNum <= 0)
+            Building freeBlacksmithShop = city.GetFreeBuilding((int)BuildingKindType.BlacksmithShop);
+            Building freeStable = city.GetFreeBuilding((int)BuildingKindType.Stable);
+            if (freeBlacksmithShop == null && freeStable == null)
                 return true;
 
             int totalNum = 0;
@@ -1029,18 +1029,18 @@ namespace Sango.Game
             });
 
             int sumTotal = 0;
-            if (BlacksmithShopnum > 0)
+            if (freeBlacksmithShop != null)
                 sumTotal = sumTotal + levelTotal[0] + levelTotal[1] + levelTotal[2];
 
-            if (StableNum > 0)
+            if (freeStable != null)
                 sumTotal = sumTotal + levelTotal[3];
 
             for (int itemTypeId = 2; itemTypeId <= 5; itemTypeId++)
             {
-                if (itemTypeId == 5 && StableNum <= 0)
+                if (itemTypeId == 5 && freeStable == null)
                     continue;
 
-                if (itemTypeId < 5 && BlacksmithShopnum <= 0)
+                if (itemTypeId < 5 && freeBlacksmithShop == null)
                     continue;
 
                 int itemNum = city.itemStore.GetNumber(itemTypeId);
@@ -1049,7 +1049,7 @@ namespace Sango.Game
                     Person[] people = ForceAI.CounsellorRecommendCreateItems(city.freePersons);
                     if (people == null) return true;
                     ItemType itemType = Scenario.Cur.GetObject<ItemType>(itemTypeId);
-                    city.JobCreateItems(people, itemType, itemTypeId == 5 ? StableNum : BlacksmithShopnum);
+                    city.JobCreateItems(people, itemType, itemTypeId == 5 ? freeStable : freeBlacksmithShop);
                     return true;
                 }
             }
@@ -1066,8 +1066,8 @@ namespace Sango.Game
 
             if (city.itemStore.TotalNumber >= city.StoreLimit - 1000) return true;
 
-            int BoatFactoryNum = city.GetIntriorBuildingComplateMaxLevel((int)BuildingKindType.BoatFactory);
-            if (BoatFactoryNum <= 0)
+            Building BoatFactory = city.GetFreeBuilding((int)BuildingKindType.BoatFactory);
+            if (BoatFactory== null)
                 return true;
 
             if (city.allPersons.Find(x => x.missionType == (int)MissionType.PersonCreateBoat) != null)
@@ -1084,7 +1084,7 @@ namespace Sango.Game
 
             Person[] people = ForceAI.CounsellorRecommendCreateItems(city.freePersons);
             if (people == null) return true;
-            city.JobCreateBoat(people, targetItemType, BoatFactoryNum);
+            city.JobCreateBoat(people, targetItemType, BoatFactory);
             return true;
         }
 
@@ -1095,8 +1095,8 @@ namespace Sango.Game
 
             if (city.itemStore.TotalNumber >= city.StoreLimit - 1000) return true;
 
-            int MechineFactoryNum = city.GetIntriorBuildingComplateMaxLevel((int)BuildingKindType.MechineFactory);
-            if (MechineFactoryNum <= 0)
+            Building MechineFactory = city.GetFreeBuilding((int)BuildingKindType.MechineFactory);
+            if (MechineFactory == null)
                 return true;
 
             if (city.allPersons.Find(x => x.missionType == (int)MissionType.PersonCreateMachine) != null)
@@ -1127,7 +1127,7 @@ namespace Sango.Game
 
             Person[] people = ForceAI.CounsellorRecommendCreateItems(city.freePersons);
             if (people == null) return true;
-            city.JobCreateMachine(people, targetItemType, MechineFactoryNum);
+            city.JobCreateMachine(people, targetItemType, MechineFactory);
             return true;
         }
 

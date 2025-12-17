@@ -23,7 +23,8 @@ namespace Sango.Game.Player
         {
             get
             {
-                return TargetCity.GetBuildingComplateNumber((int)BuildingKindType.Barracks) > 0 &&
+                return TargetCity.FreePersonCount > 0 && 
+                    TargetCity.GetFreeBuilding((int)BuildingKindType.Barracks) != null &&
                     TargetCity.CheckJobCost(CityJobType.RecuritTroops);
             }
         }

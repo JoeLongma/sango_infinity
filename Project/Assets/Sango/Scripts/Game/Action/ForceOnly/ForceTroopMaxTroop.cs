@@ -1,13 +1,13 @@
 ﻿using Sango.Game.Tools;
 using Newtonsoft.Json.Linq;
 
-namespace Sango.Game
+namespace Sango.Game.Action
 {
     /// <summary>
     /// 增加势力全队伍的兵力上限 
     /// value: 增加值 kinds: 兵种类型
     /// </summary>
-    public class ForceTroopMaxTroopAction : ForceTroopActionBase
+    public class ForceTroopMaxTroop : ForceTroopActionBase
     {
         public override void Init(JObject p, params SangoObject[] sangoObjects)
         {

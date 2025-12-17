@@ -1,13 +1,13 @@
 ﻿using Sango.Game.Tools;
 using Newtonsoft.Json.Linq;
 
-namespace Sango.Game
+namespace Sango.Game.Action
 {
     /// <summary>
     /// 某兵种攻击力增加
     /// value: 增加值 kinds: 兵种类型
     /// </summary>
-    public class TroopAddDefenceAction : ForceTroopActionBase
+    public class TroopAddDefence : ForceTroopActionBase
     {
         public override void Init(JObject p, params SangoObject[] sangoObjects)
         {

@@ -33,7 +33,7 @@ namespace Sango.Game.Render.UI
 
         public UITextField action_value;
 
-        public Action initAction;
+        public System.Action initAction;
 
         public void Init(CityComandBase cityComandBase)
         {
@@ -52,7 +52,7 @@ namespace Sango.Game.Render.UI
             OnInit();
         }
 
-        public void Init(CityComandBase cityComandBase, Action uiAction)
+        public void Init(CityComandBase cityComandBase, System.Action uiAction)
         {
             initAction = uiAction;
             Init(cityComandBase);

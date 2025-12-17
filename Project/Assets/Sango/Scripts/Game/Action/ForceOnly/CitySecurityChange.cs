@@ -1,13 +1,13 @@
 ﻿using Sango.Game.Tools;
 using Newtonsoft.Json.Linq;
 
-namespace Sango.Game
+namespace Sango.Game.Action
 {
     /// <summary>
     /// 某类型城池的治安下降值比例
     /// value: 值(百分比) kinds: 城市类型
     /// </summary>
-    public class CitySecurityChangeAction : ForceBuildingActionBase
+    public class CitySecurityChange : ForceBuildingActionBase
     {
         public override void Init(JObject p, params SangoObject[] sangoObjects)
         {

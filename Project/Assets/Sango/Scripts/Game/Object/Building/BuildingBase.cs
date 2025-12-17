@@ -68,7 +68,11 @@ namespace Sango.Game
         /// 是否升级中
         /// </summary>
         [JsonProperty] public bool isUpgrading;
-        
+
+        /// <summary>
+        /// 是否工作中
+        /// </summary>
+        [JsonProperty] public bool isWorking;
 
         public virtual int DurabilityLimit => BuildingType.durabilityLimit;
 

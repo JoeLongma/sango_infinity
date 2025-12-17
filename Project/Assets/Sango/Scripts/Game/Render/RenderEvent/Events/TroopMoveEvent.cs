@@ -11,7 +11,7 @@ namespace Sango.Game.Render
         public Cell start;
         public Cell dest;
         public bool isLastMove;
-        public Action doneAction;
+        public System.Action doneAction;
 
         public override void Enter(Scenario scenario)
         {

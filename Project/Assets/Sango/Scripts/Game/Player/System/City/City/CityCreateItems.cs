@@ -16,7 +16,7 @@ namespace Sango.Game.Player
         public List<ItemType> ItemTypes = new List<ItemType>();
         public int CurSelectedItemTypeIndex { get; set; }
         public ItemType CurSelectedItemType { get; set; }
-        public int TotalBuildingCount { get; set; }
+        public Building TargetBuilding { get; set; }
         public int[] TurnAndDestNumber { get; set; }
 
         public CreateType CurCreateType = CreateType.Weapon;
@@ -50,7 +50,7 @@ namespace Sango.Game.Player
                 ItemTypes.Add(scenario.GetObject<ItemType>(i));
             }
 
-            TotalBuildingCount = TargetCity.GetBuildingComplateNumber((int)BuildingKindType.BlacksmithShop);
+            TargetBuilding = TargetCity.GetFreeBuilding((int)BuildingKindType.BlacksmithShop);
             CurSelectedItemTypeIndex = 0;
             CurSelectedItemType = ItemTypes[CurSelectedItemTypeIndex];
         }
@@ -60,8 +60,9 @@ namespace Sango.Game.Player
         {
             get
             {
-                return TargetCity.itemStore.TotalNumber < TargetCity.StoreLimit && TargetCity.CheckJobCost(CityJobType.CreateItems)
-                    && (TargetCity.GetBuildingComplateNumber((int)BuildingKindType.BlacksmithShop) > 0 || TargetCity.GetBuildingComplateNumber((int)BuildingKindType.Stable) > 0);
+                return TargetCity.FreePersonCount > 0 && TargetCity.itemStore.TotalNumber < TargetCity.StoreLimit &&
+                    TargetCity.CheckJobCost(CityJobType.CreateItems)
+                    && TargetCity.GetFreeBuilding((int)BuildingKindType.BlacksmithShop) != null;
             }
         }
 
@@ -70,7 +71,7 @@ namespace Sango.Game.Player
             TurnAndDestNumber = new int[2]
             {
                 0,
-                TargetCity.JobCreateItems(personList.ToArray(), CurSelectedItemType, TotalBuildingCount, true)
+                TargetCity.JobCreateItems(personList.ToArray(), CurSelectedItemType, TargetBuilding, true)
             };
             return TurnAndDestNumber[1];
         }
@@ -94,7 +95,7 @@ namespace Sango.Game.Player
         {
             if (personList.Count > 0)
             {
-                TargetCity.JobCreateItems(personList.ToArray(), CurSelectedItemType, TotalBuildingCount);
+                TargetCity.JobCreateItems(personList.ToArray(), CurSelectedItemType, TargetBuilding);
                 Done();
             }
         }

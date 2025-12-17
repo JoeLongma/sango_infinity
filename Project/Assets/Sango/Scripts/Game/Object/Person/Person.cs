@@ -579,10 +579,10 @@ namespace Sango.Game
                         missionCounter--;
                         if (missionCounter <= 0)
                         {
-                            int buildingTotalLv = missionParams1;
+                            int buildingId = missionParams1;
                             int totalValue = missionParams2;
                             ItemType itemType = scenario.GetObject<ItemType>(missionTarget);
-                            BelongCity.DoJobCreateBoat(itemType, buildingTotalLv, totalValue);
+                            BelongCity.DoJobCreateBoat(itemType, buildingId, totalValue);
                         }
                     }
                     break;
@@ -591,10 +591,10 @@ namespace Sango.Game
                         missionCounter--;
                         if (missionCounter <= 0)
                         {
-                            int buildingTotalLv = missionParams1;
+                            int buildingId = missionParams1;
                             int totalValue = missionParams2;
                             ItemType itemType = scenario.GetObject<ItemType>(missionTarget);
-                            BelongCity.DoJobCreateMachine(itemType, buildingTotalLv, totalValue);
+                            BelongCity.DoJobCreateMachine(itemType, buildingId, totalValue);
                         }
                     }
                     break;

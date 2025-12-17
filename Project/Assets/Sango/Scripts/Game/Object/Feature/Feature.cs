@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Sango.Game.Action;
 using System.Collections.Generic;
 
 namespace Sango.Game
@@ -18,7 +19,7 @@ namespace Sango.Game
         /// <summary>
         /// 类型
         /// </summary>
-        [JsonProperty] public string kind;
+        [JsonProperty] public int kind;
 
         /// <summary>
         /// 等级

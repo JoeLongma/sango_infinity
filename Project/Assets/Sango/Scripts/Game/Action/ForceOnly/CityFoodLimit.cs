@@ -1,31 +1,30 @@
 ﻿using Sango.Game.Tools;
 using Newtonsoft.Json.Linq;
 
-namespace Sango.Game
+namespace Sango.Game.Action
 {
     /// <summary>
-    /// 某类型城池的最大士兵增加
-    /// value: 值
-    /// kinds: 城市类型
+    /// 某类型城池的最大兵粮增加
+    /// value: 值, 
+    /// kinds: 建筑类型
     /// </summary>
-    public class CityTroopsLimitAction : ForceBuildingActionBase
+    public class CityFoodLimit : ForceBuildingActionBase
     {
         public override void Init(JObject p, params SangoObject[] sangoObjects)
         {
             base.Init(p, sangoObjects);
-            GameEvent.OnCityCalculateMaxTroops += OnCityCalculateMaxTroops;
+            GameEvent.OnCityCalculateMaxFood += OnCityCalculateMaxFood;
         }
 
         public override void Clear()
         {
-            GameEvent.OnCityCalculateMaxTroops -= OnCityCalculateMaxTroops;
+            GameEvent.OnCityCalculateMaxFood -= OnCityCalculateMaxFood;
         }
 
-        void OnCityCalculateMaxTroops(City city, OverrideData<int> overrideData)
+        void OnCityCalculateMaxFood(City city, OverrideData<int> overrideData)
         {
             if (!CheckForceBuilding(city)) return;
             overrideData.Value += value;
         }
-
     }
 }

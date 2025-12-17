@@ -18,8 +18,8 @@ namespace Sango.Game.Render.UI
         }
 
         public Text content;
-        public Action cancelAction;
-        public Action sureAction;
+        public System.Action cancelAction;
+        public System.Action sureAction;
         public RectTransform panelRect;
         public RectTransform btnRect;
         public Image headImg;
@@ -37,12 +37,12 @@ namespace Sango.Game.Render.UI
             cancelAction?.Invoke();
         }
 
-        public static UIDialog Open(string content, Action sureAction)
+        public static UIDialog Open(string content, System.Action sureAction)
         {
             return Open(content, sureAction, Input.mousePosition);
         }
 
-        public static UIDialog Open(DialogStyle dialogStyle, string content, Action sureAction)
+        public static UIDialog Open(DialogStyle dialogStyle, string content, System.Action sureAction)
         {
             string windowName = "window_dialog";
             switch (dialogStyle)
@@ -57,12 +57,12 @@ namespace Sango.Game.Render.UI
             return Open(windowName, content, sureAction, Input.mousePosition);
         }
 
-        public static UIDialog Open(string content, Action sureAction, Vector3 startPoint)
+        public static UIDialog Open(string content, System.Action sureAction, Vector3 startPoint)
         {
             return Open("window_dialog", content, sureAction, startPoint);
         }
 
-        public static UIDialog Open(string windowName, string content, Action sureAction, Vector3 startPoint)
+        public static UIDialog Open(string windowName, string content, System.Action sureAction, Vector3 startPoint)
         {
             Window.WindowInterface windowInterface = Window.Instance.Open(windowName);
             if (windowInterface.ugui_instance == null)

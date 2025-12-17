@@ -2,7 +2,7 @@
 using Sango.Game.Tools;
 using System.Collections.Generic;
 
-namespace Sango.Game
+namespace Sango.Game.Action
 {
     /// <summary>
     /// 计算周围一格的资金产量，并提升系数  

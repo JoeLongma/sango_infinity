@@ -1,14 +1,13 @@
 ﻿using Sango.Game.Tools;
 using Newtonsoft.Json.Linq;
 
-namespace Sango.Game
+namespace Sango.Game.Action
 {
     /// <summary>
-    /// 某兵种战法威力(百分比)增加
-    /// value: 增加值(百分比) kinds: 兵种类型
+    /// 某兵种攻击力增加
+    /// value: 增加值 kinds: 兵种类型
     /// </summary>
-    /// 
-    public class TroopAddDamageTroopExtraFactorAction : ForceTroopActionBase
+    public class TroopAddAttack : ForceTroopActionBase
     {
         public override void Init(JObject p, params SangoObject[] sangoObjects)
         {
@@ -24,19 +23,18 @@ namespace Sango.Game
         void OnTroopCalculateAttribute(Troop troop, Scenario scenario)
         {
             if (Force != troop.BelongForce) return;
-            float factor = value / 100f;
+
             if (kinds == null)
             {
-                troop.landDamageTroopExtraFactor += factor;
-                troop.waterDamageTroopExtraFactor += factor;
+                troop.landAttack += value;
+                troop.waterAttack += value;
             }
             else
             {
                 if (kinds.Contains(troop.LandTroopType.kind))
-                    troop.landDamageTroopExtraFactor += factor;
+                    troop.landAttack += value;
                 if (kinds.Contains(troop.WaterTroopType.kind))
-                    troop.waterDamageTroopExtraFactor += factor;
-
+                    troop.waterAttack += value;
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Sango.Game.Action;
 using Sango.Game.Render;
 using System.Collections.Generic;
 using System.Text;
@@ -14,15 +15,11 @@ namespace Sango.Game
 
         [JsonConverter(typeof(SangoObjectListIDConverter<Person>))]
         [JsonProperty]
-        public SangoObjectList<Person> Builders { get; set; }
+        public SangoObjectList<Person> Workers { get; set; }
 
         [JsonProperty]
-        public int BuidlLefCounter { get; set; }
+        public int LeftCounter { get; set; }
 
-
-        //public Person Builder { get; set; }
-
-        public Person Worker { get; set; }
 
         public int cellHarvestTotalFood = 0;
         public int cellHarvestTotalGold = 0;
@@ -50,57 +47,73 @@ namespace Sango.Game
                 cell.building = this;
             CenterCell = OccupyCellList[0];
 
-            if(CenterCell.IsInterior)
+            if (CenterCell.IsInterior)
                 CenterCell.ClearInteriorModel();
 
             actionList = new List<ActionBase>();
             BuildingType.InitActions(actionList, this);
-           
+
             // 效果范围
             effectCells = new System.Collections.Generic.List<Cell>();
             scenario.Map.GetDirectSpiral(CenterCell, BuildingType.radius + 1, BuildingType.radius + BuildingType.atkRange, effectCells);
             OnPrepareRender();
-
-
-
         }
 
         public override bool OnForceTurnStart(Scenario scenario)
         {
             ActionOver = false;
 
-            if (!isComplte && Builders != null)
+
+            if (!isComplte && Workers != null)
             {
-                int totalValue = (BuildingType.durabilityLimit - durability) / BuidlLefCounter;
+                int totalValue = (BuildingType.durabilityLimit - durability) / LeftCounter;
                 durability += totalValue;
                 if (durability >= BuildingType.durabilityLimit)
                 {
                     durability = BuildingType.durabilityLimit;
                     isComplte = true;
                     //CalculateHarvest();
-                    SangoObjectList<Person> builder = Builders;
+                    SangoObjectList<Person> builder = Workers;
                     OnBuildComplate();
                     BelongCity.OnBuildingComplete(this, builder);
                 }
+                if (LeftCounter > 0)
+                    LeftCounter--;
             }
-            else if (isUpgrading && Builders != null)
+            else if (isUpgrading && Workers != null)
             {
-                int totalValue = GameUtility.Method_PersonBuildAbility(Builders);
+                if (LeftCounter > 0)
+                    LeftCounter--;
+                int totalValue = GameUtility.Method_PersonBuildAbility(Workers);
                 durability += totalValue;
                 if (durability >= BuildingType.durabilityLimit)
                 {
                     durability = BuildingType.durabilityLimit;
                     isUpgrading = false;
                     //CalculateHarvest();
-                    SangoObjectList<Person> builder = Builders;
+                    SangoObjectList<Person> builder = Workers;
                     OnUpgradeComplate();
                     BelongCity.OnBuildingUpgradeComplete(this, builder);
                 }
             }
-
-            if (BuidlLefCounter > 0)
-                BuidlLefCounter--;
-
+            else if (isWorking && Workers != null)
+            {
+                if (LeftCounter > 0)
+                    LeftCounter--;
+                if (LeftCounter == 0)
+                {
+                    isWorking = false;
+                    SangoObjectList<Person> builder = Workers;
+                    OnWorkingComplate();
+                    BelongCity.OnBuildingUpgradeComplete(this, builder);
+                }
+            }
+            else
+            {
+                if (LeftCounter > 0)
+                    LeftCounter--;
+                ActionOver = false;
+            }
             // 暂时写死
             if (isComplte && BuildingType.atk > 0 && BuildingType.atkRange > 0)
             {
@@ -152,7 +165,7 @@ namespace Sango.Game
             Sango.Log.Print($"[{BelongCity.Name}]{stringBuilder}完成{Name}建造!!");
 #endif
             Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(techniquePointGain);
-            GameEvent.OnCityJobGainTechniquePoint?.Invoke(BelongCity, jobId, Builders.objects.ToArray(), overrideData);
+            GameEvent.OnCityJobGainTechniquePoint?.Invoke(BelongCity, jobId, Workers.objects.ToArray(), overrideData);
             techniquePointGain = overrideData.Value;
 
             BelongForce.GainTechniquePoint(techniquePointGain);
@@ -171,9 +184,9 @@ namespace Sango.Game
 #if SANGO_DEBUG
             StringBuilder stringBuilder = new StringBuilder();
 #endif
-            for (int i = 0; i < Builders.Count; i++)
+            for (int i = 0; i < Workers.Count; i++)
             {
-                Person person = Builders[i];
+                Person person = Workers[i];
                 person.merit += meritGain;
                 person.GainExp(meritGain);
 #if SANGO_DEBUG
@@ -187,12 +200,17 @@ namespace Sango.Game
             Sango.Log.Print($"[{BelongCity.Name}]{stringBuilder}完成{Name}建造!!");
 #endif
             Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(techniquePointGain);
-            GameEvent.OnCityJobGainTechniquePoint?.Invoke(BelongCity, jobId, Builders.objects.ToArray(), overrideData);
+            GameEvent.OnCityJobGainTechniquePoint?.Invoke(BelongCity, jobId, Workers.objects.ToArray(), overrideData);
             techniquePointGain = overrideData.Value;
 
             BelongForce.GainTechniquePoint(techniquePointGain);
 
-            Builders = null;
+            Workers = null;
+        }
+
+        public void OnWorkingComplate()
+        {
+            Workers = null;
         }
 
         public void OnUpgradeComplate()
@@ -211,9 +229,9 @@ namespace Sango.Game
 #if SANGO_DEBUG
             StringBuilder stringBuilder = new StringBuilder();
 #endif
-            for (int i = 0; i < Builders.Count; i++)
+            for (int i = 0; i < Workers.Count; i++)
             {
-                Person person = Builders[i];
+                Person person = Workers[i];
                 person.merit += meritGain;
                 person.GainExp(meritGain);
 #if SANGO_DEBUG
@@ -226,12 +244,12 @@ namespace Sango.Game
             Sango.Log.Print($"[{BelongCity.Name}]{stringBuilder}完成{Name}升级!!");
 #endif
             Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(techniquePointGain);
-            GameEvent.OnCityJobGainTechniquePoint?.Invoke(BelongCity, jobId, Builders.objects.ToArray(), overrideData);
+            GameEvent.OnCityJobGainTechniquePoint?.Invoke(BelongCity, jobId, Workers.objects.ToArray(), overrideData);
             techniquePointGain = overrideData.Value;
 
             BelongForce.GainTechniquePoint(techniquePointGain);
 
-            Builders = null;
+            Workers = null;
         }
 
         public void ChangeCity(City dest)
@@ -288,14 +306,24 @@ namespace Sango.Game
 
             Scenario.Cur.buildingSet.Remove(this);
 
-            if (Builders != null)
+            if (Workers != null)
             {
-                for (int i = 0; i < Builders.Count; i++)
+                for (int i = 0; i < Workers.Count; i++)
                 {
-                    Person person = Builders[i];
+                    Person person = Workers[i];
                     person.ClearMission();
                 }
-                Builders = null;
+                Workers = null;
+            }
+
+            if (Workers != null)
+            {
+                for (int i = 0; i < Workers.Count; i++)
+                {
+                    Person person = Workers[i];
+                    person.ClearMission();
+                }
+                Workers = null;
             }
             if (effectCells != null)
                 effectCells.Clear();

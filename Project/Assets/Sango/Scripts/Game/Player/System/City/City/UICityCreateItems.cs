@@ -13,7 +13,7 @@ namespace Sango.Game.Render.UI
 
         public Text infoLabel;
         public Text itemTypeDescLabel;
-       
+
         CityCreateItems createItemsSys;
 
         public override void OnInit()
@@ -58,7 +58,7 @@ namespace Sango.Game.Render.UI
                 int totalNum = createItemsSys.TargetCity.itemStore.GetNumber(itemType.Id);
                 UIBuildingTypeItem cityBuildingSlot = buildingTypeItemPool[i];
                 cityBuildingSlot.SetItemType(itemType).SetIndex(i).SetSelected(itemType == createItemsSys.CurSelectedItemType).SetNum(totalNum);
-                cityBuildingSlot.SetValid(createItemsSys.TotalBuildingCount > 0);
+                cityBuildingSlot.SetValid(createItemsSys.TargetBuilding != null);
                 buildingTypeItemPool[i].gameObject.SetActive(true);
             }
 
@@ -114,6 +114,7 @@ namespace Sango.Game.Render.UI
 
         public void OnPersonChange(List<Person> personList)
         {
+            createItemsSys.personList = personList;
             createItemsSys.UpdateJobValue();
 
             ItemType curItemType = createItemsSys.CurSelectedItemType;

@@ -30,7 +30,7 @@ namespace Sango.Game.Player
         {
             get
             {
-                return TargetBuilding.BelongCity.freePersons.Count > 0;
+                return TargetBuilding.BelongCity.freePersons.Count > 0 && !TargetBuilding.isWorking;
             }
         }
         protected override void OnBuildingContextMenuShow(ContextMenuData menuData, BuildingBase building)

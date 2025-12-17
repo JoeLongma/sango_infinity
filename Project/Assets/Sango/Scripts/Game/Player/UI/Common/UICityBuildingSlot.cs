@@ -47,12 +47,12 @@ namespace Sango.Game.Render.UI
                 if (!building.isComplte)
                 {
                     personNode.gameObject.SetActive(true);
-                    leftLabel.text = $"剩:{building.BuidlLefCounter}回";
+                    leftLabel.text = $"剩:{building.LeftCounter}回";
                     for (int i = 0; i < uIPersonItems.Length; i++)
                     {
                         UIPersonItem uIPersonItem = uIPersonItems[i];
-                        if (i < building.Builders.Count)
-                            uIPersonItem.SetPerson(building.Builders[i]);
+                        if (i < building.Workers.Count)
+                            uIPersonItem.SetPerson(building.Workers[i]);
                         else
                             uIPersonItem.SetPerson(null);
                     }
@@ -63,12 +63,12 @@ namespace Sango.Game.Render.UI
                 else if (building.isUpgrading)
                 {
                     personNode.gameObject.SetActive(true);
-                    leftLabel.text = $"剩:{building.BuidlLefCounter}回";
+                    leftLabel.text = $"剩:{building.LeftCounter}回";
                     for (int i = 0; i < uIPersonItems.Length; i++)
                     {
                         UIPersonItem uIPersonItem = uIPersonItems[i];
-                        if (i < building.Builders.Count)
-                            uIPersonItem.SetPerson(building.Builders[i]);
+                        if (i < building.Workers.Count)
+                            uIPersonItem.SetPerson(building.Workers[i]);
                         else
                             uIPersonItem.SetPerson(null);
                     }

@@ -23,8 +23,9 @@ namespace Sango.Game.Player
         {
             get
             {
-                return TargetCity.security < 100 &&
-                    TargetCity.CheckJobCost(CityJobType.Inspection) ;
+                return TargetCity.FreePersonCount > 0 && 
+                    TargetCity.security < 100 &&
+                    TargetCity.CheckJobCost(CityJobType.TradeFood) ;
             }
         }
 

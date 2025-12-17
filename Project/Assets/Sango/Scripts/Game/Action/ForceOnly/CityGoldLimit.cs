@@ -1,14 +1,14 @@
 ﻿using Sango.Game.Tools;
 using Newtonsoft.Json.Linq;
 
-namespace Sango.Game
+namespace Sango.Game.Action
 {
     /// <summary>
     /// 某类型城池的最大资金增加
     /// value: 值, 
     /// kinds: 建筑类型
     /// </summary>
-    public class CityGoldLimitAction : ForceBuildingActionBase
+    public class CityGoldLimit : ForceBuildingActionBase
     {
         public override void Init(JObject p, params SangoObject[] sangoObjects)
         {

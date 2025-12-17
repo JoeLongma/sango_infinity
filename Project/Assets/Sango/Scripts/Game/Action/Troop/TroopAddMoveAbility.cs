@@ -1,13 +1,13 @@
 ﻿using Sango.Game.Tools;
 using Newtonsoft.Json.Linq;
 
-namespace Sango.Game
+namespace Sango.Game.Action
 {
     /// <summary>
     /// 某兵种攻击力增加
     /// value: 增加值  kinds:兵种kind   checkLand 0:只检查kinds 1:只对landType检查kinds 2只对waterType检查kinds
     /// </summary>
-    public class TroopAddMoveAbilityAction : TroopActionBase
+    public class TroopAddMoveAbility : TroopActionBase
     {
         int checkLand;
 

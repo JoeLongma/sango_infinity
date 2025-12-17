@@ -30,21 +30,21 @@ namespace Sango.Game.Player
             }
             CurSelectedItemTypeIndex = 0;
             CurSelectedItemType = ItemTypes[CurSelectedItemTypeIndex];
-            TotalBuildingCount = TargetCity.GetBuildingComplateNumber((int)BuildingKindType.MechineFactory);
+            TargetBuilding = TargetCity.GetFreeBuilding((int)BuildingKindType.MechineFactory);
         }
 
         public override bool IsValid
         {
             get
             {
-                return TargetCity.itemStore.TotalNumber < TargetCity.StoreLimit && TargetCity.CheckJobCost(CityJobType.CreateMachine)
-                    && TargetCity.GetBuildingComplateNumber((int)BuildingKindType.MechineFactory) > 0;
+                return TargetCity.freePersons.Count > 0 && TargetCity.itemStore.TotalNumber < TargetCity.StoreLimit && TargetCity.CheckJobCost(CityJobType.CreateMachine)
+                    && TargetCity.GetFreeBuilding((int)BuildingKindType.MechineFactory) != null;
             }
         }
 
         public override int CalculateWonderNumber()
         {
-            TurnAndDestNumber = TargetCity.JobCreateMachine(personList.ToArray(), CurSelectedItemType, TotalBuildingCount, true);
+            TurnAndDestNumber = TargetCity.JobCreateMachine(personList.ToArray(), CurSelectedItemType, TargetBuilding, true);
             return TurnAndDestNumber[1];
         }
 
@@ -52,7 +52,7 @@ namespace Sango.Game.Player
         {
             if (personList.Count > 0)
             {
-                TargetCity.JobCreateMachine(personList.ToArray(), CurSelectedItemType, TotalBuildingCount);
+                TargetCity.JobCreateMachine(personList.ToArray(), CurSelectedItemType, TargetBuilding);
                 Done();
             }
         }

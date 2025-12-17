@@ -10,6 +10,8 @@ namespace Sango.Game
         public static OverrideData<int> IntOverrideData = new OverrideData<int>(0);
         public static OverrideData<float> FloatOverrideData = new OverrideData<float>(0);
         public static System.Random RandomDigit = new System.Random();
+        static int[] v_factor = new int[] { 0, 100, 120, 150 };
+
         public static int Random(int maxValue)
         {
             if (maxValue <= 0)
@@ -177,23 +179,22 @@ namespace Sango.Game
             return Math.Max(1, (int)(Math.Pow(v, 0.5)) - 5);
         }
 
-        // 这里传入的v是放大了10倍的
         public static int Method_RecuritTroops(int v, int buildingTotalLevel)
         {
-            int percent = 0;
-            for (int i = 1; i <= buildingTotalLevel; ++i)
-                percent += (int)(Math.Pow(100, 0.5f / i) * 60);
-
-            return ((int)(v * 8.567f / 10f - 1) + 1500) * percent / 1000;
+            /*
+                以Lv.1设施为准，LV.2设施为1.2倍，Lv.3设施为1.5倍）
+                计算基准值v＝1000＋6(xa＋xb＋xc)
+                最终值V＝β{T×α(v)×[(100－Z)×0.05]}（治安每下降1点，征兵数量少0.5%）
+                其中：有特技“名声”则T为1.5，否则为1
+                例：治安为100，三个魅力为94、92、92的武将，在Lv.3兵舍征兵一次的数量为：1000＋6×(94＋92＋92)＝4002
+             */
+            return (1000 + 6 * v) * v_factor[buildingTotalLevel] / 100;
         }
 
         /// 训练值计算公式
-        public static int Method_TrainTroops(int v, int buildingTotalLevel)
+        public static int Method_TrainTroops(int v, int subV)
         {
-            int percent = 0;
-            for (int i = 1; i <= buildingTotalLevel; ++i)
-                percent += (int)(Math.Pow(v, 0.5f / i));
-            return Math.Max(1, percent - 3);
+            return Math.Max(1, (int)(Math.Pow(v, 0.5f) + Math.Pow(subV, 0.5f)));
         }
 
         // 交易比列计算公式
@@ -205,7 +206,6 @@ namespace Sango.Game
         }
 
 
-        static int[] v_factor = new int[] { 0, 100, 120, 150 };
 
         // 这里传入的v是放大了10倍的
         public static int Method_CreateItems(int v, int buildingTotalLevel)

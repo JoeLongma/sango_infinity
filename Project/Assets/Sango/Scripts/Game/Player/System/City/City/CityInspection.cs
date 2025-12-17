@@ -23,9 +23,10 @@ namespace Sango.Game.Player
         {
             get
             {
-                return TargetCity.security < 100 &&
-                    TargetCity.CheckJobCost(CityJobType.Inspection) 
-                    //&&TargetCity.GetBuildingComplateNumber((int)BuildingKindType.PatrolBureau) > 0
+                return TargetCity.freePersons.Count > 0 && 
+                    TargetCity.security < 100 &&
+                    TargetCity.CheckJobCost(CityJobType.Inspection) && 
+                    TargetCity.GetJobCounter((int)CityJobType.Inspection) == 0
                     ;
             }
         }

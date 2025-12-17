@@ -1,12 +1,12 @@
 ﻿using Sango.Game.Tools;
 using Newtonsoft.Json.Linq;
 
-namespace Sango.Game
+namespace Sango.Game.Action
 {
     /// <summary>
     /// 势力忠诚减少概率  value:修改值(百分比)
     /// </summary>
-    public class ForcePersonLoyaltyChangeAction : ForceActionBase
+    public class ForcePersonLoyaltyChange : ForceActionBase
     {
         protected int value;
 

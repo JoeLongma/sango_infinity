@@ -9,7 +9,7 @@ namespace Sango.Game.Render.UI
         public static TroopInteractiveDialogData InteractiveDialogData = new TroopInteractiveDialogData();
 
         public string content;
-        public Action sureAction;
+        public System.Action sureAction;
 
         public void Clear()
         {

@@ -1,7 +1,7 @@
 ﻿using Sango.Game.Tools;
 using Newtonsoft.Json.Linq;
 
-namespace Sango.Game
+namespace Sango.Game.Action
 {
     /// <summary>
     /// 某兵种类型战法的增减伤害  p1:0攻击方 1受击方 p2:兵种类型(0全兵种全地形 -1陆地 -2水上) p3:增加值(百分比) p4: 是否一般攻击 -1都可以 p5: 是否是远程 -1都可以 p6:其他条件(troop,troop,skill)

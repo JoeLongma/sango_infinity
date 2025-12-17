@@ -2,13 +2,13 @@
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
-namespace Sango.Game
+namespace Sango.Game.Action
 {
     /// <summary>
     /// 某类型城池的最大耐久增加
     /// value: 值, kinds: 建筑类型
     /// </summary>
-    public class CityDurabilityLimitAction : ForceBuildingActionBase
+    public class CityDurabilityLimit : ForceBuildingActionBase
     {
         public override void Init(JObject p, params SangoObject[] sangoObjects)
         {

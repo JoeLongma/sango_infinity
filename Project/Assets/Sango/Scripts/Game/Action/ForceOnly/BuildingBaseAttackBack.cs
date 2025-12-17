@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
-namespace Sango.Game
+namespace Sango.Game.Action
 {
     /// <summary>
     /// 建筑的反击力修改,

@@ -1,13 +1,13 @@
 ﻿using Newtonsoft.Json.Linq;
 using Sango.Game.Tools;
 
-namespace Sango.Game
+namespace Sango.Game.Action
 {
     /// <summary>
     /// 增加势力城池的士气上限 
     /// value: 值  kinds: 城市类型
     /// </summary>
-    public class ForceCityMaxMoraleAction : ForceBuildingActionBase
+    public class ForceCityMaxMorale : ForceBuildingActionBase
     {
         public override void Init(JObject p, params SangoObject[] sangoObjects)
         {

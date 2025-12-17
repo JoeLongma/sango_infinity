@@ -344,7 +344,7 @@ namespace Sango.Game
         }
 
 
-        public bool UpdateRender(Troop troop, Cell spellCell, Scenario scenario, float time, Action action)
+        public bool UpdateRender(Troop troop, Cell spellCell, Scenario scenario, float time, System.Action action)
         {
             if (time <= 0f)
             {

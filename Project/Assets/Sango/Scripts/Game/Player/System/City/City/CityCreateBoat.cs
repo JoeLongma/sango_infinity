@@ -30,21 +30,23 @@ namespace Sango.Game.Player
             }
             CurSelectedItemTypeIndex = 0;
             CurSelectedItemType = ItemTypes[CurSelectedItemTypeIndex];
-            TotalBuildingCount = TargetCity.GetBuildingComplateNumber((int)BuildingKindType.BoatFactory);
+            TargetBuilding = TargetCity.GetFreeBuilding((int)BuildingKindType.BoatFactory);
         }
 
         public override bool IsValid
         {
             get
             {
-                return TargetCity.itemStore.TotalNumber < TargetCity.StoreLimit && TargetCity.CheckJobCost(CityJobType.CreateItems)
-                    && TargetCity.GetBuildingComplateNumber((int)BuildingKindType.BoatFactory) > 0;
+                return TargetCity.FreePersonCount > 0 && 
+                    TargetCity.itemStore.TotalNumber < TargetCity.StoreLimit && 
+                    TargetCity.CheckJobCost(CityJobType.CreateItems)
+                    && TargetCity.GetFreeBuilding((int)BuildingKindType.BoatFactory) != null;
             }
         }
 
         public override int CalculateWonderNumber()
         {
-            TurnAndDestNumber = TargetCity.JobCreateBoat(personList.ToArray(), CurSelectedItemType, TotalBuildingCount, true);
+            TurnAndDestNumber = TargetCity.JobCreateBoat(personList.ToArray(), CurSelectedItemType, TargetBuilding, true);
             return TurnAndDestNumber[1];
         }
 
@@ -52,7 +54,7 @@ namespace Sango.Game.Player
         {
             if (personList.Count > 0)
             {
-                TargetCity.JobCreateBoat(personList.ToArray(), CurSelectedItemType, TotalBuildingCount);
+                TargetCity.JobCreateBoat(personList.ToArray(), CurSelectedItemType, TargetBuilding);
                 Done();
             }
         }

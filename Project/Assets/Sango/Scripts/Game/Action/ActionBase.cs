@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
-namespace Sango.Game
+namespace Sango.Game.Action
 {
     public abstract class ActionBase
     {
@@ -31,29 +31,32 @@ namespace Sango.Game
         public static void Init()
         {
             Register("BuildingBaseAttackBack", CraeteHandle<BuildingBaseAttackBack>);
-            Register("CityDurabilityLimitAction", CraeteHandle<CityDurabilityLimitAction>);
-            Register("CityFoodLimitAction", CraeteHandle<CityFoodLimitAction>);
-            Register("CityGoldLimitAction", CraeteHandle<CityGoldLimitAction>);
-            Register("CitySecurityChangeAction", CraeteHandle<CitySecurityChangeAction>);
-            Register("CityStoreLimitAction", CraeteHandle<CityStoreLimitAction>);
-            Register("CityTroopsLimitAction", CraeteHandle<CityTroopsLimitAction>);
-            Register("ForceCityMaxMoraleAction", CraeteHandle<ForceCityMaxMoraleAction>);
-            Register("ForcePersonLoyaltyChangeAction", CraeteHandle<ForcePersonLoyaltyChangeAction>);
-            Register("ForceTroopMaxTroopAction", CraeteHandle<ForceTroopMaxTroopAction>);
-            Register("TroopAddAttackAction", CraeteHandle<TroopAddAttackAction>);
-            Register("TroopAddDamageBuildingExtraFactorAction", CraeteHandle<TroopAddDamageBuildingExtraFactorAction>);
-            Register("TroopAddDamageTroopExtraFactorAction", CraeteHandle<TroopAddDamageTroopExtraFactorAction>);
-            Register("TroopAddDefenceAction", CraeteHandle<TroopAddDefenceAction>);
-            Register("TroopAddMoveAbilityAction", CraeteHandle<TroopAddMoveAbilityAction>);
-            Register("TroopAddSkillAction", CraeteHandle<TroopAddSkillAction>);
-            Register("TroopReplaceSkillAction", CraeteHandle<TroopReplaceSkillAction>);
-            Register("TroopSkillCalculateCriticalAction", CraeteHandle<TroopSkillCalculateCriticalAction>);
-            Register("TroopSkillCalculateSuccessAction", CraeteHandle<TroopSkillCalculateSuccessAction>);
-            Register("TroopSkillCalculateAttackBackAction", CraeteHandle<TroopSkillCalculateAttackBackAction>);
-            Register("TroopChangeTroopsAction", CraeteHandle<TroopChangeTroopsAction>);
+            Register("CityDurabilityLimit", CraeteHandle<CityDurabilityLimit>);
+            Register("CityFoodLimit", CraeteHandle<CityFoodLimit>);
+            Register("CityGoldLimit", CraeteHandle<CityGoldLimit>);
+            Register("CitySecurityChange", CraeteHandle<CitySecurityChange>);
+            Register("CityStoreLimit", CraeteHandle<CityStoreLimit>);
+            Register("CityTroopsLimit", CraeteHandle<CityTroopsLimit>);
+            Register("ForceCityMaxMorale", CraeteHandle<ForceCityMaxMorale>);
+            Register("ForcePersonLoyaltyChange", CraeteHandle<ForcePersonLoyaltyChange>);
+            Register("ForceTroopMaxTroop", CraeteHandle<ForceTroopMaxTroop>);
+            Register("TroopAddAttack", CraeteHandle<TroopAddAttack>);
+            Register("TroopAddDamageBuildingExtraFactor", CraeteHandle<TroopAddDamageBuildingExtraFactor>);
+            Register("TroopAddDamageTroopExtraFactor", CraeteHandle<TroopAddDamageTroopExtraFactor>);
+            Register("TroopAddDefence", CraeteHandle<TroopAddDefence>);
+            Register("TroopAddMoveAbility", CraeteHandle<TroopAddMoveAbility>);
+            Register("TroopAddSkill", CraeteHandle<TroopAddSkill>);
+            Register("TroopReplaceSkill", CraeteHandle<TroopReplaceSkill>);
+            Register("TroopSkillCalculateCritical", CraeteHandle<TroopSkillCalculateCritical>);
+            Register("TroopSkillCalculateSuccess", CraeteHandle<TroopSkillCalculateSuccess>);
+            Register("TroopSkillCalculateAttackBack", CraeteHandle<TroopSkillCalculateAttackBack>);
+            Register("TroopChangeTroops", CraeteHandle<TroopChangeTroops>);
             Register("BuildingImproveFoodGain", CraeteHandle<BuildingImproveFoodGain>);
             Register("BuildingImproveGoldGain", CraeteHandle<BuildingImproveGoldGain>);
             Register("BuildingImproveFoodGainByCityTroops", CraeteHandle<BuildingImproveFoodGainByCityTroops>);
+            Register("CityImproveJobResult", CraeteHandle<CityImproveJobResult>);
+            Register("CityImproveJobCounterResult", CraeteHandle<CityImproveJobCounterResult>);
+      
         }
 
     }

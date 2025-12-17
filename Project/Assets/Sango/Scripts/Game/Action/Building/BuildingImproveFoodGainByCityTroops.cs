@@ -3,7 +3,7 @@ using Sango.Game.Tools;
 using System;
 using System.Collections.Generic;
 
-namespace Sango.Game
+namespace Sango.Game.Action
 {
     /// <summary>
     /// 根据所属城市的士兵数量来增加粮食产量

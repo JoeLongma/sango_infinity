@@ -1,13 +1,13 @@
 ﻿using Sango.Game.Tools;
 using Newtonsoft.Json.Linq;
 
-namespace Sango.Game
+namespace Sango.Game.Action
 {
     /// <summary>
     /// 某兵种类型战法的成功率增加	
     ///value:增加值（百分比）  kinds： 兵种类型  checkLand： 0:只检查kinds 1:只对landType检查kinds，2只对waterType检查kinds isNormal：  -1都可以 0非 1是 conditionId： 额外条件 支持参数(troop,troop,skill)
     /// </summary>
-    public class TroopSkillCalculateSuccessAction : TroopTroopActionBase
+    public class TroopSkillCalculateSuccess : TroopTroopActionBase
     {
         public override void Init(JObject p, params SangoObject[] sangoObjects)
         {

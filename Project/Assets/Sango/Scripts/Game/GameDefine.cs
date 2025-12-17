@@ -81,66 +81,65 @@
         /// <summary>
         /// 商业
         /// </summary>
-        Develop,
+        Develop = 2,
 
         /// <summary>
         /// 巡查
         /// </summary>
-        Inspection,
+        Inspection = 3,
 
         /// <summary>
         /// 训练
         /// </summary>
-        TrainTroops,
+        TrainTroops = 4,
 
         /// <summary>
         /// 搜索
         /// </summary>
-        Searching,
+        Searching = 5,
 
         /// <summary>
         /// 招募士兵
         /// </summary>
-        RecuritTroops,
+        RecuritTroops = 6,
 
         /// <summary>
         /// 招募武将
         /// </summary>
-        RecuritPerson,
+        RecuritPerson = 7,
 
         /// <summary>
         /// 生产兵装
         /// </summary>
-        CreateItems,
+        CreateItems = 8,
 
         /// <summary>
         /// 建造
         /// </summary>
-        Build,
+        Build = 9,
 
         /// <summary>
-        /// 生产器具
+        /// 生产兵器
         /// </summary>
-        CreateMachine,
+        CreateMachine = 10,
 
         /// <summary>
         /// 生产船
         /// </summary>
-        CreateBoat,
+        CreateBoat = 11,
 
         /// <summary>
         /// 生产马
         /// </summary>
-        CreateHourse,
+        CreateHourse = 12,
 
         /// <summary>
         /// 交易粮食
         /// </summary>
-        TradeFood,
+        TradeFood = 13,
 
         MaxJobCount
     }
-
 
     public enum InfoType : int
     {
