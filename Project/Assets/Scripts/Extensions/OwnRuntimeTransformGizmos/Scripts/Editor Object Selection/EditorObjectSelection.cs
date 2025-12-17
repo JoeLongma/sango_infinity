@@ -26,6 +26,9 @@ namespace RTEditor
         public delegate void SelectionDeletedHandler(List<GameObject> deletedObjects);
         public event SelectionDeletedHandler SelectionDeleted;
 
+        public delegate bool IsOverUI();
+        public event IsOverUI IsOverUIHandler;
+
         /// <summary>
         /// Event handler which can be used to handle the click of an object.
         /// </summary>
@@ -562,9 +565,12 @@ namespace RTEditor
         /// </summary>
         private bool CanPerformMultiSelect()
         {
+            if (IsOverUIHandler != null && IsOverUIHandler())
+                return false;
+
             return ObjectSelectionSettings.CanMultiSelect &&
                    gameObject.activeSelf && enabled && InputDevice.Instance.IsPressed(0) && !SceneGizmo.Instance.IsHovered() &&
-                   _objectSelectionRectangle.IsVisible && !Sango.Tools.EditorWindow.IsPointOverUI();
+                   _objectSelectionRectangle.IsVisible;
         }
 
         /// <summary>
@@ -1050,7 +1056,8 @@ namespace RTEditor
         /// </summary>
         private bool WereAnyUIElementsHovered()
         {
-            if (Sango.Tools.EditorWindow.IsPointOverUI()) return true;
+            if (IsOverUIHandler != null && IsOverUIHandler())
+                return true;
 
             if (EventSystem.current == null) return false;
 

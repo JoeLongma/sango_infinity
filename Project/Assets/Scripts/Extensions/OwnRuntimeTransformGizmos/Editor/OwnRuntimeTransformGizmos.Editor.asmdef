@@ -1,0 +1,16 @@
+{
+    "name": "OwnRuntimeTransformGizmos.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:487e7a69225af9d4f96c4fd168f104b5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

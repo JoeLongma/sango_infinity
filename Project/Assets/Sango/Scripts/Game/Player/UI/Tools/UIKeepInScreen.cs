@@ -10,6 +10,7 @@ namespace UnityEngine.UI
         public float delayTime = 0;
         float cur_delayTime = 0;
         public Vector2 cachePosition;
+        public bool dontResetCachePosition = true;
         RectTransform cacheTrans;
         RectTransform uiRoot;
         public void Start()
@@ -22,13 +23,17 @@ namespace UnityEngine.UI
                 uiRoot = Sango.Game.Game.Instance.UIRoot;
             }
 
-            LateUpdate();
+            if (!dontResetCachePosition)
+                LateUpdate();
         }
 
         public void OnEnable()
         {
-            if (cacheTrans != null)
-                cacheTrans.anchoredPosition = cachePosition;
+            if (cacheTrans != null )
+            {
+                if(!dontResetCachePosition)
+                    cacheTrans.anchoredPosition = cachePosition;
+            }
 
             Start();
         }

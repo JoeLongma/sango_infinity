@@ -20,8 +20,9 @@ namespace Sango.Game.Player
                 GameController.Instance.DragMoveViewEnabled = false;
                 GameController.Instance.ZoomViewEnabled = false;
                 GameController.Instance.BorderMoveViewEnabled = false;
-
+#if UNITY_ANDROID && !UNITY_EDITOR
                 Window.Instance.Open("window_mobile_cancel");
+#endif
             }
 
             commads.Push(command);
@@ -47,7 +48,9 @@ namespace Sango.Game.Player
                 GameController.Instance.DragMoveViewEnabled = true;
                 GameController.Instance.ZoomViewEnabled = true;
                 GameController.Instance.BorderMoveViewEnabled = true;
+#if UNITY_ANDROID && !UNITY_EDITOR
                 Window.Instance.Close("window_mobile_cancel");
+#endif
             }
         }
 
@@ -61,7 +64,9 @@ namespace Sango.Game.Player
             GameController.Instance.DragMoveViewEnabled = true;
             GameController.Instance.ZoomViewEnabled = true;
             GameController.Instance.BorderMoveViewEnabled = true;
+#if UNITY_ANDROID && !UNITY_EDITOR
             Window.Instance.Close("window_mobile_cancel");
+#endif
         }
 
         public void Update()

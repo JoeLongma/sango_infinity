@@ -1538,7 +1538,7 @@ namespace Sango.Game
             building.LeftCounter = turnCount;
             building.isWorking = true;
 #if SANGO_DEBUG
-            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了舰船生产!开始生产{itemType.Name}, 所需回合:{turnCount}, 建筑总等级:{buildingTotalLevel}");
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了舰船生产!开始生产{itemType.Name}, 所需回合:{turnCount}, 建筑:{building.Name}");
 #endif
             ClearJobFeature();
             return null;
@@ -1610,7 +1610,7 @@ namespace Sango.Game
             BelongForce.GainTechniquePoint(techniquePointGain);
 
 #if SANGO_DEBUG
-            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了船只生产!共生产了{totalValue}{itemType.Name}, 当前数量:{exsistNumber}, 建筑总等级:{buildingTotalLevel}");
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了船只生产!共生产了{totalValue}{itemType.Name}, 当前数量:{exsistNumber}, 建筑:{building.Name}");
 #endif
 
             Render?.ShowInfo(totalValue, itemType.Id + 1);
@@ -1738,7 +1738,7 @@ namespace Sango.Game
             building.isWorking = true;
 
 #if SANGO_DEBUG
-            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了器械生产!开始生产{itemType.Name}, 所需回合:{turnCount}, 建筑总等级:{buildingTotalLevel}");
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了器械生产!开始生产{itemType.Name}, 所需回合:{turnCount}, 建筑:{building.Name}");
 #endif
             Render?.UpdateRender();
             ClearJobFeature();
@@ -1803,7 +1803,7 @@ namespace Sango.Game
             BelongForce.GainTechniquePoint(techniquePointGain);
 
 #if SANGO_DEBUG
-            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了器械生产!共生产了{totalValue}{itemType.Name}, 当前数量:{exsistNumber}, 建筑总等级:{buildingTotalLevel}");
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了器械生产!共生产了{totalValue}{itemType.Name}, 当前数量:{exsistNumber}, 建筑:{building.Name}");
 #endif
 
             Render?.ShowInfo(totalValue, itemType.Id + 1);
@@ -2574,7 +2574,7 @@ namespace Sango.Game
                 Render?.ShowInfo(totalValue, itemType.Id);
 
 #if SANGO_DEBUG
-            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了生产兵装!共生产了{totalValue}{itemType.Name}, 当前数量:{exsistNumber}, 建筑总等级:{buildingTotalLevel}");
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}对<{Name}>进行了生产兵装!共生产了{totalValue}{itemType.Name}, 当前数量:{exsistNumber}, 建筑:{building.Name}");
 #endif
             ClearJobFeature();
             return totalValue;
