@@ -12,6 +12,16 @@ namespace Sango.Game.Player
     {
         public ShortScenario[] all_saved_scenario_list = new ShortScenario[50];
 
+        /// <summary>
+        /// 玩家系统集合
+        /// </summary>
+        Dictionary<string, CommandSystemBase> playerSystemMap = new Dictionary<string, CommandSystemBase>();
+
+        public void RegisterSystem(string name, CommandSystemBase system)
+        {
+            playerSystemMap[name] = system;
+        }
+
         public void Init()
         {
             //都市

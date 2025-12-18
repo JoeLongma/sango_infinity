@@ -138,6 +138,36 @@
         /// </summary>
         TradeFood = 13,
 
+        /// <summary>
+        /// 派遣武将
+        /// </summary>
+        TransformPerson = 14,
+
+        /// <summary>
+        /// 召唤武将
+        /// </summary>
+        CallPerson = 15,
+
+        /// <summary>
+        /// 升级建筑
+        /// </summary>
+        UpgradeBuilding = 16,
+
+        /// <summary>
+        /// 组建部队
+        /// </summary>
+        MakeTroop = 17,
+
+        /// <summary>
+        /// 组建运输部队
+        /// </summary>
+        MakeTansport = 18,
+
+        /// <summary>
+        /// 研究
+        /// </summary>
+        Research = 19,
+
         MaxJobCount
     }
 
