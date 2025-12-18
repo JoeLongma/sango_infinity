@@ -60,7 +60,8 @@ namespace Sango.Game.Player
         {
             get
             {
-                return TargetCity.troops > 0 && TargetCity.food > 0 && TargetCity.freePersons.Count > 0;
+                return TargetCity.troops > 0 && TargetCity.food > 0 && TargetCity.freePersons.Count > 0 &&
+                    TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.MakeTansport);
             }
         }
         public void UpdateJobValue()

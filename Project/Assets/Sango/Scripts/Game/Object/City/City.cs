@@ -1243,7 +1243,7 @@ namespace Sango.Game
             Scenario scenario = Scenario.Cur;
             ScenarioVariables variables = scenario.Variables;
             int jobId = (int)cityJobType;
-            int goldNeed = variables.jobCost[jobId];
+            int goldNeed = JobType.GetJobCost(jobId);
 
             Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
             GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, null, overrideData);
@@ -1256,7 +1256,7 @@ namespace Sango.Game
             Scenario scenario = Scenario.Cur;
             ScenarioVariables variables = scenario.Variables;
             int jobId = (int)cityJobType;
-            int goldNeed = variables.jobCost[jobId];
+            int goldNeed = JobType.GetJobCost(jobId);
 
             Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
             GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, null, overrideData);
@@ -1449,7 +1449,7 @@ namespace Sango.Game
             ScenarioVariables variables = scenario.Variables;
             int jobId = (int)CityJobType.CreateBoat;
 
-            int goldNeed = variables.jobCost[jobId] + itemType.cost;
+            int goldNeed = JobType.GetJobCost(jobId) + itemType.cost;
 
             Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
             GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
@@ -1566,8 +1566,8 @@ namespace Sango.Game
             Scenario scenario = Scenario.Cur;
             ScenarioVariables variables = scenario.Variables;
             int jobId = (int)CityJobType.CreateBoat;
-            int meritGain = variables.jobMaxPersonCount[jobId];
-            int techniquePointGain = variables.jobTechniquePoint[jobId];
+            int meritGain = JobType.GetJobMeritGain(jobId);
+            int techniquePointGain = JobType.GetJobTPGain(jobId);
 
             Building building = scenario.GetObject<Building>(buildingId);
 
@@ -1643,7 +1643,7 @@ namespace Sango.Game
             ScenarioVariables variables = scenario.Variables;
             int jobId = (int)CityJobType.CreateMachine;
 
-            int goldNeed = variables.jobCost[jobId] + itemType.cost;
+            int goldNeed = JobType.GetJobCost(jobId) + itemType.cost;
 
             Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
             GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
@@ -1761,8 +1761,8 @@ namespace Sango.Game
             Scenario scenario = Scenario.Cur;
             ScenarioVariables variables = scenario.Variables;
             int jobId = (int)CityJobType.CreateMachine;
-            int meritGain = variables.jobMaxPersonCount[jobId];
-            int techniquePointGain = variables.jobTechniquePoint[jobId];
+            int meritGain = JobType.GetJobMeritGain(jobId);
+            int techniquePointGain = JobType.GetJobTPGain(jobId);
             Building building = scenario.GetObject<Building>(buildingId);
 #if SANGO_DEBUG
             StringBuilder stringBuilder = new StringBuilder();
@@ -1826,7 +1826,7 @@ namespace Sango.Game
 
             InitJobFeature(personList);
 
-            int goldNeed = variables.jobCost[jobId];
+            int goldNeed = JobType.GetJobCost(jobId);
 
             Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
             GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
@@ -1859,8 +1859,8 @@ namespace Sango.Game
                 return totalValue;
             }
 
-            int meritGain = variables.jobMaxPersonCount[jobId];
-            int techniquePointGain = variables.jobTechniquePoint[jobId];
+            int meritGain = JobType.GetJobMeritGain(jobId);
+            int techniquePointGain = JobType.GetJobTPGain(jobId);
 
 #if SANGO_DEBUG
             StringBuilder stringBuilder = new StringBuilder();
@@ -1914,7 +1914,7 @@ namespace Sango.Game
             int jobId = (int)CityJobType.Develop;
 
             InitJobFeature(personList);
-            int goldNeed = variables.jobCost[jobId];
+            int goldNeed = JobType.GetJobCost(jobId);
 
             Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
             GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
@@ -1947,8 +1947,8 @@ namespace Sango.Game
                 return totalValue;
             }
 
-            int meritGain = variables.jobMaxPersonCount[jobId];
-            int techniquePointGain = variables.jobTechniquePoint[jobId];
+            int meritGain = JobType.GetJobMeritGain(jobId);
+            int techniquePointGain = JobType.GetJobTPGain(jobId);
 
 #if SANGO_DEBUG
             StringBuilder stringBuilder = new StringBuilder();
@@ -2007,7 +2007,7 @@ namespace Sango.Game
             ScenarioVariables variables = scenario.Variables;
             int jobId = (int)CityJobType.Inspection;
 
-            int goldNeed = variables.jobCost[jobId];
+            int goldNeed = JobType.GetJobCost(jobId);
 
             Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
             GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
@@ -2043,8 +2043,8 @@ namespace Sango.Game
                 return totalValue;
             }
 
-            int meritGain = variables.jobMaxPersonCount[jobId];
-            int techniquePointGain = variables.jobTechniquePoint[jobId];
+            int meritGain = JobType.GetJobMeritGain(jobId);
+            int techniquePointGain = JobType.GetJobTPGain(jobId);
 
 #if SANGO_DEBUG
             StringBuilder stringBuilder = new StringBuilder();
@@ -2100,7 +2100,7 @@ namespace Sango.Game
             ScenarioVariables variables = scenario.Variables;
             int jobId = (int)CityJobType.TrainTroops;
 
-            int goldNeed = variables.jobCost[jobId];
+            int goldNeed = JobType.GetJobCost(jobId);
 
             Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
             GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
@@ -2155,8 +2155,8 @@ namespace Sango.Game
                 return totalValue;
             }
 
-            int meritGain = variables.jobMaxPersonCount[jobId];
-            int techniquePointGain = variables.jobTechniquePoint[jobId];
+            int meritGain = JobType.GetJobMeritGain(jobId);
+            int techniquePointGain = JobType.GetJobTPGain(jobId);
 
 #if SANGO_DEBUG
             StringBuilder stringBuilder = new StringBuilder();
@@ -2211,7 +2211,7 @@ namespace Sango.Game
             ScenarioVariables variables = scenario.Variables;
             int jobId = (int)CityJobType.Searching;
             InitJobFeature(personList);
-            int goldNeed = variables.jobCost[jobId];
+            int goldNeed = JobType.GetJobCost(jobId);
 
             Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
             GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
@@ -2224,8 +2224,8 @@ namespace Sango.Game
             }
 
 
-            int meritGain = variables.jobMaxPersonCount[jobId];
-            int techniquePointGain = variables.jobTechniquePoint[jobId];
+            int meritGain = JobType.GetJobMeritGain(jobId);
+            int techniquePointGain = JobType.GetJobTPGain(jobId);
 
             for (int i = 0; i < personList.Length; i++)
             {
@@ -2350,7 +2350,7 @@ namespace Sango.Game
             ScenarioVariables variables = scenario.Variables;
             int jobId = (int)CityJobType.RecuritTroops;
 
-            int goldNeed = variables.jobCost[jobId];
+            int goldNeed = JobType.GetJobCost(jobId);
 
             Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
             GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
@@ -2362,8 +2362,8 @@ namespace Sango.Game
                 return 0;
             }
 
-            int meritGain = variables.jobMaxPersonCount[jobId];
-            int techniquePointGain = variables.jobTechniquePoint[jobId];
+            int meritGain = JobType.GetJobMeritGain(jobId);
+            int techniquePointGain = JobType.GetJobTPGain(jobId);
 
             sJobActions.Clear();
             int totalValue = 0;
@@ -2479,7 +2479,7 @@ namespace Sango.Game
             ScenarioVariables variables = scenario.Variables;
             int jobId = itemType.Id == 5 ? (int)CityJobType.CreateHourse : (int)CityJobType.CreateItems;
 
-            int goldNeed = variables.jobCost[jobId] + itemType.cost;
+            int goldNeed = JobType.GetJobCost(jobId) + itemType.cost;
 
             Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
             GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
@@ -2533,8 +2533,8 @@ namespace Sango.Game
                 return totalValue;
             }
 
-            int meritGain = variables.jobMaxPersonCount[jobId];
-            int techniquePointGain = variables.jobTechniquePoint[jobId];
+            int meritGain = JobType.GetJobLimit(jobId);
+            int techniquePointGain = JobType.GetJobTPGain(jobId);
 
 #if SANGO_DEBUG
             StringBuilder stringBuilder = new StringBuilder();
@@ -2596,8 +2596,8 @@ namespace Sango.Game
             ScenarioVariables variables = scenario.Variables;
             int jobId = (int)CityJobType.TradeFood;
 
-            int meritGain = variables.jobMaxPersonCount[jobId];
-            int techniquePointGain = variables.jobTechniquePoint[jobId];
+            int meritGain = JobType.GetJobLimit(jobId);
+            int techniquePointGain = JobType.GetJobTPGain(jobId);
 
             Person person = personList[0];
             if (person == null) return false;

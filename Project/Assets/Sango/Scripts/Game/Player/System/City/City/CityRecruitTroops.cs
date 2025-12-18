@@ -25,7 +25,8 @@ namespace Sango.Game.Player
             {
                 return TargetCity.FreePersonCount > 0 && 
                     TargetCity.GetFreeBuilding((int)BuildingKindType.Barracks) != null &&
-                    TargetCity.CheckJobCost(CityJobType.RecuritTroops);
+                    TargetCity.CheckJobCost(CityJobType.RecuritTroops) &&
+                    TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.RecuritTroops);
             }
         }
 

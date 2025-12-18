@@ -139,6 +139,7 @@ namespace Sango.Game.Render.UI
             GameEvent.OnCityFall += OnCityFall;
             GameEvent.OnSeasonUpdate += OnSeasonUpdate;
             GameEvent.OnForceGainTechniquePoint += OnForceGainTechniquePoint;
+            GameEvent.OnCorpsActionPointChange += OnCorpsActionPointChange;
 
             loopScrollRect.prefabSource = this;
             loopScrollRect.dataSource = this;
@@ -152,6 +153,16 @@ namespace Sango.Game.Render.UI
             OnForceStart(Scenario.Cur.CurRunForce, Scenario.Cur);
             OnDayUpdate(Scenario.Cur);
             OnSeasonUpdate(Scenario.Cur);
+
+            for (int i = 0; i < Scenario.Cur.corpsSet.Count; ++i)
+            {
+                var c = Scenario.Cur.corpsSet[i];
+                if (c != null && c.IsAlive && c.BelongForce == Scenario.Cur.CurRunForce)
+                {
+                    OnCorpsActionPointChange(c);
+                    break;
+                }
+            }
         }
 
         void OnDestroy()
@@ -163,6 +174,9 @@ namespace Sango.Game.Render.UI
             GameEvent.OnCityFall -= OnCityFall;
             GameEvent.OnSeasonUpdate -= OnSeasonUpdate;
             GameEvent.OnForceGainTechniquePoint -= OnForceGainTechniquePoint;
+            GameEvent.OnCorpsActionPointChange -= OnCorpsActionPointChange;
+
+
         }
 
         public void OnCityFall(City city, Troop atker)
@@ -193,11 +207,16 @@ namespace Sango.Game.Render.UI
 
             if (force.IsPlayer)
             {
-
                 uIPlayerInfoPanel.UpdateShowType();
                 Singleton<PlayerTurnStartGreeting>.Instance.Push();
-            }
 
+               
+            }
+        }
+
+        public void OnCorpsActionPointChange(Corps corps)
+        {
+            actionNumberLabel.text = corps.ActionPoint.ToString();
         }
 
         public void OnForceGainTechniquePoint(Force force, int value)

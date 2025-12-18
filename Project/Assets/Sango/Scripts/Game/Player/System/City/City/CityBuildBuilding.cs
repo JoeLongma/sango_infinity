@@ -44,7 +44,10 @@ namespace Sango.Game.Player
             {
                 InitCanBuildingTypes();
 
-                return TargetCity.freePersons.Count > 0 && TargetCity.gold > 200 && !TargetCity.IsInteriorBuildFull();
+                return TargetCity.freePersons.Count > 0 
+                    && TargetCity.gold > 200 
+                    && !TargetCity.IsInteriorBuildFull() 
+                    && TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.Build);
             }
         }
 

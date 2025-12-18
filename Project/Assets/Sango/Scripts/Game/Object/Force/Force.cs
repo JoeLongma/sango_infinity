@@ -102,7 +102,6 @@ namespace Sango.Game
 
         public Corps CurRunCorps { get; set; }
 
-
         public override void Init(Scenario scenario)
         {
 

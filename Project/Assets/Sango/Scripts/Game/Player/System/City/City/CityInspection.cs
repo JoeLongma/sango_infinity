@@ -26,8 +26,8 @@ namespace Sango.Game.Player
                 return TargetCity.freePersons.Count > 0 && 
                     TargetCity.security < 100 &&
                     TargetCity.CheckJobCost(CityJobType.Inspection) && 
-                    TargetCity.GetJobCounter((int)CityJobType.Inspection) == 0
-                    ;
+                    TargetCity.GetJobCounter((int)CityJobType.Inspection) == 0 
+                    && TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.Inspection);
             }
         }
 

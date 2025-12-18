@@ -25,7 +25,9 @@ namespace Sango.Game.Player
             {
                 return TargetCity.FreePersonCount > 0 && 
                     TargetCity.security < 100 &&
-                    TargetCity.CheckJobCost(CityJobType.TradeFood) ;
+                    TargetCity.CheckJobCost(CityJobType.TradeFood) &&
+                    TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.TradeFood);
+
             }
         }
 

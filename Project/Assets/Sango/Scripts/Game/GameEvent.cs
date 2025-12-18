@@ -346,11 +346,15 @@ namespace Sango.Game
         /// </summary>
         public static EventDelegate<Troop, Skill, Cell, OverrideData<int>> OnTroopCalculateSkillCriticalFactor;
 
-
         /// <summary>
         /// 当部队兵力变化时
         /// </summary>
         public static EventDelegate<Troop, SangoObject, Skill, int, OverrideData<int>> OnTroopChangeTroops;
+
+        /// <summary>
+        /// 当部队兵力变化时
+        /// </summary>
+        public static EventDelegate<Corps> OnCorpsActionPointChange;
 
         #endregion Game
 

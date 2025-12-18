@@ -31,10 +31,18 @@ namespace Sango.Game
         /// 军团任务
         /// </summary>
         [JsonProperty] public int CropsMissionType { get; set; }
+
         /// <summary>
         /// 军团任务目标
         /// </summary>
         [JsonProperty] public int CropsMissionTarget { get; set; }
+
+        /// <summary>
+        /// 行动力点数
+        /// </summary>
+        [JsonProperty] public int ActionPoint { get; set; }
+
+
         public City TargetCity { get; set; }
         public Force TargetForce { get; set; }
 
@@ -54,8 +62,72 @@ namespace Sango.Game
             AIFinished = false;
             AIPrepared = false;
             PrepareCityPersonHole(scenario);
+            AddActionPoint();
             ActionOver = false;
             return true;
+        }
+        public void AddActionPoint()
+        {
+            /*
+                每回合新增行动力=（君主参数+城市参数+武将参数）* 军师参数
+
+                君主参数=40*【0.65+0.025*（能力参数-6）】
+                上式中的“能力参数”为君主“统率”和“魅力”两个属性中数值较高者，然后再除以5所得的数值。这个数值取整，非四舍五入。
+                另外，（能力参数-6）最小取0，不能取负数。
+                比如某君主统率78，魅力99，则这个值首选选取统率和魅力两项中较高的魅力值99，然后除以5，得19.8。然后取整，得19。
+                
+                城市参数=10*（拥有城数的数量-1）
+                也就是说，每多拥有一个城池，这个参数就多10点。
+                不过需要注意的是，只有一个城池的时候，这个数值是0。而拥有6个城池的时候，达到最大值的50上限。
+             
+                武将参数=拥有最多所属武将数的前6个城池、港口、关卡的武将数之和
+                不过，每个据点最多只计算10个，超出不计。
+                比如，你只有一个城，城里有15个武将，那也只按10个计算。
+                还有一点需要注意的是，必须占领所在地的主城才可以计算该参数。仅仅占领了该城附属的港口和关卡是没用的。
+                比如，你没有打下来洛阳，但是打下了虎牢关，那虎牢关中的武将是不计人数的。
+                另外就是武将只计算人头，和他本身的身份、属性等等都没有关系。也就是说，刘备和刘禅，在凑人头方面，没有区别。
+                武将参数上限为60，即60个武将理论上有可能达到最大行动力。
+
+                军师参数
+                根据计算公式也可以看出来，军师参数是一项非常重要的参数，因为前面全是相加，到这里变成了相乘。
+                军师参数=1.2-0.01*（50-智力参数）
+                其中，智力参数=军师智力/2，取整，同样的，不四舍五入。
+                如果没有军师的时候，军师参数取1。
+                可以看到，上式中，军师的智力越高，军师参数的数值就越大。当军师智力达到100时，军师参数有最大值1.2。
+                而军师的智力≤60的时候，军师参数反而小于了没有军师的1，这时候，不要军师就对了，反正一个60智力的军师，说话能靠谱才怪了。
+             */
+
+            int governorAdd = (int)(40 * (0.65f + 0.025f * Math.Max(0, (int)(Math.Max((float)BelongForce.Governor.Command, (float)BelongForce.Governor.Glamour) / 5.0f) - 6)));
+            int personAdd = 0;
+            List<City> cities = new List<City>();
+            BelongForce.ForEachCityBase((c) =>
+            {
+                if (c.BelongCity != null && c.BelongCity.BelongForce != BelongForce)
+                    return;
+
+                if (c.BelongCorps == this)
+                    cities.Add(c);
+            });
+            int cityAdd = Math.Min(50, 10 * (cities.Count - 1));
+
+            cities.Sort((a, b) => -a.allPersons.Count.CompareTo(b.allPersons.Count));
+            for (int i = 0; i < 6; i++)
+            {
+                if (i < cities.Count)
+                    personAdd = personAdd + Math.Min(10, cities[i].allPersons.Count);
+            }
+
+            float counsellorFactor = 1.0f;
+            if (BelongForce.Counsellor != null)
+                counsellorFactor = 1.2f - 0.01f * (50 - BelongForce.Counsellor.Intelligence / 2);
+
+            ActionPoint = Math.Min(Scenario.Cur.Variables.ActionPointLimit, ActionPoint + (int)((governorAdd + personAdd + cityAdd) * counsellorFactor));
+      
+            if(IsPlayer && BelongForce == Scenario.Cur.CurRunForce)
+            {
+                GameEvent.OnCorpsActionPointChange?.Invoke(this);
+            }
+        
         }
 
         /// <summary>

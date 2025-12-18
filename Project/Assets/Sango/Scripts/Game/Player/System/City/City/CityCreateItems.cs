@@ -62,7 +62,9 @@ namespace Sango.Game.Player
             {
                 return TargetCity.FreePersonCount > 0 && TargetCity.itemStore.TotalNumber < TargetCity.StoreLimit &&
                     TargetCity.CheckJobCost(CityJobType.CreateItems)
-                    && TargetCity.GetFreeBuilding((int)BuildingKindType.BlacksmithShop) != null;
+                    && TargetCity.GetFreeBuilding((int)BuildingKindType.BlacksmithShop) != null &&
+                    TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.CreateItems);
+
             }
         }
 

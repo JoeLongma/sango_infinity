@@ -111,7 +111,14 @@ namespace Sango.Game
         [JsonProperty]
         public SangoObjectSet<PersonLevel> PersonLevels = new SangoObjectSet<PersonLevel>();
 
+        /// <summary>
+        /// 工作类型
+        /// </summary>
+        [JsonConverter(typeof(SangoObjectMaptConverter<JobType>))]
+        [JsonProperty]
+        public SangoObjectMap<JobType> JobTypes = new SangoObjectMap<JobType>();
 
+        /// <summary>
         public List<ItemType> ItemTypeList { get; set; }
 
         public void Init()

@@ -749,8 +749,8 @@ namespace Sango.Game
             }
             ScenarioVariables variables = Scenario.Cur.Variables;
             int jobId = (int)CityJobType.RecuritPerson;
-            int meritGain = variables.jobMaxPersonCount[jobId];
-            int techniquePointGain = variables.jobTechniquePoint[jobId];
+            int meritGain = JobType.GetJobLimit(jobId);
+            int techniquePointGain = JobType.GetJobTPGain(jobId);
             merit += meritGain;
             BelongForce?.GainTechniquePoint(techniquePointGain);
             ActionOver = true;

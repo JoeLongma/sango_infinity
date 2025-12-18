@@ -145,8 +145,8 @@ namespace Sango.Game
             Scenario scenario = Scenario.Cur;
             ScenarioVariables variables = scenario.Variables;
             int jobId = (int)CityJobType.Build;
-            int meritGain = variables.jobMaxPersonCount[jobId];
-            int techniquePointGain = variables.jobTechniquePoint[jobId];
+            int meritGain = JobType.GetJobLimit(jobId);
+            int techniquePointGain = JobType.GetJobTPGain(jobId);
 
 #if SANGO_DEBUG
             StringBuilder stringBuilder = new StringBuilder();
@@ -178,8 +178,8 @@ namespace Sango.Game
             Scenario scenario = Scenario.Cur;
             ScenarioVariables variables = scenario.Variables;
             int jobId = (int)CityJobType.Build;
-            int meritGain = variables.jobMaxPersonCount[jobId];
-            int techniquePointGain = variables.jobTechniquePoint[jobId];
+            int meritGain = JobType.GetJobLimit(jobId);
+            int techniquePointGain = JobType.GetJobTPGain(jobId);
 
 #if SANGO_DEBUG
             StringBuilder stringBuilder = new StringBuilder();
@@ -218,8 +218,8 @@ namespace Sango.Game
             Scenario scenario = Scenario.Cur;
             ScenarioVariables variables = scenario.Variables;
             int jobId = (int)CityJobType.Build;
-            int meritGain = variables.jobMaxPersonCount[jobId];
-            int techniquePointGain = variables.jobTechniquePoint[jobId];
+            int meritGain = JobType.GetJobLimit(jobId);
+            int techniquePointGain = JobType.GetJobTPGain(jobId);
 
             BuildingType nextBuildingType = scenario.GetObject<BuildingType>(BuildingType.nextId);
             BuildingType = nextBuildingType;

@@ -9,16 +9,9 @@ namespace Sango.Game
     public class ScenarioVariables
     {
         /// <summary>
-        /// 关卡开始索引
+        /// 最大可存储的行动力上限
         /// </summary>
-        [JsonProperty]
-        public int GateBeginIndex;
-
-        /// <summary>
-        /// 港口开始索引
-        /// </summary>
-        [JsonProperty]
-        public int PortBeginIndex;
+        [JsonProperty] public short ActionPointLimit = 255;
 
         /// <summary>
         /// 真实年龄开关
@@ -39,6 +32,8 @@ namespace Sango.Game
         /// 最高能力等级
         /// </summary>
         [JsonProperty] public byte MaxAbilityLevel = 10;
+
+        
 
         /// <summary>
         /// 属性每点经验
@@ -243,33 +238,32 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public float securityInfluenceRecruitTroops = 0.005f;
 
-        /// <summary>
-        /// 工作花费 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
-        /// </summary>
-        [JsonProperty]
-        public int[] jobCost = new int[] { 200, 300, 300, 200, 0, 0, 400, 0, 0, 0, 0, 0, 0, 0 };
-        /// <summary>
-        /// 工作人数限制 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
-        /// </summary>
-        [JsonProperty]
-        public int[] jobMaxPersonCount = new int[] { 3, 3, 3, 3, 3, 1, 3, 1, 3, 3, 3, 3, 3, 1 };
-        /// <summary>
-        /// 工作获取的功绩 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
-        /// </summary>
-        [JsonProperty]
-        public int[] jobMeritGain = new int[] { 5, 5, 5, 5, 5, 5, 10, 10, 10, 10, 10, 10, 10, 10 };
-        /// <summary>
-        /// 工作获取的技巧点 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
-        /// </summary>
-        [JsonProperty]
-        public int[] jobTechniquePoint = new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 };
+        ///// <summary>
+        ///// 工作花费 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
+        ///// </summary>
+        //[JsonProperty]
+        //public int[] jobCost = new int[] { 200, 300, 300, 200, 0, 0, 400, 0, 0, 0, 0, 0, 0, 0 };
+        ///// <summary>
+        ///// 工作人数限制 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
+        ///// </summary>
+        //[JsonProperty]
+        //public int[] jobMaxPersonCount = new int[] { 3, 3, 3, 3, 3, 1, 3, 1, 3, 3, 3, 3, 3, 1 };
+        ///// <summary>
+        ///// 工作获取的功绩 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
+        ///// </summary>
+        //[JsonProperty]
+        //public int[] jobMeritGain = new int[] { 5, 5, 5, 5, 5, 5, 10, 10, 10, 10, 10, 10, 10, 10 };
+        ///// <summary>
+        ///// 工作获取的技巧点 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
+        ///// </summary>
+        //[JsonProperty]
+        //public int[] jobTechniquePoint = new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 };
 
-        /// <summary>
-        /// 工作需要的行动力 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
-        /// </summary>
-        [JsonProperty]
-        public int[] jobCostActionPoint= new int[] { 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20 };
-
+        ///// <summary>
+        ///// 工作需要的行动力 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
+        ///// </summary>
+        //[JsonProperty]
+        //public int[] jobCostActionPoint= new int[] { 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20 };
 
 
         /// <summary>

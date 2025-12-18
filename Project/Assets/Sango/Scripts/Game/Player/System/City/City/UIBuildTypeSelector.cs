@@ -39,12 +39,14 @@ namespace Sango.Game.Render.UI
             limitLabel.text = "";
             durabilityLabel.text = "";
 
+
             buildBuildingSys = Singleton<CityBuildBuilding>.Instance;
             BuildingTypes = buildBuildingSys.canBuildBuildingType;
             curPage = 0;
             maxPage = BuildingTypes.Count / buildingTypeItems.Length;
             if (BuildingTypes.Count % buildingTypeItems.Length != 0)
                 maxPage += 1;
+            action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.Build)}/{buildBuildingSys.TargetCity.BelongCorps.ActionPoint}";
 
             for (int i = 0; i < buildingTypeItems.Length; i++)
             {

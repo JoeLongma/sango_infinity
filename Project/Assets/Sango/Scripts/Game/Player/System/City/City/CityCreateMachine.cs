@@ -37,8 +37,11 @@ namespace Sango.Game.Player
         {
             get
             {
-                return TargetCity.freePersons.Count > 0 && TargetCity.itemStore.TotalNumber < TargetCity.StoreLimit && TargetCity.CheckJobCost(CityJobType.CreateMachine)
-                    && TargetCity.GetFreeBuilding((int)BuildingKindType.MechineFactory) != null;
+                return TargetCity.freePersons.Count > 0 && 
+                    TargetCity.itemStore.TotalNumber < TargetCity.StoreLimit && 
+                    TargetCity.CheckJobCost(CityJobType.CreateMachine)
+                    && TargetCity.GetFreeBuilding((int)BuildingKindType.MechineFactory) != null &&
+                    TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.CreateMachine);
             }
         }
 

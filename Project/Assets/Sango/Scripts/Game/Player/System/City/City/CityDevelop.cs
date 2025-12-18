@@ -23,7 +23,10 @@ namespace Sango.Game.Player
         {
             get
             {
-                return TargetCity.freePersons.Count > 0 && TargetCity.commerce < TargetCity.commerceLimit && TargetCity.CheckJobCost(CityJobType.Develop);
+                return TargetCity.freePersons.Count > 0 
+                    && TargetCity.commerce < TargetCity.commerceLimit 
+                    && TargetCity.CheckJobCost(CityJobType.Develop)
+                    && TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.Develop);
             }
         }
 
