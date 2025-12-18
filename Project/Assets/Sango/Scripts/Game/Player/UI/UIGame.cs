@@ -10,6 +10,8 @@ namespace Sango.Game.Render.UI
 {
     public class UIGame : UGUIWindow, LoopScrollPrefabSource, LoopScrollDataSource
     {
+        public UIPlayerInfoPanel uIPlayerInfoPanel;
+
         public Text forceText;
         public Text dateText;
         public Text fpsText;
@@ -46,6 +48,8 @@ namespace Sango.Game.Render.UI
         public GameObject resumeObj;
 
         public Button endTurnButton;
+
+
 
         public GameObject[] fpaObj;
 
@@ -185,9 +189,12 @@ namespace Sango.Game.Render.UI
             techPointLabel.text = force.TechniquePoint.ToString();
 
             endTurnButton.interactable = force.IsPlayer;
+            uIPlayerInfoPanel.gameObject.SetActive(force.IsPlayer);
 
             if (force.IsPlayer)
             {
+
+                uIPlayerInfoPanel.UpdateShowType();
                 Singleton<PlayerTurnStartGreeting>.Instance.Push();
             }
 

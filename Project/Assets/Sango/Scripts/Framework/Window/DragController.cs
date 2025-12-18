@@ -5,8 +5,8 @@ using UnityEngine.EventSystems;
 
 public class DragController : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
-    private RectTransform tran;
-    private RectTransform parentTran;
+     RectTransform tran;
+     RectTransform parentTran;
     private Vector2 pointerOffset;
 
     public RectTransform dragRect;
@@ -14,8 +14,10 @@ public class DragController : MonoBehaviour, IPointerDownHandler, IDragHandler, 
 
     private void Awake()
     {
-        tran = GetComponent<RectTransform>();
-        parentTran = tran.parent.GetComponent<RectTransform>();
+        if (tran == null)
+            tran = GetComponent<RectTransform>();
+        if (parentTran == null)
+            parentTran = tran.parent.GetComponent<RectTransform>();
     }
 
     public void OnPointerDown(PointerEventData eventData)

@@ -5,8 +5,11 @@ using UnityEngine.EventSystems;
 
 public class UIEventPass : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
-    public bool nextOnly = true; 
-
+    public bool nextOnly = true;
+    public bool PointerClick = true;
+    public bool PointerDown = true;
+    public bool PointerUp = true;
+    public bool Drag = true;
     public void PassEvent<T>(PointerEventData data, ExecuteEvents.EventFunction<T> func) where T : IEventSystemHandler
     {
         List<RaycastResult> results = new List<RaycastResult>();
@@ -14,7 +17,7 @@ public class UIEventPass : MonoBehaviour, IPointerClickHandler, IPointerDownHand
 
         GameObject currObj = gameObject;
         int currIndex = -1;
-        for(int i = 0; i < results.Count; i++)
+        for (int i = 0; i < results.Count; i++)
         {
             if (currIndex >= 0)
             {
@@ -29,21 +32,25 @@ public class UIEventPass : MonoBehaviour, IPointerClickHandler, IPointerDownHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        PassEvent(eventData, ExecuteEvents.pointerClickHandler);
+        if (PointerClick)
+            PassEvent(eventData, ExecuteEvents.pointerClickHandler);
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        PassEvent(eventData, ExecuteEvents.pointerDownHandler);
+        if (PointerDown)
+            PassEvent(eventData, ExecuteEvents.pointerDownHandler);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        PassEvent(eventData, ExecuteEvents.pointerUpHandler);
+        if (PointerUp)
+            PassEvent(eventData, ExecuteEvents.pointerUpHandler);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        PassEvent(eventData, ExecuteEvents.dragHandler);
+        if (Drag)
+            PassEvent(eventData, ExecuteEvents.dragHandler);
     }
 }
