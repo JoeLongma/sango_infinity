@@ -9,15 +9,14 @@ using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
 {
-    public class UIObjectSelector : UGUIWindow, LoopScrollPrefabSource, LoopScrollDataSource
+    public class UIObjectSelector : UGUIWindow
     {
-        Stack<Transform> pool = new Stack<Transform>();
-        public GameObject objectItemObject;
-        public LoopScrollRect loopScrollRect;
-
         public List<ObjectSortTitle> sortItems;
-
         public Toggle[] toggleGroup;
+
+        public UIObjectListItem[] uIObjectListItems;
+        public RectTransform[] uIObjectListItemsRect;
+        public Scrollbar scrollbar;
 
         List<UISortButton> sortButtonPool = new List<UISortButton>();
         public UISortButton sortTitleItem;
@@ -25,7 +24,8 @@ namespace Sango.Game.Render.UI
         public RectTransform sorltTitleTransform;
 
         ObjectSelectSystem objectSelectSystem;
-
+        int startIndex = 0;
+        bool dragFlag = false;
         void Awake()
         {
             for (int i = 0; i < toggleGroup.Length; i++)
@@ -44,12 +44,6 @@ namespace Sango.Game.Render.UI
             return sortBtn;
         }
 
-        public override void OnShow()
-        {
-            loopScrollRect.prefabSource = this;
-            loopScrollRect.dataSource = this;
-        }
-
         public virtual void Init(ObjectSelectSystem objectSelectSystem)
         {
             this.objectSelectSystem = objectSelectSystem;
@@ -58,12 +52,33 @@ namespace Sango.Game.Render.UI
             toggleGroup[0].isOn = true;
             for (int i = 1; i < toggleGroup.Length; i++)
                 toggleGroup[i].GetComponentInChildren<Text>(true).text = objectSelectSystem.GetSortTitleGroupName(i);
-            loopScrollRect.totalCount = objectSelectSystem.Objects.Count;
+
+            startIndex = 0;
+            int dataCount = objectSelectSystem.Objects.Count;
+            if (dataCount < uIObjectListItems.Length)
+            {
+                scrollbar.transform.parent.gameObject.SetActive(false);
+            }
+            else
+            {
+                scrollbar.transform.parent.gameObject.SetActive(true);
+                scrollbar.size = (float)uIObjectListItems.Length / (float)dataCount;
+                scrollbar.SetValueWithoutNotify(0);
+            }
+
+
             UpdateSortContent();
+            OnScrollBarValueChange(0);
         }
 
         public void UpdateSortContent()
         {
+            for (int j = 0; j < uIObjectListItems.Length; j++)
+            {
+                UIObjectListItem listItem = uIObjectListItems[j];
+                listItem.Clear();
+            }
+
             for (int i = 0; i < sortItems.Count; i++)
             {
                 ObjectSortTitle sortTitle = sortItems[i];
@@ -80,15 +95,61 @@ namespace Sango.Game.Render.UI
                 {
                     objectSelectSystem.Objects.Sort(sortTitle.Sort);
                     if (!up) objectSelectSystem.Objects.Reverse();
-                    loopScrollRect.RefillCells();
+                    scrollbar.SetValueWithoutNotify(0);
+                    OnScrollBarValueChange(0);
                 };
+
+                for (int j = 0; j < uIObjectListItems.Length; j++)
+                {
+                    UIObjectListItem listItem = uIObjectListItems[j];
+                    listItem.Add("", sortTitle.width);
+                }
             }
 
             for (int i = sortItems.Count; i < sortButtonPool.Count; i++)
                 sortButtonPool[i].gameObject.SetActive(false);
-
-            loopScrollRect.RefillCells();
         }
+
+        public void UpShow()
+        {
+            if (startIndex > 0)
+                startIndex--;
+            UpdateItemStartIndex(startIndex);
+            scrollbar.SetValueWithoutNotify((float)startIndex / (objectSelectSystem.Objects.Count - uIObjectListItems.Length));
+        }
+
+        public void DownShow()
+        {
+            if (startIndex < objectSelectSystem.Objects.Count - uIObjectListItems.Length)
+                startIndex++;
+
+            UpdateItemStartIndex(startIndex);
+            scrollbar.SetValueWithoutNotify((float)startIndex / (objectSelectSystem.Objects.Count - uIObjectListItems.Length));
+        }
+
+        public void OnScrollBarValueChange(float value)
+        {
+            startIndex = (int)UnityEngine.Mathf.Lerp(0, objectSelectSystem.Objects.Count - uIObjectListItems.Length, value);
+            UpdateItemStartIndex(startIndex);
+        }
+
+        public void UpdateItemStartIndex(int startIndex)
+        {
+            for (int i = 0; i < uIObjectListItems.Length; i++)
+            {
+                UIObjectListItem listItem = uIObjectListItems[i];
+                SangoObject sango = objectSelectSystem.Objects[i + startIndex];
+                bool isSelected = objectSelectSystem.selected.Contains(sango);
+                for (int j = 0; j < sortItems.Count; j++)
+                {
+                    ObjectSortTitle sortTitle = sortItems[j];
+                    listItem.Set(j, sortTitle.GetValueStr(sango));
+                }
+                listItem.index = i + startIndex;
+                listItem.SetSelected(isSelected);
+            }
+        }
+
 
         public override void OnHide()
         {
@@ -107,43 +168,13 @@ namespace Sango.Game.Render.UI
             objectSelectSystem.OnCancel();
         }
 
-        public GameObject GetObject(int index)
-        {
-            if (pool.Count == 0)
-            {
-                GameObject obj = Instantiate(objectItemObject);
-                UIObjectListItem uiObjectListItem = obj.GetComponent<UIObjectListItem>();
-                if (uiObjectListItem != null)
-                {
-                    uiObjectListItem.onSelected = OnPersonListSelected;
-                    uiObjectListItem.onShow = OnPersonListShow;
-                }
-                return obj;
-            }
-            Transform candidate = pool.Pop();
-            candidate.gameObject.SetActive(true);
-            return candidate.gameObject;
-        }
-
-        public void ReturnObject(Transform trans)
-        {
-            trans.SendMessage("ScrollCellReturn", SendMessageOptions.DontRequireReceiver);
-            trans.gameObject.SetActive(false);
-            trans.SetParent(transform, false);
-            pool.Push(trans);
-        }
-
-        public void ProvideData(Transform transform, int idx)
-        {
-            transform.SendMessage("ScrollCellIndex", idx);
-        }
-
         public void OnSortGroupChanged(int index, bool b)
         {
             if (b)
             {
                 sortItems = objectSelectSystem.GetSortTitleGroup(index);
                 UpdateSortContent();
+                OnScrollBarValueChange(0);
             }
 
         }
@@ -164,23 +195,48 @@ namespace Sango.Game.Render.UI
             }
         }
 
-        public void OnPersonListShow(UIObjectListItem item)
+        public void OnPointDownPersonListSelected(UIObjectListItem item)
         {
-            RectTransform rectTransform = item.GetComponent<RectTransform>();
-            rectTransform.anchoredPosition = Vector2.zero;
-            SangoObject obj = objectSelectSystem.Objects[item.index];
-
-            bool isSelected = objectSelectSystem.selected.Contains(obj);
-            item.Clear();
-            for (int i = 0; i < sortItems.Count; i++)
-            {
-                ObjectSortTitle sortTitle = sortItems[i];
-                item.Add(sortTitle.GetValueStr(obj), sortTitle.width);
-            }
-
-            item.SetSelected(isSelected);
+            dragFlag = !item.IsSelected();
         }
 
+        public void OnDragPersonListSelected(UIObjectListItem item)
+        {
+            if (dragFlag && objectSelectSystem.IsPersonLimit())
+                return;
 
+            if (!dragFlag && objectSelectSystem.IsPersonEmpty())
+                return;
+
+            if (item.IsSelected() && !dragFlag)
+            {
+                item.SetSelected(false);
+                objectSelectSystem.Remove(item.index);
+            }
+            else if (!item.IsSelected() && dragFlag)
+            {
+                item.SetSelected(true);
+                objectSelectSystem.Add(item.index);
+            }
+
+            for (int i = 0; i < uIObjectListItems.Length; i++)
+            {
+                RectTransform itemRect = uIObjectListItemsRect[i];
+                UIObjectListItem listItem = uIObjectListItems[i];
+                if (listItem != item && RectTransformUtility.RectangleContainsScreenPoint(itemRect, Input.mousePosition, Sango.Game.Game.Instance.UICamera))
+                {
+                    if (listItem.IsSelected() && !dragFlag)
+                    {
+                        listItem.SetSelected(false);
+                        objectSelectSystem.Remove(listItem.index);
+                    }
+                    else if (!listItem.IsSelected() && dragFlag)
+                    {
+                        listItem.SetSelected(true);
+                        objectSelectSystem.Add(listItem.index);
+                    }
+                }
+            }
+        }
     }
 }

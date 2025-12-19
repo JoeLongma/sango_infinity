@@ -46,6 +46,12 @@ namespace Sango.Game.Player
             return selectLimit <= selected.Count;
         }
 
+        public bool IsPersonEmpty()
+        {
+            return selected.Count <= 0;
+        }
+
+
         public void Add(int index)
         {
             selected.Add(Objects[index]);
@@ -65,7 +71,7 @@ namespace Sango.Game.Player
             if (win != null)
             {
                 UIObjectSelector uIObjectSelector = win.ugui_instance as UIObjectSelector;
-                if(uIObjectSelector != null)
+                if (uIObjectSelector != null)
                 {
                     uIObjectSelector.Init(this);
                 }
@@ -80,7 +86,7 @@ namespace Sango.Game.Player
 
         public virtual List<ObjectSortTitle> GetSortTitleGroup(int index)
         {
-           return customSortItems;
+            return customSortItems;
         }
 
         public virtual string GetSortTitleGroupName(int index)

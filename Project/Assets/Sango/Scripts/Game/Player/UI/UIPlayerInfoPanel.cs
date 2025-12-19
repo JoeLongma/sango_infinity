@@ -119,7 +119,7 @@ namespace Sango.Game.Render.UI
                 size.x = 132;
                 itemRoot.sizeDelta = size;
 
-                scrollbar.size = (float)showTypeSelectObjs.Length / (float)curDataList.Count;
+                scrollbar.size = (float)uIForceElementItems.Length / (float)curDataList.Count;
                 scrollbar.SetValueWithoutNotify(0);
                 OnScrollBarValueChange(0);
             }
@@ -158,12 +158,7 @@ namespace Sango.Game.Render.UI
         {
             if (startIndex > 0)
                 startIndex--;
-            for (int i = 0; i < uIForceElementItems.Length; i++)
-            {
-                SangoObject sango = curDataList[i + startIndex];
-                UIForceElementItem uIForceElement = uIForceElementItems[i];
-                uIForceElement.SetSangoObject(sango);
-            }
+            UpdateItemStartIndex(startIndex);
             scrollbar.SetValueWithoutNotify((float)startIndex / (curDataList.Count - uIForceElementItems.Length));
         }
 
@@ -171,18 +166,17 @@ namespace Sango.Game.Render.UI
         {
             if (startIndex < curDataList.Count - uIForceElementItems.Length)
                 startIndex++;
-            for (int i = 0; i < uIForceElementItems.Length; i++)
-            {
-                SangoObject sango = curDataList[i + startIndex];
-                UIForceElementItem uIForceElement = uIForceElementItems[i];
-                uIForceElement.SetSangoObject(sango);
-            }
+            UpdateItemStartIndex(startIndex);
             scrollbar.SetValueWithoutNotify((float)startIndex / (curDataList.Count - uIForceElementItems.Length));
         }
 
         public void OnScrollBarValueChange(float value)
         {
             startIndex = (int)UnityEngine.Mathf.Lerp(0, curDataList.Count - uIForceElementItems.Length, value);
+            UpdateItemStartIndex(startIndex);
+        }
+        public void UpdateItemStartIndex(int startIndex)
+        {
             for (int i = 0; i < uIForceElementItems.Length; i++)
             {
                 SangoObject sango = curDataList[i + startIndex];

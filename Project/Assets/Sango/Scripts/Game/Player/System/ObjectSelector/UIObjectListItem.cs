@@ -55,6 +55,11 @@ namespace Sango.Game.Render.UI
             item.transform.SetAsLastSibling();
         }
 
+        public void Set(int index, string content)
+        {
+            usedItems[index].SetText(content);
+        }
+
         public void SetSelected(bool b)
         {
             selectItem.SetSelected(b);
