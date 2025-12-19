@@ -37,6 +37,11 @@ namespace Sango.Game
         [JsonProperty] public int cost;
 
         /// <summary>
+        /// 产出建筑
+        /// </summary>
+        [JsonProperty] public int createBuildingKind;
+
+        /// <summary>
         /// 所需科技
         /// </summary>
         [JsonProperty] public int validTechId;
@@ -59,13 +64,30 @@ namespace Sango.Game
 
         public bool IsValid(Force force)
         {
-            // 检查科技
-            if (validTechId == 0) 
-                return true;
-            else if (validTechId > 0)
+            if (validTechId > 0)
                 return force.HasTechnique(validTechId);
-            else //if (validTechId < 0)
-                return !force.HasTechnique(System.Math.Abs(validTechId));
+
+            // 检查科技
+            return true;
+        }
+        public bool IsWeapon()
+        {
+            return kind == (int)ItemKindType.Weapon;
+        }
+
+        public bool IsBoat()
+        {
+            return kind == (int)ItemKindType.Boat;
+        }
+
+        public bool IsMachine()
+        {
+            return kind == (int)ItemKindType.Machine;
+        }
+
+        public bool IsHorse()
+        {
+            return kind == (int)ItemKindType.Horse;
         }
     }
 }

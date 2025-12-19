@@ -2477,7 +2477,7 @@ namespace Sango.Game
             int empty = StoreLimit - itemStore.TotalNumber;
 
             ScenarioVariables variables = scenario.Variables;
-            int jobId = itemType.Id == 5 ? (int)CityJobType.CreateHourse : (int)CityJobType.CreateItems;
+            int jobId = itemType.Id == 5 ? (int)CityJobType.CreateHorse : (int)CityJobType.CreateItems;
 
             int goldNeed = JobType.GetJobCost(jobId) + itemType.cost;
 

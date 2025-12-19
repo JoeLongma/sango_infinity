@@ -1,10 +1,15 @@
 ﻿using System.Collections.Generic;
-using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Player
 {
     public class CityCreateItems : CityComandBase
     {
+        public class ItemTypeInfo
+        {
+            public ItemType itemType;
+            public Building targetBuilding;
+        }
+
         public enum CreateType
         {
             Weapon,
@@ -13,9 +18,9 @@ namespace Sango.Game.Player
             Boat
         }
 
-        public List<ItemType> ItemTypes = new List<ItemType>();
+        public List<ItemTypeInfo> ItemTypes = new List<ItemTypeInfo>();
         public int CurSelectedItemTypeIndex { get; set; }
-        public ItemType CurSelectedItemType { get; set; }
+        public ItemTypeInfo CurSelectedItemType { get; set; }
         public Building TargetBuilding { get; set; }
         public int[] TurnAndDestNumber { get; set; }
 
@@ -45,16 +50,53 @@ namespace Sango.Game.Player
         {
             ItemTypes.Clear();
             Scenario scenario = Scenario.Cur;
-            for (int i = 2; i < 5; i++)
+            Dictionary<int, ItemType> itemMap = new Dictionary<int, ItemType>();
+            scenario.CommonData.ItemTypes.ForEach(it =>
             {
-                ItemTypes.Add(scenario.GetObject<ItemType>(i));
+                if (it.cost > 0 && it.IsValid(TargetCity.BelongForce))
+                {
+                    ItemType itemType;
+                    if (itemMap.TryGetValue(it.subKind, out itemType))
+                    {
+                        if (it.Id > itemType.Id)
+                        {
+                            itemMap[it.subKind] = it;
+                        }
+                    }
+                    else
+                    {
+                        itemMap[it.subKind] = it;
+                    }
+                }
+            });
+
+            foreach (ItemType itemType in itemMap.Values)
+            {
+                ItemTypes.Add(new ItemTypeInfo()
+                {
+                    itemType = itemType,
+                    targetBuilding = TargetCity.GetFreeBuilding(itemType.createBuildingKind)
+                });
             }
 
-            TargetBuilding = TargetCity.GetFreeBuilding((int)BuildingKindType.BlacksmithShop);
-            CurSelectedItemTypeIndex = 0;
-            CurSelectedItemType = ItemTypes[CurSelectedItemTypeIndex];
+            ItemTypes.Sort((a, b) => a.itemType.Id.CompareTo(b.itemType.Id));
+            FindAndSelectFirstValidItemType();
         }
 
+        void FindAndSelectFirstValidItemType()
+        {
+            for (int i = 0; i < ItemTypes.Count; i++)
+            {
+                ItemTypeInfo itemType = ItemTypes[i];
+                TargetBuilding = itemType.targetBuilding;
+                if (TargetBuilding != null)
+                {
+                    CurSelectedItemTypeIndex = i;
+                    CurSelectedItemType = itemType;
+                    return;
+                }
+            }
+        }
 
         public override bool IsValid
         {
@@ -62,7 +104,11 @@ namespace Sango.Game.Player
             {
                 return TargetCity.FreePersonCount > 0 && TargetCity.itemStore.TotalNumber < TargetCity.StoreLimit &&
                     TargetCity.CheckJobCost(CityJobType.CreateItems)
-                    && TargetCity.GetFreeBuilding((int)BuildingKindType.BlacksmithShop) != null &&
+                    && (TargetCity.GetFreeBuilding((int)BuildingKindType.BlacksmithShop) != null ||
+                        TargetCity.GetFreeBuilding((int)BuildingKindType.Stable) != null ||
+                        TargetCity.GetFreeBuilding((int)BuildingKindType.BoatFactory) != null ||
+                        TargetCity.GetFreeBuilding((int)BuildingKindType.MechineFactory) != null)
+                    &&
                     TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.CreateItems);
 
             }
@@ -70,11 +116,21 @@ namespace Sango.Game.Player
 
         public override int CalculateWonderNumber()
         {
-            TurnAndDestNumber = new int[2]
+            if (CurSelectedItemType.itemType.IsMachine())
             {
+                TurnAndDestNumber = TargetCity.JobCreateMachine(personList.ToArray(), CurSelectedItemType.itemType, TargetBuilding, true);
+            }
+            else if (CurSelectedItemType.itemType.IsBoat())
+            {
+                TurnAndDestNumber = TargetCity.JobCreateBoat(personList.ToArray(), CurSelectedItemType.itemType, TargetBuilding, true);
+            }
+            else
+            {
+                TurnAndDestNumber = new int[2]{
                 0,
-                TargetCity.JobCreateItems(personList.ToArray(), CurSelectedItemType, TargetBuilding, true)
-            };
+                TargetCity.JobCreateItems(personList.ToArray(), CurSelectedItemType.itemType, TargetBuilding, true) };
+            }
+
             return TurnAndDestNumber[1];
         }
 
@@ -97,7 +153,18 @@ namespace Sango.Game.Player
         {
             if (personList.Count > 0)
             {
-                TargetCity.JobCreateItems(personList.ToArray(), CurSelectedItemType, TargetBuilding);
+                if (CurSelectedItemType.itemType.IsMachine())
+                {
+                    TargetCity.JobCreateMachine(personList.ToArray(), CurSelectedItemType.itemType, TargetBuilding);
+                }
+                else if (CurSelectedItemType.itemType.IsBoat())
+                {
+                    TargetCity.JobCreateBoat(personList.ToArray(), CurSelectedItemType.itemType, TargetBuilding);
+                }
+                else
+                {
+                    TargetCity.JobCreateItems(personList.ToArray(), CurSelectedItemType.itemType, TargetBuilding);
+                }
                 Done();
             }
         }

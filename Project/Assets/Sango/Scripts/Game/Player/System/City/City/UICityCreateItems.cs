@@ -26,18 +26,7 @@ namespace Sango.Game.Render.UI
             value_value?.gameObject.SetActive(true);
             title_gold?.gameObject.SetActive(true);
             value_gold?.gameObject.SetActive(true);
-            if (createItemsSys is CityCreateBoat)
-            {
-                infoLabel.text = "舰船";
-            }
-            else if (createItemsSys is CityCreateBoat)
-            {
-                infoLabel.text = "兵器";
-            }
-            else
-            {
-                infoLabel.text = "兵装";
-            }
+            infoLabel.text = "兵装";
 
             int len = createItemsSys.ItemTypes.Count;
             while (buildingTypeItemPool.Count < len)
@@ -54,11 +43,11 @@ namespace Sango.Game.Render.UI
 
             for (int i = 0; i < len; i++)
             {
-                ItemType itemType = createItemsSys.ItemTypes[i];
-                int totalNum = createItemsSys.TargetCity.itemStore.GetNumber(itemType.Id);
+                CityCreateItems.ItemTypeInfo itemType = createItemsSys.ItemTypes[i];
+                int totalNum = createItemsSys.TargetCity.itemStore.GetNumber(itemType.itemType.Id);
                 UIBuildingTypeItem cityBuildingSlot = buildingTypeItemPool[i];
-                cityBuildingSlot.SetItemType(itemType).SetIndex(i).SetSelected(itemType == createItemsSys.CurSelectedItemType).SetNum(totalNum);
-                cityBuildingSlot.SetValid(createItemsSys.TargetBuilding != null);
+                cityBuildingSlot.SetItemType(itemType.itemType).SetIndex(i).SetSelected(itemType == createItemsSys.CurSelectedItemType).SetNum(totalNum);
+                cityBuildingSlot.SetValid(itemType.targetBuilding != null);
                 buildingTypeItemPool[i].gameObject.SetActive(true);
             }
 
@@ -73,7 +62,7 @@ namespace Sango.Game.Render.UI
             }
 
             createItemsSys.CurSelectedItemTypeIndex = buildingTypeItem.index;
-            ItemType curItemType = createItemsSys.ItemTypes[buildingTypeItem.index];
+            CityCreateItems.ItemTypeInfo curItemType = createItemsSys.ItemTypes[buildingTypeItem.index];
             createItemsSys.CurSelectedItemType = curItemType;
 
             Person[] builder = ForceAI.CounsellorRecommendCreateItems(createItemsSys.TargetCity.freePersons);
@@ -103,12 +92,12 @@ namespace Sango.Game.Render.UI
             createItemsSys.UpdateJobValue();
 
             value_1.text = $"{createItemsSys.TurnAndDestNumber[0]}回";
-            value_gold.text = $"{curItemType.cost}/{createItemsSys.TargetCity.gold}";
+            value_gold.text = $"{curItemType.itemType.cost}/{createItemsSys.TargetCity.gold}";
 
-            int totalNum = createItemsSys.TargetCity.itemStore.GetNumber(curItemType.Id);
+            int totalNum = createItemsSys.TargetCity.itemStore.GetNumber(curItemType.itemType);
             value_value.text = $"{totalNum}→{totalNum + createItemsSys.TurnAndDestNumber[1]}";
 
-            itemTypeDescLabel.text = curItemType.desc;
+            itemTypeDescLabel.text = curItemType.itemType.desc;
             buildingTypeItem.SetSelected(true);
         }
 
@@ -117,12 +106,12 @@ namespace Sango.Game.Render.UI
             createItemsSys.personList = personList;
             createItemsSys.UpdateJobValue();
 
-            ItemType curItemType = createItemsSys.CurSelectedItemType;
+            CityCreateItems.ItemTypeInfo curItemType = createItemsSys.CurSelectedItemType;
 
             value_1.text = $"{createItemsSys.TurnAndDestNumber[0]}回";
-            value_gold.text = $"{curItemType.cost}/{createItemsSys.TargetCity.gold}";
+            value_gold.text = $"{curItemType.itemType.cost}/{createItemsSys.TargetCity.gold}";
 
-            int totalNum = createItemsSys.TargetCity.itemStore.GetNumber(curItemType.Id);
+            int totalNum = createItemsSys.TargetCity.itemStore.GetNumber(curItemType.itemType);
             value_value.text = $"{totalNum}→{totalNum + createItemsSys.TurnAndDestNumber[1]}";
 
             for (int i = 0; i < personItems.Length; ++i)

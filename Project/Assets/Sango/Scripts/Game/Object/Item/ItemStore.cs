@@ -53,6 +53,11 @@ namespace Sango.Game
             return copy;
         }
 
+        public int Set(ItemType itemType, int number)
+        {
+            return Set(itemType.subKind, number);
+        }
+
         public int Set(int itemTypeId, int number)
         {
             if (Items.TryGetValue(itemTypeId, out int has))
@@ -66,6 +71,11 @@ namespace Sango.Game
             TotalNumber += number;
             Items.Add(itemTypeId, number);
             return number;
+        }
+
+        public int Add(ItemType itemType, int number)
+        {
+            return Add(itemType.subKind, number);
         }
 
         public int Add(int itemTypeId, int number)
@@ -94,6 +104,11 @@ namespace Sango.Game
             }
         }
 
+        public int Remove(ItemType itemType)
+        {
+            return Remove(itemType.subKind);
+        }
+
         public int Remove(int itemTypeId)
         {
             if (Items.TryGetValue(itemTypeId, out int has))
@@ -103,6 +118,11 @@ namespace Sango.Game
                 return has;
             }
             return 0;
+        }
+
+        public int Remove(ItemType itemType, int number)
+        {
+            return Remove(itemType.subKind, number);
         }
 
         public int Remove(int itemTypeId, int number)
@@ -136,6 +156,19 @@ namespace Sango.Game
             if (Items.TryGetValue(itemTypeId, out int has))
                 return has;
             return 0;
+        }
+
+        public int GetNumber(ItemType itemType)
+        {
+            if (Items.TryGetValue(itemType.subKind, out int has))
+                return has;
+            return 0;
+        }
+
+        public int this[ItemType itemType]
+        {
+            get { return GetNumber(itemType.subKind); }
+            set { Add(itemType.subKind, value); }
         }
 
         public int this[int itemTypeId]

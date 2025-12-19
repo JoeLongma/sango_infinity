@@ -42,4 +42,29 @@ namespace Sango.Game
         /// </summary>
         Boat
     }
+
+    public enum ItemSubKindType : int
+    {
+        None = 0,
+
+        /// <summary>
+        /// 兵器
+        /// </summary>
+        Weapon,
+
+        /// <summary>
+        /// 战马
+        /// </summary>
+        Horse,
+
+        /// <summary>
+        /// 器械
+        /// </summary>
+        Machine,
+
+        /// <summary>
+        /// 船
+        /// </summary>
+        Boat
+    }
 }

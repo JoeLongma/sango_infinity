@@ -11,14 +11,14 @@ namespace Sango.Game.Player
             base.Init();
             Singleton<CityBuildBuilding>.Instance.Init();
             Singleton<CityRecruitTroops>.Instance.Init();   // 征兵
-            Singleton<CityCreateBoat>.Instance.Init();
+            //Singleton<CityCreateBoat>.Instance.Init();
             Singleton<CityCreateItems>.Instance.Init();
-            Singleton<CityCreateMachine>.Instance.Init();
+            //Singleton<CityCreateMachine>.Instance.Init();
             Singleton<CityDevelop>.Instance.Init();
             Singleton<CityFarming>.Instance.Init();
             Singleton<CityInspection>.Instance.Init();
             Singleton<CityTrade>.Instance.Init();
-            Singleton<CityCreateHorse>.Instance.Init();
+            //Singleton<CityCreateHorse>.Instance.Init();
 
             //军事
             Singleton<CityExpedition>.Instance.Init();      // 出征

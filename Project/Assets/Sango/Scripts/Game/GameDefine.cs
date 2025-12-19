@@ -131,7 +131,7 @@
         /// <summary>
         /// 生产马
         /// </summary>
-        CreateHourse = 12,
+        CreateHorse = 12,
 
         /// <summary>
         /// 交易粮食
@@ -179,7 +179,7 @@
         Sword,
         CrossBow,
         Food,
-        Hourse,
+        Horse,
         /// <summary>
         /// 冲车
         /// </summary>
