@@ -38,7 +38,7 @@ namespace Sango.Game.Player
             if (commads.Count > 0)
             {
                 CurrentCommand = commads.Peek();
-                CurrentCommand.OnBack();
+                CurrentCommand.OnBack(command);
             }
             else
             {

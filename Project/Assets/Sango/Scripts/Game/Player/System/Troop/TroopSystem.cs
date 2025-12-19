@@ -50,7 +50,7 @@ namespace Sango.Game.Player
 
             moveRange.Clear();
             Scenario.Cur.Map.GetMoveRange(TargetTroop, moveRange);
-            OnBack();
+            OnBack(null);
 
         }
 
@@ -65,7 +65,7 @@ namespace Sango.Game.Player
             ShowMovePath();
         }
 
-        public override void OnBack()
+        public override void OnBack(ICommandEvent whoGone)
         {
             GameController.Instance.RotateViewEnabled = true;
             GameController.Instance.ZoomViewEnabled = true;

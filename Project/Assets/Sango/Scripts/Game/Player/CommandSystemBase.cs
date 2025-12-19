@@ -23,7 +23,7 @@
         /// <summary>
         /// 当前命令被重新拾起的时候触发(返回)
         /// </summary>
-        public virtual void OnBack() {; }
+        public virtual void OnBack(ICommandEvent whoGone) {; }
 
         /// <summary>
         /// 当前命令被舍弃的时候触发

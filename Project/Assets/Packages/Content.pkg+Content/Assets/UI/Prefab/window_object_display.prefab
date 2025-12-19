@@ -695,9 +695,9 @@ GameObject:
   - component: {fileID: 5973749658295835790}
   - component: {fileID: 174056003858870177}
   - component: {fileID: 576643473640125865}
-  - component: {fileID: 4285155316148925842}
+  - component: {fileID: -6612751369927749266}
   m_Layer: 5
-  m_Name: window_object_selector
+  m_Name: window_object_display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -764,7 +764,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 32
---- !u!114 &4285155316148925842
+--- !u!114 &-6612751369927749266
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -773,7 +773,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9039031632039893254}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 703b885bf0bd69d48aad153483a5de2e, type: 3}
+  m_Script: {fileID: 11500000, guid: a56598182e715d54cb72a021b3bcbb5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   toggleGroup:
@@ -814,31 +814,6 @@ MonoBehaviour:
   sortTitleItem: {fileID: 4812628535542239739}
   selectSortBtn: {fileID: 8232714500853857732}
   sorltTitleTransform: {fileID: 3708776829742478546}
-  uIObjectListItemsRect:
-  - {fileID: 443365792501371526}
-  - {fileID: 6058521046971645930}
-  - {fileID: 2850860557984448754}
-  - {fileID: 3537159221234758664}
-  - {fileID: 905303986379028998}
-  - {fileID: 9142477421308552982}
-  - {fileID: 7526373990285909093}
-  - {fileID: 6870039338550317686}
-  - {fileID: 2140900138674099443}
-  - {fileID: 5075900098671358437}
-  - {fileID: 5555439597056033055}
-  - {fileID: 2520761136152527799}
-  - {fileID: 3871872847121438832}
-  - {fileID: 2616961909863712718}
-  - {fileID: 8351935923239368404}
-  - {fileID: 8296889318487879121}
-  - {fileID: 6241625921548346843}
-  - {fileID: 8297806450436325264}
-  - {fileID: 5710054458853983578}
-  - {fileID: 6144486240757920885}
-  - {fileID: 395741660045306070}
-  - {fileID: 6188593316717482564}
-  - {fileID: 6213747511697097343}
-  - {fileID: 5952312654914497878}
 --- !u!1 &9167501678661684136
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,7 +904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5d6125d06f1fef4aa9861c00314c119, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originalHeight: 1080
+  originalHeight: 900
 --- !u!1001 &724987993149157297
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -963,7 +938,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2363978993333869412, guid: 9fa6f74c916481444acc962c2cb3c7e7, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2363978993333869412, guid: 9fa6f74c916481444acc962c2cb3c7e7, type: 3}
       propertyPath: m_AnchorMin.x
@@ -971,7 +946,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2363978993333869412, guid: 9fa6f74c916481444acc962c2cb3c7e7, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2363978993333869412, guid: 9fa6f74c916481444acc962c2cb3c7e7, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1011,7 +986,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2363978993333869412, guid: 9fa6f74c916481444acc962c2cb3c7e7, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2363978993333869412, guid: 9fa6f74c916481444acc962c2cb3c7e7, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1047,7 +1022,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8669383675882623605, guid: 9fa6f74c916481444acc962c2cb3c7e7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9184444476421416857, guid: 9fa6f74c916481444acc962c2cb3c7e7, type: 3}
       propertyPath: sortGroup
@@ -1086,11 +1061,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -1130,7 +1105,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1184,6 +1159,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!1 &3121081371808366180 stripped
@@ -1208,7 +1187,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -1225,7 +1204,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -1242,7 +1221,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -1429,11 +1408,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -1473,7 +1452,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1527,6 +1506,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!114 &3372920000372423271 stripped
@@ -1562,7 +1545,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -1579,7 +1562,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -1596,7 +1579,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -1635,11 +1618,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -1679,7 +1662,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1733,6 +1716,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!114 &3372289290934577190 stripped
@@ -1768,7 +1755,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -1785,7 +1772,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -1802,7 +1789,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -1841,11 +1828,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -1885,7 +1872,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1939,6 +1926,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!114 &3315622695066952034 stripped
@@ -1974,7 +1965,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -1991,7 +1982,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -2008,7 +1999,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -2149,11 +2140,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -2193,7 +2184,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -2247,6 +2238,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!114 &2525365970761019552 stripped
@@ -2282,7 +2277,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -2299,7 +2294,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -2316,7 +2311,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -2481,7 +2476,7 @@ PrefabInstance:
     - target: {fileID: 4047078994823135925, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4285155316148925842}
+      objectReference: {fileID: 0}
     - target: {fileID: 4047078994823135925, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnSure
@@ -2490,6 +2485,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 4981427211202277705, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5403531806318675778, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_Layer
       value: 5
@@ -2497,7 +2496,7 @@ PrefabInstance:
     - target: {fileID: 5788964857443963546, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4285155316148925842}
+      objectReference: {fileID: 0}
     - target: {fileID: 5788964857443963546, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnCancel
@@ -2602,6 +2601,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7283794659537304192, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8781529737710856827, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_Layer
       value: 5
@@ -2671,11 +2674,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -2715,7 +2718,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -2769,6 +2772,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!1 &383504721399239652 stripped
@@ -2793,7 +2800,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -2810,7 +2817,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -2827,7 +2834,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -2886,7 +2893,7 @@ PrefabInstance:
     - target: {fileID: 674654685042760257, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4285155316148925842}
+      objectReference: {fileID: 0}
     - target: {fileID: 674654685042760257, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -2918,7 +2925,7 @@ PrefabInstance:
     - target: {fileID: 2220643449552010829, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4285155316148925842}
+      objectReference: {fileID: 0}
     - target: {fileID: 2220643449552010829, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -2946,7 +2953,7 @@ PrefabInstance:
     - target: {fileID: 4755714639111395937, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4285155316148925842}
+      objectReference: {fileID: 0}
     - target: {fileID: 4755714639111395937, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -3106,11 +3113,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -3150,7 +3157,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -3204,6 +3211,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!1 &1025590761257231134 stripped
@@ -3228,7 +3239,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -3245,7 +3256,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -3262,7 +3273,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -3312,11 +3323,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -3356,7 +3367,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -3410,6 +3421,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!1 &872981423783569243 stripped
@@ -3434,7 +3449,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -3451,7 +3466,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -3468,7 +3483,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -3518,11 +3533,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -3562,7 +3577,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -3616,6 +3631,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!114 &720379076321814620 stripped
@@ -3651,7 +3670,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -3668,7 +3687,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -3685,7 +3704,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -3724,11 +3743,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -3768,7 +3787,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -3822,6 +3841,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!114 &625689807784731587 stripped
@@ -3857,7 +3880,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -3874,7 +3897,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -3891,7 +3914,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -3930,11 +3953,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -3974,7 +3997,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -4028,6 +4051,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!114 &579047816349648370 stripped
@@ -4063,7 +4090,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -4080,7 +4107,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -4097,7 +4124,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -4136,11 +4163,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -4180,7 +4207,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -4234,6 +4261,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!114 &851415961438098889 stripped
@@ -4269,7 +4300,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -4286,7 +4317,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -4303,7 +4334,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -4342,11 +4373,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -4386,7 +4417,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -4440,6 +4471,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!114 &825787702140187245 stripped
@@ -4475,7 +4510,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -4492,7 +4527,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -4509,7 +4544,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -4689,11 +4724,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -4733,7 +4768,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -4787,6 +4822,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!114 &1112847519937493728 stripped
@@ -4822,7 +4861,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -4839,7 +4878,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -4856,7 +4895,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -4895,11 +4934,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -4939,7 +4978,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -4993,6 +5032,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!114 &197090070223750592 stripped
@@ -5028,7 +5071,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -5045,7 +5088,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -5062,7 +5105,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -5101,11 +5144,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -5145,7 +5188,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -5199,6 +5242,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!224 &2616961909863712718 stripped
@@ -5228,7 +5275,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -5245,7 +5292,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -5262,7 +5309,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -5307,11 +5354,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -5351,7 +5398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -5405,6 +5452,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!224 &2850860557984448754 stripped
@@ -5434,7 +5485,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -5451,7 +5502,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -5468,7 +5519,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -5513,11 +5564,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -5557,7 +5608,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -5611,6 +5662,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!224 &2520761136152527799 stripped
@@ -5640,7 +5695,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -5657,7 +5712,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -5674,7 +5729,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -5856,11 +5911,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -5900,7 +5955,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -5954,6 +6009,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!224 &3871872847121438832 stripped
@@ -5994,7 +6053,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -6011,7 +6070,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -6028,7 +6087,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -6062,11 +6121,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -6106,7 +6165,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -6160,6 +6219,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!224 &3537159221234758664 stripped
@@ -6200,7 +6263,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -6217,7 +6280,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -6234,7 +6297,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -6268,11 +6331,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -6312,7 +6375,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -6366,6 +6429,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!224 &395741660045306070 stripped
@@ -6395,7 +6462,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -6412,7 +6479,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -6429,7 +6496,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -6619,11 +6686,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -6663,7 +6730,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -6717,6 +6784,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!224 &443365792501371526 stripped
@@ -6746,7 +6817,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -6763,7 +6834,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -6780,7 +6851,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -7099,11 +7170,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -7143,7 +7214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -7197,6 +7268,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!224 &905303986379028998 stripped
@@ -7226,7 +7301,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -7243,7 +7318,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -7260,7 +7335,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
@@ -7685,11 +7760,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013104667643636265, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_Name
@@ -7729,7 +7804,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_SizeDelta.y
@@ -7783,6 +7858,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039752524215460898, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
 --- !u!224 &2140900138674099443 stripped
@@ -7823,7 +7902,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
@@ -7840,7 +7919,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
@@ -7857,7 +7936,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2

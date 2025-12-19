@@ -1,23 +1,14 @@
 ﻿using Sango.Game.Render.UI;
 using System;
 using System.Collections.Generic;
-using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Player
 {
-    public class ObjectSelectSystem : CommandSystemBase
+    public class ObjectSelectSystem : ObjectsDisplaySystem
     {
-        public List<SangoObject> Objects;
         public List<SangoObject> selected = new List<SangoObject>();
         protected Action<List<SangoObject>> sureAction;
-        protected PersonSortGroupType sangoObjectSortGroupType;
-
-        public string customSortTitleName;
-        public List<ObjectSortTitle> customSortItems;
-
         public int selectLimit = 0;
-
-        public Troop TargetTroop { get; set; }
 
         public void Start(List<SangoObject> sangoObjects, List<SangoObject> resultList, int limit, Action<List<SangoObject>> action, List<ObjectSortTitle> customSortTitles, string cutomSortTitleName)
         {
@@ -36,11 +27,6 @@ namespace Sango.Game.Player
             PlayerCommand.Instance.Back();
         }
 
-        public void OnCancel()
-        {
-            PlayerCommand.Instance.Back();
-        }
-
         public bool IsPersonLimit()
         {
             return selectLimit <= selected.Count;
@@ -50,7 +36,6 @@ namespace Sango.Game.Player
         {
             return selected.Count <= 0;
         }
-
 
         public void Add(int index)
         {
@@ -76,33 +61,6 @@ namespace Sango.Game.Player
                     uIObjectSelector.Init(this);
                 }
             }
-        }
-
-        public override void OnDestroy()
-        {
-            Window.Instance.Close("window_object_selector");
-        }
-
-
-        public virtual List<ObjectSortTitle> GetSortTitleGroup(int index)
-        {
-            return customSortItems;
-        }
-
-        public virtual string GetSortTitleGroupName(int index)
-        {
-            return "";
-        }
-
-        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)
-        {
-            switch (eventType)
-            {
-                case CommandEventType.Cancel:
-                case CommandEventType.RClickUp:
-                    OnCancel(); break;
-            }
-
         }
     }
 }

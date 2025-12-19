@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &304057084405316436
+--- !u!1 &322452748823978924
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,11 +8,11 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3708776829742478546}
-  - component: {fileID: 3049034984016918252}
-  - component: {fileID: 2908386886254170827}
-  - component: {fileID: 1199098661935644495}
-  - component: {fileID: 2947535086271684870}
+  - component: {fileID: 3691148219591748650}
+  - component: {fileID: 3031475013010730516}
+  - component: {fileID: 2890472209988356659}
+  - component: {fileID: 1217558215072081847}
+  - component: {fileID: 2929047114427300350}
   m_Layer: 5
   m_Name: item_person_title
   m_TagString: Untagged
@@ -20,21 +20,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &3708776829742478546
+--- !u!224 &3691148219591748650
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 304057084405316436}
+  m_GameObject: {fileID: 322452748823978924}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3080786378849694933}
-  - {fileID: 6127218782367293821}
-  m_Father: {fileID: 8734080045334747305}
+  - {fileID: 3062599187860925485}
+  - {fileID: 6145705242440874373}
+  m_Father: {fileID: 8751620908095520849}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -42,21 +42,21 @@ RectTransform:
   m_AnchoredPosition: {x: 20, y: -127.5}
   m_SizeDelta: {x: 0, y: 32}
   m_Pivot: {x: 0, y: 1}
---- !u!222 &3049034984016918252
+--- !u!222 &3031475013010730516
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 304057084405316436}
+  m_GameObject: {fileID: 322452748823978924}
   m_CullTransparentMesh: 1
---- !u!114 &2908386886254170827
+--- !u!114 &2890472209988356659
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 304057084405316436}
+  m_GameObject: {fileID: 322452748823978924}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
@@ -76,13 +76,13 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &1199098661935644495
+--- !u!114 &1217558215072081847
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 304057084405316436}
+  m_GameObject: {fileID: 322452748823978924}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
@@ -90,19 +90,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 0
---- !u!114 &2947535086271684870
+--- !u!114 &2929047114427300350
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 304057084405316436}
+  m_GameObject: {fileID: 322452748823978924}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a737bb3ba6a98f441b0690e956f2cfea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1423782763994815832
+--- !u!1 &1406220117051114912
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,9 +110,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9142812374488896199}
-  - component: {fileID: 8421761858814021331}
-  - component: {fileID: 4161675738680926493}
+  - component: {fileID: 9124403029496285759}
+  - component: {fileID: 8404196935658903083}
+  - component: {fileID: 4143471461364611557}
   m_Layer: 5
   m_Name: item_person_title_bg_1
   m_TagString: Untagged
@@ -120,19 +120,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &9142812374488896199
+--- !u!224 &9124403029496285759
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1423782763994815832}
+  m_GameObject: {fileID: 1406220117051114912}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8734080045334747305}
+  m_Father: {fileID: 8751620908095520849}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -140,21 +140,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0.7238159, y: -39.648285}
   m_SizeDelta: {x: -31.926, y: -247.6134}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &8421761858814021331
+--- !u!222 &8404196935658903083
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1423782763994815832}
+  m_GameObject: {fileID: 1406220117051114912}
   m_CullTransparentMesh: 1
---- !u!114 &4161675738680926493
+--- !u!114 &4143471461364611557
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1423782763994815832}
+  m_GameObject: {fileID: 1406220117051114912}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &1757399725253435684
+--- !u!1 &1851639006949222812
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,84 +186,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1316660040435741584}
-  - component: {fileID: 3762170690000153964}
-  - component: {fileID: 8509705514447680116}
-  m_Layer: 5
-  m_Name: mask
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1316660040435741584
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1757399725253435684}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5973749658295835790}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &3762170690000153964
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1757399725253435684}
-  m_CullTransparentMesh: 1
---- !u!114 &8509705514447680116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1757399725253435684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a380f2da829d90047a369e7047536782, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!1 &1870111509273391460
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 922149766015704695}
-  - component: {fileID: 1667056711388399534}
+  - component: {fileID: 904534183739147919}
+  - component: {fileID: 1685257071724306262}
   m_Layer: 5
   m_Name: Viewport
   m_TagString: Untagged
@@ -271,19 +195,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &922149766015704695
+--- !u!224 &904534183739147919
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1870111509273391460}
+  m_GameObject: {fileID: 1851639006949222812}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3128816901895660700}
+  m_Father: {fileID: 3110409794604874852}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -291,13 +215,13 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1667056711388399534
+--- !u!114 &1685257071724306262
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1870111509273391460}
+  m_GameObject: {fileID: 1851639006949222812}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
@@ -305,7 +229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
---- !u!1 &3804097768023025117
+--- !u!1 &3786244828647750949
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -313,7 +237,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3128816901895660700}
+  - component: {fileID: 3110409794604874852}
   m_Layer: 5
   m_Name: Loop Vertical Scroll Rect
   m_TagString: Untagged
@@ -321,22 +245,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &3128816901895660700
+--- !u!224 &3110409794604874852
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3804097768023025117}
+  m_GameObject: {fileID: 3786244828647750949}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8925069206507445770}
-  - {fileID: 922149766015704695}
-  - {fileID: 8816711857279544546}
-  m_Father: {fileID: 8734080045334747305}
+  - {fileID: 8907443277633701618}
+  - {fileID: 904534183739147919}
+  - {fileID: 8798608597470950426}
+  m_Father: {fileID: 8751620908095520849}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
@@ -344,7 +268,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0.64904785, y: -447.51913}
   m_SizeDelta: {x: 1161.3082, y: 559.3089}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &4856435979340463816
+--- !u!1 &4838037620886382128
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -352,9 +276,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5927729510072378163}
-  - component: {fileID: 2039305310400243586}
-  - component: {fileID: 1114417673491767233}
+  - component: {fileID: 5909331611200912331}
+  - component: {fileID: 2021199513310625658}
+  - component: {fileID: 1096234703323645753}
   m_Layer: 5
   m_Name: item_person_title_bg
   m_TagString: Untagged
@@ -362,19 +286,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &5927729510072378163
+--- !u!224 &5909331611200912331
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4856435979340463816}
+  m_GameObject: {fileID: 4838037620886382128}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8734080045334747305}
+  m_Father: {fileID: 8751620908095520849}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -382,21 +306,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0.72387695, y: -143.13}
   m_SizeDelta: {x: -31.9265, y: 40.637}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &2039305310400243586
+--- !u!222 &2021199513310625658
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4856435979340463816}
+  m_GameObject: {fileID: 4838037620886382128}
   m_CullTransparentMesh: 1
---- !u!114 &1114417673491767233
+--- !u!114 &1096234703323645753
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4856435979340463816}
+  m_GameObject: {fileID: 4838037620886382128}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -420,7 +344,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &6888356622630910566
+--- !u!1 &6906820358032384670
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -428,9 +352,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 162990942266610658}
-  - component: {fileID: 7076141681181629364}
-  - component: {fileID: 3281015346936554243}
+  - component: {fileID: 144854310516378394}
+  - component: {fileID: 7093782947353953100}
+  - component: {fileID: 3299218009505741819}
   m_Layer: 5
   m_Name: toggleframe
   m_TagString: Untagged
@@ -438,19 +362,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!224 &162990942266610658
+--- !u!224 &144854310516378394
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6888356622630910566}
+  m_GameObject: {fileID: 6906820358032384670}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 3.3623486}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8975250968257638052}
+  m_Father: {fileID: 8993636144248862300}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -458,21 +382,21 @@ RectTransform:
   m_AnchoredPosition: {x: -8.898376, y: -17.285324}
   m_SizeDelta: {x: 1179.0056, y: 43.299896}
   m_Pivot: {x: 0, y: 0.5}
---- !u!222 &7076141681181629364
+--- !u!222 &7093782947353953100
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6888356622630910566}
+  m_GameObject: {fileID: 6906820358032384670}
   m_CullTransparentMesh: 1
---- !u!114 &3281015346936554243
+--- !u!114 &3299218009505741819
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6888356622630910566}
+  m_GameObject: {fileID: 6906820358032384670}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -496,7 +420,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &6963141837578453365
+--- !u!1 &6981603910644226445
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -504,9 +428,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8975250968257638052}
-  - component: {fileID: 6423232123133130785}
-  - component: {fileID: 903171438672500751}
+  - component: {fileID: 8993636144248862300}
+  - component: {fileID: 6440790450399961305}
+  - component: {fileID: 921297271640899831}
   m_Layer: 5
   m_Name: toggleGroup
   m_TagString: Untagged
@@ -514,28 +438,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &8975250968257638052
+--- !u!224 &8993636144248862300
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6963141837578453365}
+  m_GameObject: {fileID: 6981603910644226445}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -3.3623486}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 162990942266610658}
-  - {fileID: 3432675793048724806}
-  - {fileID: 9128873482842178485}
-  - {fileID: 8605688982453505912}
-  - {fileID: 5945564730804108176}
-  - {fileID: 525259120195376474}
-  - {fileID: 1050499225841640037}
-  - {fileID: 7857032814474179156}
-  - {fileID: 9110163006710670055}
-  m_Father: {fileID: 8734080045334747305}
+  - {fileID: 144854310516378394}
+  - {fileID: 3450600837488541118}
+  - {fileID: 9147348845785619277}
+  - {fileID: 8587277997882038144}
+  - {fileID: 5963694721455907688}
+  - {fileID: 507700854282554786}
+  - {fileID: 1068954160821844637}
+  - {fileID: 7874657098342673068}
+  - {fileID: 9091751299502832159}
+  m_Father: {fileID: 8751620908095520849}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -543,26 +467,26 @@ RectTransform:
   m_AnchoredPosition: {x: 76, y: -86.2}
   m_SizeDelta: {x: 100, y: 38.1726}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6423232123133130785
+--- !u!114 &6440790450399961305
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6963141837578453365}
+  m_GameObject: {fileID: 6981603910644226445}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fafe2cfe61f6974895a912c3755e8f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_AllowSwitchOff: 0
---- !u!114 &903171438672500751
+--- !u!114 &921297271640899831
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6963141837578453365}
+  m_GameObject: {fileID: 6981603910644226445}
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
@@ -582,7 +506,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!1 &8291092350120552544
+--- !u!1 &8308666116730777752
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -590,9 +514,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8925069206507445770}
-  - component: {fileID: 981843879027833842}
-  - component: {fileID: 5199234136250463206}
+  - component: {fileID: 8907443277633701618}
+  - component: {fileID: 1000250543969624842}
+  - component: {fileID: 5217082316897135390}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -600,43 +524,43 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &8925069206507445770
+--- !u!224 &8907443277633701618
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8291092350120552544}
+  m_GameObject: {fileID: 8308666116730777752}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 443365792501371526}
-  - {fileID: 6058521046971645930}
-  - {fileID: 2850860557984448754}
-  - {fileID: 3537159221234758664}
-  - {fileID: 905303986379028998}
-  - {fileID: 9142477421308552982}
-  - {fileID: 7526373990285909093}
-  - {fileID: 6870039338550317686}
-  - {fileID: 2140900138674099443}
-  - {fileID: 5075900098671358437}
-  - {fileID: 5555439597056033055}
-  - {fileID: 2520761136152527799}
-  - {fileID: 3871872847121438832}
-  - {fileID: 2616961909863712718}
-  - {fileID: 8351935923239368404}
-  - {fileID: 8296889318487879121}
-  - {fileID: 6241625921548346843}
-  - {fileID: 8297806450436325264}
-  - {fileID: 5710054458853983578}
-  - {fileID: 6144486240757920885}
-  - {fileID: 395741660045306070}
-  - {fileID: 6188593316717482564}
-  - {fileID: 6213747511697097343}
-  - {fileID: 5952312654914497878}
-  m_Father: {fileID: 3128816901895660700}
+  - {fileID: 461207235275623038}
+  - {fileID: 6076938735865554706}
+  - {fileID: 2869327106431440906}
+  - {fileID: 3555359692133428464}
+  - {fileID: 923772777972294398}
+  - {fileID: 9124633252312334318}
+  - {fileID: 7508241766371296413}
+  - {fileID: 6851918139696564878}
+  - {fileID: 2159385908290915339}
+  - {fileID: 5057708823285213469}
+  - {fileID: 5573571494639901159}
+  - {fileID: 2502354025732660047}
+  - {fileID: 3889430610574065800}
+  - {fileID: 2598858057346490166}
+  - {fileID: 8334375273578016300}
+  - {fileID: 8315289506590291241}
+  - {fileID: 6259751605418687779}
+  - {fileID: 8315356161865459560}
+  - {fileID: 5728472182133857698}
+  - {fileID: 6126081806112238733}
+  - {fileID: 377277275033956398}
+  - {fileID: 6171026098884070076}
+  - {fileID: 6231298733897112199}
+  - {fileID: 5970492780602373550}
+  m_Father: {fileID: 3110409794604874852}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -644,13 +568,13 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 963, y: 0}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &981843879027833842
+--- !u!114 &1000250543969624842
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8291092350120552544}
+  m_GameObject: {fileID: 8308666116730777752}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
@@ -670,13 +594,13 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &5199234136250463206
+--- !u!114 &5217082316897135390
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8291092350120552544}
+  m_GameObject: {fileID: 8308666116730777752}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
@@ -684,7 +608,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
---- !u!1 &9039031632039893254
+--- !u!1 &9185141378404209488
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -692,220 +616,65 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5973749658295835790}
-  - component: {fileID: 174056003858870177}
-  - component: {fileID: 576643473640125865}
-  - component: {fileID: 4285155316148925842}
+  - component: {fileID: 8751620908095520849}
+  - component: {fileID: 4415383776963768060}
+  - component: {fileID: 5142937753310465906}
+  - component: {fileID: 1320648669890859787}
   m_Layer: 5
-  m_Name: window_object_selector
+  m_Name: display_object_root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &5973749658295835790
+--- !u!224 &8751620908095520849
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9039031632039893254}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 1316660040435741584}
-  - {fileID: 8734080045334747305}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
---- !u!223 &174056003858870177
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9039031632039893254}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 1
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: -903361245
-  m_SortingOrder: 1000
-  m_TargetDisplay: 0
---- !u!114 &576643473640125865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9039031632039893254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 32
---- !u!114 &4285155316148925842
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9039031632039893254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 703b885bf0bd69d48aad153483a5de2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toggleGroup:
-  - {fileID: 6044875620745559979}
-  - {fileID: 211845358093850968}
-  - {fileID: 805417156993291669}
-  - {fileID: 3369261745714372989}
-  - {fileID: 8866178404952756151}
-  - {fileID: 8274512542297520264}
-  - {fileID: 1245579121881737401}
-  - {fileID: 156828666692745226}
-  uIObjectListItems:
-  - {fileID: 6614761905727423792}
-  - {fileID: 720379076321814620}
-  - {fileID: 8825708008633014084}
-  - {fileID: 7853714443035747262}
-  - {fileID: 5871344895715454384}
-  - {fileID: 2525365970761019552}
-  - {fileID: 3861961451393174483}
-  - {fileID: 197090070223750592}
-  - {fileID: 4638001092971512645}
-  - {fileID: 1988976960543188563}
-  - {fileID: 1221494608297186985}
-  - {fileID: 9156089463519745025}
-  - {fileID: 7516749575396691910}
-  - {fileID: 8771372440607936632}
-  - {fileID: 3315622695066952034}
-  - {fileID: 3372920000372423271}
-  - {fileID: 825787702140187245}
-  - {fileID: 3372289290934577190}
-  - {fileID: 1357074941053326060}
-  - {fileID: 625689807784731587}
-  - {fileID: 6383439947082448736}
-  - {fileID: 579047816349648370}
-  - {fileID: 851415961438098889}
-  - {fileID: 1112847519937493728}
-  scrollbar: {fileID: 4068711469854008411}
-  sortTitleItem: {fileID: 4812628535542239739}
-  selectSortBtn: {fileID: 8232714500853857732}
-  sorltTitleTransform: {fileID: 3708776829742478546}
-  uIObjectListItemsRect:
-  - {fileID: 443365792501371526}
-  - {fileID: 6058521046971645930}
-  - {fileID: 2850860557984448754}
-  - {fileID: 3537159221234758664}
-  - {fileID: 905303986379028998}
-  - {fileID: 9142477421308552982}
-  - {fileID: 7526373990285909093}
-  - {fileID: 6870039338550317686}
-  - {fileID: 2140900138674099443}
-  - {fileID: 5075900098671358437}
-  - {fileID: 5555439597056033055}
-  - {fileID: 2520761136152527799}
-  - {fileID: 3871872847121438832}
-  - {fileID: 2616961909863712718}
-  - {fileID: 8351935923239368404}
-  - {fileID: 8296889318487879121}
-  - {fileID: 6241625921548346843}
-  - {fileID: 8297806450436325264}
-  - {fileID: 5710054458853983578}
-  - {fileID: 6144486240757920885}
-  - {fileID: 395741660045306070}
-  - {fileID: 6188593316717482564}
-  - {fileID: 6213747511697097343}
-  - {fileID: 5952312654914497878}
---- !u!1 &9167501678661684136
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8734080045334747305}
-  - component: {fileID: 4397544555610224132}
-  - component: {fileID: 5124759911530436490}
-  - component: {fileID: 1302188628294028275}
-  m_Layer: 5
-  m_Name: root
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &8734080045334747305
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9167501678661684136}
+  m_GameObject: {fileID: 9185141378404209488}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5207262687183987893}
-  - {fileID: 4465690715815389107}
-  - {fileID: 9142812374488896199}
-  - {fileID: 5927729510072378163}
-  - {fileID: 3708776829742478546}
-  - {fileID: 5113276684754653622}
-  - {fileID: 3128816901895660700}
-  - {fileID: 8975250968257638052}
-  m_Father: {fileID: 5973749658295835790}
-  m_RootOrder: 1
+  - {fileID: 5188787290013727821}
+  - {fileID: 4447583169734295371}
+  - {fileID: 9124403029496285759}
+  - {fileID: 5909331611200912331}
+  - {fileID: 3691148219591748650}
+  - {fileID: 5095732071444089166}
+  - {fileID: 3110409794604874852}
+  - {fileID: 8993636144248862300}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -8.053223}
   m_SizeDelta: {x: 1200, y: 816.1064}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4397544555610224132
+--- !u!114 &4415383776963768060
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9167501678661684136}
+  m_GameObject: {fileID: 9185141378404209488}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 370194d3861052b40a08ef39bf1f341f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragRect: {fileID: 9219872030424774454}
---- !u!114 &5124759911530436490
+  dragRect: {fileID: 9201486931776253902}
+--- !u!114 &5142937753310465906
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9167501678661684136}
+  m_GameObject: {fileID: 9185141378404209488}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1245b4da1b56ef04ea4e29e03bce86ff, type: 3}
@@ -917,25 +686,25 @@ MonoBehaviour:
   delayTime: 0
   cachePosition: {x: 0, y: 0}
   dontResetCachePosition: 1
---- !u!114 &1302188628294028275
+--- !u!114 &1320648669890859787
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9167501678661684136}
+  m_GameObject: {fileID: 9185141378404209488}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5d6125d06f1fef4aa9861c00314c119, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originalHeight: 1080
---- !u!1001 &724987993149157297
+  originalHeight: 900
+--- !u!1001 &742535260780050249
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 3708776829742478546}
+    m_TransformParent: {fileID: 3691148219591748650}
     m_Modifications:
     - target: {fileID: 795524378561782492, guid: 9fa6f74c916481444acc962c2cb3c7e7, type: 3}
       propertyPath: m_Layer
@@ -975,7 +744,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2363978993333869412, guid: 9fa6f74c916481444acc962c2cb3c7e7, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 25
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 2363978993333869412, guid: 9fa6f74c916481444acc962c2cb3c7e7, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1052,25 +821,20 @@ PrefabInstance:
     - target: {fileID: 9184444476421416857, guid: 9fa6f74c916481444acc962c2cb3c7e7, type: 3}
       propertyPath: sortGroup
       value: 
-      objectReference: {fileID: 2947535086271684870}
+      objectReference: {fileID: 2929047114427300350}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fa6f74c916481444acc962c2cb3c7e7, type: 3}
---- !u!224 &3080786378849694933 stripped
+--- !u!224 &3062599187860925485 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2363978993333869412, guid: 9fa6f74c916481444acc962c2cb3c7e7, type: 3}
-  m_PrefabInstance: {fileID: 724987993149157297}
+  m_PrefabInstance: {fileID: 742535260780050249}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8232714500853857732 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8669383675882623605, guid: 9fa6f74c916481444acc962c2cb3c7e7, type: 3}
-  m_PrefabInstance: {fileID: 724987993149157297}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &866432989018020164
+--- !u!1001 &884851125691498940
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1186,18 +950,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!1 &3121081371808366180 stripped
+--- !u!1 &3103509725951747740 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 866432989018020164}
+  m_PrefabInstance: {fileID: 884851125691498940}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &588204555581526997
+--- !u!114 &605760206967606061
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3121081371808366180}
+  m_GameObject: {fileID: 3103509725951747740}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -1208,12 +972,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 3861961451393174483}
+            m_ObjectArgument: {fileID: 3880376808132170539}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -1225,12 +989,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 3861961451393174483}
+            m_ObjectArgument: {fileID: 3880376808132170539}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -1242,12 +1006,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 3861961451393174483}
+            m_ObjectArgument: {fileID: 3880376808132170539}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -1255,28 +1019,28 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &3861961451393174483 stripped
+--- !u!114 &3880376808132170539 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 866432989018020164}
+  m_PrefabInstance: {fileID: 884851125691498940}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3121081371808366180}
+  m_GameObject: {fileID: 3103509725951747740}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &7526373990285909093 stripped
+--- !u!224 &7508241766371296413 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 866432989018020164}
+  m_PrefabInstance: {fileID: 884851125691498940}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1332765181953393985
+--- !u!1001 &1314841636420476345
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8975250968257638052}
+    m_TransformParent: {fileID: 8993636144248862300}
     m_Modifications:
     - target: {fileID: 2083743472045156132, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
       propertyPath: m_Pivot.x
@@ -1389,31 +1153,20 @@ PrefabInstance:
     - target: {fileID: 6965405672376581577, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
       propertyPath: m_Group
       value: 
-      objectReference: {fileID: 6423232123133130785}
+      objectReference: {fileID: 6440790450399961305}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
---- !u!224 &1050499225841640037 stripped
+--- !u!224 &1068954160821844637 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2083743472045156132, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
-  m_PrefabInstance: {fileID: 1332765181953393985}
+  m_PrefabInstance: {fileID: 1314841636420476345}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8274512542297520264 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6965405672376581577, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
-  m_PrefabInstance: {fileID: 1332765181953393985}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1001 &1680200630772279536
+--- !u!1001 &1662086432740257800
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1529,29 +1282,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!114 &3372920000372423271 stripped
+--- !u!114 &3354807343176557215 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 1680200630772279536}
+  m_PrefabInstance: {fileID: 1662086432740257800}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3460800106611150800}
+  m_GameObject: {fileID: 3478630506098726696}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &3460800106611150800 stripped
+--- !u!1 &3478630506098726696 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 1680200630772279536}
+  m_PrefabInstance: {fileID: 1662086432740257800}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7412835686762433739
+--- !u!114 &7394349388828202035
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3460800106611150800}
+  m_GameObject: {fileID: 3478630506098726696}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -1562,12 +1315,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 3372920000372423271}
+            m_ObjectArgument: {fileID: 3354807343176557215}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -1579,12 +1332,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 3372920000372423271}
+            m_ObjectArgument: {fileID: 3354807343176557215}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -1596,12 +1349,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 3372920000372423271}
+            m_ObjectArgument: {fileID: 3354807343176557215}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -1609,17 +1362,17 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!224 &8296889318487879121 stripped
+--- !u!224 &8315289506590291241 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 1680200630772279536}
+  m_PrefabInstance: {fileID: 1662086432740257800}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1680553438512020145
+--- !u!1001 &1662717962516881993
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1735,29 +1488,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!114 &3372289290934577190 stripped
+--- !u!114 &3354452065830662366 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 1680553438512020145}
+  m_PrefabInstance: {fileID: 1662717962516881993}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3460163904312794513}
+  m_GameObject: {fileID: 3478282921173468521}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &3460163904312794513 stripped
+--- !u!1 &3478282921173468521 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 1680553438512020145}
+  m_PrefabInstance: {fileID: 1662717962516881993}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4136707823650865208
+--- !u!114 &4118865693684865216
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3460163904312794513}
+  m_GameObject: {fileID: 3478282921173468521}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -1768,12 +1521,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 3372289290934577190}
+            m_ObjectArgument: {fileID: 3354452065830662366}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -1785,12 +1538,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 3372289290934577190}
+            m_ObjectArgument: {fileID: 3354452065830662366}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -1802,12 +1555,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 3372289290934577190}
+            m_ObjectArgument: {fileID: 3354452065830662366}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -1815,17 +1568,119 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!224 &8297806450436325264 stripped
+--- !u!224 &8315356161865459560 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 1680553438512020145}
+  m_PrefabInstance: {fileID: 1662717962516881993}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1701573455228695541
+--- !u!1001 &1694665767659795657
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8751620908095520849}
+    m_Modifications:
+    - target: {fileID: 1133357189973749116, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_Name
+      value: frame_bg
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -25.3069
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -201.3238
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 12.997192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -19.092407
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+--- !u!224 &4447583169734295371 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
+  m_PrefabInstance: {fileID: 1694665767659795657}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1719419948931541773
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1941,29 +1796,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!114 &3315622695066952034 stripped
+--- !u!114 &3333466477555317146 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 1701573455228695541}
+  m_PrefabInstance: {fileID: 1719419948931541773}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3515986143986537685}
+  m_GameObject: {fileID: 3497860516073196589}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &3515986143986537685 stripped
+--- !u!1 &3497860516073196589 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 1701573455228695541}
+  m_PrefabInstance: {fileID: 1719419948931541773}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3049775928709155304
+--- !u!114 &3031859693347934480
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3515986143986537685}
+  m_GameObject: {fileID: 3497860516073196589}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -1974,12 +1829,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 3315622695066952034}
+            m_ObjectArgument: {fileID: 3333466477555317146}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -1991,12 +1846,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 3315622695066952034}
+            m_ObjectArgument: {fileID: 3333466477555317146}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -2008,12 +1863,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 3315622695066952034}
+            m_ObjectArgument: {fileID: 3333466477555317146}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -2021,119 +1876,17 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!224 &8351935923239368404 stripped
+--- !u!224 &8334375273578016300 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 1701573455228695541}
+  m_PrefabInstance: {fileID: 1719419948931541773}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1712782753026239537
+--- !u!1001 &1933179946271341263
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8734080045334747305}
-    m_Modifications:
-    - target: {fileID: 1133357189973749116, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_Name
-      value: frame_bg
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: -25.3069
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: -201.3238
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 12.997192
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -19.092407
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
---- !u!224 &4465690715815389107 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-  m_PrefabInstance: {fileID: 1712782753026239537}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &1915621610560315959
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2249,29 +2002,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!114 &2525365970761019552 stripped
+--- !u!114 &2542925924617873496 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 1915621610560315959}
+  m_PrefabInstance: {fileID: 1933179946271341263}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4450639977468052759}
+  m_GameObject: {fileID: 4432234884668972527}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &4450639977468052759 stripped
+--- !u!1 &4432234884668972527 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 1915621610560315959}
+  m_PrefabInstance: {fileID: 1933179946271341263}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3676879534723148281
+--- !u!114 &3695002468597936385
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4450639977468052759}
+  m_GameObject: {fileID: 4432234884668972527}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -2282,12 +2035,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 2525365970761019552}
+            m_ObjectArgument: {fileID: 2542925924617873496}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -2299,12 +2052,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 2525365970761019552}
+            m_ObjectArgument: {fileID: 2542925924617873496}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -2316,12 +2069,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 2525365970761019552}
+            m_ObjectArgument: {fileID: 2542925924617873496}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -2329,17 +2082,17 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!224 &9142477421308552982 stripped
+--- !u!224 &9124633252312334318 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 1915621610560315959}
+  m_PrefabInstance: {fileID: 1933179946271341263}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1990848075199804030
+--- !u!1001 &2008964533370415750
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8975250968257638052}
+    m_TransformParent: {fileID: 8993636144248862300}
     m_Modifications:
     - target: {fileID: 2083743472045156132, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
       propertyPath: m_Pivot.x
@@ -2452,36 +2205,25 @@ PrefabInstance:
     - target: {fileID: 6965405672376581577, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
       propertyPath: m_Group
       value: 
-      objectReference: {fileID: 6423232123133130785}
+      objectReference: {fileID: 6440790450399961305}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
---- !u!224 &525259120195376474 stripped
+--- !u!224 &507700854282554786 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2083743472045156132, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
-  m_PrefabInstance: {fileID: 1990848075199804030}
+  m_PrefabInstance: {fileID: 2008964533370415750}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8866178404952756151 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6965405672376581577, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
-  m_PrefabInstance: {fileID: 1990848075199804030}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1001 &2044860201333122121
+--- !u!1001 &2027010002146852017
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8734080045334747305}
+    m_TransformParent: {fileID: 8751620908095520849}
     m_Modifications:
     - target: {fileID: 4047078994823135925, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4285155316148925842}
+      objectReference: {fileID: 0}
     - target: {fileID: 4047078994823135925, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnSure
@@ -2490,6 +2232,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 4981427211202277705, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5403531806318675778, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_Layer
       value: 5
@@ -2497,7 +2243,7 @@ PrefabInstance:
     - target: {fileID: 5788964857443963546, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4285155316148925842}
+      objectReference: {fileID: 0}
     - target: {fileID: 5788964857443963546, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnCancel
@@ -2602,6 +2348,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7283794659537304192, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8781529737710856827, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_Layer
       value: 5
@@ -2640,22 +2390,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
---- !u!224 &5207262687183987893 stripped
+--- !u!224 &5188787290013727821 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6062729483653480700, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
-  m_PrefabInstance: {fileID: 2044860201333122121}
+  m_PrefabInstance: {fileID: 2027010002146852017}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &9219872030424774454 stripped
+--- !u!224 &9201486931776253902 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7175181193469252479, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
-  m_PrefabInstance: {fileID: 2044860201333122121}
+  m_PrefabInstance: {fileID: 2027010002146852017}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &2451089925820347588
+--- !u!1001 &2469566967936478268
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2771,18 +2521,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!1 &383504721399239652 stripped
+--- !u!1 &365870038340913948 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 2451089925820347588}
+  m_PrefabInstance: {fileID: 2469566967936478268}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2748325655260429003
+--- !u!114 &2766807490699518515
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 383504721399239652}
+  m_GameObject: {fileID: 365870038340913948}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -2793,12 +2543,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 1988976960543188563}
+            m_ObjectArgument: {fileID: 2007456849132519083}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -2810,12 +2560,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 1988976960543188563}
+            m_ObjectArgument: {fileID: 2007456849132519083}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -2827,12 +2577,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 1988976960543188563}
+            m_ObjectArgument: {fileID: 2007456849132519083}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -2840,28 +2590,28 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &1988976960543188563 stripped
+--- !u!114 &2007456849132519083 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 2451089925820347588}
+  m_PrefabInstance: {fileID: 2469566967936478268}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 383504721399239652}
+  m_GameObject: {fileID: 365870038340913948}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &5075900098671358437 stripped
+--- !u!224 &5057708823285213469 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 2451089925820347588}
+  m_PrefabInstance: {fileID: 2469566967936478268}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &2785398261008882198
+--- !u!1001 &2802953838414775022
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 3128816901895660700}
+    m_TransformParent: {fileID: 3110409794604874852}
     m_Modifications:
     - target: {fileID: 339987350857063987, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2886,7 +2636,7 @@ PrefabInstance:
     - target: {fileID: 674654685042760257, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4285155316148925842}
+      objectReference: {fileID: 0}
     - target: {fileID: 674654685042760257, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -2918,7 +2668,7 @@ PrefabInstance:
     - target: {fileID: 2220643449552010829, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4285155316148925842}
+      objectReference: {fileID: 0}
     - target: {fileID: 2220643449552010829, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -2946,7 +2696,7 @@ PrefabInstance:
     - target: {fileID: 4755714639111395937, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4285155316148925842}
+      objectReference: {fileID: 0}
     - target: {fileID: 4755714639111395937, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -3069,28 +2819,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
---- !u!114 &4068711469854008411 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2220643449552010829, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
-  m_PrefabInstance: {fileID: 2785398261008882198}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a4db7a114972834c8e4117be1d82ba3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!224 &8816711857279544546 stripped
+--- !u!224 &8798608597470950426 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6700503356650288884, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
-  m_PrefabInstance: {fileID: 2785398261008882198}
+  m_PrefabInstance: {fileID: 2802953838414775022}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &2985287951074214974
+--- !u!1001 &2966870278185114822
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3206,18 +2945,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!1 &1025590761257231134 stripped
+--- !u!1 &1043161668466768870 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 2985287951074214974}
+  m_PrefabInstance: {fileID: 2966870278185114822}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1131851580094196095
+--- !u!114 &1149695933904171399
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1025590761257231134}
+  m_GameObject: {fileID: 1043161668466768870}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -3228,12 +2967,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 1221494608297186985}
+            m_ObjectArgument: {fileID: 1203078478357909073}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -3245,12 +2984,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 1221494608297186985}
+            m_ObjectArgument: {fileID: 1203078478357909073}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -3262,12 +3001,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 1221494608297186985}
+            m_ObjectArgument: {fileID: 1203078478357909073}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -3275,28 +3014,28 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &1221494608297186985 stripped
+--- !u!114 &1203078478357909073 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 2985287951074214974}
+  m_PrefabInstance: {fileID: 2966870278185114822}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1025590761257231134}
+  m_GameObject: {fileID: 1043161668466768870}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &5555439597056033055 stripped
+--- !u!224 &5573571494639901159 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 2985287951074214974}
+  m_PrefabInstance: {fileID: 2966870278185114822}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3119601688059756667
+--- !u!1001 &3101469875393648771
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3412,18 +3151,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!1 &872981423783569243 stripped
+--- !u!1 &890829429315043235 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 3119601688059756667}
+  m_PrefabInstance: {fileID: 3101469875393648771}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4688564652566304205
+--- !u!114 &4706419847855197493
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 872981423783569243}
+  m_GameObject: {fileID: 890829429315043235}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -3434,12 +3173,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 1357074941053326060}
+            m_ObjectArgument: {fileID: 1338944748680530452}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -3451,12 +3190,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 1357074941053326060}
+            m_ObjectArgument: {fileID: 1338944748680530452}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -3468,12 +3207,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 1357074941053326060}
+            m_ObjectArgument: {fileID: 1338944748680530452}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -3481,28 +3220,28 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &1357074941053326060 stripped
+--- !u!114 &1338944748680530452 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 3119601688059756667}
+  m_PrefabInstance: {fileID: 3101469875393648771}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 872981423783569243}
+  m_GameObject: {fileID: 890829429315043235}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &5710054458853983578 stripped
+--- !u!224 &5728472182133857698 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 3119601688059756667}
+  m_PrefabInstance: {fileID: 3101469875393648771}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3486082674670090955
+--- !u!1001 &3467950827651572275
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3618,29 +3357,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!114 &720379076321814620 stripped
+--- !u!114 &702248918282547364 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 3486082674670090955}
+  m_PrefabInstance: {fileID: 3467950827651572275}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1672932740673707499}
+  m_GameObject: {fileID: 1690780780538692883}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1672932740673707499 stripped
+--- !u!1 &1690780780538692883 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 3486082674670090955}
+  m_PrefabInstance: {fileID: 3467950827651572275}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7830823688930095939
+--- !u!114 &7848934091151862715
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1672932740673707499}
+  m_GameObject: {fileID: 1690780780538692883}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -3651,12 +3390,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 720379076321814620}
+            m_ObjectArgument: {fileID: 702248918282547364}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -3668,12 +3407,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 720379076321814620}
+            m_ObjectArgument: {fileID: 702248918282547364}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -3685,12 +3424,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 720379076321814620}
+            m_ObjectArgument: {fileID: 702248918282547364}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -3698,17 +3437,17 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!224 &6058521046971645930 stripped
+--- !u!224 &6076938735865554706 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 3486082674670090955}
+  m_PrefabInstance: {fileID: 3467950827651572275}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3544514172983505236
+--- !u!1001 &3562641441587980716
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3824,29 +3563,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!114 &625689807784731587 stripped
+--- !u!114 &643815524815108923 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 3544514172983505236}
+  m_PrefabInstance: {fileID: 3562641441587980716}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1614217288974882420}
+  m_GameObject: {fileID: 1596373569826147980}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1614217288974882420 stripped
+--- !u!1 &1596373569826147980 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 3544514172983505236}
+  m_PrefabInstance: {fileID: 3562641441587980716}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4173541070930825935
+--- !u!114 &4155355855622949431
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1614217288974882420}
+  m_GameObject: {fileID: 1596373569826147980}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -3857,12 +3596,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 625689807784731587}
+            m_ObjectArgument: {fileID: 643815524815108923}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -3874,12 +3613,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 625689807784731587}
+            m_ObjectArgument: {fileID: 643815524815108923}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -3891,12 +3630,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 625689807784731587}
+            m_ObjectArgument: {fileID: 643815524815108923}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -3904,17 +3643,17 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!224 &6144486240757920885 stripped
+--- !u!224 &6126081806112238733 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 3544514172983505236}
+  m_PrefabInstance: {fileID: 3562641441587980716}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3573449792286562149
+--- !u!1001 &3591302912124653469
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4030,29 +3769,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!114 &579047816349648370 stripped
+--- !u!114 &596902547891395850 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 3573449792286562149}
+  m_PrefabInstance: {fileID: 3591302912124653469}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1639608683091439685}
+  m_GameObject: {fileID: 1621472022387534013}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1639608683091439685 stripped
+--- !u!1 &1621472022387534013 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 3573449792286562149}
+  m_PrefabInstance: {fileID: 3591302912124653469}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4006802752847412552
+--- !u!114 &4024716685174760880
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1639608683091439685}
+  m_GameObject: {fileID: 1621472022387534013}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -4063,12 +3802,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 579047816349648370}
+            m_ObjectArgument: {fileID: 596902547891395850}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -4080,12 +3819,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 579047816349648370}
+            m_ObjectArgument: {fileID: 596902547891395850}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -4097,12 +3836,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 579047816349648370}
+            m_ObjectArgument: {fileID: 596902547891395850}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -4110,17 +3849,17 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!224 &6188593316717482564 stripped
+--- !u!224 &6171026098884070076 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 3573449792286562149}
+  m_PrefabInstance: {fileID: 3591302912124653469}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3625000787795380062
+--- !u!1001 &3607163798880067494
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4236,29 +3975,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!114 &851415961438098889 stripped
+--- !u!114 &833580524063067441 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 3625000787795380062}
+  m_PrefabInstance: {fileID: 3607163798880067494}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1520221939282387070}
+  m_GameObject: {fileID: 1538338345892296838}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1520221939282387070 stripped
+--- !u!1 &1538338345892296838 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 3625000787795380062}
+  m_PrefabInstance: {fileID: 3607163798880067494}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1815950845634277580
+--- !u!114 &1833566428023941172
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1520221939282387070}
+  m_GameObject: {fileID: 1538338345892296838}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -4269,12 +4008,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 851415961438098889}
+            m_ObjectArgument: {fileID: 833580524063067441}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -4286,12 +4025,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 851415961438098889}
+            m_ObjectArgument: {fileID: 833580524063067441}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -4303,12 +4042,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 851415961438098889}
+            m_ObjectArgument: {fileID: 833580524063067441}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -4316,17 +4055,17 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!224 &6213747511697097343 stripped
+--- !u!224 &6231298733897112199 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 3625000787795380062}
+  m_PrefabInstance: {fileID: 3607163798880067494}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3669176708887486714
+--- !u!1001 &3650773987808196610
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4442,29 +4181,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!114 &825787702140187245 stripped
+--- !u!114 &807383300637764245 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 3669176708887486714}
+  m_PrefabInstance: {fileID: 3650773987808196610}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1566678763821893594}
+  m_GameObject: {fileID: 1584239400721293090}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1566678763821893594 stripped
+--- !u!1 &1584239400721293090 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 3669176708887486714}
+  m_PrefabInstance: {fileID: 3650773987808196610}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4519776198102133622
+--- !u!114 &4537613976377209742
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1566678763821893594}
+  m_GameObject: {fileID: 1584239400721293090}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -4475,12 +4214,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 825787702140187245}
+            m_ObjectArgument: {fileID: 807383300637764245}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -4492,12 +4231,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 825787702140187245}
+            m_ObjectArgument: {fileID: 807383300637764245}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -4509,12 +4248,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 825787702140187245}
+            m_ObjectArgument: {fileID: 807383300637764245}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -4522,17 +4261,17 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!224 &6241625921548346843 stripped
+--- !u!224 &6259751605418687779 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 3669176708887486714}
+  m_PrefabInstance: {fileID: 3650773987808196610}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3695662916566647394
+--- !u!1001 &3677205073871575706
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8975250968257638052}
+    m_TransformParent: {fileID: 8993636144248862300}
     m_Modifications:
     - target: {fileID: 2083743472045156132, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
       propertyPath: m_Pivot.x
@@ -4645,35 +4384,24 @@ PrefabInstance:
     - target: {fileID: 6965405672376581577, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
       propertyPath: m_Group
       value: 
-      objectReference: {fileID: 6423232123133130785}
+      objectReference: {fileID: 6440790450399961305}
     - target: {fileID: 6965405672376581577, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
       propertyPath: m_Interactable
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
---- !u!224 &3432675793048724806 stripped
+--- !u!224 &3450600837488541118 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2083743472045156132, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
-  m_PrefabInstance: {fileID: 3695662916566647394}
+  m_PrefabInstance: {fileID: 3677205073871575706}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6044875620745559979 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6965405672376581577, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
-  m_PrefabInstance: {fileID: 3695662916566647394}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1001 &3958630677504583799
+--- !u!1001 &3940173581194162319
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4789,29 +4517,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!114 &1112847519937493728 stripped
+--- !u!114 &1094391975201169944 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 3958630677504583799}
+  m_PrefabInstance: {fileID: 3940173581194162319}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1277227266618642263}
+  m_GameObject: {fileID: 1294837880716548015}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1277227266618642263 stripped
+--- !u!1 &1294837880716548015 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 3958630677504583799}
+  m_PrefabInstance: {fileID: 3940173581194162319}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &19983709919484870
+--- !u!114 &2058610823693118
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1277227266618642263}
+  m_GameObject: {fileID: 1294837880716548015}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -4822,12 +4550,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 1112847519937493728}
+            m_ObjectArgument: {fileID: 1094391975201169944}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -4839,12 +4567,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 1112847519937493728}
+            m_ObjectArgument: {fileID: 1094391975201169944}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -4856,12 +4584,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 1112847519937493728}
+            m_ObjectArgument: {fileID: 1094391975201169944}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -4869,17 +4597,17 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!224 &5952312654914497878 stripped
+--- !u!224 &5970492780602373550 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 3958630677504583799}
+  m_PrefabInstance: {fileID: 3940173581194162319}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &4261096922227545943
+--- !u!1001 &4279504093955297199
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4995,29 +4723,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!114 &197090070223750592 stripped
+--- !u!114 &215498782787935544 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 4261096922227545943}
+  m_PrefabInstance: {fileID: 4279504093955297199}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2050276774834778231}
+  m_GameObject: {fileID: 2032711687272507535}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &2050276774834778231 stripped
+--- !u!1 &2032711687272507535 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 4261096922227545943}
+  m_PrefabInstance: {fileID: 4279504093955297199}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5301367148280834326
+--- !u!114 &5319756159804994030
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2050276774834778231}
+  m_GameObject: {fileID: 2032711687272507535}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -5028,12 +4756,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 197090070223750592}
+            m_ObjectArgument: {fileID: 215498782787935544}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -5045,12 +4773,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 197090070223750592}
+            m_ObjectArgument: {fileID: 215498782787935544}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -5062,12 +4790,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 197090070223750592}
+            m_ObjectArgument: {fileID: 215498782787935544}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -5075,17 +4803,17 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!224 &6870039338550317686 stripped
+--- !u!224 &6851918139696564878 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 4261096922227545943}
+  m_PrefabInstance: {fileID: 4279504093955297199}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &4621939582454579951
+--- !u!1001 &4640329190966483479
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5201,23 +4929,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!224 &2616961909863712718 stripped
+--- !u!224 &2598858057346490166 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 4621939582454579951}
+  m_PrefabInstance: {fileID: 4640329190966483479}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7454041506838832591 stripped
+--- !u!1 &7436494248797437239 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 4621939582454579951}
+  m_PrefabInstance: {fileID: 4640329190966483479}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6439322153646956004
+--- !u!114 &6421216342749545756
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7454041506838832591}
+  m_GameObject: {fileID: 7436494248797437239}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -5228,12 +4956,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 8771372440607936632}
+            m_ObjectArgument: {fileID: 8789763806851844224}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -5245,12 +4973,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 8771372440607936632}
+            m_ObjectArgument: {fileID: 8789763806851844224}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -5262,12 +4990,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 8771372440607936632}
+            m_ObjectArgument: {fileID: 8789763806851844224}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -5275,23 +5003,23 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &8771372440607936632 stripped
+--- !u!114 &8789763806851844224 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 4621939582454579951}
+  m_PrefabInstance: {fileID: 4640329190966483479}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7454041506838832591}
+  m_GameObject: {fileID: 7436494248797437239}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &4892448376906810835
+--- !u!1001 &4874259011682999595
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5407,23 +5135,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!224 &2850860557984448754 stripped
+--- !u!224 &2869327106431440906 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 4892448376906810835}
+  m_PrefabInstance: {fileID: 4874259011682999595}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7256153520327828211 stripped
+--- !u!1 &7274059353277872651 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 4892448376906810835}
+  m_PrefabInstance: {fileID: 4874259011682999595}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4720182080685335855
+--- !u!114 &4738028458549116375
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7256153520327828211}
+  m_GameObject: {fileID: 7274059353277872651}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -5434,12 +5162,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 8825708008633014084}
+            m_ObjectArgument: {fileID: 8807521294461374396}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -5451,12 +5179,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 8825708008633014084}
+            m_ObjectArgument: {fileID: 8807521294461374396}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -5468,12 +5196,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 8825708008633014084}
+            m_ObjectArgument: {fileID: 8807521294461374396}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -5481,23 +5209,23 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &8825708008633014084 stripped
+--- !u!114 &8807521294461374396 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 4892448376906810835}
+  m_PrefabInstance: {fileID: 4874259011682999595}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7256153520327828211}
+  m_GameObject: {fileID: 7274059353277872651}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &5084202892246189718
+--- !u!1001 &5102324152181857902
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5613,23 +5341,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!224 &2520761136152527799 stripped
+--- !u!224 &2502354025732660047 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 5084202892246189718}
+  m_PrefabInstance: {fileID: 5102324152181857902}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7050606604696789430 stripped
+--- !u!1 &7032764470381427022 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 5084202892246189718}
+  m_PrefabInstance: {fileID: 5102324152181857902}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4955640682375712538
+--- !u!114 &4937167498195867618
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7050606604696789430}
+  m_GameObject: {fileID: 7032764470381427022}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -5640,12 +5368,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 9156089463519745025}
+            m_ObjectArgument: {fileID: 9174212341567425785}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -5657,12 +5385,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 9156089463519745025}
+            m_ObjectArgument: {fileID: 9174212341567425785}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -5674,12 +5402,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 9156089463519745025}
+            m_ObjectArgument: {fileID: 9174212341567425785}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -5687,23 +5415,23 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &9156089463519745025 stripped
+--- !u!114 &9174212341567425785 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 5084202892246189718}
+  m_PrefabInstance: {fileID: 5102324152181857902}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7050606604696789430}
+  m_GameObject: {fileID: 7032764470381427022}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &5649785776727202996
+--- !u!1001 &5632241051617592396
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8975250968257638052}
+    m_TransformParent: {fileID: 8993636144248862300}
     m_Modifications:
     - target: {fileID: 2083743472045156132, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
       propertyPath: m_Pivot.x
@@ -5816,31 +5544,20 @@ PrefabInstance:
     - target: {fileID: 6965405672376581577, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
       propertyPath: m_Group
       value: 
-      objectReference: {fileID: 6423232123133130785}
+      objectReference: {fileID: 6440790450399961305}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
---- !u!114 &3369261745714372989 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6965405672376581577, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
-  m_PrefabInstance: {fileID: 5649785776727202996}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!224 &5945564730804108176 stripped
+--- !u!224 &5963694721455907688 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2083743472045156132, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
-  m_PrefabInstance: {fileID: 5649785776727202996}
+  m_PrefabInstance: {fileID: 5632241051617592396}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &5894818996431428945
+--- !u!1001 &5876975388955903401
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5956,34 +5673,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!224 &3871872847121438832 stripped
+--- !u!224 &3889430610574065800 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 5894818996431428945}
+  m_PrefabInstance: {fileID: 5876975388955903401}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7516749575396691910 stripped
+--- !u!114 &7498903181577787198 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 5894818996431428945}
+  m_PrefabInstance: {fileID: 5876975388955903401}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8545831441620384369}
+  m_GameObject: {fileID: 8563958856249418377}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &8545831441620384369 stripped
+--- !u!1 &8563958856249418377 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 5894818996431428945}
+  m_PrefabInstance: {fileID: 5876975388955903401}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8552013221974840536
+--- !u!114 &8570198258015144992
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8545831441620384369}
+  m_GameObject: {fileID: 8563958856249418377}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -5994,12 +5711,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 7516749575396691910}
+            m_ObjectArgument: {fileID: 7498903181577787198}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -6011,12 +5728,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 7516749575396691910}
+            m_ObjectArgument: {fileID: 7498903181577787198}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -6028,12 +5745,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 7516749575396691910}
+            m_ObjectArgument: {fileID: 7498903181577787198}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -6041,12 +5758,12 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!1001 &6152971385771897129
+--- !u!1001 &6134485156749683153
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -6162,34 +5879,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!224 &3537159221234758664 stripped
+--- !u!224 &3555359692133428464 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 6152971385771897129}
+  m_PrefabInstance: {fileID: 6134485156749683153}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7853714443035747262 stripped
+--- !u!114 &7835226458429274950 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 6152971385771897129}
+  m_PrefabInstance: {fileID: 6134485156749683153}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8229695198288090633}
+  m_GameObject: {fileID: 8247339351736323825}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &8229695198288090633 stripped
+--- !u!1 &8247339351736323825 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 6152971385771897129}
+  m_PrefabInstance: {fileID: 6134485156749683153}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3070114392883698617
+--- !u!114 &3087942782175576897
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8229695198288090633}
+  m_GameObject: {fileID: 8247339351736323825}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -6200,12 +5917,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 7853714443035747262}
+            m_ObjectArgument: {fileID: 7835226458429274950}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -6217,12 +5934,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 7853714443035747262}
+            m_ObjectArgument: {fileID: 7835226458429274950}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -6234,12 +5951,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 7853714443035747262}
+            m_ObjectArgument: {fileID: 7835226458429274950}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -6247,12 +5964,12 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!1001 &6992059987588591095
+--- !u!1001 &7010247393373041935
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -6368,23 +6085,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!224 &395741660045306070 stripped
+--- !u!224 &377277275033956398 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 6992059987588591095}
+  m_PrefabInstance: {fileID: 7010247393373041935}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5070691773245819607 stripped
+--- !u!1 &5052783776551866927 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 6992059987588591095}
+  m_PrefabInstance: {fileID: 7010247393373041935}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4043510461616439966
+--- !u!114 &4061332107858958950
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5070691773245819607}
+  m_GameObject: {fileID: 5052783776551866927}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -6395,12 +6112,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 6383439947082448736}
+            m_ObjectArgument: {fileID: 6401628895816722328}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -6412,12 +6129,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 6383439947082448736}
+            m_ObjectArgument: {fileID: 6401628895816722328}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -6429,12 +6146,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 6383439947082448736}
+            m_ObjectArgument: {fileID: 6401628895816722328}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -6442,23 +6159,23 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &6383439947082448736 stripped
+--- !u!114 &6401628895816722328 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 6992059987588591095}
+  m_PrefabInstance: {fileID: 7010247393373041935}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5070691773245819607}
+  m_GameObject: {fileID: 5052783776551866927}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &7080598981567018666
+--- !u!1001 &7062479973145144914
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 3708776829742478546}
+    m_TransformParent: {fileID: 3691148219591748650}
     m_Modifications:
     - target: {fileID: 2013037316306740466, guid: 9ca3270ee2d347043a2bfdca93d15416, type: 3}
       propertyPath: m_Layer
@@ -6471,7 +6188,7 @@ PrefabInstance:
     - target: {fileID: 2344883805823444817, guid: 9ca3270ee2d347043a2bfdca93d15416, type: 3}
       propertyPath: sortGroup
       value: 
-      objectReference: {fileID: 2947535086271684870}
+      objectReference: {fileID: 2929047114427300350}
     - target: {fileID: 2455912002251839307, guid: 9ca3270ee2d347043a2bfdca93d15416, type: 3}
       propertyPath: m_FontData.m_Alignment
       value: 3
@@ -6582,28 +6299,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ca3270ee2d347043a2bfdca93d15416, type: 3}
---- !u!114 &4812628535542239739 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2344883805823444817, guid: 9ca3270ee2d347043a2bfdca93d15416, type: 3}
-  m_PrefabInstance: {fileID: 7080598981567018666}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ff7b47fc1136514d808d78b7f554b80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!224 &6127218782367293821 stripped
+--- !u!224 &6145705242440874373 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3984302788419114967, guid: 9ca3270ee2d347043a2bfdca93d15416, type: 3}
-  m_PrefabInstance: {fileID: 7080598981567018666}
+  m_PrefabInstance: {fileID: 7062479973145144914}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &7084755558656956327
+--- !u!1001 &7067191232548818783
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -6719,23 +6425,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!224 &443365792501371526 stripped
+--- !u!224 &461207235275623038 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 7084755558656956327}
+  m_PrefabInstance: {fileID: 7067191232548818783}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4973211398484553863 stripped
+--- !u!1 &4991618092241217663 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 7084755558656956327}
+  m_PrefabInstance: {fileID: 7067191232548818783}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &535698103354073545
+--- !u!114 &517493709909932337
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4973211398484553863}
+  m_GameObject: {fileID: 4991618092241217663}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -6746,12 +6452,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 6614761905727423792}
+            m_ObjectArgument: {fileID: 6597199197731053000}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -6763,12 +6469,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 6614761905727423792}
+            m_ObjectArgument: {fileID: 6597199197731053000}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -6780,12 +6486,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 6614761905727423792}
+            m_ObjectArgument: {fileID: 6597199197731053000}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -6793,23 +6499,23 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &6614761905727423792 stripped
+--- !u!114 &6597199197731053000 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 7084755558656956327}
+  m_PrefabInstance: {fileID: 7067191232548818783}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4973211398484553863}
+  m_GameObject: {fileID: 4991618092241217663}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &7087178952007017617
+--- !u!1001 &7069271436408126569
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8975250968257638052}
+    m_TransformParent: {fileID: 8993636144248862300}
     m_Modifications:
     - target: {fileID: 2083743472045156132, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
       propertyPath: m_Pivot.x
@@ -6922,31 +6628,20 @@ PrefabInstance:
     - target: {fileID: 6965405672376581577, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
       propertyPath: m_Group
       value: 
-      objectReference: {fileID: 6423232123133130785}
+      objectReference: {fileID: 6440790450399961305}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
---- !u!114 &211845358093850968 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6965405672376581577, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
-  m_PrefabInstance: {fileID: 7087178952007017617}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!224 &9128873482842178485 stripped
+--- !u!224 &9147348845785619277 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2083743472045156132, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
-  m_PrefabInstance: {fileID: 7087178952007017617}
+  m_PrefabInstance: {fileID: 7069271436408126569}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &7099710791824082371
+--- !u!1001 &7117536819050552635
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8975250968257638052}
+    m_TransformParent: {fileID: 8993636144248862300}
     m_Modifications:
     - target: {fileID: 2083743472045156132, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
       propertyPath: m_Pivot.x
@@ -7059,31 +6754,20 @@ PrefabInstance:
     - target: {fileID: 6965405672376581577, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
       propertyPath: m_Group
       value: 
-      objectReference: {fileID: 6423232123133130785}
+      objectReference: {fileID: 6440790450399961305}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
---- !u!114 &156828666692745226 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6965405672376581577, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
-  m_PrefabInstance: {fileID: 7099710791824082371}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!224 &9110163006710670055 stripped
+--- !u!224 &9091751299502832159 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2083743472045156132, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
-  m_PrefabInstance: {fileID: 7099710791824082371}
+  m_PrefabInstance: {fileID: 7117536819050552635}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &7558575504547102503
+--- !u!1001 &7540392471077103583
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -7199,23 +6883,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!224 &905303986379028998 stripped
+--- !u!224 &923772777972294398 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 7558575504547102503}
+  m_PrefabInstance: {fileID: 7540392471077103583}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5742945571503544327 stripped
+--- !u!1 &5760849178686390527 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 7558575504547102503}
+  m_PrefabInstance: {fileID: 7540392471077103583}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4363721465362806587
+--- !u!114 &4381618510914744259
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5742945571503544327}
+  m_GameObject: {fileID: 5760849178686390527}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -7226,12 +6910,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 5871344895715454384}
+            m_ObjectArgument: {fileID: 5853160319262078280}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -7243,12 +6927,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 5871344895715454384}
+            m_ObjectArgument: {fileID: 5853160319262078280}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -7260,12 +6944,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 5871344895715454384}
+            m_ObjectArgument: {fileID: 5853160319262078280}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -7273,23 +6957,23 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &5871344895715454384 stripped
+--- !u!114 &5853160319262078280 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 7558575504547102503}
+  m_PrefabInstance: {fileID: 7540392471077103583}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5742945571503544327}
+  m_GameObject: {fileID: 5760849178686390527}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &7748299316424878172
+--- !u!1001 &7766125997551988900
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8975250968257638052}
+    m_TransformParent: {fileID: 8993636144248862300}
     m_Modifications:
     - target: {fileID: 2083743472045156132, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
       propertyPath: m_Pivot.x
@@ -7402,31 +7086,20 @@ PrefabInstance:
     - target: {fileID: 6965405672376581577, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
       propertyPath: m_Group
       value: 
-      objectReference: {fileID: 6423232123133130785}
+      objectReference: {fileID: 6440790450399961305}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
---- !u!114 &805417156993291669 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6965405672376581577, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
-  m_PrefabInstance: {fileID: 7748299316424878172}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!224 &8605688982453505912 stripped
+--- !u!224 &8587277997882038144 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2083743472045156132, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
-  m_PrefabInstance: {fileID: 7748299316424878172}
+  m_PrefabInstance: {fileID: 7766125997551988900}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &7839173556409883188
+--- !u!1001 &7821619572575388364
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8734080045334747305}
+    m_TransformParent: {fileID: 8751620908095520849}
     m_Modifications:
     - target: {fileID: 1133357189973749116, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
       propertyPath: m_Name
@@ -7522,17 +7195,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
---- !u!224 &5113276684754653622 stripped
+--- !u!224 &5095732071444089166 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3043400758161886082, guid: fecba18f010cbef4eb141cbf8ce72e79, type: 3}
-  m_PrefabInstance: {fileID: 7839173556409883188}
+  m_PrefabInstance: {fileID: 7821619572575388364}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &8206464598796686704
+--- !u!1001 &8188273429698530696
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8975250968257638052}
+    m_TransformParent: {fileID: 8993636144248862300}
     m_Modifications:
     - target: {fileID: 2083743472045156132, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
       propertyPath: m_Pivot.x
@@ -7645,31 +7318,20 @@ PrefabInstance:
     - target: {fileID: 6965405672376581577, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
       propertyPath: m_Group
       value: 
-      objectReference: {fileID: 6423232123133130785}
+      objectReference: {fileID: 6440790450399961305}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
---- !u!114 &1245579121881737401 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6965405672376581577, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
-  m_PrefabInstance: {fileID: 8206464598796686704}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!224 &7857032814474179156 stripped
+--- !u!224 &7874657098342673068 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2083743472045156132, guid: c3daba5ac4c80ab4fb4d8adbcbde0f0a, type: 3}
-  m_PrefabInstance: {fileID: 8206464598796686704}
+  m_PrefabInstance: {fileID: 8188273429698530696}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &8773922638404997586
+--- !u!1001 &8755722772942440746
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8925069206507445770}
+    m_TransformParent: {fileID: 8907443277633701618}
     m_Modifications:
     - target: {fileID: 1782216024823852985, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -7785,34 +7447,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
---- !u!224 &2140900138674099443 stripped
+--- !u!224 &2159385908290915339 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7238759536132244769, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 8773922638404997586}
+  m_PrefabInstance: {fileID: 8755722772942440746}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4638001092971512645 stripped
+--- !u!114 &4619798439018617789 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4151827705359471255, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 8773922638404997586}
+  m_PrefabInstance: {fileID: 8755722772942440746}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6815427181490206450}
+  m_GameObject: {fileID: 6833347904135556618}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 683e1943456693b44a773f32b515a451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &6815427181490206450 stripped
+--- !u!1 &6833347904135556618 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2834592439604389664, guid: 9fc3912d6be841b45a3507e4fad5fa90, type: 3}
-  m_PrefabInstance: {fileID: 8773922638404997586}
+  m_PrefabInstance: {fileID: 8755722772942440746}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6665513808245814543
+--- !u!114 &6683630064625053175
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6815427181490206450}
+  m_GameObject: {fileID: 6833347904135556618}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
@@ -7823,12 +7485,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 4638001092971512645}
+            m_ObjectArgument: {fileID: 4619798439018617789}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -7840,12 +7502,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnPointDownPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 4638001092971512645}
+            m_ObjectArgument: {fileID: 4619798439018617789}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0
@@ -7857,12 +7519,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4285155316148925842}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
           m_MethodName: OnDragPersonListSelected
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 4638001092971512645}
+            m_ObjectArgument: {fileID: 4619798439018617789}
             m_ObjectArgumentAssemblyTypeName: Sango.Game.Render.UI.UIObjectListItem,
               Assembly-CSharp
             m_IntArgument: 0

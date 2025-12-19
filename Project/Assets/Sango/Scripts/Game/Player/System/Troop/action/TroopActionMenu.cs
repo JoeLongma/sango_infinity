@@ -70,7 +70,7 @@ namespace Sango.Game.Player
             ContextMenu.SetVisible(false);
         }
 
-        public override void OnBack()
+        public override void OnBack(ICommandEvent whoGone)
         {
             ShowSpellRange();
             ContextMenu.SetVisible(true);

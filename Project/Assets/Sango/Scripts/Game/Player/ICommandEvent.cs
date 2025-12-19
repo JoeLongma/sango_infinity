@@ -17,7 +17,7 @@ namespace Sango.Game.Player
         /// <summary>
         /// 当前命令被重新拾起的时候触发(返回)
         /// </summary>
-        void OnBack();
+        void OnBack(ICommandEvent whoGone);
 
         /// <summary>
         /// 当前命令被舍弃的时候触发

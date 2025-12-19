@@ -133,9 +133,10 @@ namespace Sango.Game.Player
             Singleton<TroopSystem>.Instance.Start(TargetTroop);
         }
 
-        public override void OnBack()
+        public override void OnBack(ICommandEvent whoGone)
         {
-            base.OnBack();
+            base.OnBack(whoGone);
+            if (whoGone is ObjectSelectSystem) return;
             Window.Instance.SetVisible(windowName, true);
             TargetTroop.EnterCity(TargetCity);
         }
