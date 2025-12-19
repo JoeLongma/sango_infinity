@@ -93,8 +93,7 @@ namespace Sango.Game.Player
 
             targetUI.value_1.gameObject.SetActive(true);
 
-
-
+            targetUI.action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.TransformPerson)}/{TargetCity.BelongCorps.ActionPoint}";
 
         }
 

@@ -52,6 +52,9 @@ namespace Sango.Game.Player
             base.OnUIInit();
             targetUI.person_extra_value.gameObject.SetActive(true);
             targetUI.person_extra_value.text = $"{personList.Count}人";
+
+            targetUI.action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.CallPerson)}/{TargetCity.BelongCorps.ActionPoint}";
+
         }
 
         public override int CalculateWonderNumber()

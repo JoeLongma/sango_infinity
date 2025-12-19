@@ -100,15 +100,18 @@ namespace Sango.Game
             int governorAdd = (int)(40 * (0.65f + 0.025f * Math.Max(0, (int)(Math.Max((float)BelongForce.Governor.Command, (float)BelongForce.Governor.Glamour) / 5.0f) - 6)));
             int personAdd = 0;
             List<City> cities = new List<City>();
+            int cityCount = 0;
             BelongForce.ForEachCityBase((c) =>
             {
                 if (c.BelongCity != null && c.BelongCity.BelongForce != BelongForce)
                     return;
 
+                if (c.IsCity()) cityCount++;
+
                 if (c.BelongCorps == this)
                     cities.Add(c);
             });
-            int cityAdd = Math.Min(50, 10 * (cities.Count - 1));
+            int cityAdd = Math.Min(50, 10 * (cityCount - 1));
 
             cities.Sort((a, b) => -a.allPersons.Count.CompareTo(b.allPersons.Count));
             for (int i = 0; i < 6; i++)
@@ -121,13 +124,26 @@ namespace Sango.Game
             if (BelongForce.Counsellor != null)
                 counsellorFactor = 1.2f - 0.01f * (50 - BelongForce.Counsellor.Intelligence / 2);
 
+            //TODO: 建筑影响， 特技影响
+
             ActionPoint = Math.Min(Scenario.Cur.Variables.ActionPointLimit, ActionPoint + (int)((governorAdd + personAdd + cityAdd) * counsellorFactor));
-      
-            if(IsPlayer && BelongForce == Scenario.Cur.CurRunForce)
+            ActionPoint = Math.Max(0, ActionPoint);
+
+
+            if (IsPlayer && BelongForce == Scenario.Cur.CurRunForce)
             {
                 GameEvent.OnCorpsActionPointChange?.Invoke(this);
             }
-        
+
+        }
+
+        public void ReduceActionPoint(int v)
+        {
+            ActionPoint -= v;
+            if (IsPlayer && BelongForce == Scenario.Cur.CurRunForce)
+            {
+                GameEvent.OnCorpsActionPointChange?.Invoke(this);
+            }
         }
 
         /// <summary>

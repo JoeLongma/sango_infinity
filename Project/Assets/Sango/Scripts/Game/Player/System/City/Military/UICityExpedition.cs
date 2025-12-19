@@ -42,6 +42,9 @@ namespace Sango.Game.Render.UI
         public UITextField itemGoldLabel;
         public UITextField itemFoodLabel;
 
+        
+        public UITextField action_value;
+
         public Slider troopsSlider;
         public Slider goldSlider;
         public Slider foodSlider;
@@ -100,6 +103,9 @@ namespace Sango.Game.Render.UI
                 cityBuildingSlot.SetTroopType(troopType).SetIndex(i).SetSelected(cityExpeditionSys.CurSelectWaterTrropTypeIndex == i);
                 cityBuildingSlot.SetValid(cityExpeditionSys.TargetCity.itemStore.CheckItemEnough(troopType.costItems, 1));
             }
+
+            action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.MakeTroop)}/{cityExpeditionSys.TargetCity.BelongCorps.ActionPoint}";
+
 
             UpdateContent();
         }

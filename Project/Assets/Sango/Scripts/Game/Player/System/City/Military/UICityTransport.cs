@@ -22,6 +22,7 @@ namespace Sango.Game.Render.UI
         public UITextField itemTroopsLabel;
         public UITextField itemGoldLabel;
         public UITextField itemFoodLabel;
+        public UITextField action_value;
 
         public Slider troopsSlider;
         public Slider goldSlider;
@@ -39,6 +40,7 @@ namespace Sango.Game.Render.UI
 
             itemTypeRect.onItemTypeShow = OnItemTypeShow;
             itemTypeSliderRect.onItemTypeShow = OnItemTypeSliderShow;
+            action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.MakeTansport)}/{cityTransportSys.TargetCity.BelongCorps.ActionPoint}";
 
             UpdateContent();
         }

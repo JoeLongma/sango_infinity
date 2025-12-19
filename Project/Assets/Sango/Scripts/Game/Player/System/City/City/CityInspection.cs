@@ -48,6 +48,9 @@ namespace Sango.Game.Player
 
             targetUI.value_value.text = $"{TargetCity.security}→{destValue}";
             targetUI.value_gold.text = $"{TargetCity.GetJobCost(CityJobType.Inspection)}/{TargetCity.gold}";
+
+            targetUI.action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.Inspection)}/{TargetCity.BelongCorps.ActionPoint}";
+
         }
 
         public override int CalculateWonderNumber()

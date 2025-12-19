@@ -14,8 +14,10 @@ namespace Sango.Game.Render.UI
         public Text infoLabel;
         public Text itemTypeDescLabel;
 
+        public Scrollbar scrollbar;
+        public VerticalLayoutGroup rootLayout;
         CityCreateItems createItemsSys;
-
+        int updateNextFrame = 0;
         public override void OnInit()
         {
             base.OnInit();
@@ -50,8 +52,22 @@ namespace Sango.Game.Render.UI
                 cityBuildingSlot.SetValid(itemType.targetBuilding != null);
                 buildingTypeItemPool[i].gameObject.SetActive(true);
             }
+            action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.CreateItems)}/{createItemsSys.TargetCity.BelongCorps.ActionPoint}";
 
             OnSelectItemType(buildingTypeItemPool[createItemsSys.CurSelectedItemTypeIndex]);
+            updateNextFrame = 2;
+        }
+
+        private void LateUpdate()
+        {
+            if (updateNextFrame > 0)
+            {
+                updateNextFrame--;
+                if(updateNextFrame == 0)
+                {
+                    LayoutRebuilder.ForceRebuildLayoutImmediate(rootLayout.GetComponent<RectTransform>());
+                }
+            }
         }
 
         public void OnSelectItemType(UIBuildingTypeItem buildingTypeItem)

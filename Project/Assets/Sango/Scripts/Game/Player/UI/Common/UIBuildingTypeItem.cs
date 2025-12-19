@@ -21,7 +21,7 @@ namespace Sango.Game.Render.UI
 
         public UIBuildingTypeItem SetValid(bool b)
         {
-            Color color = b ? Color.white : Color.gray;
+            Color color = b ? new Color(0.85f, 0.85f, 0.85f) : Color.gray;
             icon.color = color;
             GetComponent<Button>().interactable = b;
             nameLabel.color = color;
@@ -39,6 +39,8 @@ namespace Sango.Game.Render.UI
 
         public UIBuildingTypeItem SetSelected(bool b)
         {
+            Color color = b ? Color.white : new Color(0.85f, 0.85f, 0.85f);
+            icon.color = color;
             select.gameObject.SetActive(b);
             return this;
         }
@@ -88,6 +90,7 @@ namespace Sango.Game.Render.UI
                 costLabel.text = itemType.cost.ToString();
                 icon.sprite = GameRenderHelper.LoadBuildingTypeIcon(itemType.icon);
                 numLabel.text = "";
+                icon.color = new Color(0.85f, 0.85f, 0.85f);
             }
             return this;
         }
@@ -108,6 +111,7 @@ namespace Sango.Game.Render.UI
                 costLabel.text = "";
                 icon.sprite = GameRenderHelper.LoadBuildingTypeIcon(troopType.icon);
                 numLabel.text = "";
+                icon.color = new Color(0.85f, 0.85f, 0.85f);
             }
             return this;
         }

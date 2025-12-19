@@ -1375,6 +1375,7 @@ namespace Sango.Game
             building.durability = 1;
             building.LeftCounter = buildCount;
             gold -= buildingType.cost;
+            BelongCorps.ReduceActionPoint(JobType.GetJobCostAP((int)CityJobType.Build));
 
 #if SANGO_DEBUG
             Sango.Log.Print($"@内政@[{BelongForce.Name}]在<{Name}>由{stringBuilder}开始修建: {building.Name} 需耗时:{buildCount} 回合");
@@ -1418,6 +1419,8 @@ namespace Sango.Game
             building.Workers = sangoObjectList;
             building.LeftCounter = buildCount;
             gold -= upgradeBuildingType.cost;
+            BelongCorps.ReduceActionPoint(JobType.GetJobCostAP((int)CityJobType.UpgradeBuilding));
+
             building.Render?.UpdateRender();
 
 #if SANGO_DEBUG
@@ -1523,6 +1526,7 @@ namespace Sango.Game
             }
 
             gold -= goldNeed;
+            BelongCorps.ReduceActionPoint(JobType.GetJobCostAP(jobId));
             building.ActionOver = true;
             SangoObjectList<Person> sangoObjectList = new SangoObjectList<Person>();
             for (int i = 0; i < personList.Length; i++)
@@ -1721,6 +1725,8 @@ namespace Sango.Game
             }
 
             gold -= goldNeed;
+            BelongCorps.ReduceActionPoint(JobType.GetJobCostAP(jobId));
+
             building.ActionOver = true;
             SangoObjectList<Person> sangoObjectList = new SangoObjectList<Person>();
 
@@ -1886,6 +1892,7 @@ namespace Sango.Game
 
             BelongForce.GainTechniquePoint(techniquePointGain);
             gold -= goldNeed;
+            BelongCorps.ReduceActionPoint(JobType.GetJobCostAP(jobId));
             agriculture += totalValue;
             if (agriculture > AgricultureLimit)
                 agriculture = AgricultureLimit;
@@ -1975,6 +1982,7 @@ namespace Sango.Game
 
             BelongForce.GainTechniquePoint(techniquePointGain);
             gold -= goldNeed;
+            BelongCorps.ReduceActionPoint(JobType.GetJobCostAP(jobId));
             commerce += totalValue;
             if (commerce > CommerceLimit)
                 commerce = CommerceLimit;
@@ -2071,6 +2079,7 @@ namespace Sango.Game
 
             BelongForce.GainTechniquePoint(techniquePointGain);
             gold -= goldNeed;
+            BelongCorps.ReduceActionPoint(JobType.GetJobCostAP(jobId));
             security += totalValue;
             if (security > 100)
                 security = 100;
@@ -2183,7 +2192,7 @@ namespace Sango.Game
 
             gold -= goldNeed;
             morale += totalValue;
-            gold -= goldNeed;
+            BelongCorps.ReduceActionPoint(JobType.GetJobCostAP(jobId));
             if (morale > MaxMorale)
                 morale = MaxMorale;
 
@@ -2226,7 +2235,8 @@ namespace Sango.Game
 
             int meritGain = JobType.GetJobMeritGain(jobId);
             int techniquePointGain = JobType.GetJobTPGain(jobId);
-
+            int apCost = JobType.GetJobCostAP(jobId);
+            int totalAPCost = 0;
             for (int i = 0; i < personList.Length; i++)
             {
                 Person person = personList[i];
@@ -2288,11 +2298,18 @@ namespace Sango.Game
                 //TODO: 触发事件
 
                 // 什么也没找到
-                person.merit += meritGain;
-                person.GainExp(meritGain);
+                if (!person.ActionOver)
+                {
+                    person.merit += meritGain;
+                    person.GainExp(meritGain);
+                    person.ActionOver = true;
+                }
 
-                person.ActionOver = true;
+
+                totalAPCost += apCost;
+
             }
+            BelongCorps.ReduceActionPoint(totalAPCost);
 
             overrideData.Value = techniquePointGain;
             GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
@@ -2435,6 +2452,7 @@ namespace Sango.Game
 
             //治安减少
             security -= Math.Min(6, 4 * totalValue / 1000);
+            BelongCorps.ReduceActionPoint(JobType.GetJobCostAP(jobId));
 
             BelongForce.GainTechniquePoint(techniquePointGain);
 
@@ -2563,6 +2581,7 @@ namespace Sango.Game
             techniquePointGain = overrideData.Value;
             building.ActionOver = true;
             gold -= goldNeed;
+            BelongCorps.ReduceActionPoint(JobType.GetJobCostAP(jobId));
 
             BelongForce.GainTechniquePoint(techniquePointGain);
 
@@ -2628,6 +2647,7 @@ namespace Sango.Game
 
             AddGold(-goldNum);
             AddFood(totalValue);
+            BelongCorps.ReduceActionPoint(JobType.GetJobCostAP(jobId));
 
             AddJobCounter(jobId);
 
