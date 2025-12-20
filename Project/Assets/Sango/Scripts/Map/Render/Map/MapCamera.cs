@@ -3,6 +3,8 @@ using System;
 using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace Sango.Render
 {
@@ -408,6 +410,13 @@ namespace Sango.Render
                 changed = false;
                 transform.rotation = Quaternion.Euler(look_rotate);
                 transform.position = lookAt.position - transform.forward * cur_distance;
+
+                UniversalRenderPipelineAsset m_URPAsset = GraphicsSettings.currentRenderPipeline as UniversalRenderPipelineAsset;
+                if (m_URPAsset != null)
+                {
+                    m_URPAsset.shadowDistance = Mathf.Lerp(500, 980, (cur_distance - limitDistance.x) / (limitDistance.y - limitDistance.x));
+                }
+
                 transform.LookAt(lookAt);
                 onValueChanged?.Invoke(this);
             }

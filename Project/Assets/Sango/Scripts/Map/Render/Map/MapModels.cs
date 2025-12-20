@@ -90,7 +90,7 @@ namespace Sango.Render
 
                 if (SystemInfo.supportsInstancing)
                 {
-                    Graphics.DrawMeshInstanced(mesh, 0, material, _matrixes, showCount, _mpb, ShadowCastingMode.On, false, 0);
+                    Graphics.DrawMeshInstanced(mesh, 0, material, _matrixes, showCount, _mpb, ShadowCastingMode.On, true, 0);
                 }
                 else
                 {

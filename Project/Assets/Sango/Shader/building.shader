@@ -62,6 +62,9 @@ Shader "Sango/building_urp" {
 				//#pragma multi_compile_fog
 				#pragma skip_variants SHADOWS_SOFT DIRLIGHTMAP_COMBINED
 				//#pragma multi_compile LIGHTMAP_OFF LIGHTMAP_ON
+				#pragma multi_compile _ _MAIN_LIGHT_SHADOWS //主光源阴影
+				#pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE //级联阴影(多张阴影贴图, 近处分辨率高, 远处分辨率低)
+				#pragma multi_compile _ _SHADOWS_SOFT //阴影抗锯齿
 				#pragma multi_compile _ SANGO_EDITOR
 				#pragma skip_variants FOG_EXP FOG_EXP2
 				#pragma exclude_renderers xbox360 ps3 
