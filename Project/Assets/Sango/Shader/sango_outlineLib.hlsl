@@ -7,11 +7,15 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 #include "Packages/com.unity.shadergraph/ShaderGraphLibrary/ShaderVariablesFunctions.hlsl"
 CBUFFER_START(UnityPerMaterial)
-float4 _MainTex_ST;
+float4 _BaseMap_ST;
 float _OutlineWidth;
 
 #if SANGO_WATER | SANGO_TERRAIN
 half _Alpha;
+#endif
+
+#if defined(FOG_LINEAR) || defined(FOG_EXP) || defined(FOG_EXP2)
+#define APPLY_FOG 1            
 #endif
 
 #if SANGO_WATER
@@ -25,11 +29,16 @@ float _BlendHeight;
 float _BlendPower;
 #endif
 
+half4 _BaseColor;
+half _Cutoff;
+
 #if SANGO_COLOR
 half4 _Color;
 #endif
 
-half4 _FogColor;
+#if SANGO_FLASH
+float _FlashFactor;
+#endif
 
 #if SANGO_BASE_COLOR || SANGO_BASE_COLOR_ADD
 float _BaseColorIntensity;
@@ -41,10 +50,11 @@ float _Power;
 float _MixBegin;
 float _MixPower;
 float _MixEnd;
+half4 _FogColor;
 
 TEXTURE2D_X_FLOAT(_CameraDepthTexture);
 SAMPLER(sampler_CameraDepthTexture);
-TEXTURE2D(_MainTex);
+TEXTURE2D(_BaseMap);
 #define smp SamplerState_Linear_Repeat
 SAMPLER(smp);
 
@@ -77,7 +87,7 @@ VertexOutput outline_vert(VertexInput v)
 	v.vertex.xyz += normalize(v.normal) * camDist;
 
 	//v.vertex.xyz += normalize(v.vertex.xyz) * _OutlineWidth;
-	o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+	o.uv = TRANSFORM_TEX(v.uv, _BaseMap);
 
 	o.pos = TransformObjectToHClip(v.vertex.xyz);
 	o.screenPos = ComputeScreenPos(o.pos);
@@ -95,7 +105,7 @@ half4 outline_frag(VertexOutput i) : SV_TARGET
 	float depth = SAMPLE_TEXTURE2D_X(_CameraDepthTexture, sampler_CameraDepthTexture, screenPos).r;
 	float depthValue = Linear01Depth(depth, _ZBufferParams);
 	float linear01Depth = pow(saturate((depthValue * 980 - _MixBegin) / (_MixEnd - _MixBegin)), _MixPower);
-	half4 _MainTex_var = SAMPLE_TEXTURE2D(_MainTex, smp, i.uv);
+	half4 _MainTex_var = SAMPLE_TEXTURE2D(_BaseMap, smp, i.uv);
 
 	clip(_MainTex_var.a - 0.5);
 

@@ -58,8 +58,8 @@ namespace Sango.Render
                                   -layer.map.mapData.vertex_height * 64 / tex.height);
                     if (i == layer.curSeason)
                     {
-                        material.SetTexture("_MainTex", tex);
-                        material.SetTextureScale("_MainTex", textureScale);
+                        material.SetTexture("_BaseMap", tex);
+                        material.SetTextureScale("_BaseMap", textureScale);
                     }
                 }
             }
@@ -104,7 +104,7 @@ namespace Sango.Render
                 textureScale = scale;
                 if (diffuse != null)
                 {
-                    material.SetTextureScale("_MainTex", textureScale);
+                    material.SetTextureScale("_BaseMap", textureScale);
                 }
                 if (normal != null)
                 {
@@ -123,8 +123,8 @@ namespace Sango.Render
 
                 if (diffuse != null)
                 {
-                    material.SetTexture("_MainTex", diffuse[season]);
-                    material.SetTextureScale("_MainTex", textureScale);
+                    material.SetTexture("_BaseMap", diffuse[season]);
+                    material.SetTextureScale("_BaseMap", textureScale);
                 }
                 if (isLit)
                 {
@@ -220,8 +220,8 @@ namespace Sango.Render
                                       -layer.map.mapData.vertex_height * 32 / tex.height);
                         if (i == layer.curSeason)
                         {
-                            material.SetTexture("_MainTex", tex);
-                            material.SetTextureScale("_MainTex", textureScale);
+                            material.SetTexture("_BaseMap", tex);
+                            material.SetTextureScale("_BaseMap", textureScale);
                         }
                     }
 

@@ -196,7 +196,7 @@ namespace Sango.Game
                 interiorModel.objType = 0;
                 interiorModel.modelId = 0;
                 interiorModel.modelAsset = $"Assets/Model/Prefab/4622.prefab";
-                interiorModel.transform.position = Position + new Vector3(0, 1, 0);
+                interiorModel.transform.position = Position + new Vector3(0, 0.7f, 0);
                 interiorModel.transform.rotation = Quaternion.Euler(new Vector3(0, GameRandom.Range(0,10) * 90, 0));
                 interiorModel.transform.localScale = Vector3.one;
                 interiorModel.bounds = new Sango.Tools.Rect(0, 0, 32, 32);

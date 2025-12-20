@@ -504,6 +504,10 @@ namespace Sango.Game
         float boderWidth = 10;
         public void HandleBorderMoveCamera()
         {
+#if UNITY_EDITOR
+            return;
+#endif
+
             if (!BorderMoveViewEnabled) return;
 
             int sWidth = UnityEngine.Screen.width;

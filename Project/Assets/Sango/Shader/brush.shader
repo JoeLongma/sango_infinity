@@ -1,7 +1,7 @@
 Shader "Sango/brush"
 {
 	Properties{
-		_MainTex ("Texture", 2D) = "white" {}
+		_BaseMap("Texture", 2D) = "white" {}
 		//_BrushTex("Brush Texture",2D)= "white" {}
 		//_Color("Color",Color)=(1,1,1,1)
 		//_UV("UV",Vector)=(0,0,0,0)

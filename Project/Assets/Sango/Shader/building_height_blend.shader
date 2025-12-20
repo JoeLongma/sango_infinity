@@ -1,7 +1,7 @@
 
 Shader "Sango/building_height_blend" {
 	Properties{
-		_MainTex("MainTex", 2D) = "white" {}
+		_BaseMap("MainTex", 2D) = "white" {}
 		_Color("Color", Color) = (1,1,1,1)
 		_BlendHeight("BlendHeight", float) = -0.8
 		_BlendPower("BlendPower", float) = 25

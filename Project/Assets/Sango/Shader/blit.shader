@@ -1,7 +1,7 @@
 Shader "Sango/blit"
 {
 	Properties{
-		_MainTex ("Texture", 2D) = "white" {}
+		_BaseMap("Texture", 2D) = "white" {}
 		}
 
 	SubShader{

@@ -158,10 +158,10 @@ namespace Sango.Tools
             {
                 //int w = Math.Min(t.width, width);
                 //int h = Math.Min(t.height, height);
-                //blitMat.SetTexture("_MainTex", editor.map.mapBaseColor.texture[curSeason]);
+                //blitMat.SetTexture("_BaseMap", editor.map.mapBaseColor.texture[curSeason]);
                 ////blitMat.SetFloat("_BrushSize", mapSize.x / editor.map.mapBaseColor.texture[curSeason].width);
                 //Vector2 scale = new Vector2(2, 1);
-                //blitMat.SetTextureScale("_MainTex", scale);
+                //blitMat.SetTextureScale("_BaseMap", scale);
                 //UnityEngine.Graphics.Blit(editor.map.mapBaseColor.texture[curSeason], rt, blitMat);
                 UnityEngine.Graphics.Blit(editor.map.mapBaseColor.texture[curSeason], rt);
             }

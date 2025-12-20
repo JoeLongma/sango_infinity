@@ -106,7 +106,7 @@ namespace Sango.Loader
                     ModelLoadData _data = (ModelLoadData)custom;
                     if (tex != null && _data.mat != null)
                     {
-                        _data.mat.SetTexture("_MainTex", tex as Texture);
+                        _data.mat.SetTexture("_BaseMap", tex as Texture);
                     }
                     if (_data.onCSharpLoadedFunc != null)
                     {
@@ -230,7 +230,7 @@ namespace Sango.Loader
                             Texture texture = TextureLoader.LoadFromFileSync(texturePath, textureNeedCompress, true);
                             if (texture != null)
                             {
-                                material.SetTexture("_MainTex", texture);
+                                material.SetTexture("_BaseMap", texture);
                             }
                         }
                     }

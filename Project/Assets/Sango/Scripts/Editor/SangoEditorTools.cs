@@ -192,7 +192,7 @@ public static class SangeEditorTools
                 mat = new Material(Shader.Find("Sango/building_urp"));
                 mat.name = texName;
                 Texture texture = AssetDatabase.LoadAssetAtPath<Texture>(texFile);
-                mat.SetTexture("_MainTex", texture);
+                mat.SetTexture("_BaseMap", texture);
                 AssetDatabase.CreateAsset(mat, matFile);
             }
 
@@ -210,5 +210,24 @@ public static class SangeEditorTools
 
     }
 
+    [MenuItem("Sango/材质求MainTex->BaseTex")]
+    public static void MatSaveMainTex2BaseTex()
+    {
+        Object[] objects = Selection.objects;
+        foreach(Object o in objects)
+        {
+            Material material = o as Material;
+            if(material != null)
+            {
+                Texture tex = material.GetTexture("_MainTex");
+                if(tex != null)
+                {
+                    material.SetTexture("_BaseMap", tex);
+                }
+            }
+        }
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+    }
 
 }

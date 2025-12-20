@@ -1,7 +1,7 @@
 
 Shader "Sango/flag_urp" {
 	Properties{
-		_MainTex("MainTex", 2D) = "white" {}
+		_BaseMap("MainTex", 2D) = "white" {}
 		_TextTex("TextTex", 2D) = "white" {}
 		_Color("Color", Color) = (1,1,1,1)
 		_OutlineWidth("width", float) = 3.5

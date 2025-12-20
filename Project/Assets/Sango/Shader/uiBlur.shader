@@ -2,7 +2,7 @@ Shader "Sango/uiBlur"
 {
     Properties
     {
-        _MainTex("MainTex",2D) = "white"{}
+        _BaseMap("MainTex",2D) = "white"{}
         _Color("Color",Color) = (1,1,1,1)
         _Radius("半径",Range(0,10)) = 0
     }

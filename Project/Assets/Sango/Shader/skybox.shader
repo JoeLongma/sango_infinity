@@ -2,7 +2,7 @@
 
 Shader "Sango/skybox" {
 Properties {
-	_MainTex ("Base (RGB) Trans (A)", 2D) = "white" {}
+	_BaseMap("Base (RGB) Trans (A)", 2D) = "white" {}
 	_BeginHeight("Start", Float) = 0
 	_EndHeight("End", Float) = 0
 	_MixBegin("mixBegin", float) = 800//和天空盒混合距离

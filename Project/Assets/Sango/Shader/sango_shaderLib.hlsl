@@ -1,14 +1,39 @@
 #ifndef SANGO_SHADER_LIB
 #define SANGO_SHADER_LIB
 
-#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceData.hlsl"
+#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Packing.hlsl"
+half4 SampleAlbedoAlpha(float2 uv, TEXTURE2D_PARAM(albedoAlphaMap, sampler_albedoAlphaMap))
+{
+	return SAMPLE_TEXTURE2D(albedoAlphaMap, sampler_albedoAlphaMap, uv);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//                      Material Property Helpers                            //
+///////////////////////////////////////////////////////////////////////////////
+half Alpha(half albedoAlpha, half4 color, half cutoff)
+{
+#if !defined(_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A) && !defined(_GLOSSINESS_FROM_BASE_ALPHA)
+	half alpha = albedoAlpha * color.a;
+#else
+	half alpha = color.a;
+#endif
+#if defined(_ALPHATEST_ON)
+	clip(albedoAlpha - 0.5);
+#endif
+
+	return alpha;
+}
+
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 #include "Packages/com.unity.shadergraph/ShaderGraphLibrary/ShaderVariablesFunctions.hlsl"
-           
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
+
 CBUFFER_START(UnityPerMaterial)
-float4 _MainTex_ST;
+float4 _BaseMap_ST;
 float _OutlineWidth;
 
 #if SANGO_WATER | SANGO_TERRAIN
@@ -30,6 +55,9 @@ float _BlendHeight;
 float _BlendPower;
 #endif
 
+half4 _BaseColor;
+half _Cutoff;
+
 #if SANGO_COLOR
 half4 _Color;
 #endif
@@ -47,7 +75,7 @@ CBUFFER_END
 
 // 阴影颜色
 half4 _ShadowColor;
-TEXTURE2D(_MainTex);
+TEXTURE2D(_BaseMap);
 float _MapWidth;
 float _MapHeight;
 
@@ -119,10 +147,10 @@ TEXTURE2D_X_FLOAT(_CameraDepthTexture);
 SAMPLER(sampler_CameraDepthTexture);
 
 //为了方便操作 定义预定义
-#define smp SamplerState_Linear_Repeat
+#define sampler_BaseMap SamplerState_Linear_Repeat
 #define smpPoint SamplerState_Point_Repeat
-// SAMPLER(sampler_MainTex); 默认采样器
-SAMPLER(smp);
+// SAMPLER(sampler_BaseMap); 默认采样器
+SAMPLER(sampler_BaseMap);
 SAMPLER(smpPoint);
 
 struct SangoVertexInput
@@ -177,7 +205,7 @@ SangoVertexOutput sango_vert(SangoVertexInput v)
 	UNITY_SETUP_INSTANCE_ID(v);
 
 	SangoVertexOutput o = (SangoVertexOutput)0;
-	o.uv = TRANSFORM_TEX(v.uv,_MainTex);
+	o.uv = TRANSFORM_TEX(v.uv,_BaseMap);
 #if SANGO_TEXT
 	o.ouv = v.uv;
 #endif
@@ -208,10 +236,10 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 	i.uv = SangoWaterTransofromUV(i);
 	#endif
 
-	half4 _MainTex_var = SAMPLE_TEXTURE2D(_MainTex,smp,i.uv);
+	half4 _BaseMap_var = SAMPLE_TEXTURE2D(_BaseMap,sampler_BaseMap,i.uv);
 
 	#if SANGO_ALPHA_TEST 
-	clip(_MainTex_var.a - 0.5);
+	clip(_BaseMap_var.a - 0.5);
 	#endif
 
 	Light mainLight = GetMainLight(i.shadowCoord);
@@ -224,27 +252,27 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 	// 计算漫反射颜色
 	half NdotL = saturate(dot(lightDirection, i.normal));
 	half3 directDiffuse = lerp(0, ((mainLight.color.rgb)), saturate(NdotL+0.6)) + ambient;
-	half3 diffuse = directDiffuse * _MainTex_var.rgb;
+	half3 diffuse = directDiffuse * _BaseMap_var.rgb;
 	#else
 	//阴影数据
 	half shadow = mainLight.shadowAttenuation;
 	// 计算漫反射颜色
 	half NdotL = saturate(dot(lightDirection, i.normal));
 	half3 directDiffuse = lerp(_ShadowColor.rgb, ((mainLight.color.rgb)), NdotL) * shadow + ambient;
-	half3 diffuse = directDiffuse * _MainTex_var.rgb;
+	half3 diffuse = directDiffuse * _BaseMap_var.rgb;
 	#endif
 
 	// 计算BASE遮罩
 	#if SANGO_BASE_COLOR
 	float2 baseUV = float2(i.posWorld.z / (_MapWidth), 1 - i.posWorld.x / (_MapHeight));
-	half4 baseColor = SAMPLE_TEXTURE2D(_BaseTex, smp, baseUV);
+	half4 baseColor = SAMPLE_TEXTURE2D(_BaseTex, sampler_BaseMap, baseUV);
 	half3 baseDiffuse = lerp(diffuse, baseColor.rgb*diffuse,  _BaseColorIntensity);
 	diffuse = baseDiffuse;
 	#endif
 
 	#if SANGO_BASE_COLOR_ADD
 	float2 baseUV = float2(i.posWorld.z / (_MapWidth), 1 - i.posWorld.x / (_MapHeight));
-	half4 baseColor = SAMPLE_TEXTURE2D(_BaseTex, smp, baseUV);
+	half4 baseColor = SAMPLE_TEXTURE2D(_BaseTex, sampler_BaseMap, baseUV);
 	//half gray = 0.299 * diffuse.r + 0.587 * diffuse.g + 0.114 * diffuse.b;
 	//half3 baseDiffuse = lerp(diffuse, gray * baseColor.rgb , _BaseColorIntensity);
 	//diffuse = baseDiffuse;
@@ -282,7 +310,7 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 #if SANGO_GRID_COLOR
 	float row = floor(i.posWorld.z / (_GridSize) % 2);    // /运算获取当前行
 	float2 gridUV = float2(i.posWorld.z / (_GridSize), 1 - i.posWorld.x / (_GridSize)+row * 0.5);
-	half4 gridColor = SAMPLE_TEXTURE2D(_GridTex, smp, gridUV);
+	half4 gridColor = SAMPLE_TEXTURE2D(_GridTex, sampler_BaseMap, gridUV);
 	float2 gridMaskUV = float2(baseUV.x, baseUV.y + row * 0.5 / (_MapHeight / _GridSize));
 	half4 gridMaskColor = SAMPLE_TEXTURE2D(_GridMask, smpPoint, gridMaskUV);
 	half4 rangeMaskColor = SAMPLE_TEXTURE2D(_RangeMask, smpPoint, gridMaskUV);
@@ -341,7 +369,7 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 	// light
 	// 雾效处理
 	#if SANGO_WATER
-		half4 finalRGBA = half4(diffuse, _Alpha * _MainTex_var.a * saturate(i.vertColor.a));
+		half4 finalRGBA = half4(diffuse, _Alpha * _BaseMap_var.a * saturate(i.vertColor.a));
 	#elif SANGO_TERRAIN
 		half4 finalRGBA = half4(diffuse, _Alpha * saturate(i.vertColor.a));
 	#else
@@ -349,7 +377,7 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 	#endif
 
 	#if SANGO_TEXT
-		half4 col = SAMPLE_TEXTURE2D(_TextTex, smp, i.ouv);
+		half4 col = SAMPLE_TEXTURE2D(_TextTex, sampler_BaseMap, i.ouv);
 		finalRGBA.rgb = lerp(finalRGBA.rgb, col.rgb,  col.a);
 	#endif
 

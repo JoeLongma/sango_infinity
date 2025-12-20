@@ -25,6 +25,7 @@ namespace Sango.Render
             GameObject lightGameObject = new GameObject("MainLight");
             light = lightGameObject.AddComponent<UnityEngine.Light>();
             light.type = LightType.Directional;
+            light.shadows = LightShadows.Soft;
             UpdateRender();
         }
 

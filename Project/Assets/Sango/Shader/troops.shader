@@ -1,24 +1,24 @@
 
 Shader "Sango/troops_urp" {
 	Properties{
-		_MainTex("MainTex", 2D) = "white" {}
+		_BaseMap("MainTex", 2D) = "white" {}
 		_MaskTex("MaskTex", 2D) = "black" {}
 		_MaskColor("MaskColor", Color) = (1,1,1,1)
-		_Alpha("alpha", float) = 0.5
+		_Alpha("alpha", float) = 1
 		_HorizontalAmount("Horizontal Amount", Float) = 8
 		_HorizontalMax("Horizontal Max", Float) = 8
 		_VerticalAmount("Vertical Amount", Float) = 8
 		_VerticalIndex("Vertical Index", Float) = 8
 		_Speed("Speed", Float) = 10
 		_FlashFactor("FlashFactor", float) = 1
-
+		_Cutoff("cutoff", float) = 0.5
 	}
 		SubShader{
 			Tags { "RenderPipeline" = "UniversalPipeline" "Queue" = "Transparent" "RenderType" = "TransparentCutout" }
 			LOD 300
 			
 			//ZWrite Off
-			Lighting Off
+			//Lighting Off
 
 
 			Pass {
@@ -51,9 +51,9 @@ Shader "Sango/troops_urp" {
 				float _VerticalIndex;
 				float _VerticalAmount;
 				float _FlashFactor;
-				float _Speed;
 				half4 _MaskColor;
-				float4 _MainTex_ST;
+				float4 _BaseMap_ST;
+				float _Speed;
 				CBUFFER_END
 				float _EndHeight;
 				float _BeginHeight;
@@ -66,7 +66,7 @@ Shader "Sango/troops_urp" {
 #define APPLY_FOG 1            
 #endif
 
-				TEXTURE2D(_MainTex);
+				TEXTURE2D(_BaseMap);
 				TEXTURE2D(_MaskTex);
 				TEXTURE2D_X_FLOAT(_CameraDepthTexture);
 				SAMPLER(sampler_CameraDepthTexture);
@@ -103,7 +103,7 @@ Shader "Sango/troops_urp" {
 				VertexOutput vert(VertexInput v) {
 					UNITY_SETUP_INSTANCE_ID(v);
 					VertexOutput o = (VertexOutput)0;
-					o.uv0 = TRANSFORM_TEX(v.uv0,_MainTex);
+					o.uv0 = TRANSFORM_TEX(v.uv0, _BaseMap);
 					
 					float3 center = float3(0, 0, 0);
 					  //物体空间原点
@@ -159,7 +159,7 @@ Shader "Sango/troops_urp" {
 					uv.x /= _HorizontalAmount;
 					uv.y /= _VerticalAmount;
 
-					half4 _MainTex_var = SAMPLE_TEXTURE2D(_MainTex, smp, uv);
+					half4 _MainTex_var = SAMPLE_TEXTURE2D(_BaseMap, smp, uv);
 					half4 _MaskTex_var = SAMPLE_TEXTURE2D(_MaskTex, smp, uv);
 					clip( _MainTex_var.a - 0.5f);
 					
@@ -201,6 +201,99 @@ Shader "Sango/troops_urp" {
 
 			}
 
+			Pass
+			{
+				Name "ShadowCaster"
+				Tags{"LightMode" = "ShadowCaster"}
+
+				ZWrite On
+				ZTest LEqual
+				ColorMask 0
+				Cull[_Cull]
+
+				HLSLPROGRAM
+				#pragma exclude_renderers gles gles3 glcore
+				#pragma target 4.5
+
+				
+
+				#define SANGO_BASE_COLOR 1
+				#define SANGO_GRID_COLOR 1
+				#define SANGO_FOG 1
+				#define SANGO_BRUSH 1
+				#define SANGO_TERRAIN_TYPE 1
+				#define SANGO_TERRAIN 1
+				#define _ALPHATEST_ON 1
+
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceData.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Packing.hlsl"
+			half4 SampleAlbedoAlpha(float2 uv, TEXTURE2D_PARAM(albedoAlphaMap, sampler_albedoAlphaMap))
+			{
+				return SAMPLE_TEXTURE2D(albedoAlphaMap, sampler_albedoAlphaMap, uv);
+			}
+
+			///////////////////////////////////////////////////////////////////////////////
+			//                      Material Property Helpers                            //
+			///////////////////////////////////////////////////////////////////////////////
+			half Alpha(half albedoAlpha, half4 color, half cutoff)
+			{
+			#if !defined(_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A) && !defined(_GLOSSINESS_FROM_BASE_ALPHA)
+				half alpha = albedoAlpha * color.a;
+			#else
+				half alpha = color.a;
+			#endif
+			#if defined(_ALPHATEST_ON)
+				clip(albedoAlpha - 0.5);
+			#endif
+
+				return alpha;
+			}
+
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
+			#include "Packages/com.unity.shadergraph/ShaderGraphLibrary/ShaderVariablesFunctions.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
+
+				CBUFFER_START(UnityPerMaterial)
+				half _Alpha;
+				float _HorizontalAmount;
+				float _HorizontalMax;
+				float _VerticalIndex;
+				float _VerticalAmount;
+				float _FlashFactor;
+				half4 _MaskColor;
+				float4 _BaseMap_ST;
+				float _Speed;
+				CBUFFER_END
+				TEXTURE2D(_BaseMap);
+				SAMPLER(sampler_BaseMap);
+
+				half4 _BaseColor;
+				half _Cutoff;
+				// -------------------------------------
+				// Material Keywords
+				#pragma shader_feature_local_fragment _ALPHATEST_ON
+				#pragma shader_feature_local_fragment _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+				//--------------------------------------
+				// GPU Instancing
+				#pragma multi_compile_instancing
+				#pragma multi_compile _ DOTS_INSTANCING_ON
+
+				// -------------------------------------
+				// Universal Pipeline keywords
+
+				// This is used during shadow map generation to differentiate between directional and punctual light shadows, as they use different formulas to apply Normal Bias
+				#pragma multi_compile_vertex _ _CASTING_PUNCTUAL_LIGHT_SHADOW
+
+				#pragma vertex ShadowPassVertex
+				#pragma fragment ShadowPassFragment
+
+				//#include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
+				#include "troopsShadowCasterPass.hlsl"
+				ENDHLSL
+			}
 
 		}
 }

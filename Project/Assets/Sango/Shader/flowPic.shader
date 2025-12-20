@@ -1,7 +1,7 @@
 Shader "Sango/flowPic"
 {
 	Properties{
-		_MainTex ("Texture", 2D) = "white" {}
+		_BaseMap("Texture", 2D) = "white" {}
 		_FlowTex ("Flow", 2D) = "white" {}
 		_FlowSpeed("FlowSpeed", float)=1
 		_FlowPower("FlowPower", float)=1

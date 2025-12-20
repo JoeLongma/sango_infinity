@@ -234,7 +234,7 @@ namespace Sango
 
             if (SystemInfo.supportsInstancing)
             {
-                Graphics.DrawMeshInstanced(mesh, 0, material, _matrixes, showCount, _mpb, ShadowCastingMode.Off, false, 0);
+                Graphics.DrawMeshInstanced(mesh, 0, material, _matrixes, showCount, _mpb, ShadowCastingMode.On, false, 0);
             }
             else
             {

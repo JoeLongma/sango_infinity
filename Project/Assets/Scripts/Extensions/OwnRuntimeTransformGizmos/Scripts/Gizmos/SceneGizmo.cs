@@ -336,7 +336,7 @@ namespace RTEditor
                 color.a = _componentAlphas[axisIndex * 2 + 1];
 
                 material.SetColor("_Color", color);
-                material.SetTexture("_MainTex", _axisLabelTextures[axisIndex]);
+                material.SetTexture("_BaseMap", _axisLabelTextures[axisIndex]);
                 material.SetPass(0);
 
                 float dotCamLook = Vector3.Dot(gizmoAxes[axisIndex], _gizmoCameraTransform.forward);
