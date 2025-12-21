@@ -140,7 +140,21 @@ namespace Sango.Game
         /// <summary>
         /// 是否行动完毕
         /// </summary>
-        [JsonProperty] public override bool ActionOver { get; set; }
+        [JsonProperty]
+        public override bool ActionOver
+        {
+            get => _actionOver;
+            set
+            {
+                if (_actionOver != value)
+                {
+                    _actionOver = value;
+                    GameEvent.OnTroopActionOver?.Invoke(this);
+                }
+            }
+        }
+        private bool _actionOver;
+        public System.Action overAction;
 
         /// <summary>
         /// 当前任务类型

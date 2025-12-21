@@ -35,7 +35,7 @@ Shader "Sango/brush"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _MainTex_ST;
+			float4 _BaseMap_ST;
 			CBUFFER_END
 			float4 _Brush;
 			half4 _BrushUV;
@@ -51,7 +51,7 @@ Shader "Sango/brush"
 			{
 				v2f o;
 				o.vertex = TransformObjectToHClip(v.vertex.xyz);
-				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+				o.uv = TRANSFORM_TEX(v.uv, _BaseMap);
 				return o;
 			}
 			half4 frag (v2f i) : SV_Target

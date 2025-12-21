@@ -179,7 +179,7 @@ namespace Sango.Game.Render.UI
 
         }
 
-        public void OnCityFall(City city, Troop atker)
+        public void OnCityFall(City city, Force lastForce, Troop atker)
         {
             if (itemType == typeof(City))
             {

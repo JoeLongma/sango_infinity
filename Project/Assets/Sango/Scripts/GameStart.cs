@@ -21,7 +21,7 @@ public class GameStart : MonoBehaviour
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
         Application.targetFrameRate = 0;
 #else
-        Application.targetFrameRate = 30;
+        Application.targetFrameRate = 60;
 #endif
 
 #if UNITY_STANDALONE_WIN && !UNITY_EDITOR

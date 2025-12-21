@@ -20,15 +20,24 @@ namespace Sango.Game.Render.UI
             for (int i = 0; i < uIObjectListItems.Length; i++)
             {
                 UIObjectListItem listItem = uIObjectListItems[i];
-                SangoObject sango = objectSelectSystem.Objects[i + startIndex];
-                bool isSelected = objectSelectSystem.selected.Contains(sango);
-                for (int j = 0; j < sortItems.Count; j++)
+                int destIndex = i + startIndex;
+                if (destIndex < objectSelectSystem.Objects.Count)
                 {
-                    ObjectSortTitle sortTitle = sortItems[j];
-                    listItem.Set(j, sortTitle.GetValueStr(sango));
+                    SangoObject sango = objectSelectSystem.Objects[destIndex];
+                    bool isSelected = objectSelectSystem.selected.Contains(sango);
+                    for (int j = 0; j < sortItems.Count; j++)
+                    {
+                        ObjectSortTitle sortTitle = sortItems[j];
+                        listItem.Set(j, sortTitle.GetValueStr(sango));
+                    }
+                    listItem.index = i + startIndex;
+                    listItem.SetSelected(isSelected);
                 }
-                listItem.index = i + startIndex;
-                listItem.SetSelected(isSelected);
+                else
+                {
+                    listItem.SetSelected(false);
+                }
+                
             }
         }
 

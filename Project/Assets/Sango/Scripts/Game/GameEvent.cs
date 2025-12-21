@@ -213,7 +213,7 @@ namespace Sango.Game
         /// <summary>
         /// 当城池沦陷的时候
         /// </summary>
-        public static EventDelegate<City, Troop> OnCityFall;
+        public static EventDelegate<City, Force, Troop> OnCityFall;
 
         /// <summary>
         /// 可监听改写工作花费
@@ -355,6 +355,11 @@ namespace Sango.Game
         /// 当部队兵力变化时
         /// </summary>
         public static EventDelegate<Corps> OnCorpsActionPointChange;
+
+        /// <summary>
+        /// 当部队结束行动时
+        /// </summary>
+        public static EventDelegate<Troop> OnTroopActionOver;
 
         #endregion Game
 

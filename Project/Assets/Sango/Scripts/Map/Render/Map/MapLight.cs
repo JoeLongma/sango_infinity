@@ -22,10 +22,11 @@ namespace Sango.Render
         public override void Init()
         {
             base.Init();
-            GameObject lightGameObject = new GameObject("MainLight");
-            light = lightGameObject.AddComponent<UnityEngine.Light>();
-            light.type = LightType.Directional;
-            light.shadows = LightShadows.Soft;
+            GameObject lightGameObject = GameObject.Find("MainLight");
+            light = lightGameObject.GetComponent<UnityEngine.Light>();
+            //
+            //light.type = LightType.Directional;
+            //light.shadows = LightShadows.Soft;
             UpdateRender();
         }
 
@@ -33,7 +34,7 @@ namespace Sango.Render
         {
             base.Clear();
             if (light == null) return;
-            GameObject.Destroy(light.gameObject);
+            //GameObject.Destroy(light.gameObject);
             light = null;
         }
 
@@ -72,10 +73,10 @@ namespace Sango.Render
         public override void UpdateRender()
         {
             if (light == null) return;
-            light.transform.rotation = Quaternion.Euler(light_direction[curSeason]);
+            //light.transform.rotation = Quaternion.Euler(light_direction[curSeason]);
             light.color = light_color[curSeason];
-            light.intensity = light_intensity[curSeason];
-            light.intensity = 1.2f;
+            //light.intensity = light_intensity[curSeason];
+            //light.intensity = 1.2f;
             Shader.SetGlobalColor("_ShadowColor", shadow_color[curSeason]);
             Shader.SetGlobalFloat("_ShadowStrength", shadow_strength[curSeason]);
         }

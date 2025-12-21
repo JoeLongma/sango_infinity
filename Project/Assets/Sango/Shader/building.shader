@@ -5,6 +5,7 @@ Shader "Sango/building_urp" {
 		_OutlineWidth("width", float) = 3.5
 		_BaseColorIntensity("BaseColorFactor", float) = 1
 		_FlashFactor("FlashFactor", float) = 1
+		_Alpha("Alpha", float) = 1
 		}
 		SubShader{
 			Tags { "RenderPipeline" = "UniversalPipeline" "Queue" = "Transparent" "RenderType" = "TransparentCutout" }
@@ -60,11 +61,11 @@ Shader "Sango/building_urp" {
 				#include "sango_shaderLib.hlsl"
 				//#pragma multi_compile_fwdbase
 				//#pragma multi_compile_fog
-				#pragma skip_variants SHADOWS_SOFT DIRLIGHTMAP_COMBINED
+				#pragma skip_variants DIRLIGHTMAP_COMBINED
+
 				//#pragma multi_compile LIGHTMAP_OFF LIGHTMAP_ON
-				#pragma multi_compile _ _MAIN_LIGHT_SHADOWS //Ö÷¹âÔ´ÒõÓ°
-				#pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE //¼¶ÁªÒõÓ°(¶àÕÅÒõÓ°ÌùÍ¼, ½ü´¦·Ö±æÂÊ¸ß, Ô¶´¦·Ö±æÂÊµÍ)
-				#pragma multi_compile _ _SHADOWS_SOFT //ÒõÓ°¿¹¾â³Ý
+				#pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
+				#pragma multi_compile _ _SHADOWS_SOFT //é˜´å½±æŠ—é”¯é½¿
 				#pragma multi_compile _ SANGO_EDITOR
 				#pragma skip_variants FOG_EXP FOG_EXP2
 				#pragma exclude_renderers xbox360 ps3 
@@ -90,15 +91,15 @@ Shader "Sango/building_urp" {
 				Cull[_Cull]
 
 				HLSLPROGRAM
-				#pragma exclude_renderers gles gles3 glcore
-				#pragma target 4.5
+				#pragma exclude_renderers xbox360 ps3 
+				#pragma target 3.0
 
 				#define SANGO_BASE_COLOR 1
-				#define SANGO_GRID_COLOR 1
 				#define SANGO_FOG 1
-				#define SANGO_BRUSH 1
+				#define SANGO_ALPHA_TEST 1
 				#define SANGO_TERRAIN_TYPE 1
-				#define SANGO_TERRAIN 1
+				#define SANGO_LIT_SHADOW 1
+				#define SANGO_FLASH 1	
 				#include "sango_shaderLib.hlsl"
 				// -------------------------------------
 				// Material Keywords
@@ -127,6 +128,6 @@ Shader "Sango/building_urp" {
 
 		}
 
-			//Fallback "Legacy Shaders/Diffuse"
+		Fallback "Sango/sango_urp"
 }
 

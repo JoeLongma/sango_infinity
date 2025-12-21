@@ -28,8 +28,8 @@ namespace Sango.Game.Player
         {
             get
             {
-                return TargetCity.GetBuildingComplateNumber((int)BuildingKindType.Barracks) > 0 && 
-                    TargetCity.CheckJobCost(CityJobType.TrainTroops) && 
+                return TargetCity.freePersons.Count > 0 &&
+                    TargetCity.CheckJobCost(CityJobType.TrainTroops) &&
                     TargetCity.morale < TargetCity.MaxMorale &&
                      TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.TrainTroops);
             }
@@ -42,7 +42,7 @@ namespace Sango.Game.Player
             targetUI.value_value.gameObject.SetActive(true);
 
             int destValue = TargetCity.morale + wonderNumber;
-            if(destValue > TargetCity.MaxMorale)
+            if (destValue > TargetCity.MaxMorale)
                 destValue = TargetCity.MaxMorale;
 
             targetUI.title_value.text = "士气";

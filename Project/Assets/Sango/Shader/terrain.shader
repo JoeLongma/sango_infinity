@@ -42,13 +42,12 @@ Shader "Sango/terrain_urp" {
 				#define SANGO_TERRAIN 1
 				#include "sango_shaderLib.hlsl"
 
-				#pragma skip_variants SHADOWS_SOFT DIRLIGHTMAP_COMBINED
+				#pragma skip_variants DIRLIGHTMAP_COMBINED
 				//#pragma multi_compile LIGHTMAP_OFF LIGHTMAP_ON
 				#pragma multi_compile _ SANGO_EDITOR
 				#pragma multi_compile_instancing
 				#pragma multi_compile_fog
-				#pragma multi_compile _ _MAIN_LIGHT_SHADOWS //主光源阴影
-				#pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE //级联阴影(多张阴影贴图, 近处分辨率高, 远处分辨率低)
+				#pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
 				#pragma multi_compile _ _SHADOWS_SOFT //阴影抗锯齿
 
 				#pragma skip_variants FOG_EXP FOG_EXP2
@@ -70,8 +69,8 @@ Shader "Sango/terrain_urp" {
 				Cull[_Cull]
 
 				HLSLPROGRAM
-				#pragma exclude_renderers gles gles3 glcore
-				#pragma target 4.5
+				#pragma exclude_renderers xbox360 ps3 
+				#pragma target 3.0
 
 				#define SANGO_BASE_COLOR 1
 				#define SANGO_GRID_COLOR 1

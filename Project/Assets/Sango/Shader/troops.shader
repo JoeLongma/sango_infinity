@@ -34,7 +34,7 @@ Shader "Sango/troops_urp" {
 				#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 				#include "Packages/com.unity.shadergraph/ShaderGraphLibrary/ShaderVariablesFunctions.hlsl"
 
-				#pragma skip_variants SHADOWS_SOFT DIRLIGHTMAP_COMBINED
+				#pragma skip_variants DIRLIGHTMAP_COMBINED
 				#pragma skip_variants FOG_EXP FOG_EXP2
 				#pragma exclude_renderers xbox360 ps3 
 				#pragma target 3.0
@@ -42,7 +42,7 @@ Shader "Sango/troops_urp" {
 				#pragma fragment frag
 				#pragma multi_compile_instancing
 				#pragma multi_compile_fog
-
+				#pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
 
 				CBUFFER_START(UnityPerMaterial)
 				half _Alpha;
@@ -212,8 +212,8 @@ Shader "Sango/troops_urp" {
 				Cull[_Cull]
 
 				HLSLPROGRAM
-				#pragma exclude_renderers gles gles3 glcore
-				#pragma target 4.5
+				#pragma exclude_renderers xbox360 ps3 
+				#pragma target 3.0
 
 				
 

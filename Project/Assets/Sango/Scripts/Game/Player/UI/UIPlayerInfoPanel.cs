@@ -29,6 +29,55 @@ namespace Sango.Game.Render.UI
         List<SangoObject> curDataList = new List<SangoObject>();
         int startIndex = 0;
 
+        private void Start()
+        {
+            GameEvent.OnTroopCreated += OnTroopCreated;
+            GameEvent.OnTroopDestroyed += OnTroopDestroyed;
+            GameEvent.OnCityFall += OnCityFall;
+            GameEvent.OnTroopActionOver += OnTroopActionOver;
+        }
+
+        protected override void OnDestroy()
+        {
+            GameEvent.OnTroopCreated -= OnTroopCreated;
+            GameEvent.OnTroopDestroyed -= OnTroopDestroyed;
+            GameEvent.OnCityFall -= OnCityFall;
+            GameEvent.OnTroopActionOver -= OnTroopActionOver;
+        }
+
+        void OnTroopActionOver(Troop troop)
+        {
+            if ((curShowType == ShowType.Troop || curShowType == ShowType.Person) && troop.BelongForce.IsPlayer && troop.BelongForce == Scenario.Cur.CurRunForce)
+            {
+                UpdateShowType();
+            }
+        }
+
+
+        void OnCityFall(City city, Force lastForce, Troop atk)
+        {
+            if (curShowType == ShowType.City && city.BelongForce.IsPlayer && city.BelongForce == Scenario.Cur.CurRunForce)
+            {
+                UpdateShowType();
+            }
+        }
+
+        void OnTroopCreated(Troop troop, Scenario scenario)
+        {
+            if (curShowType == ShowType.Troop && troop.BelongForce.IsPlayer && troop.BelongForce == scenario.CurRunForce)
+            {
+                UpdateShowType();
+            }
+        }
+
+        void OnTroopDestroyed(Troop troop, Scenario scenario)
+        {
+            if (curShowType == ShowType.Troop && troop.BelongForce.IsPlayer && troop.BelongForce == scenario.CurRunForce)
+            {
+                UpdateShowType();
+            }
+        }
+
         public enum ShowType
         {
             City = 0,

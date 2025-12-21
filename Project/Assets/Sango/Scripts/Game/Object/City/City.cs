@@ -979,6 +979,8 @@ namespace Sango.Game
             Troop atk = atker as Troop;
             if (atk == null) return;
 
+            Force lastBelongForce = BelongForce;
+
             // 清理火
             for (int i = 0; i < OccupyCellList.Count; ++i)
             {
@@ -1019,7 +1021,7 @@ namespace Sango.Game
                 atk.EnterCity(this);
                 Render?.UpdateRender();
                 CalculateHarvest();
-                GameEvent.OnCityFall?.Invoke(this, atk);
+                GameEvent.OnCityFall?.Invoke(this, lastBelongForce, atk);
                 return;
             }
 
@@ -1204,7 +1206,7 @@ namespace Sango.Game
                 }
             }
 
-            GameEvent.OnCityFall?.Invoke(this, atk);
+            GameEvent.OnCityFall?.Invoke(this, lastBelongForce, atk);
 
         }
 

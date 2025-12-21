@@ -80,7 +80,7 @@ namespace Sango.Game.Render.UI
             createItemsSys.CurSelectedItemTypeIndex = buildingTypeItem.index;
             CityCreateItems.ItemTypeInfo curItemType = createItemsSys.ItemTypes[buildingTypeItem.index];
             createItemsSys.CurSelectedItemType = curItemType;
-
+            createItemsSys.TargetBuilding = curItemType.targetBuilding;
             Person[] builder = ForceAI.CounsellorRecommendCreateItems(createItemsSys.TargetCity.freePersons);
             createItemsSys.personList.Clear();
             if (builder == null || builder.Length == 0)

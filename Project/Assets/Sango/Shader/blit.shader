@@ -31,9 +31,9 @@ Shader "Sango/blit"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _MainTex_ST;
+			float4 _BaseMap_ST;
 			CBUFFER_END
-			TEXTURE2D(_MainTex);
+			TEXTURE2D(_BaseMap);
 
 			#define smp SamplerState_Linear_Clamp
 			SAMPLER(smp);
@@ -50,10 +50,10 @@ Shader "Sango/blit"
 			{
 				// sample the texture
 				//float size = _BrushSize;
-				float2 uv = TRANSFORM_TEX(i.uv, _MainTex);
+				float2 uv = TRANSFORM_TEX(i.uv, _BaseMap);
 				////uv = uv - _BrushUV.xy;
 				//uv *= size;
-				half4 col = SAMPLE_TEXTURE2D(_MainTex, smp, uv);
+				half4 col = SAMPLE_TEXTURE2D(_BaseMap, smp, uv);
 				//if(col.a<0.1)
 				//{
 				//	col.a = 0;

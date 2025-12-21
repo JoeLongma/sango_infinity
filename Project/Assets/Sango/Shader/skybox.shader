@@ -37,7 +37,7 @@ SubShader {
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.shadergraph/ShaderGraphLibrary/ShaderVariablesFunctions.hlsl"
-            #pragma skip_variants SHADOWS_SOFT DIRLIGHTMAP_COMBINED
+            #pragma skip_variants DIRLIGHTMAP_COMBINED
 			#pragma multi_compile LIGHTMAP_OFF LIGHTMAP_ON
 			#pragma skip_variants FOG_EXP FOG_EXP2
 			#pragma exclude_renderers xbox360 ps3 
@@ -59,7 +59,7 @@ SubShader {
 
 			};
 			CBUFFER_START(UnityPerMaterial)
-			float4 _MainTex_ST;
+			float4 _BaseMap_ST;
 			float _EndHeight;
 			float _BeginHeight;
 			float _MixBegin;
@@ -82,7 +82,7 @@ SubShader {
 			{
 				VertexOutput o = (VertexOutput)0;
 				o.vertex = TransformObjectToHClip(v.vertex.xyz);
-				o.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
+				o.texcoord = TRANSFORM_TEX(v.texcoord, _BaseMap);
 				float4 posWorld = mul(unity_ObjectToWorld, v.vertex);
 				o.fogCoord.x = posWorld.y;
 				o.screenPos = ComputeScreenPos(o.vertex);
@@ -109,7 +109,7 @@ SubShader {
 
 				col.a = (linear01Depth) * saturate(heightAlpha);
 
-				float aa = saturate(pow(((i.localPos.y - _Height) / _HeightDis), _HeightPower));
+				float aa = saturate(pow(abs((i.localPos.y - _Height) / _HeightDis), _HeightPower));
 
 				return half4(col.rgb, col.a * aa);
 			}

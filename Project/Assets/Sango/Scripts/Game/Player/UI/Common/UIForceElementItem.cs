@@ -12,6 +12,7 @@ namespace Sango.Game.Render.UI
         public Image icon;
         public Button button;
         SangoObject targetObject;
+
         public UIForceElementItem SetName(string n)
         {
             name.text = n;
@@ -58,7 +59,16 @@ namespace Sango.Game.Render.UI
                 else if (obj is Person)
                 {
                     name.text = obj.Name;
-                    name.color = obj.ActionOver ? Color.gray : Color.white;
+
+                    Person p = (Person)obj;
+                    if (p.BelongTroop != null)
+                    {
+                        name.color = p.BelongTroop.ActionOver ? Color.gray : Color.white;
+                    }
+                    else
+                    {
+                        name.color = obj.ActionOver ? Color.gray : Color.white;
+                    }
                     icon.enabled = false;
                 }
                 else if (obj is Troop)

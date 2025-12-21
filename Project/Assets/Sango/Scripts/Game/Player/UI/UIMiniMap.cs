@@ -142,7 +142,7 @@ namespace Sango.Game.Render.UI
 
         }
 
-        void OnCityFall(City city, Troop troop)
+        void OnCityFall(City city, Force lastForce, Troop troop)
         {
             for (int i = 0; i < mapCityNodes.Count; i++)
             {

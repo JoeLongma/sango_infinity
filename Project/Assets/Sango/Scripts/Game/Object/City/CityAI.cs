@@ -103,7 +103,8 @@ namespace Sango.Game
                         else
                         {
                             // 需要兵力充足
-                            if (city.troops > 30000 || city.troops > x.troops - 5000)
+                            //if (city.troops > 30000 || city.troops > x.troops - 5000)
+                            if (city.troops >= 20000)
                             {
                                 // 范围大约在
                                 int weight = (int)(2500 * (float)city.virtualFightPower / x.virtualFightPower);
@@ -113,6 +114,10 @@ namespace Sango.Game
                                 // 5 4 3 2 1 0 -1 -2 -3 -4 -5
                                 // 0 1 2 3 4 5 6 7 8 9 10
                                 weight = UnityEngine.Mathf.FloorToInt((float)weight * (1f - (float)relation / 10000f));
+                                if(x.BelongForce.IsPlayer)
+                                {
+                                    weight += 1500;
+                                }
                                 priorityQueue.Push(x, weight);
                             }
                         }
@@ -890,27 +895,27 @@ namespace Sango.Game
 
         public static bool AICanAttack(City city, Scenario scenario)
         {
-            if (city.troops < 20000)
+            if (city.troops < 10000)
                 return false;
 
-            if (city.morale < 60 || city.security < 60)
+            if (city.morale < 60 || city.security < 50)
                 return false;
 
-            if (city.freePersons.Count < 6)
+            if (city.freePersons.Count < 2)
                 return false;
 
-            if (city.durability < city.DurabilityLimit)
-                return false;
+            //if (city.durability < city.DurabilityLimit)
+            //    return false;
 
             if (!city.IsBorderCity)
                 return false;
 
-            if (city.IsEnemiesRound())
+            if (city.IsEnemiesRound(15))
                 return false;
 
             // 兵装检查
-            if (city.itemStore.TotalNumber < Math.Min(20000, city.troops * 3 / 2))
-                return false;
+            //if (city.itemStore.TotalNumber < Math.Min(20000, city.troops * 3 / 2))
+            //    return false;
 
             //int cityTroopNeedFood = (int)(scenario.Variables.baseFoodCostInCity * (city.troops - 20000) * 9);
             //int troopNeedFood = (int)(20000 * 20 * scenario.Variables.baseFoodCostInTroop);
