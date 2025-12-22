@@ -876,7 +876,7 @@
       "model": "Assets/Model/Prefab/4636.prefab",
       "modelCreate": "Assets/Model/Prefab/4624.prefab",
       "modelBroken": "Assets/Model/Prefab/4624.prefab",
-      "actionEntities": "[{class:\"BuildingImproveGoldGain\", value:50, kinds:[32]}]"
+      "actionEntities": "[{class:\"BuildingImproveGoldGain\", value:50, kinds:[32], bound:0}]"
     },
     "40": {
       "Id": 40,
@@ -900,7 +900,7 @@
       "model": "Assets/Model/Prefab/4614.prefab",
       "modelCreate": "Assets/Model/Prefab/4624.prefab",
       "modelBroken": "Assets/Model/Prefab/4624.prefab",
-      "actionEntities": "[{class:\"BuildingImproveFoodGain\", value:50, kinds:[33]}]"
+      "actionEntities": "[{class:\"BuildingImproveFoodGain\", value:50, kinds:[33], bound:0}]"
     },
     "41": {
       "Id": 41,

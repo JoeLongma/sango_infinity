@@ -119,8 +119,10 @@ namespace Sango.Game.Render.UI
             UIDialog.Open(content, () =>
             {
                 Player.Player.Instance.Save(index);
+                newestData = Player.Player.Instance.all_saved_scenario_list[index];
                 UIDialog.Close();
                 ShowPage(curShowPage);
+
             });
         }
 
