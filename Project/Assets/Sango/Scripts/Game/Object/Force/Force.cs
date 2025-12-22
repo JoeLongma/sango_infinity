@@ -99,6 +99,7 @@ namespace Sango.Game
         public int PersonCount { get; set; }
         public int CityCount { get; set; }
         public int CityBaseCount { get; set; }
+        public Color Color => Flag.color;
 
         public Corps CurRunCorps { get; set; }
 

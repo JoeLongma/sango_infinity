@@ -59,10 +59,12 @@ namespace Sango.Game
         [JsonProperty]
         public SangoObjectList<Person> captiveList = new SangoObjectList<Person>();
 
+
+        string _troopName;
         /// <summary>
         /// 部队名
         /// </summary>
-        public override string Name => Leader?.Name;
+        public override string Name => _troopName;
 
         /// <summary>
         /// 所在格子
@@ -318,6 +320,7 @@ namespace Sango.Game
 
         public override void Init(Scenario scenario)
         {
+            _troopName = $"{Leader?.Name}队";
             actionList = new List<ActionBase>();
             ForEachPerson(x =>
             {

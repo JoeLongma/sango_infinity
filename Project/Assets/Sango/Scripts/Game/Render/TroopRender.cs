@@ -19,7 +19,7 @@ namespace Sango.Game.Render
             Owener = troop;
             Troop = troop;
             headbarCreate = true;
-            MapObject = MapObject.Create(Troop.Name + "队", "Troops");
+            MapObject = MapObject.Create(Troop.Name, "Troops");
             MapObject.objType = Troop.TroopType.Id;
             MapObject.modelId = Troop.TroopType.Id;
             MapObject.modelAsset = Troop.TroopType.model;
@@ -45,7 +45,7 @@ namespace Sango.Game.Render
             Owener = troop;
             Troop = troop;
             headbarCreate = headbar;
-            MapObject = MapObject.Create(Troop.Name + "队", "Troops");
+            MapObject = MapObject.Create(Troop.Name, "Troops");
             MapObject.objType = Troop.TroopType.Id;
             MapObject.modelId = Troop.TroopType.Id;
             MapObject.modelAsset = Troop.TroopType.model;

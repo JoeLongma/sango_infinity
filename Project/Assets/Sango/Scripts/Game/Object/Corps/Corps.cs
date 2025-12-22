@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Sango.Game
 {
@@ -42,6 +43,9 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public int ActionPoint { get; set; }
 
+
+        public Color Color => Color.cyan;
+        public int Index => 1;
 
         public City TargetCity { get; set; }
         public Force TargetForce { get; set; }
