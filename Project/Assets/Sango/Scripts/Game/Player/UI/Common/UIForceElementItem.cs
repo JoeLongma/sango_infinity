@@ -73,7 +73,7 @@ namespace Sango.Game.Render.UI
                 }
                 else if (obj is Troop)
                 {
-                    name.text = $"{obj.Name}队";
+                    name.text = obj.Name;
                     name.color = obj.ActionOver ? Color.gray : Color.white;
                     icon.enabled = false;
                 }

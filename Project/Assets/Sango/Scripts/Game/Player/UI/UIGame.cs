@@ -66,6 +66,8 @@ namespace Sango.Game.Render.UI
             Window.Instance.Close("window_loading");
             GameController.Instance.onCellOverEnter += OnCellOverEnter;
             GameController.Instance.onCellOverExit += OnCellOverExit;
+
+            Window.Instance.Open("window_object_pop_info");
         }
 
         public override void OnHide()
