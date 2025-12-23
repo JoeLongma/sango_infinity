@@ -25,6 +25,32 @@
       "Name": "昙花一现"
     }
   },
+  "Buffs": {
+    "1": {
+      "Id": 1,
+      "Name": "混乱",
+      "kind": 1,
+      "subKind": 1,
+      "asset": "Assets/Effect/Prefab/ef_buff_xuanyun.prefab",
+      "offset": [
+        0.0,
+        20.0,
+        0.0
+      ]
+    },
+    "2": {
+      "Id": 2,
+      "Name": "伪报",
+      "kind": 1,
+      "subKind": 2,
+      "asset": "Assets/Effect/Prefab/ef_buff_xuanyun.prefab",
+      "offset": [
+        0.0,
+        20.0,
+        0.0
+      ]
+    }
+  },
   "BuildingTypes": {
     "1": {
       "Id": 1,
@@ -1812,7 +1838,7 @@
       "desc": "对武力比自己低的敌方部队施展枪兵战法成功时会心一击",
       "level": 2,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[3], conditionId:1}]"
+      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[3], condition:{class:\"ConditionAnd\",L:{class:\"TroopAttributeCompare\",attType:\"strength\",result:1},R:{class:\"SkillIsNormalSkill\", result:0}}}]"
     },
     "36": {
       "Id": 36,
@@ -1820,7 +1846,7 @@
       "desc": "对武力比自己低的敌方部队施展戟兵战法成功时会心一击",
       "level": 2,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[1], conditionId:1}]"
+      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[1], condition:{class:\"ConditionAnd\",L:{class:\"TroopAttributeCompare\",attType:\"strength\",result:1},R:{class:\"SkillIsNormalSkill\", result:0}}}]"
     },
     "37": {
       "Id": 37,
@@ -1828,7 +1854,7 @@
       "desc": "对武力比自己低的敌方部队施展弩兵战法成功时会心一击",
       "level": 2,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[2], conditionId:1}]"
+      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[2], condition:{class:\"ConditionAnd\",L:{class:\"TroopAttributeCompare\",attType:\"strength\",result:1},R:{class:\"SkillIsNormalSkill\", result:0}}}]"
     },
     "38": {
       "Id": 38,
@@ -1836,7 +1862,7 @@
       "desc": "对武力比自己低的敌方部队施展骑兵战法成功时会心一击",
       "level": 2,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[4],conditionId:1}]"
+      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[4],condition:{class:\"ConditionAnd\",L:{class:\"TroopAttributeCompare\",attType:\"strength\",result:1},R:{class:\"SkillIsNormalSkill\", result:0}}}]"
     },
     "39": {
       "Id": 39,
@@ -1844,7 +1870,7 @@
       "desc": "对武力比自己低的敌方部队施展水军战法成功时会心一击",
       "level": 2,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[8,9,10], checkLand:2, isNormal:0, conditionId:1}]"
+      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[8,9,10], checkLand:2, isNormal:0, condition:{class:\"ConditionAnd\",L:{class:\"TroopAttributeCompare\",attType:\"strength\",result:1},R:{class:\"SkillIsNormalSkill\", result:0}}}]"
     },
     "40": {
       "Id": 40,
@@ -1852,7 +1878,7 @@
       "desc": "对武力比自己低的敌方部队施展全战法成功时会心一击",
       "level": 3,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100,conditionId:1}]"
+      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100,condition:{class:\"ConditionAnd\",L:{class:\"TroopAttributeCompare\",attType:\"strength\",result:1},R:{class:\"SkillIsNormalSkill\", result:0}}}]"
     },
     "41": {
       "Id": 41,
@@ -1860,7 +1886,7 @@
       "desc": "对武力比自己低的敌方部队施展一般攻击及战法成功时会心一击",
       "level": 4,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, isNormal:-1, conditionId:1}]"
+      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, isNormal:-1, condition:{class:\"ConditionAnd\",L:{class:\"TroopAttributeCompare\",attType:\"strength\",result:1},R:{class:\"SkillIsNormalSkill\", result:0}}}]"
     },
     "42": {
       "Id": 42,
@@ -1868,7 +1894,7 @@
       "desc": "枪兵战法与戟兵战法施展成功时会心一击",
       "level": 3,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[3,1], conditionId:1}]"
+      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[3,1], condition:{class:\"ConditionAnd\",L:{class:\"TroopAttributeCompare\",attType:\"strength\",result:1},R:{class:\"SkillIsNormalSkill\", result:0}}}]"
     },
     "43": {
       "Id": 43,

@@ -32,13 +32,17 @@ namespace Sango.Game
 
         public static void Init()
         {
+            // core
+            Register("ConditionAnd", CraeteHandle<ConditionAnd>);
+            Register("ConditionOr", CraeteHandle<ConditionOr>);
+            Register("ConditionList", CraeteHandle<ConditionList>);
+
             // Troop
-            Register("TroopIntelligenceGreaterThanTarget", CraeteHandle<TroopIntelligenceGreaterThanTarget>);
-            Register("TroopStrengthGreaterThanTarget", CraeteHandle<SkillIsCritical>);
-            Register("TroopCommandhGreaterThanTarget", CraeteHandle<SkillIsCritical>);
+            Register("TroopAttributeCompare", CraeteHandle<TroopAttributeCompare>);
 
             // Skill
             Register("SkillIsCritical", CraeteHandle<SkillIsCritical>);
+            Register("SkillIsNormalSkill", CraeteHandle<SkillIsNormalSkill>);
 
         }
     }

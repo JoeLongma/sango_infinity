@@ -22,7 +22,7 @@
         ///// <summary>
         ///// 骑兵
         ///// </summary>
-        Horse,
+        Ride,
 
         ///// <summary>
         ///// 器械

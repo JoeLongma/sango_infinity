@@ -305,7 +305,7 @@ namespace Sango.Game
         /// <summary>
         /// 骑兵适应
         /// </summary>
-        public int HorseLv => rideLv.value;
+        public int RideLv => rideLv.value;
 
         /// <summary>
         /// 水军适应

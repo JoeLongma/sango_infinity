@@ -23,7 +23,7 @@ namespace Sango.Game.Player
                 PersonSortFunction.SortBySpearLv,
                 PersonSortFunction.SortByHalberdLv,
                 PersonSortFunction.SortByCrossbowLv,
-                PersonSortFunction.SortByHorseLv,
+                PersonSortFunction.SortByRideLv,
                 PersonSortFunction.SortByWaterLv,
                 PersonSortFunction.SortByMachineLv,
                 PersonSortFunction.SortByFeatureList,

@@ -100,8 +100,8 @@ namespace Sango.Game
                     return leader.HalberdLv * 100 + leader.Command * 130 / 100 + leader.Strength * 120 / 100;
                 case (int)AbilityType.Crossbow:
                     return leader.CrossbowLv * 100 + leader.Intelligence * 110 / 100 + leader.Command * 110 / 100 + leader.Strength * 130 / 100;
-                case (int)AbilityType.Horse:
-                    return leader.HorseLv * 100 + leader.Command * 120 / 100 + leader.Strength * 130 / 100;
+                case (int)AbilityType.Ride:
+                    return leader.RideLv * 100 + leader.Command * 120 / 100 + leader.Strength * 130 / 100;
                 case (int)AbilityType.Machine:
                     return leader.MachineLv * 100;
                 case (int)AbilityType.Water:

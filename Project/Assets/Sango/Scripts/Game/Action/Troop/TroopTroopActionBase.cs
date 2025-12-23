@@ -1,5 +1,6 @@
 ﻿using Sango.Game.Tools;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Sango.Game.Action
 {
@@ -11,7 +12,7 @@ namespace Sango.Game.Action
     /// isAttacker 0攻击方 1受击方
     /// isNormal  -1都可以 0非 1是
     /// isRange -1都可以 0非 1是
-    /// conditionId 额外条件 支持参数(troop,troop,skill)
+    /// condition 额外条件 支持参数(troop,troop,skill)
     /// </summary>
     public abstract class TroopTroopActionBase : TroopActionBase
     {
@@ -19,7 +20,7 @@ namespace Sango.Game.Action
         protected int isAttacker;
         protected int isNormal;
         protected int isRange;
-        protected int conditionId;
+        protected Condition condition;
 
         public override void Init(JObject p, params SangoObject[] sangoObjects)
         {
@@ -28,7 +29,12 @@ namespace Sango.Game.Action
             isAttacker = p.Value<int>("isAttacker");
             isNormal = p.Value<int>("isNormal");
             isRange = p.Value<int>("isRange");
-            conditionId = p.Value<int>("conditionId");
+            JObject conObj = p.Value<JObject>("condition");
+            if (conObj != null)
+            {
+                condition = Condition.Create(conObj.Value<string>("class"));
+                condition.Init(conObj, sangoObjects);
+            }
         }
 
         protected virtual bool CheckTroop(Troop defencer, SangoObject atker, Skill skill)
@@ -62,10 +68,6 @@ namespace Sango.Game.Action
 
             if (checkLand == 2 && kinds != null && !kinds.Contains(troop.WaterTroopType.kind))
                 return false;
-
-            Condition condition = null;
-            if (conditionId > 0)
-                condition = Condition.Get(conditionId);
 
             if (condition != null && !condition.Check(troop, defencer, skill))
                 return false;

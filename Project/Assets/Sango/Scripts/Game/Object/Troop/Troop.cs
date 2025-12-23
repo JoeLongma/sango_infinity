@@ -932,8 +932,8 @@ namespace Sango.Game
                     return person.WaterLv;
                 case (int)AbilityType.Crossbow:
                     return person.CrossbowLv;
-                case (int)AbilityType.Horse:
-                    return person.HorseLv;
+                case (int)AbilityType.Ride:
+                    return person.RideLv;
                 case (int)AbilityType.Machine:
                     return person.MachineLv;
             }

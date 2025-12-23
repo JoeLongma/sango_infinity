@@ -22,6 +22,10 @@ namespace Sango.Game
             base.Init(start, targetPlatform);
             Window.Instance.Init(1024, 720);
             ActionBase.Init();
+            Condition.Init();
+            PersonCompareFunction.Instance.Init();
+            TroopCompareFunction.Instance.Init();
+
             ModManager.Instance.Init();
             StartCoroutine(GameInit());
         }

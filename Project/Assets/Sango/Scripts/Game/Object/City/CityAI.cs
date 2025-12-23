@@ -1030,7 +1030,7 @@ namespace Sango.Game
                 levelTotal[0] += x.SpearLv;
                 levelTotal[1] += x.HalberdLv;
                 levelTotal[2] += x.CrossbowLv;
-                levelTotal[3] += x.HorseLv;
+                levelTotal[3] += x.RideLv;
             });
 
             int sumTotal = 0;

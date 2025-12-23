@@ -86,7 +86,7 @@ namespace Sango.Game
                         titleList.Add(SortByHalberdLv);
                         titleList.Add(SortByCrossbowLv);
                         titleList.Add(SortBySpearLv);
-                        titleList.Add(SortByHorseLv);
+                        titleList.Add(SortByRideLv);
                         titleList.Add(SortByWaterLv);
                         titleList.Add(SortByMachineLv);
                         titleList.Add(SortByFeatureList);
@@ -282,12 +282,12 @@ namespace Sango.Game
             personSortFunc = (a, b) => a.CrossbowLv.CompareTo(b.CrossbowLv),
         };
 
-        public static SortTitle SortByHorseLv = new SortTitle()
+        public static SortTitle SortByRideLv = new SortTitle()
         {
             name = "骑兵",
             width = 50,
-            valueGetCall = x => Scenario.Cur.Variables.GetAbilityName(x.HorseLv),
-            personSortFunc = (a, b) => a.HorseLv.CompareTo(b.HorseLv),
+            valueGetCall = x => Scenario.Cur.Variables.GetAbilityName(x.RideLv),
+            personSortFunc = (a, b) => a.RideLv.CompareTo(b.RideLv),
         };
 
         public static SortTitle SortByWaterLv = new SortTitle()
