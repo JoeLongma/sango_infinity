@@ -229,6 +229,10 @@ namespace Sango.Game
             {
                 return CommonData.JobTypes as Database<T>;
             }
+            else if (tType == typeof(Buff))
+            {
+                return CommonData.Buffs as Database<T>;
+            }
             return null;
         }
 
@@ -339,7 +343,10 @@ namespace Sango.Game
             {
                 return CommonData.JobTypes.Get(id);
             }
-
+            else if (tType == typeof(Buff))
+            {
+                return CommonData.Buffs.Get(id);
+            }
 
             //else if (tType == typeof(CityLevelType))
             //{

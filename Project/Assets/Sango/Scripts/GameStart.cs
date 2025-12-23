@@ -15,6 +15,7 @@ public class GameStart : MonoBehaviour
     public bool Debug = false;
     public Camera uiCamera;
     public RectTransform uiRoot;
+    public CanvasScaler canvasScaler;
 
     void Awake()
     {
@@ -36,7 +37,7 @@ public class GameStart : MonoBehaviour
 #endif
 
 #if UNITY_ANDROID
-        uiRoot.GetComponent<CanvasScaler>().referenceResolution = new Vector2(1280, 720);
+        canvasScaler.referenceResolution = new Vector2(1280, 720);
 #endif
         Screen.sleepTimeout = UnityEngine.SleepTimeout.NeverSleep;
         Sango.Path.Init();
@@ -69,6 +70,8 @@ public class GameStart : MonoBehaviour
 #endif
         Game.Instance.UICamera = uiCamera;
         Game.Instance.UIRoot = uiRoot;
+        Game.Instance.RootCanvas = uiRoot.GetComponent<Canvas>();
+        Game.Instance.CanvasScaler = canvasScaler;
         /// <summary>
         /// 目标平台
         /// </summary>

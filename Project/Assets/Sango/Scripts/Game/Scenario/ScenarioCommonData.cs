@@ -119,6 +119,13 @@ namespace Sango.Game
         public SangoObjectMap<JobType> JobTypes = new SangoObjectMap<JobType>();
 
         /// <summary>
+        /// 工作类型
+        /// </summary>
+        [JsonConverter(typeof(SangoObjectMaptConverter<Buff>))]
+        [JsonProperty]
+        public SangoObjectMap<Buff> Buffs = new SangoObjectMap<Buff>();
+
+        /// <summary>
         public List<ItemType> ItemTypeList { get; set; }
 
         public void Init()

@@ -22,8 +22,6 @@ namespace Sango.Game.Render.UI
         {
             base.OnShow();
             ResetAllPanel(null);
-            currentPanel = null;
-            currentObject = null;
             GameController.Instance.onCellOverEnter += OnCellOverEnter;
             GameController.Instance.onCellOverExit += OnCellOverExit;
         }
@@ -38,6 +36,8 @@ namespace Sango.Game.Render.UI
                 portInfoPanel.gameObject.SetActive(false);
             if (except != troopInfoPanel && troopInfoPanel.gameObject.activeSelf)
                 troopInfoPanel.gameObject.SetActive(false);
+            currentPanel = null;
+            currentObject = null;
         }
 
         public override void OnHide()
@@ -53,6 +53,16 @@ namespace Sango.Game.Render.UI
             {
                 if (currentPanel != null)
                 {
+                    ResetAllPanel(null);
+                }
+                return;
+            }
+
+
+            if (ContextMenu.IsVisible())
+            {
+                if (currentPanel != null)
+                {
                     currentPanel.gameObject.SetActive(false);
                     currentPanel = null;
                     currentObject = null;
@@ -60,20 +70,14 @@ namespace Sango.Game.Render.UI
                 return;
             }
 
-            Vector2 screenPos = Camera.main.WorldToScreenPoint(cell.Position);
 
-            Sango.Log.Error($"screenPos : {screenPos}");
-            Vector2 anchorPos;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(GetComponent<RectTransform>(),
-                screenPos, Game.Instance.UICamera, out anchorPos);
-
-            Sango.Log.Error($"anchorPos : {anchorPos}");
+            Vector3 worldPos = cell.Position;
 
             if (cell.building != null)
             {
                 if (currentObject == cell.building)
                     return;
-                currentObject = cell.building;
+                worldPos = cell.building.CenterCell.Position;
                 if (cell.building.IsCity())
                 {
                     ResetAllPanel(cityInfoPanel);
@@ -82,7 +86,7 @@ namespace Sango.Game.Render.UI
                 }
                 else if (cell.building.IsCityBase())
                 {
-                    ResetAllPanel(portInfoPanel); 
+                    ResetAllPanel(portInfoPanel);
                     portInfoPanel.Show(cell.building as City);
                     currentPanel = portInfoPanel;
                 }
@@ -92,21 +96,20 @@ namespace Sango.Game.Render.UI
                     buildingInfoPanel.Show(cell.building as Building);
                     currentPanel = buildingInfoPanel;
                 }
+                currentObject = cell.building;
             }
             else if (cell.troop != null)
             {
                 if (currentObject == cell.troop)
                     return;
-                currentObject = cell.building;
                 ResetAllPanel(troopInfoPanel);
                 troopInfoPanel.Show(cell.troop);
                 currentPanel = troopInfoPanel;
+                currentObject = cell.building;
             }
             else
             {
-                currentPanel = null;
                 ResetAllPanel(null);
-                currentObject = null;
             }
 
             if (currentPanel == null)
@@ -117,31 +120,40 @@ namespace Sango.Game.Render.UI
             if (!currentPanel.gameObject.activeSelf)
                 currentPanel.gameObject.SetActive(true);
 
+
+            Vector2 screenPos = Camera.main.WorldToScreenPoint(worldPos);
+
+            //Sango.Log.Error($"screenPos : {screenPos}");
+            Vector2 anchorPos;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(GetComponent<RectTransform>(),
+                screenPos, Game.Instance.UICamera, out anchorPos);
+
+            //Sango.Log.Error($"anchorPos : {anchorPos}");
+
             bool showUp = screenPos.y < Screen.height / 2;
             bool showLeft = screenPos.x <= (Screen.width / 2);
-            Sango.Log.Error($"showUp : {showUp}");
-            Sango.Log.Error($"showLeft : {showLeft}");
+            //Sango.Log.Error($"showUp : {showUp}");
+            //Sango.Log.Error($"showLeft : {showLeft}");
+            int offset = 20;
             if (showUp)
             {
-                anchorPos.y += (currentPanel.root.sizeDelta.y + 10);
+                anchorPos.y += offset;
             }
             else
             {
-                anchorPos.y -= 10;
+                anchorPos.y -= (currentPanel.root.sizeDelta.y + offset) * currentPanel.root.localScale.y;
             }
 
             if (showLeft)
             {
-                anchorPos.x += (currentPanel.root.sizeDelta.x + 10);
+                anchorPos.x += offset;
             }
             else
             {
-                anchorPos.x -= 10;
-
+                anchorPos.x -= (currentPanel.root.sizeDelta.x + offset) * currentPanel.root.localScale.x;
             }
 
             currentPanel.root.anchoredPosition = anchorPos;
-
         }
 
         void OnCellOverExit(Cell cell)

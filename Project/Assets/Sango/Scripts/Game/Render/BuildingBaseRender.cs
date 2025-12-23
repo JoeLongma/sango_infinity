@@ -88,8 +88,9 @@ namespace Sango.Game.Render
 
         }
 
-        void OnModelVisibleChange(MapObject obj)
+        public override void OnModelVisibleChange(MapObject obj)
         {
+            base.OnModelVisibleChange(obj);
             if (obj.visible == false)
             {
                 BuildingModel = null;

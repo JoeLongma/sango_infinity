@@ -137,7 +137,8 @@ namespace Sango.Game
         /// <summary>
         /// 携带道具
         /// </summary>
-        [JsonProperty] public ItemStore itemStore = new ItemStore();
+        [JsonProperty]
+        public ItemStore itemStore = new ItemStore();
 
         /// <summary>
         /// 是否行动完毕
@@ -177,6 +178,12 @@ namespace Sango.Game
         /// 任务参数1
         /// </summary>
         [JsonProperty] public int missionParams2;
+
+        /// <summary>
+        /// 当前状态管理器
+        /// </summary>
+        [JsonProperty]
+        public BuffManager buffManager = new BuffManager();
 
         /// <summary>
         /// 任务地点
@@ -339,6 +346,8 @@ namespace Sango.Game
             cell.troop = this;
             Render = new TroopRender(this);
             foodCost = (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
+
+            buffManager.Init(this);
         }
 
         public virtual bool Run(Corps corps, Force force, Scenario scenario)
@@ -358,6 +367,7 @@ namespace Sango.Game
             foodCost = (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
             //MemberList?.InitCache();// = new SangoObjectList<Person>().FromString(_memberListStr, scenario.personSet);
         }
+
         public override bool OnForceTurnStart(Scenario scenario)
         {
             ActionOver = false;
@@ -390,10 +400,14 @@ namespace Sango.Game
                 ChangeFood(-foodCost, false);
             }
 
+            buffManager.OnForceTurnStart(scenario);
+
             if (Render != null)
             {
                 Render.UpdateRender();
             }
+
+
 
             return true;
         }

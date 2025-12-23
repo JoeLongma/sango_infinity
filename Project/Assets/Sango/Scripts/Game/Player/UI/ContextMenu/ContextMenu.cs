@@ -51,6 +51,8 @@ namespace Sango.Game.Render.UI
 
         public static void SetVisible(bool b)
         {
+            if (string.IsNullOrEmpty(currentWindowName)) return;
+
             WindowInterface windowInterface = Window.Instance.GetWindow(currentWindowName);
             if (windowInterface != null)
             {
@@ -60,6 +62,8 @@ namespace Sango.Game.Render.UI
 
         public static bool IsVisible()
         {
+            if(string.IsNullOrEmpty(currentWindowName)) return false;
+
             WindowInterface windowInterface = Window.Instance.GetWindow(currentWindowName);
             if (windowInterface == null) return false;
             return windowInterface.IsVisible();

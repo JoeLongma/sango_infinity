@@ -4,6 +4,7 @@ using Sango.Render;
 using Sango.Tools;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Sango.Game
 {
@@ -11,9 +12,13 @@ namespace Sango.Game
     {
         public Camera UICamera { get; internal set; }
         public RectTransform UIRoot { get; internal set; }
+        public Canvas RootCanvas { get; internal set; }
+        public CanvasScaler CanvasScaler { get; internal set; }
+        public float CanvasScalerFactor { get; internal set; }
 
         public override void Init(MonoBehaviour start, Platform.PlatformName targetPlatform)
         {
+            CanvasScalerFactor = CanvasScaler.referenceResolution.y / 1080f;
             base.Init(start, targetPlatform);
             Window.Instance.Init(1024, 720);
             ActionBase.Init();

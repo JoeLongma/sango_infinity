@@ -2,7 +2,7 @@
 
 namespace Sango.Game
 {
-    public class TroopStrengthGreaterThanTarget : Condition
+    public class TroopAttributeCompare : Condition
     {
         public override bool Check(params object[] objects)
         {

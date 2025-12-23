@@ -11,6 +11,12 @@ namespace Sango.Game
         [JsonProperty]
         public uint[] state;
         public int Max { get { return state.Length * 32; } }
+
+        public BitCheck()
+        {
+            state = new uint[1];
+        }
+
         public BitCheck(int size)
         {
             int n = size / 32;

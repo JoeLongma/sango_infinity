@@ -224,17 +224,17 @@ namespace Sango
 
         public static GameObject Create(string assetsPath)
         {
-            GameObject headBar = Get(assetsPath);
-            if (headBar == null)
+            GameObject poolObj = Get(assetsPath);
+            if (poolObj == null)
             {
-                GameObject headBarObj = ObjectLoader.LoadObject<GameObject>(assetsPath);
-                if (headBarObj != null)
+                poolObj = ObjectLoader.LoadObject<GameObject>(assetsPath);
+                if (poolObj != null)
                 {
-                    Add(assetsPath, headBarObj);
-                    headBar = Get(assetsPath);
+                    Add(assetsPath, poolObj);
+                    poolObj = Get(assetsPath);
                 }
             }
-            return headBar;
+            return poolObj;
         }
 
     }

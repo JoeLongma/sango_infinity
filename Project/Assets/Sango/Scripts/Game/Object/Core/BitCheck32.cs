@@ -25,6 +25,11 @@ namespace Sango.Game
             state = state & (~((uint)1 << bitPos));
         }
 
+        public bool IsEnpty()
+        {
+            return state == 0;
+        }
+
         public void Reset()
         {
             state = 0;

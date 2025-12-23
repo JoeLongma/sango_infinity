@@ -238,6 +238,7 @@ MonoBehaviour:
   Debug: 0
   uiCamera: {fileID: 1702651287}
   uiRoot: {fileID: 40802348}
+  canvasScaler: {fileID: 40802349}
 --- !u!4 &138966664
 Transform:
   m_ObjectHideFlags: 0

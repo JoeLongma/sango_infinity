@@ -96,6 +96,8 @@ namespace Sango.Game.Render
                 HeadBar = null;
             }
 
+            Troop.buffManager.OnModelLoaded(obj);
+
             if (!headbarCreate) return;
 
             GameObject headBar = PoolManager.Create(GameRenderHelper.TroopHeadbarRes);
@@ -123,12 +125,16 @@ namespace Sango.Game.Render
                 HeadBar = uGUIWindow;
             }
 
+
+
         }
 
-        void OnModelVisibleChange(MapObject obj)
+        public override void OnModelVisibleChange(MapObject obj)
         {
+            base.OnModelVisibleChange(obj);
             if (obj.visible == false)
             {
+                Troop.buffManager.OnModelClear();
                 TroopModel = null;
                 if (HeadBar != null)
                 {

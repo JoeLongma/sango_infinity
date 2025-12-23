@@ -1,46 +1,45 @@
-﻿using Sango.Game.Tools;
+﻿using Newtonsoft.Json.Linq;
+using Sango.Game.Tools;
 using System.Collections.Generic;
 using UnityEditor;
 
 namespace Sango.Game
 {
-    public class Condition
+    public abstract class Condition
     {
-        public static Condition Default = new Condition();
-        public virtual bool Check(params object[] objects)
+        public abstract void Init(JObject p, params SangoObject[] sangoObjects);
+        public abstract bool Check(params object[] objects);
+
+        public delegate Condition ConditionCreator();
+
+        public static Dictionary<string, ConditionCreator> CreateMap = new Dictionary<string, ConditionCreator>();
+        public static void Register(string name, ConditionCreator action)
         {
-            return false;
+            CreateMap[name] = action;
         }
 
-        static Dictionary<ConditionType, Condition> ConditionMap = new Dictionary<ConditionType, Condition>();
-
-        public static Condition Get(int conditionType)
+        public static Condition CraeteHandle<T>() where T : Condition, new()
         {
-            return Get((ConditionType)conditionType);
+            return new T();
+        }
+        public static Condition Create(string name)
+        {
+            ConditionCreator actionBaseCreator;
+            if (CreateMap.TryGetValue(name, out actionBaseCreator))
+                return actionBaseCreator();
+            return null;
         }
 
-        public static Condition Get(ConditionType conditionType)
+        public static void Init()
         {
-            Condition condition;
-            if(ConditionMap.TryGetValue(conditionType, out condition))
-                return condition;
+            // Troop
+            Register("TroopIntelligenceGreaterThanTarget", CraeteHandle<TroopIntelligenceGreaterThanTarget>);
+            Register("TroopStrengthGreaterThanTarget", CraeteHandle<SkillIsCritical>);
+            Register("TroopCommandhGreaterThanTarget", CraeteHandle<SkillIsCritical>);
 
-            condition = Create(conditionType);
-            ConditionMap.Add(conditionType, condition);
-            return condition;
-        }
+            // Skill
+            Register("SkillIsCritical", CraeteHandle<SkillIsCritical>);
 
-        public static Condition Create(ConditionType conditionType)
-        {
-            switch(conditionType)
-            {
-                case ConditionType.TroopIntelligenceGreaterThanTarget:
-                    return new TroopIntelligenceGreaterThanTarget();
-                case ConditionType.TroopStrengthGreaterThanTarget:
-                    return new TroopStrengthGreaterThanTarget();
-            }
-
-            return Default;
         }
     }
 }

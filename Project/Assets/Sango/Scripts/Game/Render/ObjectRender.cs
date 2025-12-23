@@ -5,6 +5,10 @@ namespace Sango.Game.Render
 {
     public abstract class ObjectRender : IRender
     {
+        public delegate void OnModelVisibleChangeFunction(MapObject obj);
+
+        public OnModelVisibleChangeFunction onModelVisibleChangeFunction;
+
         public bool IsVisible()
         {
             return MapObject != null && MapObject.visible;
@@ -12,6 +16,11 @@ namespace Sango.Game.Render
 
         public virtual SangoObject Owener { get; set; }
         public virtual MapObject MapObject { get; set; }
+
+        public Transform GetTransform()
+        {
+            return MapObject.transform;
+        }
 
         public virtual Vector3 GetPosition()
         {
@@ -46,5 +55,10 @@ namespace Sango.Game.Render
         public virtual void UpdateRender() { }
         public virtual void ShowInfo(int damage, int damageType) {; }
         public virtual void ShowSkill(Skill skill, bool isFail, bool isCritical) {; }
+
+        public virtual void OnModelVisibleChange(MapObject obj) {
+
+            onModelVisibleChangeFunction?.Invoke(obj);
+        }
     }
 }

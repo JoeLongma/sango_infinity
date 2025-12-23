@@ -98,6 +98,8 @@ namespace Sango.Game
         [JsonConverter(typeof(SangoObjectListIDConverter<SkillEffect>))]
         [JsonProperty] public SangoObjectList<SkillEffect> skillEffects;
 
+        public int tempCriticalFactor;
+
         //TODO:技能效果配置
 
         public void GetSpellRange(Troop atker, Cell where, List<Cell> cells)
@@ -339,7 +341,7 @@ namespace Sango.Game
                 GameEvent.OnTroopCalculateSkillCriticalFactor?.Invoke(troop, this, spellCell, overrideData);
                 criticalFactor = overrideData.Value;
             }
-
+            tempCriticalFactor = criticalFactor;
             return criticalFactor;
         }
 
