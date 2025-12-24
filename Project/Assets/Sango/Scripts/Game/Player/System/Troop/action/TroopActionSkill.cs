@@ -65,6 +65,10 @@ namespace Sango.Game.Player
 
         public override void OnEnter()
         {
+            GameController.Instance.RotateViewEnabled = true;
+            GameController.Instance.ZoomViewEnabled = true;
+            GameController.Instance.DragMoveViewEnabled = true;
+            GameController.Instance.KeyboardMoveEnabled = true;
             isShow = false;
             isMoving = false;
             spellRangeCell.Clear();
@@ -84,6 +88,15 @@ namespace Sango.Game.Player
                 }
             }
             ShowSpellRange();
+        }
+
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+            GameController.Instance.RotateViewEnabled = false;
+            GameController.Instance.ZoomViewEnabled = false;
+            GameController.Instance.DragMoveViewEnabled = false;
+            GameController.Instance.KeyboardMoveEnabled = false;
         }
     }
 }

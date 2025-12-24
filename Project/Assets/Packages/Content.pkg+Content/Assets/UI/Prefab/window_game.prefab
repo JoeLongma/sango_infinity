@@ -8429,6 +8429,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5973749658295835790}
     m_Modifications:
+    - target: {fileID: 4717106743255183795, guid: bcdd1c32b23820243b4d431b102f7499, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 218.9999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717106743255183795, guid: bcdd1c32b23820243b4d431b102f7499, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 31.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717106743255183795, guid: bcdd1c32b23820243b4d431b102f7499, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 64.55298
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717106743255183795, guid: bcdd1c32b23820243b4d431b102f7499, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.38325
+      objectReference: {fileID: 0}
+    - target: {fileID: 5436712418936234603, guid: bcdd1c32b23820243b4d431b102f7499, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 5449869254770133771, guid: bcdd1c32b23820243b4d431b102f7499, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

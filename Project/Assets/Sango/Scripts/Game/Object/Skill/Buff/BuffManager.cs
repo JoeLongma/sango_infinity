@@ -79,6 +79,7 @@ namespace Sango.Game
                 leftCounter = turnCount,
             };
             buffInstance.Init(this, buff, srcTroop);
+            _buffs.Add(buffInstance);
         }
 
         public void RemoveBuff(int id)

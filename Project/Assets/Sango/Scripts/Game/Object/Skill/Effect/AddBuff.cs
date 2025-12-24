@@ -23,6 +23,7 @@ namespace Sango.Game
             base.Init(p, master);
 
             buffId = p.Value<int>("buffId");
+            probability = p.Value<int>("probability");
 
             JArray array = p.Value<JArray>("turn");
             List<int> list = new List<int>();

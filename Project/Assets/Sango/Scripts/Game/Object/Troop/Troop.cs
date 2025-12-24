@@ -402,6 +402,8 @@ namespace Sango.Game
                 ChangeFood(-foodCost, false);
             }
 
+            buffManager.OnForceTurnStart(scenario);
+
             GameEvent.OnTroopTurnStart?.Invoke(this, scenario);
 
             if (Render != null)
