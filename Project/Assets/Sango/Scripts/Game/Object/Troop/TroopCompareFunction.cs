@@ -1,27 +1,26 @@
-﻿using Sango.Game.Player;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Sango.Game
 {
-    public class TroopCompareFunction : Singleton<TroopCompareFunction>
+    public class TroopCompareFunction
     {
         public delegate int TroopCompare(Troop troop1, Troop troop2);
-        public Dictionary<string, TroopCompare> CompareMap = new Dictionary<string, TroopCompare>();
+        static public Dictionary<string, TroopCompare> CompareMap = new Dictionary<string, TroopCompare>();
 
-        public void Register(string key, TroopCompare compare)
+        static public void Register(string key, TroopCompare compare)
         {
             CompareMap[key] = compare;
         }
-        public TroopCompare Get(string name)
+        static public TroopCompare Get(string name)
         {
             TroopCompare c;
             if (CompareMap.TryGetValue(name, out c))
                 return c;
+            Sango.Log.Error($"TroopCompareFunction中没有找到{name}的函数");
             return null;
         }
 
-        public void Init()
+        static public void Init()
         {
             Register("command", (a, b) => a.Command.CompareTo(b.Command));
             Register("strength", (a, b) => a.Strength.CompareTo(b.Strength));

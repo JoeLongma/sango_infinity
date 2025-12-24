@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Sango.Game.Tools;
+using System.Collections.Generic;
 
 namespace Sango.Game
 {
@@ -18,6 +19,24 @@ namespace Sango.Game
                 {
                     return (skill.costEnergy == 0) == (result == 1);
                 }
+            }
+            return false;
+        }
+
+        public override bool Check(Troop troop, Troop target, Skill skill)
+        {
+            if (skill != null)
+            {
+                return (skill.costEnergy == 0) == (result == 1);
+            }
+            return false;
+        }
+
+        public override bool Check(SkillInstance skillInstance, Troop troop, Cell spellCell, List<Cell> atkCellList)
+        {
+            if (skillInstance != null)
+            {
+                return (skillInstance.Skill.costEnergy == 0) == (result == 1);
             }
             return false;
         }

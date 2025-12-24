@@ -20,6 +20,7 @@ namespace Sango.Game
         Corps,
         Skill,
         InnerBuilding,
+        Strategy
 
     }
 

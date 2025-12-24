@@ -221,10 +221,6 @@ namespace Sango.Game
             {
                 return CommonData.ItemTypes as Database<T>;
             }
-            else if (tType == typeof(SkillEffect))
-            {
-                return CommonData.SkillEffects as Database<T>;
-            }
             else if (tType == typeof(JobType))
             {
                 return CommonData.JobTypes as Database<T>;
@@ -334,10 +330,6 @@ namespace Sango.Game
             else if (tType == typeof(ItemType))
             {
                 return CommonData.ItemTypes.Get(id);
-            }
-            else if (tType == typeof(SkillEffect))
-            {
-                return CommonData.SkillEffects.Get(id);
             }
             else if (tType == typeof(JobType))
             {

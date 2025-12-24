@@ -17,25 +17,10 @@ namespace Sango.Game
         [JsonProperty] public UnityEngine.Vector3 offset;
 
         /// <summary>
-        /// 效果实体集合
+        /// 技能效果
         /// </summary>
-        [JsonProperty]
-        [JsonConverter(typeof(String2JArrayConverter))]
-        public Newtonsoft.Json.Linq.JArray actionEntities;
+        [JsonProperty] public JArray buffEffects;
 
-        public void InitActions(List<ActionBase> list, params SangoObject[] sangoObjects)
-        {
-            if (actionEntities == null) return;
-            for (int i = 0; i < actionEntities.Count; i++)
-            {
-                JObject valus = actionEntities[i] as JObject;
-                ActionBase action = ActionBase.Create(valus.Value<string>("class"));
-                if (action != null)
-                {
-                    action.Init(valus, sangoObjects);
-                    list.Add(action);
-                }
-            }
-        }
+        
     }
 }

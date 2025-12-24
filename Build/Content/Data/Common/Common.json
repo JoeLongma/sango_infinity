@@ -36,6 +36,11 @@
         0.0,
         20.0,
         0.0
+      ],
+      "buffEffects": [
+        {
+          "class": "Stun"
+        }
       ]
     },
     "2": {
@@ -902,7 +907,16 @@
       "model": "Assets/Model/Prefab/4636.prefab",
       "modelCreate": "Assets/Model/Prefab/4624.prefab",
       "modelBroken": "Assets/Model/Prefab/4624.prefab",
-      "actionEntities": "[{class:\"BuildingImproveGoldGain\", value:50, kinds:[32], bound:0}]"
+      "actionEntities": [
+        {
+          "class": "BuildingImproveGoldGain",
+          "value": 50,
+          "kinds": [
+            32
+          ],
+          "bound": 0
+        }
+      ]
     },
     "40": {
       "Id": 40,
@@ -926,7 +940,16 @@
       "model": "Assets/Model/Prefab/4614.prefab",
       "modelCreate": "Assets/Model/Prefab/4624.prefab",
       "modelBroken": "Assets/Model/Prefab/4624.prefab",
-      "actionEntities": "[{class:\"BuildingImproveFoodGain\", value:50, kinds:[33], bound:0}]"
+      "actionEntities": [
+        {
+          "class": "BuildingImproveFoodGain",
+          "value": 50,
+          "kinds": [
+            33
+          ],
+          "bound": 0
+        }
+      ]
     },
     "41": {
       "Id": 41,
@@ -1179,7 +1202,14 @@
       "model": "Assets/Model/Prefab/4701.prefab",
       "modelCreate": "Assets/Model/Prefab/4624.prefab",
       "modelBroken": "Assets/Model/Prefab/4624.prefab",
-      "actionEntities": "[{class:\"BuildingImproveFoodGainByCityTroops\", value:100, minTroops:5000, maxTroops:30000}]"
+      "actionEntities": [
+        {
+          "class": "BuildingImproveFoodGainByCityTroops",
+          "value": 100,
+          "minTroops": 5000,
+          "maxTroops": 30000
+        }
+      ]
     },
     "51": {
       "Id": 51,
@@ -1838,7 +1868,27 @@
       "desc": "对武力比自己低的敌方部队施展枪兵战法成功时会心一击",
       "level": 2,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[3], condition:{class:\"ConditionAnd\",L:{class:\"TroopAttributeCompare\",attType:\"strength\",result:1},R:{class:\"SkillIsNormalSkill\", result:0}}}]"
+      "actionEntities": [
+        {
+          "class": "TroopSkillCalculateCritical",
+          "value": 100,
+          "kinds": [
+            3
+          ],
+          "condition": {
+            "class": "and",
+            "L": {
+              "class": "TroopAttributeCompare",
+              "attType": "strength",
+              "result": 1
+            },
+            "R": {
+              "class": "SkillIsNormalSkill",
+              "result": 0
+            }
+          }
+        }
+      ]
     },
     "36": {
       "Id": 36,
@@ -1846,7 +1896,27 @@
       "desc": "对武力比自己低的敌方部队施展戟兵战法成功时会心一击",
       "level": 2,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[1], condition:{class:\"ConditionAnd\",L:{class:\"TroopAttributeCompare\",attType:\"strength\",result:1},R:{class:\"SkillIsNormalSkill\", result:0}}}]"
+      "actionEntities": [
+        {
+          "class": "TroopSkillCalculateCritical",
+          "value": 100,
+          "kinds": [
+            1
+          ],
+          "condition": {
+            "class": "and",
+            "L": {
+              "class": "TroopAttributeCompare",
+              "attType": "strength",
+              "result": 1
+            },
+            "R": {
+              "class": "SkillIsNormalSkill",
+              "result": 0
+            }
+          }
+        }
+      ]
     },
     "37": {
       "Id": 37,
@@ -1854,7 +1924,27 @@
       "desc": "对武力比自己低的敌方部队施展弩兵战法成功时会心一击",
       "level": 2,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[2], condition:{class:\"ConditionAnd\",L:{class:\"TroopAttributeCompare\",attType:\"strength\",result:1},R:{class:\"SkillIsNormalSkill\", result:0}}}]"
+      "actionEntities": [
+        {
+          "class": "TroopSkillCalculateCritical",
+          "value": 100,
+          "kinds": [
+            2
+          ],
+          "condition": {
+            "class": "and",
+            "L": {
+              "class": "TroopAttributeCompare",
+              "attType": "strength",
+              "result": 1
+            },
+            "R": {
+              "class": "SkillIsNormalSkill",
+              "result": 0
+            }
+          }
+        }
+      ]
     },
     "38": {
       "Id": 38,
@@ -1862,7 +1952,27 @@
       "desc": "对武力比自己低的敌方部队施展骑兵战法成功时会心一击",
       "level": 2,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[4],condition:{class:\"ConditionAnd\",L:{class:\"TroopAttributeCompare\",attType:\"strength\",result:1},R:{class:\"SkillIsNormalSkill\", result:0}}}]"
+      "actionEntities": [
+        {
+          "class": "TroopSkillCalculateCritical",
+          "value": 100,
+          "kinds": [
+            4
+          ],
+          "condition": {
+            "class": "and",
+            "L": {
+              "class": "TroopAttributeCompare",
+              "attType": "strength",
+              "result": 1
+            },
+            "R": {
+              "class": "SkillIsNormalSkill",
+              "result": 0
+            }
+          }
+        }
+      ]
     },
     "39": {
       "Id": 39,
@@ -1870,7 +1980,31 @@
       "desc": "对武力比自己低的敌方部队施展水军战法成功时会心一击",
       "level": 2,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[8,9,10], checkLand:2, isNormal:0, condition:{class:\"ConditionAnd\",L:{class:\"TroopAttributeCompare\",attType:\"strength\",result:1},R:{class:\"SkillIsNormalSkill\", result:0}}}]"
+      "actionEntities": [
+        {
+          "class": "TroopSkillCalculateCritical",
+          "value": 100,
+          "kinds": [
+            8,
+            9,
+            10
+          ],
+          "checkLand": 2,
+          "isNormal": 0,
+          "condition": {
+            "class": "and",
+            "L": {
+              "class": "TroopAttributeCompare",
+              "attType": "strength",
+              "result": 1
+            },
+            "R": {
+              "class": "SkillIsNormalSkill",
+              "result": 0
+            }
+          }
+        }
+      ]
     },
     "40": {
       "Id": 40,
@@ -1878,7 +2012,24 @@
       "desc": "对武力比自己低的敌方部队施展全战法成功时会心一击",
       "level": 3,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100,condition:{class:\"ConditionAnd\",L:{class:\"TroopAttributeCompare\",attType:\"strength\",result:1},R:{class:\"SkillIsNormalSkill\", result:0}}}]"
+      "actionEntities": [
+        {
+          "class": "TroopSkillCalculateCritical",
+          "value": 100,
+          "condition": {
+            "class": "and",
+            "L": {
+              "class": "TroopAttributeCompare",
+              "attType": "strength",
+              "result": 1
+            },
+            "R": {
+              "class": "SkillIsNormalSkill",
+              "result": 0
+            }
+          }
+        }
+      ]
     },
     "41": {
       "Id": 41,
@@ -1886,7 +2037,25 @@
       "desc": "对武力比自己低的敌方部队施展一般攻击及战法成功时会心一击",
       "level": 4,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, isNormal:-1, condition:{class:\"ConditionAnd\",L:{class:\"TroopAttributeCompare\",attType:\"strength\",result:1},R:{class:\"SkillIsNormalSkill\", result:0}}}]"
+      "actionEntities": [
+        {
+          "class": "TroopSkillCalculateCritical",
+          "value": 100,
+          "isNormal": -1,
+          "condition": {
+            "class": "and",
+            "L": {
+              "class": "TroopAttributeCompare",
+              "attType": "strength",
+              "result": 1
+            },
+            "R": {
+              "class": "SkillIsNormalSkill",
+              "result": 0
+            }
+          }
+        }
+      ]
     },
     "42": {
       "Id": 42,
@@ -1894,7 +2063,28 @@
       "desc": "枪兵战法与戟兵战法施展成功时会心一击",
       "level": 3,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[3,1], condition:{class:\"ConditionAnd\",L:{class:\"TroopAttributeCompare\",attType:\"strength\",result:1},R:{class:\"SkillIsNormalSkill\", result:0}}}]"
+      "actionEntities": [
+        {
+          "class": "TroopSkillCalculateCritical",
+          "value": 100,
+          "kinds": [
+            3,
+            1
+          ],
+          "condition": {
+            "class": "and",
+            "L": {
+              "class": "TroopAttributeCompare",
+              "attType": "strength",
+              "result": 1
+            },
+            "R": {
+              "class": "SkillIsNormalSkill",
+              "result": 0
+            }
+          }
+        }
+      ]
     },
     "43": {
       "Id": 43,
@@ -1902,7 +2092,15 @@
       "desc": "枪兵战法成功时施展会心一击",
       "level": 3,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[3]}]"
+      "actionEntities": [
+        {
+          "class": "TroopSkillCalculateCritical",
+          "value": 100,
+          "kinds": [
+            3
+          ]
+        }
+      ]
     },
     "44": {
       "Id": 44,
@@ -1910,7 +2108,15 @@
       "desc": "戟兵战法成功时施展会心一击",
       "level": 3,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[1]}]"
+      "actionEntities": [
+        {
+          "class": "TroopSkillCalculateCritical",
+          "value": 100,
+          "kinds": [
+            1
+          ]
+        }
+      ]
     },
     "45": {
       "Id": 45,
@@ -1918,7 +2124,15 @@
       "desc": "弩兵战法成功时施展会心一击",
       "level": 3,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[2]}]"
+      "actionEntities": [
+        {
+          "class": "TroopSkillCalculateCritical",
+          "value": 100,
+          "kinds": [
+            2
+          ]
+        }
+      ]
     },
     "46": {
       "Id": 46,
@@ -1926,7 +2140,15 @@
       "desc": "骑兵战法成功时施展会心一击",
       "level": 3,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[4]}]"
+      "actionEntities": [
+        {
+          "class": "TroopSkillCalculateCritical",
+          "value": 100,
+          "kinds": [
+            4
+          ]
+        }
+      ]
     },
     "47": {
       "Id": 47,
@@ -1934,7 +2156,18 @@
       "desc": "兵器战法成功时施展会心一击",
       "level": 3,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[11,12,13,14]}]"
+      "actionEntities": [
+        {
+          "class": "TroopSkillCalculateCritical",
+          "value": 100,
+          "kinds": [
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
     },
     "48": {
       "Id": 48,
@@ -1942,7 +2175,18 @@
       "desc": "水军战法成功时施展会心一击",
       "level": 3,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100, kinds:[8,9,10], checkLand:2}]"
+      "actionEntities": [
+        {
+          "class": "TroopSkillCalculateCritical",
+          "value": 100,
+          "kinds": [
+            8,
+            9,
+            10
+          ],
+          "checkLand": 2
+        }
+      ]
     },
     "49": {
       "Id": 49,
@@ -1950,7 +2194,12 @@
       "desc": "全战法成功时施展会心一击",
       "level": 4,
       "kind": 2,
-      "actionEntities": "[{class:\"TroopSkillCalculateCritical\", value:100}]"
+      "actionEntities": [
+        {
+          "class": "TroopSkillCalculateCritical",
+          "value": 100
+        }
+      ]
     },
     "50": {
       "Id": 50,
@@ -2042,7 +2291,14 @@
       "desc": "必定可识破敌方部队所施展的部队计略,反击伤害增加为２倍",
       "level": 4,
       "kind": 4,
-      "actionEntities": "[{class:\"TroopSkillCalculateAttackBack\", value:200, isAttacker:1, isRange:-1}]"
+      "actionEntities": [
+        {
+          "class": "TroopSkillCalculateAttackBack",
+          "value": 200,
+          "isAttacker": 1,
+          "isRange": -1
+        }
+      ]
     },
     "63": {
       "Id": 63,
@@ -2169,7 +2425,15 @@
       "desc": "增加征兵时的士兵数",
       "level": 2,
       "kind": 6,
-      "actionEntities": "[{class:\"CityImproveJobResult\", value:150, jobIds:[6]}]"
+      "actionEntities": [
+        {
+          "class": "CityImproveJobResult",
+          "value": 150,
+          "jobIds": [
+            6
+          ]
+        }
+      ]
     },
     "81": {
       "Id": 81,
@@ -2177,7 +2441,15 @@
       "desc": "增加生产枪、戟、弩之兵装时的产量",
       "level": 2,
       "kind": 6,
-      "actionEntities": "[{class:\"CityImproveJobResult\", value:200, jobIds:[8]}]"
+      "actionEntities": [
+        {
+          "class": "CityImproveJobResult",
+          "value": 200,
+          "jobIds": [
+            8
+          ]
+        }
+      ]
     },
     "82": {
       "Id": 82,
@@ -2185,7 +2457,15 @@
       "desc": "增加生产军马之兵装时的产量",
       "level": 2,
       "kind": 6,
-      "actionEntities": "[{class:\"CityImproveJobResult\", value:200, jobIds:[12]}]"
+      "actionEntities": [
+        {
+          "class": "CityImproveJobResult",
+          "value": 200,
+          "jobIds": [
+            12
+          ]
+        }
+      ]
     },
     "83": {
       "Id": 83,
@@ -2193,7 +2473,15 @@
       "desc": "生产兵器之兵装时所需的生产期间减半",
       "level": 2,
       "kind": 6,
-      "actionEntities": "[{class:\"CityImproveJobCounterResult\", value:50, jobIds:[10]}]"
+      "actionEntities": [
+        {
+          "class": "CityImproveJobCounterResult",
+          "value": 50,
+          "jobIds": [
+            10
+          ]
+        }
+      ]
     },
     "84": {
       "Id": 84,
@@ -2201,7 +2489,15 @@
       "desc": "生产舰船之兵装时所需的生产期间减半",
       "level": 2,
       "kind": 6,
-      "actionEntities": "[{class:\"CityImproveJobCounterResult\", value:50, jobIds:[11]}]"
+      "actionEntities": [
+        {
+          "class": "CityImproveJobCounterResult",
+          "value": 50,
+          "jobIds": [
+            11
+          ]
+        }
+      ]
     },
     "85": {
       "Id": 85,
@@ -4466,6 +4762,42 @@
       "spellRanges": [
         1
       ],
+      "skillEffects": [
+        {
+          "class": "AddBuff",
+          "buffId": 1,
+          "probability": 5000,
+          "turn": [
+            1,
+            2
+          ],
+          "weight": [
+            70,
+            30
+          ],
+          "condition": {
+            "class": "SkillIsCritical",
+            "result": 0
+          }
+        },
+        {
+          "class": "AddBuff",
+          "buffId": 1,
+          "probability": 5000,
+          "turn": [
+            2,
+            3
+          ],
+          "weight": [
+            70,
+            30
+          ],
+          "condition": {
+            "class": "SkillIsCritical",
+            "result": 1
+          }
+        }
+      ],
       "canDamageTroop": true,
       "canDamageMachine": true,
       "canDamageBoat": false,
@@ -4580,7 +4912,38 @@
         2
       ],
       "skillEffects": [
-        1
+        {
+          "class": "Burn",
+          "probability": 5000,
+          "turn": [
+            1,
+            2
+          ],
+          "weight": [
+            70,
+            30
+          ],
+          "condition": {
+            "class": "SkillIsCritical",
+            "result": 0
+          }
+        },
+        {
+          "class": "Burn",
+          "probability": 5000,
+          "turn": [
+            2,
+            3
+          ],
+          "weight": [
+            70,
+            30
+          ],
+          "condition": {
+            "class": "SkillIsCritical",
+            "result": 1
+          }
+        }
       ],
       "canDamageTroop": true,
       "canDamageMachine": true,
@@ -4722,7 +5085,38 @@
         2
       ],
       "skillEffects": [
-        1
+        {
+          "class": "Burn",
+          "probability": 5000,
+          "turn": [
+            1,
+            2
+          ],
+          "weight": [
+            70,
+            30
+          ],
+          "condition": {
+            "class": "SkillIsCritical",
+            "result": 0
+          }
+        },
+        {
+          "class": "Burn",
+          "probability": 5000,
+          "turn": [
+            2,
+            3
+          ],
+          "weight": [
+            70,
+            30
+          ],
+          "condition": {
+            "class": "SkillIsCritical",
+            "result": 1
+          }
+        }
       ],
       "canDamageTroop": true,
       "canDamageMachine": false,
@@ -4765,7 +5159,38 @@
         1
       ],
       "skillEffects": [
-        1
+        {
+          "class": "Burn",
+          "probability": 5000,
+          "turn": [
+            1,
+            2
+          ],
+          "weight": [
+            70,
+            30
+          ],
+          "condition": {
+            "class": "SkillIsCritical",
+            "result": 0
+          }
+        },
+        {
+          "class": "Burn",
+          "probability": 5000,
+          "turn": [
+            2,
+            3
+          ],
+          "weight": [
+            70,
+            30
+          ],
+          "condition": {
+            "class": "SkillIsCritical",
+            "result": 1
+          }
+        }
       ],
       "canDamageTroop": true,
       "canDamageMachine": true,
@@ -4813,7 +5238,38 @@
         2
       ],
       "skillEffects": [
-        1
+        {
+          "class": "Burn",
+          "probability": 5000,
+          "turn": [
+            1,
+            2
+          ],
+          "weight": [
+            70,
+            30
+          ],
+          "condition": {
+            "class": "SkillIsCritical",
+            "result": 0
+          }
+        },
+        {
+          "class": "Burn",
+          "probability": 5000,
+          "turn": [
+            2,
+            3
+          ],
+          "weight": [
+            70,
+            30
+          ],
+          "condition": {
+            "class": "SkillIsCritical",
+            "result": 1
+          }
+        }
       ],
       "canDamageTroop": true,
       "canDamageMachine": true,

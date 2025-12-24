@@ -185,13 +185,15 @@ namespace Sango.Game
         [JsonProperty]
         public BuffManager buffManager = new BuffManager();
 
+        public void AddBuff(int id, int turnCount, Troop srcTroop) { buffManager.AddBuff(id, turnCount, srcTroop); }
+        public void RemoveBuff(int id) { buffManager.RemoveBuff(id); }
+
         /// <summary>
         /// 任务地点
         /// </summary>
         [JsonProperty]
         [JsonConverter(typeof(XY2CellConverter))]
         public Cell missionTargetCell;
-
 
         public TroopType TroopType
         {
@@ -400,15 +402,12 @@ namespace Sango.Game
                 ChangeFood(-foodCost, false);
             }
 
-            buffManager.OnForceTurnStart(scenario);
+            GameEvent.OnTroopTurnStart?.Invoke(this, scenario);
 
             if (Render != null)
             {
                 Render.UpdateRender();
             }
-
-
-
             return true;
         }
 
@@ -1799,7 +1798,6 @@ namespace Sango.Game
         {
 
         }
-
 
 
     }

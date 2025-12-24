@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
 namespace Sango.Game
@@ -20,7 +21,8 @@ namespace Sango.Game
         [JsonProperty]
         public int leftCounter;
 
-        public List<Action.ActionBase> actions = new List<Action.ActionBase>();
+        List<BuffEffect> effects;
+        public Troop Target => Manager.Master;
 
         public void Init(BuffManager manager, Buff buff, Troop master)
         {
@@ -28,11 +30,29 @@ namespace Sango.Game
             Master = master;
             Buff = buff;
             Manager.CreateAsset(Buff.asset, Buff.offset);
-            Buff.InitActions(actions, Manager.Master, Master, Buff);
+            InitBuffEffects();
+        }
+
+        public void InitBuffEffects()
+        {
+            if (Buff.buffEffects == null) return;
+            if (Buff.buffEffects.Count == 0) return;
+            effects = new List<BuffEffect>();
+            for (int i = 0; i < Buff.buffEffects.Count; i++)
+            {
+                JObject valus = Buff.buffEffects[i] as JObject;
+                BuffEffect eft = BuffEffect.Create(valus.Value<string>("class"));
+                if (eft != null)
+                {
+                    eft.Init(valus, this);
+                    effects.Add(eft);
+                }
+            }
         }
 
         public bool TurnUpdate()
         {
+
             leftCounter--;
             if (leftCounter <= 0)
             {
@@ -45,13 +65,13 @@ namespace Sango.Game
         public void Clear()
         {
             Manager.ReleaseAsset(Buff.asset);
-            if (actions != null)
+            if (effects != null)
             {
-                for (int i = 0; i < actions.Count; i++)
-                    actions[i].Clear();
+                for (int i = 0; i < effects.Count; i++)
+                    effects[i].Clear();
 
-                actions.Clear();
-                actions = null;
+                effects.Clear();
+                effects = null;
             }
         }
     }

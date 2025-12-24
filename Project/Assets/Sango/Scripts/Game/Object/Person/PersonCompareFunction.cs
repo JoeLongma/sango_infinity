@@ -1,19 +1,17 @@
-﻿using Sango.Game.Player;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Sango.Game
 {
-    public class PersonCompareFunction : Singleton<PersonCompareFunction>
+    public class PersonCompareFunction
     {
         public delegate int PersonCompare(Person person1, Person person2);
-        public Dictionary<string, PersonCompare> CompareMap = new Dictionary<string, PersonCompare>();
+        static public Dictionary<string, PersonCompare> CompareMap = new Dictionary<string, PersonCompare>();
 
-        public void Register(string key, PersonCompare compare)
+        static public void Register(string key, PersonCompare compare)
         {
             CompareMap[key] = compare;
         }
-        public PersonCompare Get(string name)
+        static public PersonCompare Get(string name)
         {
             PersonCompare c;
             if (CompareMap.TryGetValue(name, out c))
@@ -21,7 +19,7 @@ namespace Sango.Game
             return null;
         }
 
-        public void Init()
+        static public void Init()
         {
             Register("command", (a, b) => a.Command.CompareTo(b.Command));
             Register("strength", (a, b) => a.Strength.CompareTo(b.Strength));

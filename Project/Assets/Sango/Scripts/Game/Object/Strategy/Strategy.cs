@@ -7,9 +7,9 @@ using UnityEngine;
 namespace Sango.Game
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class Skill : SangoObject
+    public class Strategy : Skill
     {
-        public override SangoObjectType ObjectType { get { return SangoObjectType.Skill; } }
+        public override SangoObjectType ObjectType { get { return SangoObjectType.Strategy; } }
 
         /// <summary>
         /// 技能类型

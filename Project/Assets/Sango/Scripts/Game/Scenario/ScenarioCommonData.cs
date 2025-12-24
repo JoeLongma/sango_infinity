@@ -91,13 +91,6 @@ namespace Sango.Game
         public SangoObjectSet<Official> Officials = new SangoObjectSet<Official>();
 
         /// <summary>
-        /// 技能效果
-        /// </summary>
-        [JsonConverter(typeof(SangoObjectMapSkillEffectConverter))]
-        [JsonProperty(Order = -1)]
-        public SangoObjectMap<SkillEffect> SkillEffects = new SangoObjectMap<SkillEffect>();
-
-        /// <summary>
         /// 技能
         /// </summary>
         [JsonConverter(typeof(SangoObjectSetConverter<Skill>))]

@@ -1,0 +1,45 @@
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+
+namespace Sango.Game
+{
+    public class BuffEffect
+    {
+        public BuffInstance master;
+        public virtual void Init(JObject p, BuffInstance master) { this.master = master; }
+        public virtual void Action(BuffInstance BuffInstance, Troop troop, Cell spellCell, List<Cell> atkCellList) {; }
+        public virtual void Clear() {; }
+
+        public delegate BuffEffect BuffEffectCreator();
+
+        public static Dictionary<string, BuffEffectCreator> CreateMap = new Dictionary<string, BuffEffectCreator>();
+        public static void Register(string name, BuffEffectCreator action)
+        {
+            CreateMap[name] = action;
+        }
+        public static BuffEffect CraeteHandle<T>() where T : BuffEffect, new()
+        {
+            return new T();
+        }
+        public static BuffEffect Create(string name)
+        {
+            BuffEffectCreator creator;
+            if (CreateMap.TryGetValue(name, out creator))
+                return creator();
+            return null;
+        }
+
+        public static void Init()
+        {
+            Register("Stun", CraeteHandle<Stun>);
+            //Register("AddBuff", CraeteHandle<AddBuff>);
+
+        }
+
+
+
+
+
+    }
+}

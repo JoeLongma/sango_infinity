@@ -23,8 +23,10 @@ namespace Sango.Game
             Window.Instance.Init(1024, 720);
             ActionBase.Init();
             Condition.Init();
-            PersonCompareFunction.Instance.Init();
-            TroopCompareFunction.Instance.Init();
+            BuffEffect.Init();
+            SkillEffect.Init();
+            PersonCompareFunction.Init();
+            TroopCompareFunction.Init();
 
             ModManager.Instance.Init();
             StartCoroutine(GameInit());

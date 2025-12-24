@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using Sango.Game.Tools;
 using System.Collections.Generic;
-using UnityEditor;
 
 namespace Sango.Game
 {
@@ -14,6 +12,20 @@ namespace Sango.Game
         {
             if (L != null && !L.Check(objects)) return false;
             if (R != null && !R.Check(objects)) return false;
+            return true;
+        }
+
+        public override bool Check(Troop troop, Troop target, Skill skill)
+        {
+            if (L != null && !L.Check(troop, target, skill)) return false;
+            if (R != null && !R.Check(troop, target, skill)) return false;
+            return true;
+        }
+
+        public override bool Check(SkillInstance skillInstance, Troop troop, Cell spellCell, List<Cell> atkCellList)
+        {
+            if (L != null && !L.Check(skillInstance, troop, spellCell, atkCellList)) return false;
+            if (R != null && !R.Check(skillInstance, troop, spellCell, atkCellList)) return false;
             return true;
         }
 

@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using Sango.Game.Tools;
 using System.Collections.Generic;
-using UnityEditor;
 
 namespace Sango.Game
 {
@@ -9,6 +7,8 @@ namespace Sango.Game
     {
         public abstract void Init(JObject p, params SangoObject[] sangoObjects);
         public abstract bool Check(params object[] objects);
+        public virtual bool Check(Troop troop, Troop target, Skill skill) { return false; }
+        public virtual bool Check(SkillInstance skillInstance, Troop troop, Cell spellCell, List<Cell> atkCellList) { return false; }
 
         public delegate Condition ConditionCreator();
 
@@ -33,9 +33,9 @@ namespace Sango.Game
         public static void Init()
         {
             // core
-            Register("ConditionAnd", CraeteHandle<ConditionAnd>);
-            Register("ConditionOr", CraeteHandle<ConditionOr>);
-            Register("ConditionList", CraeteHandle<ConditionList>);
+            Register("and", CraeteHandle<ConditionAnd>);
+            Register("or", CraeteHandle<ConditionOr>);
+            Register("list", CraeteHandle<ConditionList>);
 
             // Troop
             Register("TroopAttributeCompare", CraeteHandle<TroopAttributeCompare>);

@@ -56,7 +56,6 @@ namespace Sango.Game
         /// 效果实体集合
         /// </summary>
         [JsonProperty]
-        [JsonConverter(typeof(String2JArrayConverter))]
         public Newtonsoft.Json.Linq.JArray actionEntities;
 
         public void InitActions(List<ActionBase> list, params SangoObject[] sangoObjects)

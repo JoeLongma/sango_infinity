@@ -16,7 +16,7 @@ namespace Sango.Game
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer, JsonProperty property, object target)
         {
             string content = serializer.Deserialize<string>(reader);
-            return JsonConvert.DeserializeObject<JObject>(content); ;
+            return JsonConvert.DeserializeObject<JObject>(content);
         }
     }
 }

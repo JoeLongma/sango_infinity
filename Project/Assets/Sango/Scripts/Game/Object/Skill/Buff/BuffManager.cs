@@ -71,9 +71,14 @@ namespace Sango.Game
         }
 
 
-        public void AddBuff(int id)
+        public void AddBuff(int id, int turnCount, Troop srcTroop)
         {
             Buff buff = Scenario.Cur.GetObject<Buff>(id);
+            BuffInstance buffInstance = new BuffInstance()
+            {
+                leftCounter = turnCount,
+            };
+            buffInstance.Init(this, buff, srcTroop);
         }
 
         public void RemoveBuff(int id)

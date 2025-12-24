@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Sango.Game.Tools;
+using System.Collections.Generic;
 
 namespace Sango.Game
 {
@@ -28,14 +29,35 @@ namespace Sango.Game
             Troop atker = objects[0] as Troop;
             Troop target = objects[1] as Troop;
             if (target == null) return true;
-            TroopCompareFunction.TroopCompare compareFunction = TroopCompareFunction.Instance.Get(attType);
+            TroopCompareFunction.TroopCompare compareFunction = TroopCompareFunction.Get(attType);
             if (compareFunction == null)
             {
-                Sango.Log.Error($"TroopCompareFunction中没有找到{attType}的函数");
                 return false;
             }
 
             return compareFunction(atker, target) == result;
+        }
+
+        public override bool Check(Troop troop, Troop target, Skill skill)
+        {
+            if (target == null) return true;
+            TroopCompareFunction.TroopCompare compareFunction = TroopCompareFunction.Get(attType);
+            if (compareFunction == null)
+            {
+                return false;
+            }
+            return compareFunction(troop, target) == result;
+        }
+
+        public override bool Check(SkillInstance skillInstance, Troop troop, Cell spellCell, List<Cell> atkCellList)
+        {
+            if (spellCell.troop == null) return true;
+            TroopCompareFunction.TroopCompare compareFunction = TroopCompareFunction.Get(attType);
+            if (compareFunction == null)
+            {
+                return false;
+            }
+            return compareFunction(troop, spellCell.troop) == result;
         }
     }
 }
