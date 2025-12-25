@@ -6,7 +6,7 @@ namespace Sango.Game.Render.UI
     public class UIPersonItem : MonoBehaviour
     {
         public Text name;
-        public Image headIcon;
+        public RawImage headIcon;
         public Text feature;
 
         public void SetPerson(Person person)
@@ -19,7 +19,7 @@ namespace Sango.Game.Render.UI
                 else
                     feature.text = "";
                 name.text = person.Name;
-                headIcon.sprite = GameRenderHelper.LoadHeadIcon(person.headIconID);
+                headIcon.texture = GameRenderHelper.LoadHeadIcon(person.headIconID);
                 headIcon.enabled = true;
             }
             else

@@ -21,5 +21,8 @@ namespace Sango.Game
         [JsonProperty]
         public int CDCount { get; set; }
 
+        public int cost;
+        public int[] spellRanges;
+
     }
 }

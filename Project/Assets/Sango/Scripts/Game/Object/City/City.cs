@@ -1605,7 +1605,7 @@ namespace Sango.Game
             totalValue = overrideData.Value;
 
 
-            overrideData.Value = totalValue;
+            overrideData.Value = techniquePointGain;
             GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
             techniquePointGain = overrideData.Value;
 
@@ -1800,7 +1800,7 @@ namespace Sango.Game
             totalValue = overrideData.Value;
 
 
-            overrideData.Value = totalValue;
+            overrideData.Value = techniquePointGain;
             GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
             techniquePointGain = overrideData.Value;
 
@@ -1888,7 +1888,7 @@ namespace Sango.Game
                 person.ActionOver = true;
             }
 
-            overrideData.Value = totalValue;
+            overrideData.Value = techniquePointGain;
             GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
             techniquePointGain = overrideData.Value;
 
@@ -1978,7 +1978,7 @@ namespace Sango.Game
                 person.ActionOver = true;
             }
 
-            overrideData.Value = totalValue;
+            overrideData.Value = techniquePointGain;
             GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
             techniquePointGain = overrideData.Value;
 
@@ -2075,7 +2075,7 @@ namespace Sango.Game
                 person.ActionOver = true;
             }
 
-            overrideData.Value = totalValue;
+            overrideData.Value = techniquePointGain;
             GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
             techniquePointGain = overrideData.Value;
 
@@ -2187,7 +2187,7 @@ namespace Sango.Game
                 person.ActionOver = true;
             }
 
-            overrideData.Value = totalValue;
+            overrideData.Value = techniquePointGain;
             GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
             techniquePointGain = overrideData.Value;
             BelongForce.GainTechniquePoint(techniquePointGain);
@@ -2403,7 +2403,7 @@ namespace Sango.Game
             // 治安对征兵的影响
             totalValue = (int)(totalValue * (1f - Math.Max(0, (100 - security)) * variables.securityInfluenceRecruitTroops));
 
-            overrideData.Value = totalValue / 100;
+            overrideData.Value = techniquePointGain;
             GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
             techniquePointGain = overrideData.Value;
 
@@ -2578,7 +2578,7 @@ namespace Sango.Game
 
             int exsistNumber = itemStore.Add(itemType.Id, totalValue);
 
-            overrideData.Value = totalValue;
+            overrideData.Value = techniquePointGain;
             GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
             techniquePointGain = overrideData.Value;
             building.ActionOver = true;
@@ -2637,7 +2637,7 @@ namespace Sango.Game
             totalValue = overrideData.Value;
 
 
-            overrideData.Value = totalValue;
+            overrideData.Value = techniquePointGain;
             GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
             techniquePointGain = overrideData.Value;
 

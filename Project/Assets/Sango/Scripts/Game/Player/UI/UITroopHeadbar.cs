@@ -5,7 +5,7 @@ namespace Sango.Game.Render.UI
 {
     public class UITroopHeadbar : UGUIWindow
     {
-        public Image headIcon;
+        public RawImage headIcon;
         public Text name;
         public Image state;
         public Image food;
@@ -21,7 +21,7 @@ namespace Sango.Game.Render.UI
             aniText = null;
             this.troop = troop;
             name.text = troop.Name;
-            headIcon.sprite = GameRenderHelper.LoadHeadIcon(troop.Leader.headIconID);
+            headIcon.texture = GameRenderHelper.LoadHeadIcon(troop.Leader.headIconID);
             skillText.Clear();
             UpdateState(troop);
             GameEvent.OnForceStart += OnForceStart;

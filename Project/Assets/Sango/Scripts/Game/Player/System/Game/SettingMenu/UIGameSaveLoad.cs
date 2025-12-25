@@ -21,7 +21,7 @@ namespace Sango.Game.Render.UI
 
         public UITextField id;
         public UITextField name;
-        public Image head;
+        public RawImage head;
         public UITextField forceName;
         public UITextField playYear;
         public UITextField playNum;
@@ -69,7 +69,7 @@ namespace Sango.Game.Render.UI
             time.SetText("");
             playTime.SetText("");
             desc.SetText("");
-            head.sprite = null;
+            head.texture = null;
             this.curShowPage = curShowPage;
             for (int i = 0; i < CountInPage; i++)
             {
@@ -154,7 +154,7 @@ namespace Sango.Game.Render.UI
                 time.SetText("");
                 playTime.SetText("");
                 desc.SetText("");
-                head.sprite = null;
+                head.texture = null;
                 return;
             }
 
@@ -163,7 +163,7 @@ namespace Sango.Game.Render.UI
             name.SetText($"{scenarioInfo.year} 年 {scenarioInfo.month}月 {scenarioInfo.day}日   {scenarioInfo.name}");
 
             ShortForce force = scenario.forceSet[scenarioInfo.playerForceList[0]];
-            head.sprite = GameRenderHelper.LoadHeadIcon(scenario.personSet[force.Governor].headIconID);
+            head.texture = GameRenderHelper.LoadHeadIcon(scenario.personSet[force.Governor].headIconID);
             forceName.SetText(force.Name);
             playYear.SetText($"{scenarioInfo.year} 年 {scenarioInfo.month}月 {scenarioInfo.day}日");
             playNum.SetText($"{scenarioInfo.playerForceList.Length.ToString()}人游玩");

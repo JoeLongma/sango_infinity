@@ -22,7 +22,7 @@ namespace Sango.Game.Render.UI
         public System.Action sureAction;
         public RectTransform panelRect;
         public RectTransform btnRect;
-        public Image headImg;
+        public RawImage headImg;
         public Text nameText;
 
         static UIDialog CurInstance;
@@ -92,7 +92,7 @@ namespace Sango.Game.Render.UI
         public void SetPerson(Person person)
         {
             if (headImg == null || nameText == null) return;
-            headImg.sprite = GameRenderHelper.LoadHeadIcon(person.headIconID, 1);
+            headImg.texture = GameRenderHelper.LoadHeadIcon(person.headIconID, 1);
             nameText.text = person.Name;
         }
 

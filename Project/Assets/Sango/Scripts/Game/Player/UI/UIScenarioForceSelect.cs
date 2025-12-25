@@ -14,7 +14,7 @@ namespace Sango.Game.Render.UI
     /// </summary>
     public class UIScenarioForceSelect : UGUIWindow
     {
-        public Image forceHead;
+        public RawImage forceHead;
         public Text forceInfo;
         public Text forceDesc;
         public RectTransform mapBounds;
@@ -28,7 +28,7 @@ namespace Sango.Game.Render.UI
         public override void OnShow()
         {
             forceDesc.text = "";
-            forceHead.sprite = null;
+            forceHead.texture = null;
             forceInfo.text = "";
             playerList.Clear();
             ShortScenario scenario = ShortScenario.CurSelected;
@@ -112,7 +112,7 @@ namespace Sango.Game.Render.UI
             {
                 if (playerList.Count == 0)
                 {
-                    forceHead.sprite = null;
+                    forceHead.texture = null;
                     forceInfo.text = "";
                     return;
                 }
@@ -148,7 +148,7 @@ namespace Sango.Game.Render.UI
                 }
             }
 
-            forceHead.sprite = GameRenderHelper.LoadHeadIcon(ShortScenario.CurSelected.personSet[force.Governor].headIconID, 1);
+            forceHead.texture = GameRenderHelper.LoadHeadIcon(ShortScenario.CurSelected.personSet[force.Governor].headIconID, 1);
             forceInfo.text = $"{force.Name}\n城池:{cityCount} 武将:{personCount} \n士兵: {troopsCount} 粮食:{foodCount} 金钱:{goldCount}";
         }
 

@@ -10,7 +10,7 @@ namespace Sango.Game
         public static string BuildingTypeIconPath = "Assets/UI/AtlasTexture/facilities";
         public static string TroopStatePath = "Assets/UI/AtlasTexture/Troopstate";
 
-        public static string HeadIconPath = "Assets/UI/AtlasTexture/Face";
+        public static string HeadIconPath = "Assets/UI/Texture/Face";
         public static string TroopHeadbarRes = "Assets/UI/Prefab/window_troop_bar.prefab";
         public static string CityHeadbarRes = "Assets/UI/Prefab/window_city_bar.prefab";
         public static string BuildingHeadbarRes = "Assets/UI/Prefab/window_building_bar.prefab";
@@ -21,18 +21,18 @@ namespace Sango.Game
         "Assets/Model/Prefab/p_city_2.prefab",
         };
 
-        public static UnityEngine.Sprite LoadHeadIcon(int id)
+        public static Texture LoadHeadIcon(int id)
         {
             return LoadHeadIcon(id, 2);
         }
-        public static UnityEngine.Sprite LoadHeadIcon(int id, int type)
+        public static Texture LoadHeadIcon(int id, int type)
         {
             string headPath = $"{HeadIconPath}/{id}_{type}.png";
-            UnityEngine.Sprite headSpr = ObjectLoader.LoadObject<UnityEngine.Sprite>(headPath);
+            Texture headSpr = ObjectLoader.LoadObject<Texture>(headPath);
             if (headSpr == null)
             {
                 headPath = $"{HeadIconPath}/0_{type}.png";
-                headSpr = ObjectLoader.LoadObject<UnityEngine.Sprite>(headPath);
+                headSpr = ObjectLoader.LoadObject<Texture>(headPath);
             }
             return headSpr;
         }

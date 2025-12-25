@@ -244,6 +244,11 @@ namespace Sango.Game
         [JsonProperty]
         public List<SkillInstance> landSkills;
 
+        /// <summary>
+        /// 计略
+        /// </summary>
+        public List<SkillInstance> StrategySkills = new List<SkillInstance>();
+
         // 近战普攻
         public SkillInstance NormalSkill => IsInWater ? waterNormalSkill : landNormalSkill;
         SkillInstance waterNormalSkill;
@@ -348,6 +353,13 @@ namespace Sango.Game
             cell.troop = this;
             Render = new TroopRender(this);
             foodCost = (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
+
+            StrategySkills.Clear();
+            scenario.CommonData.Skills.ForEach(x =>
+            {
+                if (x.kind == 3)
+                    StrategySkills.Add(new SkillInstance() { Skill = x });
+            });
 
             buffManager.Init(this);
         }
@@ -1657,6 +1669,9 @@ namespace Sango.Game
             Render.Clear();
             if (cell != null && cell.troop == this)
                 cell.troop = null;
+            StrategySkills.Clear();
+            landSkills?.Clear();
+            waterSkills?.Clear();
         }
 
         public void RemovePerson(Person person, bool justRemove = false)
