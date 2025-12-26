@@ -617,16 +617,16 @@ namespace Sango.Game
 
         public bool IsTransport()
         {
-            return LandTroopType.kind == 7;
+            return LandTroopType.IsTransport();
         }
 
         public bool IsMachine()
         {
-            return LandTroopType.kind == 8 || LandTroopType.kind == 9;
+            return LandTroopType.IsMachine();
         }
         public bool IsHelepolis()
         {
-            return LandTroopType.kind == 8;
+            return LandTroopType.IsHelepolis();
         }
 
         public int GetAttackBackFactor(Skill skill, int distance)
@@ -920,15 +920,9 @@ namespace Sango.Game
         {
             ScenarioVariables Variables = Scenario.Cur.Variables;
             var attack_troops_type = attacker.TroopType;
-
-            if (attack_troops_type.Id < 0 || attack_troops_type.Id > Variables.troops_type_restraint.Length)
-                return 1;
-            float[] t_map = Variables.troops_type_restraint[attack_troops_type.Id];
-
+            float[] t_map = Variables.troops_type_restraint[attack_troops_type.kind];
             var defender_troops_type = target.TroopType;
-            if (defender_troops_type.Id < 0 || defender_troops_type.Id > t_map.Length)
-                return 1;
-            return t_map[defender_troops_type.Id];
+            return t_map[defender_troops_type.kind];
         }
 
         public static int CheckTroopTypeLevel(TroopType troopType, Person person)

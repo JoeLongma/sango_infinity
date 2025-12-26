@@ -2661,6 +2661,83 @@ namespace Sango.Game
             return true;
         }
 
+        /// <summary>
+        /// 搜索
+        /// </summary>
+        /// <param name="personList"></param>
+        /// <returns></returns>
+        public int[] JobResearch(Person[] personList, Technique technique, bool isTest)
+        {
+            if (personList == null || personList.Length == 0) return null;
+
+            Scenario scenario = Scenario.Cur;
+            ScenarioVariables variables = scenario.Variables;
+            int jobId = (int)CityJobType.Research;
+            InitJobFeature(personList);
+
+            int goldNeed = technique.goldCost;
+            int tpNeed = technique.techPointCost;
+            int turnCount = technique.counter;
+
+            int totalValue = 0;
+            for (int i = 0; i < personList.Length; i++)
+            {
+                Person person = personList[i];
+                if (person == null) continue;
+                switch (technique.needAttr)
+                {
+                    case (int)AttributeType.Command:
+                        totalValue += person.Command;
+                        break;
+                    case (int)AttributeType.Strength:
+                        totalValue += person.Strength;
+                        break;
+                    case (int)AttributeType.Intelligence:
+                        totalValue += person.Intelligence;
+                        break;
+                    case (int)AttributeType.Politics:
+                        totalValue += person.Politics;
+                        break;
+                    case (int)AttributeType.Glamour:
+                        totalValue += person.Glamour;
+                        break;
+                }
+            }
+
+            turnCount = GameUtility.Method_ResearchCounter(totalValue, turnCount);
+
+            Tools.OverrideData<int> goldOverride = GameUtility.IntOverrideData.Set(goldNeed);
+            Tools.OverrideData<int> tpOverride = new OverrideData<int>(tpNeed);
+            Tools.OverrideData<int> turnCountOveride = new OverrideData<int>(turnCount);
+            GameEvent.OnCityResearchCost?.Invoke(this, personList, technique, goldOverride, tpOverride, turnCountOveride);
+            goldNeed = goldOverride.Value;
+            tpNeed = tpOverride.Value;
+            turnCount = turnCountOveride.Value;
+
+            if (isTest)
+            {
+                ClearJobFeature();
+                return new int[] { goldNeed, tpNeed, turnCount };
+            }
+
+            if (gold < goldNeed || tpNeed < BelongForce.TechniquePoint)
+            {
+                ClearJobFeature();
+                return null;
+            }
+
+            gold -= goldNeed;
+            BelongForce.GainTechniquePoint(-tpNeed);
+            BelongCorps.ReduceActionPoint(JobType.GetJobCostAP(jobId));
+
+            int meritGain = JobType.GetJobMeritGain(jobId);
+            int techniquePointGain = JobType.GetJobTPGain(jobId);
+            int apCost = JobType.GetJobCostAP(jobId);
+
+            ClearJobFeature();
+            return null;
+        }
+
         public bool JobRecuritPerson(Person person, Person dest)
         {
             if (dest.BelongCity == person.BelongCity)

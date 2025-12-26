@@ -33,8 +33,6 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public byte MaxAbilityLevel = 10;
 
-        
-
         /// <summary>
         /// 属性每点经验
         /// </summary>
@@ -90,32 +88,6 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public int commerce_add_gold = 1;
 
-
-        ///// <summary>
-        ///// 士气最多影响比例
-        ///// </summary>
-        //[JsonProperty] public float fight_morale_decay_percent = 0.5f;
-
-        ///// <summary>
-        ///// 士气基准值
-        ///// </summary>
-        //[JsonProperty] public float fight_morale_decay_below = 80;
-
-        ///// <summary>
-        ///// 每多基准值多少,获得一次士气加成
-        ///// </summary>
-        //[JsonProperty] public float fight_base_morale_increase_count = 20;
-
-        ///// <summary>
-        ///// 士气矫正加成
-        ///// </summary>
-        //[JsonProperty] public float fight_morale_add = 0.15f;
-
-        ///// <summary>
-        ///// 最大减伤比例
-        ///// </summary>
-        //[JsonProperty] public float fight_base_reduce_percent = 0.3f;
-
         /// <summary>
         /// 部队攻击武力影响比例(万分比)
         /// </summary>
@@ -164,7 +136,7 @@ namespace Sango.Game
         [JsonProperty]
         public int[] troops_adaptation_level_boost = new int[]
          // C    B        A       S        SS
-           {80,   90,     100,   110,    120, };
+           {80,   90,    100,   110,    120, };
 
         /// <summary>
         /// 兵种克制(小数)
@@ -172,21 +144,16 @@ namespace Sango.Game
         [JsonProperty]
         public float[][] troops_type_restraint = new float[][]{
 
-        //////////1   2   3   4   5   6   7   8   9   10  11  12  13  14
-        new float[] {1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1},
-        new float[] {1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1},
-        new float[] {1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1},
-        new float[] {1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1},
-        new float[] {1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1},
-        new float[] {1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1},
-        new float[] {1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1},
-        new float[] {1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1},
-        new float[] {1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1},
-        new float[] {1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1},
-        new float[] {1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1},
-        new float[] {1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1},
-        new float[] {1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1},
-        new float[] {1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1},
+        //////////   1杂     2枪    3戟    4弩      5骑         6运     7水    8冲      9井
+        new float[] {1,     1,       1,      1,       1,        1,      1,      1,       1  },      //1杂
+        new float[] {1,     1,       1,      1,       1.15f,    1,      1,      1,       1  },      //2枪
+        new float[] {1,     1,       1,      1.15f,   1,        1,      1,      1,       1  },      //3戟
+        new float[] {1,     1.15f,   1,      1,       1,        1,      1,      1,       1  },      //4弩
+        new float[] {1,     1,       1.15f,  1,       1,        1,      1,      1,       1  },      //5骑
+        new float[] {1,     1,       1,      1,       1,        1,      1,      1,       1  },      //6运
+        new float[] {1,     1,       1,      1,       1,        1,      1,      1,       1  },      //7水
+        new float[] {1,     1,       1,      1,       1,        1,      1,      1,       1  },      //8冲
+        new float[] {1,     1,       1,      1,       1,        1,      1,      1,       1  },      //9井
         };
         /// <summary>
         /// 人口系统开关
@@ -237,34 +204,6 @@ namespace Sango.Game
         /// 治安每一点对征兵的影响值比例
         /// </summary>
         [JsonProperty] public float securityInfluenceRecruitTroops = 0.005f;
-
-        ///// <summary>
-        ///// 工作花费 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
-        ///// </summary>
-        //[JsonProperty]
-        //public int[] jobCost = new int[] { 200, 300, 300, 200, 0, 0, 400, 0, 0, 0, 0, 0, 0, 0 };
-        ///// <summary>
-        ///// 工作人数限制 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
-        ///// </summary>
-        //[JsonProperty]
-        //public int[] jobMaxPersonCount = new int[] { 3, 3, 3, 3, 3, 1, 3, 1, 3, 3, 3, 3, 3, 1 };
-        ///// <summary>
-        ///// 工作获取的功绩 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
-        ///// </summary>
-        //[JsonProperty]
-        //public int[] jobMeritGain = new int[] { 5, 5, 5, 5, 5, 5, 10, 10, 10, 10, 10, 10, 10, 10 };
-        ///// <summary>
-        ///// 工作获取的技巧点 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
-        ///// </summary>
-        //[JsonProperty]
-        //public int[] jobTechniquePoint = new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 };
-
-        ///// <summary>
-        ///// 工作需要的行动力 {默认, 农业,商业,巡视,训练,搜索,招募士兵,招募武将,生产兵装, 建造, 生产器具, 生产船, 生产马, 交易粮}
-        ///// </summary>
-        //[JsonProperty]
-        //public int[] jobCostActionPoint= new int[] { 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20 };
-
 
         /// <summary>
         /// 建筑最大回合数
@@ -402,8 +341,22 @@ namespace Sango.Game
         /// <summary>
         /// 适应名称
         /// </summary>
-        [JsonProperty] public string[] personAbilityName = new string[] { "Ｃ", "Ｂ", "Ａ", "Ｓ", "Ｓ2", "Ｓ3", "Ｓ4", "Ｓ5" };
+        [JsonProperty] public string[] personAbilityName = new string[] { "Ｃ", "Ｂ", "Ａ", "Ｓ"};
 
+        /// <summary>
+        /// 属性名称
+        /// </summary>
+        [JsonProperty] public string[] attributeName = new string[] { "统率", "武力", "智力", "政治", "魅力"};
+
+        /// <summary>
+        /// 属性名称-带颜色
+        /// </summary>
+        [JsonProperty] public string[] attributeNameWithColor = new string[] { 
+            "<color=#F58080>统率</color>",
+            "<color=#9866DB>武力</color>",
+            "<color=#E5B462>智力</color>",
+            "<color=#61E28F>政治</color>",
+            "<color=#78CBF3>魅力</color>" };
 
         public float DifficultyDamageFactor
         {
@@ -422,7 +375,35 @@ namespace Sango.Game
             if (lvl < personAbilityName.Length)
                 return personAbilityName[lvl];
             else
+            {
+                if (GameEvent.OnGetAbilityName != null)
+                    return GameEvent.OnGetAbilityName(lvl);
                 return personAbilityName[personAbilityName.Length - 1];
+            }
+        }
+
+        public string GetAttributeName(int lvl)
+        {
+            if (lvl < attributeName.Length)
+                return attributeName[lvl];
+            else
+            {
+                if (GameEvent.OnGetAttributeName != null)
+                    return GameEvent.OnGetAttributeName(lvl);
+                return attributeName[attributeName.Length - 1];
+            }
+        }
+
+        public string GetAttributeNameWithColor(int lvl)
+        {
+            if (lvl < attributeNameWithColor.Length)
+                return attributeNameWithColor[lvl];
+            else
+            {
+                if (GameEvent.OnGetAttributeNameWithColor != null)
+                    return GameEvent.OnGetAttributeNameWithColor(lvl);
+                return attributeNameWithColor[attributeNameWithColor.Length - 1];
+            }
         }
     }
 }

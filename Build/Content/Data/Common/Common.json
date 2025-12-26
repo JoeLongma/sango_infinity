@@ -1873,7 +1873,7 @@
           "class": "TroopSkillCalculateCritical",
           "value": 100,
           "kinds": [
-            3
+            2
           ],
           "condition": {
             "class": "and",
@@ -1901,7 +1901,7 @@
           "class": "TroopSkillCalculateCritical",
           "value": 100,
           "kinds": [
-            1
+            3
           ],
           "condition": {
             "class": "and",
@@ -1929,7 +1929,7 @@
           "class": "TroopSkillCalculateCritical",
           "value": 100,
           "kinds": [
-            2
+            4
           ],
           "condition": {
             "class": "and",
@@ -1957,7 +1957,7 @@
           "class": "TroopSkillCalculateCritical",
           "value": 100,
           "kinds": [
-            4
+            5
           ],
           "condition": {
             "class": "and",
@@ -2068,8 +2068,8 @@
           "class": "TroopSkillCalculateCritical",
           "value": 100,
           "kinds": [
-            3,
-            1
+            2,
+            3
           ],
           "condition": {
             "class": "and",
@@ -2097,7 +2097,7 @@
           "class": "TroopSkillCalculateCritical",
           "value": 100,
           "kinds": [
-            3
+            2
           ]
         }
       ]
@@ -2113,7 +2113,7 @@
           "class": "TroopSkillCalculateCritical",
           "value": 100,
           "kinds": [
-            1
+            3
           ]
         }
       ]
@@ -2129,7 +2129,7 @@
           "class": "TroopSkillCalculateCritical",
           "value": 100,
           "kinds": [
-            2
+            4
           ]
         }
       ]
@@ -2145,7 +2145,7 @@
           "class": "TroopSkillCalculateCritical",
           "value": 100,
           "kinds": [
-            4
+            5
           ]
         }
       ]
@@ -5481,12 +5481,17 @@
       "desc": "增加枪兵战法的威力",
       "kind": 1,
       "level": 0,
+      "col": 0,
+      "row": 0,
+      "needAttr": 2,
       "goldCost": 1000,
+      "tabColor": [
+        255,
+        100,
+        100
+      ],
       "techPointCost": 2000,
-      "counter": 6,
-      "needTechs": [
-        0
-      ]
+      "counter": 3
     },
     "2": {
       "Id": 2,
@@ -5494,9 +5499,17 @@
       "desc": "以枪兵攻击时，夺取敌方部队的兵粮",
       "kind": 1,
       "level": 1,
+      "col": 1,
+      "row": 0,
+      "needAttr": 2,
       "goldCost": 2000,
+      "tabColor": [
+        255,
+        100,
+        100
+      ],
       "techPointCost": 3000,
-      "counter": 9,
+      "counter": 4,
       "needTechs": [
         1
       ]
@@ -5507,9 +5520,17 @@
       "desc": "枪兵于森林中攻击时，不会遭到反击",
       "kind": 1,
       "level": 2,
+      "col": 2,
+      "row": 0,
+      "needAttr": 2,
       "goldCost": 3000,
+      "tabColor": [
+        255,
+        100,
+        100
+      ],
       "techPointCost": 5000,
-      "counter": 15,
+      "counter": 6,
       "needTechs": [
         2
       ]
@@ -5520,9 +5541,17 @@
       "desc": "强化枪兵的攻击力、防御力、移动力",
       "kind": 1,
       "level": 3,
+      "col": 3,
+      "row": 0,
+      "needAttr": 2,
       "goldCost": 5000,
+      "tabColor": [
+        255,
+        100,
+        100
+      ],
       "techPointCost": 8000,
-      "counter": 24,
+      "counter": 9,
       "needTechs": [
         3
       ]
@@ -5533,12 +5562,17 @@
       "desc": "增加戟兵战法的威力",
       "kind": 2,
       "level": 0,
+      "col": 0,
+      "row": 1,
+      "needAttr": 2,
       "goldCost": 1000,
+      "tabColor": [
+        100,
+        100,
+        255
+      ],
       "techPointCost": 2000,
-      "counter": 6,
-      "needTechs": [
-        0
-      ]
+      "counter": 3
     },
     "6": {
       "Id": 6,
@@ -5546,9 +5580,17 @@
       "desc": "以30％的机率来防御弓箭攻击",
       "kind": 2,
       "level": 1,
+      "col": 1,
+      "row": 1,
+      "needAttr": 2,
       "goldCost": 2000,
+      "tabColor": [
+        100,
+        100,
+        255
+      ],
       "techPointCost": 3000,
-      "counter": 9,
+      "counter": 4,
       "needTechs": [
         5
       ]
@@ -5559,9 +5601,17 @@
       "desc": "以30％的机率来防御一般攻击",
       "kind": 2,
       "level": 2,
+      "col": 2,
+      "row": 1,
+      "needAttr": 2,
       "goldCost": 3000,
+      "tabColor": [
+        100,
+        100,
+        255
+      ],
       "techPointCost": 5000,
-      "counter": 15,
+      "counter": 6,
       "needTechs": [
         6
       ]
@@ -5572,9 +5622,17 @@
       "desc": "强化戟兵的攻击力、防御力、移动力",
       "kind": 2,
       "level": 3,
+      "col": 3,
+      "row": 1,
+      "needAttr": 2,
       "goldCost": 5000,
+      "tabColor": [
+        100,
+        100,
+        255
+      ],
       "techPointCost": 8000,
-      "counter": 24,
+      "counter": 9,
       "needTechs": [
         7
       ]
@@ -5585,12 +5643,17 @@
       "desc": "增加弩兵战法的威力",
       "kind": 3,
       "level": 0,
+      "col": 0,
+      "row": 2,
+      "needAttr": 2,
       "goldCost": 1000,
+      "tabColor": [
+        100,
+        255,
+        100
+      ],
       "techPointCost": 2000,
-      "counter": 6,
-      "needTechs": [
-        0
-      ]
+      "counter": 3
     },
     "10": {
       "Id": 10,
@@ -5598,9 +5661,17 @@
       "desc": "弩兵遭受弓箭攻击时会自动反击",
       "kind": 3,
       "level": 1,
+      "col": 1,
+      "row": 2,
+      "needAttr": 2,
       "goldCost": 2000,
+      "tabColor": [
+        100,
+        255,
+        100
+      ],
       "techPointCost": 3000,
-      "counter": 9,
+      "counter": 4,
       "needTechs": [
         9
       ]
@@ -5611,9 +5682,17 @@
       "desc": "弩兵的射程增加１区格",
       "kind": 3,
       "level": 2,
+      "col": 2,
+      "row": 2,
+      "needAttr": 2,
       "goldCost": 3000,
+      "tabColor": [
+        100,
+        255,
+        100
+      ],
       "techPointCost": 5000,
-      "counter": 15,
+      "counter": 6,
       "needTechs": [
         10
       ]
@@ -5624,9 +5703,17 @@
       "desc": "强化弩兵的攻击力、防御力、移动力",
       "kind": 3,
       "level": 3,
+      "col": 3,
+      "row": 2,
+      "needAttr": 2,
       "goldCost": 5000,
+      "tabColor": [
+        100,
+        255,
+        100
+      ],
       "techPointCost": 8000,
-      "counter": 24,
+      "counter": 9,
       "needTechs": [
         11
       ]
@@ -5637,12 +5724,17 @@
       "desc": "增加骑兵战法的威力",
       "kind": 4,
       "level": 0,
+      "col": 0,
+      "row": 3,
+      "needAttr": 2,
       "goldCost": 1000,
+      "tabColor": [
+        150,
+        100,
+        100
+      ],
       "techPointCost": 2000,
-      "counter": 6,
-      "needTechs": [
-        0
-      ]
+      "counter": 3
     },
     "14": {
       "Id": 14,
@@ -5650,9 +5742,17 @@
       "desc": "增加骑兵的移动力",
       "kind": 4,
       "level": 1,
+      "col": 1,
+      "row": 3,
+      "needAttr": 2,
       "goldCost": 2000,
+      "tabColor": [
+        150,
+        100,
+        100
+      ],
       "techPointCost": 3000,
-      "counter": 9,
+      "counter": 4,
       "needTechs": [
         13
       ]
@@ -5663,9 +5763,17 @@
       "desc": "骑兵可执行弓箭攻击",
       "kind": 4,
       "level": 2,
+      "col": 2,
+      "row": 3,
+      "needAttr": 2,
       "goldCost": 3000,
+      "tabColor": [
+        150,
+        100,
+        100
+      ],
       "techPointCost": 5000,
-      "counter": 15,
+      "counter": 6,
       "needTechs": [
         14
       ]
@@ -5676,9 +5784,17 @@
       "desc": "强化骑兵的攻击力、防御力、移动力",
       "kind": 4,
       "level": 3,
+      "col": 3,
+      "row": 3,
+      "needAttr": 2,
       "goldCost": 5000,
+      "tabColor": [
+        150,
+        100,
+        100
+      ],
       "techPointCost": 8000,
-      "counter": 24,
+      "counter": 9,
       "needTechs": [
         15
       ]
@@ -5689,12 +5805,17 @@
       "desc": "士兵的气力上限增加20",
       "kind": 5,
       "level": 0,
+      "col": 0,
+      "row": 4,
+      "needAttr": 1,
       "goldCost": 1000,
+      "tabColor": [
+        255,
+        255,
+        100
+      ],
       "techPointCost": 2000,
-      "counter": 6,
-      "needTechs": [
-        0
-      ]
+      "counter": 3
     },
     "18": {
       "Id": 18,
@@ -5702,9 +5823,17 @@
       "desc": "可通行间道与浅滩，通行栈道时不会受到损伤",
       "kind": 5,
       "level": 1,
+      "col": 1,
+      "row": 4,
+      "needAttr": 1,
       "goldCost": 2000,
+      "tabColor": [
+        255,
+        255,
+        100
+      ],
       "techPointCost": 3000,
-      "counter": 10,
+      "counter": 4,
       "needTechs": [
         17
       ]
@@ -5715,9 +5844,17 @@
       "desc": "部队士兵上限增加3000",
       "kind": 5,
       "level": 2,
+      "col": 2,
+      "row": 4,
+      "needAttr": 1,
       "goldCost": 3000,
+      "tabColor": [
+        255,
+        255,
+        100
+      ],
       "techPointCost": 5000,
-      "counter": 15,
+      "counter": 6,
       "needTechs": [
         18
       ]
@@ -5728,9 +5865,17 @@
       "desc": "增加部队的据点攻击力",
       "kind": 5,
       "level": 3,
+      "col": 3,
+      "row": 4,
+      "needAttr": 1,
       "goldCost": 5000,
+      "tabColor": [
+        255,
+        255,
+        100
+      ],
       "techPointCost": 8000,
-      "counter": 24,
+      "counter": 9,
       "needTechs": [
         19
       ]
@@ -5741,12 +5886,17 @@
       "desc": "增加兵器的移动力",
       "kind": 6,
       "level": 0,
+      "col": 0,
+      "row": 5,
+      "needAttr": 3,
       "goldCost": 1000,
+      "tabColor": [
+        100,
+        255,
+        200
+      ],
       "techPointCost": 2000,
-      "counter": 6,
-      "needTechs": [
-        0
-      ]
+      "counter": 3
     },
     "22": {
       "Id": 22,
@@ -5754,9 +5904,17 @@
       "desc": "可使用障害物「石墙」、设施「石兵八阵」",
       "kind": 6,
       "level": 1,
+      "col": 1,
+      "row": 5,
+      "needAttr": 3,
       "goldCost": 2000,
+      "tabColor": [
+        100,
+        255,
+        200
+      ],
       "techPointCost": 3000,
-      "counter": 9,
+      "counter": 4,
       "needTechs": [
         21
       ]
@@ -5767,9 +5925,17 @@
       "desc": "可使用兵装「投石、斗舰」、设施「投石台」",
       "kind": 6,
       "level": 2,
+      "col": 2,
+      "row": 5,
+      "needAttr": 3,
       "goldCost": 3000,
+      "tabColor": [
+        100,
+        255,
+        200
+      ],
       "techPointCost": 5000,
-      "counter": 15,
+      "counter": 6,
       "needTechs": [
         22
       ]
@@ -5780,9 +5946,17 @@
       "desc": "执行投石攻击时，同时攻击周围１区格",
       "kind": 6,
       "level": 3,
+      "col": 3,
+      "row": 5,
+      "needAttr": 3,
       "goldCost": 5000,
+      "tabColor": [
+        100,
+        255,
+        200
+      ],
       "techPointCost": 8000,
-      "counter": 24,
+      "counter": 9,
       "needTechs": [
         23
       ]
@@ -5793,12 +5967,17 @@
       "desc": "增加每回合的耐久回复量",
       "kind": 7,
       "level": 0,
+      "col": 0,
+      "row": 6,
+      "needAttr": 1,
       "goldCost": 1000,
+      "tabColor": [
+        200,
+        100,
+        200
+      ],
       "techPointCost": 2000,
-      "counter": 6,
-      "needTechs": [
-        0
-      ]
+      "counter": 4
     },
     "26": {
       "Id": 26,
@@ -5806,9 +5985,17 @@
       "desc": "可使用设施「砦、连弩楼」",
       "kind": 7,
       "level": 1,
+      "col": 1,
+      "row": 6,
+      "needAttr": 1,
       "goldCost": 2000,
+      "tabColor": [
+        200,
+        100,
+        200
+      ],
       "techPointCost": 3000,
-      "counter": 9,
+      "counter": 5,
       "needTechs": [
         25
       ]
@@ -5819,9 +6006,17 @@
       "desc": "可使用设施「城塞」、增加据点的耐久",
       "kind": 7,
       "level": 2,
+      "col": 2,
+      "row": 6,
+      "needAttr": 1,
       "goldCost": 3000,
+      "tabColor": [
+        200,
+        100,
+        200
+      ],
       "techPointCost": 5000,
-      "counter": 15,
+      "counter": 7,
       "needTechs": [
         26
       ]
@@ -5832,9 +6027,17 @@
       "desc": "强化据点的反击力",
       "kind": 7,
       "level": 3,
+      "col": 3,
+      "row": 6,
+      "needAttr": 1,
       "goldCost": 5000,
+      "tabColor": [
+        200,
+        100,
+        200
+      ],
       "techPointCost": 8000,
-      "counter": 24,
+      "counter": 10,
       "needTechs": [
         27
       ]
@@ -5845,12 +6048,17 @@
       "desc": "可使用兵装「木兽」",
       "kind": 8,
       "level": 0,
+      "col": 0,
+      "row": 7,
+      "needAttr": 3,
       "goldCost": 1000,
+      "tabColor": [
+        100,
+        255,
+        255
+      ],
       "techPointCost": 2000,
-      "counter": 6,
-      "needTechs": [
-        0
-      ]
+      "counter": 3
     },
     "30": {
       "Id": 30,
@@ -5858,9 +6066,17 @@
       "desc": "可于３区格范围内执行火计",
       "kind": 8,
       "level": 1,
+      "col": 1,
+      "row": 7,
+      "needAttr": 3,
       "goldCost": 2000,
+      "tabColor": [
+        100,
+        255,
+        255
+      ],
       "techPointCost": 3000,
-      "counter": 9,
+      "counter": 4,
       "needTechs": [
         29
       ]
@@ -5871,9 +6087,17 @@
       "desc": "可使用陷阱「火焰种、火焰球」",
       "kind": 8,
       "level": 2,
+      "col": 2,
+      "row": 7,
+      "needAttr": 3,
       "goldCost": 3000,
+      "tabColor": [
+        100,
+        255,
+        255
+      ],
       "techPointCost": 5000,
-      "counter": 15,
+      "counter": 6,
       "needTechs": [
         30
       ]
@@ -5884,9 +6108,17 @@
       "desc": "可使用陷阱「业火种、业火球」，增强火势",
       "kind": 8,
       "level": 3,
+      "col": 3,
+      "row": 7,
+      "needAttr": 3,
       "goldCost": 5000,
+      "tabColor": [
+        100,
+        255,
+        255
+      ],
       "techPointCost": 8000,
-      "counter": 24,
+      "counter": 9,
       "needTechs": [
         31
       ]
@@ -5897,12 +6129,17 @@
       "desc": "提升输送队的移动力",
       "kind": 9,
       "level": 0,
+      "col": 0,
+      "row": 8,
+      "needAttr": 4,
       "goldCost": 1000,
+      "tabColor": [
+        255,
+        150,
+        100
+      ],
       "techPointCost": 2000,
-      "counter": 6,
-      "needTechs": [
-        0
-      ]
+      "counter": 4
     },
     "34": {
       "Id": 34,
@@ -5910,9 +6147,17 @@
       "desc": "提升关所、港的最大资金、兵粮、士兵、兵装",
       "kind": 9,
       "level": 1,
+      "col": 1,
+      "row": 8,
+      "needAttr": 4,
       "goldCost": 2000,
+      "tabColor": [
+        255,
+        150,
+        100
+      ],
       "techPointCost": 3000,
-      "counter": 9,
+      "counter": 5,
       "needTechs": [
         33
       ]
@@ -5923,9 +6168,17 @@
       "desc": "治安变得不容易下降",
       "kind": 9,
       "level": 2,
+      "col": 2,
+      "row": 8,
+      "needAttr": 4,
       "goldCost": 3000,
+      "tabColor": [
+        255,
+        150,
+        100
+      ],
       "techPointCost": 5000,
-      "counter": 15,
+      "counter": 7,
       "needTechs": [
         34
       ]
@@ -5936,9 +6189,17 @@
       "desc": "麾下武将的忠诚变得不容易下降",
       "kind": 9,
       "level": 3,
+      "col": 3,
+      "row": 8,
+      "needAttr": 4,
       "goldCost": 5000,
+      "tabColor": [
+        255,
+        150,
+        100
+      ],
       "techPointCost": 8000,
-      "counter": 24,
+      "counter": 10,
       "needTechs": [
         35
       ]
@@ -7254,7 +7515,7 @@
     "2": {
       "Id": 2,
       "Name": "枪兵",
-      "kind": 3,
+      "kind": 2,
       "skills": [
         1,
         3,
@@ -7320,7 +7581,7 @@
     "3": {
       "Id": 3,
       "Name": "刀兵",
-      "kind": 1,
+      "kind": 3,
       "skills": [
         1,
         6,
@@ -7386,7 +7647,7 @@
     "4": {
       "Id": 4,
       "Name": "弓兵",
-      "kind": 2,
+      "kind": 4,
       "skills": [
         1,
         2,
@@ -7452,7 +7713,7 @@
     "5": {
       "Id": 5,
       "Name": "骑兵",
-      "kind": 4,
+      "kind": 5,
       "skills": [
         1,
         12,
@@ -8007,7 +8268,7 @@
     "15": {
       "Id": 15,
       "Name": "陷阵营",
-      "kind": 1,
+      "kind": 2,
       "skills": [
         1,
         6,
@@ -8031,7 +8292,7 @@
     "20": {
       "Id": 20,
       "Name": "虎卫军",
-      "kind": 1,
+      "kind": 2,
       "skills": [
         1,
         6,
@@ -8055,7 +8316,7 @@
     "23": {
       "Id": 23,
       "Name": "藤甲兵",
-      "kind": 1,
+      "kind": 2,
       "skills": [
         1,
         6,

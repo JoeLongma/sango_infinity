@@ -201,6 +201,14 @@ namespace Sango.Game.Render.UI
 
         public void OnForceStart(Force force, Scenario scenario)
         {
+            if(force == null)
+            {
+                forceText.text = "";
+                techPointLabel.text = "";
+                endTurnButton.interactable = false;
+                uIPlayerInfoPanel.gameObject.SetActive(false);
+                return;
+            }
             forceText.text = force.Name;
             techPointLabel.text = force.TechniquePoint.ToString();
 
@@ -211,8 +219,6 @@ namespace Sango.Game.Render.UI
             {
                 uIPlayerInfoPanel.UpdateShowType();
                 Singleton<PlayerTurnStartGreeting>.Instance.Push();
-
-               
             }
         }
 

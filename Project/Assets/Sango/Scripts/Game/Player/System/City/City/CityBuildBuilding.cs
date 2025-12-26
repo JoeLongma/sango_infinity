@@ -1,10 +1,8 @@
-﻿using Sango.Game.Render;
-using Sango.Game.Render.UI;
+﻿using Sango.Game.Render.UI;
 using Sango.Render;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Player
 {

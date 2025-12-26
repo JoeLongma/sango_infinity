@@ -865,5 +865,23 @@ namespace Sango.Game
                 return false;
             });
         }
+
+
+        /// <summary>
+        /// 军师研究推荐
+        /// </summary>
+        public static Person[] CounsellorRecommendResearch(List<Person> personList, Technique technique)
+        {
+            return CounsellorRecommend1Person(personList, (ref int[] maxValue, Person check1) =>
+            {
+                int buildAbility = check1.MilitaryAbility;
+                if (buildAbility < maxValue[1])
+                {
+                    maxValue[1] = buildAbility;
+                    return true;
+                }
+                return false;
+            });
+        }
     }
 }

@@ -270,5 +270,20 @@ namespace Sango.Game
             city.BelongForce.GainTechniquePoint(-costTechPoint * troops);
             city.itemStore.Cost(costItems, troops);
         }
+
+        public bool IsTransport()
+        {
+            return kind == 6;
+        }
+
+        public bool IsMachine()
+        {
+            return kind == 8 || kind == 9;
+        }
+        public bool IsHelepolis()
+        {
+            return kind == 8;
+        }
+
     }
 }

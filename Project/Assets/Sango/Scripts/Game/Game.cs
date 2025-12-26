@@ -25,7 +25,7 @@ namespace Sango.Game
             Condition.Init();
             BuffEffect.Init();
             SkillEffect.Init();
-            PersonCompareFunction.Init();
+            PersonFunctions.Init();
             TroopCompareFunction.Init();
 
             ModManager.Instance.Init();

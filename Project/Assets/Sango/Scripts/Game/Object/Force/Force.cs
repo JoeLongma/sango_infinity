@@ -45,6 +45,13 @@ namespace Sango.Game
         public SangoObjectList<Alliance> AllianceList = new SangoObjectList<Alliance>();
 
         /// <summary>
+        /// 联盟信息
+        /// </summary>
+        [JsonConverter(typeof(SangoObjectListIDConverter<Technique>))]
+        [JsonProperty]
+        public SangoObjectList<Technique> Techniques = new SangoObjectList<Technique>();
+
+        /// <summary>
         /// 本国被俘虏
         /// </summary>
         public List<Person> CaptiveList = new List<Person>();
@@ -577,7 +584,7 @@ namespace Sango.Game
 
         public bool HasTechnique(int techId)
         {
-            return false;
+            return Techniques.Contains(techId);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Sango.Game
     public enum AttributeType : int
     {
         ///// <summary>
-        ///// 统御
+        ///// 统率
         ///// </summary>
         Command = 0,
         ///// <summary>

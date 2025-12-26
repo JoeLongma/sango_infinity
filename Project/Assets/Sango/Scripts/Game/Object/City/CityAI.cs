@@ -1161,7 +1161,7 @@ namespace Sango.Game
 
             // 小于4支部队不带器械, 防守不组建器械
             if (city.AttackTroopsCount < 4 || !isAttack)
-                costEnoughTroopTypes.RemoveAll(x => x.kind == 8 || x.kind == 9);
+                costEnoughTroopTypes.RemoveAll(x => x.IsMachine());
 
             if (costEnoughTroopTypes.Count == 0)
                 return null;

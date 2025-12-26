@@ -229,6 +229,10 @@ namespace Sango.Game
             {
                 return CommonData.Buffs as Database<T>;
             }
+            else if (tType == typeof(Technique))
+            {
+                return CommonData.Techniques as Database<T>;
+            }
             return null;
         }
 
@@ -339,7 +343,10 @@ namespace Sango.Game
             {
                 return CommonData.Buffs.Get(id);
             }
-
+            else if (tType == typeof(Technique))
+            {
+                return CommonData.Techniques.Get(id);
+            }
             //else if (tType == typeof(CityLevelType))
             //{
             //    return CommonData.CityLevelTypes.Get(id);
@@ -702,6 +709,8 @@ namespace Sango.Game
             }
 
             GameController.Instance.Enabled = true;
+
+            Run();
 
             IsAlive = true;
             if (useThreadRun)

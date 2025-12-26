@@ -274,5 +274,25 @@ namespace Sango.Game
         {
             return (int)(troop.BuildPower * Math.Min(1f, (float)troop.troops / 1000) + 300 * (1f - Math.Pow(1.0 - (Math.Max(troop.troops, 5000.0) / 5000.0), 1.451)));
         }
+
+        /// <summary>
+        /// 计算研究所需回合
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="buildingTotalLevel"></param>
+        /// <returns></returns>
+        public static int Method_ResearchCounter(int maxValue, int counter)
+        {
+            /*
+            6、  研究技巧的耗旬（相关设施：人才府）
+                耗旬R＝3－β[(xa＋xb＋xc)÷70]＋U－S
+                其中：有设施“人才府”则S为2，否则为0
+                U为技巧基础回合数
+                例如：武力为76、68、66的武将，在有人才府的情况下，研究“难所行军”所耗旬数为：3－(76＋68＋66)÷70＋4－2＝2
+                统率为94、93、93的武将，在有人才府的情况下，研究“袭击兵粮”所耗旬数为：3－(94＋93＋93)÷70＋4－2＝2
+          */
+            return Math.Max(1, 3 - maxValue / 70 + counter);
+        }
+
     }
 }

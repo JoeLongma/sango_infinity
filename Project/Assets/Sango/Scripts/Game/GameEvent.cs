@@ -20,6 +20,18 @@ namespace Sango.Game
         /// 游戏状态监听 -Exit
         /// </summary>
         public static EventDelegate<int, int> OnGameStateExit;
+
+        /// <summary>
+        /// 可扩展适应名字
+        /// </summary>
+        public static EventDelegateReturn<string, int> OnGetAbilityName;
+
+        /// <summary>
+        /// 可扩展获取武将属性名字
+        /// </summary>
+        public static EventDelegateReturn<string, int> OnGetAttributeName;
+        public static EventDelegateReturn<string, int> OnGetAttributeNameWithColor;
+
         #endregion Global
 
         #region Scenario
@@ -140,6 +152,8 @@ namespace Sango.Game
         public static EventDelegate<Scenario> OnTurnEnd;
 
 
+
+
         #region Force
         /// <summary>
         /// 势力逻辑开始
@@ -219,104 +233,109 @@ namespace Sango.Game
 
         /// <summary>
         /// 可监听改写工作花费
-        /// City, JobType, PersonList, PersonCount, lastValue, OverrideFunc
+        /// City, JobType, PersonList, OverrideData
         /// </summary>
         public static EventDelegate<City, int, Person[], OverrideData<int>> OnCityCheckJobCost;
 
         /// <summary>
         /// 可监听改写工作成果
-        /// City, JobType, PersonList, PersonCount, lastValue, OverrideFunc
+        /// City, JobType, PersonList, OverrideData
         /// </summary>
         public static EventDelegate<City, int, Person[], OverrideData<int>> OnCityJobResult;
 
         /// <summary>
         /// 可监听改写工作回合
-        /// City, JobType, PersonList, PersonCount, lastValue, OverrideFunc
+        /// City, JobType, PersonList, OverrideData
         /// </summary>
         public static EventDelegate<City, int, Person[], OverrideData<int>> OnCityJobCounterResult;
 
         /// <summary>
         /// 可监听改写工作获取的技巧
-        /// City, JobType, PersonList, PersonCount, lastValue, OverrideFunc
+        /// City, JobType, PersonList, OverrideData
         /// </summary>
         public static EventDelegate<City, int, Person[], OverrideData<int>> OnCityJobGainTechniquePoint;
 
         /// <summary>
         /// 可监听改写发现人才的几率
-        /// City, JobType, PersonList, PersonCount, lastValue, OverrideFunc
+        /// City, JobType, PersonList, OverrideData
         /// </summary>
         public static EventDelegate<City, int, Person, OverrideData<int>> OnCityJobSearchingWild;
 
         /// <summary>
         /// 可监听改计算城池最大士气
-        /// City, Troop, lastValue, OverrideFunc
+        /// City, Troop, OverrideData
         /// </summary>
         public static EventDelegate<City, OverrideData<int>> OnCityCalculateMaxMorale;
 
         /// <summary>
         /// 可监听改计算城池最大资金
-        /// City, Troop, lastValue, OverrideFunc
+        /// City, Troop, OverrideData
         /// </summary>
         public static EventDelegate<City, OverrideData<int>> OnCityCalculateMaxGold;
 
         /// <summary>
         /// 可监听改计算城池最大兵粮
-        /// City, Troop, lastValue, OverrideFunc
+        /// City, Troop, OverrideData
         /// </summary>
         public static EventDelegate<City, OverrideData<int>> OnCityCalculateMaxFood;
 
         /// <summary>
         /// 可监听改计算城池最大仓库数量
-        /// City, Troop, lastValue, OverrideFunc
+        /// City, Troop, OverrideData
         /// </summary>
         public static EventDelegate<City, OverrideData<int>> OnCityCalculateMaxItemStoreSize;
 
         /// <summary>
         /// 可监听改计算城池最大士兵数
-        /// City, Troop, lastValue, OverrideFunc
+        /// City, Troop, OverrideData
         /// </summary>
         public static EventDelegate<City, OverrideData<int>> OnCityCalculateMaxTroops;
 
         /// <summary>
         /// 可监听改计算城池最大耐久
-        /// City, Troop, lastValue, OverrideFunc
+        /// City, Troop, OverrideData
         /// </summary>
         public static EventDelegate<City, OverrideData<int>> OnCityCalculateMaxDurability;
 
         /// <summary>
         /// 可监听改计算部队最大兵力
-        /// City, Troop, lastValue, OverrideFunc
+        /// City, Troop, OverrideData
         /// </summary>
         public static EventDelegate<City, Troop, OverrideData<int>> OnTroopCalculateMaxTroops;
 
         /// <summary>
         /// 可监听改计算城池每季度治安下降值
-        /// City, Troop, lastValue, OverrideFunc
+        /// City, Troop, OverrideData
         /// </summary>
         public static EventDelegate<City, OverrideData<int>> OnCitySecurityChangeOnSeasonStart;
 
+        /// <summary>
+        /// 可监听改写研究特定技巧的花费和时间
+        /// 城市, 执行者, 科技, 技巧点花费, 资金花费, 时间
+        /// </summary>
+        public static EventDelegate<City, Person[], Technique, OverrideData<int>, OverrideData<int>, OverrideData<int>> OnCityResearchCost;
 
         /// <summary>
         /// 可监听改计算建筑兵粮产出
-        /// City, Troop, lastValue, OverrideFunc
+        /// City, Troop, OverrideData
         /// </summary>
         public static EventDelegate<BuildingBase, OverrideData<int>> OnBuildingCalculateFoodGain;
 
         /// <summary>
         /// 可监听改计算建筑资金产出
-        /// City, Troop, lastValue, OverrideFunc
+        /// BuildingBase, OverrideData
         /// </summary>
         public static EventDelegate<BuildingBase, OverrideData<int>> OnBuildingCalculateGoldGain;
 
         /// <summary>
         /// 可监听改计算建筑人口增长率
-        /// City, Troop, lastValue, OverrideFunc
+        /// BuildingBase, OverrideData
         /// </summary>
         public static EventDelegate<BuildingBase, OverrideData<float>> OnBuildingCalculatePopulationGain;
 
         /// <summary>
         /// 可监听改计算建筑反击攻击力
-        /// City, Troop, lastValue, OverrideFunc
+        /// Troop, Cell, BuildingBase, Skill, OverrideData
         /// </summary>
         public static EventDelegate<Troop, Cell, BuildingBase, Skill, OverrideData<int>> OnBuildCalculateAttackBack;
 
