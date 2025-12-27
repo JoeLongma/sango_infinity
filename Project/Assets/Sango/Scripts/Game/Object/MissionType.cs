@@ -24,6 +24,7 @@
         PersonInTroop,
         PersonInCityCaptive,
         PersonInTroopCaptive,
+        PersonResearch,
 
         /// <summary>
         /// 移动

@@ -16,6 +16,8 @@ namespace Sango.Game.Render.UI
         public RectTransform personNode;
         public ScrollRect scrollRect;
 
+        public Button sureBtn;
+
         public UITextField techDesc;
         public UITextField techCount;
         public UITextField techCost;
@@ -69,7 +71,7 @@ namespace Sango.Game.Render.UI
             maxRow = Mathf.Max(maxRow, technique.row);
             techNode.sizeDelta = new Vector2((maxCol + 1) * itemWidth + 2f * woffset, (maxRow + 1) * itemHeight + 2f * hoffset);
             techItem.SetTechnique(technique);
-
+            techItem.onClick = OnSelectTechniqueItem;
             return techItem;
         }
 
@@ -133,23 +135,26 @@ namespace Sango.Game.Render.UI
 
         public override void OnShow()
         {
+            sureBtn.interactable = false;
             selectedItem = null;
             techniqueResearchSys = Singleton<CityTechniqueResearch>.Instance;
             targetForce = techniqueResearchSys.TargetCity.BelongForce;
             targetCity = techniqueResearchSys.TargetCity;
             InitItems();
             UpdateItems();
-        }
+            actionPointValue.text = $"{JobType.GetJobCostAP((int)CityJobType.Research)}/{techniqueResearchSys.TargetCity.BelongCorps.ActionPoint}";
 
+        }
 
         public void OnSure()
         {
+            techniqueResearchSys.DoResearch();
 
         }
 
         public void OnCancel()
         {
-
+            techniqueResearchSys.Back();
         }
 
         public void OnSelectTechniqueItem(UITechniqueItem techniqueItem)
@@ -166,23 +171,36 @@ namespace Sango.Game.Render.UI
 
             if (techniqueItem.CanResearch())
             {
+                sureBtn.interactable = true;
                 techniqueResearchSys.SelectTechnique(selectTech);
+                techCount.text = $"{techniqueResearchSys.counter * 10}日";
                 techCost.text = $"{techniqueResearchSys.goldCost}/{targetCity.gold}";
                 techCostTP.text = $"{techniqueResearchSys.tpCost}/{targetCity.BelongForce.TechniquePoint}";
             }
             else if (techniqueItem.IsValid())
             {
+                sureBtn.interactable = false;
                 techCount.text = "--";
                 techCost.text = "--";
                 techCostTP.text = "--";
             }
             else
             {
+                sureBtn.interactable = false;
                 techCount.text = $"{selectTech.counter * 10}日";
                 techCost.text = $"{selectTech.goldCost}/{targetCity.gold}";
                 techCostTP.text = $"{selectTech.techPointCost}/{targetCity.BelongForce.TechniquePoint}";
             }
             techNeedAttr.text = Scenario.Cur.Variables.GetAttributeNameWithColor(selectTech.needAttr);
+
+            for (int i = 0; i < personItems.Length; ++i)
+            {
+                if (i < techniqueResearchSys.personList.Count)
+                    personItems[i].SetPerson(techniqueResearchSys.personList[i]);
+
+                else
+                    personItems[i].SetPerson(null);
+            }
         }
 
         public void OnSelectPerson()

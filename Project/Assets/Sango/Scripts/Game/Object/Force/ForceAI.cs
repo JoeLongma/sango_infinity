@@ -222,6 +222,11 @@ namespace Sango.Game
         /// <returns></returns>
         static Person[] CounsellorRecommend3Person(List<Person> personList, Recommend3PersonValue recommend3PersonValueFunc)
         {
+            return CounsellorRecommend3Person(personList, null, null, recommend3PersonValueFunc);
+        }
+
+        static Person[] CounsellorRecommend3Person(List<Person> personList, Person p1, Person p2, Recommend3PersonValue recommend3PersonValueFunc)
+        {
             int count = personList.Count;
             if (count <= 0)
                 return null;
@@ -235,6 +240,7 @@ namespace Sango.Game
             for (int i = 0; i < count; i++)
             {
                 Person person1 = personList[i];
+                if (p1 != null && person1 != p1) continue;
                 if (recommend3PersonValueFunc(ref maxValue, person1, null, null))
                 {
                     checkPersons[0] = person1;
@@ -245,6 +251,7 @@ namespace Sango.Game
                 for (int j = i + 1; j < count; j++)
                 {
                     Person person2 = personList[j];
+                    if (p2 != null && person2 != p2) continue;
                     if (recommend3PersonValueFunc(ref maxValue, person1, person2, null))
                     {
                         checkPersons[0] = person1;
@@ -274,6 +281,10 @@ namespace Sango.Game
 
         static Person[] CounsellorRecommend2Person(List<Person> personList, Recommend2PersonValue recommend2PersonValueFunc)
         {
+            return CounsellorRecommend2Person(personList, null, recommend2PersonValueFunc);
+        }
+        static Person[] CounsellorRecommend2Person(List<Person> personList, Person p1, Recommend2PersonValue recommend2PersonValueFunc)
+        {
             int count = personList.Count;
             if (count <= 0)
                 return null;
@@ -287,6 +298,7 @@ namespace Sango.Game
             for (int i = 0; i < count; i++)
             {
                 Person person1 = personList[i];
+                if (p1 != null && p1 != person1) continue;
                 if (recommend2PersonValueFunc(ref maxValue, person1, null))
                 {
                     checkPersons[0] = person1;
@@ -348,6 +360,11 @@ namespace Sango.Game
         /// <returns></returns>
         static Person[] CounsellorFastRecommend3Person(List<Person> personList, Recommend3PersonValue fastRecommend3PersonValueFunc)
         {
+            return CounsellorFastRecommend3Person(personList, null, null, fastRecommend3PersonValueFunc);
+        }
+
+        static Person[] CounsellorFastRecommend3Person(List<Person> personList, Person p1, Person p2, Recommend3PersonValue fastRecommend3PersonValueFunc)
+        {
             int count = personList.Count;
             if (count <= 0)
                 return null;
@@ -358,10 +375,12 @@ namespace Sango.Game
             Person[] checkPersons = new Person[3];
             int[] maxValues = new int[] { -99999, 99999 };
             Person person1 = null, person2 = null;
+
             // 第一位找目标属性最大
             for (int i = 0; i < count; i++)
             {
                 Person person = personList[i];
+                if (p1 != null && p1 != person) continue;
                 if (fastRecommend3PersonValueFunc(ref maxValues, person, null, null))
                 {
                     person1 = person;
@@ -369,11 +388,13 @@ namespace Sango.Game
                 }
             }
 
+           
             maxValues[0] = -99999;
             maxValues[1] = 99999;
             for (int i = 0; i < count; i++)
             {
                 Person person = personList[i];
+                if (p2 != null && p2 != person) continue;
                 if (person != person1 && fastRecommend3PersonValueFunc(ref maxValues, person1, person, null))
                 {
                     person2 = person;
@@ -394,7 +415,12 @@ namespace Sango.Game
 
             return checkPersons;
         }
+
         static Person[] CounsellorFastRecommend2Person(List<Person> personList, Recommend2PersonValue fastRecommend2PersonValueFunc)
+        {
+            return CounsellorFastRecommend2Person(personList, null, fastRecommend2PersonValueFunc);
+        }
+        static Person[] CounsellorFastRecommend2Person(List<Person> personList, Person p1, Recommend2PersonValue fastRecommend2PersonValueFunc)
         {
             int count = personList.Count;
             if (count <= 0)
@@ -410,6 +436,7 @@ namespace Sango.Game
             for (int i = 0; i < count; i++)
             {
                 Person person = personList[i];
+                if (p1 != null && person != p1) continue;
                 if (fastRecommend2PersonValueFunc(ref maxValues, person, null))
                 {
                     person1 = person;
@@ -429,6 +456,7 @@ namespace Sango.Game
             }
             return checkPersons;
         }
+
         static Person[] CounsellorFastRecommend1Person(List<Person> personList, Recommend1PersonValue fastRecommend1PersonValueFunc)
         {
             int count = personList.Count;
@@ -872,16 +900,147 @@ namespace Sango.Game
         /// </summary>
         public static Person[] CounsellorRecommendResearch(List<Person> personList, Technique technique)
         {
-            return CounsellorRecommend1Person(personList, (ref int[] maxValue, Person check1) =>
+            List<Person> featurePersonList = personList.FindAll(x => x.FeatureList != null && x.FeatureList.Contains(technique.recommandFeatures));
+            if (featurePersonList.Count >= 3) return featurePersonList.ToArray();
+
+            Person p1 = featurePersonList.Count > 0 ? featurePersonList[0] : null;
+            Person p2 = featurePersonList.Count > 1 ? featurePersonList[1] : null;
+
+            switch (technique.needAttr)
             {
-                int buildAbility = check1.MilitaryAbility;
-                if (buildAbility < maxValue[1])
-                {
-                    maxValue[1] = buildAbility;
-                    return true;
-                }
-                return false;
-            });
+                case (int)AttributeType.Command:
+                    return CounsellorRecommend3Person(personList, p1, p2, (ref int[] maxValue, Person check1, Person check2, Person check3) =>
+                    {
+                        int buildAbility = 0;
+                        if (check1 != null) buildAbility += check1.Command;
+                        if (check2 != null) buildAbility += check2.Command;
+                        if (check3 != null) buildAbility += check3.Command;
+
+                        int c = buildAbility / 70;
+                        if (c > maxValue[0])
+                        {
+                            maxValue[0] = c;
+                            maxValue[1] = buildAbility;
+                            return true;
+                        }
+                        else if (c == maxValue[0])
+                        {
+                            if (buildAbility < maxValue[1])
+                            {
+                                maxValue[1] = buildAbility;
+                                return true;
+                            }
+                        }
+                        return false;
+
+                    });
+                case (int)AttributeType.Strength:
+                    return CounsellorRecommend3Person(personList, p1, p2, (ref int[] maxValue, Person check1, Person check2, Person check3) =>
+                    {
+                        int buildAbility = 0;
+                        if (check1 != null) buildAbility += check1.Strength;
+                        if (check2 != null) buildAbility += check2.Strength;
+                        if (check3 != null) buildAbility += check3.Strength;
+
+                        int c = buildAbility / 70;
+                        if (c > maxValue[0])
+                        {
+                            maxValue[0] = c;
+                            maxValue[1] = buildAbility;
+                            return true;
+                        }
+                        else if (c == maxValue[0])
+                        {
+                            if (buildAbility < maxValue[1])
+                            {
+                                maxValue[1] = buildAbility;
+                                return true;
+                            }
+                        }
+                        return false;
+
+                    });
+                case (int)AttributeType.Intelligence:
+                    return CounsellorRecommend3Person(personList, p1, p2, (ref int[] maxValue, Person check1, Person check2, Person check3) =>
+                    {
+                        int buildAbility = 0;
+                        if (check1 != null) buildAbility += check1.Intelligence;
+                        if (check2 != null) buildAbility += check2.Intelligence;
+                        if (check3 != null) buildAbility += check3.Intelligence;
+
+                        int c = buildAbility / 70;
+                        if (c > maxValue[0])
+                        {
+                            maxValue[0] = c;
+                            maxValue[1] = buildAbility;
+                            return true;
+                        }
+                        else if (c == maxValue[0])
+                        {
+                            if (buildAbility < maxValue[1])
+                            {
+                                maxValue[1] = buildAbility;
+                                return true;
+                            }
+                        }
+                        return false;
+
+                    });
+                case (int)AttributeType.Politics:
+                    return CounsellorRecommend3Person(personList, p1, p2, (ref int[] maxValue, Person check1, Person check2, Person check3) =>
+                    {
+                        int buildAbility = 0;
+                        if (check1 != null) buildAbility += check1.Politics;
+                        if (check2 != null) buildAbility += check2.Politics;
+                        if (check3 != null) buildAbility += check3.Politics;
+
+                        int c = buildAbility / 70;
+                        if (c > maxValue[0])
+                        {
+                            maxValue[0] = c;
+                            maxValue[1] = buildAbility;
+                            return true;
+                        }
+                        else if(c == maxValue[0])
+                        {
+                            if( buildAbility < maxValue[1])
+                            {
+                                maxValue[1] = buildAbility;
+                                return true;
+                            }
+                        }
+                        return false;
+
+                    });
+                case (int)AttributeType.Glamour:
+                    return CounsellorRecommend3Person(personList, p1, p2, (ref int[] maxValue, Person check1, Person check2, Person check3) =>
+                    {
+                        int buildAbility = 0;
+                        if (check1 != null) buildAbility += check1.Glamour;
+                        if (check2 != null) buildAbility += check2.Glamour;
+                        if (check3 != null) buildAbility += check3.Glamour;
+
+                        int c = buildAbility / 70;
+                        if (c > maxValue[0])
+                        {
+                            maxValue[0] = c;
+                            maxValue[1] = buildAbility;
+                            return true;
+                        }
+                        else if (c == maxValue[0])
+                        {
+                            if (buildAbility < maxValue[1])
+                            {
+                                maxValue[1] = buildAbility;
+                                return true;
+                            }
+                        }
+                        return false;
+
+                    });
+            }
+
+            return null;
         }
     }
 }

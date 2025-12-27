@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Sango.Game.Action;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,6 +25,7 @@ namespace Sango.Game
         [JsonProperty] public int row;
         [JsonConverter(typeof(Color32Converter))]
         [JsonProperty] public UnityEngine.Color32 tabColor;
+        [JsonProperty] public int[] recommandFeatures;
 
         public bool CanResearch(Force force)
         {
@@ -45,6 +47,19 @@ namespace Sango.Game
             return force.HasTechnique(Id);
         }
 
-
+        public void InitActions(List<ActionBase> list, params SangoObject[] sangoObjects)
+        {
+            if (effects == null) return;
+            for (int i = 0; i < effects.Count; i++)
+            {
+                JObject valus = effects[i] as JObject;
+                ActionBase action = ActionBase.Create(valus.Value<string>("class"));
+                if (action != null)
+                {
+                    action.Init(valus, sangoObjects);
+                    list.Add(action);
+                }
+            }
+        }
     }
 }

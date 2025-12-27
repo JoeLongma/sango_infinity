@@ -711,7 +711,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5176471}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2076,7 +2076,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6591836239096336499, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9010271449503537046, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
       propertyPath: m_Type
@@ -2085,7 +2085,7 @@ PrefabInstance:
     - target: {fileID: 9010271449503537046, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: a380f2da829d90047a369e7047536782, type: 3}
+      objectReference: {fileID: 21300000, guid: add275dc279906f4cbe582559089c3c8, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
 --- !u!224 &4521124793911470017 stripped

@@ -41,7 +41,29 @@ namespace Sango.Game
         public abstract bool Check(int id);
         public abstract void Set(T obj);
         public abstract bool Contains(int id);
+        public virtual bool Contains(int[] ids)
+        {
+            if (ids == null) return false;
+            for (int i = 0; i < ids.Length; i++)
+            {
+                int destId = ids[i];
+                if (Contains(destId))
+                    return true;
+            }
+            return false;
+        }
         public abstract bool Contains(T t);
+        public virtual bool Contains(T [] t)
+        {
+            if (t == null) return false;
+            for (int i = 0; i < t.Length; i++)
+            {
+                T destId = t[i];
+                if (Contains(destId))
+                    return true;
+            }
+            return false;
+        }
         public abstract void ForEach(Action<T> action);
         public abstract T Find(Predicate<T> match);
         public abstract List<T> FindAll(Predicate<T> match);

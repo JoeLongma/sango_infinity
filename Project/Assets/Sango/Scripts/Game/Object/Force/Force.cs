@@ -2,6 +2,7 @@
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Sango.Game.Action;
 using UnityEngine;
 
 namespace Sango.Game
@@ -110,9 +111,15 @@ namespace Sango.Game
 
         public Corps CurRunCorps { get; set; }
 
+        public List<ActionBase> actionList;
+
         public override void Init(Scenario scenario)
         {
-
+            actionList = new List<ActionBase>();
+            Techniques.ForEach(x =>
+            {
+                x.InitActions(actionList, this);
+            });
         }
 
         public bool IsAlliance(Force other)
@@ -283,7 +290,18 @@ namespace Sango.Game
 #if SANGO_DEBUG
             Sango.Log.Print($"==={Name} 回合===");
 #endif
+            if (ResearchTechnique > 0)
+            {
+                ResearchLeftCounter--;
+                if(ResearchLeftCounter <= 0)
+                {
+                    Technique technique = scenario.GetObject<Technique>(ResearchTechnique);
+                    Techniques.Add(technique);
+                    ResearchTechnique = 0;
+                    technique.InitActions(actionList, this);
 
+                }
+            }
 
             for (int i = 0; i < scenario.buildingSet.Count; ++i)
             {

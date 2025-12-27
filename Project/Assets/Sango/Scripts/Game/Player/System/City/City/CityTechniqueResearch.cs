@@ -27,6 +27,7 @@ namespace Sango.Game.Player
         public Technique TargetTechnique { get; set; }
         public int goldCost;
         public int tpCost;
+        public int counter;
 
         public override void Init()
         {
@@ -47,6 +48,15 @@ namespace Sango.Game.Player
                 //    && TargetCity.gold > 200
                 //    && TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.Research);
             }
+        }
+
+        public void DoResearch()
+        {
+            if (TargetTechnique == null || !TargetTechnique.CanResearch(TargetCity.BelongForce))
+                return;
+
+            TargetCity.JobResearch(personList.ToArray(), TargetTechnique, false);
+            Done();
         }
 
         void OnCityContextMenuShow(ContextMenuData menuData, City city)
@@ -70,7 +80,7 @@ namespace Sango.Game.Player
 
         public override void OnDestroy()
         {
-            Window.Instance.Close("window_building_select");
+            Window.Instance.Close("window_technique");
         }
 
         public void SelectTechnique(Technique tech)
@@ -93,9 +103,10 @@ namespace Sango.Game.Player
             if (personList.Count <= 0)
                 return;
 
-            //int buildAbility = GameUtility.Method_PersonBuildAbility(personList.ToArray());
-            //int turnCount = TargetBuildingType.durabilityLimit % buildAbility == 0 ? 0 : 1;
-            //wonderBuildCounter = Math.Min(Scenario.Cur.Variables.BuildMaxTurn, TargetBuildingType.durabilityLimit / buildAbility + turnCount);
+            int[] valus = TargetCity.JobResearch(personList.ToArray(), TargetTechnique, true);
+            goldCost = valus[0];
+            tpCost = valus[1];
+            counter = valus[2];
         }
 
         public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)

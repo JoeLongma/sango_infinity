@@ -525,6 +525,8 @@ namespace Sango.Game
 
         public void UpdateMission(Scenario scenario)
         {
+            if (missionType == 0) return;
+
             switch (missionType)
             {
                 case (int)MissionType.PersonReturn:
@@ -595,6 +597,15 @@ namespace Sango.Game
                             int totalValue = missionParams2;
                             ItemType itemType = scenario.GetObject<ItemType>(missionTarget);
                             BelongCity.DoJobCreateMachine(itemType, buildingId, totalValue);
+                        }
+                    }
+                    break;
+                default:
+                    {
+                        missionCounter--;
+                        if (missionCounter <= 0)
+                        {
+                            ClearMission();
                         }
                     }
                     break;

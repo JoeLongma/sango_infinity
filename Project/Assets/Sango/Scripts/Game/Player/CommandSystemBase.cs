@@ -7,6 +7,12 @@
             PlayerCommand.Instance.Push(this);
         }
 
+        public virtual void Back()
+        {
+            if (PlayerCommand.Instance.CurrentCommand == this)
+                PlayerCommand.Instance.Back();
+        }
+
         public virtual void Init() {; }
         public virtual void Clear() {; }
 
@@ -52,7 +58,7 @@
 
         public virtual void Exit()
         {
-            if(PlayerCommand.Instance.CurrentCommand == this)
+            if (PlayerCommand.Instance.CurrentCommand == this)
             {
                 PlayerCommand.Instance.Back();
             }
@@ -68,6 +74,6 @@
 
         public virtual bool IsDone { get; protected set; }
 
-        public virtual bool IsValid{ get; protected set; }
+        public virtual bool IsValid { get; protected set; }
     }
 }

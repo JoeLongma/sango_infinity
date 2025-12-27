@@ -13,7 +13,7 @@ namespace Sango.Game
         public int meritGain;
         public int tpGain;
         public int limit;
-
+        public int[] recommandFeatures;
         public static int GetJobCost(int jobId)
         {
             JobType t = Scenario.Cur.CommonData.JobTypes.Get(jobId);

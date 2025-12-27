@@ -132,6 +132,7 @@ namespace Sango.Game
         {
             return objects.Find(x => x.Id == id) != null;
         }
+
         public override bool Contains(T t)
         {
             return objects.Contains(t);

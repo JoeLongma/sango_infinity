@@ -2558,7 +2558,6 @@ namespace Sango.Game
 
 #if SANGO_DEBUG
             StringBuilder stringBuilder = new StringBuilder();
-            int lastTroops = troops;
 #endif
             for (int i = 0; i < personList.Length; i++)
             {
@@ -2731,8 +2730,30 @@ namespace Sango.Game
             BelongCorps.ReduceActionPoint(JobType.GetJobCostAP(jobId));
 
             int meritGain = JobType.GetJobMeritGain(jobId);
-            int techniquePointGain = JobType.GetJobTPGain(jobId);
-            int apCost = JobType.GetJobCostAP(jobId);
+
+#if SANGO_DEBUG
+            StringBuilder stringBuilder = new StringBuilder();
+#endif
+            for (int i = 0; i < personList.Length; i++)
+            {
+                Person person = personList[i];
+                if (person == null) continue;
+
+                person.merit += meritGain;
+                person.GainExp(meritGain);
+                person.SetMission(MissionType.PersonResearch, technique, turnCount);
+                freePersons.Remove(person);
+#if SANGO_DEBUG
+                stringBuilder.Append(person.Name);
+                stringBuilder.Append(",");
+#endif
+                person.ActionOver = true;
+            }
+
+            BelongForce.ResearchTechnique = technique.Id;
+            BelongForce.ResearchLeftCounter = turnCount;
+
+            BelongCorps.ReduceActionPoint(JobType.GetJobCostAP(jobId));
 
             ClearJobFeature();
             return null;
