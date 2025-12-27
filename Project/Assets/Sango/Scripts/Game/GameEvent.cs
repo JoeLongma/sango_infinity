@@ -182,6 +182,7 @@ namespace Sango.Game
         /// </summary>
         public static EventDelegate<Force, City, Troop> OnForceFall;
         public static EventDelegate<Force, int> OnForceGainTechniquePoint;
+        public static EventDelegate<Force, Technique> OnForceResearchComplete;
 
         #endregion Force
 

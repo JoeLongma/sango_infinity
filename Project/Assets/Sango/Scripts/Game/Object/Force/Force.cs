@@ -293,13 +293,22 @@ namespace Sango.Game
             if (ResearchTechnique > 0)
             {
                 ResearchLeftCounter--;
-                if(ResearchLeftCounter <= 0)
+                if (ResearchLeftCounter <= 0)
                 {
                     Technique technique = scenario.GetObject<Technique>(ResearchTechnique);
                     Techniques.Add(technique);
                     ResearchTechnique = 0;
                     technique.InitActions(actionList, this);
-
+                    GameEvent.OnForceResearchComplete?.Invoke(this, technique);
+                    if(IsPlayer)
+                    {
+                        Render.WindowEvent windowEvent = new Render.WindowEvent()
+                        {
+                            windowName = "window_technique_complete",
+                            args = new object[] { technique }
+                        };
+                        Render.RenderEvent.Instance.Add(windowEvent);
+                    }
                 }
             }
 

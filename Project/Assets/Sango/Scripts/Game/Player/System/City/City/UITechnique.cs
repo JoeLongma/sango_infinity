@@ -174,8 +174,21 @@ namespace Sango.Game.Render.UI
                 sureBtn.interactable = true;
                 techniqueResearchSys.SelectTechnique(selectTech);
                 techCount.text = $"{techniqueResearchSys.counter * 10}日";
-                techCost.text = $"{techniqueResearchSys.goldCost}/{targetCity.gold}";
-                techCostTP.text = $"{techniqueResearchSys.tpCost}/{targetCity.BelongForce.TechniquePoint}";
+                if (techniqueResearchSys.goldCost <= targetCity.gold)
+                    techCost.text = $"{techniqueResearchSys.goldCost}/{targetCity.gold}";
+                else
+                {
+                    techCost.text = $"<color=#ff1010>{techniqueResearchSys.goldCost}</color>/{targetCity.gold}";
+                    sureBtn.interactable = false;
+                }
+
+                if (techniqueResearchSys.tpCost <= targetCity.BelongForce.TechniquePoint)
+                    techCostTP.text = $"{techniqueResearchSys.tpCost}/{targetCity.BelongForce.TechniquePoint}";
+                else
+                {
+                    techCostTP.text = $"<color=#ff1010>{techniqueResearchSys.tpCost}</color>/{targetCity.BelongForce.TechniquePoint}";
+                    sureBtn.interactable = false;
+                }
             }
             else if (techniqueItem.IsValid())
             {
@@ -188,8 +201,15 @@ namespace Sango.Game.Render.UI
             {
                 sureBtn.interactable = false;
                 techCount.text = $"{selectTech.counter * 10}日";
-                techCost.text = $"{selectTech.goldCost}/{targetCity.gold}";
-                techCostTP.text = $"{selectTech.techPointCost}/{targetCity.BelongForce.TechniquePoint}";
+                if (selectTech.goldCost <= targetCity.gold)
+                    techCost.text = $"{selectTech.goldCost}/{targetCity.gold}";
+                else
+                    techCost.text = $"<color=#ff1010>{selectTech.goldCost}</color>/{targetCity.gold}";
+
+                if (selectTech.techPointCost <= targetCity.BelongForce.TechniquePoint)
+                    techCostTP.text = $"{selectTech.techPointCost }/{targetCity.BelongForce.TechniquePoint}";
+                else
+                    techCostTP.text = $"<color=#ff1010>{selectTech.techPointCost }</color>/{targetCity.BelongForce.TechniquePoint}";
             }
             techNeedAttr.text = Scenario.Cur.Variables.GetAttributeNameWithColor(selectTech.needAttr);
 

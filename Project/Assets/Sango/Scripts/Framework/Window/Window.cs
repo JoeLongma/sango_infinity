@@ -15,7 +15,6 @@ namespace Sango
         {
             //public FairyGUI.Window fgui_instance;
             public UGUIWindow ugui_instance;
-            public Action OnHideAction;
 
             public bool HasValid()
             {

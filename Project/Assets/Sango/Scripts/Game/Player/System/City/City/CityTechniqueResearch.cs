@@ -43,10 +43,9 @@ namespace Sango.Game.Player
         {
             get
             {
-                return true;
-                //return TargetCity.freePersons.Count > 0
-                //    && TargetCity.gold > 200
-                //    && TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.Research);
+                return TargetCity.BelongForce.ResearchTechnique <= 0 &&
+                     TargetCity.freePersons.Count > 0 &&
+                     TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.Research);
             }
         }
 

@@ -10,6 +10,7 @@ namespace Sango
 
     public class UGUIWindow : MonoBehaviour
     {
+        public Action OnHideAction;
         protected UnityEngine.Canvas[] panels;
         public bool IsOpen { get; set; }
         protected virtual void Awake()
@@ -169,7 +170,7 @@ namespace Sango
 
         public virtual void OnHide()
         {
-
+            OnHideAction?.Invoke();
         }
 
         public void SetText(string path, string content)

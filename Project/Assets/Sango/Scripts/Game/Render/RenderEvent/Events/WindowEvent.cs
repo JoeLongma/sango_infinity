@@ -11,13 +11,18 @@ namespace Sango.Game.Render
         public override void Enter(Scenario scenario)
         {
             targetWindow = Window.Instance.Open(windowName, args);
-            if (targetWindow == null) return;
-            targetWindow.OnHideAction = OnWindowHide;
+            if (targetWindow == null)
+            {
+                IsDone = true; 
+                return;
+            }
+            targetWindow.ugui_instance.OnHideAction = OnWindowHide;
         }
 
         void OnWindowHide()
         {
-            targetWindow.OnHideAction = null;
+            targetWindow.ugui_instance.OnHideAction = null;
+            IsDone = true;
         }
     }
 }
