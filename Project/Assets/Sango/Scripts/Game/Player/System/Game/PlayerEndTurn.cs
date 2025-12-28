@@ -8,6 +8,27 @@ namespace Sango.Game.Player
             
         }
 
+        public override void Init()
+        {
+            GameEvent.OnRightMouseButtonContextMenuShow += OnRightMouseButtonContextMenuShow;
+        }
+
+        public override void Clear()
+        {
+            GameEvent.OnRightMouseButtonContextMenuShow -= OnRightMouseButtonContextMenuShow;
+        }
+
+        protected virtual void OnRightMouseButtonContextMenuShow(ContextMenuData menuData)
+        {
+            menuData.Add("结束回合", 0, null, OnClickMenuItem, true);
+        }
+
+        protected virtual void OnClickMenuItem(ContextMenuItem contextMenuItem)
+        {
+            ContextMenu.CloseAll();
+            PlayerCommand.Instance.Push(this);
+        }
+
         public override void OnEnter()
         {
             UIDialog.Open("是否需要结束玩家回合", () =>

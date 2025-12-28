@@ -80,6 +80,7 @@ namespace Sango.Game.Render.UI
         public GameObject cityObj;
         public GameObject miniCityObj;
         public RectTransform mapBounds;
+        public RectTransform mapValidBounds;
 
         public RectTransform[] cameraCorners;
 
@@ -94,7 +95,7 @@ namespace Sango.Game.Render.UI
             GameEvent.OnTroopDestroyed += OnTroopDestroyed;
             GameEvent.OnCityFall += OnCityFall;
             InitCities();
-            MapRender.Instance.mapCamera.onValueChanged = OnCameraValueChanged;
+            MapRender.Instance.onValueChanged = OnCameraValueChanged;
         }
 
         Vector2 WorldPos2MiniMapPos(Vector3 worldPos)
@@ -138,7 +139,7 @@ namespace Sango.Game.Render.UI
             GameEvent.OnTroopEnterCell -= OnTroopEnterCell;
             GameEvent.OnCityFall -= OnCityFall;
 
-            MapRender.Instance.mapCamera.onValueChanged = null;
+            MapRender.Instance.onValueChanged = null;
 
         }
 
@@ -226,10 +227,14 @@ namespace Sango.Game.Render.UI
             if (PlayerCommand.Instance.CurrentCommand != null)
                 return;
 
-            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(mapBounds, Input.mousePosition, Game.Instance.UICamera, out Vector2 localPoint))
+            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(mapValidBounds, Input.mousePosition, Game.Instance.UICamera, out Vector2 localPoint))
             {
-                Vector3 worldPos = MiniMapPos2WorldPos(localPoint);
-                MapRender.Instance.MoveCameraTo(worldPos);
+                Vector2 halfSize = mapValidBounds.sizeDelta / 2;
+                if (localPoint.x > -halfSize.x && localPoint.x < halfSize.x && localPoint.y > -halfSize.y && localPoint.y < halfSize.y)
+                {
+                    Vector3 worldPos = MiniMapPos2WorldPos(localPoint);
+                    MapRender.Instance.MoveCameraTo(worldPos);
+                }
             }
         }
 

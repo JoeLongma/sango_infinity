@@ -267,7 +267,7 @@ namespace Sango.Game
                     PlayerCommand.Instance.HandleEvent(CommandEventType.RClickUp, mouseOverCell, dragPosition, isOverUI);
                     return;
                 }
-
+                clickPosition = Input.mousePosition;
                 OnRClickWorld();
                 PlayerCommand.Instance.HandleEvent(CommandEventType.RClickUp, mouseOverCell, dragPosition, isOverUI);
             }

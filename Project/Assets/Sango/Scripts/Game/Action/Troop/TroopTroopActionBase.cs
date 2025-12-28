@@ -9,7 +9,7 @@ namespace Sango.Game.Action
     /// value 增加值(百分比)
     /// kinds 兵种类型
     /// checkLand 0:只检查kinds 1:只对landType检查kinds 2只对waterType检查kinds
-    /// isAttacker 0攻击方 1受击方
+    /// isAttacker 0受击方 1攻击方
     /// isNormal  -1都可以 0非 1是
     /// isRange -1都可以 0非 1是
     /// condition 额外条件 支持参数(troop,troop,skill)

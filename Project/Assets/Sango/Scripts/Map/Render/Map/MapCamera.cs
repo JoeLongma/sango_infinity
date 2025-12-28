@@ -29,9 +29,9 @@ namespace Sango.Render
         public float keyBoardMoveSpeed = 300f;
         public float rotSpeed = 0.1f;
 
-        bool changed = false;
+        public float safeBoder = 560f;
 
-        public Action<MapCamera> onValueChanged;
+        bool changed = false;
 
         public MapCamera(MapRender map) : base(map)
         {
@@ -173,6 +173,15 @@ namespace Sango.Render
             get { return look_position; }
             set
             {
+                if (value.x < safeBoder)
+                    value.x = safeBoder;
+                if (value.z < safeBoder)
+                    value.z = safeBoder;
+                if (value.x > map.mapData.world_height - safeBoder)
+                    value.x = map.mapData.world_height - safeBoder;
+                if (value.z > map.mapData.world_width - safeBoder)
+                    value.z = map.mapData.world_width - safeBoder;
+          
                 look_position = value;
                 lookAt.position = look_position;
                 NeedUpdateCamera();
@@ -418,7 +427,7 @@ namespace Sango.Render
                 }
 
                 transform.LookAt(lookAt);
-                onValueChanged?.Invoke(this);
+                map.onValueChanged?.Invoke(this);
             }
 
             oldMousePos = Input.mousePosition;

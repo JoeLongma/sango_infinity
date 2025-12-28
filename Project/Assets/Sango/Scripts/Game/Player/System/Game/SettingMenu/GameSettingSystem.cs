@@ -6,14 +6,6 @@ namespace Sango.Game.Player
 {
     public class GameSettingSystem : CommandSystemBase
     {
-        public override void Init()
-        {
-            base.Init();
-            Singleton<GameSave>.Instance.Init();
-            Singleton<GameLoad>.Instance.Init();
-            Singleton<GameBackToMain>.Instance.Init();
-        }
-
         public void Start(Vector3 startPoint)
         {
             ContextMenuData.MenuData.Clear();

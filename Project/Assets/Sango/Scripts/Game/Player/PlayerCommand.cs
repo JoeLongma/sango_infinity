@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Sango.Game.Render.UI;
+using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
@@ -94,6 +95,11 @@ namespace Sango.Game.Player
                         {
                             Singleton<TroopSystem>.Instance.Start(clickCell.troop, clickPosition);
                         }
+                    }
+                    break;
+                case CommandEventType.RClick:
+                    {
+                        Singleton<GameRightButtonMenu>.Instance.Start(clickPosition);
                     }
                     break;
                 case CommandEventType.Cancel:

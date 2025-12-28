@@ -600,7 +600,7 @@ namespace Sango.Game
                         }
                     }
                     break;
-                default:
+                case (int)MissionType.PersonResearch:
                     {
                         missionCounter--;
                         if (missionCounter <= 0)

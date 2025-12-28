@@ -34,7 +34,10 @@ namespace Sango.Game.Player
             Singleton<TroopSystem>.Instance.Init();
 
             // 其他
-            Singleton<GameSettingSystem>.Instance.Init();
+            Singleton<GameSave>.Instance.Init();
+            Singleton<GameLoad>.Instance.Init();
+            Singleton<GameBackToMain>.Instance.Init();
+            Singleton<PlayerEndTurn>.Instance.Init();
 
             InitSaveFile();
         }

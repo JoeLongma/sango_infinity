@@ -27,7 +27,7 @@ namespace Sango.Game.Render.UI
             security.text = c.security.ToString();
             durability.text = $"{c.durability}/{c.DurabilityLimit}";
             troops.text = c.troops.ToString();
-            persons.text = $"{c.allPersons.Count - c.FreePersonCount}/{c.allPersons.Count}";
+            persons.text = $"{c.FreePersonCount}/{c.allPersons.Count}";
             return this;
         }
 

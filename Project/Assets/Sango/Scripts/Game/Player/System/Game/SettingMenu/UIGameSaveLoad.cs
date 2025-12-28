@@ -95,15 +95,15 @@ namespace Sango.Game.Render.UI
                     if (scenario1 != null)
                     {
                         curSelectedItem = item;
-                        if(!isSave)
-                            curSelectedItem.SetSelected(true);
+                        //if(!isSave)
+                        //    curSelectedItem.SetSelected(true);
                     }
                     ShowScenario(index);
                 });
-                item.BindSureCall(() =>
-                {
-                    Load(index);
-                });
+                //item.BindSureCall(() =>
+                //{
+                //    Load(index);
+                //});
             }
         }
 
@@ -129,9 +129,13 @@ namespace Sango.Game.Render.UI
         public void Load(int index)
         {
             ShortScenario scenario = Player.Player.Instance.all_saved_scenario_list[index];
-            if (scenario == null) return;
-            PlayerCommand.Instance.Done();
-            Player.Player.Instance.Load(index);
+            string content = $"是否加载{index + 1}号存档";
+            UIDialog.Open(content, () =>
+            {
+                PlayerCommand.Instance.Done();
+                Player.Player.Instance.Load(index);
+                UIDialog.Close();
+            });
         }
 
         public void ShowScenario(int index)
@@ -141,7 +145,7 @@ namespace Sango.Game.Render.UI
             {
                 Save(index);
             }
-
+           
             curSelectIndex = index;
             ShortScenario scenario = Player.Player.Instance.all_saved_scenario_list[index];
             if (scenario == null)
@@ -156,6 +160,11 @@ namespace Sango.Game.Render.UI
                 desc.SetText("");
                 head.texture = null;
                 return;
+            }
+
+            if (!isSave)
+            {
+                Load(index);
             }
 
             ScenarioInfo scenarioInfo = scenario.Info;

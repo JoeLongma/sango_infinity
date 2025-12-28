@@ -14,6 +14,7 @@ namespace Sango.Render
         public delegate void OnLoadModelCall(MapObject mapObject);
         public delegate void OnInitGridCall(int gridSize, int boundx, int boundy);
         public delegate void OnBindGridDataCall(int x, int y, MapGrid.GridData data);
+        public Action<MapCamera> onValueChanged;
 
         // 2022/10/20 add to 4
         // 2025/3/8 add to 5
@@ -204,7 +205,6 @@ namespace Sango.Render
             mapCamera.Init();
             mapSkyBox.Init();
             mapGrid.Init();
-
         }
 
         public void AddDynamic(IMapManageObject obj)

@@ -5963,6 +5963,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9127302877886492052}
     m_Modifications:
+    - target: {fileID: 180852881623829434, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2802901003287693600, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3552190252951156685, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6062729483653480700, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -6051,10 +6063,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: panel_frame
       objectReference: {fileID: 0}
+    - target: {fileID: 8567409250123222778, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9010271449503537046, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 2d2ccee2388e505419076f6cddac438b, type: 3}
+    - target: {fileID: 9010271449503537046, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
 --- !u!224 &7886895009720746323 stripped
@@ -6785,6 +6805,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6633601064656576197}
     m_Modifications:
+    - target: {fileID: 180852881623829434, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2802901003287693600, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3552190252951156685, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6062729483653480700, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -6873,10 +6905,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: panel_frame
       objectReference: {fileID: 0}
+    - target: {fileID: 8567409250123222778, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9010271449503537046, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 2d2ccee2388e505419076f6cddac438b, type: 3}
+    - target: {fileID: 9010271449503537046, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
 --- !u!224 &1826048453674983368 stripped
@@ -7068,6 +7108,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8177063141801161775}
     m_Modifications:
+    - target: {fileID: 180852881623829434, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2802901003287693600, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3552190252951156685, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6062729483653480700, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -7156,10 +7208,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: panel_frame
       objectReference: {fileID: 0}
+    - target: {fileID: 8567409250123222778, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9010271449503537046, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 2d2ccee2388e505419076f6cddac438b, type: 3}
+    - target: {fileID: 9010271449503537046, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
 --- !u!224 &168980369083625568 stripped
@@ -8236,6 +8296,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 56133543870884359}
     m_Modifications:
+    - target: {fileID: 180852881623829434, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2802901003287693600, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3552190252951156685, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6062729483653480700, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -8324,10 +8396,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: panel_frame
       objectReference: {fileID: 0}
+    - target: {fileID: 8567409250123222778, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9010271449503537046, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 2d2ccee2388e505419076f6cddac438b, type: 3}
+    - target: {fileID: 9010271449503537046, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52725172159528848a6ce4c8fe46b54f, type: 3}
 --- !u!224 &3074609400615788405 stripped
