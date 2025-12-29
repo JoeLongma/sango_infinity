@@ -74,5 +74,10 @@ namespace Sango.Game
                 effects = null;
             }
         }
+
+        public bool IsControlBuff()
+        {
+            return Buff.IsControlBuff();
+        }
     }
 }

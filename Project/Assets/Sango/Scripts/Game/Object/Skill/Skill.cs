@@ -89,8 +89,7 @@ namespace Sango.Game
         /// <summary>
         /// 成功率计算类型
         /// </summary>
-        [JsonProperty] public int successMethodType;
-
+        [JsonProperty] public JObject successMethod;
 
         /// <summary>
         /// 额外的攻击位置

@@ -21,6 +21,9 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public JArray buffEffects;
 
-        
+        public bool IsControlBuff()
+        {
+            return true;
+        }
     }
 }

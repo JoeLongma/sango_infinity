@@ -188,6 +188,11 @@ namespace Sango.Game
         public void AddBuff(int id, int turnCount, Troop srcTroop) { buffManager.AddBuff(id, turnCount, srcTroop); }
         public void RemoveBuff(int id) { buffManager.RemoveBuff(id); }
 
+        public bool HasControlBuff()
+        {
+            return buffManager.HasControlBuff();
+        }
+
         /// <summary>
         /// 任务地点
         /// </summary>

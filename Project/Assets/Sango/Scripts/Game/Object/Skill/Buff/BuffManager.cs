@@ -87,6 +87,17 @@ namespace Sango.Game
 
         }
 
+        public bool HasControlBuff()
+        {
+            for (int i = 0; i < _buffs.Count; i++)
+            {
+                BuffInstance buff = _buffs[i];
+                if (buff.IsControlBuff())
+                    return true;
+            }
+            return false;
+        }
+
         public void OnForceTurnStart(Scenario scenario)
         {
             for (int i = 0; i < _buffs.Count; i++)
