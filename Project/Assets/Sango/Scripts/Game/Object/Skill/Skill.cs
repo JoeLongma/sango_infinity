@@ -87,6 +87,12 @@ namespace Sango.Game
         [JsonProperty] public int successRate;
 
         /// <summary>
+        /// 成功率计算类型
+        /// </summary>
+        [JsonProperty] public int successMethodType;
+
+
+        /// <summary>
         /// 额外的攻击位置
         /// </summary>
         [JsonProperty] public List<int> atkOffsetPoint;

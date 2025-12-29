@@ -355,7 +355,13 @@ namespace Sango.Game
         /// 可监听改计算战法成功率(百分比)
         /// City, Skill, spellCell, OverrideFunc
         /// </summary>
-        public static EventDelegate<Troop, SkillInstance, Cell, OverrideData<int>> OnTroopCalculateSkillSuccess;
+        public static EventDelegate<Troop, SkillInstance, Cell, OverrideData<int>> OnTroopBeforeCalculateSkillSuccess;
+        /// <summary>
+        /// 
+        /// 可监听改计算战法成功率(百分比)
+        /// City, Skill, spellCell, OverrideFunc
+        /// </summary>
+        public static EventDelegate<Troop, SkillInstance, Cell, OverrideData<int>> OnTroopAfterCalculateSkillSuccess;
 
         /// <summary>
         /// 可监听改计算战法暴击率(百分比)

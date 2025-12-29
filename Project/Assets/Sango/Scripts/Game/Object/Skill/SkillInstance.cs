@@ -298,12 +298,18 @@ namespace Sango.Game
         /// <returns></returns>
         public bool CheckSuccess(Troop troop, Cell spellCell)
         {
-            // TODO: 特殊状态必定成功
-            int baseSuccessRate = successRate + Math.Max(0, troop.TroopTypeLv - 1) * Scenario.Cur.Variables.skillSuccessRateAddByAbility;
-
-            // TODO: 其他加成
+            int baseSuccessRate = 0;
             Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(baseSuccessRate);
-            GameEvent.OnTroopCalculateSkillSuccess?.Invoke(troop, this, spellCell, overrideData);
+            GameEvent.OnTroopBeforeCalculateSkillSuccess?.Invoke(troop, this, spellCell, overrideData);
+            baseSuccessRate = overrideData.Value;
+
+            if (baseSuccessRate >= 100)
+                return true;
+
+            baseSuccessRate = successRate + Math.Max(0, troop.TroopTypeLv - 1) * Scenario.Cur.Variables.skillSuccessRateAddByAbility;
+
+            overrideData = GameUtility.IntOverrideData.Set(baseSuccessRate);
+            GameEvent.OnTroopAfterCalculateSkillSuccess?.Invoke(troop, this, spellCell, overrideData);
             baseSuccessRate = overrideData.Value;
 
 #if SANGO_DEBUG

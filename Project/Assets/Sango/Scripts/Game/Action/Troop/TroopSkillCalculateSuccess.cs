@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 namespace Sango.Game.Action
 {
     /// <summary>
-    /// 某兵种类型战法的成功率增加	
+    /// 某兵种类型战法的成功率增加-前 (必中)
     ///value:增加值（百分比）  
     ///kinds： 兵种类型  
     ///checkLand： 0:只检查kinds 1:只对landType检查kinds，2只对waterType检查kinds 
@@ -16,15 +16,15 @@ namespace Sango.Game.Action
         public override void Init(JObject p, params SangoObject[] sangoObjects)
         {
             base.Init(p, sangoObjects);
-            GameEvent.OnTroopCalculateSkillSuccess += OnTroopCalculateSkillSuccess;
+            GameEvent.OnTroopBeforeCalculateSkillSuccess += OnTroopBeforeCalculateSkillSuccess;
         }
 
         public override void Clear()
         {
-            GameEvent.OnTroopCalculateSkillSuccess -= OnTroopCalculateSkillSuccess;
+            GameEvent.OnTroopBeforeCalculateSkillSuccess -= OnTroopBeforeCalculateSkillSuccess;
         }
 
-        void OnTroopCalculateSkillSuccess(Troop troop, SkillInstance skill, Cell cell, OverrideData<int> overrideData)
+        void OnTroopBeforeCalculateSkillSuccess(Troop troop, SkillInstance skill, Cell cell, OverrideData<int> overrideData)
         {
             if (Force != null && troop.BelongForce != Force) return;
             if (Troop != null && Troop != troop) return;
