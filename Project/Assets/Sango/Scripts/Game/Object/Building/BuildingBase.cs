@@ -260,7 +260,7 @@ namespace Sango.Game
         public virtual int GetAttack() { return BuildingType.atk; }
         public virtual int GetAttackBack() { return BuildingType.atkBack; }
         public virtual int GetDefence() { return 50; }
-        public float GetAttackBackFactor(Skill skill, int distance)
+        public float GetAttackBackFactor(SkillInstance skill, int distance)
         {
             if (skill.IsRange() && skill.costEnergy == 0 && distance > 1)
                 return 0.7f;

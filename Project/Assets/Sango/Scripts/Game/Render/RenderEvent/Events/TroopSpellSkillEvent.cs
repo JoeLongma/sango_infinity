@@ -5,7 +5,7 @@ namespace Sango.Game.Render
     public class TroopSpellSkillEvent : RenderEventBase
     {
         public Troop troop;
-        public Skill skill;
+        public SkillInstance skill;
         public Cell spellCell;
         private bool isAction = false;
         private float time = 0;

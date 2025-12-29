@@ -6,8 +6,8 @@ namespace Sango.Game
 {
     public static class TroopAIUtility
     {
-        public delegate int SkillAttackPriorityCalculateMethod(Troop troop, Skill skill, Cell target, Cell movetoCell, Cell spellCell);
-        public delegate int SkillDefencePriorityCalculateMethod(Troop troop, Skill skill, Cell target, Cell movetoCell, Cell spellCell);
+        public delegate int SkillAttackPriorityCalculateMethod(Troop troop, SkillInstance skill, Cell target, Cell movetoCell, Cell spellCell);
+        public delegate int SkillDefencePriorityCalculateMethod(Troop troop, SkillInstance skill, Cell target, Cell movetoCell, Cell spellCell);
 
         static List<Cell> spellRangeCells = new List<Cell>(256);
         static List<Cell> attackCells = new List<Cell>(256);
@@ -20,7 +20,7 @@ namespace Sango.Game
         public class PriorityActionData
         {
             public int prioriry;
-            public Skill skill;
+            public SkillInstance skill;
             public Cell movetoCell;
             public Cell spellCell;
             public Cell[] atkCells;
@@ -66,7 +66,7 @@ namespace Sango.Game
             checkList.Clear();
             for (int i = 0, count = skill_list.Count; i < count; i++)
             {
-                Skill skill = skill_list[i].Skill;
+                SkillInstance skill = skill_list[i];
                 if (skill.CanBeSpell(troop))
                 {
                     if (needUpdateMoverange)
@@ -304,7 +304,7 @@ namespace Sango.Game
         //}
 
         //攻击时被反击防守评分
-        public static int SkillDefencePriority(Troop troop, Skill skill, Cell target, Cell movetoCell, Cell spellCell)
+        public static int SkillDefencePriority(Troop troop, SkillInstance skill, Cell target, Cell movetoCell, Cell spellCell)
         {
             //TODO: 攻击时被反击防守评分(上面减除了,暂时返回0)
 
@@ -320,23 +320,23 @@ namespace Sango.Game
         /// <param name="movetoCell"></param>
         /// <param name="spellCell"></param>
         /// <returns></returns>
-        public static int SkillStatusPriority(Troop troop, Skill skill, Cell target, Cell movetoCell, Cell spellCell)
+        public static int SkillStatusPriority(Troop troop, SkillInstance skill, Cell target, Cell movetoCell, Cell spellCell)
         {
             if (target.IsEmpty()) return 0;
             if (target.troop != null && skill.canDamageTroop)
             {
                 if (troop.IsEnemy(target.troop))
                 {
-                    return (skill.atk + (skill.isRange ? 15 : 0) + (skill.IsSingleSkill() ? 5 : 0) + (skill.HasEffect() ? 5 : 0)) * 150 / Math.Max(10, skill.costEnergy) * (troop.Attack - target.troop.Defence + 200);
+                    return (skill.atk + (skill.IsRange() ? 15 : 0) + (skill.IsSingleSkill() ? 5 : 0) + (skill.HasEffect() ? 5 : 0)) * 150 / Math.Max(10, skill.costEnergy) * (troop.Attack - target.troop.Defence + 200);
                 }
                 else if (skill.canDamageTeam && spellCell != target)
                 {
-                    return -(skill.atk + (skill.isRange ? 15 : 0) + (skill.IsSingleSkill() ? 5 : 0) + (skill.HasEffect() ? 5 : 0)) * 150 / Math.Max(10, skill.costEnergy) * (troop.Attack - target.troop.Defence + 200);
+                    return -(skill.atk + (skill.IsRange() ? 15 : 0) + (skill.IsSingleSkill() ? 5 : 0) + (skill.HasEffect() ? 5 : 0)) * 150 / Math.Max(10, skill.costEnergy) * (troop.Attack - target.troop.Defence + 200);
                 }
             }
             else if (target.building != null && skill.canDamageBuilding)
             {
-                int rangeFactor = skill.isRange ? 150 : 100;
+                int rangeFactor = skill.IsRange() ? 150 : 100;
                 //TODO: 对建筑的攻击评分
                 if (troop.IsEnemy(target.building))
                 {

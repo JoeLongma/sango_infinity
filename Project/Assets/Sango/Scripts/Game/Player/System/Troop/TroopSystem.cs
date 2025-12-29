@@ -16,6 +16,8 @@ namespace Sango.Game.Player
             Singleton<TroopActionBuild>.Instance.Init();
             Singleton<TroopActionBuildingFix>.Instance.Init();
 
+            Singleton<TroopActionStrategy>.Instance.Init();
+
             Singleton<TroopInteractiveBuildingFix>.Instance.Init();
             Singleton<TroopInteractiveCityEnter>.Instance.Init();
         }

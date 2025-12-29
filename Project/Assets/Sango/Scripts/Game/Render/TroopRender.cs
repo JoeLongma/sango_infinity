@@ -222,7 +222,7 @@ namespace Sango.Game.Render
             }
         }
 
-        public override void ShowSkill(Skill skill, bool isFail, bool isCritical)
+        public override void ShowSkill(SkillInstance skill, bool isFail, bool isCritical)
         {
             if (HeadBar != null)
             {

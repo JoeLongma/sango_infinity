@@ -27,7 +27,7 @@ namespace Sango.Game.Player
                     list = TargetTroop.landSkills;
                 for (int i = 0, count = list.Count; i < count; ++i)
                 {
-                    Skill skill = list[i].Skill;
+                    SkillInstance skill = list[i];
                     if (skill.costEnergy > 0)
                     {
                         bool isValid = skill.CanBeSpell(TargetTroop);
@@ -54,10 +54,10 @@ namespace Sango.Game.Player
 
         protected override void OnClickMenuItem(ContextMenuItem contextMenuItem)
         {
-            Start(TargetTroop, ActionCell, contextMenuItem.customData as Skill);
+            Start(TargetTroop, ActionCell, contextMenuItem.customData as SkillInstance);
         }
 
-        public void Start(Troop troop, Cell actionCell, Skill skill)
+        public void Start(Troop troop, Cell actionCell, SkillInstance skill)
         {
             spellSkill = skill;
             base.Start(troop, actionCell);

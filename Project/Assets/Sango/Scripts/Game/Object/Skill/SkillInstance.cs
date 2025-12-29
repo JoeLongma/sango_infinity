@@ -1,28 +1,729 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 namespace Sango.Game
 {
+    /// <summary>
+    /// 技能实例
+    /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class SkillInstance : SangoObject
     {
+        public override string Name => skill?.Name ?? string.Empty;
+
         /// <summary>
         /// 技能
         /// </summary>
         [JsonConverter(typeof(Id2ObjConverter<Skill>))]
         [JsonProperty]
-        public Skill Skill { get; set; }
+        public Skill skill;
 
         /// <summary>
         /// 当前剩余冷却
         /// </summary>
         [JsonProperty]
-        public int CDCount { get; set; }
+        public int CDCount;
 
-        public int cost;
-        public int[] spellRanges;
+        /// <summary>
+        /// 拥有者
+        /// </summary>
+        public Troop master;
+
+        /// <summary>
+        /// 基础攻击力
+        /// </summary>
+        [JsonProperty] public int atk;
+
+        /// <summary>
+        /// 基础攻城值
+        /// </summary>
+        [JsonProperty] public int atkDurability;
+
+        /// <summary>
+        /// 释放所需能量
+        /// </summary>
+        [JsonProperty] public int costEnergy;
+
+        /// <summary>
+        /// 是否可以对部队造成伤害
+        /// </summary>
+        [JsonProperty] public bool canDamageTroop;
+
+        /// <summary>
+        /// 是否可以对器械造成伤害
+        /// </summary>
+        [JsonProperty] public bool canDamageMachine;
+
+        /// <summary>
+        /// 是否可以对船只造成伤害
+        /// </summary>
+        [JsonProperty] public bool canDamageBoat;
+
+        /// <summary>
+        /// 是否可以对建筑造成伤害
+        /// </summary>
+        [JsonProperty] public bool canDamageBuilding;
+
+        /// <summary>
+        /// 是否可误伤
+        /// </summary>
+        [JsonProperty] public bool canDamageTeam;
+
+        /// <summary>
+        /// 是否可空放
+        /// </summary>
+        [JsonProperty] public bool canSpellToCell;
+
+        /// <summary>
+        /// 是否只可对友军释放
+        /// </summary>
+        [JsonProperty] public bool onlySpellToTeam;
+
+        /// <summary>
+        /// 施法范围
+        /// </summary>
+        [JsonProperty] public int[] spellRanges;
+
+        /// <summary>
+        /// 基础成功率
+        /// </summary>
+        [JsonProperty] public int successRate;
+
+        /// <summary>
+        /// 成功率加成
+        /// </summary>
+        [JsonProperty] public int[] successRateAdd;
+
+        /// <summary>
+        /// 额外的攻击位置
+        /// </summary>
+        [JsonProperty] public List<int> atkOffsetPoint;
+
+        /// <summary>
+        /// 位移配置
+        /// </summary>
+        [JsonProperty] public int[] offsetAction;
+
+        /// <summary>
+        /// 碰撞伤害系数
+        /// </summary>
+        [JsonProperty] public int blockFactor;
+
+        protected List<SkillEffect> effects;
+        public int tempCriticalFactor;
+
+        protected void InitSkillEffects()
+        {
+            if (skill.skillEffects == null) return;
+            if (skill.skillEffects.Count == 0) return;
+            if (effects != null) return;
+            effects = new List<SkillEffect>();
+            for (int i = 0; i < skill.skillEffects.Count; i++)
+            {
+                JObject valus = skill.skillEffects[i] as JObject;
+                SkillEffect eft = SkillEffect.Create(valus.Value<string>("class"));
+                if (eft != null)
+                {
+                    eft.Init(valus, this);
+                    effects.Add(eft);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 在势力开始时候调用
+        /// </summary>
+        /// <param name="scenario"></param>
+        /// <returns></returns>
+        public virtual bool OnForceTurnStart(Scenario scenario)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// 根据技能创建技能实例
+        /// </summary>
+        /// <param name="skill"></param>
+        /// <returns></returns>
+        public static SkillInstance Create(Troop master, Skill skill)
+        {
+            SkillInstance ins = new SkillInstance();
+            ins.Init(master, skill);
+            return ins;
+        }
+
+        public void Init(Troop master, Skill skill)
+        {
+            this.skill = skill;
+            this.master = master;
+            CDCount = 0;
+            atk = skill.atk;
+            atkDurability = skill.atkDurability;
+            costEnergy = skill.costEnergy;
+            canDamageTroop = skill.canDamageTroop;
+            canDamageMachine = skill.canDamageMachine;
+            canDamageBoat = skill.canDamageBoat;
+            canDamageBuilding = skill.canDamageBuilding;
+            canDamageTeam = skill.canDamageTeam;
+            canSpellToCell = skill.canSpellToCell;
+            onlySpellToTeam = skill.onlySpellToTeam;
+            spellRanges = skill.spellRanges;
+            successRate = skill.successRate;
+            atkOffsetPoint = skill.atkOffsetPoint;
+            offsetAction = skill.offsetAction;
+            blockFactor = skill.blockFactor;
+
+            InitSkillEffects();
+
+            GameEvent.OnSkillCalculateAttribute?.Invoke(master, this);
+        }
+
+        /// <summary>
+        /// 获取施放距离
+        /// </summary>
+        /// <param name="atker"></param>
+        /// <param name="where"></param>
+        /// <param name="cells"></param>
+        public void GetSpellRange(Troop atker, Cell where, List<Cell> cells)
+        {
+            if (spellRanges == null || spellRanges.Length == 0)
+            {
+                cells.Add(where);
+            }
+            else
+            {
+                for (int i = 0; i < spellRanges.Length; i++)
+                {
+                    Scenario.Cur.Map.GetRing(where, spellRanges[i], cells, true);
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 获取攻击范围
+        /// </summary>
+        /// <param name="atker"></param>
+        /// <param name="spell"></param>
+        /// <param name="cells"></param>
+        public void GetAttackCells(Troop atker, Cell spell, List<Cell> cells)
+        {
+            skill.GetAttackCells(atker, spell, cells);
+        }
+
+        /// <summary>
+        /// 是否是远程技能
+        /// </summary>
+        /// <returns></returns>
+        public bool IsRange()
+        {
+            return skill.IsRange();
+        }
+
+        /// <summary>
+        /// 是否是计略技能
+        /// </summary>
+        /// <returns></returns>
+        public bool IsStrategy()
+        {
+            return skill.IsStrategy();
+        }
+
+        /// <summary>
+        ///  是否是单体技能
+        /// </summary>
+        /// <returns></returns>
+        public bool IsSingleSkill()
+        {
+            return skill.IsSingleSkill();
+        }
+
+        /// <summary>
+        /// 是否有攻击效果
+        /// </summary>
+        /// <returns></returns>
+        public bool HasEffect()
+        {
+            return skill.HasEffect();
+        }
+
+
+        public bool CanAddToTroop(Troop troop)
+        {
+            return skill.CanAddToTroop(troop);
+        }
+
+        public bool CanBeSpell(Troop troop)
+        {
+            //TODO: 完善技能释放规则
+            if (skill.costEnergy > troop.morale)
+                return false;
+
+            return true;
+        }
+
+        public bool CanSpeellToHere(Troop who, Cell where)
+        {
+            if (canSpellToCell)
+                return true;
+
+            if (canDamageTroop && where.troop != null)
+            {
+                bool isEnemy = where.troop.IsEnemy(who);
+                if (onlySpellToTeam && !isEnemy)
+                    return true;
+                else if (isEnemy)
+                    return true;
+            }
+
+            if (canDamageBuilding && where.building != null)
+            {
+                bool isEnemy = where.building.IsEnemy(who);
+                if (onlySpellToTeam && !isEnemy)
+                    return true;
+                else if (isEnemy)
+                    return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 成功率判断
+        /// </summary>
+        /// <param name="troop"></param>
+        /// <param name="spellCell"></param>
+        /// <returns></returns>
+        public bool CheckSuccess(Troop troop, Cell spellCell)
+        {
+            // TODO: 特殊状态必定成功
+            int baseSuccessRate = successRate + Math.Max(0, troop.TroopTypeLv - 1) * Scenario.Cur.Variables.skillSuccessRateAddByAbility;
+
+            // TODO: 其他加成
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(baseSuccessRate);
+            GameEvent.OnTroopCalculateSkillSuccess?.Invoke(troop, this, spellCell, overrideData);
+            baseSuccessRate = overrideData.Value;
+
+#if SANGO_DEBUG
+            Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} 部队 准备释放技能: {Name} =>({spellCell.x},{spellCell.y})] 成功率:{baseSuccessRate}");
+#endif
+            return GameRandom.Chance(baseSuccessRate);
+        }
+
+        /*
+        *【战法爆击率】
+           1、如果有必爆特技则爆击率为100％，无必爆则执行战法爆击率判断。
+           2、战法爆击率 ＝ A + B + C
+           A：部队武力爆击加成：武力60以下＝0％；武力在60～79之间＝1％；武力大于等于80＝2％
+           B：部队适性爆击加成：C＝0％，B＝1％，A＝2％，S＝3％，依次推类
+           C：主副将关系爆击加成：
+            如果副将亲爱主将＋2％；
+            如果副将与主将结义或结婚＋4％；
+            如果副将厌恶主将－5％；
+           注：每名副将单独计算，即2员副将都亲爱主将＋4％，一仲介一厌恶则－1％；
+
+        * 
+        **/
+        /// <summary>
+        /// 暴击率检查
+        /// </summary>
+        /// <param name="troop"></param>
+        /// <param name="spellCell"></param>
+        /// <returns></returns>
+        public int CheckCritical(Troop troop, Cell spellCell)
+        {
+            // TODO: 特殊状态必定暴击
+            ScenarioVariables scenarioVariables = Scenario.Cur.Variables;
+
+            int basCriticalRate = scenarioVariables.baseSkillCriticalRate + troop.TroopTypeLv * Scenario.Cur.Variables.skillCriticalRateAddByAbility;
+            basCriticalRate += Math.Max(0, (troop.Strength - 60) * scenarioVariables.skillCriticalRateAddByStength / 10);
+
+            // TODO: 其他加成
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(basCriticalRate);
+            GameEvent.OnTroopCalculateSkillCritical?.Invoke(troop, this, spellCell, overrideData);
+            basCriticalRate = overrideData.Value;
+
+            int criticalFactor = 100;
+            if (GameRandom.Chance(basCriticalRate))
+            {
+                criticalFactor = scenarioVariables.skillCriticalFactor;
+                overrideData = GameUtility.IntOverrideData.Set(criticalFactor);
+                GameEvent.OnTroopCalculateSkillCriticalFactor?.Invoke(troop, this, spellCell, overrideData);
+                criticalFactor = overrideData.Value;
+            }
+            tempCriticalFactor = criticalFactor;
+            return criticalFactor;
+        }
+
+
+        public bool UpdateRender(Troop troop, Cell spellCell, Scenario scenario, float time, System.Action action)
+        {
+            if (time <= 0f)
+            {
+                troop.Render.FaceTo(spellCell.Position);
+                troop.Render.SetAniShow(1);
+            }
+            if (time > 1f)
+                action();
+            if (time > 2.5f)
+            {
+                troop.Render.SetAniShow(0);
+                return true;
+            }
+            return false;
+        }
+
+        List<Cell> tempCellList = new List<Cell>();
+
+        public void Action(Troop troop, Cell spellCell, int criticalFactor)
+        {
+            Scenario scenario = Scenario.Cur;
+            ScenarioVariables scenarioVariables = scenario.Variables;
+            Troop targetTroop = spellCell.troop;
+            BuildingBase targetBuilding = spellCell.building;
+
+            List<SangoObject> activedTargetList = new List<SangoObject>();
+            //TODO: 释放技能
+            tempCellList.Clear();
+            GetAttackCells(troop, spellCell, tempCellList);
+            int targetDamage = 0;
+            for (int i = 0; i < tempCellList.Count; i++)
+            {
+                Cell atkCell = tempCellList[i];
+                Troop beAtkTroop = atkCell.troop;
+
+                if (beAtkTroop != null && canDamageTroop && (troop.IsEnemy(beAtkTroop) || canDamageTeam))
+                {
+                    int damage = Troop.CalculateSkillDamage(troop, beAtkTroop, this) * criticalFactor / 100;
+                    if (damage < 0)
+                    {
+                        damage = 0;
+                    }
+                    beAtkTroop.ChangeTroops(-damage, troop, this, 0);
+                    int ep = damage / 100;
+                    if (!beAtkTroop.IsAlive) ep += 50;
+                    troop.ForEachPerson(p =>
+                    {
+                        p.GainExp(ep);
+                        p.merit += ep;
+                    });
+#if SANGO_DEBUG
+                    Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 使用<{this.Name}> 攻击 {beAtkTroop.BelongForce.Name}的[{beAtkTroop.Name} - {beAtkTroop.TroopType.Name}], 造成伤害:{damage}, 目标剩余兵力: {beAtkTroop.GetTroopsNum()}");
+#endif
+                    // 反击
+                    if (beAtkTroop.IsAlive && targetTroop == beAtkTroop)
+                    {
+                        targetDamage = damage;
+                        int hitBack = beAtkTroop.GetAttackBackFactor(this, Scenario.Cur.Map.Distance(troop.cell, spellCell));
+                        Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(hitBack);
+                        GameEvent.OnTroopCalculateAttackBack?.Invoke(troop, beAtkTroop, this, scenario, overrideData);
+                        hitBack = overrideData.Value;
+
+                        if (hitBack > 0)
+                        {
+                            if (this.IsRange())
+                            {
+                                int hitBackDmg = hitBack * Troop.CalculateSkillDamage(beAtkTroop, troop, beAtkTroop.NormalRangeSkill) / 100;
+                                troop.ChangeTroops(-hitBackDmg, beAtkTroop, beAtkTroop.NormalRangeSkill, hitBack);
+#if SANGO_DEBUG
+                                Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 受到 {beAtkTroop.BelongForce.Name}的[{beAtkTroop.Name} - {beAtkTroop.TroopType.Name}]反击伤害:{hitBackDmg}, 目标剩余兵力: {troop.GetTroopsNum()}");
+#endif
+                                ep = hitBackDmg / 100;
+                                if (!troop.IsAlive) ep += 50;
+                                beAtkTroop.ForEachPerson(p =>
+                                {
+                                    p.GainExp(ep);
+                                    p.merit += ep;
+                                });
+                            }
+                            else
+                            {
+                                int hitBackDmg = hitBack * Troop.CalculateSkillDamage(beAtkTroop, troop, beAtkTroop.NormalSkill) / 100;
+                                troop.ChangeTroops(-hitBackDmg, beAtkTroop, beAtkTroop.NormalSkill, hitBack);
+#if SANGO_DEBUG
+                                Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 受到 {beAtkTroop.BelongForce.Name}的[{beAtkTroop.Name} - {beAtkTroop.TroopType.Name}]反击伤害:{hitBackDmg}, 目标剩余兵力: {troop.GetTroopsNum()}");
+#endif
+                                ep = hitBackDmg / 100;
+                                if (!troop.IsAlive)
+                                {
+                                    // 获取对方部分钱粮
+                                    int getFood = troop.food * scenarioVariables.defeatTroopCanGainFoodFactor / 100;
+                                    int getGold = troop.gold * scenarioVariables.defeatTroopCanGainGoldFactor / 100;
+                                    if (getFood > 0)
+                                    {
+                                        beAtkTroop.ChangeFood(getFood);
+                                    }
+                                    if (getGold > 0)
+                                    {
+                                        beAtkTroop.ChangeGold(getGold);
+                                    }
+
+                                    ep += 50;
+                                }
+                                beAtkTroop.ForEachPerson(p =>
+                                {
+                                    p.GainExp(ep);
+                                    p.merit += ep;
+                                });
+
+                            }
+                        }
+                    }
+                }
+
+                BuildingBase beAtkBuildingBase = atkCell.building;
+
+                if (beAtkBuildingBase != null && this.canDamageBuilding && (troop.IsEnemy(beAtkBuildingBase) || this.canDamageTeam))
+                {
+                    // 一个目标只会收到一次伤害
+                    if (activedTargetList.Contains(beAtkBuildingBase))
+                        continue;
+                    activedTargetList.Add(beAtkBuildingBase);
+
+                    int damage = Troop.CalculateSkillDamage(troop, beAtkBuildingBase, this) * criticalFactor / 100;
+#if SANGO_DEBUG
+                    Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 使用<{this.Name}> 攻击 {beAtkBuildingBase.BelongForce?.Name}的 [{beAtkBuildingBase.Name}], 造成耐久伤害:{damage}, 目标剩余耐久: {beAtkBuildingBase.durability}");
+#endif
+                    int ep = damage / 10;
+                    if (beAtkBuildingBase is City)
+                    {
+                        City city = (City)beAtkBuildingBase;
+                        int damage_troops = Troop.CalculateSkillDamageTroopOnCity(troop, city, this) * criticalFactor / 100;
+#if SANGO_DEBUG
+                        Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 使用<{this.Name}> 攻击 {beAtkBuildingBase.BelongForce?.Name}的 [{beAtkBuildingBase.Name}], 造成兵力伤害:{damage_troops}, 目标剩余兵力: {city.troops}");
+#endif
+                        if (!city.ChangeTroops(-damage_troops, troop, city.BelongForce != null))
+                        {
+                            ep += 100;
+                            troop.ForEachPerson(p =>
+                            {
+                                int ep = damage / 100;
+                                p.GainExp(ep);
+                                p.merit += ep;
+                            });
+#if SANGO_DEBUG
+                            Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 攻破城池: <{beAtkBuildingBase.Name}>");
+#endif
+                            city.OnFall(troop);
+                            return;
+                        }
+                    }
+
+                    if (beAtkBuildingBase.ChangeDurability(-damage, troop))
+                    {
+                        ep += 100;
+                        troop.ForEachPerson(p =>
+                        {
+                            int ep = damage / 100;
+                            p.GainExp(ep);
+                            p.merit += ep;
+                        });
+#if SANGO_DEBUG
+
+                        Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 破坏建筑: <{beAtkBuildingBase.Name}>");
+#endif
+                    }
+                    else
+                    {
+                        troop.ForEachPerson(p =>
+                        {
+                            int ep = damage / 100;
+                            p.GainExp(ep);
+                            p.merit += ep;
+                        });
+
+                        // 城池反击
+                        if (targetBuilding == beAtkBuildingBase)
+                        {
+                            float hitBack = beAtkBuildingBase.GetAttackBackFactor(this, Scenario.Cur.Map.Distance(troop.cell, atkCell));
+                            if (hitBack > 0)
+                            {
+                                int atkBack = beAtkBuildingBase.GetAttackBack();
+                                Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(atkBack);
+                                GameEvent.OnBuildCalculateAttackBack?.Invoke(troop, spellCell, beAtkBuildingBase, this, overrideData);
+                                atkBack = overrideData.Value;
+                                if (atkBack > 0)
+                                {
+                                    int hitBackDmg = (int)System.Math.Ceiling(hitBack * Troop.CalculateSkillDamage(beAtkBuildingBase, troop, atkBack));
+                                    troop.ChangeTroops(-hitBackDmg, beAtkBuildingBase, null, atkBack);
+#if SANGO_DEBUG
+                                    Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} - {troop.TroopType.Name}] 受到 {beAtkBuildingBase.BelongForce?.Name}的[{beAtkBuildingBase.Name}]反击伤害:{hitBackDmg}, 目标剩余兵力: {troop.GetTroopsNum()}");
+#endif
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            DoOffset(troop, targetTroop, targetDamage);
+
+            DoEffect(troop, spellCell, tempCellList);
+
+            if (troop.IsAlive)
+            {
+                troop.morale -= this.costEnergy;
+                if (troop.morale < 0)
+                    troop.morale = 0;
+                troop.Render.UpdateRender();
+            }
+        }
+
+        public void DoOffset(Troop troop, Troop targetTroop, int targetDamage)
+        {
+            if (targetTroop == null || offsetAction == null || offsetAction.Length <= 0) return;
+            List<Cell> checkList = new List<Cell>();
+            int dir = troop.cell.DirectionTo(targetTroop.cell);
+            for (int k = 0; k < this.offsetAction.Length; k += 2)
+            {
+                int offsetType = this.offsetAction[k];
+                int offsetLength = this.offsetAction[k + 1];
+                int targetDir = dir;
+                int absOffsetLength = Mathf.Abs(offsetLength);
+                if (offsetLength < 0)
+                    targetDir -= 3;
+                checkList.Clear();
+                switch (offsetType)
+                {
+                    case (int)SkillCellOffsetType.Master:
+                        {
+                            if (troop.IsAlive)
+                            {
+                                troop.cell.GetDirectionLine(targetDir, absOffsetLength, checkList);
+                                for (int i = 0; i < checkList.Count; i++)
+                                {
+                                    Cell c = checkList[i];
+                                    if (c.CanStay(troop))
+                                        troop.UpdateCell(c, troop.cell, true);
+                                    else
+                                        break;
+                                }
+                            }
+                        }
+                        break;
+                    case (int)SkillCellOffsetType.Target:
+                        {
+                            if (targetTroop.IsAlive)
+                            {
+                                targetTroop.cell.GetDirectionLine(targetDir, absOffsetLength, checkList);
+                                for (int i = 0; i < checkList.Count; i++)
+                                {
+                                    Cell c = checkList[i];
+                                    if (c.CanStay(targetTroop))
+                                        targetTroop.UpdateCell(c, targetTroop.cell, true);
+                                    else
+                                        break;
+                                }
+                            }
+                        }
+                        break;
+                    case (int)SkillCellOffsetType.MasterBlock:
+                        {
+                            if (troop.IsAlive)
+                            {
+                                troop.cell.GetDirectionLine(targetDir, absOffsetLength, checkList);
+                                for (int i = 0; i < checkList.Count; i++)
+                                {
+                                    Cell c = checkList[i];
+                                    if (c.CanStay(troop))
+                                        troop.UpdateCell(c, troop.cell, true);
+                                    else
+                                    {
+                                        Troop blockTroop = c.troop;
+                                        if (this.blockFactor > 0 && blockTroop != null && blockTroop.IsEnemy(troop))
+                                        {
+                                            int blockDmg = targetDamage * this.blockFactor / 100;
+                                            blockTroop.ChangeTroops(-blockDmg, troop, this, -blockFactor);
+                                            int ep = blockDmg / 100;
+                                            if (!blockTroop.IsAlive) ep += 50;
+                                            troop.ForEachPerson(p =>
+                                            {
+                                                p.GainExp(ep);
+                                                p.merit += ep;
+                                            });
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case (int)SkillCellOffsetType.TargetBlock:
+                        {
+                            if (targetTroop.IsAlive)
+                            {
+                                targetTroop.cell.GetDirectionLine(targetDir, absOffsetLength, checkList);
+                                for (int i = 0; i < checkList.Count; i++)
+                                {
+                                    Cell c = checkList[i];
+                                    if (c.CanStay(troop))
+                                        targetTroop.UpdateCell(c, targetTroop.cell, true);
+                                    else
+                                    {
+                                        Troop blockTroop = c.troop;
+                                        if (this.blockFactor > 0 && blockTroop != null && blockTroop.IsEnemy(troop))
+                                        {
+                                            int blockDmg = targetDamage * this.blockFactor / 100;
+                                            blockTroop.ChangeTroops(-blockDmg, troop, this, -blockFactor);
+                                            int ep = blockDmg / 100;
+                                            if (!blockTroop.IsAlive) ep += 50;
+                                            troop.ForEachPerson(p =>
+                                            {
+                                                p.GainExp(ep);
+                                                p.merit += ep;
+                                            });
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case (int)SkillCellOffsetType.MasterJustCheckEnd:
+                        {
+                            if (troop.IsAlive)
+                            {
+                                troop.cell.GetDirectionLine(targetDir, absOffsetLength, checkList);
+                                if (checkList.Count == 0)
+                                {
+                                    int cc = 123;
+                                    cc++;
+                                }
+                                for (int i = checkList.Count - 1; i >= 0; i--)
+                                {
+                                    Cell c = checkList[i];
+                                    if (c.CanStay(troop))
+                                    {
+                                        troop.UpdateCell(c, troop.cell, true);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+
+        public void DoEffect(Troop troop, Cell spellCell, List<Cell> atkCellList)
+        {
+            InitSkillEffects();
+            if (effects == null || effects.Count == 0) return;
+
+            effects.ForEach(s => s.Action(null, troop, spellCell, atkCellList));
+
+        }
+
+        public override void Clear()
+        {
+            if (effects != null)
+            {
+                effects.ForEach(s => s.Clear());
+                effects.Clear();
+            }
+        }
 
     }
 }

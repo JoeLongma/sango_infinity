@@ -47,27 +47,27 @@ namespace Sango.Game.Action
         }
 
         /// <summary>
-        /// 是否一般攻击 1一般攻击 0非一般攻击 -1都可以
+        /// 是否一般攻击 1一般攻击 2非一般攻击 0都可以
         /// </summary>
         /// <param name="skill"></param>
         /// <param name="isNormalSkill"></param>
         /// <returns></returns>
-        public bool CheckIsNormalSkill(Skill skill, int isNormalSkill)
+        public bool CheckIsNormalSkill(SkillInstance skill, int isNormalSkill)
         {
-            if ((isNormalSkill == 1 && skill.costEnergy > 0) || (isNormalSkill == 0 && skill.costEnergy == 0))
+            if ((isNormalSkill == 1 && skill.costEnergy > 0) || (isNormalSkill == 2 && skill.costEnergy == 0))
                 return false;
             return true;
         }
 
         /// <summary>
-        /// 是否是远程 1远程 0近战 -1都可以 
+        /// 是否是远程 1远程 2近战 0都可以 
         /// </summary>
         /// <param name="skill"></param>
         /// <param name="isRangeSkill"></param>
         /// <returns></returns>
-        public bool CheckIsRangeSkill(Skill skill, int isRangeSkill)
+        public bool CheckIsRangeSkill(SkillInstance skill, int isRangeSkill)
         {
-            if ((isRangeSkill == 1 && !skill.IsRange()) || (isRangeSkill == 0 && skill.IsRange()))
+            if ((isRangeSkill == 1 && !skill.IsRange()) || (isRangeSkill == 2 && skill.IsRange()))
                 return false;
             return true;
         }

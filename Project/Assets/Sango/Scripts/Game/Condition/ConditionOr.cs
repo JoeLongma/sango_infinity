@@ -15,7 +15,7 @@ namespace Sango.Game
             return false;
         }
 
-        public override bool Check(Troop troop, Troop target, Skill skill)
+        public override bool Check(Troop troop, Troop target, SkillInstance skill)
         {
             if (L != null && L.Check(troop, target, skill)) return true;
             if (R != null && R.Check(troop, target, skill)) return true;

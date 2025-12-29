@@ -3,26 +3,29 @@ using System.Collections.Generic;
 
 namespace Sango.Game
 {
-    public class ConditionList : Condition
+    /// <summary>
+    /// 和集,任何一个不满足则返回false
+    /// </summary>
+    public class ConditionAndList : Condition
     {
-        List<Condition> Conditions = new List<Condition>();
+        List<Condition> list = new List<Condition>();
 
         public override bool Check(params object[] objects)
         {
-            for (int i = 0; i < Conditions.Count; ++i)
+            for (int i = 0; i < list.Count; ++i)
             {
-                Condition c = Conditions[i];
+                Condition c = list[i];
                 if (c != null && !c.Check(objects))
                     return false;
             }
             return true;
         }
 
-        public override bool Check(Troop troop, Troop target, Skill skill)
+        public override bool Check(Troop troop, Troop target, SkillInstance skill)
         {
-            for (int i = 0; i < Conditions.Count; ++i)
+            for (int i = 0; i < list.Count; ++i)
             {
-                Condition c = Conditions[i];
+                Condition c = list[i];
                 if (c != null && !c.Check(troop, target, skill))
                     return false;
             }
@@ -31,9 +34,9 @@ namespace Sango.Game
 
         public override bool Check(SkillInstance skillInstance, Troop troop, Cell spellCell, List<Cell> atkCellList)
         {
-            for (int i = 0; i < Conditions.Count; ++i)
+            for (int i = 0; i < list.Count; ++i)
             {
-                Condition c = Conditions[i];
+                Condition c = list[i];
                 if (c != null && !c.Check(skillInstance, troop, spellCell, atkCellList))
                     return false;
             }
@@ -49,7 +52,7 @@ namespace Sango.Game
                 Condition c = Condition.Create(obj.Value<string>("class"));
                 if (c != null)
                 {
-                    Conditions.Add(c);
+                    list.Add(c);
                 }
             }
         }

@@ -38,7 +38,7 @@ namespace Sango.Game
             return compareFunction(atker, target) == result;
         }
 
-        public override bool Check(Troop troop, Troop target, Skill skill)
+        public override bool Check(Troop troop, Troop target, SkillInstance skill)
         {
             if (target == null) return true;
             TroopCompareFunction.TroopCompare compareFunction = TroopCompareFunction.Get(attType);

@@ -1990,7 +1990,7 @@
             10
           ],
           "checkLand": 2,
-          "isNormal": 0,
+          "isNormal": 2,
           "condition": {
             "class": "and",
             "L": {
@@ -2041,7 +2041,7 @@
         {
           "class": "TroopSkillCalculateCritical",
           "value": 100,
-          "isNormal": -1,
+          "isNormal": 0,
           "condition": {
             "class": "and",
             "L": {
@@ -2295,7 +2295,7 @@
         {
           "class": "TroopSkillCalculateAttackBack",
           "value": 200,
-          "isAttacker": 1,
+          "isDefender": 1,
           "isRange": -1
         }
       ]
@@ -2990,162 +2990,6 @@
         138,
         211
       ]
-    }
-  },
-  "GlobalEffects": {
-    "1": {
-      "Id": 1,
-      "Name": "势力带兵上限增加",
-      "class": "ForceTroopMaxTroopAction",
-      "参数说明": "value: 增加值 kinds: 兵种类型",
-      "kind": 1
-    },
-    "2": {
-      "Id": 2,
-      "Name": "势力士气上限增加",
-      "class": "ForceCityMaxMoraleAction",
-      "参数说明": "value: 值  kinds: 城市类型",
-      "kind": 1
-    },
-    "3": {
-      "Id": 3,
-      "Name": "据点反击力增加",
-      "class": "BuildingBaseAttackBack",
-      "参数说明": "value: 值, kinds: 建筑类型",
-      "kind": 1
-    },
-    "4": {
-      "Id": 4,
-      "Name": "某类型城池的最大资金增加",
-      "class": "CityGoldLimitAction",
-      "参数说明": "value: 值, kinds: 建筑类型",
-      "kind": 1
-    },
-    "5": {
-      "Id": 5,
-      "Name": "某类型城池的最大兵粮增加",
-      "class": "CityFoodLimitAction",
-      "参数说明": "value: 值, kinds: 建筑类型",
-      "kind": 1
-    },
-    "6": {
-      "Id": 6,
-      "Name": "某类型城池的最大士兵增加",
-      "class": "CityTroopsLimitAction",
-      "参数说明": "value: 值, kinds: 建筑类型",
-      "kind": 1
-    },
-    "7": {
-      "Id": 7,
-      "Name": "某类型城池的最大兵装增加",
-      "class": "CityStoreLimitAction",
-      "参数说明": "value: 值, kinds: 建筑类型",
-      "kind": 1
-    },
-    "8": {
-      "Id": 8,
-      "Name": "某类型城池的最大耐久增加",
-      "class": "CityDurabilityLimitAction",
-      "参数说明": "value: 值, kinds: 建筑类型",
-      "kind": 1
-    },
-    "9": {
-      "Id": 9,
-      "Name": "某类型城池的治安下降值比例",
-      "class": "CitySecurityChangeAction",
-      "参数说明": "value: 值(百分比) kinds: 城市类型",
-      "kind": 1
-    },
-    "10": {
-      "Id": 10,
-      "Name": "武将忠诚下降值比例",
-      "class": "ForcePersonLoyaltyChangeAction",
-      "参数说明": "value:修改值(百分比)",
-      "kind": 1
-    },
-    "11": {
-      "Id": 11,
-      "Name": "某兵种攻击力增加",
-      "class": "TroopAddAttackAction",
-      "参数说明": "value: 增加值 kinds: 兵种类型",
-      "kind": 2
-    },
-    "12": {
-      "Id": 12,
-      "Name": "某兵种防御力增加",
-      "class": "TroopAddDefenceAction",
-      "参数说明": "value: 增加值 kinds: 兵种类型",
-      "kind": 2
-    },
-    "13": {
-      "Id": 13,
-      "Name": "某兵种移动力增加",
-      "class": "TroopAddMoveAbilityAction",
-      "参数说明": "value: 增加值  kinds:兵种kind   checkLand 0:只检查kinds 1:只对landType检查kinds 2只对waterType检查kinds",
-      "kind": 2
-    },
-    "14": {
-      "Id": 14,
-      "Name": "某兵种战法威力(百分比)增加",
-      "class": "TroopAddDamageTroopExtraFactorAction",
-      "参数说明": "value: 增加值(百分比) kinds: 兵种类型",
-      "kind": 2
-    },
-    "15": {
-      "Id": 15,
-      "Name": "某兵种类型的耐久伤害增加",
-      "class": "TroopAddDamageBuildingExtraFactorAction",
-      "参数说明": "value: 增加值(百分比) kinds: 兵种类型",
-      "kind": 2
-    },
-    "16": {
-      "Id": 16,
-      "Name": "某兵种战法替换成新战法",
-      "class": "TroopReplaceSkillAction",
-      "参数说明": " value: 技能id kinds: 兵种类型 srcSkillId: 被替换技能id",
-      "kind": 2
-    },
-    "17": {
-      "Id": 17,
-      "Name": "某兵种新增战法",
-      "class": "TroopAddSkillAction",
-      "参数说明": "value: 技能id kinds: 兵种类型",
-      "kind": 2
-    },
-    "18": {
-      "Id": 18,
-      "Name": "某兵种类型战法的成功率增加",
-      "class": "TroopSkillCalculateSuccessAction",
-      "参数说明": "value： 增加值(百分比) kinds： 兵种类型  checkLand： 0:只检查kinds 1:只对landType检查kinds 2只对waterType检查kinds isNormal：  -1都可以 0非 1是 conditionId： 额外条件 支持参数(troop,troop,skill)"
-    },
-    "19": {
-      "Id": 19,
-      "Name": "某兵种类型战法的暴击率增加",
-      "class": "TroopSkillCalculateCriticalAction",
-      "参数说明": "value:增加值（百分比）  kinds： 兵种类型  checkLand： 0:只检查kinds 1:只对landType检查kinds，2只对waterType检查kinds isNormal：  -1都可以 0非 1是 conditionId： 额外条件 支持参数(troop,troop,skill)"
-    },
-    "20": {
-      "Id": 20,
-      "Name": "某兵种的反击伤害率增加",
-      "class": "TroopSkillCalculateAttackBackAction",
-      "参数说明": " value： 增加值(百分比) kinds： 兵种类型 checkLand： 0:只检查kinds 1:只对landType检查kinds 2只对waterType检查kinds isAttacker： 0攻击方 1受击方 isNormal：  -1都可以 0非 1是 isRange： -1都可以 0非 1是 conditionId： 额外条件 支持参数(troop,troop,skill)"
-    },
-    "21": {
-      "Id": 21,
-      "Name": "某兵种类型战法的增减伤害",
-      "参数说明": "value： 增加值(百分比) kinds： 兵种类型 checkLand： 0:只检查kinds 1:只对landType检查kinds 2只对waterType检查kinds isAttacker： 0攻击方 1受击方 isNormal：  -1都可以 0非 1是 isRange： -1都可以 0非 1是 conditionId： 额外条件 支持参数(troop,troop,skill)"
-    },
-    "22": {
-      "Id": 22,
-      "Name": "计算周围一格的粮食产量，并提升系数",
-      "参数说明": "value:提升系数（百分比） kinds：有效kind类型合集",
-      "kind": 5
-    },
-    "23": {
-      "Id": 23,
-      "Name": "计算周围一格的资金产量，并提升系数",
-      "参数说明": "value:提升系数（百分比） kinds：有效kind类型合集",
-      "kind": 5
     }
   },
   "ItemTypes": {
@@ -4676,16 +4520,6 @@
       "exp": 0
     }
   },
-  "SkillEffects": {
-    "1": {
-      "Id": "1",
-      "Name": "放火",
-      "effectType": 1,
-      "p1": 8000,
-      "p2": 400,
-      "p3": 200
-    }
-  },
   "Skills": {
     "1": {
       "Id": 1,
@@ -4704,7 +4538,9 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": true,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "2": {
       "Id": 2,
@@ -4723,7 +4559,9 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": true,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "3": {
       "Id": 3,
@@ -4747,7 +4585,9 @@
       "canDamageMachine": true,
       "canDamageBoat": false,
       "canDamageBuilding": false,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "4": {
       "Id": 4,
@@ -4802,7 +4642,9 @@
       "canDamageMachine": true,
       "canDamageBoat": false,
       "canDamageBuilding": false,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "5": {
       "Id": 5,
@@ -4826,7 +4668,9 @@
       "canDamageMachine": true,
       "canDamageBoat": false,
       "canDamageBuilding": false,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "6": {
       "Id": 6,
@@ -4851,7 +4695,9 @@
       "canDamageMachine": true,
       "canDamageBoat": false,
       "canDamageBuilding": false,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "7": {
       "Id": 7,
@@ -4873,7 +4719,9 @@
       "canDamageMachine": true,
       "canDamageBoat": false,
       "canDamageBuilding": false,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "8": {
       "Id": 8,
@@ -4896,7 +4744,9 @@
       "canDamageMachine": true,
       "canDamageBoat": false,
       "canDamageBuilding": false,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "9": {
       "Id": 9,
@@ -4949,7 +4799,9 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": true,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "10": {
       "Id": 10,
@@ -4972,7 +4824,9 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": true,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "11": {
       "Id": 11,
@@ -4995,7 +4849,9 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": true,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "12": {
       "Id": 12,
@@ -5020,7 +4876,9 @@
       "canDamageMachine": true,
       "canDamageBoat": false,
       "canDamageBuilding": false,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "13": {
       "Id": 13,
@@ -5043,7 +4901,9 @@
       "canDamageMachine": true,
       "canDamageBoat": false,
       "canDamageBuilding": false,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "14": {
       "Id": 14,
@@ -5068,7 +4928,9 @@
       "canDamageMachine": true,
       "canDamageBoat": false,
       "canDamageBuilding": false,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "15": {
       "Id": 15,
@@ -5122,7 +4984,9 @@
       "canDamageMachine": false,
       "canDamageBoat": false,
       "canDamageBuilding": true,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "16": {
       "Id": 16,
@@ -5142,7 +5006,9 @@
       "canDamageMachine": false,
       "canDamageBoat": false,
       "canDamageBuilding": true,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "17": {
       "Id": 17,
@@ -5196,7 +5062,9 @@
       "canDamageMachine": true,
       "canDamageBoat": false,
       "canDamageBuilding": true,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "18": {
       "Id": 18,
@@ -5221,7 +5089,9 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": true,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "19": {
       "Id": 19,
@@ -5275,7 +5145,9 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": true,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "20": {
       "Id": 20,
@@ -5301,7 +5173,9 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": true,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "21": {
       "Id": 21,
@@ -5326,7 +5200,9 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": true,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "22": {
       "Id": 22,
@@ -5343,7 +5219,9 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": true,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": true,
+      "onlySpellToTeam": false
     },
     "23": {
       "Id": 23,
@@ -5360,7 +5238,9 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": true,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": true
     },
     "24": {
       "Id": 24,
@@ -5377,7 +5257,9 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": false,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "25": {
       "Id": 25,
@@ -5394,7 +5276,9 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": false,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "26": {
       "Id": 26,
@@ -5411,7 +5295,9 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": false,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": true
     },
     "27": {
       "Id": 27,
@@ -5428,7 +5314,9 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": false,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     },
     "28": {
       "Id": 28,
@@ -5445,7 +5333,9 @@
       "canDamageMachine": true,
       "canDamageBoat": true,
       "canDamageBuilding": false,
-      "canDamageTeam": false
+      "canDamageTeam": false,
+      "canSpellToCell": false,
+      "onlySpellToTeam": false
     }
   },
   "States": {
@@ -5483,7 +5373,7 @@
       "level": 0,
       "col": 0,
       "row": 0,
-      "needAttr": 1,
+      "needAttr": 0,
       "goldCost": 1000,
       "tabColor": [
         255,
@@ -5492,717 +5382,6 @@
       ],
       "techPointCost": 2000,
       "counter": 3
-    },
-    "2": {
-      "Id": 2,
-      "Name": "袭击兵粮",
-      "desc": "以枪兵攻击时，夺取敌方部队的兵粮",
-      "kind": 1,
-      "level": 1,
-      "col": 1,
-      "row": 0,
-      "needAttr": 1,
-      "goldCost": 2000,
-      "tabColor": [
-        255,
-        100,
-        100
-      ],
-      "techPointCost": 3000,
-      "counter": 4,
-      "needTechs": [
-        1
-      ]
-    },
-    "3": {
-      "Id": 3,
-      "Name": "奇袭",
-      "desc": "枪兵于森林中攻击时，不会遭到反击",
-      "kind": 1,
-      "level": 2,
-      "col": 2,
-      "row": 0,
-      "needAttr": 1,
-      "goldCost": 3000,
-      "tabColor": [
-        255,
-        100,
-        100
-      ],
-      "techPointCost": 5000,
-      "counter": 6,
-      "needTechs": [
-        2
-      ]
-    },
-    "4": {
-      "Id": 4,
-      "Name": "精锐枪兵",
-      "desc": "强化枪兵的攻击力、防御力、移动力",
-      "kind": 1,
-      "level": 3,
-      "col": 3,
-      "row": 0,
-      "needAttr": 1,
-      "goldCost": 5000,
-      "tabColor": [
-        255,
-        100,
-        100
-      ],
-      "techPointCost": 8000,
-      "counter": 9,
-      "needTechs": [
-        3
-      ]
-    },
-    "5": {
-      "Id": 5,
-      "Name": "锻炼戟兵",
-      "desc": "增加戟兵战法的威力",
-      "kind": 2,
-      "level": 0,
-      "col": 0,
-      "row": 1,
-      "needAttr": 1,
-      "goldCost": 1000,
-      "tabColor": [
-        100,
-        100,
-        255
-      ],
-      "techPointCost": 2000,
-      "counter": 3
-    },
-    "6": {
-      "Id": 6,
-      "Name": "箭盾",
-      "desc": "以30％的机率来防御弓箭攻击",
-      "kind": 2,
-      "level": 1,
-      "col": 1,
-      "row": 1,
-      "needAttr": 1,
-      "goldCost": 2000,
-      "tabColor": [
-        100,
-        100,
-        255
-      ],
-      "techPointCost": 3000,
-      "counter": 4,
-      "needTechs": [
-        5
-      ]
-    },
-    "7": {
-      "Id": 7,
-      "Name": "大盾",
-      "desc": "以30％的机率来防御一般攻击",
-      "kind": 2,
-      "level": 2,
-      "col": 2,
-      "row": 1,
-      "needAttr": 1,
-      "goldCost": 3000,
-      "tabColor": [
-        100,
-        100,
-        255
-      ],
-      "techPointCost": 5000,
-      "counter": 6,
-      "needTechs": [
-        6
-      ]
-    },
-    "8": {
-      "Id": 8,
-      "Name": "精锐戟兵",
-      "desc": "强化戟兵的攻击力、防御力、移动力",
-      "kind": 2,
-      "level": 3,
-      "col": 3,
-      "row": 1,
-      "needAttr": 1,
-      "goldCost": 5000,
-      "tabColor": [
-        100,
-        100,
-        255
-      ],
-      "techPointCost": 8000,
-      "counter": 9,
-      "needTechs": [
-        7
-      ]
-    },
-    "9": {
-      "Id": 9,
-      "Name": "锻炼弩兵",
-      "desc": "增加弩兵战法的威力",
-      "kind": 3,
-      "level": 0,
-      "col": 0,
-      "row": 2,
-      "needAttr": 1,
-      "goldCost": 1000,
-      "tabColor": [
-        100,
-        255,
-        100
-      ],
-      "techPointCost": 2000,
-      "counter": 3
-    },
-    "10": {
-      "Id": 10,
-      "Name": "还射",
-      "desc": "弩兵遭受弓箭攻击时会自动反击",
-      "kind": 3,
-      "level": 1,
-      "col": 1,
-      "row": 2,
-      "needAttr": 1,
-      "goldCost": 2000,
-      "tabColor": [
-        100,
-        255,
-        100
-      ],
-      "techPointCost": 3000,
-      "counter": 4,
-      "needTechs": [
-        9
-      ]
-    },
-    "11": {
-      "Id": 11,
-      "Name": "强弩",
-      "desc": "弩兵的射程增加１区格",
-      "kind": 3,
-      "level": 2,
-      "col": 2,
-      "row": 2,
-      "needAttr": 1,
-      "goldCost": 3000,
-      "tabColor": [
-        100,
-        255,
-        100
-      ],
-      "techPointCost": 5000,
-      "counter": 6,
-      "needTechs": [
-        10
-      ]
-    },
-    "12": {
-      "Id": 12,
-      "Name": "精锐弩兵",
-      "desc": "强化弩兵的攻击力、防御力、移动力",
-      "kind": 3,
-      "level": 3,
-      "col": 3,
-      "row": 2,
-      "needAttr": 1,
-      "goldCost": 5000,
-      "tabColor": [
-        100,
-        255,
-        100
-      ],
-      "techPointCost": 8000,
-      "counter": 9,
-      "needTechs": [
-        11
-      ]
-    },
-    "13": {
-      "Id": 13,
-      "Name": "锻炼骑兵",
-      "desc": "增加骑兵战法的威力",
-      "kind": 4,
-      "level": 0,
-      "col": 0,
-      "row": 3,
-      "needAttr": 1,
-      "goldCost": 1000,
-      "tabColor": [
-        150,
-        100,
-        100
-      ],
-      "techPointCost": 2000,
-      "counter": 3
-    },
-    "14": {
-      "Id": 14,
-      "Name": "出产良马",
-      "desc": "增加骑兵的移动力",
-      "kind": 4,
-      "level": 1,
-      "col": 1,
-      "row": 3,
-      "needAttr": 1,
-      "goldCost": 2000,
-      "tabColor": [
-        150,
-        100,
-        100
-      ],
-      "techPointCost": 3000,
-      "counter": 4,
-      "needTechs": [
-        13
-      ]
-    },
-    "15": {
-      "Id": 15,
-      "Name": "骑射",
-      "desc": "骑兵可执行弓箭攻击",
-      "kind": 4,
-      "level": 2,
-      "col": 2,
-      "row": 3,
-      "needAttr": 1,
-      "goldCost": 3000,
-      "tabColor": [
-        150,
-        100,
-        100
-      ],
-      "techPointCost": 5000,
-      "counter": 6,
-      "needTechs": [
-        14
-      ]
-    },
-    "16": {
-      "Id": 16,
-      "Name": "精锐骑兵",
-      "desc": "强化骑兵的攻击力、防御力、移动力",
-      "kind": 4,
-      "level": 3,
-      "col": 3,
-      "row": 3,
-      "needAttr": 1,
-      "goldCost": 5000,
-      "tabColor": [
-        150,
-        100,
-        100
-      ],
-      "techPointCost": 8000,
-      "counter": 9,
-      "needTechs": [
-        15
-      ]
-    },
-    "17": {
-      "Id": 17,
-      "Name": "熟练兵",
-      "desc": "士兵的气力上限增加20",
-      "kind": 5,
-      "level": 0,
-      "col": 0,
-      "row": 4,
-      "needAttr": 0,
-      "goldCost": 1000,
-      "tabColor": [
-        255,
-        255,
-        100
-      ],
-      "techPointCost": 2000,
-      "counter": 3
-    },
-    "18": {
-      "Id": 18,
-      "Name": "难所行军",
-      "desc": "可通行间道与浅滩，通行栈道时不会受到损伤",
-      "kind": 5,
-      "level": 1,
-      "col": 1,
-      "row": 4,
-      "needAttr": 0,
-      "goldCost": 2000,
-      "tabColor": [
-        255,
-        255,
-        100
-      ],
-      "techPointCost": 3000,
-      "counter": 4,
-      "needTechs": [
-        17
-      ]
-    },
-    "19": {
-      "Id": 19,
-      "Name": "军制改革",
-      "desc": "部队士兵上限增加3000",
-      "kind": 5,
-      "level": 2,
-      "col": 2,
-      "row": 4,
-      "needAttr": 0,
-      "goldCost": 3000,
-      "tabColor": [
-        255,
-        255,
-        100
-      ],
-      "techPointCost": 5000,
-      "counter": 6,
-      "needTechs": [
-        18
-      ]
-    },
-    "20": {
-      "Id": 20,
-      "Name": "云梯",
-      "desc": "增加部队的据点攻击力",
-      "kind": 5,
-      "level": 3,
-      "col": 3,
-      "row": 4,
-      "needAttr": 0,
-      "goldCost": 5000,
-      "tabColor": [
-        255,
-        255,
-        100
-      ],
-      "techPointCost": 8000,
-      "counter": 9,
-      "needTechs": [
-        19
-      ]
-    },
-    "21": {
-      "Id": 21,
-      "Name": "强化车轴",
-      "desc": "增加兵器的移动力",
-      "kind": 6,
-      "level": 0,
-      "col": 0,
-      "row": 5,
-      "needAttr": 2,
-      "goldCost": 1000,
-      "tabColor": [
-        100,
-        255,
-        200
-      ],
-      "techPointCost": 2000,
-      "counter": 3
-    },
-    "22": {
-      "Id": 22,
-      "Name": "石造建筑",
-      "desc": "可使用障害物「石墙」、设施「石兵八阵」",
-      "kind": 6,
-      "level": 1,
-      "col": 1,
-      "row": 5,
-      "needAttr": 2,
-      "goldCost": 2000,
-      "tabColor": [
-        100,
-        255,
-        200
-      ],
-      "techPointCost": 3000,
-      "counter": 4,
-      "needTechs": [
-        21
-      ]
-    },
-    "23": {
-      "Id": 23,
-      "Name": "开发投石",
-      "desc": "可使用兵装「投石、斗舰」、设施「投石台」",
-      "kind": 6,
-      "level": 2,
-      "col": 2,
-      "row": 5,
-      "needAttr": 2,
-      "goldCost": 3000,
-      "tabColor": [
-        100,
-        255,
-        200
-      ],
-      "techPointCost": 5000,
-      "counter": 6,
-      "needTechs": [
-        22
-      ]
-    },
-    "24": {
-      "Id": 24,
-      "Name": "霹雳",
-      "desc": "执行投石攻击时，同时攻击周围１区格",
-      "kind": 6,
-      "level": 3,
-      "col": 3,
-      "row": 5,
-      "needAttr": 2,
-      "goldCost": 5000,
-      "tabColor": [
-        100,
-        255,
-        200
-      ],
-      "techPointCost": 8000,
-      "counter": 9,
-      "needTechs": [
-        23
-      ]
-    },
-    "25": {
-      "Id": 25,
-      "Name": "培训工兵",
-      "desc": "增加每回合的耐久回复量",
-      "kind": 7,
-      "level": 0,
-      "col": 0,
-      "row": 6,
-      "needAttr": 0,
-      "goldCost": 1000,
-      "tabColor": [
-        200,
-        100,
-        200
-      ],
-      "techPointCost": 2000,
-      "counter": 4
-    },
-    "26": {
-      "Id": 26,
-      "Name": "强化设施",
-      "desc": "可使用设施「砦、连弩楼」",
-      "kind": 7,
-      "level": 1,
-      "col": 1,
-      "row": 6,
-      "needAttr": 0,
-      "goldCost": 2000,
-      "tabColor": [
-        200,
-        100,
-        200
-      ],
-      "techPointCost": 3000,
-      "counter": 5,
-      "needTechs": [
-        25
-      ]
-    },
-    "27": {
-      "Id": 27,
-      "Name": "强化城墙",
-      "desc": "可使用设施「城塞」、增加据点的耐久",
-      "kind": 7,
-      "level": 2,
-      "col": 2,
-      "row": 6,
-      "needAttr": 0,
-      "goldCost": 3000,
-      "tabColor": [
-        200,
-        100,
-        200
-      ],
-      "techPointCost": 5000,
-      "counter": 7,
-      "needTechs": [
-        26
-      ]
-    },
-    "28": {
-      "Id": 28,
-      "Name": "强化防卫",
-      "desc": "强化据点的反击力",
-      "kind": 7,
-      "level": 3,
-      "col": 3,
-      "row": 6,
-      "needAttr": 0,
-      "goldCost": 5000,
-      "tabColor": [
-        200,
-        100,
-        200
-      ],
-      "techPointCost": 8000,
-      "counter": 10,
-      "needTechs": [
-        27
-      ]
-    },
-    "29": {
-      "Id": 29,
-      "Name": "开发木兽",
-      "desc": "可使用兵装「木兽」",
-      "kind": 8,
-      "level": 0,
-      "col": 0,
-      "row": 7,
-      "needAttr": 2,
-      "goldCost": 1000,
-      "tabColor": [
-        100,
-        255,
-        255
-      ],
-      "techPointCost": 2000,
-      "counter": 3
-    },
-    "30": {
-      "Id": 30,
-      "Name": "神火计",
-      "desc": "可于３区格范围内执行火计",
-      "kind": 8,
-      "level": 1,
-      "col": 1,
-      "row": 7,
-      "needAttr": 2,
-      "goldCost": 2000,
-      "tabColor": [
-        100,
-        255,
-        255
-      ],
-      "techPointCost": 3000,
-      "counter": 4,
-      "needTechs": [
-        29
-      ]
-    },
-    "31": {
-      "Id": 31,
-      "Name": "炼成火药",
-      "desc": "可使用陷阱「火焰种、火焰球」",
-      "kind": 8,
-      "level": 2,
-      "col": 2,
-      "row": 7,
-      "needAttr": 2,
-      "goldCost": 3000,
-      "tabColor": [
-        100,
-        255,
-        255
-      ],
-      "techPointCost": 5000,
-      "counter": 6,
-      "needTechs": [
-        30
-      ]
-    },
-    "32": {
-      "Id": 32,
-      "Name": "炼成炸药",
-      "desc": "可使用陷阱「业火种、业火球」，增强火势",
-      "kind": 8,
-      "level": 3,
-      "col": 3,
-      "row": 7,
-      "needAttr": 2,
-      "goldCost": 5000,
-      "tabColor": [
-        100,
-        255,
-        255
-      ],
-      "techPointCost": 8000,
-      "counter": 9,
-      "needTechs": [
-        31
-      ]
-    },
-    "33": {
-      "Id": 33,
-      "Name": "开通官道",
-      "desc": "提升输送队的移动力",
-      "kind": 9,
-      "level": 0,
-      "col": 0,
-      "row": 8,
-      "needAttr": 3,
-      "goldCost": 1000,
-      "tabColor": [
-        255,
-        150,
-        100
-      ],
-      "techPointCost": 2000,
-      "counter": 4
-    },
-    "34": {
-      "Id": 34,
-      "Name": "扩展港关",
-      "desc": "提升关所、港的最大资金、兵粮、士兵、兵装",
-      "kind": 9,
-      "level": 1,
-      "col": 1,
-      "row": 8,
-      "needAttr": 3,
-      "goldCost": 2000,
-      "tabColor": [
-        255,
-        150,
-        100
-      ],
-      "techPointCost": 3000,
-      "counter": 5,
-      "needTechs": [
-        33
-      ]
-    },
-    "35": {
-      "Id": 35,
-      "Name": "整备政令",
-      "desc": "治安变得不容易下降",
-      "kind": 9,
-      "level": 2,
-      "col": 2,
-      "row": 8,
-      "needAttr": 3,
-      "goldCost": 3000,
-      "tabColor": [
-        255,
-        150,
-        100
-      ],
-      "techPointCost": 5000,
-      "counter": 7,
-      "needTechs": [
-        34
-      ]
-    },
-    "36": {
-      "Id": 36,
-      "Name": "掌握人心",
-      "desc": "麾下武将的忠诚变得不容易下降",
-      "kind": 9,
-      "level": 3,
-      "col": 3,
-      "row": 8,
-      "needAttr": 3,
-      "goldCost": 5000,
-      "tabColor": [
-        255,
-        150,
-        100
-      ],
-      "techPointCost": 8000,
-      "counter": 10,
-      "needTechs": [
-        35
-      ]
     }
   },
   "TerrainTypes": {
@@ -6265,7 +5444,7 @@
       "isWater": false,
       "moveable": true,
       "canAmbush": true,
-      "baseCost": 4,
+      "baseCost": 5,
       "color": [
         74,
         187,
@@ -6298,7 +5477,7 @@
       "isWater": false,
       "moveable": true,
       "canAmbush": true,
-      "baseCost": 4,
+      "baseCost": 5,
       "color": [
         120,
         70,
@@ -6364,7 +5543,7 @@
       "isWater": false,
       "moveable": true,
       "canAmbush": true,
-      "baseCost": 5,
+      "baseCost": 8,
       "color": [
         161,
         98,
@@ -6397,7 +5576,7 @@
       "isWater": false,
       "moveable": true,
       "canAmbush": true,
-      "baseCost": 4,
+      "baseCost": 12,
       "color": [
         172,
         28,
@@ -6463,7 +5642,7 @@
       "isWater": true,
       "moveable": false,
       "canAmbush": true,
-      "baseCost": 4,
+      "baseCost": 999,
       "color": [
         250,
         0,
@@ -6496,7 +5675,7 @@
       "isWater": true,
       "moveable": true,
       "canAmbush": true,
-      "baseCost": 4,
+      "baseCost": 5,
       "color": [
         175,
         134,
@@ -6529,7 +5708,7 @@
       "isWater": true,
       "moveable": true,
       "canAmbush": true,
-      "baseCost": 4,
+      "baseCost": 5,
       "color": [
         36,
         95,
@@ -6562,7 +5741,7 @@
       "isWater": false,
       "moveable": true,
       "canAmbush": true,
-      "baseCost": 4,
+      "baseCost": 6,
       "color": [
         123,
         36,
@@ -6595,7 +5774,7 @@
       "isWater": false,
       "moveable": true,
       "canAmbush": true,
-      "baseCost": 2,
+      "baseCost": 4,
       "color": [
         254,
         255,
@@ -6661,7 +5840,7 @@
       "isWater": false,
       "moveable": true,
       "canAmbush": true,
-      "baseCost": 4,
+      "baseCost": 5,
       "color": [
         127,
         115,
@@ -6694,7 +5873,7 @@
       "isWater": false,
       "moveable": true,
       "canAmbush": true,
-      "baseCost": 4,
+      "baseCost": 5,
       "color": [
         39,
         146,
@@ -6727,7 +5906,7 @@
       "isWater": false,
       "moveable": false,
       "canAmbush": true,
-      "baseCost": 4,
+      "baseCost": 999,
       "color": [
         100,
         0,
@@ -6760,7 +5939,7 @@
       "isWater": false,
       "moveable": false,
       "canAmbush": true,
-      "baseCost": 4,
+      "baseCost": 999,
       "color": [
         220,
         0,
@@ -6793,7 +5972,7 @@
       "isWater": false,
       "moveable": true,
       "canAmbush": true,
-      "baseCost": 1,
+      "baseCost": 4,
       "color": [
         221,
         147,
@@ -6859,7 +6038,7 @@
       "isWater": false,
       "moveable": true,
       "canAmbush": true,
-      "baseCost": 1,
+      "baseCost": 4,
       "color": [
         109,
         98,
@@ -6892,7 +6071,7 @@
       "isWater": false,
       "moveable": true,
       "canAmbush": true,
-      "baseCost": 4,
+      "baseCost": 7,
       "color": [
         255,
         179,
@@ -7471,7 +6650,7 @@
       "atk": 65,
       "def": 65,
       "durabilityDmg": 30,
-      "move": 16,
+      "move": 22,
       "defType": 1,
       "atkType": 1,
       "influenceAbility": 0,
@@ -7480,28 +6659,8 @@
       "isFight": true,
       "isSingle": true,
       "isLand": true,
-      "terrainCost": [
-        99,
-        4,
-        4,
-        5,
-        5,
-        4,
-        6,
-        4,
-        4,
-        4,
-        4,
-        3,
-        6,
-        4,
-        4,
-        4,
-        4,
-        1,
-        1,
-        4,
-        4
+      "extraMoveCost": [
+        0
       ],
       "desc": "标准装备的兵装，威力是最弱的",
       "icon": "4845_7_0",
@@ -7525,7 +6684,7 @@
       "atk": 95,
       "def": 85,
       "durabilityDmg": 100,
-      "move": 16,
+      "move": 22,
       "defType": 2,
       "atkType": 2,
       "influenceAbility": 1,
@@ -7546,28 +6705,8 @@
       "isFight": true,
       "isSingle": true,
       "isLand": true,
-      "terrainCost": [
-        99,
-        4,
-        4,
-        5,
-        5,
-        4,
-        6,
-        4,
-        4,
-        4,
-        4,
-        3,
-        6,
-        4,
-        4,
-        4,
-        4,
-        1,
-        1,
-        4,
-        4
+      "extraMoveCost": [
+        0
       ],
       "desc": "有利于对付骑兵，但不利于戟兵",
       "icon": "4845_7_1",
@@ -7591,7 +6730,7 @@
       "atk": 75,
       "def": 105,
       "durabilityDmg": 100,
-      "move": 16,
+      "move": 22,
       "defType": 2,
       "atkType": 1,
       "influenceAbility": 2,
@@ -7612,28 +6751,8 @@
       "isFight": true,
       "isSingle": true,
       "isLand": true,
-      "terrainCost": [
-        99,
-        4,
-        4,
-        5,
-        5,
-        4,
-        6,
-        4,
-        4,
-        4,
-        4,
-        3,
-        6,
-        4,
-        4,
-        4,
-        4,
-        1,
-        1,
-        4,
-        4
+      "extraMoveCost": [
+        0
       ],
       "desc": "有利于对付枪兵，但不利于骑兵",
       "icon": "4845_7_2",
@@ -7658,7 +6777,7 @@
       "atk": 85,
       "def": 75,
       "durabilityDmg": 100,
-      "move": 16,
+      "move": 22,
       "defType": 3,
       "atkType": 2,
       "influenceAbility": 3,
@@ -7678,28 +6797,8 @@
       "isFight": true,
       "isSingle": true,
       "isLand": true,
-      "terrainCost": [
-        99,
-        4,
-        4,
-        5,
-        5,
-        4,
-        6,
-        4,
-        4,
-        4,
-        4,
-        3,
-        6,
-        4,
-        4,
-        4,
-        4,
-        1,
-        1,
-        4,
-        4
+      "extraMoveCost": [
+        0
       ],
       "desc": "可对２区格之外的敌人执行弓箭攻击",
       "icon": "4845_7_3",
@@ -7743,28 +6842,32 @@
       "isFight": true,
       "isSingle": true,
       "isLand": true,
-      "terrainCost": [
-        99,
+      "extraMoveCost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
         4,
-        4,
-        5,
-        5,
-        4,
-        6,
-        4,
-        4,
-        4,
-        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
         3,
-        6,
-        4,
-        4,
-        4,
-        4,
-        1,
-        1,
-        4,
-        4
+        0,
+        0,
+        0,
+        0
       ],
       "desc": "有利于对付戟兵，但不利于枪兵",
       "icon": "4845_7_4",
@@ -7782,7 +6885,7 @@
       "atk": 0,
       "def": 50,
       "durabilityDmg": 0,
-      "move": 24,
+      "move": 25,
       "defType": 1,
       "atkType": 1,
       "influenceAbility": 0,
@@ -7791,28 +6894,8 @@
       "isFight": false,
       "isSingle": false,
       "isLand": true,
-      "terrainCost": [
-        99,
-        4,
-        4,
-        5,
-        5,
-        4,
-        6,
-        4,
-        4,
-        4,
-        4,
-        3,
-        6,
-        4,
-        4,
-        4,
-        4,
-        1,
-        1,
-        4,
-        4
+      "extraMoveCost": [
+        0
       ],
       "desc": "普通运输队",
       "model": "Assets/Model/Prefab/Troops6.prefab"
@@ -7824,7 +6907,7 @@
       "atk": 0,
       "def": 50,
       "durabilityDmg": 0,
-      "move": 32,
+      "move": 28,
       "defType": 1,
       "atkType": 1,
       "influenceAbility": 0,
@@ -7833,28 +6916,8 @@
       "isFight": false,
       "isSingle": false,
       "isLand": true,
-      "terrainCost": [
-        99,
-        4,
-        4,
-        5,
-        5,
-        4,
-        6,
-        4,
-        4,
-        4,
-        4,
-        3,
-        6,
-        4,
-        4,
-        4,
-        4,
-        1,
-        1,
-        4,
-        4
+      "extraMoveCost": [
+        0
       ],
       "desc": "木牛流马运输",
       "model": "Assets/Model/Prefab/Troops7.prefab"
@@ -7871,7 +6934,7 @@
       "atk": 70,
       "def": 80,
       "durabilityDmg": 100,
-      "move": 24,
+      "move": 16,
       "influenceAbility": 6,
       "matchFeatures": [
         49,
@@ -7885,28 +6948,8 @@
       "isFight": true,
       "isSingle": false,
       "isLand": false,
-      "terrainCost": [
-        99,
-        4,
-        4,
-        5,
-        5,
-        4,
-        6,
-        4,
-        4,
-        4,
-        4,
-        3,
-        6,
-        4,
-        4,
-        4,
-        4,
-        1,
-        1,
-        4,
-        4
+      "extraMoveCost": [
+        0
       ],
       "desc": "标准装备的舰船。",
       "icon": "4845_7_9",
@@ -7923,7 +6966,7 @@
       "atk": 80,
       "def": 100,
       "durabilityDmg": 100,
-      "move": 26,
+      "move": 20,
       "influenceAbility": 6,
       "matchFeatures": [
         49,
@@ -7941,28 +6984,8 @@
       "isFight": true,
       "isSingle": false,
       "isLand": false,
-      "terrainCost": [
-        99,
-        4,
-        4,
-        5,
-        5,
-        4,
-        6,
-        4,
-        4,
-        4,
-        4,
-        3,
-        6,
-        4,
-        4,
-        4,
-        4,
-        1,
-        1,
-        4,
-        4
+      "extraMoveCost": [
+        0
       ],
       "desc": "大型船，移动力、装甲都比走舸强化许多",
       "icon": "4845_7_10",
@@ -7980,7 +7003,7 @@
       "atk": 90,
       "def": 120,
       "durabilityDmg": 100,
-      "move": 28,
+      "move": 20,
       "influenceAbility": 6,
       "matchFeatures": [
         49,
@@ -7998,28 +7021,8 @@
       "isFight": true,
       "isSingle": false,
       "isLand": false,
-      "terrainCost": [
-        99,
-        4,
-        4,
-        5,
-        5,
-        4,
-        6,
-        4,
-        4,
-        4,
-        4,
-        3,
-        6,
-        4,
-        4,
-        4,
-        4,
-        1,
-        1,
-        4,
-        4
+      "extraMoveCost": [
+        0
       ],
       "desc": "将楼船强化后的舰船，可执行投石攻击",
       "icon": "4845_7_11",
@@ -8035,7 +7038,7 @@
       "atk": 70,
       "def": 90,
       "durabilityDmg": 100,
-      "move": 16,
+      "move": 18,
       "influenceAbility": 5,
       "matchFeatures": [
         49,
@@ -8053,28 +7056,8 @@
       "isFight": true,
       "isSingle": false,
       "isLand": true,
-      "terrainCost": [
-        99,
-        4,
-        4,
-        5,
-        5,
-        4,
-        6,
-        4,
-        4,
-        4,
-        4,
-        3,
-        6,
-        4,
-        4,
-        4,
-        4,
-        1,
-        1,
-        4,
-        4
+      "extraMoveCost": [
+        0
       ],
       "desc": "直接攻击建筑物的兵器，可大大削弱建筑物的耐久",
       "icon": "4845_7_5",
@@ -8095,7 +7078,7 @@
       "atk": 90,
       "def": 90,
       "durabilityDmg": 100,
-      "move": 16,
+      "move": 18,
       "influenceAbility": 5,
       "matchFeatures": [
         49,
@@ -8113,28 +7096,8 @@
       "isFight": true,
       "isSingle": false,
       "isLand": true,
-      "terrainCost": [
-        99,
-        4,
-        4,
-        5,
-        5,
-        4,
-        6,
-        4,
-        4,
-        4,
-        4,
-        3,
-        6,
-        4,
-        4,
-        4,
-        4,
-        1,
-        1,
-        4,
-        4
+      "extraMoveCost": [
+        0
       ],
       "desc": "将冲车强化后的兵器，可削减建筑物的耐久，并放火",
       "icon": "4845_7_8",
@@ -8155,7 +7118,7 @@
       "atk": 80,
       "def": 80,
       "durabilityDmg": 100,
-      "move": 16,
+      "move": 18,
       "influenceAbility": 5,
       "matchFeatures": [
         49,
@@ -8173,28 +7136,8 @@
       "isFight": true,
       "isSingle": false,
       "isLand": true,
-      "terrainCost": [
-        99,
-        4,
-        4,
-        5,
-        5,
-        4,
-        6,
-        4,
-        4,
-        4,
-        4,
-        3,
-        6,
-        4,
-        4,
-        4,
-        4,
-        1,
-        1,
-        4,
-        4
+      "extraMoveCost": [
+        0
       ],
       "desc": "以弓箭攻击建筑物的兵器，可大大削减士兵数",
       "icon": "4845_7_6",
@@ -8215,7 +7158,7 @@
       "atk": 100,
       "def": 80,
       "durabilityDmg": 100,
-      "move": 16,
+      "move": 18,
       "influenceAbility": 5,
       "matchFeatures": [
         49,
@@ -8233,28 +7176,8 @@
       "isFight": true,
       "isSingle": false,
       "isLand": true,
-      "terrainCost": [
-        99,
-        4,
-        4,
-        5,
-        5,
-        4,
-        6,
-        4,
-        4,
-        4,
-        4,
-        3,
-        6,
-        4,
-        4,
-        4,
-        4,
-        1,
-        1,
-        4,
-        4
+      "extraMoveCost": [
+        0
       ],
       "desc": "强化井阑后的兵器，以投石攻击３区格外之敌方耐久与士兵",
       "icon": "4845_7_7",
@@ -8268,7 +7191,7 @@
     "15": {
       "Id": 15,
       "Name": "陷阵营",
-      "kind": 2,
+      "kind": 3,
       "skills": [
         1,
         6,
@@ -8278,6 +7201,7 @@
       "atk": 110,
       "def": 100,
       "durabilityDmg": 100,
+      "move": 22,
       "influenceAbility": 2,
       "matchFeatures": [
         49,
@@ -8287,12 +7211,15 @@
         40,
         36
       ],
-      "validItemId": 8
+      "validItemId": 8,
+      "extraMoveCost": [
+        0
+      ]
     },
     "20": {
       "Id": 20,
       "Name": "虎卫军",
-      "kind": 2,
+      "kind": 3,
       "skills": [
         1,
         6,
@@ -8302,6 +7229,7 @@
       "atk": 110,
       "def": 104,
       "durabilityDmg": 100,
+      "move": 22,
       "influenceAbility": 2,
       "matchFeatures": [
         49,
@@ -8311,12 +7239,15 @@
         40,
         36
       ],
-      "validItemId": 13
+      "validItemId": 13,
+      "extraMoveCost": [
+        0
+      ]
     },
     "23": {
       "Id": 23,
       "Name": "藤甲兵",
-      "kind": 2,
+      "kind": 3,
       "skills": [
         1,
         6,
@@ -8326,6 +7257,7 @@
       "atk": 110,
       "def": 107,
       "durabilityDmg": 100,
+      "move": 22,
       "influenceAbility": 2,
       "matchFeatures": [
         49,
@@ -8335,12 +7267,15 @@
         40,
         36
       ],
-      "validItemId": 16
+      "validItemId": 16,
+      "extraMoveCost": [
+        0
+      ]
     },
     "16": {
       "Id": 16,
       "Name": "青州兵",
-      "kind": 3,
+      "kind": 2,
       "skills": [
         1,
         3,
@@ -8350,6 +7285,7 @@
       "atk": 110,
       "def": 100,
       "durabilityDmg": 100,
+      "move": 22,
       "influenceAbility": 1,
       "matchFeatures": [
         49,
@@ -8359,12 +7295,15 @@
         40,
         35
       ],
-      "validItemId": 9
+      "validItemId": 9,
+      "extraMoveCost": [
+        0
+      ]
     },
     "17": {
       "Id": 17,
       "Name": "白毦兵",
-      "kind": 3,
+      "kind": 2,
       "skills": [
         1,
         3,
@@ -8374,6 +7313,7 @@
       "atk": 110,
       "def": 101,
       "durabilityDmg": 100,
+      "move": 22,
       "influenceAbility": 1,
       "matchFeatures": [
         49,
@@ -8383,12 +7323,15 @@
         40,
         35
       ],
-      "validItemId": 10
+      "validItemId": 10,
+      "extraMoveCost": [
+        0
+      ]
     },
     "19": {
       "Id": 19,
       "Name": "大戟士",
-      "kind": 3,
+      "kind": 2,
       "skills": [
         1,
         3,
@@ -8398,6 +7341,7 @@
       "atk": 110,
       "def": 103,
       "durabilityDmg": 100,
+      "move": 22,
       "influenceAbility": 1,
       "matchFeatures": [
         49,
@@ -8407,12 +7351,15 @@
         40,
         35
       ],
-      "validItemId": 12
+      "validItemId": 12,
+      "extraMoveCost": [
+        0
+      ]
     },
     "18": {
       "Id": 18,
       "Name": "虎豹骑",
-      "kind": 4,
+      "kind": 5,
       "skills": [
         1,
         12,
@@ -8431,12 +7378,39 @@
         40,
         38
       ],
-      "validItemId": 11
+      "validItemId": 11,
+      "extraMoveCost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0
+      ]
     },
     "21": {
       "Id": 21,
       "Name": "白马义从",
-      "kind": 4,
+      "kind": 5,
       "skills": [
         1,
         12,
@@ -8455,12 +7429,39 @@
         40,
         38
       ],
-      "validItemId": 14
+      "validItemId": 14,
+      "extraMoveCost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0
+      ]
     },
     "22": {
       "Id": 22,
       "Name": "西凉铁骑‌",
-      "kind": 4,
+      "kind": 5,
       "skills": [
         1,
         12,
@@ -8479,12 +7480,39 @@
         40,
         38
       ],
-      "validItemId": 15
+      "validItemId": 15,
+      "extraMoveCost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0
+      ]
     },
     "24": {
       "Id": 24,
       "Name": "象兵",
-      "kind": 4,
+      "kind": 5,
       "skills": [
         1,
         12,
@@ -8494,7 +7522,7 @@
       "atk": 110,
       "def": 108,
       "durabilityDmg": 100,
-      "move": 28,
+      "move": 22,
       "influenceAbility": 4,
       "matchFeatures": [
         49,
@@ -8503,12 +7531,39 @@
         40,
         38
       ],
-      "validItemId": 17
+      "validItemId": 17,
+      "extraMoveCost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0
+      ]
     },
     "25": {
       "Id": 25,
       "Name": "无当飞军",
-      "kind": 2,
+      "kind": 4,
       "skills": [
         1,
         2,
@@ -8519,6 +7574,7 @@
       "atk": 110,
       "def": 109,
       "durabilityDmg": 100,
+      "move": 22,
       "influenceAbility": 3,
       "matchFeatures": [
         49,
@@ -8527,12 +7583,15 @@
         40,
         37
       ],
-      "validItemId": 18
+      "validItemId": 18,
+      "extraMoveCost": [
+        0
+      ]
     },
     "26": {
       "Id": 26,
       "Name": "锦帆军",
-      "kind": 2,
+      "kind": 4,
       "skills": [
         1,
         2,
@@ -8543,6 +7602,7 @@
       "atk": 110,
       "def": 110,
       "durabilityDmg": 100,
+      "move": 22,
       "influenceAbility": 3,
       "matchFeatures": [
         49,
@@ -8551,7 +7611,10 @@
         40,
         37
       ],
-      "validItemId": 19
+      "validItemId": 19,
+      "extraMoveCost": [
+        0
+      ]
     }
   }
 }

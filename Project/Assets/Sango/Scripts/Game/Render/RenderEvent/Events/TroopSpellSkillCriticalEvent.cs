@@ -8,7 +8,7 @@ namespace Sango.Game.Render
     public class TroopSpellSkillCriticalEvent : RenderEventBase
     {
         public Troop troop;
-        public Skill skill;
+        public SkillInstance skill;
         public Cell spellCell;
         public int criticalFactor;
         private bool isAction = false;

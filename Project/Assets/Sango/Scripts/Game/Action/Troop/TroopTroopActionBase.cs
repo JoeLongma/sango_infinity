@@ -9,15 +9,15 @@ namespace Sango.Game.Action
     /// value 增加值(百分比)
     /// kinds 兵种类型
     /// checkLand 0:只检查kinds 1:只对landType检查kinds 2只对waterType检查kinds
-    /// isAttacker 0受击方 1攻击方
-    /// isNormal  -1都可以 0非 1是
-    /// isRange -1都可以 0非 1是
+    /// isDefender 0攻击方 1受击方 
+    /// isNormal  0都可以 1是 2不是
+    /// isRange 0都可以 1是 2不是
     /// condition 额外条件 支持参数(troop,troop,skill)
     /// </summary>
     public abstract class TroopTroopActionBase : TroopActionBase
     {
         protected int checkLand;
-        protected int isAttacker;
+        protected int isDefender;
         protected int isNormal;
         protected int isRange;
         protected Condition condition;
@@ -26,7 +26,7 @@ namespace Sango.Game.Action
         {
             base.Init(p, sangoObjects);
             checkLand = p.Value<int>("checkLand");
-            isAttacker = p.Value<int>("isAttacker");
+            isDefender = p.Value<int>("isDefender");
             isNormal = p.Value<int>("isNormal");
             isRange = p.Value<int>("isRange");
             JObject conObj = p.Value<JObject>("condition");
@@ -37,10 +37,10 @@ namespace Sango.Game.Action
             }
         }
 
-        protected virtual bool CheckTroop(Troop defencer, SangoObject atker, Skill skill)
+        protected virtual bool CheckTroop(Troop defencer, SangoObject atker, SkillInstance skill)
         {
             Troop troop = defencer;
-            if (isAttacker == 1)
+            if (isDefender == 0)
             {
                 if (atker.ObjectType != SangoObjectType.Troops) return false;
 

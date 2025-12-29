@@ -12,7 +12,7 @@ namespace Sango.Game.Player
         protected List<Cell> MovePath { get; set; }
         protected List<Cell> spellRangeCell = new List<Cell>();
         protected Cell spellCell;
-        protected Skill spellSkill;
+        protected SkillInstance spellSkill;
         protected bool isShow = false;
         protected bool isMoving = false;
         public TroopActionAttack()
@@ -32,7 +32,7 @@ namespace Sango.Game.Player
                 List<Cell> rangeCell = new List<Cell>();
                 if (TargetTroop.NormalSkill != null)
                 {
-                    Skill skill = TargetTroop.NormalSkill.Skill;
+                    SkillInstance skill = TargetTroop.NormalSkill;
                     if (skill.CanBeSpell(TargetTroop))
                     {
                         skill.GetSpellRange(TargetTroop, stayCell, rangeCell);
@@ -49,7 +49,7 @@ namespace Sango.Game.Player
                 rangeCell.Clear();
                 if (TargetTroop.NormalRangeSkill != null)
                 {
-                    Skill skill = TargetTroop.NormalRangeSkill.Skill;
+                    SkillInstance skill = TargetTroop.NormalRangeSkill;
                     if (skill.CanBeSpell(TargetTroop))
                     {
                       
@@ -166,9 +166,9 @@ namespace Sango.Game.Player
                             if (spellSkill == null)
                             {
                                 if (spellCell.Distance(stayCell) == 1)
-                                    spellSkill = TargetTroop.NormalSkill.Skill;
+                                    spellSkill = TargetTroop.NormalSkill;
                                 else
-                                    spellSkill = TargetTroop.NormalRangeSkill.Skill;
+                                    spellSkill = TargetTroop.NormalRangeSkill;
                             }
 
                             if (!spellSkill.CanSpeellToHere(TargetTroop, cell))

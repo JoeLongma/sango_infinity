@@ -68,7 +68,7 @@ namespace Sango.Game
         }
 
         // 技能攻击评分
-        public int SkillAttackPriority(Troop troop, Skill skill, Cell target, Cell movetoCell, Cell spellCell)
+        public int SkillAttackPriority(Troop troop, SkillInstance skill, Cell target, Cell movetoCell, Cell spellCell)
         {
             int socer = TroopAIUtility.SkillStatusPriority(troop, skill, target, movetoCell, spellCell);
             if (socer > 0)

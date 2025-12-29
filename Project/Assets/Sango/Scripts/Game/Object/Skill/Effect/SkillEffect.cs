@@ -6,8 +6,8 @@ namespace Sango.Game
 {
     public abstract class SkillEffect
     {
-        public Skill master;
-        public virtual void Init(JObject p, Skill master) { this.master = master; }
+        public SkillInstance master;
+        public virtual void Init(JObject p, SkillInstance master) { this.master = master; }
         public abstract void Action(SkillInstance skillInstance, Troop troop, Cell spellCell, List<Cell> atkCellList);
         public virtual void Clear() {}
 

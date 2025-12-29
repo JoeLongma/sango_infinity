@@ -6,7 +6,8 @@ namespace Sango.Game.Action
 {
     /// <summary>
     /// 建筑的反击力修改,
-    /// value: 值, kinds: 建筑类型
+    /// value: 值(百分比), 
+    /// kinds: 建筑类型
     /// </summary>
     public class BuildingBaseAttackBack : ForceBuildingActionBase
     {
@@ -21,10 +22,10 @@ namespace Sango.Game.Action
             GameEvent.OnBuildCalculateAttackBack -= OnBuildCalculateAttackBack;
         }
 
-        void OnBuildCalculateAttackBack(Troop troop, Cell spellCell, BuildingBase buildingBase, Skill skill, OverrideData<int> overrideData)
+        void OnBuildCalculateAttackBack(Troop troop, Cell spellCell, BuildingBase buildingBase, SkillInstance skill, OverrideData<int> overrideData)
         {
             if (!CheckForceBuilding(buildingBase)) return;
-            overrideData.Value += value;
+            overrideData.Value = overrideData.Value * value / 100;
         }
 
     }

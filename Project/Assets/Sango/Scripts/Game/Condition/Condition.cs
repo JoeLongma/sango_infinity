@@ -7,7 +7,7 @@ namespace Sango.Game
     {
         public abstract void Init(JObject p, params SangoObject[] sangoObjects);
         public abstract bool Check(params object[] objects);
-        public virtual bool Check(Troop troop, Troop target, Skill skill) { return false; }
+        public virtual bool Check(Troop troop, Troop target, SkillInstance skill) { return false; }
         public virtual bool Check(SkillInstance skillInstance, Troop troop, Cell spellCell, List<Cell> atkCellList) { return false; }
 
         public delegate Condition ConditionCreator();
@@ -35,7 +35,8 @@ namespace Sango.Game
             // core
             Register("and", CraeteHandle<ConditionAnd>);
             Register("or", CraeteHandle<ConditionOr>);
-            Register("list", CraeteHandle<ConditionList>);
+            Register("andList", CraeteHandle<ConditionAndList>);
+            Register("orList", CraeteHandle<ConditionOrList>);
 
             // Troop
             Register("TroopAttributeCompare", CraeteHandle<TroopAttributeCompare>);

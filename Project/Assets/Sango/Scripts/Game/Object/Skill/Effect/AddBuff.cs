@@ -8,7 +8,12 @@ using UnityEngine;
 namespace Sango.Game
 {
     /// <summary>
-    /// 燃烧某个地方
+    /// 对目标添加BUFF
+    /// probability : 概率,万分比
+    /// condition: 条件
+    /// turn : 回合数集合[]
+    /// weight : 回合数命中的权重[]
+    /// buffId : 添加的状态ID
     /// </summary>
     public class AddBuff : SkillEffect
     {
@@ -18,7 +23,7 @@ namespace Sango.Game
         int[] weight;
         int buffId;
 
-        public override void Init(JObject p, Skill master)
+        public override void Init(JObject p, SkillInstance master)
         {
             base.Init(p, master);
 

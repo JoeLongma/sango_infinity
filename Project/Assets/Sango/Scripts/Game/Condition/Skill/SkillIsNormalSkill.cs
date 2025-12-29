@@ -23,7 +23,7 @@ namespace Sango.Game
             return false;
         }
 
-        public override bool Check(Troop troop, Troop target, Skill skill)
+        public override bool Check(Troop troop, Troop target, SkillInstance skill)
         {
             if (skill != null)
             {
@@ -36,7 +36,7 @@ namespace Sango.Game
         {
             if (skillInstance != null)
             {
-                return (skillInstance.Skill.costEnergy == 0) == (result == 1);
+                return (skillInstance.skill.costEnergy == 0) == (result == 1);
             }
             return false;
         }

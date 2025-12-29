@@ -357,8 +357,8 @@ namespace Sango.Game
             StrategySkills.Clear();
             scenario.CommonData.Skills.ForEach(x =>
             {
-                if (x.kind == 3)
-                    StrategySkills.Add(new SkillInstance() { Skill = x });
+                if (x.IsStrategy())
+                    StrategySkills.Add(new SkillInstance() { skill = x });
             });
 
             buffManager.Init(this);
@@ -415,6 +415,11 @@ namespace Sango.Game
             }
 
             buffManager.OnForceTurnStart(scenario);
+
+            foreach (SkillInstance skillInstance in waterSkills)
+                skillInstance.OnForceTurnStart(scenario);
+            foreach (SkillInstance skillInstance in landSkills)
+                skillInstance.OnForceTurnStart(scenario);
 
             GameEvent.OnTroopTurnStart?.Invoke(this, scenario);
 
@@ -480,9 +485,9 @@ namespace Sango.Game
                 {
                     SkillInstance ins = null;
                     if (skills != null)
-                        ins = skills.Find(x => x.Skill == skill);
+                        ins = skills.Find(x => x.skill == skill);
                     if (ins == null)
-                        ins = new SkillInstance() { Skill = skill, CDCount = 0 };
+                        ins = new SkillInstance() { skill = skill, CDCount = 0 };
 
                     skillInstances.Add(ins);
                     if (skill.costEnergy == 0)
@@ -506,9 +511,9 @@ namespace Sango.Game
 
                     SkillInstance ins = null;
                     if (skills != null)
-                        ins = skills.Find(x => x.Skill == skill);
+                        ins = skills.Find(x => x.skill == skill);
                     if (ins == null)
-                        ins = new SkillInstance() { Skill = skill, CDCount = 0 };
+                        ins = new SkillInstance() { skill = skill, CDCount = 0 };
 
                     skillInstances.Add(ins);
                     if (skill.costEnergy == 0)
@@ -629,7 +634,7 @@ namespace Sango.Game
             return LandTroopType.IsHelepolis();
         }
 
-        public int GetAttackBackFactor(Skill skill, int distance)
+        public int GetAttackBackFactor(SkillInstance skill, int distance)
         {
             if (IsMachine())
                 return 0;
@@ -654,7 +659,7 @@ namespace Sango.Game
         //@param attacker Troops
         //@param defender Troops
         //@param skill Skill
-        public static int CalculateSkillDamage(Troop attacker, Troop target, Skill skill)
+        public static int CalculateSkillDamage(Troop attacker, Troop target, SkillInstance skill)
         {
             var attack_troops_type = attacker.TroopType;
             var defender_troops_type = target.TroopType;
@@ -713,7 +718,7 @@ namespace Sango.Game
             return damage;
         }
 
-        public static int CalculateSkillDamage(Troop attacker, BuildingBase target, Skill skill)
+        public static int CalculateSkillDamage(Troop attacker, BuildingBase target, SkillInstance skill)
         {
             var attack_troops_type = attacker.TroopType;
             var buildingType = target.BuildingType;
@@ -748,7 +753,7 @@ namespace Sango.Game
             }
         }
 
-        public static int CalculateSkillDamageTroopOnCity(Troop attacker, City target, Skill skill)
+        public static int CalculateSkillDamageTroopOnCity(Troop attacker, City target, SkillInstance skill)
         {
             ScenarioVariables Variables = Scenario.Cur.Variables;
 
@@ -805,7 +810,7 @@ namespace Sango.Game
         }
 
 
-        public static int CalculateSkillDamage(BuildingBase attacker, Troop target, Skill skill)
+        public static int CalculateSkillDamage(BuildingBase attacker, Troop target, SkillInstance skill)
         {
 
             ScenarioVariables Variables = Scenario.Cur.Variables;
@@ -1049,7 +1054,7 @@ namespace Sango.Game
             //}
         }
 
-        public bool TryMoveToSpell(Cell destCell, Skill skill)
+        public bool TryMoveToSpell(Cell destCell, SkillInstance skill)
         {
             if (!isMoving)
             {
@@ -1198,7 +1203,7 @@ namespace Sango.Game
 
 
 
-        public bool ChangeTroops(int num, SangoObject atk, Skill skill, int atkBack)
+        public bool ChangeTroops(int num, SangoObject atk, SkillInstance skill, int atkBack)
         {
             Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(num);
             GameEvent.OnTroopChangeTroops?.Invoke(this, atk, skill, atkBack, overrideData);
@@ -1274,7 +1279,7 @@ namespace Sango.Game
             return troops;
         }
 
-        public bool SpellSkill(Skill skill, Cell spellCell)
+        public bool SpellSkill(SkillInstance skill, Cell spellCell)
         {
 
             if (actionRenderEvent != null)
@@ -1663,6 +1668,18 @@ namespace Sango.Game
             Render.Clear();
             if (cell != null && cell.troop == this)
                 cell.troop = null;
+
+            for (int i = 0; i < StrategySkills.Count; i++)
+                StrategySkills[i].Clear();
+
+            if (landSkills != null)
+                for (int i = 0; i < landSkills.Count; i++)
+                    landSkills[i].Clear();
+
+            if (waterSkills != null)
+                for (int i = 0; i < waterSkills.Count; i++)
+                    waterSkills[i].Clear();
+
             StrategySkills.Clear();
             landSkills?.Clear();
             waterSkills?.Clear();

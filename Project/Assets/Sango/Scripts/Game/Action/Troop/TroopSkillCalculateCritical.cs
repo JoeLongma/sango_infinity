@@ -8,7 +8,7 @@ namespace Sango.Game.Action
     /// value： 增加值(百分比) 
     /// kinds： 兵种类型  
     /// checkLand： 0:只检查kinds 1:只对landType检查kinds 2只对waterType检查kinds 
-    /// isNormal：  -1都可以 0非 1是 
+    /// isNormal  0都可以 1是 2不是
     /// condition： 额外条件 支持参数(troop,troop,skill)
     /// </summary>
     public class TroopSkillCalculateCritical : TroopTroopActionBase
@@ -24,7 +24,7 @@ namespace Sango.Game.Action
             GameEvent.OnTroopCalculateSkillCritical -= OnTroopCalculateSkillCritical;
         }
 
-        void OnTroopCalculateSkillCritical(Troop troop, Skill skill, Cell cell, OverrideData<int> overrideData)
+        void OnTroopCalculateSkillCritical(Troop troop, SkillInstance skill, Cell cell, OverrideData<int> overrideData)
         {
             if (Force != null && troop.BelongForce != Force) return;
             if (Troop != null && Troop != troop) return;

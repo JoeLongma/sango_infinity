@@ -101,7 +101,7 @@ namespace Sango.Game.Render.UI
             aniText = null;
         }
 
-        public void ShowSkill(Skill skill, bool isFail, bool isCritical)
+        public void ShowSkill(SkillInstance skill, bool isFail, bool isCritical)
         {
             if (isFail)
             {

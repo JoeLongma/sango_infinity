@@ -14,7 +14,7 @@ namespace Sango.Game
             if (objects.Length < 3) return false;
             for (int i = 0; i < objects.Length; i++)
             {
-                Skill skill = objects[i] as Skill;
+                SkillInstance skill = objects[i] as SkillInstance;
                 if (skill != null)
                 {
                     return (skill.tempCriticalFactor > 100) == (result == 1);
@@ -23,7 +23,7 @@ namespace Sango.Game
             return false;
         }
 
-        public override bool Check(Troop troop, Troop target, Skill skill)
+        public override bool Check(Troop troop, Troop target, SkillInstance skill)
         {
             if (skill != null)
                 return (skill.tempCriticalFactor > 100) == (result == 1);
@@ -33,7 +33,7 @@ namespace Sango.Game
         public override bool Check(SkillInstance skillInstance, Troop troop, Cell spellCell, List<Cell> atkCellList)
         {
             if (skillInstance != null)
-                return (skillInstance.Skill.tempCriticalFactor > 100) == (result == 1);
+                return (skillInstance.tempCriticalFactor > 100) == (result == 1);
             return false;
         }
 

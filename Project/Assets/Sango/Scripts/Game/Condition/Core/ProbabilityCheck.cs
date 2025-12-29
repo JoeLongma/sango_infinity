@@ -12,7 +12,7 @@ namespace Sango.Game
             return GameRandom.Range(0, 10000) <= probability;
         }
 
-        public override bool Check(Troop troop, Troop target, Skill skill)
+        public override bool Check(Troop troop, Troop target, SkillInstance skill)
         {
             return GameRandom.Range(0, 10000) <= probability;
         }

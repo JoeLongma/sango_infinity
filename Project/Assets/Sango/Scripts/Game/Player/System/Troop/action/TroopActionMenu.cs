@@ -42,7 +42,7 @@ namespace Sango.Game.Player
                 list = TargetTroop.landSkills;
             for (int i = 0, count = list.Count; i < count; ++i)
             {
-                Skill skill = list[i].Skill;
+                SkillInstance skill = list[i];
                 if (skill.CanBeSpell(TargetTroop))
                     skill.GetSpellRange(TargetTroop, TargetCell, spellRangeCell);
             }

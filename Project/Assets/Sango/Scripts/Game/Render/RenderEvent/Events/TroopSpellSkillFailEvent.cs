@@ -8,10 +8,10 @@ namespace Sango.Game.Render
     public class TroopSpellSkillFailEvent : RenderEventBase
     {
         public Troop troop;
-        public Skill skill;
+        public SkillInstance skill;
         public Cell spellCell;
         private bool isAction = false;
-        private Skill replaceSkill;
+        private SkillInstance replaceSkill;
         private float time = 0;
         public override void Enter(Scenario scenario)
         {
@@ -22,7 +22,13 @@ namespace Sango.Game.Render
                 troop.Render.SetSmokeShow(true);
             }
 
-            replaceSkill = skill.isRange ? troop.NormalRangeSkill.Skill : troop.NormalSkill.Skill;
+            if(skill.IsStrategy())
+            {
+                IsDone = true;
+                return;
+            }
+
+            replaceSkill = skill.IsRange() ? troop.NormalRangeSkill : troop.NormalSkill;
 
             if (skill.costEnergy > 0)
                 troop.Render.ShowSkill(skill, true, false);
@@ -49,6 +55,14 @@ namespace Sango.Game.Render
                 IsDone = true;
                 return IsDone;
             }
+
+
+            if (replaceSkill == null)
+            {
+                IsDone = true;
+                return IsDone;
+            }
+
             IsDone = replaceSkill.UpdateRender(troop, spellCell, scenario, time, Action);
             time += deltaTime;
             return IsDone;
