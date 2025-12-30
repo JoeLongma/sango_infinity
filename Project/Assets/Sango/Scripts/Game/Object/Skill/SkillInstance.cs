@@ -148,7 +148,7 @@ namespace Sango.Game
         /// </summary>
         /// <param name="scenario"></param>
         /// <returns></returns>
-        public virtual bool OnForceTurnStart(Scenario scenario)
+        public override bool OnForceTurnStart(Scenario scenario)
         {
             return true;
         }

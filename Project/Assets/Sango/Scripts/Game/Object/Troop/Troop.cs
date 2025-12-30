@@ -364,7 +364,7 @@ namespace Sango.Game
             scenario.CommonData.Skills.ForEach(x =>
             {
                 if (x.IsStrategy())
-                    StrategySkills.Add(new SkillInstance() { skill = x });
+                    StrategySkills.Add(SkillInstance.Create(this, x));
             });
 
             buffManager.Init(this);
@@ -493,7 +493,7 @@ namespace Sango.Game
                     if (skills != null)
                         ins = skills.Find(x => x.skill == skill);
                     if (ins == null)
-                        ins = new SkillInstance() { skill = skill, CDCount = 0 };
+                        ins = SkillInstance.Create(this, skill);
 
                     skillInstances.Add(ins);
                     if (skill.costEnergy == 0)
@@ -519,7 +519,7 @@ namespace Sango.Game
                     if (skills != null)
                         ins = skills.Find(x => x.skill == skill);
                     if (ins == null)
-                        ins = new SkillInstance() { skill = skill, CDCount = 0 };
+                        ins = SkillInstance.Create(this, skill);
 
                     skillInstances.Add(ins);
                     if (skill.costEnergy == 0)

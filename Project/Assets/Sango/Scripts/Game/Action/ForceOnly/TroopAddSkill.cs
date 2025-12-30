@@ -26,15 +26,15 @@ namespace Sango.Game.Action
             Skill skill = scenario.GetObject<Skill>(value);
             if (kinds == null)
             {
-                troop.landSkills.Add(new SkillInstance() { skill = skill });
-                troop.waterSkills.Add(new SkillInstance() { skill = skill });
+                troop.landSkills.Add(SkillInstance.Create(troop, skill));
+                troop.waterSkills.Add(SkillInstance.Create(troop, skill));
             }
             else
             {
                 if (kinds.Contains(troop.LandTroopType.kind))
-                    troop.landSkills.Add(new SkillInstance() { skill = skill });
+                    troop.landSkills.Add(SkillInstance.Create(troop, skill));
                 if (kinds.Contains(troop.WaterTroopType.kind))
-                    troop.waterSkills.Add(new SkillInstance() { skill = skill });
+                    troop.waterSkills.Add(SkillInstance.Create(troop, skill));
             }
         }
     }

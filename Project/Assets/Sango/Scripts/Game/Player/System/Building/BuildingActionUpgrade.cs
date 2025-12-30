@@ -30,7 +30,8 @@ namespace Sango.Game.Player
         {
             get
             {
-                return TargetBuilding.BelongCity.freePersons.Count > 0 && !TargetBuilding.isWorking;
+                TargetUpgradeType = Scenario.Cur.GetObject<BuildingType>(TargetBuilding.BuildingType.nextId);
+                return TargetBuilding.BelongCity.freePersons.Count > 0 && TargetBuilding.BelongCity.gold >= TargetUpgradeType.cost &&!TargetBuilding.isWorking;
             }
         }
         protected override void OnBuildingContextMenuShow(ContextMenuData menuData, BuildingBase building)
@@ -39,7 +40,9 @@ namespace Sango.Game.Player
             {
                 TargetBuilding = building;
                 if (building.isComplte && !building.isUpgrading && building.BuildingType.nextId > 0)
+                {
                     menuData.Add(customMenuName, customMenuOrder, null, OnClickMenuItem, IsValid);
+                }
             }
         }
 
@@ -91,7 +94,7 @@ namespace Sango.Game.Player
             switch (eventType)
             {
                 case CommandEventType.Cancel:
-                case CommandEventType.RClick:
+                case CommandEventType.RClickUp:
                     {
                         PlayerCommand.Instance.Back();
                         break;

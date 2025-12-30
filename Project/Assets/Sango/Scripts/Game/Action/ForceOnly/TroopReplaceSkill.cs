@@ -31,21 +31,21 @@ namespace Sango.Game.Action
             if (kinds == null)
             {
                 troop.landSkills.RemoveAll(x => x.skill.Id == skillId);
-                troop.landSkills.Add(new SkillInstance() { skill = skill });
+                troop.landSkills.Add(SkillInstance.Create(troop, skill));
                 troop.waterSkills.RemoveAll(x => x.skill.Id == skillId);
-                troop.waterSkills.Add(new SkillInstance() { skill = skill });
+                troop.waterSkills.Add(SkillInstance.Create(troop, skill));
             }
             else
             {
                 if (kinds.Contains(troop.LandTroopType.kind))
                 {
                     troop.landSkills.RemoveAll(x => x.skill.Id == skillId);
-                    troop.landSkills.Add(new SkillInstance() { skill = skill });
+                    troop.landSkills.Add(SkillInstance.Create(troop, skill));
                 }
                 if (kinds.Contains(troop.WaterTroopType.kind))
                 {
                     troop.waterSkills.RemoveAll(x => x.skill.Id == skillId);
-                    troop.waterSkills.Add(new SkillInstance() { skill = skill });
+                    troop.waterSkills.Add(SkillInstance.Create(troop, skill));
                 }
             }
         }

@@ -14,6 +14,12 @@ namespace Sango.Game.Render.UI
 
         public UITextField value_turn;
         public UITextField value_gold;
+
+        public UITextField destBuldingName;
+        public UITextField destGoldProduction;
+        public UITextField destFoodProduction;
+
+
         public UITextField action_value;
 
         BuildingActionUpgrade buildingActionUpgrade;
@@ -38,6 +44,16 @@ namespace Sango.Game.Render.UI
             value_turn.text = $"{buildingActionUpgrade.wonderBuildCounter * 10}日";
             value_gold.text = $"{buildingActionUpgrade.TargetUpgradeType.cost}/{buildingActionUpgrade.TargetBuilding.BelongCity.gold}";
 
+            destBuldingName.text = buildingActionUpgrade.TargetUpgradeType.Name;
+            if (buildingActionUpgrade.TargetUpgradeType.goldGain == 0)
+                destGoldProduction.text = "---";
+            else
+                destGoldProduction.text = $"{buildingActionUpgrade.TargetBuilding.BuildingType.goldGain} → {buildingActionUpgrade.TargetUpgradeType.goldGain}";
+            if (buildingActionUpgrade.TargetUpgradeType.foodGain == 0)
+                destFoodProduction.text = "---";
+            else
+                destFoodProduction.text = $"{buildingActionUpgrade.TargetBuilding.BuildingType.foodGain} → {buildingActionUpgrade.TargetUpgradeType.foodGain}";
+            action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.UpgradeBuilding)}/{buildingActionUpgrade.TargetBuilding.BelongCorps.ActionPoint}";
         }
 
 

@@ -799,7 +799,7 @@ namespace Sango.Game
                 {
                     BuildingType nextBuildingType = scenario.GetObject<BuildingType>(building.BuildingType.nextId);
                     int cost = nextBuildingType.cost;
-                    if (city.gold < nextBuildingType.cost)
+                    if (city.gold < cost)
                         return true;
 
                     Person[] people = ForceAI.CounsellorRecommendBuild(city.freePersons, nextBuildingType);
