@@ -187,6 +187,7 @@ namespace Sango.Game
 
         public void AddBuff(int id, int turnCount, Troop srcTroop) { buffManager.AddBuff(id, turnCount, srcTroop); }
         public void RemoveBuff(int id) { buffManager.RemoveBuff(id); }
+        public void RemoveBuffByKind(int kind) { buffManager.RemoveBuffByKind(kind); }
 
         public bool HasControlBuff()
         {
@@ -1206,8 +1207,6 @@ namespace Sango.Game
             return false;
         }
 
-
-
         public bool ChangeTroops(int num, SangoObject atk, SkillInstance skill, int atkBack)
         {
             Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(num);
@@ -1236,6 +1235,9 @@ namespace Sango.Game
                     divFood += _foodCost;
                 ChangeFood(-divFood, false);
             }
+
+            if(troops > MaxTroops)
+                troops = MaxTroops;
 
             IsAlive = troops > 0;
             if (!IsAlive)
@@ -1596,8 +1598,8 @@ namespace Sango.Game
             city.AddTroops(troops);
 
             // 返还兵装
-            city.itemStore.Gain(LandTroopType.costItems, troops);
-            city.itemStore.Gain(WaterTroopType.costItems, troops);
+            city.itemStore.Gain(LandTroopType.costItems, troops + woundedTroops);
+            city.itemStore.Gain(WaterTroopType.costItems, troops + woundedTroops);
             city.woundedTroops += woundedTroops;
 
             // 中和士气

@@ -233,6 +233,14 @@ namespace Sango.Game
             {
                 return CommonData.Techniques as Database<T>;
             }
+            else if (tType == typeof(Personality))
+            {
+                return CommonData.Personalities as Database<T>;
+            }
+            else if (tType == typeof(Argumentation))
+            {
+                return CommonData.Argumentations as Database<T>;
+            }
             return null;
         }
 
@@ -346,6 +354,14 @@ namespace Sango.Game
             else if (tType == typeof(Technique))
             {
                 return CommonData.Techniques.Get(id);
+            }
+            else if (tType == typeof(Personality))
+            {
+                return CommonData.Personalities.Get(id);
+            }
+            else if (tType == typeof(Argumentation))
+            {
+                return CommonData.Argumentations.Get(id);
             }
             //else if (tType == typeof(CityLevelType))
             //{

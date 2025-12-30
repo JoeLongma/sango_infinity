@@ -106,6 +106,20 @@ namespace Sango.Game
         [JsonProperty] public int state;
 
         /// <summary>
+        /// 性格
+        /// </summary>
+        [JsonProperty]
+        [JsonConverter(typeof(Id2ObjConverter<Personality>))]
+        public Personality personality;
+
+        /// <summary>
+        /// 义理
+        /// </summary>
+        [JsonProperty]
+        [JsonConverter(typeof(Id2ObjConverter<Argumentation>))]
+        public Argumentation argumentation;
+
+        /// <summary>
         /// 官职
         /// </summary>
         [JsonConverter(typeof(Id2ObjConverter<Official>))]

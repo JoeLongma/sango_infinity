@@ -128,7 +128,8 @@ namespace Sango.Game
             }
         }
 
-
+        float clickTime = 0.08f;
+        float mousePressTime = 0;
 
         public void HandleWindowsEvent()
         {
@@ -137,6 +138,8 @@ namespace Sango.Game
             {
                 if (Input.GetMouseButtonDown(0))
                 {
+                    mousePressTime = Time.time;
+
                     bool isOverUI = IsOverUI();
 
                     PlayerCommand.Instance.HandleEvent(CommandEventType.ClickDown, mouseOverCell, dragPosition, isOverUI);
@@ -173,7 +176,9 @@ namespace Sango.Game
                     if (controlType != ControlType.Move)
                         return;
 
-                    if (dragPosition != Input.mousePosition)
+                    float passedTime = Time.time - mousePressTime;
+
+                    if (dragPosition != Input.mousePosition && passedTime > clickTime)
                     {
                         isDragMoving = true;
 
@@ -290,6 +295,8 @@ namespace Sango.Game
                 Touch touch = Input.GetTouch(0);
                 if (touch.phase == TouchPhase.Began)
                 {
+                    mousePressTime = Time.time;
+
                     bool isOverUI = IsOverUI(touch.fingerId);
                     PlayerCommand.Instance.HandleEvent(CommandEventType.ClickDown, mouseOverCell, dragPosition, isOverUI);
 
@@ -319,7 +326,8 @@ namespace Sango.Game
                     if (controlType != ControlType.Move)
                         return;
 
-                    if (!dragPosition.Equals(touch.position))
+                    float passedTime = Time.time - mousePressTime;
+                    if (!dragPosition.Equals(touch.position) && passedTime > clickTime)
                     {
                         isDragMoving = true;
 

@@ -84,7 +84,28 @@ namespace Sango.Game
 
         public void RemoveBuff(int id)
         {
+            for (int i = _buffs.Count - 1; i >= 0; i--)
+            {
+                BuffInstance buff = _buffs[i];
+                if (buff.Buff.Id == id)
+                {
+                    buff.Clear();
+                    _buffs.RemoveAt(i);
+                }
+            }
+        }
 
+        public void RemoveBuffByKind(int kind)
+        {
+            for (int i = _buffs.Count - 1; i >= 0; i--)
+            {
+                BuffInstance buff = _buffs[i];
+                if(buff.Buff.kind == kind)
+                {
+                    buff.Clear();
+                    _buffs.RemoveAt(i);
+                }
+            }
         }
 
         public bool HasControlBuff()

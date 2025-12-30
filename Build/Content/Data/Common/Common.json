@@ -1,4 +1,43 @@
 {
+  "Argumentations": {
+    "1": {
+      "Id": 1,
+      "Name": "容易背叛",
+      "kind": 1,
+      "falseReportSuccessAdd": 0,
+      "disturbSuccessAdd": 0,
+      "infightingCriticalAdd": 10
+    },
+    "2": {
+      "Id": 2,
+      "Name": "无情义",
+      "kind": 2,
+      "falseReportSuccessAdd": 0,
+      "disturbSuccessAdd": 0,
+      "infightingCriticalAdd": 5
+    },
+    "3": {
+      "Id": 3,
+      "Name": "普通",
+      "kind": 3,
+      "falseReportSuccessAdd": 0,
+      "disturbSuccessAdd": 0,
+      "infightingCriticalAdd": 0
+    },
+    "4": {
+      "Id": 4,
+      "Name": "情理坚定",
+      "kind": 4,
+      "falseReportSuccessAdd": 0,
+      "disturbSuccessAdd": 0,
+      "infightingCriticalAdd": -5
+    },
+    "5": {
+      "Id": 5,
+      "Name": "不会背叛",
+      "infightingCriticalAdd": -10
+    }
+  },
   "AttributeChangeTypes": {
     "0": {
       "Id": 0,
@@ -4013,6 +4052,60 @@
       "meritNeeds": 36000
     }
   },
+  "Personalities": {
+    "1": {
+      "Id": 1,
+      "Name": "胆小",
+      "kind": 1,
+      "falseReportSuccessAdd": 3,
+      "disturbSuccessAdd": -2,
+      "calmdownSuccessAdd": -5,
+      "ambushSuccessAdd": 3,
+      "infightingSuccessAdd": -2,
+      "sorcerySuccessAdd": -2,
+      "falseReportCriticalAdd": 10,
+      "disturbCriticalAdd": -5
+    },
+    "2": {
+      "Id": 2,
+      "Name": "冷静",
+      "kind": 2,
+      "falseReportSuccessAdd": 1,
+      "disturbSuccessAdd": 0,
+      "calmdownSuccessAdd": 5,
+      "ambushSuccessAdd": -2,
+      "infightingSuccessAdd": 0,
+      "sorcerySuccessAdd": 0,
+      "falseReportCriticalAdd": 5,
+      "disturbCriticalAdd": 0
+    },
+    "3": {
+      "Id": 3,
+      "Name": "刚胆",
+      "kind": 3,
+      "falseReportSuccessAdd": 0,
+      "disturbSuccessAdd": 1,
+      "calmdownSuccessAdd": 0,
+      "ambushSuccessAdd": 0,
+      "infightingSuccessAdd": 1,
+      "sorcerySuccessAdd": 1,
+      "falseReportCriticalAdd": 0,
+      "disturbCriticalAdd": 5
+    },
+    "4": {
+      "Id": 4,
+      "Name": "莽撞",
+      "kind": 4,
+      "falseReportSuccessAdd": -2,
+      "disturbSuccessAdd": 3,
+      "calmdownSuccessAdd": -10,
+      "ambushSuccessAdd": 1,
+      "infightingSuccessAdd": 3,
+      "sorcerySuccessAdd": 3,
+      "falseReportCriticalAdd": -5,
+      "disturbCriticalAdd": 10
+    }
+  },
   "PersonLevels": {
     "0": {
       "Id": 0,
@@ -4529,6 +4622,8 @@
       "atkDurability": 15,
       "costEnergy": 0,
       "successRate": 100,
+      "successMethod": "CommonMethod",
+      "criticalMethod": "CommonMethod",
       "needAblilityLevel": 0,
       "isRange": false,
       "spellRanges": [
@@ -4550,6 +4645,8 @@
       "atkDurability": 5,
       "costEnergy": 0,
       "successRate": 100,
+      "successMethod": "CommonMethod",
+      "criticalMethod": "CommonMethod",
       "needAblilityLevel": 0,
       "isRange": true,
       "spellRanges": [
@@ -4571,6 +4668,8 @@
       "atkDurability": 0,
       "costEnergy": 15,
       "successRate": 70,
+      "successMethod": "CommonMethod",
+      "criticalMethod": "CommonMethod",
       "needAblilityLevel": 1,
       "isRange": false,
       "spellRanges": [
@@ -4597,6 +4696,8 @@
       "atkDurability": 0,
       "costEnergy": 20,
       "successRate": 70,
+      "successMethod": "CommonMethod",
+      "criticalMethod": "CommonMethod",
       "needAblilityLevel": 2,
       "isRange": false,
       "spellRanges": [
@@ -4607,7 +4708,7 @@
           "class": "AddBuff",
           "buffId": 1,
           "probability": 5000,
-          "turn": [
+          "values": [
             1,
             2
           ],
@@ -4624,7 +4725,7 @@
           "class": "AddBuff",
           "buffId": 1,
           "probability": 5000,
-          "turn": [
+          "values": [
             2,
             3
           ],
@@ -4654,6 +4755,8 @@
       "atkDurability": 0,
       "costEnergy": 25,
       "successRate": 60,
+      "successMethod": "CommonMethod",
+      "criticalMethod": "CommonMethod",
       "needAblilityLevel": 3,
       "isRange": false,
       "spellRanges": [
@@ -4680,6 +4783,8 @@
       "atkDurability": 0,
       "costEnergy": 15,
       "successRate": 70,
+      "successMethod": "CommonMethod",
+      "criticalMethod": "CommonMethod",
       "needAblilityLevel": 1,
       "isRange": false,
       "spellRanges": [
@@ -4707,6 +4812,8 @@
       "atkDurability": 0,
       "costEnergy": 20,
       "successRate": 70,
+      "successMethod": "CommonMethod",
+      "criticalMethod": "CommonMethod",
       "needAblilityLevel": 2,
       "isRange": false,
       "spellRanges": [
@@ -4731,6 +4838,8 @@
       "atkDurability": 0,
       "costEnergy": 25,
       "successRate": 65,
+      "successMethod": "CommonMethod",
+      "criticalMethod": "CommonMethod",
       "needAblilityLevel": 3,
       "isRange": false,
       "spellRanges": [
@@ -4756,6 +4865,8 @@
       "atkDurability": 15,
       "costEnergy": 15,
       "successRate": 75,
+      "successMethod": "CommonMethod",
+      "criticalMethod": "CommonMethod",
       "needAblilityLevel": 1,
       "isRange": true,
       "spellRanges": [
@@ -4765,7 +4876,7 @@
         {
           "class": "Burn",
           "probability": 5000,
-          "turn": [
+          "values": [
             1,
             2
           ],
@@ -4781,7 +4892,7 @@
         {
           "class": "Burn",
           "probability": 5000,
-          "turn": [
+          "values": [
             2,
             3
           ],
@@ -4811,6 +4922,8 @@
       "atkDurability": 15,
       "costEnergy": 20,
       "successRate": 70,
+      "successMethod": "CommonMethod",
+      "criticalMethod": "CommonMethod",
       "needAblilityLevel": 2,
       "isRange": true,
       "spellRanges": [
@@ -4836,6 +4949,8 @@
       "atkDurability": 15,
       "costEnergy": 25,
       "successRate": 65,
+      "successMethod": "CommonMethod",
+      "criticalMethod": "CommonMethod",
       "needAblilityLevel": 3,
       "isRange": true,
       "spellRanges": [
@@ -4861,6 +4976,8 @@
       "atkDurability": 0,
       "costEnergy": 15,
       "successRate": 70,
+      "successMethod": "CommonMethod",
+      "criticalMethod": "CommonMethod",
       "needAblilityLevel": 1,
       "isRange": false,
       "spellRanges": [
@@ -4888,6 +5005,8 @@
       "atkDurability": 0,
       "costEnergy": 20,
       "successRate": 65,
+      "successMethod": "CommonMethod",
+      "criticalMethod": "CommonMethod",
       "needAblilityLevel": 2,
       "isRange": false,
       "spellRanges": [
@@ -4913,6 +5032,8 @@
       "atkDurability": 0,
       "costEnergy": 25,
       "successRate": 60,
+      "successMethod": "CommonMethod",
+      "criticalMethod": "CommonMethod",
       "needAblilityLevel": 3,
       "isRange": false,
       "spellRanges": [
@@ -4940,6 +5061,8 @@
       "atkDurability": 20,
       "costEnergy": 15,
       "successRate": 100,
+      "successMethod": "CommonMethod",
+      "criticalMethod": "CommonMethod",
       "needAblilityLevel": 0,
       "needItem": 7,
       "isRange": true,
@@ -4950,7 +5073,7 @@
         {
           "class": "Burn",
           "probability": 5000,
-          "turn": [
+          "values": [
             1,
             2
           ],
@@ -4966,7 +5089,7 @@
         {
           "class": "Burn",
           "probability": 5000,
-          "turn": [
+          "values": [
             2,
             3
           ],
@@ -4996,6 +5119,8 @@
       "atkDurability": 120,
       "costEnergy": 10,
       "successRate": 100,
+      "successMethod": "CommonMethod",
+      "criticalMethod": "CommonMethod",
       "needAblilityLevel": 0,
       "needItem": 6,
       "isRange": false,
@@ -5018,6 +5143,8 @@
       "atkDurability": 150,
       "costEnergy": 15,
       "successRate": 100,
+      "successMethod": "CommonMethod",
+      "criticalMethod": "CommonMethod",
       "needAblilityLevel": 0,
       "needItem": 9,
       "isRange": true,
@@ -5028,7 +5155,7 @@
         {
           "class": "Burn",
           "probability": 5000,
-          "turn": [
+          "values": [
             1,
             2
           ],
@@ -5044,7 +5171,7 @@
         {
           "class": "Burn",
           "probability": 5000,
-          "turn": [
+          "values": [
             2,
             3
           ],
@@ -5074,6 +5201,8 @@
       "atkDurability": 80,
       "costEnergy": 20,
       "successRate": 100,
+      "successMethod": "CommonMethod",
+      "criticalMethod": "CommonMethod",
       "needAblilityLevel": 0,
       "needItem": 8,
       "isRange": true,
@@ -5101,6 +5230,8 @@
       "atkDurability": 15,
       "costEnergy": 15,
       "successRate": 100,
+      "successMethod": "CommonMethod",
+      "criticalMethod": "CommonMethod",
       "needAblilityLevel": 1,
       "needItem": 10,
       "isRange": true,
@@ -5111,7 +5242,7 @@
         {
           "class": "Burn",
           "probability": 5000,
-          "turn": [
+          "values": [
             1,
             2
           ],
@@ -5127,7 +5258,7 @@
         {
           "class": "Burn",
           "probability": 5000,
-          "turn": [
+          "values": [
             2,
             3
           ],
@@ -5157,6 +5288,8 @@
       "atkDurability": 0,
       "costEnergy": 15,
       "successRate": 70,
+      "successMethod": "CommonMethod",
+      "criticalMethod": "CommonMethod",
       "needAblilityLevel": 2,
       "needItem": 11,
       "isRange": false,
@@ -5185,6 +5318,8 @@
       "atkDurability": 80,
       "costEnergy": 20,
       "successRate": 100,
+      "successMethod": "CommonMethod",
+      "criticalMethod": "CommonMethod",
       "needAblilityLevel": 3,
       "needItem": 12,
       "isRange": true,
@@ -5210,10 +5345,46 @@
       "kind": 3,
       "costEnergy": 10,
       "successRate": 0,
+      "successMethod": "FireSuccessMethod",
+      "criticalMethod": "FireCriticalMethod",
       "needAblilityLevel": 0,
       "isRange": true,
       "spellRanges": [
         1
+      ],
+      "skillEffects": [
+        {
+          "class": "Burn",
+          "probability": 10000,
+          "values": [
+            1,
+            2
+          ],
+          "weight": [
+            70,
+            30
+          ],
+          "condition": {
+            "class": "SkillIsCritical",
+            "result": 0
+          }
+        },
+        {
+          "class": "Burn",
+          "probability": 10000,
+          "values": [
+            2,
+            3
+          ],
+          "weight": [
+            70,
+            30
+          ],
+          "condition": {
+            "class": "SkillIsCritical",
+            "result": 1
+          }
+        }
       ],
       "canDamageTroop": true,
       "canDamageMachine": true,
@@ -5229,10 +5400,18 @@
       "kind": 3,
       "costEnergy": 10,
       "successRate": 0,
+      "successMethod": "PutOutFireSuccessMethod",
+      "criticalMethod": "PutOutFireCriticalMethod",
       "needAblilityLevel": 0,
       "isRange": true,
       "spellRanges": [
         1
+      ],
+      "skillEffects": [
+        {
+          "class": "PutoutFire",
+          "probability": 10000
+        }
       ],
       "canDamageTroop": true,
       "canDamageMachine": true,
@@ -5248,10 +5427,48 @@
       "kind": 3,
       "costEnergy": 15,
       "successRate": 0,
+      "successMethod": "FalseReportSuccessMethod",
+      "criticalMethod": "FalseReportCriticalMethod",
       "needAblilityLevel": 0,
       "isRange": true,
       "spellRanges": [
         1
+      ],
+      "skillEffects": [
+        {
+          "class": "AddBuff",
+          "buffId": 2,
+          "probability": 10000,
+          "values": [
+            1,
+            2
+          ],
+          "weight": [
+            70,
+            30
+          ],
+          "condition": {
+            "class": "SkillIsCritical",
+            "result": 0
+          }
+        },
+        {
+          "class": "AddBuff",
+          "buffId": 2,
+          "probability": 10000,
+          "values": [
+            2,
+            3
+          ],
+          "weight": [
+            70,
+            30
+          ],
+          "condition": {
+            "class": "SkillIsCritical",
+            "result": 1
+          }
+        }
       ],
       "canDamageTroop": true,
       "canDamageMachine": true,
@@ -5267,10 +5484,48 @@
       "kind": 3,
       "costEnergy": 15,
       "successRate": 0,
+      "successMethod": "DisturbSuccessMethod",
+      "criticalMethod": "DisturbCriticalMethod",
       "needAblilityLevel": 0,
       "isRange": true,
       "spellRanges": [
         1
+      ],
+      "skillEffects": [
+        {
+          "class": "AddBuff",
+          "buffId": 1,
+          "probability": 10000,
+          "values": [
+            1,
+            2
+          ],
+          "weight": [
+            70,
+            30
+          ],
+          "condition": {
+            "class": "SkillIsCritical",
+            "result": 0
+          }
+        },
+        {
+          "class": "AddBuff",
+          "buffId": 1,
+          "probability": 10000,
+          "values": [
+            2,
+            3
+          ],
+          "weight": [
+            70,
+            30
+          ],
+          "condition": {
+            "class": "SkillIsCritical",
+            "result": 1
+          }
+        }
       ],
       "canDamageTroop": true,
       "canDamageMachine": true,
@@ -5286,56 +5541,13 @@
       "kind": 3,
       "costEnergy": 10,
       "successRate": 0,
+      "successMethod": "CalmdownSuccessMethod",
+      "criticalMethod": "CalmdownCriticalMethod",
       "needAblilityLevel": 0,
       "isRange": true,
       "spellRanges": [
         1
-      ],
-      "canDamageTroop": true,
-      "canDamageMachine": true,
-      "canDamageBoat": true,
-      "canDamageBuilding": false,
-      "canDamageTeam": false,
-      "canSpellToCell": false,
-      "onlySpellToTeam": true
-    },
-    "27": {
-      "Id": 27,
-      "Name": "伏兵",
-      "kind": 3,
-      "costEnergy": 10,
-      "successRate": 0,
-      "needAblilityLevel": 0,
-      "isRange": true,
-      "spellRanges": [
-        1
-      ],
-      "canDamageTroop": true,
-      "canDamageMachine": true,
-      "canDamageBoat": true,
-      "canDamageBuilding": false,
-      "canDamageTeam": false,
-      "canSpellToCell": false,
-      "onlySpellToTeam": false
-    },
-    "28": {
-      "Id": 28,
-      "Name": "内讧",
-      "kind": 3,
-      "costEnergy": 20,
-      "successRate": 0,
-      "needAblilityLevel": 0,
-      "isRange": true,
-      "spellRanges": [
-        1
-      ],
-      "canDamageTroop": true,
-      "canDamageMachine": true,
-      "canDamageBoat": true,
-      "canDamageBuilding": false,
-      "canDamageTeam": false,
-      "canSpellToCell": false,
-      "onlySpellToTeam": false
+      ]
     }
   },
   "States": {
@@ -6691,6 +6903,7 @@
       "isFight": true,
       "isSingle": true,
       "isLand": true,
+      "ambushCriticalAdd": 5,
       "extraMoveCost": [
         0
       ],
@@ -6737,6 +6950,7 @@
       "isFight": true,
       "isSingle": true,
       "isLand": true,
+      "ambushCriticalAdd": 10,
       "extraMoveCost": [
         0
       ],
@@ -6751,7 +6965,7 @@
     },
     "3": {
       "Id": 3,
-      "Name": "刀兵",
+      "Name": "戟兵",
       "kind": 3,
       "skills": [
         1,
@@ -6783,6 +6997,7 @@
       "isFight": true,
       "isSingle": true,
       "isLand": true,
+      "ambushCriticalAdd": 10,
       "extraMoveCost": [
         0
       ],
@@ -6797,7 +7012,7 @@
     },
     "4": {
       "Id": 4,
-      "Name": "弓兵",
+      "Name": "弩兵",
       "kind": 4,
       "skills": [
         1,
@@ -6829,6 +7044,7 @@
       "isFight": true,
       "isSingle": true,
       "isLand": true,
+      "ambushCriticalAdd": 5,
       "extraMoveCost": [
         0
       ],
@@ -6874,6 +7090,7 @@
       "isFight": true,
       "isSingle": true,
       "isLand": true,
+      "ambushCriticalAdd": 0,
       "extraMoveCost": [
         0,
         0,
@@ -6926,6 +7143,7 @@
       "isFight": false,
       "isSingle": false,
       "isLand": true,
+      "ambushCriticalAdd": 0,
       "extraMoveCost": [
         0
       ],
@@ -6948,6 +7166,7 @@
       "isFight": false,
       "isSingle": false,
       "isLand": true,
+      "ambushCriticalAdd": 0,
       "extraMoveCost": [
         0
       ],
@@ -6980,6 +7199,7 @@
       "isFight": true,
       "isSingle": false,
       "isLand": false,
+      "ambushCriticalAdd": 0,
       "extraMoveCost": [
         0
       ],
@@ -7016,6 +7236,7 @@
       "isFight": true,
       "isSingle": false,
       "isLand": false,
+      "ambushCriticalAdd": 0,
       "extraMoveCost": [
         0
       ],
@@ -7053,6 +7274,7 @@
       "isFight": true,
       "isSingle": false,
       "isLand": false,
+      "ambushCriticalAdd": 0,
       "extraMoveCost": [
         0
       ],
@@ -7088,6 +7310,7 @@
       "isFight": true,
       "isSingle": false,
       "isLand": true,
+      "ambushCriticalAdd": 0,
       "extraMoveCost": [
         0
       ],
@@ -7128,6 +7351,7 @@
       "isFight": true,
       "isSingle": false,
       "isLand": true,
+      "ambushCriticalAdd": 0,
       "extraMoveCost": [
         0
       ],
@@ -7168,6 +7392,7 @@
       "isFight": true,
       "isSingle": false,
       "isLand": true,
+      "ambushCriticalAdd": 0,
       "extraMoveCost": [
         0
       ],
@@ -7208,6 +7433,7 @@
       "isFight": true,
       "isSingle": false,
       "isLand": true,
+      "ambushCriticalAdd": 0,
       "extraMoveCost": [
         0
       ],
@@ -7244,6 +7470,7 @@
         36
       ],
       "validItemId": 8,
+      "ambushCriticalAdd": 10,
       "extraMoveCost": [
         0
       ]
@@ -7272,6 +7499,7 @@
         36
       ],
       "validItemId": 13,
+      "ambushCriticalAdd": 10,
       "extraMoveCost": [
         0
       ]
@@ -7300,6 +7528,7 @@
         36
       ],
       "validItemId": 16,
+      "ambushCriticalAdd": 10,
       "extraMoveCost": [
         0
       ]
@@ -7328,6 +7557,7 @@
         35
       ],
       "validItemId": 9,
+      "ambushCriticalAdd": 10,
       "extraMoveCost": [
         0
       ]
@@ -7356,6 +7586,7 @@
         35
       ],
       "validItemId": 10,
+      "ambushCriticalAdd": 10,
       "extraMoveCost": [
         0
       ]
@@ -7384,6 +7615,7 @@
         35
       ],
       "validItemId": 12,
+      "ambushCriticalAdd": 10,
       "extraMoveCost": [
         0
       ]
@@ -7411,6 +7643,7 @@
         38
       ],
       "validItemId": 11,
+      "ambushCriticalAdd": 0,
       "extraMoveCost": [
         0,
         0,
@@ -7462,6 +7695,7 @@
         38
       ],
       "validItemId": 14,
+      "ambushCriticalAdd": 0,
       "extraMoveCost": [
         0,
         0,
@@ -7513,6 +7747,7 @@
         38
       ],
       "validItemId": 15,
+      "ambushCriticalAdd": 0,
       "extraMoveCost": [
         0,
         0,
@@ -7564,6 +7799,7 @@
         38
       ],
       "validItemId": 17,
+      "ambushCriticalAdd": 0,
       "extraMoveCost": [
         0,
         0,
@@ -7616,6 +7852,7 @@
         37
       ],
       "validItemId": 18,
+      "ambushCriticalAdd": 5,
       "extraMoveCost": [
         0
       ]
@@ -7644,6 +7881,7 @@
         37
       ],
       "validItemId": 19,
+      "ambushCriticalAdd": 5,
       "extraMoveCost": [
         0
       ]

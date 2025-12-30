@@ -157,7 +157,11 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public int[] matchFeatures;
 
-        
+        /// <summary>
+        /// 伏兵计略暴击率加成
+        /// </summary>
+        [JsonProperty] public byte ambushCriticalAdd;
+         
 
         public int MoveCost(Cell cell)
         {

@@ -1,25 +1,29 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Sango.Game.Render;
+using UnityEngine;
 
 namespace Sango.Game
 {
     /// <summary>
-    /// 燃烧某个地方
+    /// 治疗伤兵
     /// probability : 概率,万分比
     /// condition: 条件
-    /// values : 回合数集合[]
-    /// weight : 回合数命中的权重[]
+    /// values : 值集合[] (百分比)
+    /// weight : 值命中的权重[]
     /// </summary>
-    public class Burn : SkillEffect
+    public class RecureWoundedTroops : SkillEffect
     {
         Condition condition;
         int probability;
-        int [] values;
-        int [] weight;
-
+        int[] values;
+        int[] weight;
         public override void Init(JObject p, SkillInstance master)
         {
             base.Init(p, master);
+
             probability = p.Value<int>("probability");
 
             JArray array = p.Value<JArray>("values");
@@ -49,36 +53,21 @@ namespace Sango.Game
 
         public override void Action(SkillInstance skillInstance, Troop troop, Cell spellCell, List<Cell> atkCellList)
         {
+            Troop target = spellCell.troop;
+            if (target == null) return;
+
             if (!GameRandom.Chance(probability, 10000))
                 return;
 
-            if (condition != null && !condition.Check(troop, spellCell.troop, master))
+            if (condition != null && !condition.Check(troop, target, master))
                 return;
 
             int index = GameRandom.RandomWeightIndex(weight);
             int finalCount = values[index];
+            int v = target.woundedTroops * finalCount / 100;
+            target.woundedTroops = Mathf.Max(0, target.woundedTroops - v);
+            target.ChangeTroops(v, troop, skillInstance, 0);
 
-            Fire fire = spellCell.fire;
-            if (fire == null)
-            {
-                fire = new Fire()
-                {
-                    damage = 300,
-                    intelligence = troop.Intelligence,
-                    cell = spellCell,
-                    counter = finalCount
-                };
-                Scenario.Cur.Add(fire);
-                fire.Init(Scenario.Cur);
-            }
-            else
-            {
-                fire.intelligence = troop.Intelligence;
-                fire.counter = finalCount;
-            }
-
-            spellCell.fire = fire;
-            fire.Action();
         }
     }
 }

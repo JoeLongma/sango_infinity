@@ -16,12 +16,19 @@ namespace Sango.Game.Action
         public override void Init(JObject p, params SangoObject[] sangoObjects)
         {
             base.Init(p, sangoObjects);
-            GameEvent.OnTroopCalculateSkillCritical += OnTroopCalculateSkillCritical;
+            if (value >= 100)
+                GameEvent.OnTroopBeforeCalculateSkillSuccess += OnTroopCalculateSkillCritical;
+            else
+                GameEvent.OnTroopAfterCalculateSkillSuccess += OnTroopCalculateSkillCritical;
+
         }
 
         public override void Clear()
         {
-            GameEvent.OnTroopCalculateSkillCritical -= OnTroopCalculateSkillCritical;
+            if (value >= 100)
+                GameEvent.OnTroopBeforeCalculateSkillSuccess -= OnTroopCalculateSkillCritical;
+            else
+                GameEvent.OnTroopAfterCalculateSkillSuccess -= OnTroopCalculateSkillCritical;
         }
 
         void OnTroopCalculateSkillCritical(Troop troop, SkillInstance skill, Cell cell, OverrideData<int> overrideData)

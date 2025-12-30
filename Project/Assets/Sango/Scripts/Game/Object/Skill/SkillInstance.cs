@@ -112,6 +112,16 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public int blockFactor;
 
+        /// <summary>
+        /// 成功率计算类型
+        /// </summary>
+        [JsonProperty] public string successMethod;
+
+        /// <summary>
+        /// 暴击率计算类型
+        /// </summary>
+        [JsonProperty] public string criticalMethod;
+
         protected List<SkillEffect> effects;
         public int tempCriticalFactor;
 
@@ -175,6 +185,8 @@ namespace Sango.Game
             atkOffsetPoint = skill.atkOffsetPoint;
             offsetAction = skill.offsetAction;
             blockFactor = skill.blockFactor;
+            successMethod = skill.successMethod;
+            criticalMethod = skill.criticalMethod;
 
             InitSkillEffects();
 
@@ -306,7 +318,14 @@ namespace Sango.Game
             if (baseSuccessRate >= 100)
                 return true;
 
-            baseSuccessRate = successRate + Math.Max(0, troop.TroopTypeLv - 1) * Scenario.Cur.Variables.skillSuccessRateAddByAbility;
+
+            SkillSuccessMethod method = SkillSuccessMethod.Create(successMethod);
+            if (method == null)
+            {
+                return false;
+            }
+
+            baseSuccessRate = method.Calculate(this, troop, spellCell);
 
             overrideData = GameUtility.IntOverrideData.Set(baseSuccessRate);
             GameEvent.OnTroopAfterCalculateSkillSuccess?.Invoke(troop, this, spellCell, overrideData);
@@ -340,15 +359,30 @@ namespace Sango.Game
         /// <returns></returns>
         public int CheckCritical(Troop troop, Cell spellCell)
         {
-            // TODO: 特殊状态必定暴击
             ScenarioVariables scenarioVariables = Scenario.Cur.Variables;
 
-            int basCriticalRate = scenarioVariables.baseSkillCriticalRate + troop.TroopTypeLv * Scenario.Cur.Variables.skillCriticalRateAddByAbility;
-            basCriticalRate += Math.Max(0, (troop.Strength - 60) * scenarioVariables.skillCriticalRateAddByStength / 10);
+            // 必爆流程判断
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(0);
+            GameEvent.OnTroopBeforeCalculateSkillSuccess?.Invoke(troop, this, spellCell, overrideData);
+            if (overrideData.Value >= 100)
+            {
+                overrideData = GameUtility.IntOverrideData.Set(scenarioVariables.skillCriticalFactor);
+                GameEvent.OnTroopCalculateSkillCriticalFactor?.Invoke(troop, this, spellCell, overrideData);
+                tempCriticalFactor = overrideData.Value;
+                return tempCriticalFactor;
+            }
 
-            // TODO: 其他加成
-            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(basCriticalRate);
-            GameEvent.OnTroopCalculateSkillCritical?.Invoke(troop, this, spellCell, overrideData);
+
+            SkillCriticalMethod method = SkillCriticalMethod.Create(criticalMethod);
+            if (method == null)
+            {
+                tempCriticalFactor = 100;
+                return tempCriticalFactor;
+            }
+
+            int basCriticalRate = method.Calculate(this, troop, spellCell);
+            overrideData = GameUtility.IntOverrideData.Set(basCriticalRate);
+            GameEvent.OnTroopAfterCalculateSkillSuccess?.Invoke(troop, this, spellCell, overrideData);
             basCriticalRate = overrideData.Value;
 
             int criticalFactor = 100;

@@ -125,6 +125,20 @@ namespace Sango.Game
         [JsonProperty]
         public SangoObjectMap<Technique> Techniques = new SangoObjectMap<Technique>();
 
+        /// <summary>
+        /// 性格
+        /// </summary>
+        [JsonConverter(typeof(SangoObjectSetConverter<Personality>))]
+        [JsonProperty]
+        public SangoObjectSet<Personality> Personalities = new SangoObjectSet<Personality>();
+
+        /// <summary>
+        /// 义理
+        /// </summary>
+        [JsonConverter(typeof(SangoObjectSetConverter<Argumentation>))]
+        [JsonProperty]
+        public SangoObjectSet<Argumentation> Argumentations = new SangoObjectSet<Argumentation>();
+
 
         public List<ItemType> ItemTypeList { get; set; }
 

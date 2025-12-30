@@ -35,6 +35,10 @@ namespace Sango.Game
 
             Register("Burn", CraeteHandle<Burn>);
             Register("AddBuff", CraeteHandle<AddBuff>);
+            Register("RemoveBuffById", CraeteHandle<RemoveBuffById>);
+            Register("RemoveBuffByKind", CraeteHandle<RemoveBuffByKind>);
+            Register("PutoutFire", CraeteHandle<PutoutFire>);
+            Register("RecureWoundedTroops", CraeteHandle<RecureWoundedTroops>);
 
         }
 

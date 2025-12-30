@@ -42,12 +42,12 @@ namespace Sango.Game
 
         public static bool Chance(int chance, int root)
         {
-            if (chance <= 0) return false;
-            else if (chance >= root) return true;
+            if (chance >= root) return true;
+            else if (chance <= 0) return false; 
             else
             {
                 int rs = random.Next(root);
-                return rs <= chance;
+                return rs < chance;
             }
         }
 

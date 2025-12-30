@@ -352,7 +352,7 @@ namespace Sango.Game
         public static EventDelegate<Force, OverrideData<int>> OnForcePersonLoyaltyChangeProbability;
 
         /// <summary>
-        /// 可监听改计算战法成功率(百分比)
+        /// 可监听改计算战法成功率(百分比) 必爆, 设置100则为必中
         /// City, Skill, spellCell, OverrideFunc
         /// </summary>
         public static EventDelegate<Troop, SkillInstance, Cell, OverrideData<int>> OnTroopBeforeCalculateSkillSuccess;
@@ -363,11 +363,19 @@ namespace Sango.Game
         /// </summary>
         public static EventDelegate<Troop, SkillInstance, Cell, OverrideData<int>> OnTroopAfterCalculateSkillSuccess;
 
+
+        /// <summary>
+        /// 可监听改计算战法暴击率(百分比) 必爆, 设置100则为必爆
+        /// City, Skill, spellCell,  OverrideFunc
+        /// </summary>
+        public static EventDelegate<Troop, SkillInstance, Cell, OverrideData<int>> OnTroopBeforeCalculateSkillCritical;
+
+
         /// <summary>
         /// 可监听改计算战法暴击率(百分比)
         /// City, Skill, spellCell,  OverrideFunc
         /// </summary>
-        public static EventDelegate<Troop, SkillInstance, Cell, OverrideData<int>> OnTroopCalculateSkillCritical;
+        public static EventDelegate<Troop, SkillInstance, Cell, OverrideData<int>> OnTroopAfterCalculateSkillCritical;
 
         /// <summary>
         /// 可监听改计算战法暴击时的伤害倍率(百分比)

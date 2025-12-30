@@ -1,34 +1,23 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Sango.Game.Render;
-using UnityEngine;
 
 namespace Sango.Game
 {
     /// <summary>
-    /// 对目标添加BUFF
+    /// 移除某些BUFF
     /// probability : 概率,万分比
     /// condition: 条件
-    /// values : 回合数集合[]
-    /// weight : 回合数命中的权重[]
-    /// buffId : 添加的状态ID
+    /// values : 状态ID集合
     /// </summary>
-    public class AddBuff : SkillEffect
+    public class RemoveBuffById : SkillEffect
     {
         Condition condition;
         int probability;
-        int[] values;
-        int[] weight;
-        int buffId;
+        int [] values;
 
         public override void Init(JObject p, SkillInstance master)
         {
             base.Init(p, master);
-
-            buffId = p.Value<int>("buffId");
-            probability = p.Value<int>("probability");
 
             JArray array = p.Value<JArray>("values");
             List<int> list = new List<int>();
@@ -38,15 +27,7 @@ namespace Sango.Game
             }
             values = list.ToArray();
 
-            array = p.Value<JArray>("weight");
-            list.Clear();
-            for (int i = 0; i < array.Count; i++)
-            {
-                list.Add(array[i].Value<int>());
-            }
-
-            weight = list.ToArray();
-
+            probability = p.Value<int>("probability");
             JObject conObj = p.Value<JObject>("condition");
             if (conObj != null)
             {
@@ -65,11 +46,8 @@ namespace Sango.Game
 
             if (condition != null && !condition.Check(troop, target, master))
                 return;
-
-            int index = GameRandom.RandomWeightIndex(weight);
-            int finalCount = values[index];
-
-            target.AddBuff(buffId, finalCount, troop);
+            for (int i = 0; i < values.Length; i++)
+                target.RemoveBuffByKind(values[i]);
         }
     }
 }
