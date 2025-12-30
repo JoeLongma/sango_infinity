@@ -52,9 +52,8 @@ namespace Sango.Game
 
         public bool TurnUpdate()
         {
-
             leftCounter--;
-            if (leftCounter <= 0)
+            if (leftCounter < 0)
             {
                 Clear();
                 return true;

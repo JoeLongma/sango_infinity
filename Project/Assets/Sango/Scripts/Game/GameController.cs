@@ -128,8 +128,7 @@ namespace Sango.Game
             }
         }
 
-        float clickTime = 0.08f;
-        float mousePressTime = 0;
+        float clickSafeSqrDistance = 100;
 
         public void HandleWindowsEvent()
         {
@@ -138,8 +137,6 @@ namespace Sango.Game
             {
                 if (Input.GetMouseButtonDown(0))
                 {
-                    mousePressTime = Time.time;
-
                     bool isOverUI = IsOverUI();
 
                     PlayerCommand.Instance.HandleEvent(CommandEventType.ClickDown, mouseOverCell, dragPosition, isOverUI);
@@ -176,9 +173,7 @@ namespace Sango.Game
                     if (controlType != ControlType.Move)
                         return;
 
-                    float passedTime = Time.time - mousePressTime;
-
-                    if (dragPosition != Input.mousePosition && passedTime > clickTime)
+                    if (dragPosition != Input.mousePosition && (Input.mousePosition - dragPosition).sqrMagnitude >= clickSafeSqrDistance)
                     {
                         isDragMoving = true;
 
@@ -295,8 +290,6 @@ namespace Sango.Game
                 Touch touch = Input.GetTouch(0);
                 if (touch.phase == TouchPhase.Began)
                 {
-                    mousePressTime = Time.time;
-
                     bool isOverUI = IsOverUI(touch.fingerId);
                     PlayerCommand.Instance.HandleEvent(CommandEventType.ClickDown, mouseOverCell, dragPosition, isOverUI);
 
@@ -326,23 +319,26 @@ namespace Sango.Game
                     if (controlType != ControlType.Move)
                         return;
 
-                    float passedTime = Time.time - mousePressTime;
-                    if (!dragPosition.Equals(touch.position) && passedTime > clickTime)
+                    if (!dragPosition.Equals(touch.position) )
                     {
-                        isDragMoving = true;
-
-                        if (DragMoveViewEnabled)
+                        Vector3 touchPos = touch.position;
+                        if ((dragPosition - touchPos).sqrMagnitude >= clickSafeSqrDistance)
                         {
-                            ray = Camera.main.ScreenPointToRay(touch.position);
-                            float dis;
-                            if (viewPlane.Raycast(ray, out dis))
+                            isDragMoving = true;
+
+                            if (DragMoveViewEnabled)
                             {
-                                Vector3 newDragPos = ray.GetPoint(dis);
-                                Vector3 offset = worldPlaneDragPosition - newDragPos;
-                                MapRender.Instance.OffsetCamera(offset);
+                                ray = Camera.main.ScreenPointToRay(touch.position);
+                                float dis;
+                                if (viewPlane.Raycast(ray, out dis))
+                                {
+                                    Vector3 newDragPos = ray.GetPoint(dis);
+                                    Vector3 offset = worldPlaneDragPosition - newDragPos;
+                                    MapRender.Instance.OffsetCamera(offset);
+                                }
                             }
+                            dragPosition = touch.position;
                         }
-                        dragPosition = touch.position;
                     }
                 }
                 else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
