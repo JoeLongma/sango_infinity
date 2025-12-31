@@ -36,8 +36,7 @@ namespace Sango.Game
 
         public static void Init()
         {
-
-            Register("CommonMethod", CraeteHandle<FireSuccessMethod>);
+            Register("CommonMethod", CraeteHandle<CommonMethod>);
             Register("FireSuccessMethod", CraeteHandle<FireSuccessMethod>);
             Register("PutOutFireSuccessMethod", CraeteHandle<PutOutFireSuccessMethod>);
             Register("FalseReportSuccessMethod", CraeteHandle<FalseReportSuccessMethod>);

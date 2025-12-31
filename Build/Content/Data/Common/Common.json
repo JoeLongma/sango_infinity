@@ -1915,16 +1915,22 @@
             2
           ],
           "condition": {
-            "class": "and",
-            "L": {
-              "class": "TroopAttributeCompare",
-              "attType": "strength",
-              "result": 1
-            },
-            "R": {
-              "class": "SkillIsNormalSkill",
-              "result": 0
-            }
+            "class": "andList",
+            "list": [
+              {
+                "class": "TroopAttributeCompare",
+                "attType": "strength",
+                "result": 1
+              },
+              {
+                "class": "SkillIsNormalSkill",
+                "result": 0
+              },
+              {
+                "class": "SkillIsStrategySkill",
+                "result": 0
+              }
+            ]
           }
         }
       ]
@@ -1943,16 +1949,22 @@
             3
           ],
           "condition": {
-            "class": "and",
-            "L": {
-              "class": "TroopAttributeCompare",
-              "attType": "strength",
-              "result": 1
-            },
-            "R": {
-              "class": "SkillIsNormalSkill",
-              "result": 0
-            }
+            "class": "andList",
+            "list": [
+              {
+                "class": "TroopAttributeCompare",
+                "attType": "strength",
+                "result": 1
+              },
+              {
+                "class": "SkillIsNormalSkill",
+                "result": 0
+              },
+              {
+                "class": "SkillIsStrategySkill",
+                "result": 0
+              }
+            ]
           }
         }
       ]
@@ -1971,16 +1983,22 @@
             4
           ],
           "condition": {
-            "class": "and",
-            "L": {
-              "class": "TroopAttributeCompare",
-              "attType": "strength",
-              "result": 1
-            },
-            "R": {
-              "class": "SkillIsNormalSkill",
-              "result": 0
-            }
+            "class": "andList",
+            "list": [
+              {
+                "class": "TroopAttributeCompare",
+                "attType": "strength",
+                "result": 1
+              },
+              {
+                "class": "SkillIsNormalSkill",
+                "result": 0
+              },
+              {
+                "class": "SkillIsStrategySkill",
+                "result": 0
+              }
+            ]
           }
         }
       ]
@@ -1999,16 +2017,22 @@
             5
           ],
           "condition": {
-            "class": "and",
-            "L": {
-              "class": "TroopAttributeCompare",
-              "attType": "strength",
-              "result": 1
-            },
-            "R": {
-              "class": "SkillIsNormalSkill",
-              "result": 0
-            }
+            "class": "andList",
+            "list": [
+              {
+                "class": "TroopAttributeCompare",
+                "attType": "strength",
+                "result": 1
+              },
+              {
+                "class": "SkillIsNormalSkill",
+                "result": 0
+              },
+              {
+                "class": "SkillIsStrategySkill",
+                "result": 0
+              }
+            ]
           }
         }
       ]
@@ -2031,16 +2055,22 @@
           "checkLand": 2,
           "isNormal": 2,
           "condition": {
-            "class": "and",
-            "L": {
-              "class": "TroopAttributeCompare",
-              "attType": "strength",
-              "result": 1
-            },
-            "R": {
-              "class": "SkillIsNormalSkill",
-              "result": 0
-            }
+            "class": "andList",
+            "list": [
+              {
+                "class": "TroopAttributeCompare",
+                "attType": "strength",
+                "result": 1
+              },
+              {
+                "class": "SkillIsNormalSkill",
+                "result": 0
+              },
+              {
+                "class": "SkillIsStrategySkill",
+                "result": 0
+              }
+            ]
           }
         }
       ]
@@ -2056,16 +2086,22 @@
           "class": "TroopSkillCalculateCritical",
           "value": 100,
           "condition": {
-            "class": "and",
-            "L": {
-              "class": "TroopAttributeCompare",
-              "attType": "strength",
-              "result": 1
-            },
-            "R": {
-              "class": "SkillIsNormalSkill",
-              "result": 0
-            }
+            "class": "andList",
+            "list": [
+              {
+                "class": "TroopAttributeCompare",
+                "attType": "strength",
+                "result": 1
+              },
+              {
+                "class": "SkillIsNormalSkill",
+                "result": 0
+              },
+              {
+                "class": "SkillIsStrategySkill",
+                "result": 0
+              }
+            ]
           }
         }
       ]
@@ -2082,16 +2118,22 @@
           "value": 100,
           "isNormal": 0,
           "condition": {
-            "class": "and",
-            "L": {
-              "class": "TroopAttributeCompare",
-              "attType": "strength",
-              "result": 1
-            },
-            "R": {
-              "class": "SkillIsNormalSkill",
-              "result": 0
-            }
+            "class": "andList",
+            "list": [
+              {
+                "class": "TroopAttributeCompare",
+                "attType": "strength",
+                "result": 1
+              },
+              {
+                "class": "SkillIsNormalSkill",
+                "result": 0
+              },
+              {
+                "class": "SkillIsStrategySkill",
+                "result": 0
+              }
+            ]
           }
         }
       ]
@@ -2111,16 +2153,22 @@
             3
           ],
           "condition": {
-            "class": "and",
-            "L": {
-              "class": "TroopAttributeCompare",
-              "attType": "strength",
-              "result": 1
-            },
-            "R": {
-              "class": "SkillIsNormalSkill",
-              "result": 0
-            }
+            "class": "andList",
+            "list": [
+              {
+                "class": "TroopAttributeCompare",
+                "attType": "strength",
+                "result": 1
+              },
+              {
+                "class": "SkillIsNormalSkill",
+                "result": 0
+              },
+              {
+                "class": "SkillIsStrategySkill",
+                "result": 0
+              }
+            ]
           }
         }
       ]
@@ -2137,7 +2185,20 @@
           "value": 100,
           "kinds": [
             2
-          ]
+          ],
+          "condition": {
+            "class": "andList",
+            "list": [
+              {
+                "class": "SkillIsNormalSkill",
+                "result": 0
+              },
+              {
+                "class": "SkillIsStrategySkill",
+                "result": 0
+              }
+            ]
+          }
         }
       ]
     },
@@ -2153,7 +2214,20 @@
           "value": 100,
           "kinds": [
             3
-          ]
+          ],
+          "condition": {
+            "class": "andList",
+            "list": [
+              {
+                "class": "SkillIsNormalSkill",
+                "result": 0
+              },
+              {
+                "class": "SkillIsStrategySkill",
+                "result": 0
+              }
+            ]
+          }
         }
       ]
     },
@@ -2169,7 +2243,20 @@
           "value": 100,
           "kinds": [
             4
-          ]
+          ],
+          "condition": {
+            "class": "andList",
+            "list": [
+              {
+                "class": "SkillIsNormalSkill",
+                "result": 0
+              },
+              {
+                "class": "SkillIsStrategySkill",
+                "result": 0
+              }
+            ]
+          }
         }
       ]
     },
@@ -2185,7 +2272,20 @@
           "value": 100,
           "kinds": [
             5
-          ]
+          ],
+          "condition": {
+            "class": "andList",
+            "list": [
+              {
+                "class": "SkillIsNormalSkill",
+                "result": 0
+              },
+              {
+                "class": "SkillIsStrategySkill",
+                "result": 0
+              }
+            ]
+          }
         }
       ]
     },
@@ -2204,7 +2304,20 @@
             12,
             13,
             14
-          ]
+          ],
+          "condition": {
+            "class": "andList",
+            "list": [
+              {
+                "class": "SkillIsNormalSkill",
+                "result": 0
+              },
+              {
+                "class": "SkillIsStrategySkill",
+                "result": 0
+              }
+            ]
+          }
         }
       ]
     },
@@ -2223,7 +2336,20 @@
             9,
             10
           ],
-          "checkLand": 2
+          "checkLand": 2,
+          "condition": {
+            "class": "andList",
+            "list": [
+              {
+                "class": "SkillIsNormalSkill",
+                "result": 0
+              },
+              {
+                "class": "SkillIsStrategySkill",
+                "result": 0
+              }
+            ]
+          }
         }
       ]
     },
@@ -2236,7 +2362,20 @@
       "actionEntities": [
         {
           "class": "TroopSkillCalculateCritical",
-          "value": 100
+          "value": 100,
+          "condition": {
+            "class": "andList",
+            "list": [
+              {
+                "class": "SkillIsNormalSkill",
+                "result": 0
+              },
+              {
+                "class": "SkillIsStrategySkill",
+                "result": 0
+              }
+            ]
+          }
         }
       ]
     },
@@ -2334,8 +2473,7 @@
         {
           "class": "TroopSkillCalculateAttackBack",
           "value": 200,
-          "isDefender": 1,
-          "isRange": -1
+          "isDefender": 1
         }
       ]
     },

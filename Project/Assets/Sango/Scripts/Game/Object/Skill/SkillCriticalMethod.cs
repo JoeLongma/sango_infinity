@@ -36,7 +36,7 @@ namespace Sango.Game
 
         public static void Init()
         {
-            Register("CommonMethod", CraeteHandle<FireCriticalMethod>);
+            Register("CommonMethod", CraeteHandle<CommonMethod>);
             Register("FireCriticalMethod", CraeteHandle<FireCriticalMethod>);
             Register("PutOutFireCriticalMethod", CraeteHandle<PutOutFireCriticalMethod>);
             Register("FalseReportCriticalMethod", CraeteHandle<FalseReportCriticalMethod>);
@@ -51,7 +51,7 @@ namespace Sango.Game
         /// <summary>
         /// 常规战法暴击率
         /// </summary>
-        public class CommonMethod : SkillSuccessMethod
+        public class CommonMethod : SkillCriticalMethod
         {
             public override int Calculate(SkillInstance skillInstance, Troop troop, Cell spellCell)
             {

@@ -14,6 +14,8 @@ namespace Sango.Game.Render.Model
         float curFactor = 0;
         float factorDir = 1;
 
+        public GameObject maxLevelEffect;
+
         protected virtual void Awake()
         {
             for(int i = 0; i < flags.Length; i++)

@@ -125,6 +125,9 @@ namespace Sango.Game
         protected List<SkillEffect> effects;
         public int tempCriticalFactor;
 
+        SkillSuccessMethod skillSuccessMethod;
+        SkillCriticalMethod skillCriticalMethod;
+
         protected void InitSkillEffects()
         {
             if (skill.skillEffects == null) return;
@@ -189,6 +192,8 @@ namespace Sango.Game
             criticalMethod = skill.criticalMethod;
 
             InitSkillEffects();
+            skillCriticalMethod = SkillCriticalMethod.Create(criticalMethod);
+            skillSuccessMethod = SkillSuccessMethod.Create(successMethod);
 
             GameEvent.OnSkillCalculateAttribute?.Invoke(master, this);
         }
@@ -316,16 +321,23 @@ namespace Sango.Game
             baseSuccessRate = overrideData.Value;
 
             if (baseSuccessRate >= 100)
-                return true;
-
-
-            SkillSuccessMethod method = SkillSuccessMethod.Create(successMethod);
-            if (method == null)
             {
+#if SANGO_DEBUG
+                Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} 部队 准备释放技能: {Name} =>({spellCell.x},{spellCell.y})] 成功率:{baseSuccessRate}");
+#endif
+                return true;
+            }
+
+
+            if (skillSuccessMethod == null)
+            {
+#if SANGO_DEBUG
+                Sango.Log.Print($"{troop.BelongForce.Name}的[{troop.Name} 部队 准备释放技能: {Name} =>({spellCell.x},{spellCell.y})] 成功率:{successMethod}");
+#endif
                 return false;
             }
 
-            baseSuccessRate = method.Calculate(this, troop, spellCell);
+            baseSuccessRate = skillSuccessMethod.Calculate(this, troop, spellCell);
 
             overrideData = GameUtility.IntOverrideData.Set(baseSuccessRate);
             GameEvent.OnTroopAfterCalculateSkillSuccess?.Invoke(troop, this, spellCell, overrideData);
@@ -373,14 +385,13 @@ namespace Sango.Game
             }
 
 
-            SkillCriticalMethod method = SkillCriticalMethod.Create(criticalMethod);
-            if (method == null)
+            if (skillCriticalMethod == null)
             {
                 tempCriticalFactor = 100;
                 return tempCriticalFactor;
             }
 
-            int basCriticalRate = method.Calculate(this, troop, spellCell);
+            int basCriticalRate = skillCriticalMethod.Calculate(this, troop, spellCell);
             overrideData = GameUtility.IntOverrideData.Set(basCriticalRate);
             GameEvent.OnTroopAfterCalculateSkillSuccess?.Invoke(troop, this, spellCell, overrideData);
             basCriticalRate = overrideData.Value;

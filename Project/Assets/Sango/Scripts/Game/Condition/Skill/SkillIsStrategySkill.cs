@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Sango.Game
 {
-    public class SkillIsNormalSkill : Condition
+    public class SkillIsStrategySkill : Condition
     {
         // 比较结果: 0不是 1是
         int result;
@@ -17,7 +17,7 @@ namespace Sango.Game
                 SkillInstance skill = objects[i] as SkillInstance;
                 if (skill != null)
                 {
-                    return (skill.costEnergy == 0) == (result == 1);
+                    return (skill.IsStrategy()) == (result == 1);
                 }
             }
             return false;
@@ -27,7 +27,7 @@ namespace Sango.Game
         {
             if (skill != null)
             {
-                return (skill.costEnergy == 0) == (result == 1);
+                return (skill.IsStrategy()) == (result == 1);
             }
             return false;
         }
@@ -36,7 +36,7 @@ namespace Sango.Game
         {
             if (skillInstance != null)
             {
-                return (skillInstance.skill.costEnergy == 0) == (result == 1);
+                return (skillInstance.IsStrategy()) == (result == 1);
             }
             return false;
         }

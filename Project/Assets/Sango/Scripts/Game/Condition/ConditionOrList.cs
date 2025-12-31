@@ -52,6 +52,7 @@ namespace Sango.Game
                 Condition c = Condition.Create(obj.Value<string>("class"));
                 if (c != null)
                 {
+                    c.Init(obj, sangoObjects);
                     list.Add(c);
                 }
             }

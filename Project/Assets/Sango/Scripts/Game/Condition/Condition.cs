@@ -44,6 +44,8 @@ namespace Sango.Game
             // Skill
             Register("SkillIsCritical", CraeteHandle<SkillIsCritical>);
             Register("SkillIsNormalSkill", CraeteHandle<SkillIsNormalSkill>);
+            Register("SkillIsStrategySkill", CraeteHandle<SkillIsStrategySkill>);
+            
 
         }
     }

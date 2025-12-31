@@ -27,6 +27,8 @@ namespace Sango.Game
             SkillEffect.Init();
             PersonFunctions.Init();
             TroopCompareFunction.Init();
+            SkillSuccessMethod.Init();
+            SkillCriticalMethod.Init();
 
             ModManager.Instance.Init();
             StartCoroutine(GameInit());

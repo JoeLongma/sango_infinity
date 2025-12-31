@@ -127,7 +127,7 @@ namespace Sango.Game
                 buff.TurnUpdate();
             }
 
-            _buffs.RemoveAll(x => x.leftCounter <= 0);
+            _buffs.RemoveAll(x => x.leftCounter < 0);
         }
 
         public bool HasControlState()
@@ -155,7 +155,15 @@ namespace Sango.Game
 
         public void ReleaseAsset(string asset)
         {
-
+            if (assetRef.TryGetValue(asset, out BuffEffectInfo refInfo))
+            {
+                refInfo.refCount--;
+                if(refInfo.refCount == 0)
+                {
+                    refInfo.ClearAsset();
+                    assetRef.Remove(asset);
+                }
+            }
         }
     }
 }

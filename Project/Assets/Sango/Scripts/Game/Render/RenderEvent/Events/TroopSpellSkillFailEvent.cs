@@ -22,13 +22,10 @@ namespace Sango.Game.Render
                 troop.Render.SetSmokeShow(true);
             }
 
-            if(skill.IsStrategy())
+            if (!skill.IsStrategy())
             {
-                IsDone = true;
-                return;
+                replaceSkill = skill.IsRange() ? troop.NormalRangeSkill : troop.NormalSkill;
             }
-
-            replaceSkill = skill.IsRange() ? troop.NormalRangeSkill : troop.NormalSkill;
 
             if (skill.costEnergy > 0)
                 troop.Render.ShowSkill(skill, true, false);
@@ -72,7 +69,8 @@ namespace Sango.Game.Render
         public void Action()
         {
             if (isAction) return;
-            replaceSkill.Action(troop, spellCell, 100);
+            if (replaceSkill != null)
+                replaceSkill.Action(troop, spellCell, 100);
             isAction = true;
         }
 

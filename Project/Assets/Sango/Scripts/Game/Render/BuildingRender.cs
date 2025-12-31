@@ -64,6 +64,11 @@ namespace Sango.Game.Render
                 HeadBar = null;
             }
 
+            if(Building.IsIntorBuilding() && Building.durability >= Building.DurabilityLimit)
+            {
+                return;
+            }
+
             GameObject headBar = PoolManager.Create(GameRenderHelper.BuildingHeadbarRes);
             if (headBar != null)
             {
@@ -137,6 +142,15 @@ namespace Sango.Game.Render
                 else
                     MapObject.ChangeModel(Building.BuildingType.model);
             }
+
+            if (BuildingModel != null)
+            {
+                if (BuildingModel.maxLevelEffect != null)
+                {
+                    BuildingModel.maxLevelEffect.SetActive(Building.BuildingType.nextId == 0);
+                }
+            }
+
         }
 
         public override void UpdateRender()
