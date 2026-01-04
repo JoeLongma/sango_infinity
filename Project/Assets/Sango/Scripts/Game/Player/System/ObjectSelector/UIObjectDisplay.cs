@@ -165,5 +165,18 @@ namespace Sango.Game.Render.UI
             }
 
         }
+
+        public void Update()
+        {
+            Vector2 scrollWheel = Input.mouseScrollDelta;
+            if (scrollWheel.y > 0)
+            {
+                UpShow();
+            }
+            else if (scrollWheel.y < 0)
+            {
+                DownShow();
+            }
+        }
     }
 }

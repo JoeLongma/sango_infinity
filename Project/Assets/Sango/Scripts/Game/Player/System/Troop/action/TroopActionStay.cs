@@ -43,7 +43,13 @@ namespace Sango.Game.Player
             Singleton<TroopActionMenu>.Instance.troopRender.Clear();
             MovePath = Singleton<TroopSystem>.Instance.movePath;
 
-            if(MovePath.Count <= 1)
+            if (TargetTroop.cell == TargetTroop.BelongCity.CenterCell)
+            {
+                TargetTroop.BelongCorps.ReduceActionPoint(JobType.GetJobCostAP((int)CityJobType.MakeTroop));
+            }
+
+
+            if (MovePath.Count <= 1)
             {
                 OnMoveDone();
                 return;

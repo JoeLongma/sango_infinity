@@ -384,8 +384,15 @@ namespace Sango.Game
                 if (person.BelongForce != null)
                     person.BelongForce.CaptiveList.Add(person);
             }
-            foodCost = (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
+            PrepeareFoodCost();
             //MemberList?.InitCache();// = new SangoObjectList<Person>().FromString(_memberListStr, scenario.personSet);
+        }
+
+        public int PrepeareFoodCost()
+        {
+            Scenario scenario = Scenario.Cur;
+            foodCost = (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
+            return foodCost;
         }
 
         public override bool OnForceTurnStart(Scenario scenario)
@@ -416,7 +423,7 @@ namespace Sango.Game
             }
             else
             {
-                foodCost = (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
+                PrepeareFoodCost();
                 ChangeFood(-foodCost, false);
             }
 
@@ -1601,7 +1608,7 @@ namespace Sango.Game
             city.itemStore.Gain(LandTroopType.costItems, troops + woundedTroops);
             city.itemStore.Gain(WaterTroopType.costItems, troops + woundedTroops);
             city.woundedTroops += woundedTroops;
-
+            city.itemStore.Add(itemStore);
             // 中和士气
             city.morale = (city.morale * city.troops + morale * troops) / (city.troops + troops);
 

@@ -296,6 +296,9 @@ namespace Sango.Game
         [JsonConverter(typeof(ItemStoreConverter))]
         public ItemStore itemStore = new ItemStore();
 
+        [JsonProperty]
+        public int bannedForceId;
+
         public bool HasItem(int itemTypeId)
         {
             return itemStore.GetNumber(itemTypeId) > 0;
@@ -888,7 +891,7 @@ namespace Sango.Game
             return FeatureList.Contains(id);
         }
 
-       
+
 
     }
 }

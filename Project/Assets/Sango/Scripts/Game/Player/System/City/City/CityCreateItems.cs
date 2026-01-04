@@ -29,12 +29,7 @@ namespace Sango.Game.Player
         public CityCreateItems()
         {
             customTitleName = "生产兵装";
-            customTitleList = new List<ObjectSortTitle>()
-            {
-                PersonSortFunction.SortByName,
-                PersonSortFunction.SortByIntelligence,
-                PersonSortFunction.SortByBaseCreativeAbility,
-            };
+
             customMenuName = "都市/生产兵装";
             customMenuOrder = 30;
             windowName = "window_city_create_items";
@@ -42,6 +37,16 @@ namespace Sango.Game.Player
 
         public override void OnEnter()
         {
+            if (customTitleList == null)
+            {
+                customTitleList = new List<ObjectSortTitle>()
+                {
+                    PersonSortFunction.SortByName,
+                    PersonSortFunction.SortByIntelligence,
+                    PersonSortFunction.GetSortByFeatrueId(81),
+                };
+            }
+
             InitItem();
             base.OnEnter();
         }

@@ -97,7 +97,7 @@ namespace Sango.Game.Player
             for (int i = 0; i < ActionCell.Neighbors.Length; i++)
             {
                 Cell n = ActionCell.Neighbors[i];
-                if (n != null && n.building == null)
+                if (n != null && n.building == null && n.moveAble)
                 {
                     if (targetBuildingType.CanBuildToHere(n))
                     {
@@ -188,6 +188,12 @@ namespace Sango.Game.Player
 
                         if (buildRangeCell.Contains(cell))
                         {
+
+                            if (TargetTroop.cell == TargetTroop.BelongCity.CenterCell)
+                            {
+                                TargetTroop.BelongCorps.ReduceActionPoint(JobType.GetJobCostAP((int)CityJobType.MakeTroop));
+                            }
+
                             Cell stayCell = MovePath[MovePath.Count - 1];
                             targetBuildCell = cell;
 

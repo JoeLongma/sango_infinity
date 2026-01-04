@@ -180,7 +180,6 @@ namespace Sango.Game.Player
                         if (spellRangeCell.Contains(cell))
                         {
 
-
                             Cell stayCell = MovePath[MovePath.Count - 1];
                             spellCell = cell;
                             if (spellSkill == null)
@@ -193,6 +192,11 @@ namespace Sango.Game.Player
 
                             if (!spellSkill.CanSpeellToHere(TargetTroop, cell))
                                 return;
+
+                            if (TargetTroop.cell == TargetTroop.BelongCity.CenterCell)
+                            {
+                                TargetTroop.BelongCorps.ReduceActionPoint(JobType.GetJobCostAP((int)CityJobType.MakeTroop));
+                            }
 
                             Singleton<TroopActionMenu>.Instance.troopRender.Clear();
                             ContextMenu.CloseAll();

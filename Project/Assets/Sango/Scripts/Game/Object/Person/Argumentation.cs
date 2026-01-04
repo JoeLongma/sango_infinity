@@ -52,7 +52,11 @@ namespace Sango.Game
         /// </summary>
         public int infightingCriticalAdd;
 
-        
-        
+        /// <summary>
+        /// 对忠诚的影响
+        /// </summary>
+        public int loyaltyAdd;
+
+
     }
 }

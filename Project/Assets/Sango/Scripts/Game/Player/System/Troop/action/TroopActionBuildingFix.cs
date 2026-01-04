@@ -54,18 +54,6 @@ namespace Sango.Game.Player
         {
             get
             {
-                // 周围一格是可以建造的地块
-                //Cell stayCell = ActionCell;
-                //fixBuildingCell.Clear();
-                //for (int i = 0; i < stayCell.Neighbors.Length; i++)
-                //{
-                //    Cell n = stayCell.Neighbors[i];
-                //    if (n != null && n.building != null && n.building.IsSameForce(TargetTroop) && n.building.durability < n.building.DurabilityLimit)
-                //    {
-                //        fixBuildingCell.Add(n);
-                //    }
-                //}
-                //return fixBuildingCell.Count > 0;
                 return true;
             }
         }
@@ -157,6 +145,11 @@ namespace Sango.Game.Player
 
                         if (fixBuildingCell.Contains(cell))
                         {
+                            if(TargetTroop.cell == TargetTroop.BelongCity.CenterCell)
+                            {
+                                TargetTroop.BelongCorps.ReduceActionPoint(JobType.GetJobCostAP((int)CityJobType.MakeTroop));
+                            }
+
                             Cell stayCell = MovePath[MovePath.Count - 1];
                             targetBuildCell = cell;
 

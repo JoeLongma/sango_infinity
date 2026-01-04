@@ -79,6 +79,11 @@ namespace Sango.Game
         [JsonProperty] public int difficulty = 1;
 
         /// <summary>
+        /// 可招募的忠诚度,高于或等于此数值不可招募
+        /// </summary>
+        [JsonProperty] public float recruitableLine = 95;
+
+        /// <summary>
         /// 每一点农业带来的粮食收入
         /// </summary>
         [JsonProperty] public int agriculture_add_food = 10;

@@ -15,8 +15,11 @@ namespace Sango.Game.Player
             finishAction = action;
             sureAction = OnBaseSure;
             selected = new List<SangoObject>(resultList);
+            selected.RemoveAll(x => x == null);
             customSortItems = customSortTitles;
             this.customSortTitleName = cutomSortTitleName;
+            if (customSortTitles.Count > 1)
+                Objects.Sort(customSortItems[1].Sort);
             PlayerCommand.Instance.Push(this);
         }
 

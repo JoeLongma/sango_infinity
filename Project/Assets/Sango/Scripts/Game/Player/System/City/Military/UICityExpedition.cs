@@ -56,6 +56,7 @@ namespace Sango.Game.Render.UI
         Troop targetTroop;
         public override void OnShow()
         {
+
             cityExpeditionSys = Singleton<CityExpedition>.Instance;
             targetCity = cityExpeditionSys.TargetCity;
             targetTroop = cityExpeditionSys.TargetTroop;
@@ -350,7 +351,8 @@ namespace Sango.Game.Render.UI
             troopsLabel.text = $"{targetTroop.troops}/{targetTroop.MaxTroops}";
             goldLabel.text = $"{targetTroop.gold}/{targetCity.gold}";
             foodLabel.text = $"{targetTroop.food}/{targetCity.food}";
-            int turnCount = (int)(targetTroop.food / (targetTroop.troops * Scenario.Cur.Variables.baseFoodCostInTroop));
+            int foodCost = targetTroop.PrepeareFoodCost();
+            int turnCount = (int)(targetTroop.food / foodCost);
             dayTurnLabel.text = $"{turnCount * 10}日";
 
             SetItemLabel(itemTroopsLabel, targetCity.troops, targetTroop.troops);

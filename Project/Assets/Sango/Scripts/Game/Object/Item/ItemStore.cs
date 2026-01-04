@@ -96,6 +96,7 @@ namespace Sango.Game
 
         public void Add(ItemStore itemStore)
         {
+            if (itemStore == null) return;
             foreach (int itemTypeId in itemStore.Items.Keys)
             {
                 int number = itemStore.Items[itemTypeId];
