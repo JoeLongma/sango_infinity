@@ -388,7 +388,7 @@ namespace Sango.Game
                 }
             }
 
-           
+
             maxValues[0] = -99999;
             maxValues[1] = 99999;
             for (int i = 0; i < count; i++)
@@ -682,6 +682,9 @@ namespace Sango.Game
             level = Troop.CheckTroopTypeLevel(troopType, person1);
 
             int destSlot = 1;
+            if (destSlot >= maxPersonLimit)
+                return checkPersons;
+
             // 必须要兵符携带者为主将
             if (troopType.validItemId > 0)
             {
@@ -761,7 +764,7 @@ namespace Sango.Game
                 }
             }
 
-            if (destSlot == maxPersonLimit)
+            if (destSlot >= maxPersonLimit)
                 return checkPersons;
 
             // 优先补充适应
@@ -788,7 +791,7 @@ namespace Sango.Game
                 destSlot++;
             }
 
-            if (destSlot == maxPersonLimit)
+            if (destSlot >= maxPersonLimit)
                 return checkPersons;
 
             for (int k = 0; k < 2; k++)
@@ -831,7 +834,7 @@ namespace Sango.Game
                     }
                 }
 
-                if (destSlot == maxPersonLimit)
+                if (destSlot >= maxPersonLimit)
                     return checkPersons;
 
                 if (person1.Intelligence < 70)
@@ -853,7 +856,7 @@ namespace Sango.Game
                     }
                 }
 
-                if (destSlot == maxPersonLimit)
+                if (destSlot >= maxPersonLimit)
                     return checkPersons;
             }
 
@@ -1001,9 +1004,9 @@ namespace Sango.Game
                             maxValue[1] = buildAbility;
                             return true;
                         }
-                        else if(c == maxValue[0])
+                        else if (c == maxValue[0])
                         {
-                            if( buildAbility < maxValue[1])
+                            if (buildAbility < maxValue[1])
                             {
                                 maxValue[1] = buildAbility;
                                 return true;

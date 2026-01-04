@@ -64,11 +64,6 @@ namespace Sango.Game.Render
                 HeadBar = null;
             }
 
-            if(Building.IsIntorBuilding() && Building.durability >= Building.DurabilityLimit)
-            {
-                return;
-            }
-
             GameObject headBar = PoolManager.Create(GameRenderHelper.BuildingHeadbarRes);
             if (headBar != null)
             {

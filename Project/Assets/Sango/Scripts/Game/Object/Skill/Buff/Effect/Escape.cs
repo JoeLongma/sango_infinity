@@ -1,12 +1,13 @@
 ﻿using Newtonsoft.Json.Linq;
+using Sango.Game.Render;
 using System.Collections.Generic;
 
 namespace Sango.Game
 {
     /// <summary>
-    /// 不可行动(扰乱)
+    /// 逃跑(伪报)
     /// </summary>
-    public class Stun : BuffEffect
+    public class Escape : BuffEffect
     {
         public override void Init(JObject p, BuffInstance master)
         {
@@ -19,6 +20,12 @@ namespace Sango.Game
             if(troop == master.Target)
             {
                 troop.ActionOver = true;
+                troop.TryMoveToCity(troop.BelongCity);
+                Render.RenderEvent.Instance.Add(new TroopEscapeToCityEvent()
+                {
+                    troop = troop,
+                    dest = troop.BelongCity
+                });
             }
         }
 

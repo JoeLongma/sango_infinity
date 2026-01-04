@@ -11,6 +11,7 @@ namespace Sango.Game.Player
         {
             customMenuName = "计略";
             customMenuOrder = 30;
+            iconRes = "Assets/UI/Prefab/worldIcon_2.prefab";
         }
 
         protected override void OnTroopActionContextMenuShow(ContextMenuData menuData, Troop troop, Cell actionCell)

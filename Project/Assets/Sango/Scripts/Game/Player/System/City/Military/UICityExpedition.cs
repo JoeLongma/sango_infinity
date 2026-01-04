@@ -128,7 +128,7 @@ namespace Sango.Game.Render.UI
 
             UIBuildingTypeItem cityBuildingSlot = landTroopTypePool[cityExpeditionSys.CurSelectLandTrropTypeIndex];
             cityBuildingSlot.SetSelected(false);
-            cityExpeditionSys.AutoMakeTroop(3);
+            cityExpeditionSys.AutoMakeTroop(2);
             cityBuildingSlot = landTroopTypePool[cityExpeditionSys.CurSelectLandTrropTypeIndex];
             cityBuildingSlot.SetSelected(true);
 
@@ -140,7 +140,7 @@ namespace Sango.Game.Render.UI
         {
             UIBuildingTypeItem cityBuildingSlot = landTroopTypePool[cityExpeditionSys.CurSelectLandTrropTypeIndex];
             cityBuildingSlot.SetSelected(false);
-            cityExpeditionSys.AutoMakeTroop(1);
+            cityExpeditionSys.AutoMakeTroop(3);
             cityBuildingSlot = landTroopTypePool[cityExpeditionSys.CurSelectLandTrropTypeIndex];
             cityBuildingSlot.SetSelected(true);
 
@@ -151,7 +151,7 @@ namespace Sango.Game.Render.UI
         {
             UIBuildingTypeItem cityBuildingSlot = landTroopTypePool[cityExpeditionSys.CurSelectLandTrropTypeIndex];
             cityBuildingSlot.SetSelected(false);
-            cityExpeditionSys.AutoMakeTroop(2);
+            cityExpeditionSys.AutoMakeTroop(4);
             cityBuildingSlot = landTroopTypePool[cityExpeditionSys.CurSelectLandTrropTypeIndex];
             cityBuildingSlot.SetSelected(true);
 
@@ -162,7 +162,7 @@ namespace Sango.Game.Render.UI
         {
             UIBuildingTypeItem cityBuildingSlot = landTroopTypePool[cityExpeditionSys.CurSelectLandTrropTypeIndex];
             cityBuildingSlot.SetSelected(false);
-            cityExpeditionSys.AutoMakeTroop(4);
+            cityExpeditionSys.AutoMakeTroop(5);
             cityBuildingSlot = landTroopTypePool[cityExpeditionSys.CurSelectLandTrropTypeIndex];
             cityBuildingSlot.SetSelected(true);
 

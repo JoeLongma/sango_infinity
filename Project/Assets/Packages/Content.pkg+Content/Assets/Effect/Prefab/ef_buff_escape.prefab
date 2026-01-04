@@ -4722,7 +4722,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bc29c8add7be63044af66607b7632628, type: 2}
+  - {fileID: 2100000, guid: da01ac51ffb508f4da1703cea79db470, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5001,9 +5001,9 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.8666667, g: 0.45974022, b: 0.09411764, a: 1}
-        key1: {r: 1, g: 0.9790452, b: 0.23921567, a: 1}
-        key2: {r: 0.9169811, g: 0.91045403, b: 0, a: 0}
+        key0: {r: 0.55707186, g: 0.09416164, b: 0.8679245, a: 1}
+        key1: {r: 0.61638397, g: 0.24056602, b: 1, a: 1}
+        key2: {r: 0.18126859, g: 0.017221425, b: 0.4056604, a: 0}
         key3: {r: 0.52156866, g: 0.019607844, b: 0.019607844, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -9569,7 +9569,7 @@ GameObject:
   - component: {fileID: 4151974341459477501}
   - component: {fileID: 826571761432539110}
   m_Layer: 0
-  m_Name: ef_buff_xuanyun
+  m_Name: ef_buff_escape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14596,10 +14596,10 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0.99667424, b: 0.49622637, a: 1}
-        key1: {r: 1, g: 0.81301373, b: 0.23921567, a: 1}
-        key2: {r: 0.85660374, g: 0.73196566, b: 0.10182267, a: 0}
-        key3: {r: 0.93962264, g: 0.74856514, b: 0.44499102, a: 0}
+        key0: {r: 0.55707186, g: 0.09416164, b: 0.8679245, a: 1}
+        key1: {r: 0.61638397, g: 0.24056602, b: 1, a: 1}
+        key2: {r: 0.18126859, g: 0.017221425, b: 0.4056604, a: 0}
+        key3: {r: 0.52156866, g: 0.019607844, b: 0.019607844, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
@@ -14607,7 +14607,7 @@ ParticleSystem:
         ctime0: 578
         ctime1: 15613
         ctime2: 57054
-        ctime3: 57285
+        ctime3: 65535
         ctime4: 0
         ctime5: 0
         ctime6: 0
@@ -19101,7 +19101,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f463d892d2f576e4ab6cc94ab77f4233, type: 2}
+  - {fileID: 2100000, guid: 1907bc0e82fc6814bae21e83c2c3075a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

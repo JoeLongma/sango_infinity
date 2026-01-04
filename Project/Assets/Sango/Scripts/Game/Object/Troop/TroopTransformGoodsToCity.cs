@@ -2,7 +2,7 @@
 {
     public class TroopTransformGoodsToCity : TroopMissionBehaviour
     {
-        public override MissionType MissionType { get { return MissionType.TroopMovetoCity; } }
+        public override MissionType MissionType { get { return MissionType.TroopTransformGoodsToCity; } }
         public override bool IsMissionComplete { get { return !TargetCity.IsSameForce(Troop); } }
         public override void Prepare(Troop troop, Scenario scenario)
         {

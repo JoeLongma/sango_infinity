@@ -168,7 +168,7 @@ namespace Sango.Game.Render.UI
             Window.Instance.Close("window_scenario_force_select");
         }
 
-        public void OnNext()
+        public void StartGame()
         {
             List<int> forceIds = new List<int>();
             for (int i = 0; i < playerList.Count; i++)
@@ -217,6 +217,24 @@ namespace Sango.Game.Render.UI
             Window.Instance.Open("window_loading");
             Window.Instance.Close("window_scenario_force_select");
             Scenario.StartScenario(Scenario.CurSelected, forceIds);
+        }
+
+        public void OnNext()
+        {
+            if (playerList.Count == 0)
+            {
+                UIDialog.Open("未选择任何势力,将进入上帝放置模式,确定进入游戏吗??", () =>
+                {
+                    UIDialog.Close();
+                    StartGame();
+                }).cancelAction = () =>
+                {
+                    UIDialog.Close();
+                };
+                return;
+            }
+
+            StartGame();
         }
 
         public void Update()

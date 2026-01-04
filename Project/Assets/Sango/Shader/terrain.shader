@@ -2,7 +2,7 @@
 Shader "Sango/terrain_urp" {
 	Properties{
 		_BaseMap("MainTex", 2D) = "white" {}
-		_BaseColorIntensity("BaseColorFactor", float) = 1
+		_BaseColorIntensity("BaseColorFactor", float) = 0.85
 		_OutlineWidth("width", float) = 3.5
 		_Alpha("Alpha", float) = 1
 

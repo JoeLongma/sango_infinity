@@ -1,8 +1,6 @@
-﻿using Sango.Game.Render.UI;
-using Sango.Render;
+﻿using Sango.Render;
 using System.Collections.Generic;
 using UnityEngine;
-using ContextMenu = Sango.Game.Render.UI.ContextMenu;
 namespace Sango.Game.Player
 {
     public class TroopSystem : CommandSystemBase
@@ -151,14 +149,19 @@ namespace Sango.Game.Player
 
                         if (!moveRange.Contains(cell))
                             return;
-                        
-                        if(cell == TargetTroop.cell || cell.IsEmpty())
+
+                        // 排除出征城市,出征城市无法原地进行行为
+                        if ((cell == TargetTroop.cell && cell.building == null) || cell.IsEmpty())
                         {
                             movePath.Clear();
                             Scenario.Cur.Map.GetMovePath(TargetTroop, cell, movePath);
                             Singleton<TroopActionMenu>.Instance.Start(TargetTroop, cell, clickPosition);
                             return;
                         }
+
+                        // 排除出征城市
+                        if (TargetTroop.cell.building == TargetTroop.BelongCity && cell.building == TargetTroop.BelongCity)
+                            return;
 
                         movePath.Clear();
                         Scenario.Cur.Map.GetMovePath(TargetTroop, cell, movePath);

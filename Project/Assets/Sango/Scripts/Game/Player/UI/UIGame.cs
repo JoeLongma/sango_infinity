@@ -167,7 +167,7 @@ namespace Sango.Game.Render.UI
             }
         }
 
-        void OnDestroy()
+        protected override void OnDestroy()
         {
             GameEvent.OnTroopCreated -= OnTroopChange;
             GameEvent.OnTroopDestroyed -= OnTroopChange;
@@ -404,24 +404,32 @@ namespace Sango.Game.Render.UI
 
         public void OnEndPlayerTurn()
         {
+            if (PlayerCommand.Instance.CurrentCommand != null)
+                return;
             ContextMenu.CloseAll();
             Singleton<PlayerEndTurn>.Instance.Push();
         }
 
         public void OnSwitchCityInfoShow()
         {
+            if (PlayerCommand.Instance.CurrentCommand != null)
+                return;
             UICityHeadbar.showIndo = !UICityHeadbar.showIndo;
             GameEvent.OnCityHeadbarShowInfoChange?.Invoke();
         }
 
         public void OnSwitchMiniMapShow()
         {
+            if (PlayerCommand.Instance.CurrentCommand != null)
+                return;
             miniMapObj.SetActive(!miniMapObj.activeSelf);
             miniMapBtnObj.SetActive(!miniMapBtnObj.activeSelf);
         }
 
         public void OnGameSetting()
         {
+            if (PlayerCommand.Instance.CurrentCommand != null)
+                return;
             Window.Instance.Close("window_city_info_panel");
             Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(Game.Instance.UICamera, gameSettingRect.position);
             Singleton<GameSettingSystem>.Instance.Start(screenPos + new Vector2(0, -gameSettingRect.sizeDelta.y - 5));

@@ -315,6 +315,13 @@ namespace Sango.Game
         /// <returns></returns>
         public bool CheckSuccess(Troop troop, Cell spellCell)
         {
+            // 普通攻击,必中
+            if (costEnergy == 0) return true;
+
+            // 除开计略,目标只有有控制状态,必中
+            if (spellCell.troop != null && !IsStrategy() && spellCell.troop.HasControlBuff())
+                return true;
+
             int baseSuccessRate = 0;
             Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(baseSuccessRate);
             GameEvent.OnTroopBeforeCalculateSkillSuccess?.Invoke(troop, this, spellCell, overrideData);

@@ -15,8 +15,12 @@ namespace Sango.Game.Player
         protected SkillInstance spellSkill;
         protected bool isShow = false;
         protected bool isMoving = false;
+        protected string iconRes;
+        protected List<GameObject> spellIconList = new List<GameObject>();
+
         public TroopActionAttack()
         {
+            iconRes = "Assets/UI/Prefab/worldIcon_1.prefab"; 
             customMenuName = "攻击";
             customMenuOrder = 10;
         }
@@ -44,7 +48,7 @@ namespace Sango.Game.Player
                                 hasTarget = true;
                             }
                         }
-                    }   
+                    }
                 }
                 rangeCell.Clear();
                 if (TargetTroop.NormalRangeSkill != null)
@@ -52,9 +56,9 @@ namespace Sango.Game.Player
                     SkillInstance skill = TargetTroop.NormalRangeSkill;
                     if (skill.CanBeSpell(TargetTroop))
                     {
-                      
+
                         skill.GetSpellRange(TargetTroop, stayCell, rangeCell);
-                        foreach(Cell c in rangeCell)
+                        foreach (Cell c in rangeCell)
                         {
                             if (skill.CanSpeellToHere(TargetTroop, c))
                             {
@@ -62,7 +66,7 @@ namespace Sango.Game.Player
                                 hasTarget = true;
                             }
                         }
-                    }   
+                    }
                 }
 
                 return hasTarget;
@@ -91,6 +95,17 @@ namespace Sango.Game.Player
                 if (!MovePath.Contains(c))
                     mapRender.SetGridMaskColor(c.x, c.y, Color.red);
                 mapRender.SetDarkMaskColor(c.x, c.y, Color.black);
+
+                GameObject resObj = PoolManager.Create(iconRes);
+                if (resObj != null)
+                {
+                    spellIconList.Add(resObj);
+                    resObj.transform.parent = null;
+                    resObj.transform.position = c.Position;
+                    if (!resObj.activeSelf)
+                        resObj.SetActive(true);
+                }
+
             }
             mapRender.EndSetGridMask();
             mapRender.EndSetDarkMask();
@@ -98,6 +113,11 @@ namespace Sango.Game.Player
 
         protected void ClearShowSpellRange()
         {
+            for (int i = 0, count = spellIconList.Count; i < count; ++i)
+            {
+                PoolManager.Recycle(spellIconList[i]);
+            }
+            spellIconList.Clear();
             MapRender mapRender = MapRender.Instance;
             mapRender.SetDarkMask(false);
             if (spellRangeCell.Count == 0) return;
@@ -178,7 +198,7 @@ namespace Sango.Game.Player
                             ContextMenu.CloseAll();
                             Cell start = TargetTroop.cell;
 
-                            if(start  == stayCell)
+                            if (start == stayCell)
                             {
                                 isShow = true;
                                 isMoving = false;
