@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace Sango.Game
 {
@@ -83,7 +84,7 @@ namespace Sango.Game
         /// <summary>
         /// 是否被发现
         /// </summary>
-        [JsonProperty] public bool beFinded;
+        public bool beFinded => !Invisible;
 
         /// <summary>
         /// 出生年
@@ -362,8 +363,7 @@ namespace Sango.Game
         /// <summary>
         /// 是否可登场
         /// </summary>
-        public virtual bool IsValid => Age >= 16;
-
+        public virtual bool IsValid => state > 0 && state < 5 && Age >= 16;
 
         /// <summary>
         /// 兵力上限其他更改值(道具等加持)
@@ -465,6 +465,8 @@ namespace Sango.Game
         public int Age { get; private set; }
         public bool IsFree { get { return BelongTroop == null && missionType == (int)MissionType.None; } }
         public bool IsWild { get { return BelongCorps == null; } }
+        public bool IsPrisoner { get { return state == (int)PersonStateType.Prisoner; } }
+        public bool Invisible { get { return state == (int)PersonStateType.Invisible; } }
 
         public bool IsAlliance(BuildingBase other)
         {
@@ -507,9 +509,30 @@ namespace Sango.Game
             {
                 if (!IsWild)
                 {
-                    beFinded = true;
-
-                    if (missionType != (int)MissionType.PersonInCityCaptive && missionType != (int)MissionType.PersonInTroopCaptive)
+                    if (IsPrisoner)
+                    {
+                        if (missionType == (int)MissionType.PersonInCityCaptive)
+                        {
+                            City city = scenario.GetObject<City>(missionTarget);
+                            if (city != null)
+                            {
+                                city.captiveList.Add(this);
+                            }
+                        }
+                        else if (missionType != (int)MissionType.PersonInTroopCaptive)
+                        {
+                            Troop troop = scenario.GetObject<Troop>(missionTarget);
+                            if (troop != null)
+                            {
+                                troop.captiveList.Add(this);
+                            }
+                        }
+                        else
+                        {
+                            Sango.Log.Error($"[{Id}]{Name}归属force:{BelongForce.Name} corps:{BelongCorps.Name}, 没有坐牢任务[{BelongCity.Id}] force:{BelongCity.BelongForce.Name} corps:{BelongCity.BelongCorps.Name}");
+                        }
+                    }
+                    else
                     {
                         BelongCity.Add(this);
                         if (BelongForce != BelongCity.BelongForce || BelongCorps != BelongCity.BelongCorps)
@@ -519,7 +542,20 @@ namespace Sango.Game
                     }
                 }
                 else
-                    BelongCity.wildPersons.Add(this);
+                {
+                    if (Invisible)
+                    {
+                        BelongCity.invisiblePersons.Add(this);
+                    }
+                    else if (IsPrisoner)
+                    {
+                        BelongCity.captiveList.Add(this);
+                    }
+                    else
+                    {
+                        BelongCity.wildPersons.Add(this);
+                    }
+                }
             }
 
             if (Father != null)
@@ -587,7 +623,7 @@ namespace Sango.Game
                             missionCounter--;
                             if (missionCounter <= 0)
                             {
-                                JobRecuritPerson(dest);
+                                JobRecuritPerson(dest, 0);
                                 SetMission(MissionType.PersonReturn, BelongCity, 1);
                             }
                         }
@@ -737,10 +773,14 @@ namespace Sango.Game
             return last;
         }
 
-        public void JobRecuritPerson(Person person)
+        public bool JobRecuritPerson(Person person, int type)
         {
+            int probability = GameFormula.RecuritPersonProbability(this, person, type);
+#if SANGO_DEBUG
+            Sango.Log.Print($"[{BelongForce.Name}]<{Name}>招募 -> {person.Name} 成功率:{probability}");
+#endif
             //TODO: 招募成功概率计算
-            bool success = true;
+            bool success = GameRandom.Chance(probability);
             if (success)
             {
 #if SANGO_DEBUG
@@ -782,6 +822,7 @@ namespace Sango.Game
             merit += meritGain;
             BelongForce?.GainTechniquePoint(techniquePointGain);
             ActionOver = true;
+            return success;
         }
 
         /// <summary>
@@ -849,7 +890,7 @@ namespace Sango.Game
         public Person BeCaptive(City city)
         {
             SetMission(MissionType.PersonInCityCaptive, city, 999);
-            city.CaptiveList.Add(this);
+            city.captiveList.Add(this);
             this.BelongForce.CaptiveList.Add(this);
             return this;
         }
@@ -891,7 +932,57 @@ namespace Sango.Game
             return FeatureList.Contains(id);
         }
 
+        public bool HasFeatrue(int[] ids)
+        {
+            if (FeatureList == null || FeatureList.Count == 0) return false;
+            if (ids == null) return false;
+            for (int i = 0; i < ids.Length; i++)
+            {
+                if (FeatureList.Contains(ids[i])) return true;
+            }
+            return false;
+        }
 
+        public int Distance(Person other)
+        {
+            if (other == null) return 0;
+            Cell cell = BelongTroop != null ? BelongTroop.cell : BelongCity.CenterCell;
+            Cell otherCell = other.BelongTroop != null ? other.BelongTroop.cell : other.BelongCity.CenterCell;
+            return cell.Distance(otherCell);
+        }
 
+        public int CompatibilityDistance(Person other)
+        {
+            if (other == null) return 0;
+            return Math.Abs(compatibility - (other.compatibility));
+        }
+
+        public bool IsLike(Person other)
+        {
+            if (other == null || LikePersonList == null) return false;
+            return LikePersonList.Contains(other);
+        }
+
+        public bool IsHate(Person other)
+        {
+            if (other == null || HatePersonList == null) return false;
+            return HatePersonList.Contains(other);
+        }
+
+        public bool IsBrother(Person other)
+        {
+            if (other == null || BrotherList == null) return false;
+            return BrotherList.Contains(other);
+        }
+
+        public bool IsParentchild(Person other)
+        {
+            if (other == null) return false;
+            if (other.Father == this) return true;
+            if (other.Mother == this) return true;
+            if (Father == other) return true;
+            if (Mother == other) return true;
+            return false;
+        }
     }
 }

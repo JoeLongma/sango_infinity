@@ -207,7 +207,7 @@ namespace Sango.Game
         /// </summary>
         [JsonConverter(typeof(SangoObjectListIDConverter<Person>))]
         [JsonProperty]
-        public SangoObjectList<Person> CaptiveList = new SangoObjectList<Person>();
+        public SangoObjectList<Person> captiveList = new SangoObjectList<Person>();
 
 
         [JsonProperty]
@@ -235,6 +235,7 @@ namespace Sango.Game
 
         public List<Person> freePersons = new List<Person>();
         public List<Person> wildPersons = new List<Person>();
+        public List<Person> invisiblePersons = new List<Person>();
 
         public int FreePersonCount => freePersons.Count;
         public int PersonHole { get; set; }
@@ -440,7 +441,7 @@ namespace Sango.Game
                 }
             }
 
-            foreach (Person person in CaptiveList)
+            foreach (Person person in captiveList)
             {
                 if (person.BelongForce != null)
                     person.BelongForce.CaptiveList.Add(person);
@@ -993,9 +994,9 @@ namespace Sango.Game
             }
 
             // 城倒,俘虏逃
-            for (int i = 0; i < CaptiveList.Count; i++)
+            for (int i = 0; i < this.captiveList.Count; i++)
             {
-                Person person = CaptiveList[i];
+                Person person = this.captiveList[i];
                 if (person.IsWild)
                 {
                     person.BelongCity = this;
@@ -1011,7 +1012,7 @@ namespace Sango.Game
                 }
             }
 
-            CaptiveList.Clear();
+            this.captiveList.Clear();
 
             // 白城
             if (BelongCorps == null)
@@ -1321,6 +1322,20 @@ namespace Sango.Game
                         if (feature.kind == (int)FeatureKindType.CityProduce)
                             person.FeatureList[j].InitActions(sJobActions, this);
                     }
+                }
+            }
+        }
+
+        void InitJobFeature(Person person)
+        {
+            sJobActions.Clear();
+            if (person != null && person.FeatureList != null)
+            {
+                for (int j = 0; j < person.FeatureList.Count; j++)
+                {
+                    Feature feature = person.FeatureList[j];
+                    if (feature.kind == (int)FeatureKindType.CityProduce)
+                        person.FeatureList[j].InitActions(sJobActions, this);
                 }
             }
         }
@@ -2216,111 +2231,90 @@ namespace Sango.Game
         public bool JobSearching(Person[] personList)
         {
             if (personList == null || personList.Length == 0) return false;
-
-            Scenario scenario = Scenario.Cur;
-
-            ScenarioVariables variables = scenario.Variables;
-            int jobId = (int)CityJobType.Searching;
-            InitJobFeature(personList);
-            int goldNeed = JobType.GetJobCost(jobId);
-
-            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(goldNeed);
-            GameEvent.OnCityCheckJobCost?.Invoke(this, jobId, personList, overrideData);
-            goldNeed = overrideData.Value;
-
-            if (gold < goldNeed)
-            {
-                ClearJobFeature();
-                return false;
-            }
-
-
-            int meritGain = JobType.GetJobMeritGain(jobId);
-            int techniquePointGain = JobType.GetJobTPGain(jobId);
-            int apCost = JobType.GetJobCostAP(jobId);
-            int totalAPCost = 0;
             for (int i = 0; i < personList.Length; i++)
             {
                 Person person = personList[i];
                 if (person == null) continue;
-
-                int ability_improve = (int)person.BaseSearchingAbility / 50;
-                freePersons.Remove(person);
-                // 发现人才
-                if (wildPersons.Count > 0)
+                CityPersonSearchingEvent te = new CityPersonSearchingEvent()
                 {
-                    Person wild_dest = null;
-                    for (int j = 0; j < wildPersons.Count; j++)
-                    {
-                        Person wild = wildPersons[j];
-                        if (wild != null && wild.IsAlive && wild.IsValid && !wild.beFinded)
-                        {
-                            wild_dest = wild;
-                            break;
-                        }
-                    }
-
-                    if (wild_dest != null)
-                    {
-                        overrideData.Value = ability_improve;
-                        GameEvent.OnCityJobSearchingWild?.Invoke(this, jobId, person, overrideData);
-                        ability_improve = overrideData.Value;
-
-                        if (GameRandom.Chance(10 * ability_improve))
-                        {
-#if SANGO_DEBUG
-                            Sango.Log.Print($"@内政@[{BelongForce.Name}]<{Name}>的{person.Name}发现了人才->{wild_dest.Name}");
-#endif
-                            wild_dest.beFinded = true;
-                            person.merit += meritGain;
-                            person.GainExp(meritGain);
-
-                            person.ActionOver = true;
-                        }
-                    }
-                }
-
-                //TODO: 搜索道具
-                //if (!person.ActionOver && GameRandom.Changce((int)(3 * ability_improve)))
-                //{
-                //    person.ActionOver = true;
-                //    continue;
-                //}
-
-
-                // 搜索钱财
-                if (!person.ActionOver && GameRandom.Chance((int)(10 * ability_improve)))
-                {
-                    person.merit += meritGain;
-                    person.GainExp(meritGain);
-
-                    person.ActionOver = true;
-                }
-
-                //TODO: 触发事件
-
-                // 什么也没找到
-                if (!person.ActionOver)
-                {
-                    person.merit += meritGain;
-                    person.GainExp(meritGain);
-                    person.ActionOver = true;
-                }
-
-
-                totalAPCost += apCost;
-
+                    city = this,
+                    person = person,
+                };
+                RenderEvent.Instance.Add(te);
             }
-            BelongCorps.ReduceActionPoint(totalAPCost);
+            return true;
+        }
+
+        public bool DoJobSearching(Person person, out Person target)
+        {
+            Scenario scenario = Scenario.Cur;
+            ScenarioVariables variables = scenario.Variables;
+            int jobId = (int)CityJobType.Searching;
+            int meritGain = JobType.GetJobMeritGain(jobId);
+            int techniquePointGain = JobType.GetJobTPGain(jobId);
+            int apCost = JobType.GetJobCostAP(jobId);
+            target = null;
+            freePersons.Remove(person);
+
+            // 发现人才
+            int probality = 20 + person.Politics * 3 / 5;
+            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(probality);
+            if (invisiblePersons.Count > 0)
+            {
+                GameEvent.OnCityJobSearchingWild?.Invoke(this, jobId, person, overrideData);
+                probality = overrideData.Value;
+                if (GameRandom.Chance(probality))
+                {
+                    target = invisiblePersons[GameRandom.Range(0, invisiblePersons.Count)];
+                    target.state = (int)PersonStateType.Normal;
+#if SANGO_DEBUG
+                    Sango.Log.Print($"@内政@[{BelongForce.Name}]<{Name}>的{person.Name}发现了人才->{target.Name}");
+#endif
+                    person.merit += meritGain;
+                    person.GainExp(meritGain);
+                    person.ActionOver = true;
+                    ClearJobFeature();
+                    return true;
+                }
+            }
+
+            //TODO: 搜索道具
+            //if (!person.ActionOver && GameRandom.Changce((int)(3 * ability_improve)))
+            //{
+            //    person.ActionOver = true;
+            //    continue;
+            //}
+
+            // 搜索钱财
+            probality = person.Politics * 3 / 5;
+            if (!person.ActionOver && GameRandom.Chance(probality))
+            {
+                person.merit += meritGain;
+                person.GainExp(meritGain);
+                person.ActionOver = true;
+            }
+
+            //TODO: 触发事件
+
+            // 什么也没找到
+            if (!person.ActionOver)
+            {
+                person.merit += meritGain;
+                person.GainExp(meritGain);
+                person.ActionOver = true;
+            }
+
+            BelongCorps.ReduceActionPoint(apCost);
 
             overrideData.Value = techniquePointGain;
-            GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, personList, overrideData);
+            GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, new Person[] { person }, overrideData);
             techniquePointGain = overrideData.Value;
 
             BelongForce.GainTechniquePoint(techniquePointGain);
             ClearJobFeature();
-            return true;
+            return false;
         }
+
 
         /// <summary>
         /// 治疗伤兵
@@ -2764,7 +2758,7 @@ namespace Sango.Game
             if (dest.BelongCity == person.BelongCity)
             {
                 // 直接招募
-                person.JobRecuritPerson(dest);
+                person.JobRecuritPerson(dest, 0);
                 freePersons.Remove(person);
                 wildPersons.Remove(dest);
             }

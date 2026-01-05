@@ -28,6 +28,8 @@ namespace Sango.Game.Player
             //人事
             Singleton<CityCallPerson>.Instance.Init();
             Singleton<CityTransformPerson>.Instance.Init();
+            Singleton<CitySeraching>.Instance.Init();
+            
         }
 
         public City TargetCity { get; set; }

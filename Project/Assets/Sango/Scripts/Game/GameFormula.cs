@@ -167,21 +167,46 @@ namespace Sango.Game
             }
 
             // 
-            int aishou = 25;
-            int n = 0;
+           
             Argumentation argumentation = target.argumentation;
 
-            if (type == 2)
-                loyalty = Math.Min(loyalty, 70);
+            Person actorGovernor = actor.BelongForce.Governor;
+            Person targetGovernor = null;
+            if(target.BelongForce != null)
+                targetGovernor = target.BelongForce.Governor;
 
+            int aishou = 25;
+            //目标武将在野或是已灭亡势力的俘虏
             if (target.IsWild)
             {
-                loyalty = 60 + Scenario.Cur.Variables.difficulty * 5;
-                argumentation = Scenario.Cur.GetObject<Argumentation>(3);
+                loyalty = 50 + Scenario.Cur.Variables.difficulty * 5;
+                if (!target.IsPrisoner)
+                    //义理_普通
+                    argumentation = Scenario.Cur.GetObject<Argumentation>(3);
             }
+            // 获取目标相性与君主的距离
+            else
+            {
+                aishou = target.CompatibilityDistance(targetGovernor);
+            }
+            int n = 50 + (aishou - target.CompatibilityDistance(actorGovernor)) * 3 / 2;
+            n -= (argumentation.loyaltyAdd + 18) * loyalty * 5 / 100;
+            n += Math.Max(actor.Glamour, 30) * 3 / 5;
+            n -= target.IsLike(targetGovernor) ? 15 : 0;
+            n -= target.IsParentchild(targetGovernor) ? 15 : 0;
+            n += target.IsHate(targetGovernor) ? 15 : 0;
+            n += target.IsPrisoner ? 15 : 0;
+            n += GameRandom.Range(0, Math.Max(0, 5 - argumentation.loyaltyAdd));
+            // 主公魅力影响10%
+            n += actorGovernor.Glamour / 10;
+            n = Math.Max(n, 0);
 
+            int giri = 10;
+            if (type != 0)
+                giri = Math.Min(15 - argumentation.loyaltyAdd * 2, 10);
+            n = Math.Min(n * giri / 10, 100);
 
-            return 0;
+            return n;
         }
 
     }

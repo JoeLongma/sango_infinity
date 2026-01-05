@@ -83,7 +83,7 @@ namespace Sango.Game.Render.UI
             business.SetText(city.hasBusiness.ToString());
 
             person.SetText($"{city.FreePersonCount}/{city.allPersons.Count}");
-            captive.SetText(city.CaptiveList.Count.ToString());
+            captive.SetText(city.captiveList.Count.ToString());
             wild.SetText(city.wildPersons.Count.ToString());
         }
 

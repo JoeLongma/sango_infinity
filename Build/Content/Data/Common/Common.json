@@ -4,38 +4,36 @@
       "Id": 1,
       "Name": "容易背叛",
       "kind": 1,
-      "falseReportSuccessAdd": 0,
-      "disturbSuccessAdd": 0,
-      "infightingCriticalAdd": 10
+      "infightingCriticalAdd": 10,
+      "loyaltyAdd": 1
     },
     "2": {
       "Id": 2,
       "Name": "无情义",
       "kind": 2,
-      "falseReportSuccessAdd": 0,
-      "disturbSuccessAdd": 0,
-      "infightingCriticalAdd": 5
+      "infightingCriticalAdd": 5,
+      "loyaltyAdd": 2
     },
     "3": {
       "Id": 3,
       "Name": "普通",
       "kind": 3,
-      "falseReportSuccessAdd": 0,
-      "disturbSuccessAdd": 0,
-      "infightingCriticalAdd": 0
+      "infightingCriticalAdd": 0,
+      "loyaltyAdd": 3
     },
     "4": {
       "Id": 4,
       "Name": "情理坚定",
       "kind": 4,
-      "falseReportSuccessAdd": 0,
-      "disturbSuccessAdd": 0,
-      "infightingCriticalAdd": -5
+      "infightingCriticalAdd": -5,
+      "loyaltyAdd": 4
     },
     "5": {
       "Id": 5,
       "Name": "不会背叛",
-      "infightingCriticalAdd": -10
+      "kind": 5,
+      "infightingCriticalAdd": -10,
+      "loyaltyAdd": 5
     }
   },
   "AttributeChangeTypes": {
@@ -7029,7 +7027,7 @@
   "TroopTypes": {
     "1": {
       "Id": 1,
-      "Name": "杂兵",
+      "Name": "剑兵",
       "kind": 1,
       "skills": [
         1

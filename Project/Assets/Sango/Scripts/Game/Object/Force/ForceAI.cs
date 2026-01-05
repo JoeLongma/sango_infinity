@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 namespace Sango.Game
 {
@@ -1044,6 +1045,25 @@ namespace Sango.Game
             }
 
             return null;
+        }
+
+
+        public static Person[] CounsellorRecommendSearching(List<Person> personList, City target, int[] commandFeatures = null)
+        {
+            if (target.invisiblePersons.Count == 0)
+                return null;
+
+            List<Person> result = new List<Person>();
+            for (int i = 0; i < personList.Count; i++)
+            {
+                Person person = personList[i];
+                if(commandFeatures != null && person.HasFeatrue(commandFeatures))
+                    result.Add(person);
+                else if(person.Politics >= 90)
+                    result.Add(person);
+            }
+
+            return result.ToArray();
         }
     }
 }

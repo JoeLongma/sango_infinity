@@ -2,12 +2,12 @@
 
 namespace Sango.Game.Player
 {
-    public class CityCallPerson : CityComandBase
+    public class CityRewardPerson : CityComandBase
     {
         List<ObjectSortTitle> citySortTitleList;
-        public CityCallPerson()
+        public CityRewardPerson()
         {
-            customTitleName = "召唤";
+            customTitleName = "褒赏";
             customTitleList = new List<ObjectSortTitle>()
             {
                 PersonSortFunction.SortByName,
@@ -28,8 +28,8 @@ namespace Sango.Game.Player
                 PersonSortFunction.SortByMachineLv,
                 PersonSortFunction.SortByFeatureList,
             };
-            customMenuName = "人事/召唤";
-            customMenuOrder = 211;
+            customMenuName = "人事/褒赏";
+            customMenuOrder = 231;
             windowName = "window_city_command_base";
 
         }

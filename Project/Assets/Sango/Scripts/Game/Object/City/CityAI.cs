@@ -162,6 +162,7 @@ namespace Sango.Game
                 {
                     if (wild.beFinded)
                     {
+                        city.freePersons.Sort((a,b)=>-a.Glamour.CompareTo(b.Glamour));
                         city.JobRecuritPerson(city.freePersons[0], wild);
                         break;
                     }

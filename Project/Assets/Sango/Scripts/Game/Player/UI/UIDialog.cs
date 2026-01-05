@@ -92,6 +92,14 @@ namespace Sango.Game.Render.UI
         public void SetPerson(Person person)
         {
             if (headImg == null || nameText == null) return;
+            if (person == null)
+            {
+                headImg.enabled = false;
+                nameText.text = "";
+                return;
+            }
+
+            headImg.enabled = true;
             headImg.texture = GameRenderHelper.LoadHeadIcon(person.headIconID, 1);
             nameText.text = person.Name;
         }

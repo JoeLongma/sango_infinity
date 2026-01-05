@@ -29,7 +29,7 @@ namespace Sango.Game.Player
                 PersonSortFunction.SortByFeatureList,
             };
             customMenuName = "人事/移动";
-            customMenuOrder = 202;
+            customMenuOrder = 201;
             windowName = "window_city_command_base";
 
             citySortTitleList = new List<ObjectSortTitle>()

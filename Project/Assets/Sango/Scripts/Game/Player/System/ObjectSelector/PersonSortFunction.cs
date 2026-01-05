@@ -401,6 +401,17 @@ namespace Sango.Game
             };
         }
 
+        public static SortTitle GetSortByContainsInList(string title, List<Person> list)
+        {
+            return new SortTitle()
+            {
+                name = title,
+                width = 50,
+                valueGetCall = x => list.Contains(x) ? "○" : "×",
+                personSortFunc = (a, b) => list.Contains(a).CompareTo(list.Contains(b)),
+            };
+        }
+
         public static SortTitle SortByIsFree = new SortTitle()
         {
             name = "空闲",
