@@ -78,9 +78,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Alpha: 1
+    - _Alpha: 1.2
     - _AlphaClip: 0
-    - _BaseColorIntensity: 0.6
+    - _BaseColorIntensity: 1
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0

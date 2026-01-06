@@ -2223,6 +2223,41 @@ namespace Sango.Game
             return totalValue;
         }
 
+
+        /// <summary>
+        /// 登庸武将
+        /// </summary>
+        /// <param name="person"></param>
+        /// <param name="dest"></param>
+        /// <returns></returns>
+        public bool JobRecuritPerson(Person person, Person dest)
+        {
+            Scenario scenario = Scenario.Cur;
+            ScenarioVariables variables = scenario.Variables;
+            int jobId = (int)CityJobType.RecuritPerson;
+            int apCost = JobType.GetJobCostAP(jobId);
+
+            freePersons.Remove(person);
+            if (dest.BelongCity == person.BelongCity)
+            {
+                InitJobFeature(person);
+                // 直接招募
+                if (person.JobRecuritPerson(dest, 0))
+                {
+                    wildPersons.Remove(dest);
+                }
+                ClearJobFeature();
+            }
+            else
+            {
+                person.SetMission(MissionType.PersonRecruitPerson, dest, Math.Max(1, person.BelongCity.Distance(dest.BelongCity)));
+            }
+
+            BelongCorps.ReduceActionPoint(apCost);
+            return true;
+        }
+
+
         /// <summary>
         /// 搜索
         /// </summary>
@@ -2255,6 +2290,7 @@ namespace Sango.Game
             int apCost = JobType.GetJobCostAP(jobId);
             target = null;
             freePersons.Remove(person);
+            InitJobFeature(person);
 
             // 发现人才
             int probality = 20 + person.Politics * 3 / 5;
@@ -2270,6 +2306,8 @@ namespace Sango.Game
 #if SANGO_DEBUG
                     Sango.Log.Print($"@内政@[{BelongForce.Name}]<{Name}>的{person.Name}发现了人才->{target.Name}");
 #endif
+                    invisiblePersons.Remove(target);
+                    wildPersons.Add(target);
                     person.merit += meritGain;
                     person.GainExp(meritGain);
                     person.ActionOver = true;
@@ -2751,22 +2789,6 @@ namespace Sango.Game
 
             ClearJobFeature();
             return null;
-        }
-
-        public bool JobRecuritPerson(Person person, Person dest)
-        {
-            if (dest.BelongCity == person.BelongCity)
-            {
-                // 直接招募
-                person.JobRecuritPerson(dest, 0);
-                freePersons.Remove(person);
-                wildPersons.Remove(dest);
-            }
-            else
-            {
-                person.SetMission(MissionType.PersonRecruitPerson, dest, Math.Max(1, person.BelongCity.Distance(dest.BelongCity)));
-            }
-            return true;
         }
 
         /// <summary>

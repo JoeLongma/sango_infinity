@@ -467,6 +467,7 @@ namespace Sango.Game
         public bool IsWild { get { return BelongCorps == null; } }
         public bool IsPrisoner { get { return state == (int)PersonStateType.Prisoner; } }
         public bool Invisible { get { return state == (int)PersonStateType.Invisible; } }
+        public bool IsDead { get { return state == (int)PersonStateType.Dead; } }
 
         public bool IsAlliance(BuildingBase other)
         {
@@ -505,7 +506,7 @@ namespace Sango.Game
 
         public override void OnScenarioPrepare(Scenario scenario)
         {
-            if (BelongCity != null)
+            if (!IsDead && BelongCity != null)
             {
                 if (!IsWild)
                 {

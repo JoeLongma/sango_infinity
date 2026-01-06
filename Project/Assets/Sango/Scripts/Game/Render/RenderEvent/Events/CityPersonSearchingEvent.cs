@@ -12,14 +12,23 @@ namespace Sango.Game.Render
         {
             if (!city.DoJobSearching(person, out target))
             {
-                IsDone = true; return;
+                IsDone = true; 
+                return;
             }
+
+            if(!city.BelongCorps.IsPlayer)
+            {
+                person.JobRecuritPerson(target, 3);
+                IsDone = true;
+                return;
+            }
+
             string content = $"搜索结果，\n发现了名为<color=#00ffff>{target.Name}</color>的武将。";
             UIDialog dialog = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, content, () => {
                 // TODO:展示武将
                 // 暂时直接招募
                 UIDialog.Close();
-                if (person.JobRecuritPerson(target, 0) )
+                if (person.JobRecuritPerson(target, 3) )
                 {
                     UIDialog dialog1 = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, $"成功招募了<color=#00ffff>{target}</color>", () => {
                         // TODO:展示武将

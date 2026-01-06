@@ -1,6 +1,7 @@
 ﻿using Sango.Tools;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Sango.Game
 {
@@ -114,7 +115,7 @@ namespace Sango.Game
                                 // 5 4 3 2 1 0 -1 -2 -3 -4 -5
                                 // 0 1 2 3 4 5 6 7 8 9 10
                                 weight = UnityEngine.Mathf.FloorToInt((float)weight * (1f - (float)relation / 10000f));
-                                if(x.BelongForce.IsPlayer)
+                                if (x.BelongForce.IsPlayer)
                                 {
                                     weight += 1500;
                                 }
@@ -156,19 +157,8 @@ namespace Sango.Game
             AIBuilding(city, scenario);
             AIIntriorBalance(city, scenario);
 
-            if (city.wildPersons.Count > 0 && city.freePersons.Count > 0)
-            {
-                foreach (Person wild in city.wildPersons)
-                {
-                    if (wild.beFinded)
-                    {
-                        city.freePersons.Sort((a,b)=>-a.Glamour.CompareTo(b.Glamour));
-                        city.JobRecuritPerson(city.freePersons[0], wild);
-                        break;
-                    }
-                }
-            }
-
+            AISearching(city, scenario);
+            AIRecuritPerson(city, scenario);
             AITrainTroop(city, scenario);
             AICreateBoat(city, scenario);
             AICreateMachine(city, scenario);
@@ -176,6 +166,40 @@ namespace Sango.Game
             {
                 city.JobSearching(city.freePersons.GetRange(0, GameRandom.Range(city.freePersons.Count / 2)).ToArray());
             }
+            return true;
+        }
+
+        static int[] recommandSearchingFeatrues = new int[] { 86 };
+        public static bool AISearching(City city, Scenario scenario)
+        {
+            if (city.invisiblePersons.Count > 0 && city.freePersons.Count > 0)
+            {
+                Person[] recommandList = ForceAI.CounsellorRecommendSearching(city.freePersons, city, recommandSearchingFeatrues);
+                if (recommandList != null && recommandList.Length > 0)
+                {
+                    city.JobSearching(recommandList.ToArray());
+                }
+            }
+            return true;
+        }
+
+        public static bool AIRecuritPerson(City city, Scenario scenario)
+        {
+            if (city.wildPersons.Count > 0 && city.freePersons.Count > 0)
+            {
+                for(int i = 0; i < city.wildPersons.Count; i++)
+                {
+                    Person target = city.wildPersons[i];
+                    Person recommandPerson = ForceAI.CounsellorRecommendRecuritPerson(city.freePersons, target, null);
+                    if(recommandPerson != null)
+                    {
+                        city.JobRecuritPerson(recommandPerson, target);
+                    }
+                }
+            }
+
+            //TODO: 招募其他势力的武将
+
             return true;
         }
 
@@ -1073,7 +1097,7 @@ namespace Sango.Game
             if (city.itemStore.TotalNumber >= city.StoreLimit - 1000) return true;
 
             Building BoatFactory = city.GetFreeBuilding((int)BuildingKindType.BoatFactory);
-            if (BoatFactory== null)
+            if (BoatFactory == null)
                 return true;
 
             if (city.allPersons.Find(x => x.missionType == (int)MissionType.PersonCreateBoat) != null)

@@ -1047,7 +1047,13 @@ namespace Sango.Game
             return null;
         }
 
-
+        /// <summary>
+        /// 军师推荐搜索的人选
+        /// </summary>
+        /// <param name="personList"></param>
+        /// <param name="target"></param>
+        /// <param name="commandFeatures"></param>
+        /// <returns></returns>
         public static Person[] CounsellorRecommendSearching(List<Person> personList, City target, int[] commandFeatures = null)
         {
             if (target.invisiblePersons.Count == 0)
@@ -1057,13 +1063,43 @@ namespace Sango.Game
             for (int i = 0; i < personList.Count; i++)
             {
                 Person person = personList[i];
-                if(commandFeatures != null && person.HasFeatrue(commandFeatures))
+                if (commandFeatures != null && person.HasFeatrue(commandFeatures))
                     result.Add(person);
-                else if(person.Politics >= 90)
+                else if (person.Politics >= 90)
                     result.Add(person);
             }
 
             return result.ToArray();
+        }
+
+        /// <summary>
+        /// 军师推荐招募人才的人选
+        /// </summary>
+        /// <param name="personList"></param>
+        /// <param name="target"></param>
+        /// <param name="commandFeatures"></param>
+        /// <returns></returns>
+        public static Person CounsellorRecommendRecuritPerson(List<Person> personList, Person target, int[] commandFeatures = null)
+        {
+            Person maxP = null;
+            int max = 0;
+            for (int i = 0; i < personList.Count; i++)
+            {
+                Person person = personList[i];
+                int probability = GameFormula.RecuritPersonProbability(person, target, 0);
+                if (probability >= 100)
+                    return person;
+                else if (probability >= 30)
+                {
+                    if (probability > max)
+                    {
+                        max = probability;
+                        maxP = person;
+                    }
+                }
+            }
+
+            return maxP;
         }
     }
 }
