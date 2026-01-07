@@ -10,6 +10,7 @@ namespace Sango.Game.Render.UI
 
         public UIPersonItem personItems;
         public UITextField action_value;
+        public UIStatusItem statusItem;
 
         City TargetCity;
         CitySeraching currentSystem;
@@ -44,7 +45,9 @@ namespace Sango.Game.Render.UI
             int count = currentSystem.personList.Count;
             action_value.text = $"{count * JobType.GetJobCostAP((int)CityJobType.Searching)}/{TargetCity.BelongCorps.ActionPoint}";
             sureButton.interactable = count > 0;
-            personItems.SetPerson(count > 0 ? currentSystem.personList[0] : null);
+            Person actionPerson = count > 0 ? currentSystem.personList[0] : null;
+            personItems.SetPerson(actionPerson);
+            statusItem.SetPerson(actionPerson);
         }
 
         public void OnSure()

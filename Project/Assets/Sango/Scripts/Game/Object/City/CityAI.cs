@@ -154,6 +154,7 @@ namespace Sango.Game
             if (city.IsEnemiesRound(9))
                 return true;
 
+            AIResearch(city, scenario);
             AIBuilding(city, scenario);
             AIIntriorBalance(city, scenario);
 
@@ -187,11 +188,11 @@ namespace Sango.Game
         {
             if (city.wildPersons.Count > 0 && city.freePersons.Count > 0)
             {
-                for(int i = 0; i < city.wildPersons.Count; i++)
+                for (int i = 0; i < city.wildPersons.Count; i++)
                 {
                     Person target = city.wildPersons[i];
                     Person recommandPerson = ForceAI.CounsellorRecommendRecuritPerson(city.freePersons, target, null);
-                    if(recommandPerson != null)
+                    if (recommandPerson != null)
                     {
                         city.JobRecuritPerson(recommandPerson, target);
                     }
@@ -862,6 +863,31 @@ namespace Sango.Game
             Person[] people = ForceAI.CounsellorRecommendRecuritTroop(city.freePersons);
             if (people == null) return true;
             city.JobRecuritTroop(people, barracks);
+            return true;
+        }
+
+        public static bool AIResearch(City city, Scenario scenario)
+        {
+            if (city.freePersons.Count < 3) return true;
+            if (city.BelongForce.ResearchTechnique > 0) return true;
+            if (city.BelongForce.TechniquePoint < 1000) return true;
+            if (city.gold < 2000) return true;
+
+            Force force = city.BelongForce;
+            for (int i = 0; i < force.canResearchTechniqueList.Count; i++)
+            {
+                Technique technique = force.canResearchTechniqueList[i];
+                if (technique == null) continue;
+                if (technique.goldCost <= city.gold && technique.techPointCost <= city.BelongForce.TechniquePoint)
+                {
+                    Person[] ps = ForceAI.CounsellorRecommendResearch(city.freePersons, technique);
+                    if (ps != null)
+                    {
+                        city.JobResearch(ps, technique, false);
+                        break;
+                    }
+                }
+            }
             return true;
         }
 

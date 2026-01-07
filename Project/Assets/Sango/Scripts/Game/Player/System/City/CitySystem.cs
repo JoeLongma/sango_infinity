@@ -29,7 +29,8 @@ namespace Sango.Game.Player
             Singleton<CityCallPerson>.Instance.Init();
             Singleton<CityTransformPerson>.Instance.Init();
             Singleton<CitySeraching>.Instance.Init();
-            
+            Singleton<CityRecruit>.Instance.Init();
+            Singleton<CityReward>.Instance.Init();
         }
 
         public City TargetCity { get; set; }

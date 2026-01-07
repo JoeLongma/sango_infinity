@@ -168,6 +168,11 @@
         /// </summary>
         Research = 19,
 
+        /// <summary>
+        /// 褒赏
+        /// </summary>
+        Reward = 20,
+
         MaxJobCount
     }
 

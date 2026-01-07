@@ -363,7 +363,7 @@ namespace Sango.Game
         /// <summary>
         /// 是否可登场
         /// </summary>
-        public virtual bool IsValid => state > 0 && state < 5 && Age >= 16;
+        public virtual bool IsValid => state > 0 && state < 5;
 
         /// <summary>
         /// 兵力上限其他更改值(道具等加持)
@@ -506,7 +506,7 @@ namespace Sango.Game
 
         public override void OnScenarioPrepare(Scenario scenario)
         {
-            if (!IsDead && BelongCity != null)
+            if (IsValid && BelongCity != null)
             {
                 if (!IsWild)
                 {
@@ -787,6 +787,7 @@ namespace Sango.Game
 #if SANGO_DEBUG
                 Sango.Log.Print($"[{BelongForce.Name}]<{Name}>招募成功, {person.Name}加入了势力{BelongForce.Name}");
 #endif
+                person.loyalty = 80;
                 // 如果在部队里,如果是主将则带部队加入,如果为副将则退出部队
                 Troop personTroop = person.BelongTroop;
                 if (personTroop != null)
@@ -858,6 +859,7 @@ namespace Sango.Game
         /// </summary>
         public void LeaveToWild()
         {
+            loyalty = 0;
             BelongCity.allPersons.Remove(this);
             Official = Scenario.Cur.CommonData.Officials.Get(0);
             // 关卡和港口的武将下野到对应的城池里
@@ -950,6 +952,21 @@ namespace Sango.Game
             Cell cell = BelongTroop != null ? BelongTroop.cell : BelongCity.CenterCell;
             Cell otherCell = other.BelongTroop != null ? other.BelongTroop.cell : other.BelongCity.CenterCell;
             return cell.Distance(otherCell);
+        }
+
+        public int DistanceDays(Person other)
+        {
+            if (other == null) return 0;
+            City otherCity = other.BelongTroop != null ? other.BelongTroop.cell.BelongCity : other.BelongCity;
+            City thisCity = BelongTroop != null ? BelongTroop.cell.BelongCity : BelongCity;
+            return otherCity.Distance(thisCity);
+        }
+
+        public int DistanceDays(City otherCity)
+        {
+            if (otherCity == null) return 0;
+            City thisCity = BelongTroop != null ? BelongTroop.cell.BelongCity : BelongCity;
+            return otherCity.Distance(thisCity);
         }
 
         public int CompatibilityDistance(Person other)

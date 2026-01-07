@@ -13,6 +13,7 @@ namespace Sango.Game.Render.UI
         public UIBuildingTypeItem objUIBuildingTypeItemWater;
         List<UIBuildingTypeItem> landTroopTypePool = new List<UIBuildingTypeItem>();
         List<UIBuildingTypeItem> waterTroopTypePool = new List<UIBuildingTypeItem>();
+        public UIStatusItem statusItem;
 
         public UIPersonItem[] personItems;
 
@@ -264,6 +265,7 @@ namespace Sango.Game.Render.UI
 
             UpdateTroopStatus();
             UpdateTroopsInfo();
+            statusItem.SetTroop(cityExpeditionSys.TargetTroop);
         }
 
         void UpdateTroopStatus()

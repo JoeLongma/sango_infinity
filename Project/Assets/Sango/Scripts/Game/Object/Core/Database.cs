@@ -134,7 +134,6 @@ namespace Sango.Game
             return list.ToArray();
         }
 
-
         public virtual IAarryDataObject FromArray(int[] values)
         {
             if (values == null) return this;

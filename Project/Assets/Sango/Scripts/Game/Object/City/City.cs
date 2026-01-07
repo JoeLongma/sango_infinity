@@ -4,6 +4,7 @@ using Sango.Game.Render;
 using Sango.Game.Tools;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 
@@ -2257,6 +2258,50 @@ namespace Sango.Game
             return true;
         }
 
+        /// <summary>
+        /// 登庸武将
+        /// </summary>
+        /// <param name="person"></param>
+        /// <param name="dest"></param>
+        /// <returns></returns>
+        public bool JobRewardPersons(Person[] persons)
+        {
+            if (persons == null || persons.Length == 0)
+                return true;
+
+            Scenario scenario = Scenario.Cur;
+            ScenarioVariables variables = scenario.Variables;
+            int jobId = (int)CityJobType.Reward;
+            int apCost = JobType.GetJobCostAP(jobId);
+            int goldCost = JobType.GetJobCost(jobId);
+#if SANGO_DEBUG
+            StringBuilder stringBuilder = new StringBuilder();
+#endif
+            int totalApCost = 0;
+            int totalGoldCost = 0;
+            for (int i = 0; i < persons.Length; ++i)
+            {
+                Person person = persons[i];
+                if (person == null) continue;
+
+                totalApCost += apCost;
+                totalGoldCost += goldCost;
+#if SANGO_DEBUG
+                stringBuilder.Append(person.Name);
+                stringBuilder.Append(",");
+#endif
+                person.loyalty += 10;
+            }
+            gold -= totalGoldCost;
+            BelongCorps.ReduceActionPoint(totalApCost);
+
+#if SANGO_DEBUG
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]在<{Name}>使用资金对{stringBuilder}进行了褒赏!!");
+#endif
+            return true;
+        }
+
+
 
         /// <summary>
         /// 搜索
@@ -2751,7 +2796,7 @@ namespace Sango.Game
                 return new int[] { goldNeed, tpNeed, turnCount };
             }
 
-            if (gold < goldNeed || tpNeed < BelongForce.TechniquePoint)
+            if (gold < goldNeed || BelongForce.TechniquePoint < tpNeed)
             {
                 ClearJobFeature();
                 return null;
@@ -2786,6 +2831,10 @@ namespace Sango.Game
             BelongForce.ResearchLeftCounter = turnCount;
 
             BelongCorps.ReduceActionPoint(JobType.GetJobCostAP(jobId));
+
+#if SANGO_DEBUG
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}在<{Name}>开始研究科技: [{technique.Name}], 研究需要{turnCount}回合!");
+#endif
 
             ClearJobFeature();
             return null;

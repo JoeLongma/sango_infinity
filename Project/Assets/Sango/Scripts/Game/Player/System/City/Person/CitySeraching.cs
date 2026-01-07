@@ -9,8 +9,6 @@ namespace Sango.Game.Player
         public List<Person> personList = new List<Person>();
         public List<Person> counsellorRecommendList = new List<Person>();
 
-        public int wonderNumber = 0;
-
         public string customTitleName;
         public List<ObjectSortTitle> customTitleList;
         public string customMenuName;
@@ -41,7 +39,6 @@ namespace Sango.Game.Player
         {
             get
             {
-                // 需要至少两座城
                 return TargetCity.freePersons.Count > 0 && TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.Searching);
             }
         }

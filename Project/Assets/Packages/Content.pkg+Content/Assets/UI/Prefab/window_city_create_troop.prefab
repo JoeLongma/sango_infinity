@@ -3533,6 +3533,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objUIBuildingTypeItemLand: {fileID: 7239700934137307818}
   objUIBuildingTypeItemWater: {fileID: 8927113279236295021}
+  statusItem: {fileID: 7327154451345465453}
   personItems:
   - {fileID: 726368274712206563}
   - {fileID: 5797030018859269797}
@@ -10398,6 +10399,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7852486731173826703, guid: 2f5f1ee98405a544fbed27ae2d18ea97, type: 3}
   m_PrefabInstance: {fileID: 6793857964229362914}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7327154451345465453 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4316676009463637135, guid: 2f5f1ee98405a544fbed27ae2d18ea97, type: 3}
+  m_PrefabInstance: {fileID: 6793857964229362914}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 516c1b7e074591847ba05bfbd5cdf6d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7730976589819456203 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3819426239837711913, guid: 2f5f1ee98405a544fbed27ae2d18ea97, type: 3}

@@ -141,7 +141,7 @@ namespace Sango.Game
         public static SortTitle SortByTroopsLimit = new SortTitle()
         {
             name = "指挥",
-            width = 100,
+            width = 70,
             valueGetCall = x => x.TroopsLimit.ToString(),
             personSortFunc = (a, b) => a.TroopsLimit.CompareTo(b.TroopsLimit),
         };
@@ -349,7 +349,7 @@ namespace Sango.Game
         {
             name = "忠诚",
             width = 50,
-            valueGetCall = x => x.loyalty.ToString(),
+            valueGetCall = x => System.Math.Min(100, x.loyalty).ToString(),
             personSortFunc = (a, b) => a.loyalty.CompareTo(b.loyalty),
         };
 
@@ -412,6 +412,18 @@ namespace Sango.Game
             };
         }
 
+        public static SortTitle GetSortByDistanceDay(City where)
+        {
+            return new SortTitle()
+            {
+                name = "期间",
+                width = 50,
+                valueGetCall = x => $"{x.DistanceDays(where) * 10}日",
+                personSortFunc = (a, b) => a.DistanceDays(where).CompareTo(b.DistanceDays(where)),
+            };
+        }
+
+
         public static SortTitle SortByIsFree = new SortTitle()
         {
             name = "空闲",
@@ -447,7 +459,7 @@ namespace Sango.Game
         public static SortTitle SortByBelongCorps = new SortTitle()
         {
             name = "军团",
-            width = 100,
+            width = 60,
             valueGetCall = x => x.BelongCorps?.Name ?? "无",
             personSortFunc = (a, b) => SangoObject.Compare(a.BelongCorps, b.BelongCorps),
         };
@@ -463,7 +475,7 @@ namespace Sango.Game
         public static SortTitle SortByBelongCity = new SortTitle()
         {
             name = "所属",
-            width = 100,
+            width = 60,
             valueGetCall = x => x.BelongCity?.Name ?? "无",
             personSortFunc = (a, b) => SangoObject.Compare(a.BelongCity, b.BelongCity),
         };

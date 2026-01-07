@@ -104,6 +104,8 @@ namespace Sango.Game
         /// </summary>
         Queue<BuildingBase> buildingBaseList = new Queue<BuildingBase>();
 
+        public List<Technique> canResearchTechniqueList = new List<Technique>();
+
         public int PersonCount { get; set; }
         public int CityCount { get; set; }
         public int CityBaseCount { get; set; }
@@ -119,6 +121,20 @@ namespace Sango.Game
             Techniques.ForEach(x =>
             {
                 x.InitActions(actionList, this);
+            });
+
+            prepareTechniqueList(scenario);
+        }
+
+        void prepareTechniqueList(Scenario scenario)
+        {
+            canResearchTechniqueList.Clear();
+            scenario.CommonData.Techniques.ForEach(x =>
+            {
+                if (x.CanResearch(this))
+                {
+                    canResearchTechniqueList.Add(x);
+                }
             });
         }
 
@@ -312,6 +328,8 @@ namespace Sango.Game
                 }
             }
 
+            prepareTechniqueList(scenario);
+
             for (int i = 0; i < scenario.buildingSet.Count; ++i)
             {
                 var c = scenario.buildingSet[i];
@@ -495,6 +513,9 @@ namespace Sango.Game
             ForEachPerson(person =>
             {
                 person.loyalty -= v;
+#if SANGO_DEBUG
+                Sango.Log.Print($"势力：{Name}, 武将：{person.Name}, 忠诚度下降: {v}, 现有忠诚度:{person.loyalty}");
+#endif
             });
         }
 

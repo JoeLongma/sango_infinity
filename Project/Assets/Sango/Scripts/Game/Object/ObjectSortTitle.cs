@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Sango.Game.Player
+namespace Sango.Game
 {
     public abstract class ObjectSortTitle
     {
@@ -9,7 +9,6 @@ namespace Sango.Game.Player
         public int width;
 
         public abstract string GetValueStr(SangoObject obj);
-
         public abstract int Sort(SangoObject a, SangoObject b);
     }
 }

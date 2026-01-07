@@ -1,0 +1,65 @@
+﻿using UnityEngine;
+using UnityEngine.UI;
+
+namespace Sango.Game.Render.UI
+{
+    public class UIStatusItem : MonoBehaviour
+    {
+        public float maxValue = 100f;
+        public DrawStatusComponent status;
+        public Text [] statusTitle1;
+        public Text [] statusTitle2;
+        public Text[] statusValue;
+
+        public void SetStatus(int index, string title, int value)
+        {
+            if (index >= statusTitle1.Length || index < 0)
+            {
+                return;
+            }
+            statusTitle1[index].text = title;
+            statusTitle2[index].text = title;
+            statusValue[index].text = value.ToString();
+            status.scaleLenth[index] = Mathf.Min(1, value / maxValue);
+            status.UpdateContent();
+        }
+
+        public void SetPerson(Person person)
+        {
+            if(person == null)
+            {
+                SetStatus(0, PersonSortFunction.SortByStrength.name, 0);
+                SetStatus(1, PersonSortFunction.SortByCommand.name, 0);
+                SetStatus(2, PersonSortFunction.SortByIntelligence.name, 0);
+                SetStatus(3, PersonSortFunction.SortByPolitics.name, 0);
+                SetStatus(4, PersonSortFunction.SortByGlamour.name, 0);
+                return;
+            }
+
+            SetStatus(0, PersonSortFunction.SortByStrength.name, person.Strength);
+            SetStatus(1, PersonSortFunction.SortByCommand.name, person.Command);
+            SetStatus(2, PersonSortFunction.SortByIntelligence.name, person.Intelligence);
+            SetStatus(3, PersonSortFunction.SortByPolitics.name, person.Politics);
+            SetStatus(4, PersonSortFunction.SortByGlamour.name, person.Glamour);
+        }
+
+        public void SetTroop(Troop troop)
+        {
+            if (troop == null)
+            {
+                SetStatus(0, TroopSortFunction.SortByAttack.name, 0);
+                SetStatus(1, TroopSortFunction.SortByDefence.name, 0);
+                SetStatus(2, TroopSortFunction.SortByIntelligence.name, 0);
+                SetStatus(3, TroopSortFunction.SortByBuild.name, 0);
+                SetStatus(4, TroopSortFunction.SortByMoveability.name, 0);
+                return;
+            }
+
+            SetStatus(0, TroopSortFunction.SortByAttack.name, troop.Attack);
+            SetStatus(1, TroopSortFunction.SortByDefence.name, troop.Defence);
+            SetStatus(2, TroopSortFunction.SortByIntelligence.name, troop.Intelligence);
+            SetStatus(3, TroopSortFunction.SortByBuild.name, troop.BuildPower);
+            SetStatus(4, TroopSortFunction.SortByMoveability.name, troop.MoveAbility);
+        }
+    }
+}

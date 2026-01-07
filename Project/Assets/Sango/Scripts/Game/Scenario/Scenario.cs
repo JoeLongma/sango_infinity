@@ -611,6 +611,48 @@ namespace Sango.Game
         {
             isThreadPause = false;
         }
+        
+        void ClaculateCityDistance()
+        {
+            int cityCount = citySet.Count; 
+            for (int i = 0; i < cityCount; ++i)
+            {
+                int len = 0;
+                List<City> closeList = new List<City>();
+                List<City> checkList = new List<City>();
+                City city = citySet[i];
+                if (city != null)
+                {
+                    checkList.Add(city);
+                    closeList.Add(city);
+                    cityDistanceMap[city.Id][city.Id] = 0;
+                    while (true)
+                    {
+                        len++;
+                        int count = checkList.Count;
+                        for (int m = 0; m < count; ++m)
+                        {
+                            City checker = checkList[m];
+                            for(int n = 0; n < checker.NeighborList.Count; n++)
+                            {
+                                City target = checker.NeighborList[n];
+                                if(!closeList.Contains(target))
+                                {
+                                    cityDistanceMap[city.Id][target.Id] = len;
+                                    cityDistanceMap[target.Id][city.Id] = len;
+                                    closeList.Add(target);
+                                    checkList.Add(target);
+                                }
+                            }
+                        }
+                        checkList.RemoveRange(0, count);
+
+                        if (checkList.Count == 0)
+                            break;
+                    }
+                }
+            }
+        }
 
         // 在Prepare之后
         public override void Init(Scenario scenario)
@@ -632,24 +674,7 @@ namespace Sango.Game
                 cityDistanceMap[i] = new int[cityCount];
             }
 
-            for (int i = 0; i < cityCount; ++i)
-            {
-                City city = citySet[i];
-                if (city != null)
-                {
-                    cityDistanceMap[city.Id][city.Id] = 0;
-                    for (int j = i + 1; j < cityCount; ++j)
-                    {
-                        City dest = citySet[j];
-                        if (dest != null)
-                        {
-                            int len = city.Distance(dest);
-                            cityDistanceMap[city.Id][dest.Id] = len;
-                            cityDistanceMap[dest.Id][city.Id] = len;
-                        }
-                    }
-                }
-            }
+            ClaculateCityDistance();
 
             for (int i = 0; i < prepareList.Count; ++i)
             {
