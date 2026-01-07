@@ -150,6 +150,8 @@ namespace Sango.Game
         /// <param name="scenario"></param>
         public static bool AIIntrior(City city, Scenario scenario)
         {
+            AIRewardPerson(city, scenario);
+
             // 兵临城下
             if (city.IsEnemiesRound(9))
                 return true;
@@ -181,6 +183,19 @@ namespace Sango.Game
                     city.JobSearching(recommandList.ToArray());
                 }
             }
+            return true;
+        }
+
+        public static bool AIRewardPerson(City city, Scenario scenario)
+        {
+            city.allPersons.ForEach(x =>
+            {
+                if(x.IsFree && city.gold > 500 && x.loyalty < 90)
+                {
+                    city.JobRewardPerson(x);   
+                }
+            });
+
             return true;
         }
 

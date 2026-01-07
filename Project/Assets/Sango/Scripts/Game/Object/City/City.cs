@@ -2302,6 +2302,35 @@ namespace Sango.Game
         }
 
 
+        public bool JobRewardPerson(Person person)
+        {
+            if (person == null)
+                return true;
+
+            Scenario scenario = Scenario.Cur;
+            ScenarioVariables variables = scenario.Variables;
+            int jobId = (int)CityJobType.Reward;
+            int apCost = JobType.GetJobCostAP(jobId);
+            int goldCost = JobType.GetJobCost(jobId);
+#if SANGO_DEBUG
+            StringBuilder stringBuilder = new StringBuilder();
+#endif
+
+#if SANGO_DEBUG
+            stringBuilder.Append(person.Name);
+            stringBuilder.Append(",");
+            int lastLoyalty = person.loyalty;
+#endif
+            person.loyalty += 10;
+            gold -= goldCost;
+            BelongCorps.ReduceActionPoint(apCost);
+
+#if SANGO_DEBUG
+            Sango.Log.Print($"@内政@[{BelongForce.Name}]在<{Name}>使用资金对{stringBuilder}进行了褒赏!! 忠诚从{lastLoyalty}提升到->{person.loyalty}");
+#endif
+            return true;
+        }
+
 
         /// <summary>
         /// 搜索
