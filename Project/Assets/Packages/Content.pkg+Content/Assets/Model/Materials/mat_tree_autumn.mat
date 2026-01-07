@@ -80,7 +80,7 @@ Material:
     m_Floats:
     - _Alpha: 1.5
     - _AlphaClip: 0
-    - _BaseColorIntensity: 1
+    - _BaseColorIntensity: 0.6
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
