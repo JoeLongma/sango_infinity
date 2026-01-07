@@ -86,7 +86,8 @@ namespace Sango.Game.Render.UI
             }
             if (cell.moveAble)
             {
-                cellInfoLabel.text = $"地形: {cell.TerrainType.Name}({cell.BelongCity.Name})  坐标: ({cell.x}, {cell.y})     ";
+                string cityName = cell.BelongCity != null ? cell.BelongCity.Name : "--";
+                cellInfoLabel.text = $"地形: {cell.TerrainType.Name}({cityName})  坐标: ({cell.x}, {cell.y})     ";
             }
             else
             {

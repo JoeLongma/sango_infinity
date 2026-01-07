@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Sango.Game.Render;
 using System;
 using System.Collections.Generic;
 
@@ -615,7 +616,7 @@ namespace Sango.Game
                 case (int)MissionType.PersonRecruitPerson:
                     {
                         Person dest = scenario.personSet.Get(missionTarget);
-                        if (BelongCorps != null && !this.IsSameForce(dest))
+                        if (BelongCorps != null && this.IsSameForce(dest))
                         {
                             SetMission(MissionType.PersonReturn, BelongCity, 1);
                         }
@@ -624,7 +625,12 @@ namespace Sango.Game
                             missionCounter--;
                             if (missionCounter <= 0)
                             {
-                                JobRecuritPerson(dest, 0);
+                                CityRecruitPersonEvent te = new CityRecruitPersonEvent()
+                                {
+                                    person = this,
+                                    target = dest,
+                                };
+                                RenderEvent.Instance.Add(te);
                                 SetMission(MissionType.PersonReturn, BelongCity, 1);
                             }
                         }

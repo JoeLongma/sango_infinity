@@ -20,7 +20,7 @@ namespace Sango.Tools
             Area,
             //Trap,
             //Dir,
-            //Interior,
+            Interior,
             Defence,
             Thief,
             //Flood,
@@ -38,7 +38,7 @@ namespace Sango.Tools
             ////"lpB",
             //"陷阱",
             //"方向",
-            //"内政",
+            "内政",
             "防守",
             "贼",
             //"水淹",
@@ -52,7 +52,7 @@ namespace Sango.Tools
             "editor_area_type",
             //"editor_trap_type",
             //"editor_dir_type",
-            //"editor_interior_type",
+            "editor_interior_type",
             "editor_defence_type",
             "editor_thief_type",
             //"editor_flood_type",
@@ -63,7 +63,7 @@ namespace Sango.Tools
             Texture2D.whiteTexture,
             Texture2D.whiteTexture,
             Texture2D.whiteTexture,
-            //Texture2D.whiteTexture,
+            Texture2D.whiteTexture,
             //Texture2D.whiteTexture,
             //Texture2D.whiteTexture,
             //Texture2D.whiteTexture,
@@ -373,6 +373,72 @@ namespace Sango.Tools
             image[1].texture = terrainTypeTex;
             GameObject.Destroy(texCreator);
 
+            yield return CreateInteriorTexture();
+        }
+
+
+        IEnumerator CreateInteriorTexture()
+        {
+            int celSize = 128;
+            GameObject texCreator = GameObject.Instantiate(Resources.Load("TerrainLayer")) as GameObject;
+            UnityEngine.UI.Text text = texCreator.GetComponentInChildren<UnityEngine.UI.Text>();
+            UnityEngine.UI.RawImage[] image = texCreator.GetComponentsInChildren<UnityEngine.UI.RawImage>(true);
+            Camera cam = texCreator.GetComponent<Camera>();
+            RenderTexture renderTexture = RenderTexture.GetTemporary(celSize, celSize, 24, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default, 8);
+            int count = 2;
+            int terrainTypeMaskCol = count;
+            int terrainTypeMaskRow = count;
+
+            terrainTypeTex = new Texture2D(terrainTypeMaskCol * celSize, terrainTypeMaskCol * celSize);
+            terrainTypeMaskRow = terrainTypeMaskCol;
+            Texture gridTex = Resources.Load<Texture>("layer_grid");
+            for (int i = 0; i < count; ++i)
+            {
+                text.fontSize = 30;
+                text.text = i == 0 ? "\n" : $"\n内政";
+                text.color = UnityEngine.Color.red;
+                image[0].color = i == 0 ? UnityEngine.Color.white : UnityEngine.Color.red;
+                image[0].texture = gridTex;
+                cam.enabled = true;
+                cam.targetTexture = renderTexture;
+                cam.Render();
+                yield return new WaitForEndOfFrame();
+                yield return new WaitForEndOfFrame();
+                cam.enabled = false;
+                cam.targetTexture = null;
+                RenderTexture.active = renderTexture;
+                Texture2D texture2D = new Texture2D(celSize, celSize);
+                texture2D.ReadPixels(new UnityEngine.Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
+                texture2D.Apply(); // 应用更改
+                RenderTexture.active = null; // 重置RenderTexture.active以避免潜在问题
+                UnityEngine.Color[] pixels = texture2D.GetPixels();
+
+                int xStart = i % terrainTypeMaskCol * texture2D.width;
+                int yStart = (terrainTypeMaskCol - 1 - i / terrainTypeMaskCol) * texture2D.width;
+
+                for (int x = 0; x < texture2D.width; ++x)
+                    for (int y = 0; y < texture2D.height; ++y)
+                    {
+                        terrainTypeTex.SetPixel(xStart + x, yStart + y, pixels[x + y * texture2D.width]);
+                    }
+
+                GameObject.DestroyImmediate(texture2D);
+
+            }
+            RenderTexture.ReleaseTemporary(renderTexture);
+            terrainTypeTex.Apply();
+            terrainTypeTexes[(int)BrushType.Interior] = terrainTypeTex;
+
+            string savePath = Path.ContentRootPath + $"/Assets/Map/{editor.map.WorkContent}/Editor/editor_interior_type.png";
+            Sango.Directory.Create(savePath, false);
+            if (File.Exists(savePath))
+                File.Delete(savePath);
+            File.WriteAllBytes(savePath, terrainTypeTex.EncodeToPNG());
+
+            //Shader.SetGlobalTexture("_TerrainTypeTex", terrainTypeTex);
+            image[1].texture = terrainTypeTex;
+            GameObject.Destroy(texCreator);
+
             Debug.LogError("创建所需贴图完成!!");
             yield return null;
         }
@@ -426,8 +492,8 @@ namespace Sango.Tools
                 //    return data.trap;
                 //case BrushType.Dir:
                 //    return data.dir;
-                //case BrushType.Interior:
-                //    return data.interior;
+               case BrushType.Interior:
+                    return data.HasGridState(MapGrid.GridState.Interior) ? 1 : 0;
                 case BrushType.Defence:
                     return data.HasGridState(MapGrid.GridState.Defence) ? 1 : 0;
                 case BrushType.Thief:
@@ -455,14 +521,14 @@ namespace Sango.Tools
                 //case BrushType.Dir:
                 //    data.dir = value;
                 //    break;
-                //case BrushType.Interior:
-                //    data.interior = value;
-                //    break;
+                case BrushType.Interior:
+                    data.SetGridState(MapGrid.GridState.Interior, value > 0);
+                    break;
                 case BrushType.Defence:
                     data.SetGridState(MapGrid.GridState.Defence, value > 0);
                     break;
                 case BrushType.Thief:
-                    data.SetGridState(MapGrid.GridState.Defence, value > 0);
+                    data.SetGridState(MapGrid.GridState.Thief, value > 0);
                     break;
                     //case BrushType.Flood:
                     //    data.flood = value;
@@ -513,7 +579,7 @@ namespace Sango.Tools
                 //        terrainTypeMaskRow = 2;
                 //    }
                 //    break;
-                //case BrushType.Interior:
+                case BrushType.Interior:
                 case BrushType.Defence:
                 case BrushType.Thief:
                     //case BrushType.Flood:

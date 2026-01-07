@@ -49,7 +49,24 @@ namespace Sango.Game.Render.UI
         public void OnPersonListSelected(UIObjectListItem item)
         {
             if (!item.IsSelected() && objectSelectSystem.IsPersonLimit())
+            {
+                int lastIndex = objectSelectSystem.RemoveFront();
+                if(lastIndex >= 0)
+                {
+                    for (int i = 0; i < uIObjectListItems.Length; i++)
+                    {
+                        UIObjectListItem listItem = uIObjectListItems[i];
+                        int destIndex = i + startIndex;
+                        if (destIndex == lastIndex)
+                        {
+                            listItem.SetSelected(false);
+                        }
+                    }
+                }
+                item.SetSelected(true);
+                objectSelectSystem.Add(item.index);
                 return;
+            }   
 
             item.SetSelected(!item.IsSelected());
             if (item.IsSelected())

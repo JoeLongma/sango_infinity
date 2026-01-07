@@ -2241,13 +2241,12 @@ namespace Sango.Game
             freePersons.Remove(person);
             if (dest.BelongCity == person.BelongCity)
             {
-                InitJobFeature(person);
-                // 直接招募
-                if (person.JobRecuritPerson(dest, 0))
+                CityRecruitPersonEvent te = new CityRecruitPersonEvent()
                 {
-                    wildPersons.Remove(dest);
-                }
-                ClearJobFeature();
+                    person = person,
+                    target = dest,
+                };
+                RenderEvent.Instance.Add(te);
             }
             else
             {

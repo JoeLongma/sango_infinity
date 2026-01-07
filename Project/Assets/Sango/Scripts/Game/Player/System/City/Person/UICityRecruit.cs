@@ -47,7 +47,7 @@ namespace Sango.Game.Render.UI
             {
                 targetForce.text = target.BelongForce != null ? target.BelongForce.Name : "--";
                 targetLoyalty.text = target.loyalty.ToString();
-                targetDays.text = $"{target.BelongCity.Distance(TargetCity)}日";
+                targetDays.text = $"{10 * target.BelongCity.Distance(TargetCity)}日";
                 targetCityName.text = target.BelongCity.Name;
             }
             else

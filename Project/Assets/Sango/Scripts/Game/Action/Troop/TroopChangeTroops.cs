@@ -30,7 +30,7 @@ namespace Sango.Game.Action
         void OnTroopChangeTroops(Troop defencer, SangoObject atker, SkillInstance skill, int atkBack, OverrideData<int> overrideData)
         {
             if (!CheckTroop(defencer, atker, skill)) return;
-            overrideData.Value = overrideData.Value * value / 100;
+            overrideData.Value = overrideData.Value * (100 + value) / 100;
         }
     }
 }

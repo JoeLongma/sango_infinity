@@ -46,6 +46,13 @@ namespace Sango.Game.Player
         {
             selected.Remove(Objects[index]);
         }
+        public int RemoveFront()
+        {
+            if (selected.Count == 0) return -1;
+            SangoObject sangoObject = selected[0];
+            selected.RemoveAt(0);
+            return Objects.IndexOf(sangoObject);
+        }
 
         /// <summary>
         /// 进入当前命令的时候触发

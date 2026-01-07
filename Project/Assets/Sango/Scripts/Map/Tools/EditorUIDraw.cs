@@ -262,6 +262,7 @@ namespace Sango.Tools
         {
             camera.keyBoardMoveSpeed = Tools.EditorUtility.FloatField(camera.keyBoardMoveSpeed, "键盘移动速度");
             camera.limitDistance = Tools.EditorUtility.Vector2Field(camera.limitDistance, "相机距离");
+            camera.safeBoder = Tools.EditorUtility.FloatField(camera.safeBoder, "边界距离");
         }
 
     }

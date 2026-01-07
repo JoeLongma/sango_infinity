@@ -124,7 +124,7 @@ namespace Sango.Render
             //writer.Write(zoomSpeed);
             //writer.Write(keyBoardMoveSpeed);
             //writer.Write(rotSpeed);
-
+            writer.Write(safeBoder);
         }
         internal override void OnLoad(int versionCode, BinaryReader reader)
         {
@@ -147,6 +147,11 @@ namespace Sango.Render
                 reader.ReadSingle();
                 reader.ReadSingle();
                 reader.ReadSingle();
+            }
+
+            if(versionCode >= 9)
+            {
+                safeBoder = reader.ReadSingle();
             }
 
             //fov = reader.ReadSingle();
