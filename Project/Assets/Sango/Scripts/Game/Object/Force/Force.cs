@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using Sango.Game.Action;
 using UnityEngine;
@@ -10,6 +11,10 @@ namespace Sango.Game
     [JsonObject(MemberSerialization.OptIn)]
     public class Force : SangoObject
     {
+
+        [JsonExtensionData]
+        private Dictionary<string, JToken> _extparams = new Dictionary<string, JToken>();
+
         public override SangoObjectType ObjectType { get { return SangoObjectType.Force; } }
         public virtual bool AIFinished { get; set; }
         public virtual bool AIPrepared { get; set; }

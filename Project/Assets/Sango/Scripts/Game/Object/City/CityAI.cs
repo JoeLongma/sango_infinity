@@ -190,9 +190,9 @@ namespace Sango.Game
         {
             city.allPersons.ForEach(x =>
             {
-                if(x.IsFree && city.gold > 500 && x.loyalty < 90)
+                if (x.IsFree && city.gold > 500 && x.loyalty < 90)
                 {
-                    city.JobRewardPerson(x);   
+                    city.JobRewardPerson(x);
                 }
             });
 
@@ -743,12 +743,12 @@ namespace Sango.Game
             }
 
             int[] building_list = CityBuildingTemplate[templateId];
-            int[] buildingFlag = new int[building_list.Length];
+            int[] buildingFlag = new int[city.InteriorCellCount];
 
             // 先排除确定的建筑
             for (int i = 0; i < city.InteriorCellCount; i++)
             {
-                int buildKindId = building_list[i];
+                int buildKindId = i < building_list.Length ? building_list[i] : 0;
                 if (buildKindId > 0)
                 {
                     if (buildingCountMap.TryGetValue(buildKindId, out int num))
@@ -766,7 +766,7 @@ namespace Sango.Game
             // 再排除不确定的建筑
             for (int i = 0; i < city.InteriorCellCount; i++)
             {
-                int buildTypeId = building_list[i];
+                int buildTypeId = i < building_list.Length ? building_list[i] : 0;
                 if (buildTypeId == 0)
                 {
                     bool findAny = false;
@@ -793,7 +793,7 @@ namespace Sango.Game
                 if (exsistId > 0)
                     continue;
 
-                int buildKindId = building_list[i];
+                int buildKindId = i < building_list.Length ? building_list[i] : 0;
                 BuildingType buildingType = scenario.GetObject<BuildingType>(buildKindId);
                 if (buildingType == null || buildingType.Id == 0)
                 {

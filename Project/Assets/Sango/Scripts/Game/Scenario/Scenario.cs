@@ -547,6 +547,18 @@ namespace Sango.Game
                     return a.Info.priority.CompareTo(b.Info.priority);
                 }
             });
+
+            ShortScenario.all_scenario_info_list.Sort((a, b) =>
+            {
+                if (a.Info.priority == b.Info.priority)
+                {
+                    return a.Info.id.CompareTo(b.Info.id);
+                }
+                else
+                {
+                    return a.Info.priority.CompareTo(b.Info.priority);
+                }
+            });
         }
 
         public static void StartScenario(Scenario scenario, List<int> playerList)

@@ -639,7 +639,7 @@ namespace Sango.Game
             frontier.Clear();
             came_from.Clear();
             closeList.Clear();
-            int safe_count = 10000;
+            int safe_count = 100000;
             frontier.Enqueue(troops.cell, 0);
             came_from[troops.cell] = null;
             troops.cell._isChecked = true;

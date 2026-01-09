@@ -24,7 +24,7 @@ Shader "Sango/terrain_urp" {
 			Tags { "RenderPipeline" = "UniversalPipeline" "Queue" = "Transparent" "RenderType" = "TransparentCutout" }
 			LOD 300
 
-			
+			Cull[_Cull]
 
 			Pass {
 				Name "FORWARD"

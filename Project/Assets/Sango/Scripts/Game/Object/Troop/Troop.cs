@@ -1243,7 +1243,7 @@ namespace Sango.Game
                 ChangeFood(-divFood, false);
             }
 
-            if(troops > MaxTroops)
+            if (troops > MaxTroops)
                 troops = MaxTroops;
 
             IsAlive = troops > 0;
@@ -1603,6 +1603,14 @@ namespace Sango.Game
             city.AddGold(gold);
             city.AddFood(food);
             city.AddTroops(troops);
+            if (captiveList != null)
+            {
+                captiveList.ForEach(p =>
+                {
+                    city.captiveList.Add(p);
+                });
+            }
+            captiveList = null;
 
             // 返还兵装
             city.itemStore.Gain(LandTroopType.costItems, troops + woundedTroops);
@@ -1656,6 +1664,15 @@ namespace Sango.Game
 
         public override void Clear()
         {
+            if (captiveList != null)
+            {
+                captiveList.ForEach(x =>
+                {
+                    x.Escape();
+                });
+                captiveList = null;
+            }
+
             if (actionList != null)
             {
                 for (int i = 0; i < actionList.Count; i++)

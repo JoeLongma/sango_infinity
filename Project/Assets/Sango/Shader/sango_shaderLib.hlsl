@@ -258,7 +258,7 @@ float4 sango_frag(SangoVertexOutput i) : COLOR
 	half shadow = mainLight.shadowAttenuation;
 	// 计算漫反射颜色
 	half NdotL = saturate(dot(lightDirection, i.normal));
-	half3 directDiffuse = lerp(_ShadowColor.rgb, ((mainLight.color.rgb)), NdotL) * shadow + ambient;
+	half3 directDiffuse = lerp(_ShadowColor.rgb, ((mainLight.color.rgb)), NdotL * shadow)  + ambient * saturate(shadow+0.5);
 	half3 diffuse = directDiffuse * _BaseMap_var.rgb;
 	#endif
 

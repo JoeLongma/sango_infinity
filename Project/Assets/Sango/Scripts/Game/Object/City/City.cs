@@ -813,6 +813,13 @@ namespace Sango.Game
                     goldCost += person.Official.cost;
                 }
             });
+
+            // 计算俘虏的消耗
+            for(int i = 0; i < captiveList.Count; i++)
+            {
+                goldCost += 100;
+            }
+
             return goldCost;
         }
 
@@ -998,21 +1005,8 @@ namespace Sango.Game
             for (int i = 0; i < this.captiveList.Count; i++)
             {
                 Person person = this.captiveList[i];
-                if (person.IsWild)
-                {
-                    person.BelongCity = this;
-                    BelongCity.wildPersons.Add(person);
-                }
-                else
-                {
-                    person.BelongForce.Governor.BelongCity.allPersons.Add(person);
-                    person.BelongCorps = person.BelongForce.Governor.BelongCorps;
-                    person.BelongCity = person.BelongForce.Governor.BelongCity;
-                    person.BelongCity.allPersons.Add(person);
-                    person.SetMission(MissionType.PersonReturn, person.BelongCity, 1);
-                }
+                person.Escape();
             }
-
             this.captiveList.Clear();
 
             // 白城
@@ -1170,11 +1164,14 @@ namespace Sango.Game
 
             CalculateHarvest();
 
-            //TODO: 玩家处理俘虏
+            //玩家处理俘虏
             for (int i = captiveList.Count - 1; i >= 0; i--)
             {
                 Person person = captiveList[i];
-                if (atk.BelongForce.Governor.Persuade(person))
+
+
+
+                if (atk.BelongForce.Governor.JobRecuritPerson(person, escapeCity == null ? 3 : 0))
                 {
 #if SANGO_DEBUG
                     Sango.Log.Print($"{person.Name} 加入了 {atk.BelongForce} 势力!!!");
@@ -1182,31 +1179,32 @@ namespace Sango.Game
                     person.ChangeCorps(atk.BelongCorps);
                     captiveList.RemoveAt(i);
                 }
-                //else
-                //{
-                //    allPersons.Remove(person.BeCaptive(this));
-                //}
-            }
-
-            // 释放
-            for (int i = captiveList.Count - 1; i >= 0; i--)
-            {
-                Person person = captiveList[i];
-#if SANGO_DEBUG
-                Sango.Log.Print($"{person.Name} 被释放!!!");
-#endif
-                if (escapeCity != null)
-                {
-                    person.ChangeCity(escapeCity);
-                    if (person.BelongTroop == null)
-                        person.SetMission(MissionType.PersonReturn, person.BelongCity, 1);
-                }
                 else
                 {
-                    person.ClearMission();
-                    person.LeaveToWild();
+                    // TODO: 释放,斩杀
+                    allPersons.Remove(person.BeCaptive(this));
                 }
             }
+
+//            // 释放
+//            for (int i = captiveList.Count - 1; i >= 0; i--)
+//            {
+//                Person person = captiveList[i];
+//#if SANGO_DEBUG
+//                Sango.Log.Print($"{person.Name} 被释放!!!");
+//#endif
+//                if (escapeCity != null)
+//                {
+//                    person.ChangeCity(escapeCity);
+//                    if (person.BelongTroop == null)
+//                        person.SetMission(MissionType.PersonReturn, person.BelongCity, 1);
+//                }
+//                else
+//                {
+//                    person.ClearMission();
+//                    person.LeaveToWild();
+//                }
+//            }
 
             GameEvent.OnCityFall?.Invoke(this, lastBelongForce, atk);
 

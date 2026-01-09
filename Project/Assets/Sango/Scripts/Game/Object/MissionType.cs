@@ -22,8 +22,6 @@
         PersonCreateMachine,
         PersonWork,
         PersonInTroop,
-        PersonInCityCaptive,
-        PersonInTroopCaptive,
         PersonResearch,
 
         /// <summary>

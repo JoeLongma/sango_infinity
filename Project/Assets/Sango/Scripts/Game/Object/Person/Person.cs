@@ -507,34 +507,22 @@ namespace Sango.Game
 
         public override void OnScenarioPrepare(Scenario scenario)
         {
-            if (IsValid && BelongCity != null)
+            if (IsPrisoner)
             {
-                if (!IsWild)
+                if (BelongTroop != null)
                 {
-                    if (IsPrisoner)
-                    {
-                        if (missionType == (int)MissionType.PersonInCityCaptive)
-                        {
-                            City city = scenario.GetObject<City>(missionTarget);
-                            if (city != null)
-                            {
-                                city.captiveList.Add(this);
-                            }
-                        }
-                        else if (missionType != (int)MissionType.PersonInTroopCaptive)
-                        {
-                            Troop troop = scenario.GetObject<Troop>(missionTarget);
-                            if (troop != null)
-                            {
-                                troop.captiveList.Add(this);
-                            }
-                        }
-                        else
-                        {
-                            Sango.Log.Error($"[{Id}]{Name}归属force:{BelongForce.Name} corps:{BelongCorps.Name}, 没有坐牢任务[{BelongCity.Id}] force:{BelongCity.BelongForce.Name} corps:{BelongCity.BelongCorps.Name}");
-                        }
-                    }
-                    else
+                    BelongTroop.captiveList.Add(this);
+                }
+                else if (BelongCity != null)
+                {
+                    BelongCity.captiveList.Add(this);
+                }
+            }
+            else
+            {
+                if (IsValid && BelongCity != null)
+                {
+                    if (!IsWild)
                     {
                         BelongCity.Add(this);
                         if (BelongForce != BelongCity.BelongForce || BelongCorps != BelongCity.BelongCorps)
@@ -542,23 +530,21 @@ namespace Sango.Game
                             Sango.Log.Error($"[{Id}]{Name}归属force:{BelongForce.Name} corps:{BelongCorps.Name}, 但在city[{BelongCity.Id}] force:{BelongCity.BelongForce.Name} corps:{BelongCity.BelongCorps.Name}");
                         }
                     }
-                }
-                else
-                {
-                    if (Invisible)
-                    {
-                        BelongCity.invisiblePersons.Add(this);
-                    }
-                    else if (IsPrisoner)
-                    {
-                        BelongCity.captiveList.Add(this);
-                    }
                     else
                     {
-                        BelongCity.wildPersons.Add(this);
+                        if (Invisible)
+                        {
+                            BelongCity.invisiblePersons.Add(this);
+                        }
+                        else
+                        {
+                            BelongCity.wildPersons.Add(this);
+                        }
                     }
                 }
+
             }
+
 
             if (Father != null)
                 Father.sonList.Add(this);
@@ -889,16 +875,9 @@ namespace Sango.Game
             BelongTroop = null;
         }
 
-        //TODO: 完善招降概率
-        public bool Persuade(Person person)
-        {
-            return GameRandom.Chance(10);
-            //return true;
-        }
-
         public Person BeCaptive(City city)
         {
-            SetMission(MissionType.PersonInCityCaptive, city, 999);
+            state = (int)PersonStateType.Prisoner;
             city.captiveList.Add(this);
             this.BelongForce.CaptiveList.Add(this);
             return this;
@@ -906,11 +885,46 @@ namespace Sango.Game
 
         public Person BeCaptive(Troop troop)
         {
-            SetMission(MissionType.PersonInTroopCaptive, troop, 999);
+            state = (int)PersonStateType.Prisoner;
             troop.captiveList.Add(this);
             this.BelongForce.CaptiveList.Add(this);
             return this;
         }
+
+        public Person Escape()
+        {
+            state = (int)PersonStateType.Normal;
+            // 有归属的武将
+            if (BelongForce != null && BelongForce.IsAlive)
+            {
+                City where = BelongCity;
+                if (BelongTroop != null)
+                {
+                    where = BelongTroop.cell.BelongCity;
+                }
+                else
+                {
+                    BelongCity.wildPersons.Add(this);
+                }
+                ChangeCity(BelongForce.Governor.BelongCity);
+                ChangeCorps(BelongForce.Governor.BelongCorps);
+                SetMission(MissionType.PersonReturn, BelongCity, DistanceDays(where));
+            }
+            else
+            {
+                // 下野
+                if (BelongTroop != null)
+                {
+                    BelongTroop.cell.BelongCity.wildPersons.Add(this);
+                }
+                else
+                {
+                    BelongCity.wildPersons.Add(this);
+                }
+            }
+            return this;
+        }
+
 
         /// <summary>
         /// 获取经验
