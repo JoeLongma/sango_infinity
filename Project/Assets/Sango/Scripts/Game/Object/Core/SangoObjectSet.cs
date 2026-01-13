@@ -89,7 +89,7 @@ namespace Sango.Game
 
 
         public override void Remove(T obj)
-        {
+        {          
             SearchingBeginIndex = Math.Min(SearchingBeginIndex, obj.Id);
             objects[obj.Id] = null;
         }

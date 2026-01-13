@@ -36,8 +36,8 @@ namespace Sango.Game.Player
             switch (eventType)
             {
                 case CommandEventType.Cancel:
-                case CommandEventType.ClickUp:
-                case CommandEventType.RClickUp:
+                case CommandEventType.ClickDown:
+                case CommandEventType.RClickDown:
                     PlayerCommand.Instance.Back(); break;
             }
 

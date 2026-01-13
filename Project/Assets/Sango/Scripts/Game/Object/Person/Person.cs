@@ -59,8 +59,7 @@ namespace Sango.Game
         /// <summary>
         /// 身平
         /// </summary>
-        public int descriptionID;
-        [JsonProperty] public string description;
+        [JsonProperty] public int description;
 
         /// <summary>
         /// 头像id
@@ -701,6 +700,14 @@ namespace Sango.Game
             return base.OnForceTurnStart(scenario);
         }
 
+        public override bool OnForceTurnEnd(Scenario scenario)
+        {
+            //TODO:在野角色随机移动
+            UpdateMission(scenario);
+            return base.OnForceTurnEnd(scenario);
+        }
+
+
         public void TransformToCity(City dest)
         {
             dest.allPersons.Add(this);
@@ -766,7 +773,7 @@ namespace Sango.Game
             return last;
         }
 
-        public bool JobRecuritPerson(Person person, int type)
+        public bool JobRecuritPerson(Person person, City targetCity, int type)
         {
             int probability = GameFormula.RecuritPersonProbability(this, person, type);
 #if SANGO_DEBUG
@@ -786,15 +793,15 @@ namespace Sango.Game
                 {
                     if (person == personTroop.Leader)
                     {
-                        personTroop.JoinToForce(BelongCity);
+                        personTroop.JoinToForce(targetCity);
                         personTroop.ActionOver = true;
                     }
                     else
                     {
                         personTroop.RemovePerson(person);
-                        if (!person.JoinToForce(BelongCity))
+                        if (!person.JoinToForce(targetCity))
                         {
-                            person.SetMission(MissionType.PersonReturn, BelongCity, 1);
+                            person.SetMission(MissionType.PersonReturn, targetCity, 1);
                         }
                     }
                     personTroop.Render?.UpdateRender();
@@ -802,9 +809,9 @@ namespace Sango.Game
                 else
                 {
                     // 有归属
-                    if (!person.JoinToForce(BelongCity))
+                    if (!person.JoinToForce(targetCity))
                     {
-                        person.SetMission(MissionType.PersonReturn, BelongCity, 1);
+                        person.SetMission(MissionType.PersonReturn, targetCity, 1);
                     }
                 }
                 person.ActionOver = true;
@@ -817,6 +824,11 @@ namespace Sango.Game
             BelongForce?.GainTechniquePoint(techniquePointGain);
             ActionOver = true;
             return success;
+        }
+
+        public bool JobRecuritPerson(Person person, int type)
+        {
+            return JobRecuritPerson(person, BelongCity, type);
         }
 
         /// <summary>
@@ -877,6 +889,7 @@ namespace Sango.Game
 
         public Person BeCaptive(City city)
         {
+            BelongCity.allPersons.Remove(this);
             state = (int)PersonStateType.Prisoner;
             city.captiveList.Add(this);
             this.BelongForce.CaptiveList.Add(this);
@@ -885,6 +898,7 @@ namespace Sango.Game
 
         public Person BeCaptive(Troop troop)
         {
+            BelongCity.allPersons.Remove(this);
             state = (int)PersonStateType.Prisoner;
             troop.captiveList.Add(this);
             this.BelongForce.CaptiveList.Add(this);
@@ -912,6 +926,7 @@ namespace Sango.Game
             }
             else
             {
+                BelongCity.allPersons.Remove(this);
                 // 下野
                 if (BelongTroop != null)
                 {
@@ -1021,6 +1036,30 @@ namespace Sango.Game
             if (Father == other) return true;
             if (Mother == other) return true;
             return false;
+        }
+
+        public void Dead()
+        {
+            state = (int)PersonStateType.Dead;
+            if (BelongCity != null)
+            {
+                BelongCity.allPersons.Remove(this);
+                BelongCity.wildPersons.Remove(this);
+            }
+
+            if (IsPrisoner)
+            {
+                if (BelongTroop != null)
+                {
+                    BelongTroop.captiveList.Remove(this);
+                }
+                else
+                    BelongCity.captiveList.Remove(this);
+            }
+            else if (BelongTroop != null)
+            {
+                BelongTroop.RemovePerson(this);
+            }
         }
     }
 }

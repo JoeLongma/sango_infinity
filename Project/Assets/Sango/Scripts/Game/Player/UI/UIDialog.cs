@@ -109,5 +109,12 @@ namespace Sango.Game.Render.UI
             CurInstance?.Hide();
             CurInstance = null;
         }
+
+        public static void Close(UIDialog uIDialog)
+        {
+           if(uIDialog == CurInstance)
+                uIDialog.Hide();
+            CurInstance = null;
+        }
     }
 }

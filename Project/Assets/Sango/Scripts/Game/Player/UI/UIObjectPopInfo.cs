@@ -161,5 +161,13 @@ namespace Sango.Game.Render.UI
 
         }
 
+        private void Update()
+        {
+            if(PlayerCommand.Instance.CurrentCommand != null)
+            {
+                ResetAllPanel(null);
+            }
+        }
+
     }
 }

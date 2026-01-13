@@ -68,7 +68,8 @@ namespace Sango.Game
         public Building Add(Building building) { buildingSet.Add(building); return building; }
         public Fire Add(Fire fire) { fireSet.Add(fire); return fire; }
         public Alliance Add(Alliance alliance) { allianceSet.Add(alliance); return alliance; }
-        public Force Remove(Force force) { forceSet.Remove(force); return force; }
+        public Force Remove(Force force) {
+            forceSet.Remove(force); return force; }
         public Corps Remove(Corps corps) { corpsSet.Remove(corps); return corps; }
         public City Remove(City city) { citySet.Remove(city); return city; }
         public Person Remove(Person person) { personSet.Remove(person); return person; }
@@ -799,7 +800,7 @@ namespace Sango.Game
                 for (int k = 0; k < Info.playerForceList.Length; k++)
                 {
                     Force force = forceSet.Get(Info.playerForceList[k]);
-                    if (force.IsAlive)
+                    if (force != null && force.IsAlive)
                     {
                         force.ActionOver = false;
                         runForces.Enqueue(force);
@@ -870,11 +871,18 @@ namespace Sango.Game
                 return true;
             }
             CurRunForce = runForces.Dequeue();
+            while(!CurRunForce.IsAlive && runForces.Count > 0)
+                CurRunForce = runForces.Dequeue();
+
             if (CurRunForce != null && CurRunForce.IsAlive)
             {
                 Info.curForceId = CurRunForce.Id;
                 CurRunForce.OnForceTurnStart(this);
                 GameEvent.OnForceStart?.Invoke(CurRunForce, this);
+            }
+            else
+            {
+                CurRunForce = null;
             }
             return false;
         }

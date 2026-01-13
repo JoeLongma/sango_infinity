@@ -165,19 +165,19 @@ namespace Sango.Game
                 if (loyalty + target.argumentation.loyaltyAdd >= Scenario.Cur.Variables.recruitableLine)
                     return 0;
             }
-
+           
             // 
 
             Argumentation argumentation = target.argumentation;
 
             Person actorGovernor = actor.BelongForce.Governor;
             Person targetGovernor = null;
-            if (target.BelongForce != null)
+            if (target.BelongForce != null && type != 2)
                 targetGovernor = target.BelongForce.Governor;
 
             int aishou = 25;
             //目标武将在野或是已灭亡势力的俘虏
-            if (target.IsWild)
+            if (target.IsWild || type == 2)
             {
                 loyalty = 60 + Scenario.Cur.Variables.difficulty * 5;
                 if (!target.IsPrisoner)
@@ -187,7 +187,8 @@ namespace Sango.Game
             // 获取目标相性与君主的距离
             else
             {
-                aishou = target.CompatibilityDistance(targetGovernor);
+                if(targetGovernor != null)
+                    aishou = target.CompatibilityDistance(targetGovernor);
             }
             int n = 45 + (aishou - target.CompatibilityDistance(actorGovernor)) * 3 / 2;
             n -= (argumentation.loyaltyAdd + 18) * loyalty * 5 / 100;

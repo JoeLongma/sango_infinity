@@ -815,7 +815,7 @@ namespace Sango.Game
             });
 
             // 计算俘虏的消耗
-            for(int i = 0; i < captiveList.Count; i++)
+            for (int i = 0; i < captiveList.Count; i++)
             {
                 goldCost += 100;
             }
@@ -989,7 +989,7 @@ namespace Sango.Game
             if (atk == null) return;
 
             Force lastBelongForce = BelongForce;
-
+            freePersons.Clear();
             // 清理火
             for (int i = 0; i < OccupyCellList.Count; ++i)
             {
@@ -1108,6 +1108,8 @@ namespace Sango.Game
                         person.LeaveToWild();
                     }
                 }
+
+
             }
 
             //处理建筑
@@ -1126,11 +1128,12 @@ namespace Sango.Game
 
             if (escapeCity == null)
             {
-                Scenario.Cur.corpsSet.Remove(BelongCorps);
+                Scenario.Cur.Remove(BelongCorps);
 #if SANGO_DEBUG
                 Sango.Log.Print($"{BelongForce.Name} 灭亡!!!");
 #endif
-                Scenario.Cur.forceSet.Remove(BelongForce);
+                BelongForce.IsAlive = false;
+                Scenario.Cur.Remove(BelongForce);
 
                 // 势力灭亡事件
                 GameEvent.OnForceFall?.Invoke(BelongForce, this, atk);
@@ -1164,49 +1167,26 @@ namespace Sango.Game
 
             CalculateHarvest();
 
-            //玩家处理俘虏
-            for (int i = captiveList.Count - 1; i >= 0; i--)
+            GameEvent.OnCityFall?.Invoke(this, lastBelongForce, atk);
+
+            if (atk.BelongCorps.IsPlayer)
             {
-                Person person = captiveList[i];
-
-
-
-                if (atk.BelongForce.Governor.JobRecuritPerson(person, escapeCity == null ? 3 : 0))
+                Render.WindowEvent windowEvent = new Render.WindowEvent()
                 {
-#if SANGO_DEBUG
-                    Sango.Log.Print($"{person.Name} 加入了 {atk.BelongForce} 势力!!!");
-#endif
-                    person.ChangeCorps(atk.BelongCorps);
-                    captiveList.RemoveAt(i);
-                }
-                else
-                {
-                    // TODO: 释放,斩杀
-                    allPersons.Remove(person.BeCaptive(this));
-                }
+                    windowName = "window_city_complete",
+                    args = new object[] { Name }
+                };
+                RenderEvent.Instance.Add(windowEvent);
             }
 
-//            // 释放
-//            for (int i = captiveList.Count - 1; i >= 0; i--)
-//            {
-//                Person person = captiveList[i];
-//#if SANGO_DEBUG
-//                Sango.Log.Print($"{person.Name} 被释放!!!");
-//#endif
-//                if (escapeCity != null)
-//                {
-//                    person.ChangeCity(escapeCity);
-//                    if (person.BelongTroop == null)
-//                        person.SetMission(MissionType.PersonReturn, person.BelongCity, 1);
-//                }
-//                else
-//                {
-//                    person.ClearMission();
-//                    person.LeaveToWild();
-//                }
-//            }
-
-            GameEvent.OnCityFall?.Invoke(this, lastBelongForce, atk);
+            CityRecruitPersonWhenCityFallEvent te = new CityRecruitPersonWhenCityFallEvent()
+            {
+                captiveList = captiveList,
+                atk = atk,
+                targetCity = this,
+                recruitType = escapeCity == null ? 2 : 0
+            };
+            RenderEvent.Instance.Add(te);
 
         }
 
@@ -2245,14 +2225,15 @@ namespace Sango.Game
                     target = dest,
                 };
                 RenderEvent.Instance.Add(te);
+                BelongCorps.ReduceActionPoint(apCost);
+                return true;
             }
             else
             {
                 person.SetMission(MissionType.PersonRecruitPerson, dest, Math.Max(1, person.BelongCity.Distance(dest.BelongCity)));
+                BelongCorps.ReduceActionPoint(apCost);
+                return false;
             }
-
-            BelongCorps.ReduceActionPoint(apCost);
-            return true;
         }
 
         /// <summary>

@@ -29,8 +29,9 @@ namespace Sango.Game
             TroopCompareFunction.Init();
             SkillSuccessMethod.Init();
             SkillCriticalMethod.Init();
-
             ModManager.Instance.Init();
+            GameLanguage.Instance.Init("cn");
+
             StartCoroutine(GameInit());
         }
         public override void Shutdown()

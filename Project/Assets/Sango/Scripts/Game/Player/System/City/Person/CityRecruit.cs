@@ -15,7 +15,6 @@ namespace Sango.Game.Player
         public int customMenuOrder;
         public string windowName;
         public List<Person> targetList = new List<Person>();
-
         public List<Person> target = new List<Person>();
 
         public CityRecruit()
@@ -74,6 +73,8 @@ namespace Sango.Game.Player
 
         public override void OnEnter()
         {
+            personList.Clear();
+            target.Clear();
             customTargetTitleList = new List<ObjectSortTitle>()
             {
                 PersonSortFunction.SortByName,
@@ -105,6 +106,7 @@ namespace Sango.Game.Player
                     {
                         x.allPersons.ForEach(y => { targetList.Add(y); });
                         x.wildPersons.ForEach(y => { targetList.Add(y); });
+                        x.captiveList.ForEach(y => { targetList.Add(y); });
                     }
                 }
                 else
@@ -141,7 +143,7 @@ namespace Sango.Game.Player
         public void SetTarget(List<Person> target)
         {
             this.target = target;
-            if(target.Count > 0)
+            if (target.Count > 0)
             {
                 Person recommandPerson = ForceAI.CounsellorRecommendRecuritPerson(TargetCity.freePersons, target[0], null);
                 if (recommandPerson != null)
@@ -157,8 +159,22 @@ namespace Sango.Game.Player
             if (personList.Count <= 0 || target.Count <= 0)
                 return;
 
-            TargetCity.JobRecuritPerson(personList[0], target[0]);
-            Done();
+            if (!TargetCity.JobRecuritPerson(personList[0], target[0]))
+            {
+                UIDialog dialog1 = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, $"交给我吧", () =>
+                {
+                    // TODO:展示武将
+                    // 暂时直接招募
+                    UIDialog.Close();
+                    Done();
+
+                });
+                dialog1.SetPerson(personList[0]);
+            }
+            else
+            {
+                Done();
+            }
         }
 
     }

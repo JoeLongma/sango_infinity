@@ -130,7 +130,7 @@ namespace Sango
         public virtual void Show()
         {
             IsOpen = true;
-            if (!this.gameObject.activeInHierarchy)
+            //if (!this.gameObject.activeInHierarchy)
             {
                 this.gameObject.SetActive(true);
             }

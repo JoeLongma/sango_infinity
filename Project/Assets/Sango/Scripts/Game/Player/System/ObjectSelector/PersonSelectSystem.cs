@@ -18,8 +18,8 @@ namespace Sango.Game.Player
             selected.RemoveAll(x => x == null);
             customSortItems = customSortTitles;
             this.customSortTitleName = cutomSortTitleName;
-            if (customSortTitles.Count > 1)
-                Objects.Sort(customSortItems[1].Sort);
+            //if (customSortTitles.Count > 1)
+            //    Objects.Sort(customSortItems[1].Sort);
             PlayerCommand.Instance.Push(this);
         }
 

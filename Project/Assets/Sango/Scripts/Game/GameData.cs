@@ -46,7 +46,7 @@ namespace Sango.Game
             string commonDataFileName = "Data/Common/Common.json";
             ModManager.Instance.LoadFile(commonDataFileName, file =>
             {
-                ScenarioCommonData = Newtonsoft.Json.JsonConvert.DeserializeObject<ScenarioCommonData>(File.ReadAllText(file));
+                Newtonsoft.Json.JsonConvert.PopulateObject(File.ReadAllText(file), ScenarioCommonData);
             });
             //SimpleJSON.JSONClass node = new SimpleJSON.JSONClass();
             //ScenarioCommonData.Save(node);
