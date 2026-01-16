@@ -66,11 +66,11 @@ namespace Sango.Game
             AIFinished = false;
             AIPrepared = false;
             PrepareCityPersonHole(scenario);
-            AddActionPoint();
+            AddActionPoint(scenario);
             ActionOver = false;
             return true;
         }
-        public void AddActionPoint()
+        public void AddActionPoint(Scenario scenario)
         {
             /*
                 每回合新增行动力=（君主参数+城市参数+武将参数）* 军师参数
@@ -130,7 +130,7 @@ namespace Sango.Game
 
             //TODO: 建筑影响， 特技影响
 
-            ActionPoint = Math.Min(Scenario.Cur.Variables.ActionPointLimit, ActionPoint + (int)((governorAdd + personAdd + cityAdd) * counsellorFactor));
+            ActionPoint = Math.Min(Scenario.Cur.Variables.ActionPointLimit, ActionPoint + (int)((governorAdd + personAdd + cityAdd) * counsellorFactor * scenario.Variables.ActionPointFactor));
             ActionPoint = Math.Max(0, ActionPoint);
 
 

@@ -11,7 +11,12 @@ namespace Sango.Game
         /// <summary>
         /// 最大可存储的行动力上限
         /// </summary>
-        [JsonProperty] public short ActionPointLimit = 255;
+        [JsonProperty] public int ActionPointLimit = 255;
+
+        /// <summary>
+        /// 行动力获取倍率
+        /// </summary>
+        [JsonProperty] public float ActionPointFactor = 1;
 
         /// <summary>
         /// 真实年龄开关
@@ -42,11 +47,6 @@ namespace Sango.Game
         /// 属性成长不超过这个点数
         /// </summary>
         [JsonProperty] public byte MaxAttributeGet = 30;
-
-        /// <summary>
-        /// 基础伤害
-        /// </summary>
-        [JsonProperty] public float fight_base_durability_damage = 4;
 
         /// <summary>
         /// 基础伤害
@@ -230,12 +230,12 @@ namespace Sango.Game
         /// <summary>
         /// 每月变化的关系值
         /// </summary>
-        [JsonProperty] public short relationChangePerMonth = -200;
+        [JsonProperty] public int relationChangePerMonth = -200;
 
         /// <summary>
         /// 每月的关系变化率
         /// </summary>
-        [JsonProperty] public ushort relationChangeChance = 50;
+        [JsonProperty] public int relationChangeChance = 50;
 
         /// <summary>
         /// 破城时候的抓捕率(百分比)
@@ -251,7 +251,6 @@ namespace Sango.Game
         /// 队伍溃败时候的抓捕率(百分比)
         /// </summary>
         [JsonProperty] public int captureChangceWhenTroopFall = 5;
-
 
         /// <summary>
         /// 进攻时候留守最低的兵力

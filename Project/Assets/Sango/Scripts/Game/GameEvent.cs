@@ -106,8 +106,7 @@ namespace Sango.Game
         public static EventDelegate<ContextMenuData> OnGameSettingContextMenuShow;
 
         public static EventDelegate<TroopInteractiveDialogData, Troop, Cell> OnTroopInteractiveContextDialogShow;
-
-
+        public static EventDelegate<IVariablesSetting, Scenario> OnScenarioVariablesSetting;
         #endregion Window
 
         #region Game

@@ -212,11 +212,13 @@ namespace Sango.Game.Render.UI
                     }
                 }
             }
-
-            //Scenario.CurSelected.Info.playerForceList = forceIds.ToArray();
-            Window.Instance.Open("window_loading");
+            Scenario.CurSelected.Info.playerForceList = forceIds.ToArray();
+            Window.Instance.Open("window_scenario_variables");
             Window.Instance.Close("window_scenario_force_select");
-            Scenario.StartScenario(Scenario.CurSelected, forceIds);
+            //
+            //Window.Instance.Open("window_loading");
+            //Window.Instance.Close("window_scenario_force_select");
+            //Scenario.StartScenario(Scenario.CurSelected, forceIds);
         }
 
         public void OnNext()

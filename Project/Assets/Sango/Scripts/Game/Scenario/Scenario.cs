@@ -408,6 +408,26 @@ namespace Sango.Game
             }
         }
 
+        public void LoadVariables()
+        {
+            using (StreamReader file = System.IO.File.OpenText(FilePath))
+            using (JsonTextReader reader = new JsonTextReader(file))
+            {
+                while (reader.Read()) // Advances to the next token in the JSON stream.
+                {
+                    if (reader.TokenType == JsonToken.StartObject) // Check for start of an object in the JSON stream.
+                    {
+                        if (!string.IsNullOrEmpty(reader.Path) && reader.Path == "Variables")
+                        {
+                            Variables = JsonSerializer.CreateDefault().Deserialize<ScenarioVariables>(reader); // Deserialize the object.
+                            Name = Info.name;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
         public void LoadContent()
         {
             LoadContent(FilePath);
