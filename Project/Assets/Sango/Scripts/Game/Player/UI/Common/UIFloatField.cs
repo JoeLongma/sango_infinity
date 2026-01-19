@@ -31,9 +31,11 @@ namespace Sango.Game.Render.UI
             {
                 if (v > max) v = max;
                 else if (v < min) v = min;
-                value = v;
-                onValueChange?.Invoke(value);
-                inputField.SetTextWithoutNotify(value.ToString());
+                if (v != value)
+                {
+                    value = v;
+                    onValueChange?.Invoke(value);
+                }
             }
         }
     }

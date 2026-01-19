@@ -34,7 +34,7 @@ namespace Sango.Game.Render
                     else
                     {
                         // TODO: 释放,斩杀
-                        targetCity.allPersons.Remove(person.BeCaptive(targetCity));
+                        person.BeCaptive(targetCity);
                     }
                 }
                 IsDone = true;

@@ -21,8 +21,11 @@ namespace Sango.Game.Render.UI
 
         void OnToggleValueChanged(bool v)
         {
-            value = v;
-            onValueChange?.Invoke(value);
+            if (v != value)
+            {
+                value = v;
+                onValueChange?.Invoke(value);
+            }
         }
     }
 }

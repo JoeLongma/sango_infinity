@@ -41,19 +41,24 @@ namespace Sango.Game.Render.UI
             {
                 if (v > max) v = max;
                 else if (v < min) v = min;
-
-                value = v;
-                slider.SetValueWithoutNotify((float)(value - min) / (max - min));
-                onValueChange?.Invoke(value);
+                if (v != value)
+                {
+                    value = v;
+                    slider.SetValueWithoutNotify((float)(value - min) / (max - min));
+                    onValueChange?.Invoke(value);
+                }
             }
         }
 
         void OnSliderNumberChanged(float number)
         {
             int v = min + (int)((float)(max - min) * number);
-            value = v;
-            inputField.SetTextWithoutNotify(value.ToString());
-            onValueChange?.Invoke(value);
+            if (v != value)
+            {
+                value = v;
+                inputField.SetTextWithoutNotify(value.ToString());
+                onValueChange?.Invoke(value);
+            }
         }
     }
 }
