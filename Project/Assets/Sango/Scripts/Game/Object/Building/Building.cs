@@ -110,18 +110,6 @@ namespace Sango.Game
                     BelongCity.OnBuildingUpgradeComplete(this, builder);
                 }
             }
-            else if (isWorking && Workers != null)
-            {
-                if (LeftCounter > 0)
-                    LeftCounter--;
-                if (LeftCounter == 0)
-                {
-                    isWorking = false;
-                    SangoObjectList<Person> builder = Workers;
-                    OnWorkingComplate();
-                    BelongCity.OnBuildingUpgradeComplete(this, builder);
-                }
-            }
             else
             {
                 if (LeftCounter > 0)
@@ -339,15 +327,6 @@ namespace Sango.Game
                 Workers = null;
             }
 
-            if (Workers != null)
-            {
-                for (int i = 0; i < Workers.Count; i++)
-                {
-                    Person person = Workers[i];
-                    person.ClearMission();
-                }
-                Workers = null;
-            }
             if (effectCells != null)
                 effectCells.Clear();
             if (CenterCell != null)

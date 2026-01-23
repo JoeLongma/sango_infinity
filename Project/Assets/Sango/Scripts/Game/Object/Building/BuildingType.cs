@@ -23,6 +23,7 @@ namespace Sango.Game
         [JsonProperty] public int foodGain;
         [JsonProperty] public int product;
         [JsonProperty] public int productCost;
+        [JsonProperty] public int productFactor;
         [JsonProperty] public int populationGain;
         [JsonProperty] public int cost;
         [JsonProperty] public byte radius;

@@ -12,10 +12,6 @@ namespace Sango.Game
     [GameSystem(order = 100)]
     public class BuildingWorking : GameSystem
     {
-        /// <summary>
-        /// 最大工作人数
-        /// </summary>
-        public static int Max_Working_Person_Count = 1;
         public Building TargetBuilding { get; set; }
 
         public override void Init()
@@ -184,13 +180,17 @@ namespace Sango.Game
 
             int person_factor = 100;
             int index = 1;
+            bool hasWorker = false;
             if (building.Workers != null)
             {
-                for (int i = 0; i < Max_Working_Person_Count; i++)
+                for (int i = 0; i < buildingType.workerLimit; i++)
                 {
-                    Person person = building.Workers.Get(i);
+                    Person person = null;
+                    if (i < building.Workers.Count)
+                        person = building.Workers.Get(i);
                     if (person != null && person.IsFree)
                     {
+                        hasWorker = true;
                         person_factor += (int)(Mathf.Pow(Mathf.Max(40, person.GetAttribute(buildingType.effectAttrType)), 0.5f) * 100 / (4 * index));
                         index++;
                     }
@@ -228,10 +228,10 @@ namespace Sango.Game
 
             if (buildingType.product > 0)
             {
-                if (belongCity.gold > buildingType.productCost)
+                if (hasWorker && belongCity.gold > buildingType.productCost )
                 {
                     belongCity.gold -= buildingType.productCost;
-                    int value = buildingType.product * totalFactor / 10000;
+                    int value = buildingType.product * buildingType.productFactor * totalFactor / 10000;
                     Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(value);
                     GameEvent.OnBuildingCalculateProduct?.Invoke(building, overrideData);
                     building.AccumulatedProduct += overrideData.Value;
@@ -325,14 +325,14 @@ namespace Sango.Game
                 // 均衡发展
             }
 
-            city.allBuildings.ForEach((building) => { building.Workers?.Clear(); });
+            city.allBuildings.ForEach((building) => { if (building.isComplate) building.Workers?.Clear(); });
             city.allPersons.ForEach((person) => { person.workingBuilding = null; });
 
             float targetGold = 5000f;
             float targetFood = city.troops * 2f;
             float targetTroop = city.food / 2f;
             float targetItemNumber = city.troops * 1.2f;
-            float targetHorseNumber = city.troops / 2;
+            float targetHorseNumber = city.troops;
             float targetBoatNumber = 100f;
             float targetMachineNumber = 100f;
             float targetSecurity = 90;
@@ -342,22 +342,21 @@ namespace Sango.Game
             float foodP = city.food / targetFood;
             float troopP = city.troops / targetTroop;
             int totalWeaponNum = city.itemStore.GetNumber(new int[] { 2, 3, 4 });
-            float itemP = totalWeaponNum / (targetItemNumber * 3);
+            float itemP = totalWeaponNum / targetItemNumber;
             int totalHorseNum = city.itemStore.GetNumber(5);
             float horseP = totalHorseNum / targetHorseNumber;
             int totalBoatNum = city.itemStore.GetNumber(9);
             float boatP = totalBoatNum / targetBoatNumber;
             int totalMachineNum = city.itemStore.GetNumber(new int[] { 7, 8 });
             float machineP = totalMachineNum / targetMachineNumber;
-            float securityP = city.security / targetSecurity;
+            float securityP = (city.security - 50) / (targetSecurity - 50);
             float moraleP = city.morale / targetMorale;
-
-
-
 
             List<PBuilding> pBuildings = new List<PBuilding>();
             city.allBuildings.ForEach((building) =>
             {
+                if (!building.isComplate) return;
+
                 BuildingType buildingType = building.BuildingType;
                 switch (buildingType.kind)
                 {
@@ -374,83 +373,99 @@ namespace Sango.Game
                         pBuildings.Add(new PBuilding() { p = goldP, building = building });
                         break;
                     case (int)BuildingKindType.Barracks:
-                        pBuildings.Add(new PBuilding() { p = troopP, building = building });
+                        if (troopP < 1)
+                            pBuildings.Add(new PBuilding() { p = troopP, building = building });
                         break;
                     case (int)BuildingKindType.BlacksmithShop:
                         {
-                            // 设置产出
-                            // 统计适应偏向
-                            int[] levelTotal = new int[4] { 1, 1, 1, 1 };
-                            city.allPersons.ForEach(x =>
+                            if (itemP < 1)
                             {
-                                levelTotal[0] += x.SpearLv;
-                                levelTotal[1] += x.HalberdLv;
-                                levelTotal[2] += x.CrossbowLv;
-                            });
-
-                            int sumTotal = levelTotal[0] + levelTotal[1] + levelTotal[2];
-                            for (int itemTypeId = 2; itemTypeId <= 4; itemTypeId++)
-                            {
-                                int itemNum = city.itemStore.GetNumber(itemTypeId);
-                                if (itemNum < levelTotal[itemTypeId - 2] * targetItemNumber / sumTotal)
+                                pBuildings.Add(new PBuilding() { p = itemP, building = building });
+                                // 设置产出
+                                // 统计适应偏向
+                                int[] levelTotal = new int[3] { 1, 1, 1 };
+                                city.allPersons.ForEach(x =>
                                 {
-                                    building.ProductItemId = itemTypeId;
-                                    break;
-                                }
+                                    levelTotal[0] += x.SpearLv;
+                                    levelTotal[1] += x.HalberdLv;
+                                    levelTotal[2] += x.CrossbowLv;
+                                });
+
+                                int sumTotal = levelTotal[0] + levelTotal[1] + levelTotal[2];
+                                int targetIndex = GameRandom.RandomWeightIndex(levelTotal);
+                                building.ProductItemId = targetIndex + 2;
+                                //for (int itemTypeId = 2; itemTypeId <= 4; itemTypeId++)
+                                //{
+                                //    int itemNum = city.itemStore.GetNumber(itemTypeId);
+                                //    if (itemNum < levelTotal[itemTypeId - 2] * targetItemNumber / sumTotal)
+                                //    {
+                                //        building.ProductItemId = itemTypeId;
+                                //        break;
+                                //    }
+                                //}
                             }
                         }
                         break;
                     case (int)BuildingKindType.Stable:
-                        pBuildings.Add(new PBuilding() { p = itemP, building = building });
+                        if (horseP < 1)
+                            pBuildings.Add(new PBuilding() { p = horseP, building = building });
                         break;
                     case (int)BuildingKindType.BoatFactory:
                         {
-                            pBuildings.Add(new PBuilding() { p = boatP, building = building });
-                            int targetBoatId = 12;
-                            ItemType itemType = scenario.GetObject<ItemType>(targetBoatId);
-                            if (itemType.IsValid(city.BelongForce))
+                            if (boatP < 1)
                             {
-                                building.ProductItemId = targetBoatId;
-                            }
-                            else
-                            {
-                                building.ProductItemId = targetBoatId - 1;
+                                pBuildings.Add(new PBuilding() { p = boatP, building = building });
+                                int targetBoatId = 12;
+                                ItemType itemType = scenario.GetObject<ItemType>(targetBoatId);
+                                if (itemType.IsValid(city.BelongForce))
+                                {
+                                    building.ProductItemId = targetBoatId;
+                                }
+                                else
+                                {
+                                    building.ProductItemId = targetBoatId - 1;
+                                }
                             }
                         }
                         break;
                     case (int)BuildingKindType.MechineFactory:
                         {
-                            pBuildings.Add(new PBuilding() { p = machineP, building = building });
-                            int monsterNum = city.itemStore.GetNumber(7);
-                            int towerNum = city.itemStore.GetNumber(9);
+                            if (machineP < 1)
+                            {
+                                pBuildings.Add(new PBuilding() { p = machineP, building = building });
+                                int monsterNum = city.itemStore.GetNumber(7);
+                                int towerNum = city.itemStore.GetNumber(9);
 
-                            int tagetItemId;
-                            int totalNum;
-                            ItemType targetItemType;
-                            if (towerNum > monsterNum)
-                            {
-                                tagetItemId = 7;
-                                totalNum = monsterNum;
-                                targetItemType = scenario.GetObject<ItemType>(tagetItemId);
-                                if (!targetItemType.IsValid(city.BelongForce))
-                                    tagetItemId--;
+                                int tagetItemId;
+                                int totalNum;
+                                ItemType targetItemType;
+                                if (towerNum > monsterNum)
+                                {
+                                    tagetItemId = 7;
+                                    totalNum = monsterNum;
+                                    targetItemType = scenario.GetObject<ItemType>(tagetItemId);
+                                    if (!targetItemType.IsValid(city.BelongForce))
+                                        tagetItemId--;
+                                }
+                                else
+                                {
+                                    tagetItemId = 9;
+                                    totalNum = towerNum;
+                                    targetItemType = scenario.GetObject<ItemType>(tagetItemId);
+                                    if (!targetItemType.IsValid(city.BelongForce))
+                                        tagetItemId--;
+                                }
+                                building.ProductItemId = tagetItemId;
                             }
-                            else
-                            {
-                                tagetItemId = 9;
-                                totalNum = towerNum;
-                                targetItemType = scenario.GetObject<ItemType>(tagetItemId);
-                                if (!targetItemType.IsValid(city.BelongForce))
-                                    tagetItemId--;
-                            }
-                            building.ProductItemId = tagetItemId;
                         }
                         break;
                     case (int)BuildingKindType.PatrolBureau:
-                        pBuildings.Add(new PBuilding() { p = securityP, building = building });
+                        if (securityP < 1)
+                            pBuildings.Add(new PBuilding() { p = securityP, building = building });
                         break;
                     case (int)BuildingKindType.TrainTroopBuilding:
-                        pBuildings.Add(new PBuilding() { p = moraleP, building = building });
+                        if (moraleP < 1)
+                            pBuildings.Add(new PBuilding() { p = moraleP, building = building });
                         break;
                     case (int)BuildingKindType.RecruitBuilding:
                         pBuildings.Add(new PBuilding() { p = 100, building = building });
@@ -477,7 +492,7 @@ namespace Sango.Game
                 return;
             city.allBuildings.ForEach((building) =>
             {
-                if(!building.isComplate)
+                if (!building.isComplate)
                     return;
 
                 BuildingType buildingType = building.BuildingType;
@@ -501,7 +516,6 @@ namespace Sango.Game
                 }
             });
 
-            AppointWorking(city, scenario);
         }
 
         /// <summary>
@@ -513,6 +527,8 @@ namespace Sango.Game
         {
             if (city.BelongCorps == null)
                 return;
+
+            // 获取收入
             city.allBuildings.ForEach((building) =>
             {
                 if (!building.isComplate)
@@ -526,7 +542,7 @@ namespace Sango.Game
                         {
                             city.AddTroops(building.AccumulatedProduct);
                             city.Render?.UpdateRender();
-                            city.Render?.ShowInfo(building.AccumulatedProduct, (int)InfoType.Troop);
+                            building.Render?.ShowInfo(building.AccumulatedProduct, (int)InfoType.Troop);
                             building.AccumulatedProduct = 0;
                         }
                         break;
@@ -535,34 +551,47 @@ namespace Sango.Game
                         {
                             city.AddItem(building.ProductItemId, building.AccumulatedProduct);
                             city.Render?.UpdateRender();
-                            city.Render?.ShowInfo(building.AccumulatedProduct, building.ProductItemId);
+                            switch (building.ProductItemId)
+                            {
+                                case 2:
+                                    building.Render?.ShowInfo(building.AccumulatedProduct, (int)InfoType.Spear);
+                                    break;
+                                case 3:
+                                    building.Render?.ShowInfo(building.AccumulatedProduct, (int)InfoType.Sword);
+                                    break;
+                                case 4:
+                                    building.Render?.ShowInfo(building.AccumulatedProduct, (int)InfoType.CrossBow);
+                                    break;
+                            }
                             building.AccumulatedProduct = 0;
                         }
                         break;
                     case (int)BuildingKindType.Stable:
                         if (building.AccumulatedProduct > 0)
                         {
-                            city.AddItem(building.ProductItemId, building.AccumulatedProduct);
+                            city.AddItem(5, building.AccumulatedProduct);
                             city.Render?.UpdateRender();
-                            city.Render?.ShowInfo(building.AccumulatedProduct, building.ProductItemId);
+                            building.Render?.ShowInfo(building.AccumulatedProduct, (int)InfoType.Horse);
                             building.AccumulatedProduct = 0;
                         }
                         break;
                     case (int)BuildingKindType.BoatFactory:
                         if (building.AccumulatedProduct > 0)
                         {
-                            city.AddItem(building.ProductItemId, building.AccumulatedProduct);
+                            ItemType itemType = scenario.GetObject<ItemType>(building.ProductItemId);
+                            city.AddItem(itemType.subKind, building.AccumulatedProduct);
                             city.Render?.UpdateRender();
-                            city.Render?.ShowInfo(building.AccumulatedProduct, building.ProductItemId + 1);
+                            building.Render?.ShowInfo(building.AccumulatedProduct, building.ProductItemId);
                             building.AccumulatedProduct = 0;
                         }
                         break;
                     case (int)BuildingKindType.MechineFactory:
                         if (building.AccumulatedProduct > 0)
                         {
-                            city.AddItem(building.ProductItemId, building.AccumulatedProduct);
+                            ItemType itemType = scenario.GetObject<ItemType>(building.ProductItemId);
+                            city.AddItem(itemType.subKind, building.AccumulatedProduct);
                             city.Render?.UpdateRender();
-                            city.Render?.ShowInfo(building.AccumulatedProduct, building.ProductItemId + 1);
+                            building.Render?.ShowInfo(building.AccumulatedProduct, building.ProductItemId - 1);
                             building.AccumulatedProduct = 0;
                         }
                         break;
@@ -571,7 +600,7 @@ namespace Sango.Game
                         {
                             city.AddSecurity(building.AccumulatedProduct);
                             city.Render?.UpdateRender();
-                            city.Render?.ShowInfo(building.AccumulatedProduct, (int)InfoType.Security);
+                            building.Render?.ShowInfo(building.AccumulatedProduct, (int)InfoType.Security);
                             building.AccumulatedProduct = 0;
                         }
                         break;
@@ -580,7 +609,7 @@ namespace Sango.Game
                         {
                             city.AddMorale(building.AccumulatedProduct);
                             city.Render?.UpdateRender();
-                            city.Render?.ShowInfo(building.AccumulatedProduct, (int)InfoType.Morale);
+                            building.Render?.ShowInfo(building.AccumulatedProduct, (int)InfoType.Morale);
                             building.AccumulatedProduct = 0;
                         }
                         break;

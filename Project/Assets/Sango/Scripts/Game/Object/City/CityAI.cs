@@ -150,7 +150,7 @@ namespace Sango.Game
         /// <param name="scenario"></param>
         public static bool AIIntrior(City city, Scenario scenario)
         {
-            AIRewardPerson(city, scenario);
+            //AIRewardPerson(city, scenario);
 
             // 兵临城下
             if (city.IsEnemiesRound(9))
@@ -158,17 +158,17 @@ namespace Sango.Game
 
             //AIResearch(city, scenario);
             AIBuilding(city, scenario);
-            AIIntriorBalance(city, scenario);
+            //AIIntriorBalance(city, scenario);
 
-            AISearching(city, scenario);
-            AIRecuritPerson(city, scenario);
-            AITrainTroop(city, scenario);
-            AICreateBoat(city, scenario);
-            AICreateMachine(city, scenario);
-            if (city.freePersons.Count > 3)
-            {
-                city.JobSearching(city.freePersons.GetRange(0, GameRandom.Range(city.freePersons.Count / 2)).ToArray());
-            }
+            //AISearching(city, scenario);
+            //AIRecuritPerson(city, scenario);
+            //AITrainTroop(city, scenario);
+            //AICreateBoat(city, scenario);
+            //AICreateMachine(city, scenario);
+            //if (city.freePersons.Count > 3)
+            //{
+            //    city.JobSearching(city.freePersons.GetRange(0, GameRandom.Range(city.freePersons.Count / 2)).ToArray());
+            //}
             return true;
         }
 
@@ -423,8 +423,8 @@ namespace Sango.Game
 
             for (int i = 0; i < count; i++)
                 AIBuildIntriore(city, scenario);
-            for (int i = 0; i < count; i++)
-                AIBuildingLevelUp(city, scenario);
+            //for (int i = 0; i < count; i++)
+            //    AIBuildingLevelUp(city, scenario);
 
             AIBuildMilitaryBuilding(city, scenario);
             return true;
@@ -565,7 +565,9 @@ namespace Sango.Game
                 (int)BuildingKindType.Market,
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Market,
-               // (int)BuildingKindType.PatrolBureau,
+                (int)BuildingKindType.TrainTroopBuilding,
+                (int)BuildingKindType.PatrolBureau,
+                (int)BuildingKindType.RecruitBuilding,
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Stable,
                 (int)BuildingKindType.MechineFactory,// 12小城
@@ -594,11 +596,13 @@ namespace Sango.Game
                 (int)BuildingKindType.Market,
                 (int)BuildingKindType.Market,
                 (int)BuildingKindType.Farm,
+                (int)BuildingKindType.TrainTroopBuilding,
                 (int)BuildingKindType.Market,
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Farm,
-               // (int)BuildingKindType.PatrolBureau,
+                (int)BuildingKindType.PatrolBureau,
                 (int)BuildingKindType.Stable,
+                (int)BuildingKindType.RecruitBuilding,
                 (int)BuildingKindType.MechineFactory,
                 (int)BuildingKindType.BoatFactory,// 12小城
 
@@ -625,18 +629,20 @@ namespace Sango.Game
                 (int)BuildingKindType.Market,
                 (int)BuildingKindType.Barracks,
                 (int)BuildingKindType.BlacksmithShop,
+                (int)BuildingKindType.RecruitBuilding,
+                (int)BuildingKindType.TrainTroopBuilding,
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Market,
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Market,
-               // (int)BuildingKindType.PatrolBureau,
+                (int)BuildingKindType.PatrolBureau,
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.BoatFactory,
                 (int)BuildingKindType.MechineFactory,// 12小城
 
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Market,
-                (int)BuildingKindType.BoatFactory,
+                (int)BuildingKindType.Market,
                 (int)BuildingKindType.CustomKind,// 16中城
 
 
@@ -655,16 +661,18 @@ namespace Sango.Game
             new int[] {
                 (int)BuildingKindType.Barracks,
                 (int)BuildingKindType.BlacksmithShop,
+                (int)BuildingKindType.RecruitBuilding,
+                (int)BuildingKindType.TrainTroopBuilding,
                 (int)BuildingKindType.Market,
                 (int)BuildingKindType.Market,
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Market,
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Farm,
-               // (int)BuildingKindType.PatrolBureau,
+                (int)BuildingKindType.PatrolBureau,
                 (int)BuildingKindType.BoatFactory,
                 (int)BuildingKindType.MechineFactory,
-                (int)BuildingKindType.BoatFactory,// 12小城
+                (int)BuildingKindType.Market,// 12小城
 
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Market,

@@ -18,7 +18,7 @@ namespace Sango.Game.Render.UI
                 if (i < workerCount || (building.Workers != null && !building.isComplate && i < building.Workers.Count))
                 {
                     uIWorker.SetEnabled(true);
-                    if (building.Workers != null)
+                    if (building.Workers != null && i < building.Workers.Count)
                         uIWorker.SetPerson(building.Workers.Get(i));
                     else
                         uIWorker.SetPerson(null);
