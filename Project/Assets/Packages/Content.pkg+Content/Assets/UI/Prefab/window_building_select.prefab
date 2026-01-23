@@ -862,7 +862,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9039031632039893254}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1849134f540415b4dba7f4e890c9a85a, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c131f03e19767e4db8805560a4d48de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   buildingTypeItems:
@@ -984,6 +984,7 @@ MonoBehaviour:
   offset: {x: 0, y: 0}
   delayTime: 0
   cachePosition: {x: 0, y: 0}
+  dontResetCachePosition: 1
 --- !u!114 &2662530083652992827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -996,7 +997,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5d6125d06f1fef4aa9861c00314c119, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originalHeight: 800
 --- !u!1 &9194460929382952310
 GameObject:
   m_ObjectHideFlags: 0
@@ -1010,7 +1010,7 @@ GameObject:
   - component: {fileID: 6098055487582875566}
   - component: {fileID: 2229582192840493131}
   m_Layer: 5
-  m_Name: nextPage_1
+  m_Name: page
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1365,7 +1365,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7913181657542872013, guid: dbf5bc900c2db7344ab0d3dd95a76655, type: 3}
       propertyPath: m_Name
-      value: citygold_2
+      value: durability
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbf5bc900c2db7344ab0d3dd95a76655, type: 3}
@@ -2741,7 +2741,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7913181657542872013, guid: dbf5bc900c2db7344ab0d3dd95a76655, type: 3}
       propertyPath: m_Name
-      value: citygold_4
+      value: empty
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbf5bc900c2db7344ab0d3dd95a76655, type: 3}
@@ -3459,7 +3459,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7913181657542872013, guid: dbf5bc900c2db7344ab0d3dd95a76655, type: 3}
       propertyPath: m_Name
-      value: citygold_3
+      value: developNum
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbf5bc900c2db7344ab0d3dd95a76655, type: 3}
@@ -3596,7 +3596,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7913181657542872013, guid: dbf5bc900c2db7344ab0d3dd95a76655, type: 3}
       propertyPath: m_Name
-      value: citygold_5
+      value: effect
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbf5bc900c2db7344ab0d3dd95a76655, type: 3}
@@ -4686,7 +4686,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7913181657542872013, guid: dbf5bc900c2db7344ab0d3dd95a76655, type: 3}
       propertyPath: m_Name
-      value: citygold_6
+      value: limit
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbf5bc900c2db7344ab0d3dd95a76655, type: 3}
@@ -4940,7 +4940,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7913181657542872013, guid: dbf5bc900c2db7344ab0d3dd95a76655, type: 3}
       propertyPath: m_Name
-      value: citygold_1
+      value: counter
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbf5bc900c2db7344ab0d3dd95a76655, type: 3}

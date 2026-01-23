@@ -363,6 +363,17 @@ namespace Sango.Game
             "<color=#61E28F>政治</color>",
             "<color=#78CBF3>魅力</color>" };
 
+        /// <summary>
+        /// 基础越狱概率(万分比)
+        /// </summary>
+        [JsonProperty] public int baseEscapeProbabllity = 100;
+
+        /// <summary>
+        /// 越狱概率每回合增长(万分比)
+        /// </summary>
+        [JsonProperty] public int baseEscapeProbablilityAddByTurn = 50;
+
+
         public float DifficultyDamageFactor
         {
             get

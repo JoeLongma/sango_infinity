@@ -176,6 +176,8 @@ namespace Sango.Mod
 
             //最终可以通过MOD/Lua/名字去查代码
             for (int i = 0; i < mModList.Count; i++)
+                mModList[i].LoadLanguage();
+            for (int i = 0; i < mModList.Count; i++)
                 mModList[i].LoadScenario();
             for (int i = 0; i < mModList.Count; i++)
                 mModList[i].LoadUI();

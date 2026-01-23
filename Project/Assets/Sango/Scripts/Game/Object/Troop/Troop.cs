@@ -440,13 +440,36 @@ namespace Sango.Game
             {
                 Render.UpdateRender();
             }
+
+            // 俘虏羁押天数累积
+            for (int i = captiveList.Count - 1; i >= 0; i--)
+            {
+                Person person = captiveList[i];
+                person.missionCounter++;
+            }
+
+            return true;
+        }
+        public override bool OnForceTurnEnd(Scenario scenario)
+        {
+            // 计算俘虏越狱
+            for (int i = captiveList.Count - 1; i >= 0; i--)
+            {
+                Person person = captiveList[i];
+                if (GameRandom.Chance(GameFormula.Instance.PersonEscapeProbablility_InTroop(person, this, scenario), 10000))
+                {
+                    person.Escape();
+                    GameEvent.OnPersonEscape?.Invoke(person, this);
+                }
+            }
+            GameEvent.OnTroopTurnEnd?.Invoke(this, scenario);
             return true;
         }
 
         public int IsWithOutFood()
         {
             if (food == 0) return 0;
-            if (food < foodCost * 3) return 1;
+            if (food < foodCost * 6) return 1;
             return 2;
         }
 

@@ -72,7 +72,7 @@ namespace Sango.Game.Render
             else
             {
                 BuildingBase building = targetCell.building;
-                if (building != null && !building.isComplte)
+                if (building != null && !building.isComplate)
                     building.ChangeDurability(GameUtility.Method_TroopBuildAbility(troop), troop);
                 else
                     troop.BelongCity.BuildBuilding(targetCell, troop, buildingType);

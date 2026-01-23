@@ -1,0 +1,231 @@
+﻿using Sango.Game.Action;
+using Sango.Game.Player;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using UnityEngine;
+
+namespace Sango.Game
+{
+    /// <summary>
+    /// 模块管理器
+    /// </summary>
+    public class GameSystemManager : Singleton<GameSystemManager>
+    {
+        /// <summary>
+        /// 模块集合
+        /// </summary>
+        public Dictionary<string, GameSystem> systemMap = new Dictionary<string, GameSystem>();
+        static System.Collections.Generic.List<System.Type> GetAllSubTypes(System.Type aBaseClass)
+        {
+            var result = new System.Collections.Generic.List<System.Type>();
+            System.Reflection.Assembly[] AS = System.AppDomain.CurrentDomain.GetAssemblies();
+            foreach (var A in AS)
+            {
+                try
+                {
+                    System.Type[] types = A.GetTypes();
+                    foreach (var T in types)
+                    {
+                        if (T.IsSubclassOf(aBaseClass))
+                            result.Add(T);
+                    }
+                }
+                catch (System.Reflection.ReflectionTypeLoadException) {; }
+            }
+            return result;
+        }
+        class systemData
+        {
+            public System.Type t;
+            public GameSystemAttribute attribute;
+        }
+        /// <summary>
+        /// 这里会自动创建所有GameSystem子类的单例
+        /// </summary>
+        public void Init()
+        {
+            Type genericType = typeof(Singleton<>);
+            List<System.Type> modules = GetAllSubTypes(typeof(GameSystem));
+            List<systemData> moduleDatas = new List<systemData>();
+            foreach (System.Type type in modules)
+            {
+                GameSystemAttribute moduleAttribute = type.GetCustomAttribute<GameSystemAttribute>(false);
+                if (moduleAttribute == null)
+                    moduleAttribute = new GameSystemAttribute() { order = 0, ignore = false, nickName = type.Name };
+
+                if (moduleAttribute.ignore)
+                    continue;
+
+                if (string.IsNullOrEmpty(moduleAttribute.nickName))
+                    moduleAttribute.nickName = type.Name;
+
+                systemData data = new systemData() { attribute = moduleAttribute, t = type };
+                systemData exsist = moduleDatas.Find(x => x.attribute.nickName == moduleAttribute.nickName);
+                if (exsist != null)
+                {
+                    if (exsist.attribute.order < data.attribute.order)
+                    {
+                        moduleDatas.Remove(exsist);
+                        moduleDatas.Add(data);
+                    }
+                }
+                else
+                    moduleDatas.Add(data);
+            }
+            moduleDatas.Sort((a, b) => a.attribute.order.CompareTo(b.attribute.order));
+
+            for (int i = 0; i < moduleDatas.Count; ++i)
+            {
+                systemData moduleData = moduleDatas[i];
+                Type specificType = genericType.MakeGenericType(moduleData.t);
+                PropertyInfo propertyInfo = specificType.GetProperty("Instance");
+                // 获取并打印属性的值（对于静态属性，传递null作为实例）
+                GameSystem value = propertyInfo.GetValue(null) as GameSystem; // 对于静态属性，此处为null
+                if (value != null)
+                {
+                    value.Init();
+                    systemMap.Add(moduleData.attribute.nickName, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 注册模块
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="system"></param>
+        public void Register(string name, GameSystem system)
+        {
+            if (systemMap.TryGetValue(name, out GameSystem value))
+                value.Clear();
+            systemMap[name] = system;
+        }
+
+        /// <summary>
+        /// 取消模块
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="system"></param>
+        public void Unregister(string name)
+        {
+            if (systemMap.TryGetValue(name, out GameSystem value))
+            {
+                value.Clear();
+                systemMap.Remove(name);
+            }
+        }
+
+        public T GetSystem<T>(string name) where T : GameSystem
+        {
+            if (systemMap.TryGetValue(name, out GameSystem value))
+                return value as T;
+            return null;
+        }
+
+        public T GetSystem<T>() where T : GameSystem
+        {
+            string name = typeof(T).Name;
+            if (systemMap.TryGetValue(name, out GameSystem value))
+                return value as T;
+            return null;
+        }
+
+        public T GetProperty<T>(string name, string propertName) where T : struct
+        {
+            if (systemMap.TryGetValue(name, out GameSystem value))
+                return value.GetProperty<T>(propertName);
+
+            return default(T);
+        }
+
+        public void PostMessage(string name, string message, params object[] objects)
+        {
+            if (systemMap.TryGetValue(name, out GameSystem value))
+                value.OnMessage(message, objects);
+        }
+
+        Stack<ICommandEvent> commads = new Stack<ICommandEvent>();
+        public ICommandEvent CurrentCommand { get; private set; }
+        public void Push(ICommandEvent command)
+        {
+            if (CurrentCommand == null)
+            {
+                GameController.Instance.KeyboardMoveEnabled = false;
+                GameController.Instance.RotateViewEnabled = false;
+                GameController.Instance.DragMoveViewEnabled = false;
+                GameController.Instance.ZoomViewEnabled = false;
+                GameController.Instance.BorderMoveViewEnabled = false;
+                GameEvent.OnSystemStart?.Invoke();
+            }
+
+            commads.Push(command);
+            CurrentCommand?.OnExit();
+            CurrentCommand = command;
+            command.OnEnter();
+        }
+        public void Back()
+        {
+            ICommandEvent command = commads.Pop();
+            command.OnDestroy();
+            if (commads.Count > 0)
+            {
+                CurrentCommand = commads.Peek();
+                CurrentCommand.OnBack(command);
+            }
+            else
+            {
+                CurrentCommand = null;
+                GameController.Instance.KeyboardMoveEnabled = true;
+                GameController.Instance.RotateViewEnabled = true;
+                GameController.Instance.DragMoveViewEnabled = true;
+                GameController.Instance.ZoomViewEnabled = true;
+                GameController.Instance.BorderMoveViewEnabled = true;
+                GameEvent.OnSystemEnd?.Invoke();
+
+            }
+        }
+        public void Done()
+        {
+            CurrentCommand = null;
+            while (commads.Count > 0)
+                commads.Pop().OnDone();
+            GameController.Instance.KeyboardMoveEnabled = true;
+            GameController.Instance.RotateViewEnabled = true;
+            GameController.Instance.DragMoveViewEnabled = true;
+            GameController.Instance.ZoomViewEnabled = true;
+            GameController.Instance.BorderMoveViewEnabled = true;
+        }
+        public void Update()
+        {
+            CurrentCommand?.Update();
+        }
+        public void HandleEvent(CommandEventType eventType, Cell clickCell, Vector3 clickPosition, bool isOverUI)
+        {
+            if (CurrentCommand != null)
+            {
+                CurrentCommand.HandleEvent(eventType, clickCell, clickPosition, isOverUI);
+                return;
+            }
+
+            switch (eventType)
+            {
+                case CommandEventType.Click:
+                    {
+                        GameEvent.OnClick?.Invoke(clickCell, clickPosition, isOverUI);
+                    }
+                    break;
+                case CommandEventType.RClick:
+                    {
+                        GameEvent.OnRClick?.Invoke(clickCell, clickPosition, isOverUI);
+                    }
+                    break;
+                case CommandEventType.Cancel:
+                    {
+                        GameEvent.OnCancel?.Invoke(clickCell, clickPosition, isOverUI);
+                    }
+                    break;
+            }
+        }
+    }
+}

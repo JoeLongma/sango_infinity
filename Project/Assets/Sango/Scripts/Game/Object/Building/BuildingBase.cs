@@ -62,7 +62,7 @@ namespace Sango.Game
         /// <summary>
         /// 是否建造完成
         /// </summary>
-        [JsonProperty] public bool isComplte;
+        [JsonProperty] public bool isComplate;
 
         /// <summary>
         /// 是否升级中
@@ -208,9 +208,9 @@ namespace Sango.Game
             if (num > 0 && durability >= DurabilityLimit)
             {
                 durability = DurabilityLimit;
-                if (!isComplte)
+                if (!isComplate)
                 {
-                    isComplte = true;
+                    isComplate = true;
                     OnComplate(atk);
                 }
             }
@@ -273,6 +273,5 @@ namespace Sango.Game
         {
             return DurabilityLimit;
         }
-
     }
 }

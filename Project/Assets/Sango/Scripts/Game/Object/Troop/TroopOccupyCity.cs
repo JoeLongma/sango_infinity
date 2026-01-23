@@ -25,7 +25,7 @@ namespace Sango.Game
             if (Troop != troop) Troop = troop;
             if (TargetCity == null || TargetCity.Id != troop.missionTarget) TargetCity = scenario.citySet.Get(Troop.missionTarget);
             // 任务完成后,如果城池被友军拿取则回到创建城池,否则将进入己方目标城池
-            if (IsMissionComplete)
+            if (IsMissionComplete || (troop.IsWithOutFood() == 1 && GameRandom.Chance(30)))
             {
                 if (TargetCity == null)
                 {

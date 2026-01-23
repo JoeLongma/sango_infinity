@@ -11,10 +11,6 @@ namespace Sango.Game
     [JsonObject(MemberSerialization.OptIn)]
     public class Force : SangoObject
     {
-
-        [JsonExtensionData]
-        private Dictionary<string, JToken> _extparams = new Dictionary<string, JToken>();
-
         public override SangoObjectType ObjectType { get { return SangoObjectType.Force; } }
         public virtual bool AIFinished { get; set; }
         public virtual bool AIPrepared { get; set; }
@@ -311,28 +307,6 @@ namespace Sango.Game
 #if SANGO_DEBUG
             Sango.Log.Print($"==={Name} 回合===");
 #endif
-            if (ResearchTechnique > 0)
-            {
-                ResearchLeftCounter--;
-                if (ResearchLeftCounter <= 0)
-                {
-                    Technique technique = scenario.GetObject<Technique>(ResearchTechnique);
-                    Techniques.Add(technique);
-                    ResearchTechnique = 0;
-                    technique.InitActions(actionList, this);
-                    GameEvent.OnForceResearchComplete?.Invoke(this, technique);
-                    if(IsPlayer)
-                    {
-                        Render.WindowEvent windowEvent = new Render.WindowEvent()
-                        {
-                            windowName = "window_technique_complete",
-                            args = new object[] { technique }
-                        };
-                        Render.RenderEvent.Instance.Add(windowEvent);
-                    }
-                }
-            }
-
             prepareTechniqueList(scenario);
 
             for (int i = 0; i < scenario.buildingSet.Count; ++i)
@@ -638,6 +612,15 @@ namespace Sango.Game
         public bool HasTechnique(int techId)
         {
             return Techniques.Contains(techId);
+        }
+
+        public Technique AddTechnique(int techId)
+        {
+            Technique technique = Scenario.Cur.GetObject<Technique>(techId);
+            if (technique == null) return null;
+            Techniques.Add(technique);
+            technique.InitActions(actionList, this);
+            return technique;
         }
     }
 }

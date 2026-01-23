@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Sango.Game.Render.UI
 {
-    public class ContextMenuData
+    public class ContextMenuData : IContextMenuData
     {
         public static ContextMenuData MenuData = new ContextMenuData();
 
@@ -17,7 +17,7 @@ namespace Sango.Game.Render.UI
         /// <param name="order"></param>
         /// <param name="custom"></param>
         /// <param name="action"></param>
-        public void Add(string title, int order, object custom, Action<ContextMenuItem> action, bool valide = true)
+        public void Add(string title, int order, object custom, Action<IContextMenuItem> action, bool valide = true)
         {
             string[] menuPath = title.Split('/');
             List<ContextMenuItem> checkList = headList;
@@ -37,7 +37,7 @@ namespace Sango.Game.Render.UI
                     };
                     if (i == menuPath.Length - 1)
                     {
-                        contextMenuItem.customData = custom;
+                        contextMenuItem.CustomData = custom;
                         contextMenuItem.action = action;
                     }
                     checkList.Add(contextMenuItem);

@@ -21,7 +21,9 @@ namespace Sango.Game
         [JsonProperty] public int buildNumLimit;
         [JsonProperty] public int goldGain;
         [JsonProperty] public int foodGain;
-        [JsonProperty] public float populationGain;
+        [JsonProperty] public int product;
+        [JsonProperty] public int productCost;
+        [JsonProperty] public int populationGain;
         [JsonProperty] public int cost;
         [JsonProperty] public byte radius;
         //[JsonProperty] public bool IsIntrior;
@@ -33,6 +35,15 @@ namespace Sango.Game
         [JsonProperty] public short techGain;
         [JsonProperty] public int needTech;
         [JsonProperty] public bool canBuild;
+
+        [JsonProperty] public int workerLimit;
+        [JsonProperty] public int[] productItems;
+
+
+        /// <summary>
+        /// 受哪种能力影响
+        /// </summary>
+        [JsonProperty] public int effectAttrType;
 
         /// <summary>
         /// 反击攻击力
@@ -83,7 +94,7 @@ namespace Sango.Game
 
         public bool IsValid(Force force)
         {
-            if(needTech > 0)
+            if (needTech > 0)
                 return force.HasTechnique(needTech);
             return true;
         }

@@ -1,4 +1,5 @@
-﻿using Sango.Game.Tools;
+﻿using Sango.Game.Action;
+using Sango.Game.Tools;
 using System;
 using System.Collections.Generic;
 
@@ -292,6 +293,67 @@ namespace Sango.Game
                 统率为94、93、93的武将，在有人才府的情况下，研究“袭击兵粮”所耗旬数为：3－(94＋93＋93)÷70＋4－2＝2
           */
             return Math.Max(1, 3 - maxValue / 70 + counter);
+        }
+
+        static List<ActionBase> sJobActions = new List<ActionBase>();
+
+        public static void InitJobFeature(SangoObjectList<Person> people, params SangoObject[] sangoObjects)
+        {
+            if (people == null) return;
+
+            sJobActions.Clear();
+            for (int i = 0; i < people.Count; ++i)
+            {
+                Person person = people[i];
+                if (person != null && person.FeatureList != null)
+                {
+                    for (int j = 0; j < person.FeatureList.Count; j++)
+                    {
+                        Feature feature = person.FeatureList[j];
+                        if (feature.kind == (int)FeatureKindType.CityProduce)
+                            person.FeatureList[j].InitActions(sJobActions, sangoObjects);
+                    }
+                }
+            }
+        }
+
+        public static void InitJobFeature(Person[] people, params SangoObject[] sangoObjects)
+        {
+            sJobActions.Clear();
+            for (int i = 0; i < people.Length; ++i)
+            {
+                Person person = people[i];
+                if (person != null && person.FeatureList != null)
+                {
+                    for (int j = 0; j < person.FeatureList.Count; j++)
+                    {
+                        Feature feature = person.FeatureList[j];
+                        if (feature.kind == (int)FeatureKindType.CityProduce)
+                            person.FeatureList[j].InitActions(sJobActions, sangoObjects);
+                    }
+                }
+            }
+        }
+
+        public static void InitJobFeature(Person person, params SangoObject[] sangoObjects)
+        {
+            sJobActions.Clear();
+            if (person != null && person.FeatureList != null)
+            {
+                for (int j = 0; j < person.FeatureList.Count; j++)
+                {
+                    Feature feature = person.FeatureList[j];
+                    if (feature.kind == (int)FeatureKindType.CityProduce)
+                        person.FeatureList[j].InitActions(sJobActions, sangoObjects);
+                }
+            }
+        }
+
+        public static void ClearJobFeature()
+        {
+            for (int i = 0; i < sJobActions.Count; i++)
+                sJobActions[i].Clear();
+            sJobActions.Clear();
         }
 
     }

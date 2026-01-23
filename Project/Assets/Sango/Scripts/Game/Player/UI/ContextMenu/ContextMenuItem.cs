@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace Sango.Game.Render.UI
 {
-    public class ContextMenuItem
+    public class ContextMenuItem : IContextMenuItem
     {
         public string title;
         public int order;
         public int depth;
         public Action<ContextMenuItem> action;
-        public object customData;
+        public object CustomData { get; set; }
         public List<ContextMenuItem> children = new List<ContextMenuItem>();
         public bool valid;
 

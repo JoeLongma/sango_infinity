@@ -69,7 +69,7 @@ namespace Sango.Mod
 
             //Game.GameData.LoadBin(path);
         }
-     
+
         public void LoadAssembly()
         {
             string path = GetFullPath("Metadata");
@@ -88,7 +88,7 @@ namespace Sango.Mod
             });
 
             path = GetFullPath($"{EntryAssembly}.dll");
-            if(File.Exists(path))
+            if (File.Exists(path))
             {
 #if !UNITY_EDITOR
                 Assembly = Assembly.Load(File.ReadAllBytes(path));
@@ -126,6 +126,17 @@ namespace Sango.Mod
             });
         }
 
+        public void LoadLanguage()
+        {
+            string path = GetFullPath("Language");
+            Directory.EnumFiles(path, "*.json", SearchOption.AllDirectories, (file) =>
+            {
+#if SANGO_DEBUG
+                Sango.Log.Print($"Find Language File: {file}");
+#endif
+                GameLanguage.AddFile(file);
+            });
+        }
         public void LoadScenario()
         {
             string path = GetFullPath("Scenario");

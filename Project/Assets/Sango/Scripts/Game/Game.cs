@@ -31,7 +31,7 @@ namespace Sango.Game
             SkillCriticalMethod.Init();
             ModManager.Instance.Init();
             GameLanguage.Instance.Init("cn");
-
+            GameSystemManager.Instance.Init();
             StartCoroutine(GameInit());
         }
         public override void Shutdown()

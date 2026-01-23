@@ -10,7 +10,7 @@ namespace Sango.Game
         {
             get
             {
-                return (TargetCell == null || (TargetCell.building != null && TargetCell.building.isComplte));
+                return (TargetCell == null || (TargetCell.building != null && TargetCell.building.isComplate));
             }
         }
 

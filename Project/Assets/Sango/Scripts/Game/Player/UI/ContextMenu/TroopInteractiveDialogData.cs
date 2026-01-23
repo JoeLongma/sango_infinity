@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Sango.Game.Render.UI
 {
-    public class TroopInteractiveDialogData
+    public class TroopInteractiveDialogData : ITroopInteractiveDialogData
     {
         public static TroopInteractiveDialogData InteractiveDialogData = new TroopInteractiveDialogData();
 
@@ -20,6 +20,16 @@ namespace Sango.Game.Render.UI
         public bool IsEmpty()
         {
             return string.IsNullOrEmpty(content);
+        }
+
+        public void SetContent(string content)
+        {
+            this.content = content;
+        }
+
+        public void SetSureAction(System.Action action)
+        {
+            this.sureAction = action;
         }
     }
 }

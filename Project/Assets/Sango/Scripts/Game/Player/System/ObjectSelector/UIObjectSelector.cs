@@ -21,6 +21,7 @@ namespace Sango.Game.Render.UI
             {
                 UIObjectListItem listItem = uIObjectListItems[i];
                 int destIndex = i + startIndex;
+                listItem.index = destIndex;
                 if (destIndex < objectSelectSystem.Objects.Count)
                 {
                     SangoObject sango = objectSelectSystem.Objects[destIndex];
@@ -30,7 +31,6 @@ namespace Sango.Game.Render.UI
                         ObjectSortTitle sortTitle = sortItems[j];
                         listItem.Set(j, sortTitle.GetValueStr(sango));
                     }
-                    listItem.index = i + startIndex;
                     listItem.SetSelected(isSelected);
                 }
                 else
@@ -48,6 +48,9 @@ namespace Sango.Game.Render.UI
 
         public void OnPersonListSelected(UIObjectListItem item)
         {
+            if (item.index >= objectSelectSystem.Objects.Count)
+                return;
+
             if (!item.IsSelected() && objectSelectSystem.IsPersonLimit())
             {
                 int lastIndex = objectSelectSystem.RemoveFront();
@@ -90,6 +93,9 @@ namespace Sango.Game.Render.UI
                 return;
 
             if (!dragFlag && objectSelectSystem.IsPersonEmpty())
+                return;
+
+            if (item.index >= objectSelectSystem.Objects.Count)
                 return;
 
             if (item.IsSelected() && !dragFlag)

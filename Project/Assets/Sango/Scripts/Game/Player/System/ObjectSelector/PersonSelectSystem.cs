@@ -10,7 +10,7 @@ namespace Sango.Game.Player
 
         public void Start(List<Person> persons, List<Person> resultList, int limit, Action<List<Person>> action, List<ObjectSortTitle> customSortTitles, string cutomSortTitleName)
         {
-            selectLimit = limit;
+            selectLimit =  Math.Min(limit, persons.Count);
             Objects = new List<SangoObject>(persons);
             finishAction = action;
             sureAction = OnBaseSure;
@@ -20,7 +20,7 @@ namespace Sango.Game.Player
             this.customSortTitleName = cutomSortTitleName;
             //if (customSortTitles.Count > 1)
             //    Objects.Sort(customSortItems[1].Sort);
-            PlayerCommand.Instance.Push(this);
+            GameSystemManager.Instance.Push(this);
         }
 
         public void OnBaseSure(List<SangoObject> objects)

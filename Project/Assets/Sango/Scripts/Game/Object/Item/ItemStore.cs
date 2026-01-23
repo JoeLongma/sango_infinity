@@ -159,6 +159,14 @@ namespace Sango.Game
             return 0;
         }
 
+        public int GetNumber(int [] itemTypeId)
+        {
+            int total = 0;
+            for(int i = 0; i < itemTypeId.Length; i++)
+                total += GetNumber(itemTypeId[i]);
+            return total;
+        }
+
         public int GetNumber(ItemType itemType)
         {
             if (Items.TryGetValue(itemType.subKind, out int has))

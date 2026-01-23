@@ -15,12 +15,12 @@ namespace Sango.Game.Player
             Objects = new List<SangoObject>(sangoObjects);
             customSortItems = customSortTitles;
             this.customSortTitleName = cutomSortTitleName;
-            PlayerCommand.Instance.Push(this);
+            GameSystemManager.Instance.Push(this);
         }
       
         public void OnCancel()
         {
-            PlayerCommand.Instance.Back();
+            GameSystemManager.Instance.Back();
         }
 
         /// <summary>

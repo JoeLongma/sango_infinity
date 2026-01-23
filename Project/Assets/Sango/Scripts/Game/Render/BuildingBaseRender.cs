@@ -22,12 +22,12 @@ namespace Sango.Game.Render
             MapObject.objType = Building.BuildingType.kind;
             MapObject.modelId = Building.BuildingType.Id;
 
-            isComplate = building.isComplte;
+            isComplate = building.isComplate;
             if (!string.IsNullOrEmpty(building.model))
                 MapObject.modelAsset = building.model;
             else
             {
-                if (building.isComplte)
+                if (building.isComplate)
                     MapObject.modelAsset = building.BuildingType.model;
                 else
                     MapObject.modelAsset = building.BuildingType.modelBroken;
@@ -119,9 +119,9 @@ namespace Sango.Game.Render
                 BuildingModel.Init(Building);
             }
 
-            if (isComplate == false && Building.isComplte)
+            if (isComplate == false && Building.isComplate)
             {
-                isComplate = Building.isComplte;
+                isComplate = Building.isComplate;
                 MapObject.ChangeModel(Building.BuildingType.model);
             }
         }

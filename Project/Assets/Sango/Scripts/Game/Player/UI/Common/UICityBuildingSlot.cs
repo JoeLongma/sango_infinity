@@ -44,7 +44,7 @@ namespace Sango.Game.Render.UI
 
                 nameLabel.text = building.BuildingType.Name;
                 buildImage.sprite = GameRenderHelper.LoadBuildingTypeIcon(building.BuildingType.icon);
-                if (!building.isComplte)
+                if (!building.isComplate)
                 {
                     personNode.gameObject.SetActive(true);
                     leftLabel.text = $"剩:{building.LeftCounter}回";

@@ -4,13 +4,13 @@
     {
         public virtual void Push()
         {
-            PlayerCommand.Instance.Push(this);
+            GameSystemManager.Instance.Push(this);
         }
 
         public virtual void Back()
         {
-            if (PlayerCommand.Instance.CurrentCommand == this)
-                PlayerCommand.Instance.Back();
+            if (GameSystemManager.Instance.CurrentCommand == this)
+                GameSystemManager.Instance.Back();
         }
 
         public virtual void Init() {; }
@@ -51,24 +51,24 @@
             switch (eventType)
             {
                 case CommandEventType.Cancel:
-                    PlayerCommand.Instance.Back(); break;
+                    GameSystemManager.Instance.Back(); break;
             }
 
         }
 
         public virtual void Exit()
         {
-            if (PlayerCommand.Instance.CurrentCommand == this)
+            if (GameSystemManager.Instance.CurrentCommand == this)
             {
-                PlayerCommand.Instance.Back();
+                GameSystemManager.Instance.Back();
             }
         }
 
         public virtual void Done()
         {
-            if (PlayerCommand.Instance.CurrentCommand == this)
+            if (GameSystemManager.Instance.CurrentCommand == this)
             {
-                PlayerCommand.Instance.Done();
+                GameSystemManager.Instance.Done();
             }
         }
 

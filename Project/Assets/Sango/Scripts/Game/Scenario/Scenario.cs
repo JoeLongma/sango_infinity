@@ -498,6 +498,7 @@ namespace Sango.Game
             prepareList.Add(troopsSet);
 
             eventReciveList.Add(personSet);
+            eventReciveList.Add(buildingSet);
             eventReciveList.Add(citySet);
             eventReciveList.Add(troopsSet);
             eventReciveList.Add(forceSet);
@@ -881,7 +882,7 @@ namespace Sango.Game
                 else
                 {
                     CurRunForce.OnForceTurnEnd(this);
-                    GameEvent.OnForceEnd?.Invoke(CurRunForce, this);
+                    GameEvent.OnForceTurnEnd?.Invoke(CurRunForce, this);
                     CurRunForce = null;
                 }
             }
@@ -898,7 +899,7 @@ namespace Sango.Game
             {
                 Info.curForceId = CurRunForce.Id;
                 CurRunForce.OnForceTurnStart(this);
-                GameEvent.OnForceStart?.Invoke(CurRunForce, this);
+                GameEvent.OnForceTurnStart?.Invoke(CurRunForce, this);
             }
             else
             {

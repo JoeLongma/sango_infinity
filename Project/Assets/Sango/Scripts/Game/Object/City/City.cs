@@ -13,7 +13,6 @@ namespace Sango.Game
     [JsonObject(MemberSerialization.OptIn)]
     public class City : BuildingBase
     {
-        static List<ActionBase> sJobActions = new List<ActionBase>();
 
         public virtual bool AIFinished { get; set; }
         public virtual bool AIPrepared { get; set; }
@@ -38,6 +37,11 @@ namespace Sango.Game
         /// 兵役人口
         /// </summary>
         [JsonProperty] public int troopPopulation;
+
+        /// <summary>
+        /// 工作委任类型
+        /// </summary>
+        [JsonProperty] public int workingAppointType;
 
         /// <summary>
         /// 库存
@@ -372,6 +376,30 @@ namespace Sango.Game
             return troops;
         }
 
+        public int AddItem(int itemTypeId, int v)
+        {
+            return itemStore.Add(itemTypeId, v);
+        }
+
+        public int AddSecurity(int v)
+        {
+            security += v;
+            if (security > 100)
+                security = 100;
+            else if (security < 0)
+                security = 0;
+            return security;
+        }
+        public int AddMorale(int v)
+        {
+            morale += v;
+            if (morale > MaxMorale)
+                morale = MaxMorale;
+            else if (morale < 0)
+                morale = 0;
+            return morale;
+        }
+
         public List<Cell> GetRoadToNeighbor(City city)
         {
             List<Cell> list;
@@ -410,7 +438,7 @@ namespace Sango.Game
             //y *= 2;
 
             base.OnScenarioPrepare(scenario);
-            isComplte = true;
+            isComplate = true;
 
             //innerSlot = new int[InsideSlot];
             if (durability <= 0)
@@ -536,7 +564,7 @@ namespace Sango.Game
             // 计算建筑收入
             allBuildings.ForEach(x =>
             {
-                if (x.isComplte)
+                if (x.isComplate)
                 {
                     Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(x.BuildingType.foodGain);
                     GameEvent.OnBuildingCalculateFoodGain?.Invoke(x, overrideData);
@@ -546,8 +574,8 @@ namespace Sango.Game
                     GameEvent.OnBuildingCalculateGoldGain?.Invoke(x, overrideData);
                     totalGainGold += overrideData.Value;
 
-                    Tools.OverrideData<float> float_overrideData = GameUtility.FloatOverrideData.Set(x.BuildingType.populationGain);
-                    GameEvent.OnBuildingCalculatePopulationGain?.Invoke(x, float_overrideData);
+                    overrideData = GameUtility.IntOverrideData.Set(x.BuildingType.populationGain);
+                    GameEvent.OnBuildingCalculatePopulationGain?.Invoke(x, overrideData);
                     population_increase_factor += overrideData.Value;
                 }
             });
@@ -613,25 +641,18 @@ namespace Sango.Game
         /// <returns></returns>
         public override bool OnSeasonStart(Scenario scenario)
         {
-            if (BelongCorps == null)
-                return true;
+            //if (BelongCorps == null)
+            //    return true;
 
-            int harvest = GameRandom.Random(totalGainFood, 0.05f);
-            Render?.ShowInfo(harvest, (int)InfoType.Food);
-            food += harvest;
-#if SANGO_DEBUG
-            Sango.Log.Print($"城市：{Name}, 收获粮食：{harvest}, 现有粮食: {food}");
-#endif
+            //            int harvest = GameRandom.Random(totalGainFood, 0.05f);
+            //            Render?.ShowInfo(harvest, (int)InfoType.Food);
+            //            food += harvest;
+            //#if SANGO_DEBUG
+            //            Sango.Log.Print($"城市：{Name}, 收获粮食：{harvest}, 现有粮食: {food}");
+            //#endif
 
-            // 治安降低
-            Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(scenario.Variables.securityChangeOnSeasonStart);
-            GameEvent.OnCitySecurityChangeOnSeasonStart?.Invoke(this, overrideData);
-            security += overrideData.Value;
-            if (security < 0) security = 0;
-            if (security > 100) security = 100;
+            GameEvent.OnCitySeasonStart?.Invoke(this, scenario);
 
-            if (Render != null)
-                Render.UpdateRender();
 
             return base.OnSeasonStart(scenario);
         }
@@ -657,17 +678,10 @@ namespace Sango.Game
             if (BelongCorps == null)
                 return true;
 
-            int inComingGold = GameRandom.Random(totalGainGold, 0.05f);
-            inComingGold -= GoldCost(scenario);
-            Render?.ShowInfo(inComingGold, (int)InfoType.Gold);
-
-            AddGold(inComingGold);
-
-#if SANGO_DEBUG
-            Sango.Log.Print($"城市：{Name}, 武将人数:{allPersons.Count}, 收入<-- 金钱:{inComingGold}, 人口:{pop}, 兵役:{troopPop}, 现有金钱: {gold}, 人口:{population}, 兵役:{troopPopulation}");
-#endif
             if (Render != null)
                 Render.UpdateRender();
+
+            GameEvent.OnCityMonthStart?.Invoke(this, scenario);
 
             return base.OnMonthStart(scenario);
         }
@@ -754,12 +768,34 @@ namespace Sango.Game
             if (Render != null)
                 Render.UpdateRender();
 
+            // 俘虏羁押天数累积
+            for (int i = captiveList.Count - 1; i >= 0; i--)
+            {
+                Person person = captiveList[i];
+                person.missionCounter++;
+            }
+
+            GameEvent.OnCityTurnStart?.Invoke(this, scenario);
+
             return base.OnForceTurnStart(scenario);
         }
         public override bool OnForceTurnEnd(Scenario scenario)
         {
             CurActiveTroop = null;
             isUpdatedFightPower = false;
+
+            // 计算俘虏越狱
+            for (int i = captiveList.Count - 1; i >= 0; i--)
+            {
+                Person person = captiveList[i];
+                if (GameRandom.Chance(GameFormula.Instance.PersonEscapeProbablility_InCity(person, this, scenario), 10000))
+                {
+                    person.Escape();
+                    GameEvent.OnPersonEscape?.Invoke(person, this);
+                }
+            }
+            GameEvent.OnCityTurnEnd?.Invoke(this, scenario);
+
             return base.OnForceTurnEnd(scenario);
         }
 
@@ -1116,7 +1152,7 @@ namespace Sango.Game
             for (int i = allBuildings.Count - 1; i >= 0; i--)
             {
                 Building building = allBuildings[i];
-                if (building.isComplte && GameRandom.Chance(30))
+                if (building.isComplate && GameRandom.Chance(30))
                 {
                     building.ChangeCorps(atk.BelongCorps);
                 }
@@ -1265,7 +1301,7 @@ namespace Sango.Game
             scenario.Add(building);
             building.Init(scenario);
             building.Workers = null;
-            building.isComplte = false;
+            building.isComplate = false;
             building.durability = 1;
             building.ChangeDurability(GameUtility.Method_TroopBuildAbility(builder), null);
 
@@ -1287,43 +1323,19 @@ namespace Sango.Game
             return null;
         }
 
-        void InitJobFeature(Person[] people)
+        public void InitJobFeature(Person[] people)
         {
-            sJobActions.Clear();
-            for (int i = 0; i < people.Length; ++i)
-            {
-                Person person = people[i];
-                if (person != null && person.FeatureList != null)
-                {
-                    for (int j = 0; j < person.FeatureList.Count; j++)
-                    {
-                        Feature feature = person.FeatureList[j];
-                        if (feature.kind == (int)FeatureKindType.CityProduce)
-                            person.FeatureList[j].InitActions(sJobActions, this);
-                    }
-                }
-            }
+            GameUtility.InitJobFeature(people, this);
         }
 
-        void InitJobFeature(Person person)
+        public void InitJobFeature(Person person)
         {
-            sJobActions.Clear();
-            if (person != null && person.FeatureList != null)
-            {
-                for (int j = 0; j < person.FeatureList.Count; j++)
-                {
-                    Feature feature = person.FeatureList[j];
-                    if (feature.kind == (int)FeatureKindType.CityProduce)
-                        person.FeatureList[j].InitActions(sJobActions, this);
-                }
-            }
+            GameUtility.InitJobFeature(person, this);
         }
 
-        void ClearJobFeature()
+        public void ClearJobFeature()
         {
-            for (int i = 0; i < sJobActions.Count; i++)
-                sJobActions[i].Clear();
-            sJobActions.Clear();
+            GameUtility.ClearJobFeature();
         }
 
         /// <summary>
@@ -1367,7 +1379,7 @@ namespace Sango.Game
             }
 
             building.Workers = sangoObjectList;
-            building.isComplte = false;
+            building.isComplate = false;
             building.durability = 1;
             building.LeftCounter = buildCount;
             gold -= buildingType.cost;
@@ -2468,7 +2480,6 @@ namespace Sango.Game
             int meritGain = JobType.GetJobMeritGain(jobId);
             int techniquePointGain = JobType.GetJobTPGain(jobId);
 
-            sJobActions.Clear();
             int totalValue = 0;
             for (int i = 0; i < personList.Length; i++)
             {
@@ -2744,108 +2755,108 @@ namespace Sango.Game
             return true;
         }
 
-        /// <summary>
-        /// 搜索
-        /// </summary>
-        /// <param name="personList"></param>
-        /// <returns></returns>
-        public int[] JobResearch(Person[] personList, Technique technique, bool isTest)
-        {
-            if (personList == null || personList.Length == 0) return null;
+//        /// <summary>
+//        /// 研究
+//        /// </summary>
+//        /// <param name="personList"></param>
+//        /// <returns></returns>
+//        public int[] JobResearch(Person[] personList, Technique technique, bool isTest)
+//        {
+//            if (personList == null || personList.Length == 0) return null;
 
-            Scenario scenario = Scenario.Cur;
-            ScenarioVariables variables = scenario.Variables;
-            int jobId = (int)CityJobType.Research;
-            InitJobFeature(personList);
+//            Scenario scenario = Scenario.Cur;
+//            ScenarioVariables variables = scenario.Variables;
+//            int jobId = (int)CityJobType.Research;
+//            InitJobFeature(personList);
 
-            int goldNeed = technique.goldCost;
-            int tpNeed = technique.techPointCost;
-            int turnCount = technique.counter;
+//            int goldNeed = technique.goldCost;
+//            int tpNeed = technique.techPointCost;
+//            int turnCount = technique.counter;
 
-            int totalValue = 0;
-            for (int i = 0; i < personList.Length; i++)
-            {
-                Person person = personList[i];
-                if (person == null) continue;
-                switch (technique.needAttr)
-                {
-                    case (int)AttributeType.Command:
-                        totalValue += person.Command;
-                        break;
-                    case (int)AttributeType.Strength:
-                        totalValue += person.Strength;
-                        break;
-                    case (int)AttributeType.Intelligence:
-                        totalValue += person.Intelligence;
-                        break;
-                    case (int)AttributeType.Politics:
-                        totalValue += person.Politics;
-                        break;
-                    case (int)AttributeType.Glamour:
-                        totalValue += person.Glamour;
-                        break;
-                }
-            }
+//            int totalValue = 0;
+//            for (int i = 0; i < personList.Length; i++)
+//            {
+//                Person person = personList[i];
+//                if (person == null) continue;
+//                switch (technique.needAttr)
+//                {
+//                    case (int)AttributeType.Command:
+//                        totalValue += person.Command;
+//                        break;
+//                    case (int)AttributeType.Strength:
+//                        totalValue += person.Strength;
+//                        break;
+//                    case (int)AttributeType.Intelligence:
+//                        totalValue += person.Intelligence;
+//                        break;
+//                    case (int)AttributeType.Politics:
+//                        totalValue += person.Politics;
+//                        break;
+//                    case (int)AttributeType.Glamour:
+//                        totalValue += person.Glamour;
+//                        break;
+//                }
+//            }
 
-            turnCount = GameUtility.Method_ResearchCounter(totalValue, turnCount);
+//            turnCount = GameUtility.Method_ResearchCounter(totalValue, turnCount);
 
-            Tools.OverrideData<int> goldOverride = GameUtility.IntOverrideData.Set(goldNeed);
-            Tools.OverrideData<int> tpOverride = new OverrideData<int>(tpNeed);
-            Tools.OverrideData<int> turnCountOveride = new OverrideData<int>(turnCount);
-            GameEvent.OnCityResearchCost?.Invoke(this, personList, technique, goldOverride, tpOverride, turnCountOveride);
-            goldNeed = goldOverride.Value;
-            tpNeed = tpOverride.Value;
-            turnCount = turnCountOveride.Value;
+//            Tools.OverrideData<int> goldOverride = GameUtility.IntOverrideData.Set(goldNeed);
+//            Tools.OverrideData<int> tpOverride = new OverrideData<int>(tpNeed);
+//            Tools.OverrideData<int> turnCountOveride = new OverrideData<int>(turnCount);
+//            GameEvent.OnCityResearchCost?.Invoke(this, personList, technique, goldOverride, tpOverride, turnCountOveride);
+//            goldNeed = goldOverride.Value;
+//            tpNeed = tpOverride.Value;
+//            turnCount = turnCountOveride.Value;
 
-            if (isTest)
-            {
-                ClearJobFeature();
-                return new int[] { goldNeed, tpNeed, turnCount };
-            }
+//            if (isTest)
+//            {
+//                ClearJobFeature();
+//                return new int[] { goldNeed, tpNeed, turnCount };
+//            }
 
-            if (gold < goldNeed || BelongForce.TechniquePoint < tpNeed)
-            {
-                ClearJobFeature();
-                return null;
-            }
+//            if (gold < goldNeed || BelongForce.TechniquePoint < tpNeed)
+//            {
+//                ClearJobFeature();
+//                return null;
+//            }
 
-            gold -= goldNeed;
-            BelongForce.GainTechniquePoint(-tpNeed);
-            BelongCorps.ReduceActionPoint(JobType.GetJobCostAP(jobId));
+//            gold -= goldNeed;
+//            BelongForce.GainTechniquePoint(-tpNeed);
+//            BelongCorps.ReduceActionPoint(JobType.GetJobCostAP(jobId));
 
-            int meritGain = JobType.GetJobMeritGain(jobId);
+//            int meritGain = JobType.GetJobMeritGain(jobId);
 
-#if SANGO_DEBUG
-            StringBuilder stringBuilder = new StringBuilder();
-#endif
-            for (int i = 0; i < personList.Length; i++)
-            {
-                Person person = personList[i];
-                if (person == null) continue;
+//#if SANGO_DEBUG
+//            StringBuilder stringBuilder = new StringBuilder();
+//#endif
+//            for (int i = 0; i < personList.Length; i++)
+//            {
+//                Person person = personList[i];
+//                if (person == null) continue;
 
-                person.merit += meritGain;
-                person.GainExp(meritGain);
-                person.SetMission(MissionType.PersonResearch, technique, turnCount);
-                freePersons.Remove(person);
-#if SANGO_DEBUG
-                stringBuilder.Append(person.Name);
-                stringBuilder.Append(",");
-#endif
-                person.ActionOver = true;
-            }
+//                person.merit += meritGain;
+//                person.GainExp(meritGain);
+//                person.SetMission(MissionType.PersonResearch, technique, turnCount);
+//                freePersons.Remove(person);
+//#if SANGO_DEBUG
+//                stringBuilder.Append(person.Name);
+//                stringBuilder.Append(",");
+//#endif
+//                person.ActionOver = true;
+//            }
 
-            BelongForce.ResearchTechnique = technique.Id;
-            BelongForce.ResearchLeftCounter = turnCount;
+//            BelongForce.ResearchTechnique = technique.Id;
+//            BelongForce.ResearchLeftCounter = turnCount;
 
-            BelongCorps.ReduceActionPoint(JobType.GetJobCostAP(jobId));
+//            BelongCorps.ReduceActionPoint(JobType.GetJobCostAP(jobId));
 
-#if SANGO_DEBUG
-            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}在<{Name}>开始研究科技: [{technique.Name}], 研究需要{turnCount}回合!");
-#endif
+//#if SANGO_DEBUG
+//            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}在<{Name}>开始研究科技: [{technique.Name}], 研究需要{turnCount}回合!");
+//#endif
 
-            ClearJobFeature();
-            return null;
-        }
+//            ClearJobFeature();
+//            return null;
+//        }
 
         /// <summary>
         /// 获取城池的攻击力
@@ -3193,7 +3204,7 @@ namespace Sango.Game
             for (int i = 0; i < allBuildings.Count; i++)
             {
                 Building building = allBuildings[i];
-                if (building.BuildingType.kind == buildingKindId && building.isComplte)
+                if (building.BuildingType.kind == buildingKindId && building.isComplate)
                 {
                     complateNum++;
                 }
@@ -3212,7 +3223,7 @@ namespace Sango.Game
             for (int i = 0; i < allBuildings.Count; i++)
             {
                 Building building = allBuildings[i];
-                if (building.BuildingType.kind == buildingKindId && building.isComplte && !building.ActionOver && !building.isWorking)
+                if (building.BuildingType.kind == buildingKindId && building.isComplate && !building.ActionOver && !building.isWorking)
                 {
                     return building;
                 }

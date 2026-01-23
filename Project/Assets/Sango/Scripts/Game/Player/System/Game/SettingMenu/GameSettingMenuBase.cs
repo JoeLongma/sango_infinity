@@ -20,15 +20,15 @@ namespace Sango.Game.Player
             GameEvent.OnGameSettingContextMenuShow -= OnGameSettingContextMenuShow;
         }
 
-        protected virtual void OnGameSettingContextMenuShow(ContextMenuData menuData)
+        protected virtual void OnGameSettingContextMenuShow(IContextMenuData menuData)
         {
              menuData.Add(customMenuName, customMenuOrder, null, OnClickMenuItem, IsValid);
         }
 
-        protected virtual void OnClickMenuItem(ContextMenuItem contextMenuItem)
+        protected virtual void OnClickMenuItem(IContextMenuItem contextMenuItem)
         {
             ContextMenu.CloseAll();
-            PlayerCommand.Instance.Push(this);
+            GameSystemManager.Instance.Push(this);
         }
 
         public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)
@@ -36,7 +36,7 @@ namespace Sango.Game.Player
             switch (eventType)
             {
                 case CommandEventType.RClickUp:
-                    PlayerCommand.Instance.Back(); break;
+                    GameSystemManager.Instance.Back(); break;
             }
 
             base.HandleEvent(eventType, cell, clickPosition, isOverUI);

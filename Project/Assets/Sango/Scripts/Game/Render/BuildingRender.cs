@@ -1,7 +1,6 @@
 ﻿
 using Sango.Game.Render.Model;
 using Sango.Game.Render.UI;
-using Sango.Loader;
 using Sango.Render;
 using UnityEngine;
 
@@ -27,9 +26,9 @@ namespace Sango.Game.Render
             MapObject = MapObject.Create($"{Building.BelongCity.Name}-{Building.Name}");
             MapObject.objType = Building.BuildingType.kind;
             MapObject.modelId = Building.BuildingType.Id;
-            isComplate = building.isComplte;
+            isComplate = building.isComplate;
             isUpgrading = building.isUpgrading;
-            if (!building.isComplte || building.isUpgrading)
+            if (!building.isComplate || building.isUpgrading)
                 MapObject.modelAsset = building.BuildingType.modelCreate;
             else
                 MapObject.modelAsset = building.BuildingType.model;
@@ -123,9 +122,9 @@ namespace Sango.Game.Render
             //{
             //    BuildingModel.Init(Building);
             //}
-            if (isComplate == false && Building.isComplte)
+            if (isComplate == false && Building.isComplate)
             {
-                isComplate = Building.isComplte;
+                isComplate = Building.isComplate;
                 MapObject.ChangeModel(Building.BuildingType.model);
             }
 

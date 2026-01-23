@@ -1086,7 +1086,7 @@ namespace Sango.Game
             for (int i = 0; i < personList.Count; i++)
             {
                 Person person = personList[i];
-                int probability = GameFormula.RecuritPersonProbability(person, target, 0);
+                int probability = GameFormula.Instance.RecuritPersonProbability(person, target, 0);
                 if (probability >= 100)
                     return person;
                 else if (probability >= 30)

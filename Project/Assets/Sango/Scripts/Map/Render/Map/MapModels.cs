@@ -27,18 +27,18 @@ namespace Sango.Render
             public Material[] seasonMaterials = new Material[4];
             public int showCount;
             public MaterialPropertyBlock _mpb = new MaterialPropertyBlock();
-            public List<MapObject> drawObject = new List<MapObject>();
+            public List<IMapManageObject> drawObject = new List<IMapManageObject>();
             public UnityEngine.Object @object;
 
             bool needUpdateMatrixes = false;
 
-            public void Add(MapObject mapObject)
+            public void Add(IMapManageObject mapObject)
             {
                 drawObject.Add(mapObject);
                 needUpdateMatrixes = true;
             }
 
-            public void Remove(MapObject mapObject)
+            public void Remove(IMapManageObject mapObject)
             {
                 drawObject.Remove(mapObject);
                 needUpdateMatrixes = true;
@@ -60,7 +60,7 @@ namespace Sango.Render
                 for (int i = 0; i < showCount; i++)
                 {
                     var mx = _matrixes[i];
-                    MapObject mapManageObject = drawObject[i];
+                    IMapManageObject mapManageObject = drawObject[i];
                     Transform node = mapManageObject.transform;
                     mx.SetTRS(
                         node.position,
@@ -104,13 +104,13 @@ namespace Sango.Render
 
         public ModelInstanceData[] modelInstanceDatas;
 
-        public void AddInstance(MapObject obj)
+        public void AddInstance(IMapManageObject obj)
         {
             ModelInstanceData modelInstanceData = modelInstanceDatas[obj.modelId - 1];
             modelInstanceData.Add(obj);
         }
 
-        public void RemoveInstance(MapObject obj)
+        public void RemoveInstance(IMapManageObject obj)
         {
             ModelInstanceData modelInstanceData = modelInstanceDatas[obj.modelId - 1];
             modelInstanceData.Remove(obj);

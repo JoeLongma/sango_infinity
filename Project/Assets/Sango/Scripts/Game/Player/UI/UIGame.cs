@@ -137,7 +137,7 @@ namespace Sango.Game.Render.UI
         {
             GameEvent.OnTroopCreated += OnTroopChange;
             GameEvent.OnTroopDestroyed += OnTroopChange;
-            GameEvent.OnForceStart += OnForceStart;
+            GameEvent.OnForceTurnStart += OnForceStart;
             GameEvent.OnDayUpdate += OnDayUpdate;
             GameEvent.OnCityFall += OnCityFall;
             GameEvent.OnSeasonUpdate += OnSeasonUpdate;
@@ -172,7 +172,7 @@ namespace Sango.Game.Render.UI
         {
             GameEvent.OnTroopCreated -= OnTroopChange;
             GameEvent.OnTroopDestroyed -= OnTroopChange;
-            GameEvent.OnForceStart -= OnForceStart;
+            GameEvent.OnForceTurnStart -= OnForceStart;
             GameEvent.OnDayUpdate -= OnDayUpdate;
             GameEvent.OnCityFall -= OnCityFall;
             GameEvent.OnSeasonUpdate -= OnSeasonUpdate;
@@ -405,7 +405,7 @@ namespace Sango.Game.Render.UI
 
         public void OnEndPlayerTurn()
         {
-            if (PlayerCommand.Instance.CurrentCommand != null)
+            if (GameSystemManager.Instance.CurrentCommand != null)
                 return;
             ContextMenu.CloseAll();
             Singleton<PlayerEndTurn>.Instance.Push();
@@ -413,7 +413,7 @@ namespace Sango.Game.Render.UI
 
         public void OnSwitchCityInfoShow()
         {
-            if (PlayerCommand.Instance.CurrentCommand != null)
+            if (GameSystemManager.Instance.CurrentCommand != null)
                 return;
             UICityHeadbar.showIndo = !UICityHeadbar.showIndo;
             GameEvent.OnCityHeadbarShowInfoChange?.Invoke();
@@ -421,7 +421,7 @@ namespace Sango.Game.Render.UI
 
         public void OnSwitchMiniMapShow()
         {
-            if (PlayerCommand.Instance.CurrentCommand != null)
+            if (GameSystemManager.Instance.CurrentCommand != null)
                 return;
             miniMapObj.SetActive(!miniMapObj.activeSelf);
             miniMapBtnObj.SetActive(!miniMapBtnObj.activeSelf);
@@ -429,7 +429,7 @@ namespace Sango.Game.Render.UI
 
         public void OnGameSetting()
         {
-            if (PlayerCommand.Instance.CurrentCommand != null)
+            if (GameSystemManager.Instance.CurrentCommand != null)
                 return;
             Window.Instance.Close("window_city_info_panel");
             Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(Game.Instance.UICamera, gameSettingRect.position);

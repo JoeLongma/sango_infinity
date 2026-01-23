@@ -1,4 +1,5 @@
-﻿using Sango.Tools;
+﻿using Sango.Game;
+using Sango.Tools;
 using System;
 using System.Threading;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace Sango.Render
         public MeshCollider[] meshCollider;
         public Mesh[] lodMesh;
         public GameObject gameObject;
+        public Transform transform => gameObject.transform;
 
 #if UNITY_ANDROID || UNITY_IPHONE
         public int lod = 1;
@@ -617,5 +619,44 @@ namespace Sango.Render
             Clear();
         }
 
+        public void CreateModel(string meshFile, string textureFile, string shaderName, bool isShareMat = true)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateModel(string packagePath, string assetName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateModel(string assetName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateModel(UnityEngine.Object modelObj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ChangeModel(string newAsset)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ReLoadModels(bool checkAsset = true)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ClearModels()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ReCheckVisible()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

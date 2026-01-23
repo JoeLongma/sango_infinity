@@ -24,12 +24,12 @@ namespace Sango.Game.Render.UI
             headIcon.texture = GameRenderHelper.LoadHeadIcon(troop.Leader.headIconID);
             skillText.Clear();
             UpdateState(troop);
-            GameEvent.OnForceStart += OnForceStart;
+            GameEvent.OnForceTurnStart += OnForceStart;
         }
 
         public override void OnHide()
         {
-            GameEvent.OnForceStart -= OnForceStart;
+            GameEvent.OnForceTurnStart -= OnForceStart;
         }
 
         void OnForceStart(Force force, Scenario scenario)

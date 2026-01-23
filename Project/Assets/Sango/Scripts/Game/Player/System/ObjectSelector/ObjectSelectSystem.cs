@@ -19,12 +19,12 @@ namespace Sango.Game.Player
             resultList.RemoveAll(x => x == null);
             customSortItems = customSortTitles;
             this.customSortTitleName = cutomSortTitleName;
-            PlayerCommand.Instance.Push(this);
+            GameSystemManager.Instance.Push(this);
         }
         public void OnSure()
         {
             sureAction?.Invoke(selected);
-            PlayerCommand.Instance.Back();
+            GameSystemManager.Instance.Back();
         }
 
         public bool IsPersonLimit()

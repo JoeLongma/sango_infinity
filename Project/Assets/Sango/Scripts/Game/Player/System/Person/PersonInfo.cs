@@ -18,15 +18,15 @@ namespace Sango.Game.Player
             GameEvent.OnRightMouseButtonContextMenuShow -= OnRightMouseButtonContextMenuShow;
         }
 
-        protected virtual void OnRightMouseButtonContextMenuShow(ContextMenuData menuData)
+        protected virtual void OnRightMouseButtonContextMenuShow(IContextMenuData menuData)
         {
             menuData.Add("结束回合", 0, null, OnClickMenuItem, true);
         }
 
-        protected virtual void OnClickMenuItem(ContextMenuItem contextMenuItem)
+        protected virtual void OnClickMenuItem(IContextMenuItem contextMenuItem)
         {
             ContextMenu.CloseAll();
-            PlayerCommand.Instance.Push(this);
+            GameSystemManager.Instance.Push(this);
         }
 
         public override void OnEnter()
@@ -54,7 +54,7 @@ namespace Sango.Game.Player
             {
                 case CommandEventType.Cancel:
                 case CommandEventType.RClickUp:
-                    PlayerCommand.Instance.Back(); break;
+                    GameSystemManager.Instance.Back(); break;
             }
 
         }

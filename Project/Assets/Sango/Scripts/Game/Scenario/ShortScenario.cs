@@ -85,8 +85,15 @@ namespace Sango.Game
     }
 
     [JsonObject(MemberSerialization.OptIn)]
-    public class ShortScenario : SangoObject
+    public class ShortScenario
     {
+        [JsonProperty(Order = -99)]
+        private int _Id = -1;
+        public int Id { get { return _Id; } set { _Id = value; } }
+
+        [JsonProperty(Order = -98)]
+        public virtual string Name { get; set; }
+
         #region Data
         [JsonProperty] public ScenarioInfo Info { get; internal set; }
         [JsonProperty] public ScenarioCommonData CommonData { internal set; get; }
@@ -125,7 +132,6 @@ namespace Sango.Game
         public void LoadContent(string path)
         {
             Cur = this;
-            IsAlive = false;
             if (CommonData == null)
                 CommonData = GameData.Instance.LoadNewCommonData();
             if (Variables == null)

@@ -1,9 +1,5 @@
-﻿using Sango.Game;
-using Sango.Game.Render.UI;
-using Sango.Game.Tools;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Sango.Game.Tools;
+using UnityEngine;
 
 namespace Sango.Game
 {
@@ -31,6 +27,20 @@ namespace Sango.Game
         /// </summary>
         public static EventDelegateReturn<string, int> OnGetAttributeName;
         public static EventDelegateReturn<string, int> OnGetAttributeNameWithColor;
+
+
+        public static EventDelegate<Cell, Vector3, bool> OnClick;
+        public static EventDelegate<Cell, Vector3, bool> OnRClick;
+        public static EventDelegate<Cell, Vector3, bool> OnCancel;
+        /// <summary>
+        /// 在最后一个系统出栈时候
+        /// </summary>
+        public static EventDelegate OnSystemEnd;
+
+        /// <summary>
+        /// 在第一个系统入栈时
+        /// </summary>
+        public static EventDelegate OnSystemStart;
 
         #endregion Global
 
@@ -95,17 +105,17 @@ namespace Sango.Game
         /// <summary>
         /// ContextMenu激活的时候,可以监听来添加自定义按钮
         /// </summary>
-        public static EventDelegate<ContextMenuData> OnContextMenuShow;
+        public static EventDelegate<IContextMenuData> OnContextMenuShow;
 
-        public static EventDelegate<ContextMenuData, BuildingBase> OnBuildingContextMenuShow;
-        public static EventDelegate<ContextMenuData, City> OnCityContextMenuShow;
-        public static EventDelegate<ContextMenuData, Troop> OnTroopContextMenuShow;
-        public static EventDelegate<ContextMenuData, Troop, Cell> OnTroopActionContextMenuShow;
-        public static EventDelegate<ContextMenuData> OnRightMouseButtonContextMenuShow;
+        public static EventDelegate<IContextMenuData, BuildingBase> OnBuildingContextMenuShow;
+        public static EventDelegate<IContextMenuData, City> OnCityContextMenuShow;
+        public static EventDelegate<IContextMenuData, Troop> OnTroopContextMenuShow;
+        public static EventDelegate<IContextMenuData, Troop, Cell> OnTroopActionContextMenuShow;
+        public static EventDelegate<IContextMenuData> OnRightMouseButtonContextMenuShow;
 
-        public static EventDelegate<ContextMenuData> OnGameSettingContextMenuShow;
+        public static EventDelegate<IContextMenuData> OnGameSettingContextMenuShow;
 
-        public static EventDelegate<TroopInteractiveDialogData, Troop, Cell> OnTroopInteractiveContextDialogShow;
+        public static EventDelegate<ITroopInteractiveDialogData, Troop, Cell> OnTroopInteractiveContextDialogShow;
         public static EventDelegate<IVariablesSetting, Scenario> OnScenarioVariablesSetting;
         #endregion Window
 
@@ -158,12 +168,12 @@ namespace Sango.Game
         /// <summary>
         /// 势力逻辑开始
         /// </summary>
-        public static EventDelegate<Force, Scenario> OnForceStart;
+        public static EventDelegate<Force, Scenario> OnForceTurnStart;
 
         /// <summary>
         /// 势力逻辑结束
         /// </summary>
-        public static EventDelegate<Force, Scenario> OnForceEnd;
+        public static EventDelegate<Force, Scenario> OnForceTurnEnd;
 
         /// <summary>
         /// 玩家控制势力
@@ -194,6 +204,13 @@ namespace Sango.Game
         public static EventDelegate<City, Scenario> OnCityAIStart;
         public static EventDelegate<City, Scenario> OnCityAIEnd;
 
+
+        public static EventDelegate<City, Scenario> OnCityTurnStart;
+        public static EventDelegate<City, Scenario> OnCityTurnEnd;
+        public static EventDelegate<City, Scenario> OnCityMonthStart;
+        public static EventDelegate<City, Scenario> OnCitySeasonStart;
+
+
         /// <summary>
         /// 部队AI
         /// </summary>
@@ -206,6 +223,10 @@ namespace Sango.Game
         public static EventDelegate<Troop, Cell, Cell> OnTroopEnterCell;
 
         public static EventDelegate<Troop, Scenario> OnTroopTurnStart;
+        public static EventDelegate<Troop, Scenario> OnTroopTurnEnd;
+
+        public static EventDelegate<Building, Scenario> OnBuildingTurnStart;
+        public static EventDelegate<Building, Scenario> OnBuildingTurnEnd;
 
         /// <summary>
         /// 部队组建的时候
@@ -332,7 +353,14 @@ namespace Sango.Game
         /// 可监听改计算建筑人口增长率
         /// BuildingBase, OverrideData
         /// </summary>
-        public static EventDelegate<BuildingBase, OverrideData<float>> OnBuildingCalculatePopulationGain;
+        public static EventDelegate<BuildingBase, OverrideData<int>> OnBuildingCalculatePopulationGain;
+
+        /// <summary>
+        /// 可监听改计算建筑人口增长率
+        /// BuildingBase, OverrideData
+        /// </summary>
+        public static EventDelegate<BuildingBase, OverrideData<int>> OnBuildingCalculateProduct;
+
 
         /// <summary>
         /// 可监听改计算建筑反击攻击力
@@ -401,6 +429,11 @@ namespace Sango.Game
         /// 技能实例计算属性时
         /// </summary>
         public static EventDelegate<Troop, SkillInstance> OnSkillCalculateAttribute;
+
+        /// <summary>
+        /// 当武将逃跑时
+        /// </summary>
+        public static EventDelegate<Person, SangoObject> OnPersonEscape;
 
         #endregion Game
 

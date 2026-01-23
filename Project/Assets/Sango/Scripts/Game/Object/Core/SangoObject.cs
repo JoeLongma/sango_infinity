@@ -45,6 +45,50 @@ namespace Sango.Game
 
         //[JsonExtensionData]
         //public Dictionary<string, JToken> AdditionalData { get; set; }
+        [JsonExtensionData]
+        private Dictionary<string, JToken> ExtensionData;
+
+        public T GetExtensionData<T>(string key) where T : struct
+        {
+            if (ExtensionData == null) return default(T);
+
+            if (ExtensionData.TryGetValue(key, out var value))
+            {
+                return value.Value<T>();
+            }
+            return default(T);
+        }
+
+        public void SetExtensionData<T>(string key, T value) where T : struct
+        {
+            if (ExtensionData == null)
+                ExtensionData = new Dictionary<string, JToken>();
+            ExtensionData[key] = new JValue(value);
+        }
+
+        public JToken GetExtensionData(string key)
+        {
+            if (ExtensionData == null) return null;
+            if (ExtensionData.TryGetValue(key, out var value))
+            {
+                return value;
+            }
+            return null;
+        }
+
+        public void SetExtensionData<T>(string key, JToken value)
+        {
+            if (ExtensionData == null)
+                ExtensionData = new Dictionary<string, JToken>();
+            ExtensionData[key] = value;
+        }
+        public bool HasExtensionData(string key)
+        {
+            if (ExtensionData == null) return false;
+            return ExtensionData.ContainsKey(key);
+        }
+
+
 
         public SangoObject()
         {
@@ -135,5 +179,11 @@ namespace Sango.Game
 
             return 0;
         }
+    }
+
+
+    public class SangoObjectExtensionData : SangoObject
+    {
+
     }
 }

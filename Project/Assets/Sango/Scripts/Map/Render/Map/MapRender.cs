@@ -8,10 +8,10 @@ using static Sango.Render.MapData;
 
 namespace Sango.Render
 {
-    public class MapRender : System<MapRender>
+    public class MapRender : System<MapRender>, IMapRender
     {
         public delegate void OnMapLoadedCall();
-        public delegate void OnLoadModelCall(MapObject mapObject);
+        public delegate void OnLoadModelCall(IMapManageObject mapObject);
         public delegate void OnInitGridCall(int gridSize, int boundx, int boundy);
         public delegate void OnBindGridDataCall(int x, int y, MapGrid.GridData data);
         public Action<MapCamera> onValueChanged;
@@ -99,7 +99,7 @@ namespace Sango.Render
             //bindGridFunc = GetFunction("OnGridBind");
         }
 
-        public void LoadModel(MapObject obj)
+        public void LoadModel(IMapManageObject obj)
         {
             if (replaceLoadModelFunc != null)
             {
@@ -649,6 +649,23 @@ namespace Sango.Render
         public void MoveCameraKeyBoard(bool[] keyFlags)
         {
             mapCamera.MoveCameraKeyBoard(keyFlags);
+        }
+
+        public void AddInstance(IMapManageObject obj)
+        {
+            mapModels?.AddInstance(obj);
+        }
+
+        public void RemoveInstance(IMapManageObject obj)
+        {
+            mapModels?.RemoveInstance(obj);
+
+        }
+
+        public bool IsInView(IMapManageObject obj)
+        {
+            return mapModels.IsInView(obj);
+
         }
     }
 }

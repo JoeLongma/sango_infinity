@@ -20,6 +20,20 @@ namespace Sango.Game
         [JsonProperty]
         public int LeftCounter { get; set; }
 
+        [JsonProperty]
+        public int ProductItemId { get; set; }
+
+        [JsonProperty]
+        public int AccumulatedProduct { get; set; }
+
+        [JsonProperty]
+        public int AccumulatedFood { get; set; }
+
+        [JsonProperty]
+        public int AccumulatedGold { get; set; }
+
+        [JsonProperty]
+        public int AccumulatedPopulation { get; set; }
 
         public int cellHarvestTotalFood = 0;
         public int cellHarvestTotalGold = 0;
@@ -64,14 +78,14 @@ namespace Sango.Game
             ActionOver = false;
 
 
-            if (!isComplte && Workers != null)
+            if (!isComplate && Workers != null)
             {
                 int totalValue = (BuildingType.durabilityLimit - durability) / LeftCounter;
                 durability += totalValue;
                 if (durability >= BuildingType.durabilityLimit)
                 {
                     durability = BuildingType.durabilityLimit;
-                    isComplte = true;
+                    isComplate = true;
                     //CalculateHarvest();
                     SangoObjectList<Person> builder = Workers;
                     OnBuildComplate();
@@ -115,7 +129,7 @@ namespace Sango.Game
                 ActionOver = false;
             }
             // 暂时写死
-            if (isComplte && BuildingType.atk > 0 && BuildingType.atkRange > 0)
+            if (isComplate && BuildingType.atk > 0 && BuildingType.atkRange > 0)
             {
                 for (int i = 1; i < effectCells.Count; i++)
                 {
@@ -131,10 +145,19 @@ namespace Sango.Game
                     }
                 }
             }
+
+            GameEvent.OnBuildingTurnStart?.Invoke(this, scenario);
+
             if (Render != null)
                 Render.UpdateRender();
 
             return base.OnForceTurnStart(scenario);
+        }
+
+        public override bool OnForceTurnEnd(Scenario scenario)
+        {
+            GameEvent.OnBuildingTurnEnd?.Invoke(this, scenario);
+            return base.OnForceTurnEnd(scenario);
         }
 
         public override void OnComplate(SangoObject builder)
@@ -254,7 +277,7 @@ namespace Sango.Game
 
         public void ChangeCity(City dest)
         {
-            if (!isComplte)
+            if (!isComplate)
             {
                 Sango.Log.Error("不允许转换一个未建好的建筑!!");
                 return;
@@ -272,7 +295,7 @@ namespace Sango.Game
         public Corps ChangeCorps(Corps corps)
         {
             Corps last = null;
-            if (!isComplte)
+            if (!isComplate)
             {
                 Sango.Log.Error("不允许转换一个未建好的建筑!!");
                 return last;

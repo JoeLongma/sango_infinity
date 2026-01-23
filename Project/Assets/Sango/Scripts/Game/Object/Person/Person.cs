@@ -300,6 +300,10 @@ namespace Sango.Game
         [JsonProperty]
         public int bannedForceId;
 
+        [JsonProperty]
+        [JsonConverter(typeof(SangoObjectListIDConverter<Building>))]
+        public Building workingBuilding;
+
         public bool HasItem(int itemTypeId)
         {
             return itemStore.GetNumber(itemTypeId) > 0;
@@ -775,7 +779,7 @@ namespace Sango.Game
 
         public bool JobRecuritPerson(Person person, City targetCity, int type)
         {
-            int probability = GameFormula.RecuritPersonProbability(this, person, type);
+            int probability = GameFormula.Instance.RecuritPersonProbability(this, person, type);
 #if SANGO_DEBUG
             Sango.Log.Print($"[{BelongForce.Name}]<{Name}>招募 -> {person.Name} 成功率:{probability}");
 #endif
@@ -863,6 +867,7 @@ namespace Sango.Game
         /// </summary>
         public void LeaveToWild()
         {
+            workingBuilding = null;
             loyalty = 0;
             BelongCity.allPersons.Remove(this);
             Official = Scenario.Cur.CommonData.Officials.Get(0);
@@ -872,7 +877,6 @@ namespace Sango.Game
                 BelongCity.BelongCity.wildPersons.Add(this);
 #if SANGO_DEBUG
                 Sango.Log.Print($"@人才@[{BelongForce.Name}]的<{Name}>下野至{BelongCity.BelongCity.Name}");
-
 #endif
             }
             else
@@ -1060,6 +1064,24 @@ namespace Sango.Game
             {
                 BelongTroop.RemovePerson(this);
             }
+        }
+
+        public int GetAttribute(int attrType)
+        {
+            switch (attrType)
+            {
+                case 0:// (int)AttributeType.Command:
+                    return Command;
+                case 1:// (int)AttributeType.Strength:
+                    return Strength;
+                case 2:// (int)AttributeType.Intelligence:
+                    return Intelligence;
+                case 3:// (int)AttributeType.Politics:
+                    return Politics;
+                case 4:// (int)AttributeType.Glamour:
+                    return Glamour;
+            }
+            return 0;
         }
     }
 }

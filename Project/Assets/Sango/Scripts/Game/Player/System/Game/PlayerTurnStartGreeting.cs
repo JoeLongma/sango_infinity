@@ -38,7 +38,7 @@ namespace Sango.Game.Player
                 case CommandEventType.Cancel:
                 case CommandEventType.ClickDown:
                 case CommandEventType.RClickDown:
-                    PlayerCommand.Instance.Back(); break;
+                    GameSystemManager.Instance.Back(); break;
             }
 
         }

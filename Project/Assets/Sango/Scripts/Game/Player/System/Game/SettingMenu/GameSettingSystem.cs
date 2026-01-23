@@ -13,7 +13,7 @@ namespace Sango.Game.Player
             if (!ContextMenuData.MenuData.IsEmpty())
             {
                 ContextMenu.Show(ContextMenuData.MenuData, startPoint);
-                PlayerCommand.Instance.Push(this);
+                GameSystemManager.Instance.Push(this);
             }
         }
 
@@ -34,7 +34,7 @@ namespace Sango.Game.Player
                 case CommandEventType.RClickDown:
                     {
                         if (ContextMenu.Close())
-                            PlayerCommand.Instance.Back();
+                            GameSystemManager.Instance.Back();
 
                         break;
                     }

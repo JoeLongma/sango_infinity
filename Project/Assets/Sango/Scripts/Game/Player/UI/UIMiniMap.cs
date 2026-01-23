@@ -224,7 +224,7 @@ namespace Sango.Game.Render.UI
 
         public void OnClickMap()
         {
-            if (PlayerCommand.Instance.CurrentCommand != null)
+            if (GameSystemManager.Instance.CurrentCommand != null)
                 return;
 
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(mapValidBounds, Input.mousePosition, Game.Instance.UICamera, out Vector2 localPoint))

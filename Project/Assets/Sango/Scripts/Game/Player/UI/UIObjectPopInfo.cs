@@ -163,7 +163,7 @@ namespace Sango.Game.Render.UI
 
         private void Update()
         {
-            if(PlayerCommand.Instance.CurrentCommand != null)
+            if(GameSystemManager.Instance.CurrentCommand != null)
             {
                 ResetAllPanel(null);
             }

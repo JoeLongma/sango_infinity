@@ -8,11 +8,13 @@ namespace Sango.Game
 {
     public class GameFormula
     {
-        public delegate int RecuritPersonProbabilityCall(Person actor, Person target, int type);
-        public delegate bool RecuritPersonProbabilityByRelationshipCall(Person actor, Person target, int type, out int probability);
+        private static GameFormula _instance = new GameFormula();
 
-        public static RecuritPersonProbabilityCall RecuritPersonProbabilityOverride;
-        public static RecuritPersonProbabilityByRelationshipCall RecuritPersonProbabilityByRelationshipOverride;
+        public static GameFormula Instance
+        {
+            set { _instance = value; }
+            get { return _instance; }
+        }
 
         /// <summary>
         /// 目标武将和可执行武将間是否有特殊关系
@@ -23,7 +25,7 @@ namespace Sango.Game
         /// <param name="type">0,正常招募 1,俘虏招募 2.破城招募</param>
         /// <param name="probability"></param>
         /// <returns></returns>
-        public static bool RecuritPersonProbabilityByRelationship(Person actor, Person target, int type, out int probability)
+        public virtual bool RecuritPersonProbabilityByRelationship(Person actor, Person target, int type, out int probability)
         {
             if (RecuritPersonProbabilityByRelationshipOverride != null)
                 return RecuritPersonProbabilityByRelationshipOverride(actor, target, type, out probability);
@@ -142,8 +144,17 @@ namespace Sango.Game
             return false;
 
         }
+        public delegate bool RecuritPersonProbabilityByRelationshipCall(Person actor, Person target, int type, out int probability);
+        public static RecuritPersonProbabilityByRelationshipCall RecuritPersonProbabilityByRelationshipOverride;
 
-        public static int RecuritPersonProbability(Person actor, Person target, int type)
+        /// <summary>
+        /// 获取招募概率
+        /// </summary>
+        /// <param name="actor"></param>
+        /// <param name="target"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public virtual int RecuritPersonProbability(Person actor, Person target, int type)
         {
             if (RecuritPersonProbabilityOverride != null)
                 return RecuritPersonProbabilityOverride(actor, target, type);
@@ -165,7 +176,7 @@ namespace Sango.Game
                 if (loyalty + target.argumentation.loyaltyAdd >= Scenario.Cur.Variables.recruitableLine)
                     return 0;
             }
-           
+
             // 
 
             Argumentation argumentation = target.argumentation;
@@ -187,7 +198,7 @@ namespace Sango.Game
             // 获取目标相性与君主的距离
             else
             {
-                if(targetGovernor != null)
+                if (targetGovernor != null)
                     aishou = target.CompatibilityDistance(targetGovernor);
             }
             int n = 45 + (aishou - target.CompatibilityDistance(actorGovernor)) * 3 / 2;
@@ -213,7 +224,52 @@ namespace Sango.Game
 
             return n;
         }
+        public delegate int RecuritPersonProbabilityCall(Person actor, Person target, int type);
+        public static RecuritPersonProbabilityCall RecuritPersonProbabilityOverride;
 
+        /// <summary>
+        /// 计算武将的逃跑概率(城池)
+        /// </summary>
+        /// <param name="person"></param>
+        /// <param name="city"></param>
+        /// <param name="scenario"></param>
+        /// <returns></returns>
+        public virtual int PersonEscapeProbablility_InCity(Person person, City city, Scenario scenario)
+        {
+            if (PersonEscapeProbablility_InCityOverride != null)
+            {
+                return PersonEscapeProbablility_InCityOverride(person, city, scenario);
+            }
+
+            int escapeFactor = scenario.Variables.baseEscapeProbabllity + scenario.Variables.baseEscapeProbablilityAddByTurn * person.missionCounter;
+            //TODO: 其他影响越狱的概率
+            return escapeFactor;
+        }
+        public delegate int PersonEscapeProbablility_InCityCall(Person person, City city, Scenario scenario);
+        public static PersonEscapeProbablility_InCityCall PersonEscapeProbablility_InCityOverride;
+
+        /// <summary>
+        /// 计算武将的逃跑概率(部队里)
+        /// </summary>
+        /// <param name="person"></param>
+        /// <param name="city"></param>
+        /// <param name="scenario"></param>
+        /// <returns></returns>
+        public virtual int PersonEscapeProbablility_InTroop(Person person, Troop troop, Scenario scenario)
+        {
+            if (PersonEscapeProbablility_InTroopOverride != null)
+            {
+                return PersonEscapeProbablility_InTroopOverride(person, troop, scenario);
+            }
+            int escapeFactor = scenario.Variables.baseEscapeProbabllity + scenario.Variables.baseEscapeProbablilityAddByTurn * person.missionCounter;
+            //TODO: 其他影响越狱的概率
+            return escapeFactor;
+        }
+        public delegate int PersonEscapeProbablility_InTroopCall(Person person, Troop troop, Scenario scenario);
+        public static PersonEscapeProbablility_InTroopCall PersonEscapeProbablility_InTroopOverride;
+
+
+        
     }
 
 }

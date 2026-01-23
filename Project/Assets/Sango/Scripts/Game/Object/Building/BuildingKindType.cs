@@ -116,6 +116,36 @@ namespace Sango.Game
         Barn = 40,
 
         /// <summary>
+        /// 符节台
+        /// </summary>
+        SpBuilding1 = 41,
+
+        /// <summary>
+        /// 巡查局
+        /// </summary>
+        PatrolBureau = 42,
+
+        /// <summary>
+        /// 人才府
+        /// </summary>
+        RecruitBuilding = 43,
+
+        /// <summary>
+        /// 外交府
+        /// </summary>
+        SpBuilding2 = 44,
+
+        /// <summary>
+        /// 计略府
+        /// </summary>
+        SpBuilding3 = 45,
+
+        /// <summary>
+        /// 炼兵所
+        /// </summary>
+        TrainTroopBuilding = 46,
+
+        /// <summary>
         /// 大市场
         /// </summary>
         BigMarket = 47,
@@ -134,11 +164,6 @@ namespace Sango.Game
         /// 军屯田
         /// </summary>
         MilitaryGarrison = 50,
-
-        /// <summary>
-        /// 巡查局
-        /// </summary>
-        PatrolBureau,
 
         /// <summary>
         /// 村庄

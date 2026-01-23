@@ -132,7 +132,7 @@ namespace Sango.Game.Render.UI
             string content = $"是否加载{index + 1}号存档";
             UIDialog.Open(content, () =>
             {
-                PlayerCommand.Instance.Done();
+                GameSystemManager.Instance.Done();
                 Player.Player.Instance.Load(index);
                 UIDialog.Close();
             });
