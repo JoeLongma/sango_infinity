@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Sango.Mod;
-using System.Xml;
 
 namespace Sango.Game
 {

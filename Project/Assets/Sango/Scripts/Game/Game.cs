@@ -34,6 +34,7 @@ namespace Sango.Game
             GameSystemManager.Instance.Init();
             StartCoroutine(GameInit());
         }
+
         public override void Shutdown()
         {
             MapRender.Instance.Clear();
@@ -42,6 +43,7 @@ namespace Sango.Game
 #endif
             GameEvent.OnGameShutdown?.Invoke();
         }
+
         public override void Pause()
         {
 #if SANGO_DEBUG
@@ -49,6 +51,7 @@ namespace Sango.Game
 #endif
             GameEvent.OnGamePause?.Invoke();
         }
+
         public override void Resume()
         {
 #if SANGO_DEBUG

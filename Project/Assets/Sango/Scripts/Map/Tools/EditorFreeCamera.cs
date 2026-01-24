@@ -1,8 +1,5 @@
 using UnityEngine;
-using System.Collections;
 using UnityEngine.EventSystems;
-using System.IO;
-
 
 namespace Sango.Tools
 {
@@ -10,9 +7,7 @@ namespace Sango.Tools
     {
         public Render.MapRender newMap;
         public Transform lookAt;
-
         public int beginSeason = 0;
-
         public Vector3 lookRotate;
         public bool changed = false;
         public float curDistance = 500;
@@ -23,7 +18,6 @@ namespace Sango.Tools
         bool isMouseMoving = false;
         bool isMousePressed = false;
         bool isPressedUI = false;
-
 
         private void Awake()
         {
@@ -133,10 +127,8 @@ namespace Sango.Tools
             UpdateCamera();
         }
 
-
         private Vector3 oldMousePos;
         private Vector3 newMosuePos;
-
         private Vector3 oldDragPos;
 
         public float zoomSpeed = 400.0f;
@@ -147,6 +139,7 @@ namespace Sango.Tools
         static Plane viewPlane;
 
         bool gridShow = true;
+
         private void MoveCameraKeyBoard()
         {
             if (/*Input.GetKey(KeyCode.A) || */Input.GetKey(KeyCode.LeftArrow))//(Input.GetAxis("Horizontal")<0)

@@ -1,10 +1,3 @@
-using System.Collections.Generic;
-using UnityEngine;
-using Sango.Loader;
-
-using System.IO;
-using Sango;
-
 namespace Sango.Loader
 {
     public class SpriteLoader

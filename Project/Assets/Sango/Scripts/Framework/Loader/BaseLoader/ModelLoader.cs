@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Sango.Loader
 {
@@ -17,6 +16,7 @@ namespace Sango.Loader
                 return _instance;
             }
         }
+
         //private static void OnModelFullyLoad(AssetLoaderContext assetLoaderContext)
         //{
         //    if (assetLoaderContext.RootGameObject != null)
@@ -36,7 +36,6 @@ namespace Sango.Loader
         //    Debug.LogError($"There was an error loading your model: {contextualizedError}");
         //}
 
-
         protected class ModelLoadData
         {
             public string texturePath;
@@ -49,7 +48,6 @@ namespace Sango.Loader
             public object customData;
             public UnityEngine.Object rsObject;
         }
-
 
         public static void OnModelObjectLoaded(UnityEngine.Object obj, object customData)
         {
@@ -242,6 +240,5 @@ namespace Sango.Loader
 
 
         }
-
     }
 }

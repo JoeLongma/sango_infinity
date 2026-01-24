@@ -21,7 +21,6 @@ namespace Sango.Render
             public Vector2 textureScale = Vector2.one;
             //public Mesh combineMesh;
 
-
             public LayerData(MapLayer layer)
             {
                 this.layer = layer;
@@ -68,10 +67,12 @@ namespace Sango.Render
             {
                 return diffuse[season];
             }
+
             public string GetDiffuseName(int season)
             {
                 return diffuseTexName[season];
             }
+
             public string SetDiffuseName(int season)
             {
                 return diffuseTexName[season];
@@ -116,7 +117,6 @@ namespace Sango.Render
                 }
             }
 
-
             public void UpdateMaterial(int season)
             {
                 if (material == null) return;
@@ -141,6 +141,7 @@ namespace Sango.Render
                     }
                 }
             }
+
             public void SetLit(bool b)
             {
                 isLit = b;
@@ -181,6 +182,7 @@ namespace Sango.Render
                     OnSaveTexture(writer, i);
                 }
             }
+
             internal void OnLoad(int versionCode, BinaryReader reader)
             {
                 isLit = reader.ReadBoolean();
@@ -228,7 +230,6 @@ namespace Sango.Render
                     normalTexName[i] = reader.ReadString();
                     if (!string.IsNullOrEmpty(normalTexName[i]))
                     {
-
                         Texture tex = layer.map.CreateTexture($"Terrain/{seasonName}/{normalTexName[i]}");
                         normal[i] = tex;
                         if (i == layer.curSeason)
@@ -291,14 +292,13 @@ namespace Sango.Render
             else
                 writer.Write(0);
 
-
             for (int i = 0; i < layerDatas.Length; i++)
             {
                 LayerData data = layerDatas[i];
                 data.OnSave(writer);
-
             }
         }
+
         internal override void OnLoad(int versionCode, BinaryReader reader)
         {
             int layerSize = reader.ReadInt32();
@@ -395,12 +395,14 @@ namespace Sango.Render
             UpdateLayerRenderQueue();
             return layer;
         }
+
         public LayerData GetLayer(int layerIndex)
         {
             if (layerIndex < 0 || layerIndex >= layerDatas.Length)
                 return default(LayerData);
             return layerDatas[layerIndex];
         }
+
         public bool SetLayer(int layerIndex, LayerData data)
         {
             if (layerIndex < 0 || layerIndex >= layerDatas.Length)
@@ -408,6 +410,7 @@ namespace Sango.Render
             layerDatas[layerIndex] = data;
             return true;
         }
+
         public void SwapLayer(int layerIndex1, int layerIndex2)
         {
             if (layerIndex1 < 0 || layerIndex1 >= layerDatas.Length)
@@ -419,6 +422,7 @@ namespace Sango.Render
             layerDatas[layerIndex2] = layer;
             UpdateLayerRenderQueue();
         }
+
         public override void UpdateRender()
         {
             for (int i = 0; i < layerDatas.Length; i++)
@@ -428,6 +432,5 @@ namespace Sango.Render
                 data.UpdateLayerIndex(i);
             }
         }
-
     }
 }

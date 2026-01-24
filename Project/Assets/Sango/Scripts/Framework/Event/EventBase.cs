@@ -56,8 +56,5 @@ namespace Sango
         public static EventDelegate OnGamePause;
         public static EventDelegate OnGameResume;
         public static EventDelegate OnGameShutdown;
-
-      
-
     }
 }

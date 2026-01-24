@@ -1,12 +1,8 @@
-﻿
-/*
+﻿/*
 '*******************************************************************
 'Tank Framework
 '*******************************************************************
 */
-using System;
-using System.Collections;
-using System.IO;
 namespace Sango
 {
     public static class File
@@ -107,7 +103,5 @@ namespace Sango
         {
             return System.IO.Path.GetExtension(path);
         }
-
-        
     }
 }

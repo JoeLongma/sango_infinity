@@ -1,5 +1,4 @@
-﻿using System.IO;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Sango.Render
 {
@@ -7,6 +6,7 @@ namespace Sango.Render
     public class MapWater : MapLayer
     {
         public MapLayer.LayerData [] waterLayers;
+
         public MapWater(MapRender map) : base(map)
         {
             waterLayers = new MapLayer.LayerData[1];
@@ -23,6 +23,5 @@ namespace Sango.Render
                 data.UpdateLayerIndex(oldLen + i);
             }
         }
-
     }
 }

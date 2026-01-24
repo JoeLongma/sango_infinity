@@ -12,8 +12,8 @@ namespace Sango.Render
         public MapCache<Vector2> uvCache;
         public MapCache<Vector3> normalCache;
         public static MeshUpdateFlags Flags = MeshUpdateFlags.DontNotifyMeshUsers | MeshUpdateFlags.DontRecalculateBounds | MeshUpdateFlags.DontValidateIndices | MeshUpdateFlags.DontResetBoneBounds;
-
         protected static Queue<LayerMeshData> queue = new Queue<LayerMeshData>();
+
         public static LayerMeshData Create()
         {
             if (queue.Count == 0)
@@ -21,6 +21,7 @@ namespace Sango.Render
             else
                 return queue.Dequeue();
         }
+
         public void Clear()
         {
             queue.Enqueue(this);
@@ -38,6 +39,7 @@ namespace Sango.Render
                 }
             }
         }
+
         public int colorCount
         {
             set
@@ -90,8 +92,6 @@ namespace Sango.Render
             }
         }
 
-
-
         public void Reset()
         {
             if (vertexCache != null)
@@ -136,7 +136,5 @@ namespace Sango.Render
             if (normalCache != null)
                 normalCache.Clear();
         }
-
-        
     }
 }

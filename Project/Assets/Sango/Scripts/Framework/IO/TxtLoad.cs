@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
@@ -16,7 +14,7 @@ namespace Sango.Data
     {
         public static T[] LoadTxt<T>(string path, bool firstIsDesc = true) where T : StringDataBase, new()
         {
-            Stream stream = System.IO.File.OpenRead(path);  // ´ò¿ªÎ»Í¼ÎÄ¼ş
+            Stream stream = System.IO.File.OpenRead(path);  // æ‰“å¼€ä½å›¾æ–‡ä»¶
             StreamReader reader = new StreamReader(stream);
             List<T> list = new List<T>();
             if (firstIsDesc)
@@ -37,7 +35,6 @@ namespace Sango.Data
 
             return list.ToArray();
         }
-
     }
 
     public class Model : StringDataBase
@@ -56,7 +53,7 @@ namespace Sango.Data
             string[] str = s.Split('\t');
             int.TryParse(str[0], out id);
 
-            valid = (str[1] == "¡ğ");
+            valid = (str[1] == "â—‹");
             //if (valid)
             //    Debug.Log(id.ToString());
 
@@ -90,7 +87,7 @@ namespace Sango.Data
     {
         public static T[] LoadXml<T>(string path, string elementName) where T : XmlDataBase, new()
         {
-            Stream stream = System.IO.File.OpenRead(path);  // ´ò¿ªÎ»Í¼ÎÄ¼ş
+            Stream stream = System.IO.File.OpenRead(path);  // æ‰“å¼€ä½å›¾æ–‡ä»¶
             XmlDocument xml = new XmlDocument();
             xml.Load(stream);
             XmlElement node = xml.DocumentElement[elementName];
@@ -110,7 +107,6 @@ namespace Sango.Data
             stream.Close();
             return list.ToArray();
         }
-
     }
 
     public class MapTerrainType : XmlDataBase
@@ -132,17 +128,17 @@ namespace Sango.Data
 
     public class MapBlock : StringDataBase
     {
-        public int terrainType;         // µØĞÎÀàĞÍ
-        public Vector2Int coords;       // µØĞÎ×ø±ê
-        public int areaId;              // µØĞÎÇøÓòID
-        public bool canBuild;           // ÊÇ·ñ¿ÉÒÔÄÚÕş½¨Éè 
+        public int terrainType;         // åœ°å½¢ç±»å‹
+        public Vector2Int coords;       // åœ°å½¢åæ ‡
+        public int areaId;              // åœ°å½¢åŒºåŸŸID
+        public bool canBuild;           // æ˜¯å¦å¯ä»¥å†…æ”¿å»ºè®¾ 
 
         public bool TryParse(string s)
         {
             //string[] str = s.Split('\t');
             //int.TryParse(str[0], out id);
 
-            //valid = (str[1] == "¡ğ");
+            //valid = (str[1] == "â—‹");
             //if (valid)
             //    Debug.Log(id.ToString());
 
@@ -167,4 +163,3 @@ namespace Sango.Data
         }
     }
 }
-

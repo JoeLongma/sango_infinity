@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unity.Burst;
+﻿using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
@@ -56,10 +51,12 @@ namespace Sango.Map.Render
         {
             return new Vector2(x * MapUVPiece.x, y * MapUVPiece.y);
         }
+
         public Vector3 VertexPosition(VertexDataNative data, int x, int y)
         {
             return new Vector3(y * quadSize, data.height * 0.5f, x * quadSize);
         }
+
         public Vector3 VertexWaterPosition(VertexDataNative data, int x, int y)
         {
             if (data.water == 0)
@@ -215,7 +212,6 @@ namespace Sango.Map.Render
 
     }
 
-
     [BurstCompile]
     public struct MapCellCreateLayer : IJobParallelFor
     {
@@ -288,6 +284,4 @@ namespace Sango.Map.Render
         }
 
     }
-
-
 }

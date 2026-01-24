@@ -1,4 +1,3 @@
-
 using Sango.Loader;
 using System.Collections.Generic;
 using System.IO;
@@ -12,6 +11,7 @@ namespace Sango.Sprite
         public delegate void OnSpriteLoaded(string fileName, UnityEngine.Sprite[] obj);
 
         private Dictionary<string, UnityEngine.Sprite> spriteDic = new Dictionary<string, UnityEngine.Sprite>();
+
         public class CustomData
         {
             public string fileName;
@@ -109,6 +109,7 @@ namespace Sango.Sprite
                 }
             }
         }
+
         public struct SpriteData
         {
             public string key;
@@ -117,6 +118,7 @@ namespace Sango.Sprite
             public float pixelsPerUnit;
             public Vector4 border;
         }
+
         public static UnityEngine.Sprite Get(string key)
         {
             UnityEngine.Sprite sprite;
@@ -124,6 +126,7 @@ namespace Sango.Sprite
                 return sprite;
             return null;
         }
+
         public static CustomData CreateLoadData(string fileName)
         {
             CustomData data = new CustomData();
@@ -136,6 +139,7 @@ namespace Sango.Sprite
             data.onCSharpCall = onLoadedCall;
             TextureLoader.LoadFromFile(data.fileName, data, OnTextureLoaded, needCompress);
         }
+
         public static void OnTextureLoaded(UnityEngine.Object obj, object customData)
         {
             CustomData data = customData as CustomData;
@@ -159,6 +163,5 @@ namespace Sango.Sprite
                 }
             }
         }
-
     }
 }

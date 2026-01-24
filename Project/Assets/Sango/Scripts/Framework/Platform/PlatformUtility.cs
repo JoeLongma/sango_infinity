@@ -25,6 +25,7 @@ namespace Sango
         {
             return UnityEngine.Application.version;
         }
+
         /// <summary>
         /// 获取游戏版本号
         /// </summary>
@@ -121,7 +122,6 @@ namespace Sango
 #endif
         }
 
-
         static public void Restart(int t = 0)
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
@@ -135,6 +135,5 @@ namespace Sango
             ac.Dispose();
 #endif
         }
-
     }
 }

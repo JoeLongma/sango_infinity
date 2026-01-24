@@ -1,16 +1,9 @@
-﻿
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using Sango;
-using Sango.Mod;
+﻿using System.Collections.Generic;
 
 namespace Sango
 {
     public class ContentManager : Singleton<ContentManager>
     {
-        public List<string> SearchPath = new List<string>();
-
-       
+        public List<string> SearchPath = new List<string>(); 
     }
 }

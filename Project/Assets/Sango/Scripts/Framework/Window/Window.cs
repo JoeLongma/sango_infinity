@@ -1,16 +1,13 @@
 ﻿//using FairyGUI;
 
 using Sango.Loader;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Sango
 {
-
     public class Window : Singleton<Window>
     {
-
         public class WindowInterface
         {
             //public FairyGUI.Window fgui_instance;
@@ -69,9 +66,11 @@ namespace Sango
             public string scriptName;
             public WindowInterface instance;
         }
+
         Dictionary<string, WindowInfo> windowMap = new Dictionary<string, WindowInfo>();
 
         public delegate Window CreateFunc(string pkgName, string resName);
+
         Dictionary<string, CreateFunc> CreateMap = new Dictionary<string, CreateFunc>();
 
         public bool AddPackage(string fileName, string pkgName)
@@ -157,6 +156,7 @@ namespace Sango
             if (!windowMap.TryAdd(windowName, info))
                 windowMap[windowName] = info;
         }
+
         public void RegisterWindow(string windowName, string pkgName, string resName, string tableName)
         {
             WindowInfo info = new WindowInfo()
@@ -181,6 +181,7 @@ namespace Sango
             }
             return split;
         }
+
         public WindowInterface CreateWindow(string windowName)
         {
             WindowInfo info;
@@ -271,7 +272,6 @@ namespace Sango
             return win;
         }
 
-
         public WindowInterface GetWindow(string windowName)
         {
             WindowInfo info;
@@ -326,7 +326,6 @@ namespace Sango
             windowMap.Clear();
         }
 
-
         public bool IsOpen(string windowName)
         {
             WindowInfo info;
@@ -350,7 +349,6 @@ namespace Sango
             info.instance.SetVisible(b);
 
         }
-
 
         //public static FairyGUI.Window CreateWindow(string pkgName, string resName, LuaTable luaTable, bool fullScreen = true)
         //{

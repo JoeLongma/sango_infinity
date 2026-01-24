@@ -50,6 +50,5 @@ namespace Sango
             else
                 mDelegates[funcCode] = call;
         }
-
     }
 }

@@ -1,9 +1,6 @@
-﻿
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Sango;
-using System;
-using System.CodeDom;
 
 namespace Sango.Loader
 {
@@ -13,6 +10,7 @@ namespace Sango.Loader
         protected static Queue<LoadData> rsQueue = new Queue<LoadData>();
         protected static Queue<LoadData> reusedQueue = new Queue<LoadData>();
         protected static List<LoadData> usingList = new List<LoadData>();
+
         class LoaderHelper : IUpdate
         {
             public bool Update(float dtTime, float unScaleTime)
@@ -26,7 +24,9 @@ namespace Sango.Loader
                 return true;
             }
         }
+
         private static LoaderHelper helper;
+
         public static void CheckHelper()
         {
             if (helper == null)
@@ -35,10 +35,12 @@ namespace Sango.Loader
                 Game.Game.Instance.AddTick(helper);
             }
         }
+
         protected static LoadData CheckExistLoader(string fileName)
         {
             return usingList.Find(x => x.filePath.Equals(fileName));
         }
+
         protected class LoadData
         {
             public string filePath;
@@ -64,11 +66,9 @@ namespace Sango.Loader
                         }
                     }
 
-
                     onCSharpLoadedFuncs.Clear();
                     c_customData.Clear();
                 }
-
 
                 reusedQueue.Enqueue(this);
                 usingList.Remove(this);
@@ -220,6 +220,5 @@ namespace Sango.Loader
             Type type = typeof(T);
             return LoadObject(assetName, type, ps) as T;
         }
-
     }
 }

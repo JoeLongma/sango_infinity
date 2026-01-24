@@ -1,7 +1,5 @@
-
 using Sango.Game;
 using Sango.Loader;
-using System.Collections;
 using UnityEngine;
 
 namespace Sango.Render
@@ -24,18 +22,15 @@ namespace Sango.Render
         bool _selectable = false;
         public MapRender manager { get; set; }
         public bool remainInView { get; set; }
-
         public Tools.Rect bounds { get; set; }
         /// <summary>
         /// 用于绑定物件的ID
         /// </summary>
         public int objId { get; set; }
-
         /// <summary>
         /// 绑定Id
         /// </summary>
         public int bindId { get; set; }
-
         /// <summary>
         /// 物件的类型
         /// </summary>
@@ -48,17 +43,19 @@ namespace Sango.Render
         /// 模型资源
         /// </summary>
         public string modelAsset { get; set; }
-
         /// <summary>
         ///  实例化标记
         /// </summary>
         public bool instanceFlag { get; set; }
-
-
+		
+        /// <summary>
+        /// 已加载的模型
+        /// </summary>
         public GameObject loadedModel;
         private bool isLoading = false;
         public bool editorShow = true;		//添加了public
         public bool isStatic { get; set; }
+
         public bool visible
         {
             get { return _visible; }
@@ -90,6 +87,7 @@ namespace Sango.Render
             get { return transCache.position; }
             set { transCache.position = value; }
         }
+
         public Vector3 rotation
         {
             get { return transCache.localRotation.eulerAngles; }
@@ -107,6 +105,7 @@ namespace Sango.Render
             get { return transCache.localScale; }
             set { transCache.localScale = value; }
         }
+
         public Vector2Int coords { get; set; }
 
         public Sango.Tools.Rect worldBounds
@@ -236,13 +235,14 @@ namespace Sango.Render
             return worldBounds.Overlaps(rect);
         }
 
-
         public virtual void OnClick()
         {
         }
+
         public virtual void OnPointerEnter()
         {
         }
+
         public virtual void OnPointerExit()
         {
         }
@@ -251,6 +251,7 @@ namespace Sango.Render
         {
 
         }
+
         protected virtual void OnModelLoaded(UnityEngine.Object obj, object customData)
         {
             OnModelLoaded(obj, customData, true);
@@ -322,10 +323,12 @@ namespace Sango.Render
             }
             loadedModel = model;
         }
+
         public void CreateModel(string meshFile, string textureFile, string shaderName, bool isShareMat = true)
         {
             isLoading = true;
-            ModelLoader.LoadFromFile(meshFile,
+            ModelLoader.LoadFromFile(
+				meshFile,
                 textureFile,
                 true,
                 shaderName,
@@ -333,6 +336,7 @@ namespace Sango.Render
                 null,
                 OnModelLoaded);
         }
+
         public void CreateModel(string packagePath, string assetName)
         {
             if (string.IsNullOrEmpty(packagePath))
@@ -352,6 +356,7 @@ namespace Sango.Render
 
             OnModelInit(null, false);
         }
+		
         public void CreateModel(string assetName)
         {
             GameObject obj = ObjectLoader.LoadObject<GameObject>(assetName);
@@ -393,7 +398,6 @@ namespace Sango.Render
                 manager.mapModels.AddInstance(this);
                 return;
             }
-
 
             if (loadedModel != null || isLoading)
             {
@@ -481,6 +485,7 @@ namespace Sango.Render
                 }
             }
         }
+
         public void Clear()
         {
             if (manager != null)
@@ -490,7 +495,6 @@ namespace Sango.Render
                 else
                     manager.RemoveDynamic(this);
             }
-
             ClearModels();
         }
 
@@ -500,6 +504,7 @@ namespace Sango.Render
             if (gameObject != null)
                 GameObject.Destroy(gameObject);
         }
+
         public GameObject GetGameObject()
         {
             return gameObject;

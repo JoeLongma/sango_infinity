@@ -1,16 +1,16 @@
-﻿
+﻿using Sango.Game;
+using Sango.Loader;
+using Sango.Tools;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using Sango;
 using UnityEngine.Rendering;
-using Sango.Game;
-using Sango.Loader;
-using Sango.Tools;
 
 namespace Sango.Render
 {
-    // 光照
+    /// <summary>
+    /// 地图模型
+    /// </summary>
     public class MapModels : MapProperty
     {
         public List<IMapManageObject> dynamicObjects = new List<IMapManageObject>();
@@ -188,6 +188,11 @@ namespace Sango.Render
             obj.visible = obj.Overlaps(curViewRect);
         }
 
+        public void RemoveDynamic(IMapManageObject obj)
+        {
+            dynamicObjects.Remove(obj);
+        }
+
         public void AddStatic(IMapManageObject obj)
         {
             //if (staticObjectMap.TryAdd(obj.objId, obj)) {
@@ -223,10 +228,6 @@ namespace Sango.Render
                 dynamicObjects.Remove(obj);
             }
         }
-        public void RemoveDynamic(IMapManageObject obj)
-        {
-            dynamicObjects.Remove(obj);
-        }
 
         public bool IsInView(IMapManageObject obj)
         {
@@ -245,13 +246,11 @@ namespace Sango.Render
             obj.transform.rotation = Quaternion.Euler(rot);
             obj.transform.localScale = scale;
             obj.bounds = new Sango.Tools.Rect(0, 0, 32, 32);
-
             obj.instanceFlag = !MapEditor.IsEditOn;
 
             //map.LoadModel(obj);
             if (bindId > 0)
                 map.BindModel(obj);
-
             AddStatic(obj);
         }
 
@@ -276,6 +275,7 @@ namespace Sango.Render
 
             foreach (IMapManageObject o in invalidList)
                 RemoveStatic(o);
+
             writer.Write(staticObjects.Count);
             for (int i = 0; i < staticObjects.Count; ++i)
             {
@@ -294,7 +294,6 @@ namespace Sango.Render
                 writer.Write(obj.scale.y);
                 writer.Write(obj.scale.z);
             }
-
         }
 
         internal override void OnLoad(int versionCode, BinaryReader reader)
@@ -345,7 +344,6 @@ namespace Sango.Render
         };
         private int[] mapManageObjectsCount = { 0, 0 };
         private int manageLastIndex = 0;
-
 
         public void Update(Tools.Rect rect)
         {

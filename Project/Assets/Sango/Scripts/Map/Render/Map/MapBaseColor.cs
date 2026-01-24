@@ -1,8 +1,10 @@
 ﻿using System.IO;
 using UnityEngine;
-using UnityEngine.Rendering;
+
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
+
 #endif
+
 namespace Sango.Render
 {
     public class MapBaseColor : MapProperty
@@ -19,6 +21,7 @@ namespace Sango.Render
         {
             base.Init();
         }
+
         public override void Clear()
         {
             base.Clear();
@@ -27,6 +30,7 @@ namespace Sango.Render
             //baseTextrueName = null;
             Shader.SetGlobalTexture("_BaseTex", Texture2D.whiteTexture);
         }
+
         internal override void OnSave(BinaryWriter writer)
         {
             for (int i = 0; i < texture.Length; i++)
@@ -84,6 +88,7 @@ namespace Sango.Render
                 }
             }
         }
+		
         internal override void OnLoad(int versionCode, BinaryReader reader)
         {
             if (versionCode > 5)
@@ -173,12 +178,9 @@ namespace Sango.Render
             }
         }
 
-
-
         public override void UpdateRender()
         {
             Shader.SetGlobalTexture("_BaseTex", texture[curSeason]);
         }
-
     }
 }

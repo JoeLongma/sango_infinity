@@ -7,7 +7,6 @@ namespace Sango.Game
 {
     public class GameUtility
     {
-
         public static OverrideData<int> IntOverrideData = new OverrideData<int>(0);
         public static OverrideData<float> FloatOverrideData = new OverrideData<float>(0);
         public static System.Random RandomDigit = new System.Random();
@@ -21,10 +20,12 @@ namespace Sango.Game
             }
             return RandomDigit.Next(maxValue);
         }
+
         public static double Random()
         {
             return RandomDigit.NextDouble();
         }
+
         public static int GetRandomValue(int a, int b)
         {
             int num;
@@ -52,6 +53,7 @@ namespace Sango.Game
             }
             return -num;
         }
+
         public static int GetBigRandomValue(int a, int b)
         {
             int num;
@@ -80,6 +82,7 @@ namespace Sango.Game
             }
             return -num;
         }
+
         public static bool Chance(int chance)
         {
             if (chance <= 0)
@@ -88,6 +91,7 @@ namespace Sango.Game
             }
             return ((chance >= 100) || (Random(100) < chance));
         }
+
         public static bool Chance(int chance, int root)
         {
             if (chance <= 0)
@@ -96,10 +100,12 @@ namespace Sango.Game
             }
             return ((chance >= root) || (Random(root) < chance));
         }
+
         public static int Random(int min, int max)
         {
             return Random(Math.Abs(max - min) + 1) + Math.Min(max, min);
         }
+
         public static int RandomGaussian(double mean, double var)
         {
             double u1 = Random();
@@ -108,6 +114,7 @@ namespace Sango.Game
                          Math.Sin(2.0 * Math.PI * u2);
             return (int)Math.Round(mean + (var / 3) * randStdNormal);
         }
+
         public static int RandomGaussianRange(int lo, int hi)
         {
             return RandomGaussian((hi + lo) / 2.0, Math.Abs(hi - lo) / 2.0);
@@ -139,6 +146,7 @@ namespace Sango.Game
             }
             return maxValue * 2;
         }
+
         public static int Method_PersonBuildAbility(Person[] people)
         {
             int maxValue = 0;
@@ -150,6 +158,7 @@ namespace Sango.Game
             }
             return maxValue * 2;
         }
+
         public static int Method_PersonBuildAbility(SangoObjectList<Person> people)
         {
             int maxValue = 0;
@@ -206,8 +215,6 @@ namespace Sango.Game
             return percent;
         }
 
-
-
         // 这里传入的v是放大了10倍的
         public static int Method_CreateItems(int v, int buildingTotalLevel)
         {
@@ -245,7 +252,6 @@ namespace Sango.Game
           */
             return Math.Max(1, Math.Min(9, (550 - maxValue * 10 / 4) / 30 - (subValue) / 24 - Math.Min(buildingTotalLevel / 3, 3)));
         }
-
 
         /// <summary>
         /// 计算建造器械所需的旬数

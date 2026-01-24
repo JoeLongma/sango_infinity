@@ -1,7 +1,4 @@
-﻿
-using Sango.Loader;
-using System;
-using System.Text;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,6 +26,7 @@ namespace Sango
                 Log.Warning("在 " + gameObject.name + " 中无法找到节点:" + namePath);
             return rs;
         }
+
         /// <summary>
         /// 获取对象, 传入对象路径
         /// </summary>
@@ -41,6 +39,7 @@ namespace Sango
                 return trans.gameObject;
             return null;
         }
+
         /// <summary>
         /// 获取对象上的T接口
         /// </summary>
@@ -68,6 +67,7 @@ namespace Sango
                 return trans.GetComponent(typeName);
             return null;
         }
+
         public Component GetComponent(string namePath, Type t)
         {
             Transform trans = GetTransform(namePath);
@@ -106,6 +106,7 @@ namespace Sango
                 }
             }
         }
+
         public void SetLayerNameAndOrder(string layer, int order)
         {
             if (panels == null)
@@ -156,7 +157,6 @@ namespace Sango
         {
 
         }
-
 
         public virtual void Hide()
         {

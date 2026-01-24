@@ -1,9 +1,4 @@
-﻿using Sango.Mod;
-using Sango.Tools;
-using System.Collections;
-using UnityEngine;
-
-namespace Sango.Game
+﻿namespace Sango.Game
 {
     public static class GameConfig
     {

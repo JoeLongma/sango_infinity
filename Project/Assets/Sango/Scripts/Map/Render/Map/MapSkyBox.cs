@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Sango.Render
 {
-
     public class MapSkyBox : MapProperty
     {
         public float sky_radius_len = 140;
@@ -16,6 +15,7 @@ namespace Sango.Render
         public float sky_mix_begin = 900f;
         public float sky_mix_end = 3400f;
         public float sky_mix_power = 18f;
+
         internal class SkyArea
         {
             public UnityEngine.Rect bounds;
@@ -111,7 +111,6 @@ namespace Sango.Render
         public MapSkyBox(MapRender map) : base(map)
         {
 
-
         }
 
         public override void Init()
@@ -121,6 +120,7 @@ namespace Sango.Render
             Transform trans = Create();
             trans.SetParent(map.mapCamera.GetCenterTransform(), false);
         }
+
         public override void Clear()
         {
             base.Clear();
@@ -156,8 +156,8 @@ namespace Sango.Render
                         writer.Write("");
                 }
             }
-
         }
+
         internal override void OnLoad(int versionCode, BinaryReader reader)
         {
             curArea = null;
@@ -165,7 +165,6 @@ namespace Sango.Render
             // 版本1的加载
             if (versionCode == 1)
             {
-
                 blendStart = reader.ReadSingle();
                 blendEnd = reader.ReadSingle();
                 int length = reader.ReadInt32();
@@ -208,11 +207,11 @@ namespace Sango.Render
         {
             get; set;
         }
+
         public float blendEnd
         {
             get; set;
         }
-
 
         void _CreateMaterial()
         {
@@ -241,7 +240,6 @@ namespace Sango.Render
             skyTrans.localScale = new Vector3(sky_radius_len, sky_height, sky_radius_len);
             for (int i = 0; i < skyMeshes.Length; i++)
             {
-
                 Mesh mesh = new Mesh();
                 for (int j = 0; j < 17; ++j)
                 {
@@ -307,6 +305,7 @@ namespace Sango.Render
 
             return skyTrans;
         }
+
         public void SetVisible(bool b)
         {
             if (skyTrans != null)
@@ -314,6 +313,7 @@ namespace Sango.Render
                 skyTrans.gameObject.SetActive(b);
             }
         }
+
         public override void UpdateRender()
         {
             if (skyMat != null && curArea != null)

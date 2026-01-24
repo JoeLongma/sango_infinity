@@ -1,10 +1,4 @@
-﻿using Sango.Tools;
-using System;
-using System.IO;
-using Unity.Burst;
-using Unity.Collections;
-using Unity.Jobs;
-using UnityEngine;
+﻿using System.IO;
 
 namespace Sango.Render
 {
@@ -47,6 +41,7 @@ namespace Sango.Render
         {
             writer.Write(cellSize);
         }
+
         // 必须在layer后面
         internal override void OnLoad(int versionCode, BinaryReader reader)
         {
@@ -194,8 +189,6 @@ namespace Sango.Render
             //Debug.LogError($"Schedule耗时：{duration:F4}秒");
         }
 
-
-
         public override void Update()
         {
             if (terrainCells == null) return;
@@ -219,7 +212,6 @@ namespace Sango.Render
             }
         }
     }
-
 
     //[BurstCompile]
     //public struct LayerJob : IJob

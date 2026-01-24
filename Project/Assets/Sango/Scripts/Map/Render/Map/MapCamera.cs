@@ -1,5 +1,4 @@
 ﻿using Sango.Tools;
-using System;
 using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,7 +7,9 @@ using UnityEngine.Rendering.Universal;
 
 namespace Sango.Render
 {
-    // 雾效
+    /// <summary>
+    /// 地图相机
+    /// </summary>
     public class MapCamera : MapProperty
     {
         Transform lookAt;
@@ -40,6 +41,7 @@ namespace Sango.Render
 
         private Plane viewPlane;
         private Vector3[] corners = new Vector3[4];
+
         public bool GetViewRect(float limitLen, out float x, out float y, out float w, out float h)
         {
             if (CameraPlaneView.GetPlaneCorners(ref viewPlane, camera, limitLen, ref corners))
@@ -63,6 +65,7 @@ namespace Sango.Render
             x = 0; y = 0; w = 0; h = 0;
             return false;
         }
+
         public override void Init()
         {
             base.Init();
@@ -126,6 +129,7 @@ namespace Sango.Render
             //writer.Write(rotSpeed);
             writer.Write(safeBoder);
         }
+
         internal override void OnLoad(int versionCode, BinaryReader reader)
         {
             if (versionCode <= 2)
@@ -173,6 +177,7 @@ namespace Sango.Render
         {
             get; set;
         }
+
         public Vector3 position
         {
             get { return look_position; }
@@ -217,7 +222,6 @@ namespace Sango.Render
         {
             return lookAt;
         }
-
 
         public void MoveCamera(int dir, float speed)
         {
@@ -336,7 +340,6 @@ namespace Sango.Render
             }
         }
 
-
         bool IsOverUI()
         {
             return (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) || (MapEditor.IsEditOn && EditorWindow.IsPointOverUI())  /* || FairyGUI.Stage.isTouchOnUI*/;
@@ -385,7 +388,6 @@ namespace Sango.Render
                 }
             }
         }
-
 
         public void SetCamera(Camera cam)
         {
@@ -438,8 +440,10 @@ namespace Sango.Render
 
             oldMousePos = Input.mousePosition;
         }
+
         private Vector3 oldDragPos;
         bool isPressedUI = false;
+
         private void MouseDragWorld()
         {
 
@@ -646,6 +650,7 @@ namespace Sango.Render
                 //}
             }
         }
+
         public void MouseDragWorldMobile()
         {
             if (Input.touchCount == 1)
@@ -701,6 +706,5 @@ namespace Sango.Render
                 }
             }
         }
-
     }
 }

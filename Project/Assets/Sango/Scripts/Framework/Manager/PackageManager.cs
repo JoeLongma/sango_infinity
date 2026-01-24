@@ -1,10 +1,6 @@
-﻿
-
+﻿using Sango.Mod;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using Sango;
-using Sango.Mod;
 
 namespace Sango
 {
@@ -24,6 +20,7 @@ namespace Sango
         {
             return AddPackage(packageName, packagePath, true);
         }
+
         public bool AddPackage(string packageName, string packagePath, bool front)
         {
             PackageInfo packageInfo = null;
@@ -81,10 +78,10 @@ namespace Sango
 
             return null;
         }
+
         public UnityEngine.Object LoadAssets(string packageName, string assetName)
         {
             return LoadAssets(packageName, assetName, null);
         }
-
     }
 }

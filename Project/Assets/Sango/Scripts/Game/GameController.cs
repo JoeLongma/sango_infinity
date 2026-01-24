@@ -1,6 +1,4 @@
-﻿using Sango.Game.Player;
-using Sango.Game.Render.UI;
-using Sango.Render;
+﻿using Sango.Render;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -22,6 +20,7 @@ namespace Sango.Game
             Move,
             Rotate,
         }
+
         ControlType controlType = ControlType.None;
 
         //public delegate void OnClickCell(Cell cell);
@@ -68,6 +67,7 @@ namespace Sango.Game
         {
             return (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())/* || FairyGUI.Stage.isTouchOnUI*/;
         }
+
         public bool IsOverUI(int fingerId)
         {
             return (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(fingerId))/* || FairyGUI.Stage.isTouchOnUI*/;
@@ -455,7 +455,6 @@ namespace Sango.Game
             }
         }
 
-
         bool[] keyFlags = new bool[4];
         bool hasKey = false;
         private bool MoveCameraKeyBoard()
@@ -611,8 +610,5 @@ namespace Sango.Game
             GameSystemManager.Instance.HandleEvent(CommandEventType.Cancel, null, clickPosition, false);
             //Sango.Game.Render.UI.ContextMenu.Close();
         }
-
-
     }
-
 }

@@ -10,6 +10,7 @@ namespace Sango.Game
         {
             random = new Random(Guid.NewGuid().GetHashCode());
         }
+
         public static double Random()
         {
             return random.NextDouble();
@@ -64,6 +65,7 @@ namespace Sango.Game
             else
                 return random.Next(min, max);
         }
+
         public static int Range(int maxValue)
         {
             return random.Next(maxValue);
@@ -76,6 +78,7 @@ namespace Sango.Game
             else
                 return (float)random.Next((int)min * 10000, (int)max * 10000) / 10000f;
         }
+
         public static float Range(float maxValue)
         {
             return (float)random.Next((int)maxValue * 10000) / 10000f;
@@ -89,6 +92,7 @@ namespace Sango.Game
                          Math.Sin(2.0 * Math.PI * u2);
             return (int)Math.Round(mean + (var / 3) * randStdNormal);
         }
+
         public static int RandomGaussianRange(int lo, int hi)
         {
             return RandomGaussian((hi + lo) / 2.0, Math.Abs(hi - lo) / 2.0);

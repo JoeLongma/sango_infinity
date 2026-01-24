@@ -9,7 +9,6 @@ namespace Sango.Game
     {
         public static bool Enabled = false;
 
-
         bool checkInNextFrame = false;
         public int EnabledForceId = 4;
         public TroopMissionBehaviour troopMissionBehaviour { get; set; }
@@ -18,6 +17,7 @@ namespace Sango.Game
 
         public bool waitForNextStep = false;
         public bool waitForNextTroop = false;
+
         public void Render()
         {
 
@@ -30,6 +30,7 @@ namespace Sango.Game
         }
         public bool waitForAIPrepare = false;
         public bool waitForTargetDirectPath = false;
+
         public void OnTroopAIStart(Troop troop, Scenario scenario)
         {
             if (troop.BelongForce.Id == EnabledForceId)
@@ -43,6 +44,7 @@ namespace Sango.Game
         {
             return waitForNextStep;
         }
+
         public bool WaitForShowAIPrepare()
         {
             if (!Enabled) return false;
@@ -61,6 +63,7 @@ namespace Sango.Game
 
             return waitForAIPrepare;
         }
+
         public void ExitShowAIPrepare()
         {
             if (!Enabled) return;
@@ -95,7 +98,6 @@ namespace Sango.Game
             MapRender.Instance.EndSetGridMask();
         }
 
-
         public bool WaitForTargetDirectPath()
         {
             if (!Enabled) return false;
@@ -112,7 +114,6 @@ namespace Sango.Game
             }
             return waitForTargetDirectPath;
         }
-
 
         public void ShowTargetDirectPath(List<Cell> moveRange, Troop troop)
         {
@@ -199,9 +200,5 @@ namespace Sango.Game
         public void Update()
         {
         }
-
-
-
     }
-
 }

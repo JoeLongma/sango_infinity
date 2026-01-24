@@ -3,7 +3,6 @@
 'Tank Framework
 '*******************************************************************
 */
-using DG.Tweening.Plugins.Core.PathCore;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -110,6 +109,7 @@ namespace Sango
             }
             return false;
         }
+
         /// <summary>
         /// e.g. Assets/Texture/11.png -> ${ContentRootPath}/Assets/Texture/11.png 
         /// or ${ModName}/Assets/Texture/11.png 

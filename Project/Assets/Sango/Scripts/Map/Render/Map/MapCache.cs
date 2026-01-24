@@ -6,6 +6,7 @@ namespace Sango.Render
         private T[] values;
         private int count;
         private int size;
+
         public MapCache(int size)
         {
             values = new T[size];
@@ -16,11 +17,13 @@ namespace Sango.Render
         public int Count { get { return count; } }
         public T[] Values { get { return values; } }
         public int Size { get { return size; } }
+
         public int Add(T t)
         {
             values[count++] = t;
             return count;
         }
+
         public void Change(int index, T t)
         {
             if (index < count)
@@ -31,10 +34,10 @@ namespace Sango.Render
         {
             count = 0;
         }
+
         public void Clear()
         {
             values = null;
         }
     }
-
 }

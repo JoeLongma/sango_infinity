@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
-using Sango;
-using System;
 
 namespace Sango.Loader
 {
@@ -12,10 +11,11 @@ namespace Sango.Loader
     {
         private Dictionary<string, WeakReference<UnityEngine.Object>> assetsMap = new Dictionary<string, WeakReference<UnityEngine.Object>>();
         Transform root;
+
         public AssetStore()
         {
-            GameObject go = new GameObject("AssetStore");
-            root = go.transform;
+            GameObject go = new GameObject("AssetStore 资源商店");   //创建 AssetStore 游戏对象
+            root = go.transform;                                     //设置 transform  为根对象
         }
 
         public UnityEngine.Object StoreAsset(string key, UnityEngine.Object obj)
@@ -53,6 +53,7 @@ namespace Sango.Loader
         {
             return GetAsset(key) as T;
         }
+
         public UnityEngine.Object GetAsset(string key)
         {
             WeakReference<UnityEngine.Object> assetRef;

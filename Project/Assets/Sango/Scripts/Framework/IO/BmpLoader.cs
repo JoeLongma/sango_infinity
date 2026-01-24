@@ -1,6 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+ï»¿using System;
 using System.IO;
 using UnityEngine;
 
@@ -68,7 +66,7 @@ namespace Sango.Data
             {
                 try
                 {
-                    Stream stream = System.IO.File.OpenRead(path);  // ´ò¿ªÎ»Í¼ÎÄ¼ş
+                    Stream stream = System.IO.File.OpenRead(path);  // æ‰“å¼€ä½å›¾æ–‡ä»¶
                     fileStream = stream;
 
                     byte[] buff = new byte[4];
@@ -103,7 +101,7 @@ namespace Sango.Data
 
             public void BeginRead()
             {
-                fileStream.Position = BmpInfo.BmpHeaderSize;  // Ìø¹ıÎÄ¼şÍ·ºÍĞÅÏ¢Í·
+                fileStream.Position = BmpInfo.BmpHeaderSize;  // è·³è¿‡æ–‡ä»¶å¤´å’Œä¿¡æ¯å¤´
             }
 
             public Color ReadColor()
@@ -148,12 +146,11 @@ namespace Sango.Data
             }
         }
 
-
         public static int[] LoadTextureIndex(string path)
         {
-            Stream stream = System.IO.File.OpenRead(path);  // ´ò¿ªÎ»Í¼ÎÄ¼ş
+            Stream stream = System.IO.File.OpenRead(path);  // æ‰“å¼€ä½å›¾æ–‡ä»¶
             BmpInfo bmpInfo = new BmpInfo(path);
-            stream.Position = BmpInfo.BmpHeaderSize;  // Ìø¹ıÎÄ¼şÍ·ºÍĞÅÏ¢Í·
+            stream.Position = BmpInfo.BmpHeaderSize;        // è·³è¿‡æ–‡ä»¶å¤´å’Œä¿¡æ¯å¤´
             int[] indexBytes = new int[bmpInfo.totalSize];
             for (int h = 0; h < bmpInfo.height; h++)
             {
@@ -183,9 +180,9 @@ namespace Sango.Data
 
         public static int[] LoadHeight(string path)
         {
-            Stream stream = System.IO.File.OpenRead(path);  // ´ò¿ªÎ»Í¼ÎÄ¼ş
+            Stream stream = System.IO.File.OpenRead(path);  // æ‰“å¼€ä½å›¾æ–‡ä»¶
             BmpInfo bmpInfo = new BmpInfo(path);
-            stream.Position = BmpInfo.BmpHeaderSize;  // Ìø¹ıÎÄ¼şÍ·ºÍĞÅÏ¢Í·
+            stream.Position = BmpInfo.BmpHeaderSize;        // è·³è¿‡æ–‡ä»¶å¤´å’Œä¿¡æ¯å¤´
             int[] indexBytes = new int[bmpInfo.totalSize];
             for (int h = 0; h < bmpInfo.height; h++)
             {
@@ -209,4 +206,3 @@ namespace Sango.Data
         }
     }
 }
-

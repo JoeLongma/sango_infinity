@@ -1,8 +1,4 @@
-﻿using Sango.Render;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using System;
 
 namespace Sango.Game
 {
@@ -267,9 +263,6 @@ namespace Sango.Game
         }
         public delegate int PersonEscapeProbablility_InTroopCall(Person person, Troop troop, Scenario scenario);
         public static PersonEscapeProbablility_InTroopCall PersonEscapeProbablility_InTroopOverride;
-
-
-        
+       
     }
-
 }

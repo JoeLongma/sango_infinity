@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-
-
-
 namespace Sango.Tools
 {
     public static class EditorUtility
@@ -20,7 +17,9 @@ namespace Sango.Tools
         {
             public bool hasDot = false;
         }
+
         static bool changed = false;
+
         static public Vector3 Vector3Field(Vector3 v)
         {
             GUILayout.BeginHorizontal();
@@ -148,6 +147,7 @@ namespace Sango.Tools
             GUILayout.EndHorizontal();
             return x;
         }
+
         static public string TextField(string v, string name, int width, int height)
         {
             GUILayout.BeginHorizontal();
@@ -199,7 +199,6 @@ namespace Sango.Tools
             return v;
         }
 
-
         static public float FloatField(float v, params GUILayoutOption[] options)
         {
             GUI.changed = false;
@@ -229,6 +228,7 @@ namespace Sango.Tools
             }
             return v;
         }
+
         static public float FloatField(UnityEngine.Rect position, float v)
         {
             GUI.changed = false;
@@ -470,7 +470,6 @@ namespace Sango.Tools
             }
         }
 
-
         /// <summary>
         /// 打开popup的选择界面
         /// </summary>
@@ -481,7 +480,6 @@ namespace Sango.Tools
             public bool hasopen;
             public string filter;
             public CustomPopupInfo info;
-
             public Vector2 scrollPosition;
 
             public void ShowGUI()
@@ -531,13 +529,11 @@ namespace Sango.Tools
             }
         }
 
-
         /// <summary>
         /// 自定义Popup的Style缓存可以有多个参数，不止是Rect，也可以自定义其他的
         /// </summary>
         public class CustomPopupTempStyle
         {
-
             public UnityEngine.Rect rect;
 
             static Dictionary<int, CustomPopupTempStyle> temp = new();

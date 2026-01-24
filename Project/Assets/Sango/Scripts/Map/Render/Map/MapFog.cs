@@ -3,7 +3,9 @@ using UnityEngine;
 
 namespace Sango.Render
 {
-    // 雾效
+    /// <summary>
+    /// 地图雾效
+    /// </summary>
     public class MapFog : MapProperty
     {
         public Color[] fog_color = { new Color(1, 1, 1), new Color(1, 1, 1), new Color(1, 1, 1), new Color(1, 1, 1) };
@@ -16,6 +18,7 @@ namespace Sango.Render
         {
 
         }
+
         public override void Init()
         {
             base.Init();
@@ -34,6 +37,7 @@ namespace Sango.Render
             }
 
         }
+
         internal override void OnLoad(int versionCode, BinaryReader reader)
         {
             for (int i = 0; i < fog_color.Length; i++) {
@@ -53,6 +57,7 @@ namespace Sango.Render
             Shader.SetGlobalFloat("_MixEnd", fog_end[curSeason]);
             Shader.SetGlobalFloat("_MixPower", fog_density[curSeason]);
         }
+
         public Color fogColor
         {
             get { return fog_color[curSeason]; }
@@ -62,6 +67,7 @@ namespace Sango.Render
                 Shader.SetGlobalColor("_FogColor", fog_color[curSeason]);
             }
         }
+
         public float fogStart
         {
             get { return fog_start[curSeason]; }
@@ -71,6 +77,7 @@ namespace Sango.Render
                 Shader.SetGlobalFloat("_MixBegin", fog_start[curSeason]);
             }
         }
+
         public float fogEnd
         {
             get { return fog_end[curSeason]; }
@@ -80,6 +87,7 @@ namespace Sango.Render
                 Shader.SetGlobalFloat("_MixEnd", fog_end[curSeason]);
             }
         }
+
         public float fogDensity
         {
             get { return fog_density[curSeason]; }
@@ -89,6 +97,7 @@ namespace Sango.Render
                 Shader.SetGlobalFloat("_MixPower", fog_density[curSeason]);
             }
         }
+		
         public bool fogEnabled
         {
             get { return fogAlpha > 0.0001f; }
@@ -109,6 +118,5 @@ namespace Sango.Render
             base.Clear();
             Shader.SetGlobalColor("_FogColor", Color.clear);
         }
-
     }
 }

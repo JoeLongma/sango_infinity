@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Sango.Loader
 {
@@ -16,7 +15,7 @@ namespace Sango.Loader
             }
         }
         
-       static public Material LoadMaterial(string matname, bool share = false)
+        static public Material LoadMaterial(string matname, bool share = false)
         {
             CheckHelper();
 
@@ -24,9 +23,9 @@ namespace Sango.Loader
             if(obj != null) {
                 if (share)
                     return obj;
-
                 return GameObject.Instantiate(obj);
             }
+
             Material mat = null;
             // 以shader来创建材质球
             if(matname.EndsWith(".shader")) {
@@ -40,6 +39,5 @@ namespace Sango.Loader
 
             return null;
         }
-
     }
 }

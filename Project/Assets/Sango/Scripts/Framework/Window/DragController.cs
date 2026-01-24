@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -49,4 +47,3 @@ public class DragController : MonoBehaviour, IPointerDownHandler, IDragHandler, 
         draging = false;
     }
 }
-

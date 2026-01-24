@@ -1,5 +1,4 @@
-﻿
-using Sango.Game;
+﻿using Sango.Game;
 using Sango.Loader;
 using System;
 using System.IO;
@@ -134,6 +133,7 @@ namespace Sango.Render
                 terrainOutlineMat.SetFloat("_OutlineWidth", _outlineWidth);
             }
         }
+
         public bool outLineShow
         {
             get { return _outlineShow; }
@@ -217,6 +217,7 @@ namespace Sango.Render
         {
             mapModels.AddStatic(obj);
         }
+
         public void RemoveDynamic(IMapManageObject obj)
         {
             mapModels.RemoveDynamic(obj);
@@ -233,6 +234,7 @@ namespace Sango.Render
             pos.y = mapGrid.GetGridHeight(c, r);
             return pos;
         }
+
         public Vector2Int PositionToCoords(float x, float y)
         {
             return mapGrid.PositionToCoords(x, y);
@@ -343,6 +345,7 @@ namespace Sango.Render
 
             OnMapLoaded?.Invoke();
         }
+
         public void SaveMap(string filename)
         {
             FileStream fs = new FileStream(filename, FileMode.Create, FileAccess.ReadWrite);
@@ -523,6 +526,7 @@ namespace Sango.Render
         {
             mapGrid.SetRangMaskColor(x, y, c);
         }
+
         public void EndSetRangeMask()
         {
             mapGrid.ApplyRangMask();
@@ -537,6 +541,7 @@ namespace Sango.Render
         {
             return Raycast(ray.origin, ray.direction, out hitPoint);
         }
+
         public static bool Raycast(Vector3 origin, Vector3 direction, out Vector3 hitPoint)
         {
             VertexData[][] vertexDatas = Instance.mapData.vertexDatas;

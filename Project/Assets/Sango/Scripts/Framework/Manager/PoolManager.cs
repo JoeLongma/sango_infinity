@@ -1,6 +1,4 @@
-﻿
-
-using Sango.Loader;
+﻿using Sango.Loader;
 using System.Collections.Generic;
 using UnityEngine;
 

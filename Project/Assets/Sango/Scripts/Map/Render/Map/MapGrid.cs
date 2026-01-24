@@ -1,5 +1,4 @@
-﻿
-using Sango.Game;
+﻿using Sango.Game;
 using Sango.Tools;
 using System.Collections.Generic;
 using System.IO;
@@ -7,11 +6,12 @@ using UnityEngine;
 
 namespace Sango.Render
 {
-
     public class MapGrid : MapProperty
     {
         /// 我们的地图是一个odd-q排列的地格
         public Sango.Hexagon.HexWorld hexWorld;
+        public int WorldPanel = 40000;
+        public int WorldRect = 200;
         public Vector2Int bounds;
         public int gridSize = -1;
         public int gridVertexCount;
@@ -20,9 +20,9 @@ namespace Sango.Render
         private int quadSize = 20;
         public Texture2D GridMaskTexture;   // a为是否显示r红色格子g绿色格子b蓝色格子
         public Texture2D RangeMaskTexture;  // a为是否显示r为当前选择地格g为我方范围b为敌方范围
-        public Texture2D DarkMaskTexture;  // a为是否显示
-
+        public Texture2D DarkMaskTexture;   // a为是否显示
         private GridData[][] gridDatas;
+
         public enum GridState : int
         {
             None = 0,
@@ -64,17 +64,18 @@ namespace Sango.Render
             }
             public void OnSave(BinaryWriter writer)
             {
-                writer.Write(tType);
-                writer.Write(areaId);
-                writer.Write(lpB);
-                writer.Write(trap);
-                writer.Write(dir);
-                writer.Write(interior);
-                writer.Write(defence);
-                writer.Write(thief);
-                writer.Write(flood);
-                writer.Write(fire);
-                writer.Write(ruins);
+                writer.Write(tType);        //terrainTypeId 地形
+                writer.Write(areaId);       //areaId        区域
+                writer.Write(lpB);          //lpB           地格上玩家的加层或增益效果？？local player Bonus
+                writer.Write(trap);         //trap          陷阱
+                writer.Write(dir);          //dir           方向
+                writer.Write(interior);     //interior      内政
+                writer.Write(defence);      //def           防守
+                writer.Write(thief);        //thief         贼
+                writer.Write(flood);        //water         洪水
+                writer.Write(fire);         //fire          火焰
+                writer.Write(ruins);        //ruins         庙，遗迹
+                //坐标(coords_x 坐标x， coords_y 坐标y)
             }
         }
 
@@ -96,14 +97,16 @@ namespace Sango.Render
             
             public San11GridData san11GridData;
 #endif
+
             public GridData()
             {
                 //san11GridData = new San11GridData()
                 //{
-                //    tType = 31,
-                //    dir = 6
+                //    tType = 31,     // 地形类型  1草地-20小径
+                //    dir = 6         // 方向标识  6无
                 //};
             }
+
             public void SetGridState(GridState state, bool b)
             {
                 int stateValue = (1 << (int)state);
@@ -120,6 +123,7 @@ namespace Sango.Render
                     terrainState ^= (1 << (int)state);
                 }
             }
+
             public bool HasGridState(GridState state)
             {
                 int stateValue = (1 << (int)state);
@@ -155,6 +159,7 @@ namespace Sango.Render
                     }
                 }
             }
+
             public void OnSave(BinaryWriter writer)
             {
                 writer.Write(terrainType);
@@ -168,6 +173,7 @@ namespace Sango.Render
         {
             hexWorld = new Hexagon.HexWorld(new Hexagon.Point(gridSize, gridSize), new Hexagon.Point(0, 0));
         }
+
         public override void Init()
         {
             base.Init();
@@ -177,6 +183,7 @@ namespace Sango.Render
             ShowGrid(true);
             SetDarkMask(false);
         }
+
         public override void Clear()
         {
             base.Clear();
@@ -247,9 +254,6 @@ namespace Sango.Render
             Shader.SetGlobalTexture("_DarkMask", DarkMaskTexture);
             Shader.SetGlobalFloat("_GridSize", gridSize);
 
-
-
-
             gridDatas = new GridData[bounds.x][];
             for (int x = 0; x < gridDatas.Length; ++x)
             {
@@ -264,8 +268,8 @@ namespace Sango.Render
                 }
                 gridDatas[x] = yTable;
             }
-
         }
+
         public void ClearGridData()
         {
             for (int x = 0; x < gridDatas.Length; ++x)
@@ -281,6 +285,7 @@ namespace Sango.Render
                 }
             }
         }
+
         public void SetGridTexture(string name)
         {
             gridTextureName = name;
@@ -289,18 +294,20 @@ namespace Sango.Render
             tex.mipMapBias = -1110.4f;
             Shader.SetGlobalTexture("_GridTex", gridTexture);
         }
+
         //public void LoadFrom311GridData(string filename)
         //{
         //    FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
         //    BinaryReader binr = new BinaryReader(fs);
         //    binr.ReadBytes(8);
-        //    for (int i = 0; i < 40000; ++i) {
-        //        int y = i % 200;
-        //        int x = i / 200;
+        //    for (int i = 0; i < WorldPanel; ++i) {
+        //        int y = i % WorldRect;
+        //        int x = i / WorldRect;
         //        GridData data = gridDatas[x + 28][y + 28];
         //        data.san11GridData.OnLoad(0, binr);
         //    }
         //}
+
         public void SaveTo311GridData(string filename)
         {
 #if UNITY_EDITOR
@@ -315,10 +322,10 @@ namespace Sango.Render
             binr.Write('0');
             binr.Write('0');
             binr.Write('8');
-            for (int i = 0; i < 40000; ++i)
+            for (int i = 0; i < WorldPanel; ++i)
             {
-                int y = i % 200;
-                int x = i / 200;
+                int y = i % WorldRect;
+                int x = i / WorldRect;
                 GridData data = gridDatas[x + 28][y + 28];
                 data.san11GridData.OnSave(binr);
             }
@@ -331,10 +338,10 @@ namespace Sango.Render
             FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
             BinaryReader binr = new BinaryReader(fs);
             binr.ReadBytes(8);
-            for (int i = 0; i < 40000; ++i)
+            for (int i = 0; i < WorldPanel; ++i)
             {
-                int y = i % 200;
-                int x = i / 200;
+                int y = i % WorldRect;
+                int x = i / WorldRect;
                 GridData data = gridDatas[x + 28][y + 28];
                 San11GridData sanData = new San11GridData();
                 sanData.OnLoad(0, binr);
@@ -428,14 +435,22 @@ namespace Sango.Render
             SetGridTexture(string.IsNullOrEmpty(gridTexName) ? "grid" : gridTexName);
             ApplyGridMask();
         }
+
         public void ShowGrid(bool b)
         {
             Shader.SetGlobalFloat("_GridFlag", b ? 1 : 0);
         }
+
         public void SetDarkMask(bool b)
         {
             Shader.SetGlobalFloat("_DarkFlag", b ? 1 : 0);
         }
+
+        public void ApplyGridMask()
+        {
+            GridMaskTexture.Apply(false);
+        }
+
         public void SetGridEnable(int x, int y, bool b, bool init = false)
         {
             y = GridMaskTexture.height - y - 1;
@@ -450,6 +465,7 @@ namespace Sango.Render
                 GridMaskTexture.SetPixel(x, y, b ? Color.black : Color.clear);
             }
         }
+
         public bool GetMovable(GridData data)
         {
             Game.TerrainType terrainType = Game.GameData.Instance.ScenarioCommonData.TerrainTypes.Get(data.terrainType);
@@ -477,6 +493,7 @@ namespace Sango.Render
             c.a = b ? 1 : 0;
             GridMaskTexture.SetPixel(x, y, c);
         }
+
         public void EndUpdateMovable()
         {
             ApplyGridMask();
@@ -488,29 +505,30 @@ namespace Sango.Render
             data.terrainType = (byte)t;
             gridDatas[x][y] = data;
         }
+
         public void SetGridMaskColor(int x, int y, Color c)
         {
             y = GridMaskTexture.height - y - 1;
             GridMaskTexture.SetPixel(x, y, c);
         }
-        public void ApplyGridMask()
-        {
-            GridMaskTexture.Apply(false);
-        }
+		
         public void SetRangMaskColor(int x, int y, Color c)
         {
             y = RangeMaskTexture.height - y - 1;
             RangeMaskTexture.SetPixel(x, y, c);
         }
+
         public void ApplyRangMask()
         {
             RangeMaskTexture.Apply(false);
         }
+		
         public void SetDarkMaskColor(int x, int y, Color c)
         {
             y = DarkMaskTexture.height - y - 1;
             DarkMaskTexture.SetPixel(x, y, c);
         }
+		
         public void ApplyDarkMask()
         {
             DarkMaskTexture.Apply(false);
@@ -520,6 +538,7 @@ namespace Sango.Render
         {
             return gridDatas[x][y];
         }
+
         public float GetGridHeight(int x, int y)
         {
             int xCount = gridVertexCount * x + gridVertexCount / 2;
@@ -538,6 +557,7 @@ namespace Sango.Render
         {
             return hexWorld.CoordsToPosition(c, r);
         }
+
         public Vector2Int PositionToCoords(float x, float y)
         {
             int c = Mathf.FloorToInt((x + gridSize / 2) / gridSize);

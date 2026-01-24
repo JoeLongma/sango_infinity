@@ -9,6 +9,7 @@ namespace Sango.Sprite
         public SpriteRenderer spriteRenderer;
         public float speed;
         private int index = 0;
+
         private void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();

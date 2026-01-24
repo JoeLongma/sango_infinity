@@ -12,11 +12,11 @@ namespace Sango.Render
         public Color[] shadow_color = { new Color(0.5f, 0.5f, 0.5f), new Color(0.5f, 0.5f, 0.5f), new Color(0.5f, 0.5f, 0.5f), new Color(0.5f, 0.5f, 0.5f) };
         public float[] shadow_strength = { 1, 1, 1, 1 };
 
-
         private Light light;
 
         public MapLight(MapRender map) : base(map)
         {
+
         }
 
         public override void Init()
@@ -54,8 +54,8 @@ namespace Sango.Render
                 writer.Write(shadow_color[i].b);
                 writer.Write(shadow_strength[i]);
             }
-
         }
+
         internal override void OnLoad(int versionCode, BinaryReader reader)
         {
             for (int i = 0; i < light_direction.Length; ++i)
@@ -66,7 +66,6 @@ namespace Sango.Render
                 shadow_color[i] = new Color((float)reader.ReadSingle(), (float)reader.ReadSingle(), (float)reader.ReadSingle());
                 shadow_strength[i] = reader.ReadSingle();
             }
-
             UpdateRender();
         }
 
@@ -74,6 +73,7 @@ namespace Sango.Render
         {
             if (light == null) return;
             //light.transform.rotation = Quaternion.Euler(light_direction[curSeason]);
+            // 更新光源颜色和强度
             light.color = light_color[curSeason];
             //light.intensity = light_intensity[curSeason];
             //light.intensity = 1.2f;
@@ -91,6 +91,7 @@ namespace Sango.Render
                 light.transform.rotation = Quaternion.Euler(light_direction[curSeason]);
             }
         }
+
         public Color lightColor
         {
             get { return light_color[curSeason]; }
@@ -101,6 +102,7 @@ namespace Sango.Render
                 light.color = light_color[curSeason];
             }
         }
+
         public float lightIntensity
         {
             get { return light_intensity[curSeason]; }
@@ -111,6 +113,7 @@ namespace Sango.Render
                 light.intensity = light_intensity[curSeason];
             }
         }
+
         public Color shadowColor
         {
             get { return shadow_color[curSeason]; }
@@ -120,6 +123,7 @@ namespace Sango.Render
                 Shader.SetGlobalColor("_ShadowColor", shadow_color[curSeason]);
             }
         }
+
         public float shadowStrength
         {
             get { return shadow_strength[curSeason]; }
@@ -129,6 +133,5 @@ namespace Sango.Render
                 Shader.SetGlobalFloat("_ShadowStrength", shadow_strength[curSeason]);
             }
         }
-
     }
 }

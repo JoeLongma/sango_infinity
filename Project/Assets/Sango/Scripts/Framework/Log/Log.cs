@@ -35,7 +35,7 @@ namespace Sango
         /// <summary>
         /// 日志输出标题颜色,与LogType对应
         /// </summary>
-        static string[] colorArray = { "",
+        static string[] colorArray = {   "",
                                          "yellow",      //Assets
                                          "#99ff00",     //Network
                                          "#33ddff",     //Object
@@ -45,9 +45,8 @@ namespace Sango
                                          "#00ffff",     //Sound
                                          "#ff8888",     //Game
                                          "pink",        //Download
-                                         "white",        //Other
+                                         "white",       //Other
                                      };
-
 
         private static string format(object message, LogType t)
         {
@@ -65,6 +64,7 @@ namespace Sango
             else
                 Debug.Log(format(message, t));
         }
+
         public static void Print(object message)
         {
             Print(message, LogType.None);
@@ -77,6 +77,7 @@ namespace Sango
             else
                 Debug.LogError(format(message, t));
         }
+
         public static void Error(object message)
         {
             Error(message, LogType.None);
@@ -89,10 +90,10 @@ namespace Sango
             else
                 Debug.LogWarning(format(message, t));
         }
+
         public static void Warning(object message)
         {
             Warning(message, LogType.None);
         }
-
     }
 }

@@ -4,10 +4,7 @@
 '*******************************************************************
 */
 using System;
-using System.Collections;
 using System.IO;
-using UnityEngine.SocialPlatforms;
-using UnityEngine.Windows;
 
 namespace Sango
 {
@@ -131,6 +128,7 @@ namespace Sango
                 action(file);
             }
         }
+
         static public void EnumDirectories(string path, string searchPattern, SearchOption searchOption, Action<string> action)
         {
             if (!Directory.Exists(path))

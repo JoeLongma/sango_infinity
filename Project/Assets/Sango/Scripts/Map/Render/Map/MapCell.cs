@@ -18,7 +18,10 @@ namespace Sango.Render
         public Mesh[] lodMesh;
         public GameObject gameObject;
         public Transform transform => gameObject.transform;
-
+		
+        /// <summary>
+        /// 当前的细节层次级别（LOD级别）
+        /// </summary>
 #if UNITY_ANDROID || UNITY_IPHONE
         public int lod = 1;
 #else
@@ -153,6 +156,7 @@ namespace Sango.Render
                 lmdCache.normalCount = maxCount;
                 lmdCache.triangleCount = maxCount * 6;
             }
+
             threadLoadStart = false;
             int maxLayer = map.mapLayer.layerDatas.Length;
             for (int i = 0; i < maxLayer; ++i)
@@ -166,6 +170,7 @@ namespace Sango.Render
             threadBeginLayer = maxLayer;
             OnLoadDone();
         }
+
         void _PrepareDatas(object stateInfo)
         {
             threadLoadDone = false;
@@ -247,7 +252,6 @@ namespace Sango.Render
                     }
                 }
             }
-
         }
 
         public void AsyncPrepareDatas()
@@ -354,8 +358,7 @@ namespace Sango.Render
                 {
                     meshCollider[layer].sharedMesh = mesh[layer];
                 }
-
-
+                // 如果MeshRenderer被禁用，则根据可见性启用它
                 if (r.enabled != visible)
                     r.enabled = visible;
                 //meshRenderer[layer].gameObject.SetActive(true);
@@ -375,7 +378,6 @@ namespace Sango.Render
                     //meshRenderer[layer].gameObject.SetActive(false);
                 }
             }
-
         }
 
         void AddVertex(ref MapData.VertexData vtex, int x, int y, int layer, int lowestLayer, bool layerIsWater)
@@ -395,7 +397,6 @@ namespace Sango.Render
             {
                 lmdCache.vertexCache.Add(vtex.waterPosition - position);
                 lmdCache.normalCache.Add(Vector3.up);
-
             }
             else
             {
@@ -434,7 +435,6 @@ namespace Sango.Render
 
                     int xL = x + lodL;
                     int yL = y + lodL;
-
 
                     MapData.VertexData start0 = vertexMap[x][y];
                     MapData.VertexData start1 = vertexMap[xL][y];
@@ -592,6 +592,7 @@ namespace Sango.Render
         {
             return worldBounds.Overlaps(rect);
         }
+
         public void OnClick()
         {
             throw new NotImplementedException();
@@ -609,6 +610,7 @@ namespace Sango.Render
 
         public void SetParent(Transform parent) { gameObject.transform.SetParent(parent); }
         public void SetParent(Transform parent, bool worldPositionStays) { gameObject.transform.SetParent(parent, worldPositionStays); }
+       
         public GameObject GetGameObject()
         {
             return gameObject;

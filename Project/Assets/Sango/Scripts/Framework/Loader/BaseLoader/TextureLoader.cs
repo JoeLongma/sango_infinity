@@ -1,15 +1,14 @@
-﻿
-using System;
+﻿using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
-using Sango;
 
 namespace Sango.Loader
 {
     public class TextureLoader : ObjectLoader
     {
         private static TextureLoader _instance;
+
         public static TextureLoader Instance
         {
             get
@@ -32,7 +31,6 @@ namespace Sango.Loader
                     loadData.rsObject = finalObj;
                     loadData.Call();
                 }
-
             }
         }
 
@@ -87,6 +85,7 @@ namespace Sango.Loader
             Sango.Game.Game.Instance.StartCoroutine(LoadImage(filePath, OnLoaded, loadData));
 
         }
+       
         public static void LoadFromFile(string filePath, object customData, OnObjectLoaded onLoadedFunc, bool textureNeedCompress = true, bool needMipmap = true)
         {
             LoadFromFile(filePath, customData, textureNeedCompress, needMipmap, onLoadedFunc);
@@ -107,6 +106,7 @@ namespace Sango.Loader
             DownloadHandlerTexture downloadTexture = new DownloadHandlerTexture(true);
             uwr.downloadHandler = downloadTexture;
             yield return uwr.SendWebRequest();
+
             if (string.IsNullOrEmpty(uwr.error))
             {
                 Texture2D t = downloadTexture.texture;
