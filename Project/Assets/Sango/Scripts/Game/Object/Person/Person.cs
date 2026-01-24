@@ -750,7 +750,8 @@ namespace Sango.Game
 #endif
                 if (!IsWild)
                 {
-                    BelongCity.allPersons.Remove(this);
+                    if(BelongCity.allPersons.Contains(this))
+                        BelongCity.allPersons.Remove(this);
                     BelongCity.CheckIfLoseLeader(this);
                     city.allPersons.Add(this);
                     BelongCity = city;
@@ -930,7 +931,8 @@ namespace Sango.Game
             }
             else
             {
-                BelongCity.allPersons.Remove(this);
+                if (BelongCity.allPersons.Contains(this))
+                    BelongCity.allPersons.Remove(this);
                 // 下野
                 if (BelongTroop != null)
                 {

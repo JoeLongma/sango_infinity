@@ -132,9 +132,12 @@ namespace Sango.Game
             canResearchTechniqueList.Clear();
             scenario.CommonData.Techniques.ForEach(x =>
             {
-                if (x.CanResearch(this))
+                if(x.Id != ResearchTechnique)
                 {
-                    canResearchTechniqueList.Add(x);
+                    if (x.CanResearch(this))
+                    {
+                        canResearchTechniqueList.Add(x);
+                    }
                 }
             });
         }

@@ -21,9 +21,16 @@ namespace Sango.Game
         [JsonProperty] public int buildNumLimit;
         [JsonProperty] public int goldGain;
         [JsonProperty] public int foodGain;
+        [JsonProperty] public int emptyProduct;
         [JsonProperty] public int product;
         [JsonProperty] public int productCost;
-        [JsonProperty] public int productFactor;
+
+        /// <summary>
+        /// 工作类型
+        /// </summary>
+        [JsonProperty] public int jobId;
+
+
         [JsonProperty] public int populationGain;
         [JsonProperty] public int cost;
         [JsonProperty] public byte radius;

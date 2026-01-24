@@ -21,7 +21,7 @@ namespace Sango.Game.Render.UI
             for (int i = 0; i < worker.Length; i++)
             {
                 UITextField uIWorker = worker[i];
-                uIWorker.gameObject.SetActive((!c.isComplate && i < c.Workers.Count) || i < c.BuildingType.workerLimit);
+                uIWorker.gameObject.SetActive((c.Workers != null && !c.isComplate && i < c.Workers.Count) || i < c.BuildingType.workerLimit);
                 if (c.Workers != null && i < c.Workers.Count)
                 {
                     uIWorker.text = c.Workers[i].Name;

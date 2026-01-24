@@ -2,6 +2,7 @@
 using Sango.Game.Tools;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Sango.Game
 {
@@ -152,6 +153,56 @@ namespace Sango.Game
             }
         }
 
+        void AutoSetWorker(City city, List<PBuilding> pBuildings)
+        {
+            City belongCity = city;
+            if (belongCity == null) return;
+
+            for (int i = 0; i < pBuildings.Count; i++)
+            {
+                Building target = pBuildings[i].building;
+                if (target.Workers != null)
+                {
+                    target.Workers.ForEach((person) =>
+                    {
+                        person.workingBuilding = null;
+                    });
+                    target.Workers.Clear();
+                }
+            }
+
+            List<Person> persons = new List<Person>();
+            for (int i = 0; i < belongCity.FreePersonCount; i++)
+            {
+                Person person = belongCity.freePersons[i];
+                if (person == null) continue;
+                if (person.workingBuilding != null)
+                    continue;
+                persons.Add(person);
+            }
+
+            for (int j = 0; j < 3; j++)
+            {
+                for (int i = 0; i < pBuildings.Count; i++)
+                {
+                    Building target = pBuildings[i].building;
+                    BuildingType targetBuildingType = target.BuildingType;
+                    if (target.Workers == null)
+                        target.Workers = new SangoObjectList<Person>();
+                    if (persons.Count > 0 && target.Workers.Count < targetBuildingType.workerLimit)
+                    {
+                        persons.Sort((a, b) => -a.GetAttribute(targetBuildingType.effectAttrType).CompareTo(b.GetAttribute(targetBuildingType.effectAttrType)));
+
+                        Person person = persons[0];
+                        target.Workers.Add(person);
+                        persons.RemoveAt(0);
+                        person.workingBuilding = target;
+                    }
+                }
+            }
+        }
+
+
 
         int GetCityLeaderInfuse(City city, int effectAttrType)
         {
@@ -163,6 +214,7 @@ namespace Sango.Game
             return 100 + (int)((Mathf.Pow(Mathf.Max(40, leaderAttrValue), 1.5f) / 10 - 25) / 3f);
         }
 
+        List<Person> worker_list = new List<Person>();
         /// <summary>
         /// 在回合末计算产出
         /// </summary>
@@ -170,6 +222,9 @@ namespace Sango.Game
         /// <param name="scenario"></param>
         void OnBuildingTurnEnd(Building building, Scenario scenario)
         {
+            if (!building.IsIntorBuilding())
+                return;
+
             City belongCity = building.BelongCity;
             if (belongCity == null) return;
             if (!building.isComplate) return;
@@ -177,6 +232,7 @@ namespace Sango.Game
 
             // 计算太守对于收入的影响
             int leader_factor = GetCityLeaderInfuse(belongCity, buildingType.effectAttrType);
+            worker_list.Clear();
 
             int person_factor = 100;
             int index = 1;
@@ -188,24 +244,29 @@ namespace Sango.Game
                     Person person = null;
                     if (i < building.Workers.Count)
                         person = building.Workers.Get(i);
-                    if (person != null && person.IsFree)
+                    if (person != null && person.IsFree && !person.ActionOver)
                     {
+                        worker_list.Add(person);
                         hasWorker = true;
-                        person_factor += (int)(Mathf.Pow(Mathf.Max(40, person.GetAttribute(buildingType.effectAttrType)), 0.5f) * 100 / (4 * index));
+                        person_factor += (int)(Mathf.Pow(Mathf.Max(40, person.GetAttribute(buildingType.effectAttrType)), 0.5f) * 100 / (8 * index));
                         index++;
                     }
                 }
             }
 
-            int totalFactor = leader_factor * person_factor;
+            Person[] personArray = worker_list.ToArray();
 
+            int totalFactor = leader_factor * person_factor;
+            int jobId = buildingType.jobId;
+            JobType jobType = Scenario.Cur.CommonData.JobTypes.Get(jobId);
             GameUtility.InitJobFeature(building.Workers, belongCity, building);
+            Tools.OverrideData<int> overrideData = null;
 
             // 建筑累积收益
             if (buildingType.foodGain > 0)
             {
                 int value = buildingType.foodGain * totalFactor / 10000;
-                Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(value);
+                overrideData = GameUtility.IntOverrideData.Set(value);
                 GameEvent.OnBuildingCalculateFoodGain?.Invoke(building, overrideData);
                 building.AccumulatedFood += overrideData.Value;
             }
@@ -213,7 +274,7 @@ namespace Sango.Game
             if (buildingType.goldGain > 0)
             {
                 int value = buildingType.goldGain * totalFactor / 10000;
-                Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(value);
+                overrideData = GameUtility.IntOverrideData.Set(value);
                 GameEvent.OnBuildingCalculateGoldGain?.Invoke(building, overrideData);
                 building.AccumulatedGold += overrideData.Value;
             }
@@ -221,29 +282,101 @@ namespace Sango.Game
             if (buildingType.populationGain > 0)
             {
                 int value = buildingType.populationGain * totalFactor / 10000;
-                Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(value);
+                overrideData = GameUtility.IntOverrideData.Set(value);
                 GameEvent.OnBuildingCalculatePopulationGain?.Invoke(building, overrideData);
                 building.AccumulatedPopulation += overrideData.Value;
             }
 
+            int productCost = buildingType.productCost;
+            int techniquePointGain = jobType.tpGain;
+            int meritGain = jobType.meritGain;
+            if (hasWorker)
+            {
+                // 计算工作消耗
+                overrideData = GameUtility.IntOverrideData.Set(productCost);
+                GameEvent.OnCityCheckJobCost?.Invoke(belongCity, jobId, personArray, overrideData);
+                productCost = overrideData.Value;
+
+                // 计算技巧值获取
+                overrideData.Value = techniquePointGain;
+                GameEvent.OnCityJobGainTechniquePoint?.Invoke(belongCity, jobId, personArray, overrideData);
+                techniquePointGain = overrideData.Value;
+
+                // 计算经验获取
+                overrideData.Value = meritGain;
+                GameEvent.OnCityJobGainMerit?.Invoke(belongCity, jobId, personArray, overrideData);
+                techniquePointGain = overrideData.Value;
+
+                // 经验获取
+                for (int i = 0; i < personArray.Length; i++)
+                {
+                    Person person = personArray[i];
+                    if (person == null) continue;
+                    person.merit += meritGain;
+                    person.GainExp(meritGain);
+                    person.ActionOver = true;
+                }
+
+                belongCity.BelongForce.GainTechniquePoint(techniquePointGain);
+            }
+
             if (buildingType.product > 0)
             {
-                if (hasWorker && belongCity.gold > buildingType.productCost )
+                if (hasWorker && belongCity.gold > productCost)
                 {
-                    belongCity.gold -= buildingType.productCost;
-                    int value = buildingType.product * buildingType.productFactor * totalFactor / 10000;
-                    Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(value);
+                    // 计算建筑实际产出
+                    int product = buildingType.product;
+                    overrideData = GameUtility.IntOverrideData.Set(product);
                     GameEvent.OnBuildingCalculateProduct?.Invoke(building, overrideData);
-                    building.AccumulatedProduct += overrideData.Value;
+                    product = overrideData.Value;
+
+                    // 计算单独产出逻辑
+                    switch (buildingType.kind)
+                    {
+                        case (int)BuildingKindType.Barracks:
+                            {
+                                int value = product * totalFactor / 10000;
+                                overrideData = GameUtility.IntOverrideData.Set(value);
+                                GameEvent.OnCityJobResult?.Invoke(belongCity, jobId, personArray, overrideData);
+
+                                // 治安对征兵的影响
+                                overrideData.Value = (int)(overrideData.Value * (1f - Mathf.Max(0, (100 - belongCity.security)) * scenario.Variables.securityInfluenceRecruitTroops));
+                                // 额外降低治安
+                                int s = -GameRandom.Range(2, 5);
+                                belongCity.AddSecurity(s);
+                                building.Render?.ShowInfo(s, (int)InfoType.Security);
+                                belongCity.morale = (belongCity.troops * belongCity.morale + overrideData.Value * 30) / (belongCity.troops + overrideData.Value);
+                                building.AccumulatedProduct += overrideData.Value;
+
+                            }
+                            break;
+                        default:
+                            {
+                                int value = product * totalFactor / 10000;
+                                overrideData = GameUtility.IntOverrideData.Set(value);
+                                GameEvent.OnCityJobResult?.Invoke(belongCity, jobId, personArray, overrideData);
+                                building.AccumulatedProduct += overrideData.Value;
+                            }
+                            break;
+                    }
+
+                    if (productCost > 0)
+                    {
+                        belongCity.gold -= buildingType.productCost;
+                        building.Render?.ShowInfo(-buildingType.productCost, (int)InfoType.Gold);
+                    }
                 }
                 else
                 {
-                    int value = buildingType.product * leader_factor / 100;
-                    Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(value);
+                    // 闲置产出
+                    int value = buildingType.emptyProduct * leader_factor / 100;
+                    overrideData = GameUtility.IntOverrideData.Set(value);
                     GameEvent.OnBuildingCalculateProduct?.Invoke(building, overrideData);
                     building.AccumulatedProduct += overrideData.Value;
                 }
             }
+
+            GameUtility.ClearJobFeature();
         }
 
         /// <summary>
@@ -286,12 +419,19 @@ namespace Sango.Game
             // 计算太守对于收入的影响
             int leader_factor = GetCityLeaderInfuse(city, (int)AttributeType.Politics);
             int totalValue = city.BaseGainGold * leader_factor / 100;
+            //Sango.Log.Error($"太守P:{leader_factor}, city.BaseGainGold{city.BaseGainGold}, t:{totalValue}");
             city.allBuildings.ForEach(building =>
             {
-                totalValue += building.AccumulatedGold;
-                building.AccumulatedGold = 0;
+
+                if(building.AccumulatedGold > 0)
+                {
+                    totalValue += building.AccumulatedGold;
+                    //Sango.Log.Error($"建筑:{building.Name}, AccumulatedGold{building.AccumulatedGold}, t:{totalValue}");
+                    building.AccumulatedGold = 0;
+                }
             });
 
+            //Sango.Log.Error($"all: t:{totalValue}");
             //totalFoodt = GameRandom.Random(totalFood, 0.05f);
             city.AddGold(totalValue);
 
@@ -329,7 +469,7 @@ namespace Sango.Game
             city.allPersons.ForEach((person) => { person.workingBuilding = null; });
 
             float targetGold = 5000f;
-            float targetFood = city.troops * 2f;
+            float targetFood = city.troops * 2.5f;
             float targetTroop = city.food / 2f;
             float targetItemNumber = city.troops * 1.2f;
             float targetHorseNumber = city.troops;
@@ -378,7 +518,7 @@ namespace Sango.Game
                         break;
                     case (int)BuildingKindType.BlacksmithShop:
                         {
-                            if (itemP < 1)
+                            if (goldP > 1 || itemP < 1)
                             {
                                 pBuildings.Add(new PBuilding() { p = itemP, building = building });
                                 // 设置产出
@@ -392,27 +532,27 @@ namespace Sango.Game
                                 });
 
                                 int sumTotal = levelTotal[0] + levelTotal[1] + levelTotal[2];
+
+                                for (int itemTypeId = 2; itemTypeId <= 4; itemTypeId++)
+                                {
+                                    int itemNum = city.itemStore.GetNumber(itemTypeId);
+                                    int destNum = totalWeaponNum * levelTotal[itemTypeId - 2] / sumTotal;
+                                    levelTotal[itemTypeId - 2] = Mathf.Max(1, (destNum - itemNum) / 100);
+                                }
+
                                 int targetIndex = GameRandom.RandomWeightIndex(levelTotal);
                                 building.ProductItemId = targetIndex + 2;
-                                //for (int itemTypeId = 2; itemTypeId <= 4; itemTypeId++)
-                                //{
-                                //    int itemNum = city.itemStore.GetNumber(itemTypeId);
-                                //    if (itemNum < levelTotal[itemTypeId - 2] * targetItemNumber / sumTotal)
-                                //    {
-                                //        building.ProductItemId = itemTypeId;
-                                //        break;
-                                //    }
-                                //}
+                                
                             }
                         }
                         break;
                     case (int)BuildingKindType.Stable:
-                        if (horseP < 1)
+                        if (goldP > 1 || horseP < 1)
                             pBuildings.Add(new PBuilding() { p = horseP, building = building });
                         break;
                     case (int)BuildingKindType.BoatFactory:
                         {
-                            if (boatP < 1)
+                            if (goldP > 1 || boatP < 1)
                             {
                                 pBuildings.Add(new PBuilding() { p = boatP, building = building });
                                 int targetBoatId = 12;
@@ -430,7 +570,7 @@ namespace Sango.Game
                         break;
                     case (int)BuildingKindType.MechineFactory:
                         {
-                            if (machineP < 1)
+                            if (goldP > 1 || machineP < 1)
                             {
                                 pBuildings.Add(new PBuilding() { p = machineP, building = building });
                                 int monsterNum = city.itemStore.GetNumber(7);
@@ -475,10 +615,7 @@ namespace Sango.Game
 
             pBuildings.Sort((a, b) => a.p.CompareTo(b.p));
 
-            for (int i = 0; i < pBuildings.Count; i++)
-            {
-                AutoSetWorker(pBuildings[i].building);
-            }
+            AutoSetWorker(city, pBuildings);
         }
 
         /// <summary>

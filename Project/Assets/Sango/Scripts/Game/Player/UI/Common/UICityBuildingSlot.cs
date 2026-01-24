@@ -51,8 +51,8 @@ namespace Sango.Game.Render.UI
                     for (int i = 0; i < uIPersonItems.Length; i++)
                     {
                         UIPersonItem uIPersonItem = uIPersonItems[i];
-                        if (i < building.Workers.Count)
-                            uIPersonItem.SetPerson(building.Workers[i]);
+                        if (i < building.Builder.Count)
+                            uIPersonItem.SetPerson(building.Builder[i]);
                         else
                             uIPersonItem.SetPerson(null);
                     }
@@ -67,8 +67,8 @@ namespace Sango.Game.Render.UI
                     for (int i = 0; i < uIPersonItems.Length; i++)
                     {
                         UIPersonItem uIPersonItem = uIPersonItems[i];
-                        if (i < building.Workers.Count)
-                            uIPersonItem.SetPerson(building.Workers[i]);
+                        if (i < building.Builder.Count)
+                            uIPersonItem.SetPerson(building.Builder[i]);
                         else
                             uIPersonItem.SetPerson(null);
                     }

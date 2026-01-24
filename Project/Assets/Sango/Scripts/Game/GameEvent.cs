@@ -278,6 +278,13 @@ namespace Sango.Game
         public static EventDelegate<City, int, Person[], OverrideData<int>> OnCityJobGainTechniquePoint;
 
         /// <summary>
+        /// 可监听改写工作获取的经验
+        /// City, JobType, PersonList, OverrideData
+        /// </summary>
+        public static EventDelegate<City, int, Person[], OverrideData<int>> OnCityJobGainMerit;
+
+
+        /// <summary>
         /// 可监听改写发现人才的几率
         /// City, JobType, PersonList, OverrideData
         /// </summary>

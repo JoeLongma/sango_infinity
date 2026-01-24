@@ -417,14 +417,17 @@ namespace Sango.Game
 
         public static bool AIBuilding(City city, Scenario scenario)
         {
+            if (city.IsEnemiesRound())
+                return true;
+
             int count = 1;
             if (city.freePersons.Count > 6)
                 count = count + (city.freePersons.Count - 3) / 3;
 
             for (int i = 0; i < count; i++)
                 AIBuildIntriore(city, scenario);
-            //for (int i = 0; i < count; i++)
-            //    AIBuildingLevelUp(city, scenario);
+            for (int i = 0; i < count; i++)
+                AIBuildingLevelUp(city, scenario);
 
             AIBuildMilitaryBuilding(city, scenario);
             return true;
@@ -557,138 +560,154 @@ namespace Sango.Game
         static int[][] CityBuildingTemplate = new int[][] {
             // 后方城市
             new int[] {
+                // 基础建筑
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Market,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Barracks,
                 (int)BuildingKindType.BlacksmithShop,
-                (int)BuildingKindType.Farm,
-                (int)BuildingKindType.Market,
-                (int)BuildingKindType.Farm,
-                (int)BuildingKindType.Market,
-                (int)BuildingKindType.TrainTroopBuilding,
                 (int)BuildingKindType.PatrolBureau,
+                (int)BuildingKindType.TrainTroopBuilding,
                 (int)BuildingKindType.RecruitBuilding,
-                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Farm,// 10小城
+
+                (int)BuildingKindType.MechineFactory,
+                (int)BuildingKindType.Market, // 12小城
+
                 (int)BuildingKindType.Stable,
-                (int)BuildingKindType.MechineFactory,// 12小城
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 16中城
 
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Market,
                 (int)BuildingKindType.BoatFactory,
-                (int)BuildingKindType.CustomKind,// 16中城
-
-
-                (int)BuildingKindType.Farm,
-                (int)BuildingKindType.Market,
-                (int)BuildingKindType.CustomKind,
-                (int)BuildingKindType.Market,// 20大城
+                (int)BuildingKindType.Farm,// 20中城
 
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Market,
                 (int)BuildingKindType.Farm,
-                (int)BuildingKindType.Market,// 24巨城
+                (int)BuildingKindType.Market,// 24大城
+
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 28巨巨城
             },
 
             // 边境城市
             new int[] {
+                // 基础建筑
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Barracks,
                 (int)BuildingKindType.BlacksmithShop,
-                (int)BuildingKindType.Market,
-                (int)BuildingKindType.Market,
-                (int)BuildingKindType.Farm,
-                (int)BuildingKindType.TrainTroopBuilding,
-                (int)BuildingKindType.Market,
-                (int)BuildingKindType.Farm,
-                (int)BuildingKindType.Farm,
                 (int)BuildingKindType.PatrolBureau,
-                (int)BuildingKindType.Stable,
+                (int)BuildingKindType.TrainTroopBuilding,
                 (int)BuildingKindType.RecruitBuilding,
+                (int)BuildingKindType.Farm,// 10小城
+
                 (int)BuildingKindType.MechineFactory,
-                (int)BuildingKindType.BoatFactory,// 12小城
+                (int)BuildingKindType.Market, // 12小城
+
+                (int)BuildingKindType.Stable,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 16中城
 
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Market,
-                (int)BuildingKindType.Barracks,
-                (int)BuildingKindType.BlacksmithShop,// 16中城
-
+                (int)BuildingKindType.BoatFactory,
+                (int)BuildingKindType.Farm,// 20中城
 
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Market,
                 (int)BuildingKindType.Farm,
-                (int)BuildingKindType.Market,// 20大城
+                (int)BuildingKindType.Market,// 24大城
 
-                (int)BuildingKindType.Market,
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Market,
-                (int)BuildingKindType.Stable,// 24巨城
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 28巨巨城
             },
 
             // 后方港口城市
             new int[] {
+                // 基础建筑
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Market,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Barracks,
                 (int)BuildingKindType.BlacksmithShop,
-                (int)BuildingKindType.RecruitBuilding,
-                (int)BuildingKindType.TrainTroopBuilding,
-                (int)BuildingKindType.Farm,
-                (int)BuildingKindType.Market,
-                (int)BuildingKindType.Farm,
-                (int)BuildingKindType.Market,
                 (int)BuildingKindType.PatrolBureau,
+                (int)BuildingKindType.TrainTroopBuilding,
+                (int)BuildingKindType.RecruitBuilding,
+                (int)BuildingKindType.Farm,// 10小城
+
+                (int)BuildingKindType.MechineFactory,
+                (int)BuildingKindType.BoatFactory, // 12小城
+
+                (int)BuildingKindType.Stable,
+                (int)BuildingKindType.Market,
                 (int)BuildingKindType.Farm,
-                (int)BuildingKindType.BoatFactory,
-                (int)BuildingKindType.MechineFactory,// 12小城
+                (int)BuildingKindType.Market,// 16中城
 
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Market,
-                (int)BuildingKindType.Market,
-                (int)BuildingKindType.CustomKind,// 16中城
-
-
                 (int)BuildingKindType.Farm,
-                (int)BuildingKindType.Market,
-                (int)BuildingKindType.CustomKind,
-                (int)BuildingKindType.Market,// 20大城
+                (int)BuildingKindType.Farm,// 20中城
 
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Market,
                 (int)BuildingKindType.Farm,
-                (int)BuildingKindType.Market,// 24巨城
+                (int)BuildingKindType.Market,// 24大城
+
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 28巨巨城
             },
 
              // 边境港口城市
             new int[] {
+                // 基础建筑
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Barracks,
                 (int)BuildingKindType.BlacksmithShop,
-                (int)BuildingKindType.RecruitBuilding,
-                (int)BuildingKindType.TrainTroopBuilding,
-                (int)BuildingKindType.Market,
-                (int)BuildingKindType.Market,
-                (int)BuildingKindType.Farm,
-                (int)BuildingKindType.Market,
-                (int)BuildingKindType.Farm,
-                (int)BuildingKindType.Farm,
                 (int)BuildingKindType.PatrolBureau,
-                (int)BuildingKindType.BoatFactory,
+                (int)BuildingKindType.TrainTroopBuilding,
+                (int)BuildingKindType.RecruitBuilding,
+                (int)BuildingKindType.Farm,// 10小城
+
                 (int)BuildingKindType.MechineFactory,
-                (int)BuildingKindType.Market,// 12小城
+                (int)BuildingKindType.BoatFactory, // 12小城
+
+                (int)BuildingKindType.Stable,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 16中城
 
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Market,
-                (int)BuildingKindType.Barracks,
-                (int)BuildingKindType.BlacksmithShop,// 16中城
-
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 20中城
 
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Market,
                 (int)BuildingKindType.Farm,
-                (int)BuildingKindType.Market,// 20大城
+                (int)BuildingKindType.Market,// 24大城
 
-                (int)BuildingKindType.Market,
                 (int)BuildingKindType.Farm,
                 (int)BuildingKindType.Market,
-                (int)BuildingKindType.Stable,// 24巨城
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 28巨巨城
             },
         };
 

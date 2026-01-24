@@ -89,22 +89,22 @@ namespace Sango.Game
         /// <returns></returns>
         public void OnCityTurnStart(City city, Scenario scenario)
         {
-            if (city.BelongCorps == null)
-                return;
+            //if (city.BelongCorps == null)
+            //    return;
 
-            city.allBuildings.ForEach(building =>
-            {
-                if (building.isComplate && building.BuildingType.kind == (int)BuildingKindType.PatrolBureau)
-                {
-                    if (building.AccumulatedProduct > 0)
-                    {
-                        city.AddSecurity(building.AccumulatedProduct);
-                        city.Render?.UpdateRender();
-                        city.Render?.ShowInfo(building.AccumulatedProduct, (int)InfoType.Security);
-                        building.AccumulatedProduct = 0;
-                    }
-                }
-            });
+            //city.allBuildings.ForEach(building =>
+            //{
+            //    if (building.isComplate && building.BuildingType.kind == (int)BuildingKindType.PatrolBureau)
+            //    {
+            //        if (building.AccumulatedProduct > 0)
+            //        {
+            //            city.AddSecurity(building.AccumulatedProduct);
+            //            city.Render?.UpdateRender();
+            //            city.Render?.ShowInfo(building.AccumulatedProduct, (int)InfoType.Security);
+            //            building.AccumulatedProduct = 0;
+            //        }
+            //    }
+            //});
         }
     }
 }

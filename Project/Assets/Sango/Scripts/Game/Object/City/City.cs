@@ -791,6 +791,9 @@ namespace Sango.Game
                 if (GameRandom.Chance(GameFormula.Instance.PersonEscapeProbablility_InCity(person, this, scenario), 10000))
                 {
                     person.Escape();
+#if SANGO_DEBUG
+                    Sango.Log.Print($"{person.Name}逃跑!");
+#endif
                     GameEvent.OnPersonEscape?.Invoke(person, this);
                 }
             }
@@ -1292,6 +1295,8 @@ namespace Sango.Game
             building.BuildingType = buildingType;
             building.x = buildCenter.x;
             building.y = buildCenter.y;
+            building.rot = GameRandom.Range(0, 10) * 90 * Mathf.Deg2Rad;
+
             building.durability = 0;
 
             Scenario scenario = Scenario.Cur;
@@ -1355,6 +1360,7 @@ namespace Sango.Game
             building.x = buildCenter.x;
             building.y = buildCenter.y;
             building.durability = 0;
+            building.rot = GameRandom.Range(0, 10) * 90 * Mathf.Deg2Rad;
 
             Scenario scenario = Scenario.Cur;
 #if SANGO_DEBUG
@@ -1378,7 +1384,7 @@ namespace Sango.Game
                 sangoObjectList.Add(person);
             }
 
-            building.Workers = sangoObjectList;
+            building.Builder = sangoObjectList;
             building.isComplate = false;
             building.durability = 1;
             building.LeftCounter = buildCount;
@@ -1424,7 +1430,7 @@ namespace Sango.Game
                 sangoObjectList.Add(person);
             }
 
-            building.Workers = sangoObjectList;
+            building.Builder = sangoObjectList;
             building.LeftCounter = buildCount;
             gold -= upgradeBuildingType.cost;
             BelongCorps.ReduceActionPoint(JobType.GetJobCostAP((int)CityJobType.UpgradeBuilding));
@@ -3066,7 +3072,7 @@ namespace Sango.Game
             {
 
                 AICommandList.Add(CityAI.AIAttack);
-                //AICommandList.Add(CityAI.AITradeFood);
+                AICommandList.Add(CityAI.AITradeFood);
                 //AICommandList.Add(CityAI.AISecurity);
 
                 //if (troops < 20000)
@@ -3100,7 +3106,7 @@ namespace Sango.Game
             else
             {
                 //AICommandList.Add(CityAI.AISecurity);
-                //AICommandList.Add(CityAI.AITradeFood);
+                AICommandList.Add(CityAI.AITradeFood);
                 // 物资输送
                 AICommandList.Add(CityAI.AITransfrom);
                 //if (troops < itemStore.TotalNumber)
