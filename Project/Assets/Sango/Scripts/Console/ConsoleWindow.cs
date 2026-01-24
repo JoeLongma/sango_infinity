@@ -7,20 +7,21 @@ using System.IO;
 
 namespace ConsoleTestWindows
 {
-	/// <summary>
-	/// Creates a console window that actually works in Unity
-	/// You should add a script that redirects output using Console.Write to write to it.
-	/// </summary>
+    /// <summary>
+    /// 控制台窗口管理类
+    /// 负责在Unity Windows独立版或编辑器中创建、配置和关闭系统控制台窗口
+    /// 提供标准输入输出重定向及编码设置功能
+    /// </summary>
 	public class ConsoleWindow
 	{
 		TextWriter oldOutput;
 
 		public void Initialize()
 		{
-			//
-			// Attach to any existing consoles we have
-			// failing that, create a new one.
-			//
+            /// <summary>
+            /// 连接到我们现有的控制台（0x0ffffffff表示当前进程），如果连接失败，就创建一个新的控制台。
+            /// </summary>
+
 			//if ( !AttachConsole( 0x0ffffffff ) )
 			{
 				AllocConsole();
@@ -51,9 +52,9 @@ namespace ConsoleTestWindows
             SetConsoleOutputCP(65001);
             Console.WriteLine("Current Output ConsoleCP: {0}", GetConsoleOutputCP());
 
-            Console.WriteLine("Current Input Encoding Scheme: {0}",
+            Console.WriteLine("当前输入编码方案: {0}",
                                         Console.InputEncoding);
-            Console.WriteLine("Current Output Encoding Scheme: {0}",
+            Console.WriteLine("当前输出编码方案: {0}",
                                         Console.OutputEncoding);
         }
 

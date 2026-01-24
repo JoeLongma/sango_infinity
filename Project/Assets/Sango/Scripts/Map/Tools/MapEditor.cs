@@ -24,15 +24,15 @@ namespace Sango.Tools
         /// </summary>
         enum EditorModType : int
         {
-            // 基础
+            // 基础编辑
             Base = 0,
             // 地形编辑
             Terrain,
             // 地格编辑
             Grid,
-            // 模型
+            // 模型编辑
             Model,
-            // 设置
+            // 设置说明
             Setting
         }
 
@@ -87,7 +87,6 @@ namespace Sango.Tools
         {
             map = MapRender.Instance;
             map.NewMap(w, h);
-
             return map;
         }
 
@@ -135,9 +134,7 @@ namespace Sango.Tools
             SetCameraControlType(1);
             Camera.main.gameObject.transform.position = map.mapCamera.position;
             Camera.main.gameObject.transform.rotation = Quaternion.Euler(90, -90, 0);
-
             terrain_brush.AutoImportLayerTexture();
-
         }
 
         protected void OnDestroy()
@@ -179,7 +176,8 @@ namespace Sango.Tools
 
         public void SetModelSelectionMod(bool b)
         {
-            SceneGizmoExtend.Instance.enabled = false;
+            // 如果参数b为真，与模型选择有关的实例都将被启用；如果参数b为假，这些实例都将被禁用
+            SceneGizmoExtend.Instance.enabled = b;
             if (SceneGizmoExtend.Instance._gizmoCamera != null)
                 SceneGizmoExtend.Instance._gizmoCamera.enabled = false;
             RuntimeEditorApplication.Instance.enabled = b;
@@ -191,6 +189,7 @@ namespace Sango.Tools
             InputDevice.Instance.enabled = b;
             //SceneGizmo.Instance.enabled = b;
         }
+
         void SetGizmoCameraEnable(bool b)
         {
             EditorCameraExtend.Instance.enabled = b;
@@ -225,7 +224,6 @@ namespace Sango.Tools
                 }
                 map.mapSkyBox.SetVisible(true);
                 map.mapCamera.enabled = true;
-
             }
         }
 
@@ -239,6 +237,7 @@ namespace Sango.Tools
                 return raycastHit.point.y;
             else return 0;
         }
+
         public static bool QueryHeight(Vector3 pos, out float height)
         {
             Vector3 begin = pos;
@@ -306,7 +305,7 @@ namespace Sango.Tools
         };
         private string[] toolbarSeason = new string[]
         {
-            "秋", "春", "夏", "冬"
+            "春", "夏", "秋", "冬"
         };
         bool viewIs311Camera = true;
         void DrawToolbarWindow(int windowID, EditorWindow window)
@@ -347,7 +346,6 @@ namespace Sango.Tools
 
             if (GUILayout.Button("加载地图"))
             {
-
                 string[] path = WindowDialog.OpenFileDialog("地图文件(*.bin)\0*.bin;\0\0");
                 if (path != null)
                 {
@@ -370,7 +368,6 @@ namespace Sango.Tools
 
             if (GUILayout.Button("保存地图"))
             {
-
                 string path = WindowDialog.SaveFileDialog("map.bin", "地图文件(*.bin)\0*.bin;\0\0");
                 if (path != null)
                 {
@@ -380,7 +377,6 @@ namespace Sango.Tools
 
             if (GUILayout.Button("放大2倍保存"))
             {
-
                 string path = WindowDialog.SaveFileDialog("map.bin", "地图文件(*.bin)\0*.bin;\0\0");
                 if (path != null)
                 {
@@ -389,7 +385,6 @@ namespace Sango.Tools
             }
 
             GUILayout.EndHorizontal();
-
 
             Color lastColor = GUI.backgroundColor;
             GUI.backgroundColor = Color.cyan;
@@ -443,7 +438,6 @@ namespace Sango.Tools
                 map.showLimitLength = v;
             }
             EditorUIDraw.OnGUI(map.mapCamera);
-
             EditorUIDraw.OnGUI(map.mapData);
             EditorUIDraw.OnGUI(map.mapGrid);
             EditorUIDraw.OnGUI(map.mapLight);
@@ -468,12 +462,12 @@ namespace Sango.Tools
 
         void OnGUI_Setting()
         {
+            GUILayout.Label("地图编辑器V4.0版本");
             GUILayout.Label("鼠标中键拖拽地图移动");
             GUILayout.Label("地形编辑模式下: Ctrl按住可以连续绘制 Shift在推平模式下可以以鼠标点高度推平");
             GUILayout.Label("地格编辑模式下: Alt按住可以取到鼠标点格子的值 Ctrl按住可以连续绘制");
             GUILayout.Label("模型编辑模式下: 选中模型 Q(无) W(平移) E(旋转) R(缩放)快捷键  鼠标右键或ESC取消选择 Delete删除选中的模型");
         }
-
 
         /// <summary>
         /// 强制相机指向目标对象

@@ -1,14 +1,9 @@
-using UnityEngine;
-using System.IO;
-using System;
-using HSVPicker;
-
-using System.Drawing;
-using Sango.Render;
-using System.Collections.Generic;
-using UnityEngine.EventSystems;
 using Sango.Game;
+using Sango.Render;
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Sango.Tools
 {
@@ -16,22 +11,23 @@ namespace Sango.Tools
     {
         public enum BrushType : int
         {
-            TerrainType,
-            Area,
-            //Trap,
-            //Dir,
-            Interior,
-            Defence,
-            Thief,
-            //Flood,
-            //Ruins,
-            Unknown,
+            TerrainType,    // "类型"
+            Area,           // "区域"
+            //Trap,           // "陷阱"
+            //Dir,            // "方向"
+            Interior,       // "内政"
+            Defence,        // "防守"
+            Thief,          // "山寨（贼）"
+            //Flood,         // "水淹"
+            //Ruins,          // "遗迹（庙）"
+            Unknown,        // "未知"
         }
         public int size = 1;
         public int opacity;
 
         //private string[] toolbarTitle = new string[] { "无", "可行走编辑", "地格类型刷", "地格信息编辑" };
-        private string[] toolbarTitle = new string[] {
+        private string[] toolbarTitle = new string[]
+ 		{
             "无",
             "类型",
             "区域",
@@ -42,21 +38,22 @@ namespace Sango.Tools
             "防守",
             "贼",
             //"水淹",
-            ////"种类?",
-            //"遗迹"
+            ////"种类?火焰",
+            //"遗迹（庙）"
         };
         private int currentEditMode = 0;
         public BrushType brushType = BrushType.Unknown;
-        public string[] terrainTypeTexNames = new string[] {
-            "editor_terrain_type",
-            "editor_area_type",
-            //"editor_trap_type",
-            //"editor_dir_type",
-            "editor_interior_type",
-            "editor_defence_type",
-            "editor_thief_type",
-            //"editor_flood_type",
-            //"editor_ruins_type",
+        public string[] terrainTypeTexNames = new string[]
+ 		{
+            "editor_terrain_type",      //1.20种地格类型+12种未知预留类型
+            "editor_area_type",         //2.16*7种不同势力区域颜色
+            //"editor_trap_type",         //3.堤防、陷阱
+            //"editor_dir_type",          //4.6个水流方向
+            "editor_interior_type",     //5.内政用地
+            "editor_defence_type",      //6.防守用地
+            "editor_thief_type",        //7.贼用地
+            //"editor_flood_type",        //8.水淹用地
+            //"editor_ruins_type",        //9.遗迹（庙）
         };
         public Texture[] terrainTypeTexes = new Texture[] {
             Texture2D.whiteTexture,
@@ -376,7 +373,6 @@ namespace Sango.Tools
             yield return CreateInteriorTexture();
         }
 
-
         IEnumerator CreateInteriorTexture()
         {
             int celSize = 128;
@@ -543,7 +539,6 @@ namespace Sango.Tools
         {
             UpdateTerrainMaskTex(brushType);
         }
-
         public void UpdateTerrainMaskTex(BrushType b)
         {
             if (terrainTypeMaskTex == null)
@@ -688,7 +683,6 @@ namespace Sango.Tools
                 SaveTo311GridData();
             }
             GUILayout.EndHorizontal();
-
 
             UnityEngine.Color lastColor = GUI.backgroundColor;
             GUI.backgroundColor = UnityEngine.Color.cyan;
@@ -838,6 +832,7 @@ namespace Sango.Tools
                 editor.map.mapGrid.ApplyRangMask();
             }
         }
+
         /// <summary>
         /// 获取相反操作值
         /// </summary>
@@ -859,6 +854,7 @@ namespace Sango.Tools
             }
             return opacity;
         }
+
         /// <summary>
         /// 吸取目标值
         /// </summary>
@@ -871,6 +867,7 @@ namespace Sango.Tools
             MapGrid.GridData data = editor.map.mapGrid.GetGridData(coord.col, coord.row);
             opacity = GetGridDataProterty(brushType, data);
         }
+
         public override void Modify(Vector3 center, MapEditor editor)
         {
             int value = opacity;
@@ -889,12 +886,11 @@ namespace Sango.Tools
                     editor.map.mapGrid.BeginUpdateMovable(coord.col, coord.row);
                 }
             }
+
             if (brushType == BrushType.TerrainType)
                 editor.map.mapGrid.EndUpdateMovable();
 
             terrainTypeMaskTex.Apply(false);
         }
-
     }
-
 }

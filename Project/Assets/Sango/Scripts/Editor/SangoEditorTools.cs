@@ -1,20 +1,20 @@
-
-using System.Collections.Generic;
-using System.Text;
 using UnityEditor;
 using UnityEngine;
+using System.IO;
+using System.Collections.Generic;
+using System.Text;
 
-public static class SangeEditorTools
+
+public static class SangoEditorTools
 {
-
     [MenuItem("Sango/头像编辑工具导出头像名字批处理")]
     public static void RenameHeadIconName()
     {
         string savedir = EditorUtility.OpenFolderPanel("选择头像文件夹", Application.dataPath, "");
-        string[] files = Sango.Directory.GetFiles(savedir, "*.png", System.IO.SearchOption.AllDirectories);
+        string[] files = Sango.Directory.GetFiles(savedir, "*.png", SearchOption.AllDirectories);
         foreach (string f in files)
         {
-            string fileName = System.IO.Path.GetFileNameWithoutExtension(f);
+            string fileName = Path.GetFileNameWithoutExtension(f);
             string[] s = fileName.Split("_");
             int id;
             int part;
@@ -22,9 +22,7 @@ public static class SangeEditorTools
             int.TryParse(s[2], out part);
 
             Sango.File.Move(f, string.Format("{0}/{1}_{2}.png", savedir, id, part));
-
         }
-
     }
 
     [MenuItem("Sango/地形贴图文件夹文件名字替换")]
@@ -32,10 +30,10 @@ public static class SangeEditorTools
     {
         Sango.Path.Init();
         string savedir = EditorUtility.OpenFolderPanel("选择贴图文件夹", Sango.Path.ContentRootPath, "");
-        string[] files = Sango.Directory.GetFiles(savedir, "*.png", System.IO.SearchOption.AllDirectories);
+        string[] files = Sango.Directory.GetFiles(savedir, "*.png", SearchOption.AllDirectories);
         foreach (string f in files)
         {
-            string fileName = System.IO.Path.GetFileNameWithoutExtension(f);
+            string fileName = Path.GetFileNameWithoutExtension(f);
             string[] s = fileName.Split("_");
             if (s.Length > 1)
             {
@@ -52,21 +50,20 @@ public static class SangeEditorTools
     public static void RenameWKMD2WKM()
     {
         string savedir = EditorUtility.OpenFolderPanel("选择文件夹", Application.dataPath, "");
-        string[] files = Sango.Directory.GetFiles(savedir, "*.WKMD", System.IO.SearchOption.AllDirectories);
+        string[] files = Sango.Directory.GetFiles(savedir, "*.WKMD", SearchOption.AllDirectories);
         foreach (string f in files)
         {
             string newFileName = f.Remove(f.Length - 4) + "wkm";
             Debug.Log(newFileName);
             Sango.File.Move(f, newFileName);
         }
-
     }
 
     [MenuItem("Sango/选中图集拆小图")]
     static void ProcessToSprite()
     {
         Texture2D image = Selection.activeObject as Texture2D;//获取旋转的对象
-        string rootPath = System.IO.Path.GetDirectoryName(AssetDatabase.GetAssetPath(image));//获取路径名称
+        string rootPath = Path.GetDirectoryName(AssetDatabase.GetAssetPath(image));//获取路径名称
         string path = rootPath + "/" + image.name + ".png";//图片路径名称
 
         TextureImporter texImp = AssetImporter.GetAtPath(path) as TextureImporter;
@@ -92,16 +89,16 @@ public static class SangeEditorTools
             }
             var pngData = myimage.EncodeToPNG();
 
-            System.IO.File.WriteAllBytes(rootPath + "/" + image.name + "/" + metaData.name + ".png", pngData);
+            File.WriteAllBytes(rootPath + "/" + image.name + "/" + metaData.name + ".png", pngData);
         }
     }
 
 
-    [MenuItem("Assets/Sprite Sheet Packer/Process to Sprites Info")]
+    [MenuItem("Assets/精灵图集/处理精灵信息")]
     static void ProcessToSpriteInfo()
     {
         Texture2D image = Selection.activeObject as Texture2D;//获取旋转的对象
-        string rootPath = System.IO.Path.GetDirectoryName(AssetDatabase.GetAssetPath(image));//获取路径名称
+        string rootPath = Path.GetDirectoryName(AssetDatabase.GetAssetPath(image));//获取路径名称
         string path = rootPath + "/" + image.name + ".png";//图片路径名称
 
         TextureImporter texImp = AssetImporter.GetAtPath(path) as TextureImporter;
@@ -117,7 +114,7 @@ public static class SangeEditorTools
                 metaData.border.x, metaData.border.y, metaData.border.z, metaData.border.w));
         }
 
-        System.IO.File.WriteAllText(rootPath + "/" + image.name + "/" + image.name + ".tpsheet", sb.ToString());
+        File.WriteAllText(rootPath + "/" + image.name + "/" + image.name + ".tpsheet", sb.ToString());
 
     }
 
@@ -125,7 +122,7 @@ public static class SangeEditorTools
     public static void RenamePNG2png()
     {
         string savedir = EditorUtility.OpenFolderPanel("选择文件夹", Application.dataPath, "");
-        string[] files = Sango.Directory.GetFiles(savedir, "*.PNG", System.IO.SearchOption.AllDirectories);
+        string[] files = Sango.Directory.GetFiles(savedir, "*.PNG", SearchOption.AllDirectories);
         foreach (string f in files)
         {
             string newFileName = f.Remove(f.Length - 3) + "png";
@@ -134,7 +131,7 @@ public static class SangeEditorTools
             Sango.File.Move(newFileName + "1", newFileName);
         }
 
-        files = Sango.Directory.GetFiles(savedir, "*.PNG.meta", System.IO.SearchOption.AllDirectories);
+        files = Sango.Directory.GetFiles(savedir, "*.PNG.meta", SearchOption.AllDirectories);
         foreach (string f in files)
         {
             string newFileName = f.Remove(f.Length - 8) + "png.meta";
@@ -145,7 +142,7 @@ public static class SangeEditorTools
     }
 
 
-    class ModelDataaa
+    class ModelData
     {
         public int Id;
         public string name;
@@ -157,20 +154,20 @@ public static class SangeEditorTools
     public static void AutoMakeModelPrefab()
     {
         string savedir = EditorUtility.OpenFilePanel("选择模型信息", Application.dataPath, "");
-        string data = System.IO.File.ReadAllText(savedir);
+        string data = File.ReadAllText(savedir);
 
-        Dictionary<int, ModelDataaa> datas = new Dictionary<int, ModelDataaa>();
-        datas = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<int, ModelDataaa>>(data);
+        Dictionary<int, ModelData> datas = new Dictionary<int, ModelData>();
+        datas = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<int, ModelData>>(data);
 
         string matDir = "Assets/Packages/Content.pkg+Content/Assets/Model/Materials/";
 
         string goSaveDir = "Assets/Packages/Content.pkg+Content/Assets/Model/Prefab/Auto";
 
-        foreach (ModelDataaa model in datas.Values)
+        foreach (ModelData model in datas.Values)
         {
             string modelFile = model.model.Replace("Model/", "Assets/Packages/Content.pkg+Content/Assets/Model/Mesh/");
             string texFile = "Assets/Packages/Content.pkg+Content/Assets/Model/" + model.texture;
-            string modelName = System.IO.Path.GetFileNameWithoutExtension(model.model);
+            string modelName = Path.GetFileNameWithoutExtension(model.model);
 
             GameObject modelObj = AssetDatabase.LoadAssetAtPath<GameObject>($"{goSaveDir}{modelName}.prefab");
             if (modelObj != null)
@@ -183,7 +180,7 @@ public static class SangeEditorTools
             obj = GameObject.Instantiate(obj);
             obj.name = modelName;
 
-            string texName = System.IO.Path.GetFileNameWithoutExtension(texFile);
+            string texName = Path.GetFileNameWithoutExtension(texFile);
             string matFile = $"{matDir}{texName}.mat";
 
             Material mat = AssetDatabase.LoadAssetAtPath<Material>(matFile);
@@ -210,7 +207,7 @@ public static class SangeEditorTools
 
     }
 
-    [MenuItem("Sango/材质求MainTex->BaseTex")]
+    [MenuItem("Sango/材质球MainTex->BaseTex")]
     public static void MatSaveMainTex2BaseTex()
     {
         Object[] objects = Selection.objects;

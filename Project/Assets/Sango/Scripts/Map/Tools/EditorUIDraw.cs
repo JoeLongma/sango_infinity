@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using static Sango.Render.MapLayer;
+﻿using UnityEngine;
 
 namespace Sango.Tools
 {
@@ -13,16 +6,16 @@ namespace Sango.Tools
     {
         public static void OnGUI(Render.MapFog fog)
         {
-            bool v = GUILayout.Toggle(fog.fogEnabled, "雾开关");
+            bool v = GUILayout.Toggle(fog.fogEnabled, "迷雾开关");
             if (fog.fogEnabled != v)
                 fog.fogEnabled = v;
 
             if (fog.fogEnabled)
             {
-                Tools.EditorUtility.ColorField(fog.fogColor, "雾颜色", (color) => { fog.fogColor = color; });
+                Tools.EditorUtility.ColorField(fog.fogColor, "迷雾颜色", (color) => { fog.fogColor = color; });
                 fog.fogStart = Tools.EditorUtility.FloatField(fog.fogStart, "开始距离");
                 fog.fogEnd = Tools.EditorUtility.FloatField(fog.fogEnd, "结束距离");
-                fog.fogDensity = Tools.EditorUtility.FloatField(fog.fogDensity, "雾浓度");
+                fog.fogDensity = Tools.EditorUtility.FloatField(fog.fogDensity, "迷雾浓度");
             }
         }
 
@@ -73,7 +66,7 @@ namespace Sango.Tools
             {
                 data.LoadLayer();
             }
-            if (GUILayout.Button("加载水"))
+            if (GUILayout.Button("加载水面"))
             {
                 data.LoadWater();
             }
@@ -136,6 +129,7 @@ namespace Sango.Tools
                     }
                 }
             }
+
             if (GUILayout.Button("覆盖贴图"))
             {
                 string[] path = WindowDialog.OpenFileDialog("贴图文件(*.png)|*.png\0", true);
@@ -264,6 +258,5 @@ namespace Sango.Tools
             camera.limitDistance = Tools.EditorUtility.Vector2Field(camera.limitDistance, "相机距离");
             camera.safeBoder = Tools.EditorUtility.FloatField(camera.safeBoder, "边界距离");
         }
-
     }
 }

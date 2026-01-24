@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.IO;
-using System;
 using UnityEngine.EventSystems;
 
 namespace Sango.Tools
@@ -19,22 +17,24 @@ namespace Sango.Tools
         {
 
         }
+
         public virtual void OnSeasonChanged(int curSeason)
         {
 
         }
+
         public virtual void DrawGizmos(Vector3 center)
         {
+		
         }
+
         public virtual void OnEnter()
         {
 
         }
         
-
         protected Vector3 lastCenter = Vector3.zero;
 
-  
         public virtual bool IsPointerOverUI()
         {
             return EditorWindow.IsPointOverUI() || (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject());
@@ -48,7 +48,6 @@ namespace Sango.Tools
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, editor.map.showLimitLength + 2000, editor.rayCastLayer))
             {
-
                 if (hit.point != lastCenter)
                 {
                     //if (Event.current != null)
@@ -68,14 +67,7 @@ namespace Sango.Tools
         public virtual void OnBrushTypeChange() { }
         public virtual void OnBrushSizeChange() { }
         public virtual void OnBrushOpacityChange() { }
-        public virtual void Clear()
-        {
-
-        }
-        public virtual void OnGUI()
-        {
-
-        }
-
+        public virtual void Clear() { }
+        public virtual void OnGUI(){ }
     }
 }

@@ -10,16 +10,67 @@ namespace Sango.Tools
     {
         public Render.MapRender newMap;
         public Transform lookAt;
-        public Vector2 distanceMax = new Vector2(100, 1500);
-        public Vector2 angleMax = new Vector2(22.5f, 70);
+
         public int beginSeason = 0;
-        public float curDistance = 500;
+
         public Vector3 lookRotate;
         public bool changed = false;
+        public float curDistance = 500;
+        public Vector2 distanceMax = new Vector2(100, 1500);
+        public Vector2 angleMax = new Vector2(22.5f, 70);
         private int rayCastLayer;
-        bool isPressedUI = false;
+
         bool isMouseMoving = false;
         bool isMousePressed = false;
+        bool isPressedUI = false;
+
+
+        private void Awake()
+        {
+            rayCastLayer = LayerMask.GetMask(new string[] { "Map", "Troops", "Building" });
+            viewPlane = new Plane(Vector3.up, Vector3.zero);
+        }
+
+        private void Start()
+        {
+            if (lookAt == null)
+                lookAt = new GameObject("lookAt").transform;
+
+            if (newMap != null)
+            {
+
+                UpdateCamera();
+                newMap.ChangeSeason(beginSeason);
+            }
+        }
+
+        private void OnEnable()
+        {
+            viewCamera = GetComponent<Camera>();
+        }
+
+        void LateUpdate()
+        {
+            MoveCameraKeyBoard();
+            ZoomCamera();
+            SuperViewMouse();
+
+            if (changed)
+            {
+                changed = false;
+
+                transform.rotation = Quaternion.Euler(lookRotate);
+                transform.position = lookAt.position - transform.forward * curDistance;
+                transform.LookAt(lookAt);
+
+                //if (newMap != null) {
+                //    newMap.UpdateByCamera(viewCamera, lookAt.position, curDistance);
+                //}
+            }
+
+
+            oldMousePos = Input.mousePosition;
+        }
 
         public void MoveCamera(int dir, float speed)
         {
@@ -82,14 +133,6 @@ namespace Sango.Tools
             UpdateCamera();
         }
 
-        public void UpdateCamera()
-        {
-
-
-            changed = true;
-
-
-        }
 
         private Vector3 oldMousePos;
         private Vector3 newMosuePos;
@@ -102,55 +145,6 @@ namespace Sango.Tools
 
         public static Camera viewCamera;
         static Plane viewPlane;
-
-
-        private void Awake()
-        {
-            rayCastLayer = LayerMask.GetMask(new string[] { "Map", "Troops", "Building" });
-            viewPlane = new Plane(Vector3.up, Vector3.zero);
-            
-        }
-
-        private void Start()
-        {
-            if (lookAt == null)
-                lookAt = new GameObject("lookAt").transform;
-
-            if (newMap != null)
-            {
-
-                UpdateCamera();
-                newMap.ChangeSeason(beginSeason);
-            }
-        }
-
-        private void OnEnable()
-        {
-            viewCamera = GetComponent<Camera>();
-        }
-
-        void LateUpdate()
-        {
-            MoveCameraKeyBoard();
-            ZoomCamera();
-            SuperViewMouse();
-
-            if (changed)
-            {
-                changed = false;
-
-                transform.rotation = Quaternion.Euler(lookRotate);
-                transform.position = lookAt.position - transform.forward * curDistance;
-                transform.LookAt(lookAt);
-
-                //if (newMap != null) {
-                //    newMap.UpdateByCamera(viewCamera, lookAt.position, curDistance);
-                //}
-            }
-
-
-            oldMousePos = Input.mousePosition;
-        }
 
         bool gridShow = true;
         private void MoveCameraKeyBoard()
@@ -172,7 +166,6 @@ namespace Sango.Tools
                 forward.Normalize();
                 lookAt.position += forward * keyBoardMoveSpeed * Time.deltaTime;
                 UpdateCamera();
-
             }
             if (/*Input.GetKey(KeyCode.S) ||*/ Input.GetKey(KeyCode.DownArrow))
             {
@@ -198,7 +191,9 @@ namespace Sango.Tools
                 UpdateCamera();
             }
         }
+		
         Ray ray;
+
         private void SuperViewMouse()
         {
             if (Input.GetMouseButton(1) && !isPressedUI)
@@ -253,7 +248,6 @@ namespace Sango.Tools
 
             if (/*Input.GetKey(KeyCode.Space) &&*/ Input.GetMouseButton(2) && !isPressedUI)
             {
-
                 if (Input.GetMouseButtonDown(2))
                 {
                     isMouseMoving = false;
@@ -271,7 +265,6 @@ namespace Sango.Tools
                 }
                 else
                 {
-
                     if (oldMousePos == Input.mousePosition)
                     {
                         return;
@@ -333,7 +326,13 @@ namespace Sango.Tools
             }
         }
 
+        public void UpdateCamera()
+        {
+            changed = true;
+        }
+
         private static Vector3[] corners = new Vector3[4];
+
         public static bool GetViewRect(float limitLen, out float x, out float y, out float w, out float h)
         {
             if (CameraPlaneView.GetPlaneCorners(ref viewPlane, viewCamera, limitLen, ref corners))

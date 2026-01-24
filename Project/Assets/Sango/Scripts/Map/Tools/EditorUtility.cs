@@ -667,8 +667,5 @@ namespace Sango.Tools
             GUILayout.EndHorizontal();
             return x;
         }
-
-
-
     }
 }

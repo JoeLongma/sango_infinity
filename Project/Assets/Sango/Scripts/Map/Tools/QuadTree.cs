@@ -514,13 +514,13 @@ namespace Sango.Tools
         {
             _Find(root, rect, list, accuracy);
         }
+
         public int Find(Rect rect, ref T[] list, bool accuracy = false) //找到的结果不代表一定相交，只是可能相交
         {
             int count = 0;
             _Find(root, rect, ref list, ref count, accuracy);
             return count;
         }
-
     }
 
 

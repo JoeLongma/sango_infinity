@@ -1,13 +1,10 @@
-using UnityEngine;
-using System.IO;
-using System;
 using HSVPicker;
-using System.Drawing;
 using Sango.Render;
-using Sango;
+using System;
 using System.Collections.Generic;
-using DG.Tweening.Plugins.Core.PathCore;
-using Sango.Game;
+using System.Drawing;
+using System.IO;
+using UnityEngine;
 
 namespace Sango.Tools
 {
@@ -16,14 +13,14 @@ namespace Sango.Tools
     {
         public enum BrushType : int
         {
-            RaiseHeight = 0,
-            LowerHeight,
-            PullHeight,
-            SmoothHeight,
-            Texture,
-            Water,
-            BaseMap,
-            Unknown,
+            RaiseHeight = 0,    // 升高
+            LowerHeight,        // 降低
+            PullHeight,         // 平整
+            SmoothHeight,       // 平滑
+            Texture,            // 贴图
+            Water,              // 水面
+            BaseMap,            // 底色
+            Unknown,       
         }
         public float size = 5f;
         public float opacity;
@@ -82,6 +79,7 @@ namespace Sango.Tools
                 contentWindow.visible = false;
         }
         float gridInfoAlpha = 1;
+
         void DrawContentWindow(int winId, EditorWindow window)
         {
             switch (brushType)
@@ -93,7 +91,6 @@ namespace Sango.Tools
                     break;
                 case BrushType.Texture:
                     {
-
                         GUILayout.Label("地格信息透明度");
                         float _alpha = GUILayout.HorizontalSlider(gridInfoAlpha, 0f, 1f);
                         if (_alpha != gridInfoAlpha)
@@ -117,7 +114,6 @@ namespace Sango.Tools
                         }
                     }
                     break;
-
             }
         }
 
@@ -125,6 +121,7 @@ namespace Sango.Tools
         {
             Shader.SetGlobalFloat("_BrushSize", mapSize.x / size);
         }
+
         public Rect GetBounds(Vector3 center)
         {
             return new Rect(new Vector2(center.z - size, center.x - size), new Vector2(size * 2, size * 2));
@@ -141,13 +138,13 @@ namespace Sango.Tools
 
                 if (baseMap[curSeason] == null)
                 {
-                    baseMap[curSeason] = CreateBaseTextrue();
+                    baseMap[curSeason] = CreateBaseTexture();
                 }
 
             }
         }
 
-        public RenderTexture CreateBaseTextrue()
+        public RenderTexture CreateBaseTexture()
         {
             int curSeason = editor.map.curSeason;
             int width = Math.Min(4096, editor.map.mapData.vertex_width);
@@ -182,7 +179,9 @@ namespace Sango.Tools
                 contentWindow.visible = true;
             }
             else
+            {
                 contentWindow.visible = false;
+            }
 
             if (brushType == BrushType.BaseMap)
             {
@@ -194,7 +193,7 @@ namespace Sango.Tools
                 // blitMat = new Material(Shader.Find("Sango/blit"));
                 if (baseMap[editor.map.curSeason] == null)
                 {
-                    baseMap[editor.map.curSeason] = CreateBaseTextrue();
+                    baseMap[editor.map.curSeason] = CreateBaseTexture();
                 }
 
                 Shader.SetGlobalTexture("_BaseTex", baseMap[editor.map.curSeason]);
@@ -234,7 +233,6 @@ namespace Sango.Tools
                     picker.gameObject.SetActive(false);
             }
         }
-
 
         /// <summary>
         /// 吸取目标值
@@ -296,7 +294,6 @@ namespace Sango.Tools
                                 }
                             }
 
-
                         // 判断哪些cell需要重新刷新
                         Rect rect = GetBounds(center);
                         for (int i = 0; i < editor.map.mapTerrain.terrainCells.Length; i++)
@@ -312,8 +309,6 @@ namespace Sango.Tools
                                 }
                             }
                         }
-
-
                     }
                     break;
                 case BrushType.BaseMap:
@@ -567,7 +562,6 @@ namespace Sango.Tools
                                             bmp24.SetPixel(x, y, System.Drawing.Color.FromArgb(h, h, h));
                                         }
                                     }
-
                                     bmp24.Save(path, System.Drawing.Imaging.ImageFormat.Bmp);
                                 }
 #endif
@@ -606,7 +600,6 @@ namespace Sango.Tools
                                             bmp24.SetPixel(x, y, System.Drawing.Color.FromArgb(c.r, c.g, c.b));
                                         }
                                     }
-
                                     bmp24.Save(path, System.Drawing.Imaging.ImageFormat.Bmp);
                                 }
 #endif
@@ -614,6 +607,7 @@ namespace Sango.Tools
                                 //bitmapSrc.Save(bmpPath, System.Drawing.Imaging.ImageFormat.Bmp);
                             }
                         }
+                        // 结束水平布局
                         GUILayout.EndHorizontal();
 
                         //MapLayer.LayerData data = editor.map.mapLayer.GetLayer(textureIndex);
@@ -654,7 +648,6 @@ namespace Sango.Tools
                                             bmp24.SetPixel(x, y, System.Drawing.Color.FromArgb(h, h, h));
                                         }
                                     }
-
                                     bmp24.Save(path, System.Drawing.Imaging.ImageFormat.Bmp);
                                 }
 #endif
@@ -671,10 +664,10 @@ namespace Sango.Tools
                         {
                             int season = (int)editor.map.curSeason;
                             RenderTexture.ReleaseTemporary(baseMap[season]);
-                            baseMap[season] = CreateBaseTextrue();
+                            baseMap[season] = CreateBaseTexture();
                             Shader.SetGlobalTexture("_BaseTex", baseMap[season]);
                         }
-                        if (GUILayout.Button("加载"))
+                        if (GUILayout.Button("加载底色"))
                         {
 #if UNITY_STANDALONE_WIN
 
@@ -688,12 +681,12 @@ namespace Sango.Tools
                                 //editor.map.mapBaseColor.baseTextrueName[season] = System.IO.Path.GetFileNameWithoutExtension(fileName);
                                 editor.map.mapBaseColor.texture[season] = obj as Texture;
                                 RenderTexture.ReleaseTemporary(baseMap[season]);
-                                baseMap[season] = CreateBaseTextrue();
+                                baseMap[season] = CreateBaseTexture();
                                 Shader.SetGlobalTexture("_BaseTex", baseMap[season]);
                             });
                         }
 
-                        if (GUILayout.Button("保存"))
+                        if (GUILayout.Button("保存底色"))
                         {
                             int i = editor.map.curSeason;
                             string path = WindowDialog.SaveFileDialog("BaseMap" + i + ".png", "贴图文件(*.png)|*.png\0");
@@ -726,7 +719,6 @@ namespace Sango.Tools
                     break;
             }
         }
-
 
         public override void DrawGizmos(Vector3 center)
         {
@@ -787,7 +779,6 @@ namespace Sango.Tools
                             picker.OnPickScreenColor();
                         }
                     }
-
                     if (Input.GetKeyDown(KeyCode.LeftAlt))
                     {
                         editor.map.mapModels.EditorShow(false);

@@ -106,7 +106,7 @@ public class GameStart : MonoBehaviour
     }
 
     /// <summary>
-    /// 退出游戏
+    /// 销毁游戏
     /// </summary>
     void OnDestroy()
     {

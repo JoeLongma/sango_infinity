@@ -73,7 +73,7 @@ namespace Sango.Tools
 
                     beginX -= 20;
                     MinRect.x = beginX;
-                    if (GUI.Button(MinRect, "¡õ", MaxStyle))
+                    if (GUI.Button(MinRect, "â–¡", MaxStyle))
                     {
                         isMax = true;
                     }
@@ -108,6 +108,7 @@ namespace Sango.Tools
         {
             window_list.Remove(this);
         }
+
         public void OnGUI()
         {
             InitGUIStyle();
@@ -143,10 +144,12 @@ namespace Sango.Tools
 
             return false;
         }
+		
         public static EditorWindow AddWindow(int id, UnityEngine.Rect rect, WindowFunction func, string windowName)
         {
             return AddWindow(id, rect, func, null, windowName);
         }
+		
         public static EditorWindow AddWindow(int id, UnityEngine.Rect rect, WindowFunction func, WindowFunction minfunc, string windowName)
         {
             EditorWindow win = new GameObject(windowName).AddComponent<EditorWindow>();
@@ -165,14 +168,17 @@ namespace Sango.Tools
         {
             return AddWindow<T>(id, rect, func, null, windowName);
         }
+		
         public static EditorWindow AddWindow<T>(int id, UnityEngine.Rect rect, WindowFunction func, string windowName, GUISkin skin) where T : EditorWindow
         {
             return AddWindow<T>(id, rect, func, null, windowName, skin);
         }
+		
         public static EditorWindow AddWindow<T>(int id, UnityEngine.Rect rect, WindowFunction func, WindowFunction minfunc, string windowName) where T : EditorWindow
         {
             return AddWindow<T>(id, rect, func, minfunc, windowName, null);
         }
+		
         public static EditorWindow AddWindow<T>(int id, UnityEngine.Rect rect, WindowFunction func, WindowFunction minfunc, string windowName, GUISkin skin) where T : EditorWindow
         {
             EditorWindow win = new GameObject(windowName).AddComponent<T>();
@@ -193,10 +199,5 @@ namespace Sango.Tools
             if (w != null)
                 Destroy(w.gameObject);
         }
-
-        
-
     }
-
-
 }
