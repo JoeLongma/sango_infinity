@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.IO;
+﻿using System.IO;
 
 namespace Sango.Game
 {
@@ -19,6 +17,5 @@ namespace Sango.Game
             writer.Write(x); 
             writer.Write(y);
         }
-
     }
 }

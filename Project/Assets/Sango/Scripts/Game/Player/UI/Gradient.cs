@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
+﻿using System.Collections.Generic;
 
 namespace UnityEngine.UI
 {
@@ -16,6 +13,7 @@ namespace UnityEngine.UI
             get { return topColor; }
             set { topColor = value; }
         }
+
         [SerializeField]
         private Color32 bottomColor = Color.black;
 
@@ -75,6 +73,5 @@ namespace UnityEngine.UI
             }
 
         }
-
     }
 }

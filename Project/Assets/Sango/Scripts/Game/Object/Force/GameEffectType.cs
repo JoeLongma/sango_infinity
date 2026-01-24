@@ -1,8 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using UnityEngine;
-
-namespace Sango.Game
+﻿namespace Sango.Game
 {
     public enum ForceGlobalValueType
     {
@@ -42,6 +38,5 @@ namespace Sango.Game
         /// 兵种战法增加(兵种id)
         /// </summary>
         TroopTypeSkillAdd1,
-
     }
 }

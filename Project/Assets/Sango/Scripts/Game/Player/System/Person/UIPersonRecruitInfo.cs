@@ -25,6 +25,7 @@ namespace Sango.Game.Render.UI
         public Button recruitBtn2;
     
         PersonRecruit personRecruit;
+
         public override void OnShow()
         {
             base.OnShow();

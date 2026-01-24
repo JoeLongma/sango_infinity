@@ -49,8 +49,6 @@ namespace Sango.Game.Render.UI
 
         public Button endTurnButton;
 
-
-
         public GameObject[] fpaObj;
 
         int destSaveTurn = -1;
@@ -99,7 +97,6 @@ namespace Sango.Game.Render.UI
         {
 
         }
-
 
         public GameObject GetObject(int index)
         {
@@ -240,10 +237,12 @@ namespace Sango.Game.Render.UI
             "Assets/UI/AtlasTexture/mainframe/4845_5_9.png",
             "Assets/UI/AtlasTexture/mainframe/4845_5_11.png",
         };
+
         public void OnDayUpdate(Scenario scenario)
         {
             dateText.text = scenario.GetDateStr();
         }
+
         public void OnSeasonUpdate(Scenario scenario)
         {
             seasonImg.sprite = ObjectLoader.LoadObject<UnityEngine.Sprite>(seasonIconPath[(int)scenario.CurSeason]);
@@ -262,7 +261,6 @@ namespace Sango.Game.Render.UI
             resumeObj.SetActive(false);
             Sango.Game.Scenario.Resume();
         }
-
 
         public void OnBtnNextForce()
         {

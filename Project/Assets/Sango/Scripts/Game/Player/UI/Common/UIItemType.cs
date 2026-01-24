@@ -1,6 +1,4 @@
-﻿using Sango.Loader;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 namespace Sango.Game.Render.UI
 {
@@ -51,6 +49,5 @@ namespace Sango.Game.Render.UI
             }
             return this;
         }
-
     }
 }

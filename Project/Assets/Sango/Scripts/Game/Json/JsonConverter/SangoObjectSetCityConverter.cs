@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using Unity.Burst.Intrinsics;
 
 namespace Sango.Game
 {
@@ -24,6 +23,7 @@ namespace Sango.Game
             });
             writer.WriteEndObject();
         }
+
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             if (existingValue == null)
@@ -48,8 +48,8 @@ namespace Sango.Game
                             continue;
                         }
 
-                        JObject jo = JObject.Load(reader); // 加载整个 JSON 对象到 JObject 中
-                        if (jo["BuildingType"] != null) // 检查 Name 是否存在
+                        JObject jo = JObject.Load(reader);  // 加载整个 JSON 对象到 JObject 中
+                        if (jo["BuildingType"] != null)     // 检查 Name 是否存在
                         {
                             int buildingType = jo["BuildingType"].Value<int>();
                             if (buildingType == 3)

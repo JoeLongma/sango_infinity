@@ -4,9 +4,7 @@ using System;
 using System.Collections.Generic;
 
 namespace Sango.Game
-{
-    
-
+{ 
     public class XY2CellConverter : JsonConverter<Cell>
     {
         public struct DelaySetCellValue
@@ -49,6 +47,7 @@ namespace Sango.Game
             writer.WriteValue(dest.y);
             writer.WriteEndArray();
         }
+
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer, JsonProperty property, object target)
         {
             Cell dest = (Cell)existingValue;

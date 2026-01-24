@@ -18,6 +18,7 @@ namespace Sango.Game
             writer.WriteValue(dest.value);
             writer.WriteEndArray();
         }
+
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer, JsonProperty property, object target)
         {
             if (existingValue == null)
@@ -43,4 +44,3 @@ namespace Sango.Game
         }
     }
 }
-

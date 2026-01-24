@@ -1,5 +1,4 @@
-﻿using Sango.Game.Tools;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
 namespace Sango.Game.Action
@@ -29,6 +28,5 @@ namespace Sango.Game.Action
             if (kinds != null && !kinds.Contains(buildingBase.BuildingType.kind)) return false;
             return true;
         }
-
     }
 }

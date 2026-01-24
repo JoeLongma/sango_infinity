@@ -41,8 +41,6 @@ namespace Sango.Game
             Register("morale", (a, b) => a.morale.CompareTo(b.morale));
             Register("moveAbility", (a, b) => a.MoveAbility.CompareTo(b.MoveAbility));
             Register("troops", (a, b) => a.troops.CompareTo(b.troops));
-
         }
     }
-
 }

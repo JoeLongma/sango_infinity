@@ -18,6 +18,7 @@ namespace Sango.Game
         public int wonderBuildCounter = 0;
 
         public string customTitleName = "开发";
+
         public List<ObjectSortTitle> customTitleList = new List<ObjectSortTitle>()
         {
             PersonSortFunction.SortByName,
@@ -35,6 +36,7 @@ namespace Sango.Game
             GameEvent.OnCityAIPrepare += OnCityAIPrepare;
             GameEvent.OnCityContextMenuShow += OnCityContextMenuShow;
         }
+
         public override void Clear() {
 
             GameEvent.OnForceTurnStart -= OnForceTurnStart;

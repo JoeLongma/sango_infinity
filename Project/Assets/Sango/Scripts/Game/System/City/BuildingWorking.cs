@@ -202,8 +202,6 @@ namespace Sango.Game
             }
         }
 
-
-
         int GetCityLeaderInfuse(City city, int effectAttrType)
         {
             Person leader = city.Leader;
@@ -215,6 +213,7 @@ namespace Sango.Game
         }
 
         List<Person> worker_list = new List<Person>();
+
         /// <summary>
         /// 在回合末计算产出
         /// </summary>
@@ -447,7 +446,6 @@ namespace Sango.Game
             public float p;
             public Building building;
         }
-
 
         /// <summary>
         /// 委任工作
@@ -752,7 +750,6 @@ namespace Sango.Game
                         break;
                 }
             });
-
 
             AppointWorking(city, scenario);
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Sango.Game.Render.UI
 {
@@ -57,18 +56,22 @@ namespace Sango.Game.Render.UI
         {
             Add(title, order, custom, null);
         }
+
         public void Add(string title, int order)
         {
             Add(title, order, null, null);
         }
+
         public void Add(string title)
         {
             Add(title, -1, null, null);
         }
+
         public void AddLine()
         {
             Add(null, -1, null, null);
         }
+
         public void Clear()
         {
             headList.Clear();

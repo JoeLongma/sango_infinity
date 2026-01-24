@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.IO;
-using Newtonsoft.Json;
 
 namespace Sango.Game
 {
@@ -13,6 +12,7 @@ namespace Sango.Game
     public class SangoObjectMap<T> : Database<T> where T : SangoObject, new()
     {
         public Dictionary<int, T> objects = new Dictionary<int, T>();
+
         public override T Default
         {
             get
@@ -27,6 +27,7 @@ namespace Sango.Game
                 return t;
             }
         }
+
         public override int Count { get { return objects.Count; } }
 
         public override T this[int aIndex] { get { return Get(aIndex); } set { Add(value); } }
@@ -35,26 +36,32 @@ namespace Sango.Game
         {
 
         }
+
         public override void Clear()
         {
             objects.Clear();
         }
+
         public override void Reset(int length)
         {
             objects.Clear();
         }
+
         public override void Add(T obj)
         {
             objects[obj.Id] = obj;
         }
+
         public override void Set(T obj)
         {
             objects[obj.Id] = obj;
         }
+
         public override void Remove(T obj)
         {
             objects.Remove(obj.Id);
         }
+
         public override T Get(int id)
         {
             T obj;
@@ -120,10 +127,12 @@ namespace Sango.Game
         {
             return objects.ContainsKey(id);
         }
+
         public override bool Contains(T t)
         {
             return objects.ContainsKey(t.Id);
         }
+
         public override void Sort(IComparer<T> comparer)
         {
             throw new NotImplementedException();
@@ -147,6 +156,5 @@ namespace Sango.Game
         }
 
         public int DataCount => objects.Count;
-
     }
 }

@@ -24,7 +24,6 @@ namespace Sango.Game.Action
         {
             if (!CheckForceBuilding(city)) return;
             overrideData.Value = (int)System.Math.Ceiling(overrideData.Value * value / 100f);
-
         }
     }
 }

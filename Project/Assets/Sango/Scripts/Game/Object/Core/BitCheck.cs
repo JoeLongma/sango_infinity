@@ -1,7 +1,4 @@
-﻿using System.Drawing;
-using System.IO;
-using Newtonsoft.Json;
-using System.Xml;
+﻿using Newtonsoft.Json;
 
 namespace Sango.Game
 {
@@ -23,6 +20,7 @@ namespace Sango.Game
             int len = size % 32 == 0 ? n : n + 1;
             state = new uint[len];
         }
+
         public bool Has(int bitPos)
         {
             int where = bitPos / 32;

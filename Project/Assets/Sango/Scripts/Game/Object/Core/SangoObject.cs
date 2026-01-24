@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Sango.Game.Render;
+using System.Collections.Generic;
 
 namespace Sango.Game
 {
@@ -21,7 +18,6 @@ namespace Sango.Game
         Skill,
         InnerBuilding,
         Strategy
-
     }
 
     public class SangoObject
@@ -82,26 +78,29 @@ namespace Sango.Game
                 ExtensionData = new Dictionary<string, JToken>();
             ExtensionData[key] = value;
         }
+
         public bool HasExtensionData(string key)
         {
             if (ExtensionData == null) return false;
             return ExtensionData.ContainsKey(key);
         }
 
-
-
         public SangoObject()
         {
             IsAlive = true;
         }
+
         public override string ToString()
         {
             return Name;
         }
 
         public virtual bool DoAI(Scenario scenario) { return true; }
+
         public virtual bool Run(Scenario scenario) { return true; }
+
         public virtual void OnScenarioPrepare(Scenario scenario) {; }
+
         public virtual void OnScenarioStart(Scenario scenario) {; }
 
         /// <summary>
@@ -132,16 +131,24 @@ namespace Sango.Game
         /// <returns></returns>
         public virtual bool OnTurnEnd(Scenario scenario) { return true; }
 
-
         public virtual bool OnDayStart(Scenario scenario) { return true; }
+
         public virtual bool OnDayEnd(Scenario scenario) { return true; }
+
         public virtual bool OnMonthStart(Scenario scenario) { return true; }
+
         public virtual bool OnMonthEnd(Scenario scenario) { return true; }
+
         public virtual bool OnYearStart(Scenario scenario) { return true; }
+
         public virtual bool OnYearEnd(Scenario scenario) { return true; }
+
         public virtual bool OnSeasonStart(Scenario scenario) { return true; }
+
         public virtual bool OnSeasonEnd(Scenario scenario) { return true; }
+
         public virtual void Init(Scenario scenario) { }
+
         public virtual void Clear() { }
 
         public bool IsEnemy(Force forceA, Force forceB)
@@ -164,6 +171,7 @@ namespace Sango.Game
             if (forceB == null) return false;
             return forceA.IsAlliance(forceB);
         }
+
         public static int Compare(SangoObject a, SangoObject b)
         {
             if (a != null && b != null)
@@ -180,7 +188,6 @@ namespace Sango.Game
             return 0;
         }
     }
-
 
     public class SangoObjectExtensionData : SangoObject
     {

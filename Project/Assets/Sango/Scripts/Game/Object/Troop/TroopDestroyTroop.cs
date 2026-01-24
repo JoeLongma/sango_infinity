@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sango.Game
+﻿namespace Sango.Game
 {
     public class TroopDestroyTroop : TroopMissionBehaviour
     {
@@ -22,9 +16,6 @@ namespace Sango.Game
         {
             if (Troop != troop) Troop = troop;
             if (TargetTroop == null || TargetTroop.Id != troop.missionTarget) scenario.troopsSet.Get(Troop.missionTarget);
-
-
-
             return true;
         }
     }

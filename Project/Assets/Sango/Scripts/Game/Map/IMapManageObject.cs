@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+
 namespace Sango.Game
 {
     public interface IMapManageObject
@@ -36,14 +37,19 @@ namespace Sango.Game
         GameObject GetGameObject();
 
         public void CreateModel(string meshFile, string textureFile, string shaderName, bool isShareMat = true);
+
         public void CreateModel(string packagePath, string assetName);
+
         public void CreateModel(string assetName);
+
         public void CreateModel(UnityEngine.Object modelObj);
+
         public void ChangeModel(string newAsset);
 
         public void ReLoadModels(bool checkAsset = true);
 
         public void ClearModels();
+
         public void ReCheckVisible();
     }
 }

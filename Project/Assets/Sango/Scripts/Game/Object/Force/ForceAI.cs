@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 
 namespace Sango.Game
 {
     public class ForceAI
     {
         /// <summary>
-        /// AI外交
+        /// AI-外交
         /// </summary>
         public static bool AIDiplomacy(Force force, Scenario scenario)
         {
@@ -89,10 +88,10 @@ namespace Sango.Game
             // 释放或者招降俘虏
             // 赎回俘虏
         }
+
         /// <summary>
         /// AI-科技研发
         /// </summary>
-
         public static bool AITechniques(Force force, Scenario scenario)
         {
             return true;
@@ -284,6 +283,7 @@ namespace Sango.Game
         {
             return CounsellorRecommend2Person(personList, null, recommend2PersonValueFunc);
         }
+
         static Person[] CounsellorRecommend2Person(List<Person> personList, Person p1, Recommend2PersonValue recommend2PersonValueFunc)
         {
             int count = personList.Count;
@@ -421,6 +421,7 @@ namespace Sango.Game
         {
             return CounsellorFastRecommend2Person(personList, null, fastRecommend2PersonValueFunc);
         }
+
         static Person[] CounsellorFastRecommend2Person(List<Person> personList, Person p1, Recommend2PersonValue fastRecommend2PersonValueFunc)
         {
             int count = personList.Count;
@@ -480,7 +481,6 @@ namespace Sango.Game
             }
             return checkPersons;
         }
-
 
         /// <summary>
         /// 军师建造推荐
@@ -551,7 +551,6 @@ namespace Sango.Game
 
             });
         }
-
 
         /// <summary>
         /// 军师农业推荐
@@ -897,7 +896,6 @@ namespace Sango.Game
                 return false;
             });
         }
-
 
         /// <summary>
         /// 军师研究推荐

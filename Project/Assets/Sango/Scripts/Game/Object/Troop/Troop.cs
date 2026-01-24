@@ -1,11 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Sango.Game.Action;
 using Sango.Game.Render;
-using Sango.Game.Tools;
 using Sango.Tools;
 using System;
 using System.Collections.Generic;
-using UnityEngine.AI;
 
 namespace Sango.Game
 {
@@ -15,6 +13,7 @@ namespace Sango.Game
         public override SangoObjectType ObjectType { get { return SangoObjectType.Troops; } }
         public virtual bool AIFinished { get; set; }
         public virtual bool AIPrepared { get; set; }
+
         /// <summary>
         /// 所属势力
         /// </summary>
@@ -51,14 +50,12 @@ namespace Sango.Game
         [JsonProperty]
         public Person Member2 { get; set; }
 
-
         /// <summary>
         /// 俘虏
         /// </summary>
         [JsonConverter(typeof(SangoObjectListIDConverter<Person>))]
         [JsonProperty]
         public SangoObjectList<Person> captiveList = new SangoObjectList<Person>();
-
 
         string _troopName;
         /// <summary>
@@ -186,7 +183,9 @@ namespace Sango.Game
         public BuffManager buffManager = new BuffManager();
 
         public void AddBuff(int id, int turnCount, Troop srcTroop) { buffManager.AddBuff(id, turnCount, srcTroop); }
+
         public void RemoveBuff(int id) { buffManager.RemoveBuff(id); }
+
         public void RemoveBuffByKind(int kind) { buffManager.RemoveBuffByKind(kind); }
 
         public bool HasControlBuff()
@@ -234,7 +233,6 @@ namespace Sango.Game
         /// </summary>
         /// <returns></returns>
         public bool IsInWater => cell?.TerrainType.isWater ?? false;
-
 
         public List<SkillInstance> skills => IsInWater ? waterSkills : landSkills;
 
@@ -377,6 +375,7 @@ namespace Sango.Game
             //yield return Event.OnTroopsAI?.Invoke(this, corps, force, scenario);
             //yield return Event.OnTroopsEnd?.Invoke(this, corps, force, scenario);
         }
+
         public override void OnScenarioPrepare(Scenario scenario)
         {
             foreach (Person person in captiveList)
@@ -450,6 +449,7 @@ namespace Sango.Game
 
             return true;
         }
+
         public override bool OnForceTurnEnd(Scenario scenario)
         {
             // 计算俘虏越狱
@@ -626,6 +626,7 @@ namespace Sango.Game
         {
             return TroopType.MoveCost(cell);
         }
+
         public bool IsAlliance(BuildingBase other)
         {
             return IsAlliance(BelongForce, other.BelongForce);
@@ -665,6 +666,7 @@ namespace Sango.Game
         {
             return LandTroopType.IsMachine();
         }
+
         public bool IsHelepolis()
         {
             return LandTroopType.IsHelepolis();
@@ -690,7 +692,6 @@ namespace Sango.Game
         {
 
         }
-
 
         //@param attacker Troops
         //@param defender Troops
@@ -845,7 +846,6 @@ namespace Sango.Game
             return damage;
         }
 
-
         public static int CalculateSkillDamage(BuildingBase attacker, Troop target, SkillInstance skill)
         {
 
@@ -987,7 +987,6 @@ namespace Sango.Game
             }
             return 0;
         }
-
 
         // 适应力加成
         //@param attacker Troops
@@ -1445,6 +1444,7 @@ namespace Sango.Game
 
             return MoveTo(tryToDest);
         }
+
         public bool TryCloseTo(Cell destCell)
         {
             if (!isMoving)
@@ -1511,6 +1511,7 @@ namespace Sango.Game
 
             return MoveTo(tryToDest);
         }
+
         public bool TryMoveToCity(City city)
         {
             if (!isMoving)

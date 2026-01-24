@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace Sango.Game
 {
@@ -66,6 +65,7 @@ namespace Sango.Game
         {
             value = ((baseValue * changeType.GetAgeFactor(master.Age)) / 10000 + Math.Min(Scenario.Cur.Variables.MaxAttributeGet, (valueExp / Scenario.Cur.Variables.AttributeExpLevelNeed))) * valueFacter / 10000;
         }
+
         public void SetExp(int exp)
         {
             if (value - baseValue >= Scenario.Cur.Variables.MaxAttributeGet)
@@ -77,6 +77,7 @@ namespace Sango.Game
                 Update();
             }
         }
+
         public void SetFacter(int facter)
         {
             if (facter != valueFacter)

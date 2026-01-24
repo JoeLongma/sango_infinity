@@ -84,14 +84,17 @@ namespace Sango.Game
             return (this.troop == null || this.troop.BelongForce == troops.BelongForce) &&
                          (this.building == null || this.building.BelongForce == troops.BelongForce);
         }
+
         public bool CanMove(Troop troops)
         {
             return TerrainType != null && TerrainType.CanMoveBy(troops);
         }
+
         public bool CanStay(Troop troops)
         {
             return this.troop == null && this.building == null && CanMove(troops);
         }
+
         public bool IsEmpty()
         {
             return this.troop == null && this.building == null;
@@ -101,18 +104,22 @@ namespace Sango.Game
         {
             return Scenario.Cur.Map.GetCell(x + offsetX, y + offsetY);
         }
+
         public int Distance(Cell other)
         {
             return Cub.Distance(other.Cub);
         }
+
         public void Ring(int radius, List<Cell> list)
         {
             Scenario.Cur.Map.GetRing(this, radius, list);
         }
+
         public void Ring(int radius, Action<Cell> action)
         {
             Scenario.Cur.Map.RingAction(this, radius, action);
         }
+
         public void Spiral(int radius, Action<Cell> action)
         {
             Scenario.Cur.Map.SpiralAction(this, radius, action);
@@ -192,7 +199,7 @@ namespace Sango.Game
         {
             if (interiorModel == null)
             {
-                interiorModel = MapObject.Create($"内政地{x}-{y}");
+                interiorModel = MapObject.Create($"内政用地{x}-{y}");
                 interiorModel.objType = 0;
                 interiorModel.modelId = 0;
                 interiorModel.modelAsset = $"Assets/Model/Prefab/4622.prefab";

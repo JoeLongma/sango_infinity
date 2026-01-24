@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Sango.Game.Render;
 using System;
-using System.Collections.Generic;
 
 namespace Sango.Game
 {
@@ -437,7 +436,6 @@ namespace Sango.Game
         /// </summary>
         public int BaseRecruitmentAbility => Glamour;
 
-
         public void OnPersonAgeUpdate(Scenario scenario)
         {
             if (scenario.Variables.AgeEnabled)
@@ -696,6 +694,7 @@ namespace Sango.Game
         {
             return base.OnTurnStart(scenario);
         }
+
         public override bool OnForceTurnStart(Scenario scenario)
         {
             //TODO:在野角色随机移动
@@ -710,7 +709,6 @@ namespace Sango.Game
             UpdateMission(scenario);
             return base.OnForceTurnEnd(scenario);
         }
-
 
         public void TransformToCity(City dest)
         {

@@ -104,6 +104,7 @@ namespace Sango.Game
             }
             return true;
         }
+
         public static bool AITroops(Corps corps, Scenario scenario)
         {
             for (int i = 0; i < scenario.troopsSet.Count; ++i)
@@ -117,6 +118,5 @@ namespace Sango.Game
             }
             return true;
         }
-
     }
 }

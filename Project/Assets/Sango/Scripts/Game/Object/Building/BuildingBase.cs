@@ -14,7 +14,7 @@ namespace Sango.Game
         public Force BelongForce;
 
         /// <summary>
-        /// 所属势力
+        /// 所属军团
         /// </summary>
         [JsonConverter(typeof(Id2ObjConverter<Corps>))]
         [JsonProperty]
@@ -107,14 +107,17 @@ namespace Sango.Game
         {
             return BuildingType.kind == (int)BuildingKindType.City;
         }
+
         public bool IsPort()
         {
             return BuildingType.kind == (int)BuildingKindType.Port;
         }
+
         public bool IsGate()
         {
             return BuildingType.kind == (int)BuildingKindType.Gate;
         }
+
         public bool IsIntorBuilding()
         {
             return BuildingType.IsIntrior;
@@ -182,6 +185,7 @@ namespace Sango.Game
             }
             return true;
         }
+
         public bool IsRoadBlocked()
         {
             List<Cell> cells = new List<Cell>();
@@ -233,6 +237,7 @@ namespace Sango.Game
         {
 
         }
+
         public virtual void OnComplate(SangoObject atk)
         {
 
@@ -247,7 +252,6 @@ namespace Sango.Game
             return true;
         }
 
-
         //public virtual int GetFoodHarvest(Cell cell)
         //{
         //    return (int)((cell.TerrainType.foodDeposit + BuildingType.foodGain) * cell.Fertility);
@@ -258,8 +262,11 @@ namespace Sango.Game
         //}
 
         public virtual int GetAttack() { return BuildingType.atk; }
+
         public virtual int GetAttackBack() { return BuildingType.atkBack; }
+
         public virtual int GetDefence() { return 50; }
+
         public float GetAttackBackFactor(SkillInstance skill, int distance)
         {
             if (skill.IsRange() && skill.costEnergy == 0 && distance > 1)

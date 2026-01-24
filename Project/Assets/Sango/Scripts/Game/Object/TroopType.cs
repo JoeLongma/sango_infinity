@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace Sango.Game
 {
@@ -37,7 +37,7 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public bool isFight;
 
-        // <summary>
+        /// <summary>
         /// 是否远程
         /// </summary>
         [JsonProperty] public bool isRange;
@@ -160,8 +160,7 @@ namespace Sango.Game
         /// <summary>
         /// 伏兵计略暴击率加成
         /// </summary>
-        [JsonProperty] public byte ambushCriticalAdd;
-         
+        [JsonProperty] public byte ambushCriticalAdd;         
 
         public int MoveCost(Cell cell)
         {
@@ -171,7 +170,6 @@ namespace Sango.Game
                 return cost + extraMoveCost[terrainId];
             return cost;
         }
-
 
         // 获取当前可以组建的兵种
         public static void CheckActivTroopTypeList(List<Person> checkPersonList, List<TroopType> activeTroopTypes)
@@ -284,10 +282,10 @@ namespace Sango.Game
         {
             return kind == 8 || kind == 9;
         }
+
         public bool IsHelepolis()
         {
             return kind == 8;
         }
-
     }
 }

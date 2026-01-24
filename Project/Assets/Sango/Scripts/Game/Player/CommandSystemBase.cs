@@ -14,6 +14,7 @@
         }
 
         public virtual void Init() {; }
+
         public virtual void Clear() {; }
 
         /// <summary>

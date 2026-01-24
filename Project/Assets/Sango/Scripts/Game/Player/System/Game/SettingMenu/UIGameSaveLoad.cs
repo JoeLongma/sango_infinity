@@ -1,7 +1,6 @@
 ﻿using Sango.Game.Player;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -140,7 +139,6 @@ namespace Sango.Game.Render.UI
 
         public void ShowScenario(int index)
         {
-
             if (isSave)
             {
                 Save(index);

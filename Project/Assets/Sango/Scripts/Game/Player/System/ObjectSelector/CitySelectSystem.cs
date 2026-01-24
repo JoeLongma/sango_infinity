@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using static Sango.Game.CitySortFunction;
 
 namespace Sango.Game.Player
 {

@@ -1,5 +1,4 @@
-﻿using Sango.Game.Render.UI;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using ContextMenu = Sango.Game.Render.UI.ContextMenu;
 
@@ -27,8 +26,8 @@ namespace Sango.Game.Player
                 PersonSortFunction.SortByName,
                 PersonSortFunction.SortByPolitics,
             };
-
         }
+
         public override bool IsValid
         {
             get
@@ -37,6 +36,7 @@ namespace Sango.Game.Player
                 return TargetBuilding.BelongCity.freePersons.Count > 0 && TargetBuilding.BelongCity.gold >= TargetUpgradeType.cost &&!TargetBuilding.isWorking;
             }
         }
+
         protected override void OnBuildingContextMenuShow(IContextMenuData menuData, BuildingBase building)
         {
             if (building.BelongForce != null && building.BelongForce.IsPlayer && building.BelongForce == Scenario.Cur.CurRunForce)
@@ -75,9 +75,7 @@ namespace Sango.Game.Player
             }
             UpdateJobValue();
             Window.Instance.Open("window_building_upgrade");
-
         }
-
 
         public override void OnDestroy()
         {
@@ -104,6 +102,5 @@ namespace Sango.Game.Player
                     }
             }
         }
-
     }
 }

@@ -2,7 +2,8 @@
 {
     public class GameSave : GameSettingMenuBase
     {
-        public GameSave() {
+        public GameSave() 
+        {
             customMenuName = "保存";
             customMenuOrder = 0;
             windowName = "window_scenario_save_in_game";

@@ -1,10 +1,4 @@
-﻿using Newtonsoft.Json;
-using Sango.Game.Render;
-using Sango.Tools;
-using System;
-using System.Collections.Generic;
-
-namespace Sango.Game
+﻿namespace Sango.Game
 {
     public class TroopAttribute
     {
@@ -14,9 +8,5 @@ namespace Sango.Game
         public int miss;
         public int critical;
         public int criticalResistance;
-
-
-
-
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
@@ -87,7 +86,6 @@ namespace Sango.Game.Render.UI
 
             return uIDialog;
         }
-
 
         public void SetPerson(Person person)
         {

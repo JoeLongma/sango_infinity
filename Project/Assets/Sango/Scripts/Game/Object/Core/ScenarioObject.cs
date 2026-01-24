@@ -1,9 +1,5 @@
-﻿using SimpleJSON;
-using System.IO;
-
-namespace Sango.Game
+﻿namespace Sango.Game
 {
-
     public abstract class ScenarioObject<T> where T : SangoObject, new()
     {
         protected int _id = 0;
@@ -28,6 +24,7 @@ namespace Sango.Game
                 }
             }
         }
+
         public T Object
         {
             get
@@ -49,13 +46,16 @@ namespace Sango.Game
                 _id = 0;
             }
         }
+
         public bool IsValid() { return Id > 0; }
+
         protected virtual T Get(int id) { return null; }
 
         public static implicit operator T(ScenarioObject<T> d)
         {
             return (d == null) ? null : d.Object;
         }
+
         public static explicit operator int(ScenarioObject<T> d)
         {
             return d.Id;

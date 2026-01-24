@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.Collections;
-using System.IO;
 using UnityEngine;
 
 namespace Sango.Game
@@ -27,12 +25,10 @@ namespace Sango.Game
         [JsonConverter(typeof(Color32Converter))]
         public Color32 color;
 
-
         public float Fertility
         {
             get
             {
-
                 return GameRandom.Range(fertility[0], fertility[1]);
             }
         }
@@ -58,6 +54,7 @@ namespace Sango.Game
             int num = GameUtility.Random(foodDeposit / 2) + ((foodDeposit * 3) / 4);
             return (int)(num * foodRate[season]);
         }
+
         public bool CanMoveBy(Troop troops)
         {
             return moveable;

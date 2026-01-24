@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace Sango.Game
 {
@@ -14,6 +12,7 @@ namespace Sango.Game
             writer.WriteValue(dest.state);
             writer.WriteEndArray();
         }
+
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             BitCheck32 dest = (BitCheck32)existingValue;
@@ -30,7 +29,6 @@ namespace Sango.Game
                 }
             }
             return dest;
-
         }
     }
 }

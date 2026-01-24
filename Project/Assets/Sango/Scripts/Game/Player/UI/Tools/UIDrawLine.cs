@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 /// <summary>
 /// 画线 
 /// https://github.com/monitor1394/unity-ugui-XCharts
@@ -24,8 +25,6 @@ public class UIDrawLine
         }
         vh.AddUIVertexQuad(vertex);
     }
-
-
 
     public static void GetBezierList(ref List<Vector3> posList, Vector3 sp, Vector3 ep,
            Vector3 lsp, Vector3 nep, float smoothness = 2f, float k = 2.0f)
@@ -52,6 +51,7 @@ public class UIDrawLine
         if (segment < 4) segment = 4;
         GetBezierList2(ref posList, sp, ep, segment, cp1, cp2);
     }
+
     public static void GetBezierList2(ref List<Vector3> posList, Vector3 sp, Vector3 ep, int segment, Vector3 cp,
           Vector3 cp2)
     {
@@ -66,6 +66,7 @@ public class UIDrawLine
         }
         posList.Add(ep);
     }
+
     public static Vector3 GetBezier2(float t, Vector3 sp, Vector3 p1, Vector3 p2, Vector3 ep)
     {
         t = Mathf.Clamp01(t);

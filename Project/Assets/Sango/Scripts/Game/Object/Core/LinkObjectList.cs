@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Xml;
 
 namespace Sango.Game
 {
@@ -37,6 +36,7 @@ namespace Sango.Game
         }
 
         public int Count { get { return values.Count; } }
+
         public int Length { get { return values.Count; } }
 
         public void ForEach(Action<T> action)
@@ -68,6 +68,7 @@ namespace Sango.Game
         {
             values.Sort(comparison);
         }
+
         public void Remove(T1 obj)
         {
 #if UNITY_EDITOR
@@ -88,7 +89,6 @@ namespace Sango.Game
             }
         }
 
-        public T this[int aIndex] { get { return values[aIndex]; } set { } }
-       
+        public T this[int aIndex] { get { return values[aIndex]; } set { } }       
     }
 }

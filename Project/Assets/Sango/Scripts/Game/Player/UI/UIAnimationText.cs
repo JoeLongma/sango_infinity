@@ -1,7 +1,4 @@
-﻿
-using Sango.Loader;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI

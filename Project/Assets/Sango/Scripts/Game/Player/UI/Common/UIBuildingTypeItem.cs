@@ -1,5 +1,4 @@
-﻿using Sango.Loader;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
@@ -14,6 +13,7 @@ namespace Sango.Game.Render.UI
         public int index;
         public delegate void OnSelect(UIBuildingTypeItem item);
         public OnSelect onSelected;
+
         public bool IsSelected()
         {
             return select.gameObject.activeSelf;
@@ -115,6 +115,7 @@ namespace Sango.Game.Render.UI
             }
             return this;
         }
+
         public void OnClick()
         {
             onSelected?.Invoke(this);

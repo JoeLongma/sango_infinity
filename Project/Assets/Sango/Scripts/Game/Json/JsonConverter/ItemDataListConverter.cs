@@ -17,6 +17,7 @@ namespace Sango.Game
             });
             writer.WriteEndArray();
         }
+
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             if (existingValue == null)

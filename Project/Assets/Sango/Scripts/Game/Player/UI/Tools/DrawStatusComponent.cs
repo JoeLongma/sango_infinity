@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+
 public class DrawStatusComponent : Graphic
 {
     public Color32[] colors = new Color32[6];
     public float [] scaleLenth = new float[5];
     bool needUpdate = false;
+
     private void Update()
     {
         if(needUpdate)
@@ -42,5 +44,3 @@ public class DrawStatusComponent : Graphic
         vh.AddTriangle(0, 1, 5);
     }
 }
-
-

@@ -181,7 +181,6 @@ namespace Sango.Game.Render.UI
             return obj;
         }
 
-
         public GameObject AddNumberItem(string title, int number, int min, int max, System.Action<int> onChange)
         {
             GameObject obj;

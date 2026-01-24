@@ -1,11 +1,11 @@
-﻿using System;
-using static Sango.Game.TroopAIUtility;
+﻿using static Sango.Game.TroopAIUtility;
 
 namespace Sango.Game
 {
     public class TroopReturnCity : TroopMissionBehaviour
     {
         public override MissionType MissionType { get { return MissionType.TroopReturnCity; } }
+
         public override bool IsMissionComplete
         {
             get

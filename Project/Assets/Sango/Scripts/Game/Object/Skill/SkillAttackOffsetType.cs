@@ -1,6 +1,5 @@
 ﻿namespace Sango.Game
 {
-
     public enum SkillAttackOffsetType : int
     {
         Customize = 0,
@@ -9,6 +8,5 @@
         SelfRing = 3,
         SpellNeighbors = 4,
         Spiral = 5,
-
     }
 }

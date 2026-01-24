@@ -36,6 +36,7 @@ namespace Sango.Game.Action
         void OnTroopBeforeCalculateSkillSuccess(Troop troop, SkillInstance skill, Cell cell, OverrideData<int> overrideData)
         {
             if (Force != null && troop.BelongForce != Force) return;
+
             if (Troop != null && Troop != troop) return;
 
             if (!CheckIsNormalSkill(skill, isNormal))

@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Sango.Hexagon;
-using Sango.Tools;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,6 +19,7 @@ namespace Sango.Game
         [JsonProperty] public CellSet CellSet { get; internal set; }
 
         public HexWorld HexWorld { get; internal set; }
+
         public string FileName { get; internal set; }
 
         public void Clear()
@@ -70,6 +70,7 @@ namespace Sango.Game
                 fs.Dispose();
             }
         }
+
         public void Init(Scenario scenario)
         {
             CellSet.Init(this);
@@ -84,24 +85,29 @@ namespace Sango.Game
             GridSize = gridSize;
             HexWorld = new Hexagon.HexWorld(new Hexagon.Point(gridSize, gridSize), new Hexagon.Point(0, 0));
         }
+
         public Cell GetCell(int x, int y)
         {
             return CellSet.GetCell(x, y);
         }
+
         public Cell GetCell(Hexagon.Hex cub)
         {
             Coord coords = Coord.OffsetFromCube(cub);
             return CellSet.GetCell(coords.col, coords.row);
         }
+
         public Cell GetCell(UnityEngine.Vector3 position)
         {
             Vector2Int coords = HexWorld.PositionToCoords(position);
             return CellSet.GetCell(coords.x, coords.y);
         }
+
         public Cell GetNeighbor(Cell cell, int dir)
         {
             return cell.Neighbors[dir];
         }
+
         public void GetNeighbors(Cell cell, List<Cell> neighborList)
         {
             for (int i = 0; i < 6; i++)
@@ -111,14 +117,17 @@ namespace Sango.Game
                     neighborList.Add(c);
             }
         }
+
         public Vector3 Coords2Position(int x, int y)
         {
             return HexWorld.CoordsToPosition(x, y);
         }
+
         public Vector2Int Position2Coords(Vector3 position)
         {
             return HexWorld.PositionToCoords(position);
         }
+
         public bool IsZOC(Troop troops, Cell cell)
         {
             if (cell.building != null && !cell.building.IsEnemy(troops))
@@ -136,26 +145,32 @@ namespace Sango.Game
             }
             return false;
         }
+
         public int Distance(Hexagon.Hex start, Hexagon.Hex end)
         {
             return start.Distance(end);
         }
+
         public int Distance(Cell start, Cell end)
         {
             return start.Cub.Distance(end.Cub);
         }
+
         public int Distance(int ax, int ay, int bx, int by)
         {
             return Distance(Coord.OffsetToCube(ax, ay), Coord.OffsetToCube(bx, by));
         }
+
         public void GetRing(int x, int y, int radius, List<Cell> cellList, bool checkMoveAble = false)
         {
             GetRing(Coord.OffsetToCube(x, y), radius, cellList, checkMoveAble);
         }
+
         public void GetRing(Cell start, int radius, List<Cell> cellList, bool checkMoveAble = false)
         {
             GetRing(start.Cub, radius, cellList, checkMoveAble);
         }
+
         public void GetRing(Hexagon.Hex cub, int radius, List<Cell> cellList, bool checkMoveAble = false)
         {
             cub.Ring(radius, (c =>
@@ -223,6 +238,7 @@ namespace Sango.Game
         {
             GetSpiral(start.Cub, radius, cellList);
         }
+
         public void GetSpiral(Hexagon.Hex cub, int radius, List<Cell> cellList)
         {
             cub.Spiral(radius, (c =>
@@ -438,7 +454,6 @@ namespace Sango.Game
             GetDirectMovePath(troops, dest, cellList);
         }
 
-
         /// <summary>
         /// 该方法寻找Troop到B的最小Cost路径
         /// </summary>
@@ -458,7 +473,6 @@ namespace Sango.Game
         List<Cell> openList = new List<Cell>();
         //PriorityQueue<Cell> frontier = new PriorityQueue<Cell>();
 
-
         System.Collections.Generic.PriorityQueue<Cell, int> frontier = new PriorityQueue<Cell, int>(new LowPriorit());
         Hashtable came_from = new Hashtable();
         //Dictionary<Cell, cellTempInfo> cost_so_far = new Dictionary<Cell, cellTempInfo>();
@@ -472,13 +486,11 @@ namespace Sango.Game
             }
         }
 
-
         class cellTempInfo
         {
             public int cost;
             public bool isZOC;
         }
-
 
         /// <summary>
         /// 获取一个格子之间的路径,仅判断是否可以行走
@@ -539,7 +551,6 @@ namespace Sango.Game
                 }
             }
         }
-
 
         /// <summary>
         /// 获取周围的路径,仅判断是否可以行走,最大寻路范围为len

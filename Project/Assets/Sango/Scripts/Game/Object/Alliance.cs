@@ -6,7 +6,6 @@ namespace Sango.Game
     [JsonObject(MemberSerialization.OptIn)]
     public class Alliance : SangoObject
     {
-
         /// <summary>
         /// 部队列表
         /// </summary>

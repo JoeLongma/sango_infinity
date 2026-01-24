@@ -357,6 +357,7 @@ namespace Sango.Game
         {
             return 4000 + 4000 * durability / DurabilityLimit;
         }
+
         public override void OnFall(SangoObject atk)
         {
             BelongCity?.OnBuildingDestroy(this);

@@ -20,6 +20,7 @@ namespace Sango.Game.Render.UI
         {
             Show(itemData.headList, position, ContextMenuType.Common);
         }
+
         public static void Show(List<ContextMenuItem> menuItems, Vector2 position)
         {
             Show(menuItems, position, ContextMenuType.Common);
@@ -69,7 +70,6 @@ namespace Sango.Game.Render.UI
             return windowInterface.IsVisible();
         }
 
-
         public static void Add(ContextMenuData itemData)
         {
             //ContenDatas[itemData.depth].Add(itemData);
@@ -101,6 +101,5 @@ namespace Sango.Game.Render.UI
                 Window.Instance.Close(currentWindowName);
             }
         }
-
     }
 }

@@ -18,6 +18,5 @@
         {
             Window.Instance.Close(windowName);
         }
-
     }
 }

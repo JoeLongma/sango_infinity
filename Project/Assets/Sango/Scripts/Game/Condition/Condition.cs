@@ -6,13 +6,17 @@ namespace Sango.Game
     public abstract class Condition
     {
         public abstract void Init(JObject p, params SangoObject[] sangoObjects);
+
         public abstract bool Check(params object[] objects);
+
         public virtual bool Check(Troop troop, Troop target, SkillInstance skill) { return false; }
+
         public virtual bool Check(SkillInstance skillInstance, Troop troop, Cell spellCell, List<Cell> atkCellList) { return false; }
 
         public delegate Condition ConditionCreator();
 
         public static Dictionary<string, ConditionCreator> CreateMap = new Dictionary<string, ConditionCreator>();
+
         public static void Register(string name, ConditionCreator action)
         {
             CreateMap[name] = action;
@@ -22,6 +26,7 @@ namespace Sango.Game
         {
             return new T();
         }
+
         public static Condition Create(string name)
         {
             ConditionCreator actionBaseCreator;
@@ -44,9 +49,7 @@ namespace Sango.Game
             // Skill
             Register("SkillIsCritical", CraeteHandle<SkillIsCritical>);
             Register("SkillIsNormalSkill", CraeteHandle<SkillIsNormalSkill>);
-            Register("SkillIsStrategySkill", CraeteHandle<SkillIsStrategySkill>);
-            
-
+            Register("SkillIsStrategySkill", CraeteHandle<SkillIsStrategySkill>);          
         }
     }
 }

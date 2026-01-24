@@ -1,8 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
-
-namespace Sango.Game
+﻿namespace Sango.Game
 {
     /// <summary>
     /// 特性

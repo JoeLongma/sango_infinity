@@ -132,7 +132,6 @@ namespace Sango.Game.Render.UI
             }
         }
 
-
         public override void OnShow()
         {
             sureBtn.interactable = false;

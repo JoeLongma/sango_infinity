@@ -1,5 +1,4 @@
-﻿using Sango.Game.Player;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 
 namespace Sango.Game
@@ -7,7 +6,6 @@ namespace Sango.Game
     public enum PersonSortTileType : int
     {
         Name = 0,
-
     }
 
     public enum PersonSortGroupType : int
@@ -128,7 +126,6 @@ namespace Sango.Game
 
             return "";
         }
-
 
         public static SortTitle SortByName = new SortTitle()
         {
@@ -312,7 +309,6 @@ namespace Sango.Game
             width = 150,
             valueGetCall = x =>
             {
-
                 StringBuilder sb = new StringBuilder();
                 if (x.FeatureList != null)
                 {
@@ -422,7 +418,6 @@ namespace Sango.Game
                 personSortFunc = (a, b) => a.DistanceDays(where).CompareTo(b.DistanceDays(where)),
             };
         }
-
 
         public static SortTitle SortByIsFree = new SortTitle()
         {
@@ -592,5 +587,4 @@ namespace Sango.Game
             personSortFunc = (a, b) => SangoObject.Compare(a.Mother, b.Mother),
         };
     }
-
 }

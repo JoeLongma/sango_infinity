@@ -87,6 +87,5 @@ namespace Sango.Game
 
         //TODO:升级所需的额外条件
         //[JsonProperty] public Condition.Condition levelUpCondition;
-
     }
 }

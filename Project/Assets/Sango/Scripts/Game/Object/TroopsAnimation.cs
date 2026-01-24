@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Newtonsoft.Json;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace Sango.Game
 {
@@ -30,7 +23,5 @@ namespace Sango.Game
         [JsonProperty] public float scale;
         [JsonProperty] public float time;
         [JsonProperty] public bool isLoop;
-
-
     }
 }

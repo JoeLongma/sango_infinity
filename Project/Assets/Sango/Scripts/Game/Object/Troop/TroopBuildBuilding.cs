@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sango.Game
+﻿namespace Sango.Game
 {
     public class TroopBuildBuilding : TroopMissionBehaviour
     {

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
 {
@@ -21,6 +20,7 @@ namespace Sango.Game.Render.UI
             index = idx;
             onShow?.Invoke(this);
         }
+
         public void OnClick()
         {
             onSelected?.Invoke(this);
@@ -68,6 +68,7 @@ namespace Sango.Game.Render.UI
                 usedItems[i].SetSelected(b);
             }
         }
+
         public bool IsSelected()
         {
             return selectItem.IsSelected();

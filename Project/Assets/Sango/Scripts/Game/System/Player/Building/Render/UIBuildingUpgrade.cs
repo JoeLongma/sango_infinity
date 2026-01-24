@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json.Utilities.LinqBridge;
-using Sango.Game.Player;
-using System;
+﻿using Sango.Game.Player;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
@@ -19,11 +17,9 @@ namespace Sango.Game.Render.UI
         public UITextField destGoldProduction;
         public UITextField destFoodProduction;
 
-
         public UITextField action_value;
 
         BuildingActionUpgrade buildingActionUpgrade;
-
 
         public override void OnShow()
         {
@@ -56,7 +52,6 @@ namespace Sango.Game.Render.UI
             action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.UpgradeBuilding)}/{buildingActionUpgrade.TargetBuilding.BelongCorps.ActionPoint}";
         }
 
-
         public void OnSure()
         {
             buildingActionUpgrade.DoJob();
@@ -79,6 +74,5 @@ namespace Sango.Game.Render.UI
             buildingActionUpgrade.UpdateJobValue();
             OnShow();
         }
-
     }
 }

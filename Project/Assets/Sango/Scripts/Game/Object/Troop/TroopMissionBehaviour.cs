@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using static Sango.Game.TroopAIUtility;
 
 namespace Sango.Game
@@ -51,6 +50,5 @@ namespace Sango.Game
                     return new TroopReturnCity();
             }
         }
-
     }
 }

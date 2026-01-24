@@ -77,6 +77,7 @@ namespace Sango.Game
             }
             ActionOver = true;
         }
+
         public void BurnTroop(Troop troop)
         {
             if (troop == null) return;
@@ -114,6 +115,5 @@ namespace Sango.Game
                 RenderEvent.Instance.Add(@event);
             }
         }
-
     }
 }

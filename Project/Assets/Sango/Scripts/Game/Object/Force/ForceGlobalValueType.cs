@@ -1,8 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using UnityEngine;
-
-namespace Sango.Game
+﻿namespace Sango.Game
 {
     public enum GameEffectType
     {
@@ -57,8 +53,5 @@ namespace Sango.Game
         /// 部队buff效果添加
         /// </summary>
         TroopAddBuffEffectAdd,
-
-
-
     }
 }

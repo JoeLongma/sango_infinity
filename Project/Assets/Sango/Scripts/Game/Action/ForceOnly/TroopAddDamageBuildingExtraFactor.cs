@@ -1,5 +1,4 @@
-﻿using Sango.Game.Tools;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
 namespace Sango.Game.Action
 {
@@ -35,7 +34,6 @@ namespace Sango.Game.Action
                     troop.landDamageBuildingExtraFactor += factor;
                 if (kinds.Contains(troop.WaterTroopType.kind))
                     troop.waterDamageBuildingExtraFactor += factor;
-
             }
         }
     }

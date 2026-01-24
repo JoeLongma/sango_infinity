@@ -3,13 +3,13 @@ using UnityEngine.UI;
 
 namespace Sango.Game.Player
 {
-
     public class UIImageAnimation : MonoBehaviour
     {
         public UnityEngine.Sprite[] sprites;
         public Image image;
         public float speed;
         private int index = 0;
+
         private void OnEnable()
         {
             if (image == null)

@@ -1,8 +1,4 @@
-﻿using Sango.Game.Render;
-using Sango.Game.Render.UI;
-using Sango.Render;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using ContextMenu = Sango.Game.Render.UI.ContextMenu;
 
 namespace Sango.Game.Player

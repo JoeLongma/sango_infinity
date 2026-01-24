@@ -359,6 +359,7 @@ namespace Sango.Game
             SaveArray<string>(o, node);
 
         }
+
         public static void Save(IList<byte> o, XmlNode node)
         {
             SaveArray<byte>(o, node);
@@ -487,7 +488,6 @@ namespace Sango.Game
 
         #endregion List
 
-
         public static void LoadArray<T>(IList<T> list, XmlNode node) where T : IConvertible
         {
             string[] strings = node.InnerText.Split(',');
@@ -565,6 +565,7 @@ namespace Sango.Game
         }
 
         #endregion Xml
+
         #region Json
         public static T Load<T>(SimpleJSON.JSONNode node) where T : struct
         {
@@ -579,12 +580,14 @@ namespace Sango.Game
                 return default;
             }
         }
+
         public static SimpleJSON.JSONNode AddNode(SimpleJSON.JSONNode node)
         {
             SimpleJSON.JSONClass classNode = new SimpleJSON.JSONClass();
             node.Add(classNode);
             return classNode;
         }
+
         public static SimpleJSON.JSONNode AddArrayNode(SimpleJSON.JSONNode node, string name)
         {
             SimpleJSON.JSONArray classNode = new SimpleJSON.JSONArray();
@@ -600,6 +603,7 @@ namespace Sango.Game
             node.Add(name, classNode);
             return classNode;
         }
+
         public static SimpleJSON.JSONNode AddNode(SimpleJSON.JSONNode node, string name, string value)
         {
             if (value == null) return null;
@@ -607,60 +611,70 @@ namespace Sango.Game
             node.Add(name, classNode);
             return classNode;
         }
+
         public static SimpleJSON.JSONNode AddNode(SimpleJSON.JSONNode node, string name, bool value)
         {
             SimpleJSON.JSONData classNode = new SimpleJSON.JSONData(value);
             node.Add(name, classNode);
             return classNode;
         }
+
         public static SimpleJSON.JSONNode AddNode(SimpleJSON.JSONNode node, string name, byte value)
         {
             SimpleJSON.JSONData classNode = new SimpleJSON.JSONData(value);
             node.Add(name, classNode);
             return classNode;
         }
+
         public static SimpleJSON.JSONNode AddNode(SimpleJSON.JSONNode node, string name, sbyte value)
         {
             SimpleJSON.JSONData classNode = new SimpleJSON.JSONData(value);
             node.Add(name, classNode);
             return classNode;
         }
+
         public static SimpleJSON.JSONNode AddNode(SimpleJSON.JSONNode node, string name, short value)
         {
             SimpleJSON.JSONData classNode = new SimpleJSON.JSONData(value);
             node.Add(name, classNode);
             return classNode;
         }
+
         public static SimpleJSON.JSONNode AddNode(SimpleJSON.JSONNode node, string name, ushort value)
         {
             SimpleJSON.JSONData classNode = new SimpleJSON.JSONData(value);
             node.Add(name, classNode);
             return classNode;
         }
+
         public static SimpleJSON.JSONNode AddNode(SimpleJSON.JSONNode node, string name, int value)
         {
             SimpleJSON.JSONData classNode = new SimpleJSON.JSONData(value);
             node.Add(name, classNode);
             return classNode;
         }
+
         public static SimpleJSON.JSONNode AddNode(SimpleJSON.JSONNode node, string name, uint value)
         {
             SimpleJSON.JSONData classNode = new SimpleJSON.JSONData(value);
             node.Add(name, classNode);
             return classNode;
         }
+
         public static SimpleJSON.JSONNode AddNode(SimpleJSON.JSONNode node, string name, float value)
         {
             SimpleJSON.JSONData classNode = new SimpleJSON.JSONData(value);
             node.Add(name, classNode);
             return classNode;
         }
+
         public static SimpleJSON.JSONNode AddNode(SimpleJSON.JSONNode node, string name, double value)
         {
             SimpleJSON.JSONData classNode = new SimpleJSON.JSONData(value);
             node.Add(name, classNode);
             return classNode;
         }
+
         public static SimpleJSON.JSONNode AddNode(SimpleJSON.JSONNode node, string name, IDataObject value)
         {
             if (value == null) return null;
@@ -680,6 +694,7 @@ namespace Sango.Game
             }
             return o;
         }
+
         public static sbyte Load(sbyte defaultValue, SimpleJSON.JSONNode node)
         {
             sbyte o;
@@ -690,6 +705,7 @@ namespace Sango.Game
             }
             return o;
         }
+
         public static byte Load(byte defaultValue, SimpleJSON.JSONNode node)
         {
             byte o;
@@ -700,6 +716,7 @@ namespace Sango.Game
             }
             return o;
         }
+
         public static short Load(short defaultValue, SimpleJSON.JSONNode node)
         {
             short o;
@@ -710,6 +727,7 @@ namespace Sango.Game
             }
             return o;
         }
+
         public static ushort Load(ushort defaultValue, SimpleJSON.JSONNode node)
         {
             ushort o;
@@ -720,6 +738,7 @@ namespace Sango.Game
             }
             return o;
         }
+
         public static int Load(int defaultValue, SimpleJSON.JSONNode node)
         {
             int o;
@@ -730,6 +749,7 @@ namespace Sango.Game
             }
             return o;
         }
+
         public static uint Load(uint defaultValue, SimpleJSON.JSONNode node)
         {
             uint o;
@@ -740,6 +760,7 @@ namespace Sango.Game
             }
             return o;
         }
+
         public static long Load(long defaultValue, SimpleJSON.JSONNode node)
         {
             long o;
@@ -750,6 +771,7 @@ namespace Sango.Game
             }
             return o;
         }
+
         public static ulong Load(ulong defaultValue, SimpleJSON.JSONNode node)
         {
             ulong o;
@@ -760,6 +782,7 @@ namespace Sango.Game
             }
             return o;
         }
+
         public static float Load(float defaultValue, SimpleJSON.JSONNode node)
         {
             float o;
@@ -770,6 +793,7 @@ namespace Sango.Game
             }
             return o;
         }
+
         public static double Load(double defaultValue, SimpleJSON.JSONNode node)
         {
             double o;
@@ -780,6 +804,7 @@ namespace Sango.Game
             }
             return o;
         }
+
         public static string Load(string defaultValue, SimpleJSON.JSONNode node)
         {
             return node.Value;
@@ -789,55 +814,69 @@ namespace Sango.Game
         {
             node.Value = o.ToString();
         }
+
         public static void Save(sbyte o, SimpleJSON.JSONNode node)
         {
             node.Value = o.ToString();
         }
+
         public static void Save(byte o, SimpleJSON.JSONNode node)
         {
             node.Value = o.ToString();
         }
+
         public static void Save(short o, SimpleJSON.JSONNode node)
         {
             node.Value = o.ToString();
         }
+
         public static void Save(ushort o, SimpleJSON.JSONNode node)
         {
             node.Value = o.ToString();
         }
+
         public static void Save(int o, SimpleJSON.JSONNode node)
         {
             node.Value = o.ToString();
         }
+
         public static void Save(uint o, SimpleJSON.JSONNode node)
         {
             node.Value = o.ToString();
         }
+
         public static void Save(long o, SimpleJSON.JSONNode node)
         {
             node.Value = o.ToString();
         }
+
         public static void Save(ulong o, SimpleJSON.JSONNode node)
         {
             node.Value = o.ToString();
         }
+
         public static void Save(float o, SimpleJSON.JSONNode node)
         {
             node.Value = o.ToString();
         }
+
         public static void Save(double o, SimpleJSON.JSONNode node)
         {
             node.Value = o.ToString();
         }
+
         public static void Save(string o, SimpleJSON.JSONNode node)
         {
             node.Value = o;
         }
+
         public static void Save(IDataObject o, SimpleJSON.JSONNode node)
         {
             o.Save(node);
         }
+
         #endregion sigle
+
         #region List
         public static SimpleJSON.JSONNode AddNode<T>(SimpleJSON.JSONNode node, string name, IList<T> value) where T : IDataObject, new()
         {
@@ -870,6 +909,7 @@ namespace Sango.Game
                 Save(o[i], Sango.Game.DataLoader.AddNode(node));
             }
         }
+
         public static void Save(IList<byte> o, SimpleJSON.JSONNode node)
         {
             if (o == null) return;
@@ -879,6 +919,7 @@ namespace Sango.Game
                 Save(o[i], Sango.Game.DataLoader.AddNode(node));
             }
         }
+
         public static void Save(IList<sbyte> o, SimpleJSON.JSONNode node)
         {
             if (o == null) return;
@@ -888,6 +929,7 @@ namespace Sango.Game
                 Save(o[i], Sango.Game.DataLoader.AddNode(node));
             }
         }
+
         public static void Save(IList<short> o, SimpleJSON.JSONNode node)
         {
             if (o == null) return;
@@ -897,6 +939,7 @@ namespace Sango.Game
                 Save(o[i], Sango.Game.DataLoader.AddNode(node));
             }
         }
+
         public static void Save(IList<ushort> o, SimpleJSON.JSONNode node)
         {
             if (o == null) return;
@@ -906,6 +949,7 @@ namespace Sango.Game
                 Save(o[i], Sango.Game.DataLoader.AddNode(node));
             }
         }
+
         public static void Save(IList<int> o, SimpleJSON.JSONNode node)
         {
             if (o == null) return;
@@ -915,6 +959,7 @@ namespace Sango.Game
                 Save(o[i], Sango.Game.DataLoader.AddNode(node));
             }
         }
+
         public static void Save(IList<uint> o, SimpleJSON.JSONNode node)
         {
             if (o == null) return;
@@ -924,6 +969,7 @@ namespace Sango.Game
                 Save(o[i], Sango.Game.DataLoader.AddNode(node));
             }
         }
+
         public static void Save(IList<long> o, SimpleJSON.JSONNode node)
         {
             if (o == null) return;
@@ -933,6 +979,7 @@ namespace Sango.Game
                 Save(o[i], Sango.Game.DataLoader.AddNode(node));
             }
         }
+
         public static void Save(IList<ulong> o, SimpleJSON.JSONNode node)
         {
             if (o == null) return;
@@ -942,6 +989,7 @@ namespace Sango.Game
                 Save(o[i], Sango.Game.DataLoader.AddNode(node));
             }
         }
+
         public static void Save(IList<bool> o, SimpleJSON.JSONNode node)
         {
             if (o == null) return;
@@ -951,6 +999,7 @@ namespace Sango.Game
                 Save(o[i], Sango.Game.DataLoader.AddNode(node));
             }
         }
+
         public static void Save(IList<float> o, SimpleJSON.JSONNode node)
         {
             if (o == null) return;
@@ -960,6 +1009,7 @@ namespace Sango.Game
                 Save(o[i], Sango.Game.DataLoader.AddNode(node));
             }
         }
+
         public static void Save(IList<double> o, SimpleJSON.JSONNode node)
         {
             if (o == null) return;
@@ -991,6 +1041,7 @@ namespace Sango.Game
                 o.Add(Load("", itemNode));
             }
         }
+
         public static void Load(IList<byte> o, SimpleJSON.JSONNode node)
         {
             int count = node.Count;
@@ -1000,6 +1051,7 @@ namespace Sango.Game
                 o.Add(Load((byte)0, itemNode));
             }
         }
+
         public static void Load(IList<sbyte> o, SimpleJSON.JSONNode node)
         {
             int count = node.Count;
@@ -1009,6 +1061,7 @@ namespace Sango.Game
                 o.Add(Load((sbyte)0, itemNode));
             }
         }
+
         public static void Load(IList<short> o, SimpleJSON.JSONNode node)
         {
             int count = node.Count;
@@ -1018,6 +1071,7 @@ namespace Sango.Game
                 o.Add(Load((short)0, itemNode));
             }
         }
+
         public static void Load(IList<ushort> o, SimpleJSON.JSONNode node)
         {
             int count = node.Count;
@@ -1027,6 +1081,7 @@ namespace Sango.Game
                 o.Add(Load((ushort)0, itemNode));
             }
         }
+
         public static void Load(IList<int> o, SimpleJSON.JSONNode node)
         {
             int count = node.Count;
@@ -1036,6 +1091,7 @@ namespace Sango.Game
                 o.Add(Load((int)0, itemNode));
             }
         }
+
         public static void Load(IList<uint> o, SimpleJSON.JSONNode node)
         {
             int count = node.Count;
@@ -1045,6 +1101,7 @@ namespace Sango.Game
                 o.Add(Load((uint)0, itemNode));
             }
         }
+
         public static void Load(IList<long> o, SimpleJSON.JSONNode node)
         {
             int count = node.Count;
@@ -1054,6 +1111,7 @@ namespace Sango.Game
                 o.Add(Load((long)0, itemNode));
             }
         }
+
         public static void Load(IList<ulong> o, SimpleJSON.JSONNode node)
         {
             int count = node.Count;
@@ -1063,6 +1121,7 @@ namespace Sango.Game
                 o.Add(Load((ulong)0, itemNode));
             }
         }
+
         public static void Load(IList<bool> o, SimpleJSON.JSONNode node)
         {
             int count = node.Count;
@@ -1072,6 +1131,7 @@ namespace Sango.Game
                 o.Add(Load(false, itemNode));
             }
         }
+
         public static void Load(IList<float> o, SimpleJSON.JSONNode node)
         {
             int count = node.Count;
@@ -1081,6 +1141,7 @@ namespace Sango.Game
                 o.Add(Load((float)0, itemNode));
             }
         }
+
         public static void Load(IList<double> o, SimpleJSON.JSONNode node)
         {
             int count = node.Count;
@@ -1090,9 +1151,11 @@ namespace Sango.Game
                 o.Add(Load((double)0, itemNode));
             }
         }
+
         #endregion List
 
         #endregion Json
+
         #region Binary
         public static bool Load(bool defaultValue, BinaryReader node)
         {
@@ -1205,8 +1268,8 @@ namespace Sango.Game
 
         #endregion 基本数据处理
 
-
         #region 额外没有继承DataObject数据处理
+
         #region UnityEngine.Vector2Int
         public static void Save(UnityEngine.Vector2Int o, System.Xml.XmlNode node)
         {
@@ -1249,6 +1312,7 @@ namespace Sango.Game
             o.y = node.ReadInt32();
         }
         #endregion UnityEngine.Vector2Int
+
         #region UnityEngine.Bounds
         public static void Save(UnityEngine.Bounds o, System.Xml.XmlNode node)
         {
@@ -1366,11 +1430,13 @@ namespace Sango.Game
             o.size = new Vector2(x, y);
         }
         #endregion Sango.Tools.Rect
+
         #region UnityEngine.Color32
         public static void Save(UnityEngine.Color32 o, SimpleJSON.JSONNode node)
         {
             node.Value = $"{o.r},{o.g},{o.b},{o.a}";
         }
+
         public static void Load(ref UnityEngine.Color32 o, SimpleJSON.JSONNode node)
         {
             string data = node.Value;
@@ -1386,6 +1452,7 @@ namespace Sango.Game
                 a = byte.Parse(values[3]);
             o.r = r; o.g = g; o.b = b; o.a = a;
         }
+
         public static void Save(UnityEngine.Color32 o, BinaryWriter node)
         {
             node.Write(o.r);
@@ -1393,6 +1460,7 @@ namespace Sango.Game
             node.Write(o.b);
             node.Write(o.a);
         }
+
         public static void Load(ref UnityEngine.Color32 o, BinaryReader node)
         {
             o.r = node.ReadByte();
@@ -1400,7 +1468,6 @@ namespace Sango.Game
             o.b = node.ReadByte();
             o.a = node.ReadByte();
         }
-
 
         public static void Save(UnityEngine.Color32 o, System.Xml.XmlNode node)
         {
@@ -1427,8 +1494,8 @@ namespace Sango.Game
                 a = byte.Parse(values[3]);
             o.r = r; o.g = g; o.b = b; o.a = a;
         }
-        #endregion UnityEngine.Color32
 
+        #endregion UnityEngine.Color32
 
         #endregion 额外没有继承DataObject数据处理
     }

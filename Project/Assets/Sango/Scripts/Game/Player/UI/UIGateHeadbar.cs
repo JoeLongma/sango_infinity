@@ -1,7 +1,4 @@
-﻿using System.Text;
-using UnityEngine.UI;
-
-namespace Sango.Game.Render.UI
+﻿namespace Sango.Game.Render.UI
 {
     public class UIGateHeadbar : UICityHeadbar
     {

@@ -37,7 +37,6 @@ namespace Sango.Game.Render.UI
                 {
                     listItem.SetSelected(false);
                 }
-                
             }
         }
 
@@ -128,6 +127,5 @@ namespace Sango.Game.Render.UI
                 }
             }
         }
-
     }
 }

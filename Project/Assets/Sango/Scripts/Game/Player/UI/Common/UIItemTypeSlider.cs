@@ -1,5 +1,4 @@
-﻿using Sango.Loader;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
@@ -20,10 +19,10 @@ namespace Sango.Game.Render.UI
             name.text = type.Name;
             return this;
         }
+
         public UIItemTypeSlider SetValid(bool b)
         {
             return this;
         }
-
     }
 }

@@ -1,8 +1,4 @@
-﻿using Sango.Game.Player;
-using Sango.Loader;
-using Sango.Render;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -52,7 +48,6 @@ namespace Sango.Game.Render.UI
                 UpdateShowType();
             }
         }
-
 
         void OnCityFall(City city, Force lastForce, Troop atk)
         {
@@ -189,7 +184,6 @@ namespace Sango.Game.Render.UI
             ChangeShowType(ShowType.Troop);
         }
 
-
         public void MaxSize()
         {
 
@@ -201,6 +195,7 @@ namespace Sango.Game.Render.UI
         }
 
         public void LongSize() { }
+
         public void ShortSize() { }
 
         public void UpShow()
@@ -224,6 +219,7 @@ namespace Sango.Game.Render.UI
             startIndex = (int)UnityEngine.Mathf.Lerp(0, curDataList.Count - uIForceElementItems.Length, value);
             UpdateItemStartIndex(startIndex);
         }
+
         public void UpdateItemStartIndex(int startIndex)
         {
             for (int i = 0; i < uIForceElementItems.Length; i++)

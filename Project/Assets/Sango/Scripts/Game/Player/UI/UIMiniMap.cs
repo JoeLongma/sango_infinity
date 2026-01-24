@@ -1,5 +1,4 @@
-﻿using Sango.Game.Player;
-using Sango.Render;
+﻿using Sango.Render;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -46,9 +45,11 @@ namespace Sango.Game.Render.UI
                 image.color = c;
             }
         }
+
         class MapTroopNodeData : MapNodeData
         {
             public Troop troop;
+
             public MapTroopNodeData(Image image) : base(image)
             {
             }
@@ -74,14 +75,12 @@ namespace Sango.Game.Render.UI
             }
         }
 
-
         public DrawLineComponent drawLine;
         public GameObject troopObj;
         public GameObject cityObj;
         public GameObject miniCityObj;
         public RectTransform mapBounds;
         public RectTransform mapValidBounds;
-
         public RectTransform[] cameraCorners;
 
         List<MapCityNodeData> mapCityNodes = new List<MapCityNodeData>();
@@ -113,6 +112,7 @@ namespace Sango.Game.Render.UI
         }
 
         private Vector3[] corners = new Vector3[4];
+
         public void OnCameraValueChanged(MapCamera camera)
         {
             Vector3 rot = mapBounds.localRotation.eulerAngles;
@@ -155,6 +155,7 @@ namespace Sango.Game.Render.UI
                 }
             }
         }
+
         void OnTroopCreated(Troop troop, Scenario scenario)
         {
             MapTroopNodeData data;

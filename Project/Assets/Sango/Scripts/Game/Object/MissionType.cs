@@ -16,7 +16,6 @@
         TroopBuildBuilding,
         TroopTransformGoodsToCity,
 
-
         PersonBuild,
         PersonCreateBoat,
         PersonCreateMachine,
@@ -30,7 +29,7 @@
         PersonTransform,
 
         /// <summary>
-        /// 返回所在城市
+        /// 回城
         /// </summary>
         PersonReturn,
 
@@ -38,6 +37,5 @@
         /// 招募
         /// </summary>
         PersonRecruitPerson
-
     }
 }

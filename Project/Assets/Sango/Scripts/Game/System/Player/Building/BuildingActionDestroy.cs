@@ -12,6 +12,7 @@ namespace Sango.Game.Player
             customMenuName = "拆除";
             customMenuOrder = 10000;
         }
+
         public override bool IsValid
         {
             get

@@ -56,7 +56,6 @@ namespace Sango.Game.Player
                 case CommandEventType.RClickUp:
                     GameSystemManager.Instance.Back(); break;
             }
-
         }
     }
 }

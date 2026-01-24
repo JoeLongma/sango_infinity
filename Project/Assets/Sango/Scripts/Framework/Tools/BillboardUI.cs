@@ -1,7 +1,5 @@
-using UnityEngine;
-using System.Collections;
 using Sango.Render;
-using Sango.Game;
+using UnityEngine;
 
 namespace Sango
 {
@@ -24,10 +22,12 @@ namespace Sango
         {
             tempFactor = -1;
         }
+
         private void OnEnable()
         {
             tempFactor = -1;
         }
+
         void CatchMainCamera()
         {
             if (cacheTrans == null)

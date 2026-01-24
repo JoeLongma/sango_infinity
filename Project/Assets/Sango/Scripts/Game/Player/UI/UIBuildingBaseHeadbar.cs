@@ -1,8 +1,7 @@
-﻿using Sango.Loader;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-namespace Sango.Game.Render.UI
 
+namespace Sango.Game.Render.UI
 {
     public class UIBuildingBaseHeadbar : UGUIWindow
     {
@@ -49,6 +48,7 @@ namespace Sango.Game.Render.UI
                 aniText.onAnimationComplate = OnAnimationComplate;
             }
         }
+
         void OnAnimationComplate()
         {
             aniText = null;

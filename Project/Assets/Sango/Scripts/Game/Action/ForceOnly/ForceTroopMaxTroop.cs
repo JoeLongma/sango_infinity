@@ -26,6 +26,5 @@ namespace Sango.Game.Action
                 return;
             overrideData.Value += value;
         }
-
     }
 }

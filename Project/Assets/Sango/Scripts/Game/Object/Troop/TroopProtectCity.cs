@@ -1,5 +1,4 @@
 ﻿using static Sango.Game.City;
-using static Sango.Game.TroopAIUtility;
 
 namespace Sango.Game
 {
@@ -8,6 +7,7 @@ namespace Sango.Game
         public override MissionType MissionType { get { return MissionType.TroopProtectCity; } }
         Troop nearestEnemy;
         bool isNoEnemyAlive = false;
+
         public override bool IsMissionComplete
         {
             get
@@ -77,7 +77,6 @@ namespace Sango.Game
             }
             return socer;
         }
-
 
         public override bool DoAI(Troop troop, Scenario scenario)
         {

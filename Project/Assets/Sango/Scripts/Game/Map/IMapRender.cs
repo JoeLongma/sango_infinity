@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-namespace Sango.Game
+﻿namespace Sango.Game
 {
     public interface IMapRender
     {

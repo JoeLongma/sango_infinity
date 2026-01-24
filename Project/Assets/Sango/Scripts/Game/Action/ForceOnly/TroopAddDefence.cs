@@ -1,5 +1,4 @@
-﻿using Sango.Game.Tools;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
 namespace Sango.Game.Action
 {
@@ -34,7 +33,6 @@ namespace Sango.Game.Action
                     troop.landDefence += value;
                 if (kinds.Contains(troop.WaterTroopType.kind))
                     troop.waterDefence += value;
-
             }
         }
     }

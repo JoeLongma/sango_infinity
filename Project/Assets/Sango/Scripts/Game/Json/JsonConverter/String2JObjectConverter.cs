@@ -2,7 +2,6 @@
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using System;
-using System.Collections.Generic;
 
 namespace Sango.Game
 {
@@ -13,6 +12,7 @@ namespace Sango.Game
             JObject dest = value as JObject;
             writer.WriteValue(dest.ToString());
         }
+
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer, JsonProperty property, object target)
         {
             string content = serializer.Deserialize<string>(reader);

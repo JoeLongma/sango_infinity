@@ -1,9 +1,5 @@
 ﻿using Sango.Game.Player;
-using Sango.Loader;
-using Sango.Render;
-using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +17,7 @@ namespace Sango.Game.Render.UI
         public RectTransform sorltTitleTransform;
         ObjectsDisplaySystem objectSelectSystem;
         protected int startIndex = 0;
+
         protected override void Awake()
         {
             for (int i = 0; i < toggleGroup.Length; i++)
@@ -141,7 +138,6 @@ namespace Sango.Game.Render.UI
                 listItem.index = i + startIndex;
             }
         }
-
 
         public override void OnHide()
         {

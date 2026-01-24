@@ -1,10 +1,6 @@
-﻿using Sango.Loader;
-using Sango.Render;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
@@ -39,7 +35,6 @@ namespace Sango.Game.Render.UI
             {
                 if (city.BuildingType > 1) return;
                 if (city.Id == 0) continue;
-
 
                 GameObject cityObj;
                 if (i >= cityList.Count)
@@ -159,7 +154,6 @@ namespace Sango.Game.Render.UI
                 cityList[i].SetActive(false);
             }
         }
-
 
         public void OnReturn()
         {

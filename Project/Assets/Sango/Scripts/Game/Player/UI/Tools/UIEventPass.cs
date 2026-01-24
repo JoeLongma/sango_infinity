@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,6 +9,7 @@ public class UIEventPass : MonoBehaviour, IPointerClickHandler, IPointerDownHand
     public bool PointerDown = true;
     public bool PointerUp = true;
     public bool Drag = true;
+
     public void PassEvent<T>(PointerEventData data, ExecuteEvents.EventFunction<T> func) where T : IEventSystemHandler
     {
         List<RaycastResult> results = new List<RaycastResult>();

@@ -1,12 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using UnityEngine.UIElements;
 
 namespace Sango.Game
 {
-
     /// <summary>
     /// SangoObject限定数组数据集, 限定最大容量, 记住下标从1开始,0作为默认无效值,数据集用0号位来作为默认值
     /// </summary>
@@ -29,12 +26,14 @@ namespace Sango.Game
         }
 
         public override int Count { get { return MaxCount; } }
+
         public override T this[int aIndex] { get { return objects[aIndex]; } set { objects[aIndex] = value; } }
 
         public SangoObjectSet()
         {
             Reset(256);
         }
+
         public SangoObjectSet(int length)
         {
             Reset(length);
@@ -48,7 +47,9 @@ namespace Sango.Game
         }
 
         int MaxCount { get; set; }
+
         int SearchingBeginIndex { get; set; }
+
         void CheckLength(int max)
         {
             int len = objects.Length;
@@ -86,7 +87,6 @@ namespace Sango.Game
         {
             objects[obj.Id] = obj;
         }
-
 
         public override void Remove(T obj)
         {          
@@ -127,7 +127,6 @@ namespace Sango.Game
                     action(obj);
             }
         }
-
 
         public override T Find(Predicate<T> match)
         {

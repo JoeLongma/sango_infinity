@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace Sango.Game.Player
+﻿namespace Sango.Game.Player
 {
     public interface ICommandEvent
     {

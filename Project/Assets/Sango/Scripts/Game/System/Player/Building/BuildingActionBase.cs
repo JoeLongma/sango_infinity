@@ -1,6 +1,4 @@
-﻿using Sango.Game.Render.UI;
-
-namespace Sango.Game.Player
+﻿namespace Sango.Game.Player
 {
     [GameSystem(ignore = true)]
     public class BuildingActionBase : GameSystem

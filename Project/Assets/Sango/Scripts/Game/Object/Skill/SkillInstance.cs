@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Sango.Game
@@ -267,7 +266,6 @@ namespace Sango.Game
             return skill.HasEffect();
         }
 
-
         public bool CanAddToTroop(Troop troop)
         {
             return skill.CanAddToTroop(troop);
@@ -414,7 +412,6 @@ namespace Sango.Game
             tempCriticalFactor = criticalFactor;
             return criticalFactor;
         }
-
 
         public bool UpdateRender(Troop troop, Cell spellCell, Scenario scenario, float time, System.Action action)
         {
@@ -782,6 +779,5 @@ namespace Sango.Game
                 effects.Clear();
             }
         }
-
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Text;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
 {
@@ -10,6 +9,7 @@ namespace Sango.Game.Render.UI
         public Image food;
         public Text number;
         public Text info;
+
         public override void UpdateState(BuildingBase building)
         {
             base.UpdateState(building);
@@ -19,7 +19,7 @@ namespace Sango.Game.Render.UI
             number.text = city.troops.ToString();
             if (info != null)
                 info.enabled = showIndo;
-            string cityInfo = $"(人:{city.allPersons.Count}闲:{city.freePersons.Count})俘虏:{city.captiveList.Count},建:{city.GetInteriorCellUsedCount()}/{city.InteriorCellCount}\n[商:{city.commerce},农:{city.agriculture}治:{city.security},训:{city.morale}]\n<金:{city.gold}+{city.totalGainGold}><粮:{city.food}+{city.totalGainFood}>\n枪:{city.itemStore.GetNumber(2)},刀:{city.itemStore.GetNumber(3)}驽:{city.itemStore.GetNumber(4)},马:{city.itemStore.GetNumber(5)}\n船:{city.itemStore.GetNumber(9)},冲车:{city.itemStore.GetNumber(7)}井阑:{city.itemStore.GetNumber(8)}";
+            string cityInfo = $"（武将:{city.allPersons.Count}空闲:{city.freePersons.Count})俘虏:{city.captiveList.Count},建设:{city.GetInteriorCellUsedCount()}/{city.InteriorCellCount}\n[商业:{city.commerce},农业:{city.agriculture}治安:{city.security},训练:{city.morale}]\n<金:{city.gold}+{city.totalGainGold}><粮:{city.food}+{city.totalGainFood}>\n枪:{city.itemStore.GetNumber(2)},刀:{city.itemStore.GetNumber(3)}驽:{city.itemStore.GetNumber(4)},马:{city.itemStore.GetNumber(5)}\n船:{city.itemStore.GetNumber(9)},冲车:{city.itemStore.GetNumber(7)}井阑:{city.itemStore.GetNumber(8)}";
             if (city.IsBorderCity)
                 cityInfo = $"*{cityInfo}";
             info.text = cityInfo;
@@ -29,6 +29,7 @@ namespace Sango.Game.Render.UI
         {
             GameEvent.OnCityHeadbarShowInfoChange += OnCityHeadbarShowInfoChange;
         }
+
         public void OnDisable()
         {
             GameEvent.OnCityHeadbarShowInfoChange -= OnCityHeadbarShowInfoChange;

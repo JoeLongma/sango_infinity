@@ -16,6 +16,7 @@ namespace Sango.Game
             writer.WriteValue(dest.a);
             writer.WriteEndArray();
         }
+
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             Color32 dest = (Color32)existingValue;
@@ -35,7 +36,6 @@ namespace Sango.Game
                 }
             }
             return dest;
-
         }
     }
 }

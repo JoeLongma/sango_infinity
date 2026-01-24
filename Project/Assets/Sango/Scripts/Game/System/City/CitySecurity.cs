@@ -1,6 +1,4 @@
-﻿using Sango.Game.Tools;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Sango.Game
 {
@@ -14,6 +12,7 @@ namespace Sango.Game
         /// 最大工作人数
         /// </summary>
         public static int Max_Working_Person_Count = 1;
+
         public Building TargetBuilding { get; set; }
 
         public override void Init()

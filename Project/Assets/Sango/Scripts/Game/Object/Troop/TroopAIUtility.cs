@@ -237,7 +237,6 @@ namespace Sango.Game
         //    return wightList.RandomGet();
         //}
 
-
         public static void RangeEnemyCell(Troop troop, int range, List<Cell> cells, Scenario scenario)
         {
             scenario.Map.SpiralAction(troop.cell, range, (cell) =>
@@ -349,6 +348,5 @@ namespace Sango.Game
             }
             return 0;
         }
-
     }
 }

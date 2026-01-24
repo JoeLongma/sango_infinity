@@ -25,6 +25,5 @@ namespace Sango.Game.Action
             if (!CheckForceBuilding(city)) return;
             overrideData.Value += value;
         }
-
     }
 }

@@ -1,6 +1,4 @@
-﻿using Sango.Render;
-using System.IO;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Text;
 
 namespace Sango.Game
@@ -10,6 +8,7 @@ namespace Sango.Game
     {
         int width, height;
         protected Cell[][] Cells;
+
         public void Init(int w, int h)
         {
             width = w;
@@ -23,6 +22,7 @@ namespace Sango.Game
                 Cells[x] = cells;
             }
         }
+
         public void Init(int w, int h, string[] valus)
         {
             width = w;
@@ -63,6 +63,7 @@ namespace Sango.Game
         {
             Cells = null;
         }
+
         public void SetTerrainTypeAndState(int x, int y, TerrainType terrainType, int terrainState, City belongCity)
         {
             Cell c = Cells[x][y];
@@ -93,7 +94,9 @@ namespace Sango.Game
 
             return Cells[x][y];
         }
+
         public TerrainType GetTerrainType(int x, int y) { return Cells[x][y].TerrainType; }
+
         public void FromString(string data)
         {
             if (string.IsNullOrEmpty(data))
@@ -104,6 +107,7 @@ namespace Sango.Game
             int h = int.Parse(values[values.Length - 1]);
             Init(w, h, values);
         }
+
         public override string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder();
@@ -129,6 +133,7 @@ namespace Sango.Game
             }
             return stringBuilder.ToString();
         }
+
         //public override void Load(BinaryReader node)
         //{
         //    int w = node.ReadInt32();

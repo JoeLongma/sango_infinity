@@ -48,7 +48,6 @@ namespace UnityEngine.UI
 
         public bool flipY = false;
 
-
         protected class Entry
         {
             public float time;
@@ -71,7 +70,6 @@ namespace UnityEngine.UI
 
         [System.NonSerialized]
         int counter = 0;
-
         void OnEnable()
         {
 #if UNITY_EDITOR
@@ -95,7 +93,6 @@ namespace UnityEngine.UI
             //    flip = 1;
 
         }
-
         void Start()
         {
 #if UNITY_EDITOR
@@ -181,10 +178,12 @@ namespace UnityEngine.UI
         {
             Create(tex, head_tex, Color.white, scale);
         }
+
         public void Create(string tex, float scale)
         {
             Create(tex, "", Color.white, scale);
         }
+
         public void Create(string tex, Color c, float scale)
         {
             Create(tex, "", c, scale);
@@ -253,8 +252,6 @@ namespace UnityEngine.UI
                 ne.flipY = 1;
             }
         }
-
-
 
         Entry CreateEntry()
         {

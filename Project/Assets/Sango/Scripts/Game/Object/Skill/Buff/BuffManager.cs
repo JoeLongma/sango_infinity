@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Sango.Game.Render;
-using Sango.Render;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -44,7 +43,6 @@ namespace Sango.Game
                     instanceObj = null;
                 }
             }
-
         }
 
         Dictionary<string, BuffEffectInfo> assetRef = new Dictionary<string, BuffEffectInfo>();
@@ -69,7 +67,6 @@ namespace Sango.Game
             foreach (BuffEffectInfo info in assetRef.Values)
                 info.ClearAsset();
         }
-
 
         public void AddBuff(int id, int turnCount, Troop srcTroop)
         {

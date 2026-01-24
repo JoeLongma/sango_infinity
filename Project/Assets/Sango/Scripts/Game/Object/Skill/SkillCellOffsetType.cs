@@ -1,9 +1,9 @@
 ﻿namespace Sango.Game
 {
-
     public enum SkillCellOffsetType : int
     {
         None = 0,
+
         /// <summary>
         /// 施法者按施法者->目标方向位移,直到移不动
         /// </summary>

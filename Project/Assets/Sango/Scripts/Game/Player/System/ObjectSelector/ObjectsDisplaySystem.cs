@@ -44,7 +44,6 @@ namespace Sango.Game.Player
             Window.Instance.Close("window_object_selector");
         }
 
-
         public virtual List<ObjectSortTitle> GetSortTitleGroup(int index)
         {
             return customSortItems;

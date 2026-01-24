@@ -1,10 +1,7 @@
 ﻿using Newtonsoft.Json;
-using Sango.Game.Action;
 using Sango.Game.Render;
-using Sango.Game.Tools;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using UnityEngine;
 
@@ -13,7 +10,6 @@ namespace Sango.Game
     [JsonObject(MemberSerialization.OptIn)]
     public class City : BuildingBase
     {
-
         public virtual bool AIFinished { get; set; }
         public virtual bool AIPrepared { get; set; }
         public override SangoObjectType ObjectType { get { return SangoObjectType.City; } }
@@ -103,6 +99,7 @@ namespace Sango.Game
         [JsonProperty] public int troopsLimit;
         public int TroopsLimit => troopsLimit + CityLevelType.troopsLimitAdd + troopsLimitAdd;
         int troopsLimitAdd;
+
         /// <summary>
         /// 仓库大小
         /// </summary>
@@ -214,7 +211,6 @@ namespace Sango.Game
         [JsonProperty]
         public SangoObjectList<Person> captiveList = new SangoObjectList<Person>();
 
-
         [JsonProperty]
         public Dictionary<int, int> jobCounter = new Dictionary<int, int>();
 
@@ -231,7 +227,6 @@ namespace Sango.Game
         public float extraGainFoodFactor = 0;
         public float extraGainGoldFactor = 0;
         public float extraPopulationFactor = 1;
-
 
         float population_increase_factor = 0;
         internal int borderLine;
@@ -288,7 +283,6 @@ namespace Sango.Game
         /// 所有设施
         /// </summary>
         public SangoObjectList<Building> allBuildings = new SangoObjectList<Building>();
-
 
         //public SangoObjectList<Building> allIntriorBuildings = new SangoObjectList<Building>();
         //public Dictionary<int, int> buildingCountMap = new Dictionary<int, int>();
@@ -366,6 +360,7 @@ namespace Sango.Game
                 food = 0;
             return food;
         }
+
         public int AddTroops(int v)
         {
             troops += v;
@@ -390,6 +385,7 @@ namespace Sango.Game
                 security = 0;
             return security;
         }
+
         public int AddMorale(int v)
         {
             morale += v;
@@ -415,12 +411,12 @@ namespace Sango.Game
 
         public int FightPower => fightPower;
         public Person Add(Person person) { allPersons.Add(person); return person; }
+
         public Person Remove(Person person)
         {
             allPersons.Remove(person); freePersons.Remove(person);
             return person;
         }
-
 
         public void UpdateActiveTroopTypes()
         {
@@ -602,7 +598,6 @@ namespace Sango.Game
             }
         }
 
-
         static bool _IsBorderCity(City city)
         {
             if (city.NeighborList == null)
@@ -657,7 +652,6 @@ namespace Sango.Game
             return base.OnSeasonStart(scenario);
         }
 
-
         /// <summary>
         /// 月度金钱收入
         /// </summary>
@@ -685,6 +679,7 @@ namespace Sango.Game
 
             return base.OnMonthStart(scenario);
         }
+
         public override bool OnDayStart(Scenario scenario)
         {
             return base.OnDayStart(scenario);
@@ -779,6 +774,7 @@ namespace Sango.Game
 
             return base.OnForceTurnStart(scenario);
         }
+
         public override bool OnForceTurnEnd(Scenario scenario)
         {
             CurActiveTroop = null;
@@ -842,6 +838,7 @@ namespace Sango.Game
                 }
             }
         }
+
         public int GoldCost(Scenario scenario)
         {
             int goldCost = 0;
@@ -988,6 +985,7 @@ namespace Sango.Game
             }
             return nearnest;
         }
+
         public Corps ChangeCorps(Corps other)
         {
             Corps last = null;
@@ -1254,6 +1252,7 @@ namespace Sango.Game
             Sango.Log.Print($"[{person.BelongForce.Name}]{person.Name}回到[{BelongForce.Name}]<{Name}>");
 #endif
         }
+
         public void OnPersonTransformEnd(Person person)
         {
 
@@ -1284,7 +1283,6 @@ namespace Sango.Game
             goldNeed = overrideData.Value;
             return goldNeed;
         }
-
 
         public Building BuildBuilding(Cell buildCenter, Troop builder, BuildingType buildingType)
         {
@@ -1635,8 +1633,6 @@ namespace Sango.Game
             ClearJobFeature();
             return true;
         }
-
-
 
         /// <summary>
         /// 生产器械
@@ -2220,7 +2216,6 @@ namespace Sango.Game
             return totalValue;
         }
 
-
         /// <summary>
         /// 登庸武将
         /// </summary>
@@ -2297,7 +2292,6 @@ namespace Sango.Game
             return true;
         }
 
-
         public bool JobRewardPerson(Person person)
         {
             if (person == null)
@@ -2326,7 +2320,6 @@ namespace Sango.Game
 #endif
             return true;
         }
-
 
         /// <summary>
         /// 搜索
@@ -2422,7 +2415,6 @@ namespace Sango.Game
             ClearJobFeature();
             return false;
         }
-
 
         /// <summary>
         /// 治疗伤兵
@@ -2886,7 +2878,6 @@ namespace Sango.Game
             return atk;
         }
 
-
         /// <summary>
         /// 获取城池的防御力
         /// </summary>
@@ -2942,6 +2933,7 @@ namespace Sango.Game
                 return enemiesRound[round];
             return false;
         }
+
         public bool IsEnemiesRound()
         {
             for (int i = 0; i < enemiesRound.Length; i++)
@@ -2950,7 +2942,6 @@ namespace Sango.Game
             }
             return false;
         }
-
 
         public bool CheckEnemiesIfAlive(out EnemyInfo enemyInfo)
         {
@@ -3218,7 +3209,6 @@ namespace Sango.Game
             }
             return complateNum;
         }
-
 
         /// <summary>
         /// 获取已建造完成的建筑类型的数量

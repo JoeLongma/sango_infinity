@@ -5,8 +5,7 @@ namespace Sango.Game
 {
     public class GameEvent : EventBase
     {
-
-        #region Global
+        #region Global 全局变量
         /// <summary>
         /// 游戏状态监听 -Enter
         /// </summary>
@@ -28,10 +27,10 @@ namespace Sango.Game
         public static EventDelegateReturn<string, int> OnGetAttributeName;
         public static EventDelegateReturn<string, int> OnGetAttributeNameWithColor;
 
-
         public static EventDelegate<Cell, Vector3, bool> OnClick;
         public static EventDelegate<Cell, Vector3, bool> OnRClick;
         public static EventDelegate<Cell, Vector3, bool> OnCancel;
+
         /// <summary>
         /// 在最后一个系统出栈时候
         /// </summary>
@@ -44,7 +43,7 @@ namespace Sango.Game
 
         #endregion Global
 
-        #region Scenario
+        #region Scenario 剧本
         /// <summary>
         /// 剧本加载开始
         /// </summary>
@@ -91,7 +90,7 @@ namespace Sango.Game
         public static EventDelegate<Scenario, float> OnScenarioTick;
         #endregion Scenario
 
-        #region Window
+        #region Window 窗体
         /// <summary>
         /// 在window创建之后
         /// </summary>
@@ -119,7 +118,7 @@ namespace Sango.Game
         public static EventDelegate<IVariablesSetting, Scenario> OnScenarioVariablesSetting;
         #endregion Window
 
-        #region Game
+        #region Game 游戏
 
         /// <summary>
         /// 游戏保存
@@ -132,7 +131,7 @@ namespace Sango.Game
         public static EventDelegate<Scenario> OnGameLoad;
 
         /// <summary>
-        /// 新天开始
+        /// 新日开始
         /// </summary>
         public static EventDelegate<Scenario> OnDayUpdate;
 
@@ -147,7 +146,7 @@ namespace Sango.Game
         public static EventDelegate<Scenario> OnYearUpdate;
 
         /// <summary>
-        /// 新季节开始
+        /// 新季开始
         /// </summary>
         public static EventDelegate<Scenario> OnSeasonUpdate;
 
@@ -160,9 +159,6 @@ namespace Sango.Game
         /// 回合结束
         /// </summary>
         public static EventDelegate<Scenario> OnTurnEnd;
-
-
-
 
         #region Force
         /// <summary>
@@ -196,7 +192,6 @@ namespace Sango.Game
 
         #endregion Force
 
-
         /// <summary>
         /// 城池AI
         /// </summary>
@@ -204,12 +199,10 @@ namespace Sango.Game
         public static EventDelegate<City, Scenario> OnCityAIStart;
         public static EventDelegate<City, Scenario> OnCityAIEnd;
 
-
         public static EventDelegate<City, Scenario> OnCityTurnStart;
         public static EventDelegate<City, Scenario> OnCityTurnEnd;
         public static EventDelegate<City, Scenario> OnCityMonthStart;
         public static EventDelegate<City, Scenario> OnCitySeasonStart;
-
 
         /// <summary>
         /// 部队AI
@@ -217,7 +210,6 @@ namespace Sango.Game
         public static EventDelegate<Troop, Scenario> OnTroopAIStart;
         public static EventDelegate<Troop, Scenario> OnTroopAIPrepare;
         public static EventDelegate<Troop, Scenario> OnTroopAIEnd;
-
 
         public static EventDelegate<Troop, Cell, Cell> OnTroopLeaveCell;
         public static EventDelegate<Troop, Cell, Cell> OnTroopEnterCell;
@@ -282,7 +274,6 @@ namespace Sango.Game
         /// City, JobType, PersonList, OverrideData
         /// </summary>
         public static EventDelegate<City, int, Person[], OverrideData<int>> OnCityJobGainMerit;
-
 
         /// <summary>
         /// 可监听改写发现人才的几率
@@ -368,7 +359,6 @@ namespace Sango.Game
         /// </summary>
         public static EventDelegate<BuildingBase, OverrideData<int>> OnBuildingCalculateProduct;
 
-
         /// <summary>
         /// 可监听改计算建筑反击攻击力
         /// Troop, Cell, BuildingBase, Skill, OverrideData
@@ -390,6 +380,7 @@ namespace Sango.Game
         /// City, Skill, spellCell, OverrideFunc
         /// </summary>
         public static EventDelegate<Troop, SkillInstance, Cell, OverrideData<int>> OnTroopBeforeCalculateSkillSuccess;
+
         /// <summary>
         /// 
         /// 可监听改计算战法成功率(百分比)
@@ -397,13 +388,11 @@ namespace Sango.Game
         /// </summary>
         public static EventDelegate<Troop, SkillInstance, Cell, OverrideData<int>> OnTroopAfterCalculateSkillSuccess;
 
-
         /// <summary>
         /// 可监听改计算战法暴击率(百分比) 必爆, 设置100则为必爆
         /// City, Skill, spellCell,  OverrideFunc
         /// </summary>
         public static EventDelegate<Troop, SkillInstance, Cell, OverrideData<int>> OnTroopBeforeCalculateSkillCritical;
-
 
         /// <summary>
         /// 可监听改计算战法暴击率(百分比)
@@ -443,6 +432,5 @@ namespace Sango.Game
         public static EventDelegate<Person, SangoObject> OnPersonEscape;
 
         #endregion Game
-
     }
 }

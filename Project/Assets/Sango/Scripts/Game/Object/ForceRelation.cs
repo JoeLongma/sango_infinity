@@ -7,6 +7,5 @@ namespace Sango.Game
     {
         [JsonProperty] public int relation;
         [JsonProperty] public byte state;
-
     }
 }

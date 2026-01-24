@@ -1,9 +1,7 @@
-﻿using System.IO;
-using Newtonsoft.Json;
-using System.Xml;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Sango.Game.Action;
+using System.Collections.Generic;
 
 namespace Sango.Game
 {
@@ -30,7 +28,6 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public int jobId;
 
-
         [JsonProperty] public int populationGain;
         [JsonProperty] public int cost;
         [JsonProperty] public byte radius;
@@ -46,7 +43,6 @@ namespace Sango.Game
 
         [JsonProperty] public int workerLimit;
         [JsonProperty] public int[] productItems;
-
 
         /// <summary>
         /// 受哪种能力影响
@@ -117,6 +113,5 @@ namespace Sango.Game
         {
             return city.GetEmptyInteriorCell();
         }
-
     }
 }

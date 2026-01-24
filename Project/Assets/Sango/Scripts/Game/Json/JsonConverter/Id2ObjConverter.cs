@@ -45,6 +45,7 @@ namespace Sango.Game
             SangoObject dest = value as SangoObject;
             writer.WriteValue(dest.Id);
         }
+
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer, JsonProperty property, object target)
         {
             //while (reader.Read())

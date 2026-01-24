@@ -1,8 +1,5 @@
-﻿using System.IO;
-
-namespace Sango.Game
+﻿namespace Sango.Game
 {
-
     public abstract class ScenarioByteObject<T> where T : SangoObject, new()
     {
         protected byte _id = 0;
@@ -27,6 +24,7 @@ namespace Sango.Game
                 }
             }
         }
+
         public T Object
         {
             get
@@ -48,8 +46,9 @@ namespace Sango.Game
                 _id = 0;
             }
         }
+
         public bool IsValid() { return Id > 0; }
-        protected virtual T Get(byte id) { return null; }
-      
+
+        protected virtual T Get(byte id) { return null; }      
     }
 }

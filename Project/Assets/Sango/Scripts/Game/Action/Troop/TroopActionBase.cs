@@ -71,6 +71,5 @@ namespace Sango.Game.Action
                 return false;
             return true;
         }
-
     }
 }

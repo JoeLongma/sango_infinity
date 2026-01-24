@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace UnityEngine.UI
+﻿namespace UnityEngine.UI
 {
     public class UIKeepInScreen : MonoBehaviour
     {
@@ -13,6 +11,7 @@ namespace UnityEngine.UI
         public bool dontResetCachePosition = true;
         RectTransform cacheTrans;
         RectTransform uiRoot;
+
         public void Start()
         {
             cur_delayTime = delayTime;

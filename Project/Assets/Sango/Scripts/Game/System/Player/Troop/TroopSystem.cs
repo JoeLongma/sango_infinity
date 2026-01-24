@@ -1,6 +1,7 @@
 ﻿using Sango.Render;
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace Sango.Game.Player
 {
     public class TroopSystem : GameSystem
@@ -117,6 +118,7 @@ namespace Sango.Game.Player
             }
             mapRender.EndSetGridMask();
         }
+
         public void ShowMovePath()
         {
             MapRender mapRender = MapRender.Instance;

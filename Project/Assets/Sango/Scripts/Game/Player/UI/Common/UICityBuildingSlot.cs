@@ -78,7 +78,6 @@ namespace Sango.Game.Render.UI
                 }
                 else
                 {
-
                     upgradeBtn.gameObject.SetActive(building.BuildingType.nextId > 0);
                     leftLabel.text = "";
                     personNode.gameObject.SetActive(false);
@@ -91,6 +90,5 @@ namespace Sango.Game.Render.UI
         {
             onClickCall?.Invoke(this);
         }
-
     }
 }

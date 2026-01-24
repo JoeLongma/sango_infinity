@@ -18,6 +18,7 @@ namespace Sango.Game
         {
             GetMap[key] = compare;
         }
+
         static public PersonCompare CompareGet(string name)
         {
             PersonCompare c;
@@ -25,6 +26,7 @@ namespace Sango.Game
                 return c;
             return null;
         }
+
         static public PersonGet GetGet(string name)
         {
             PersonGet c;
@@ -66,5 +68,4 @@ namespace Sango.Game
             Register("official", (a) => a.Official.Id);
         }
     }
-
 }

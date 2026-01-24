@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using Newtonsoft.Json;
 
 namespace Sango.Game
 {
@@ -16,13 +15,16 @@ namespace Sango.Game
         public override T Default => throw new NotImplementedException();
 
         public override void Clear() { objects.Clear(); }
+
         public override bool Check(int index)
         {
             if (index < 0 || index >= objects.Count)
                 return false;
             return true;
         }
+
         public override void Reset(int length) { objects.Clear(); }
+
         public override void Add(T obj)
         {
 #if UNITY_EDITOR || SANGO_DEBUG
@@ -39,6 +41,7 @@ namespace Sango.Game
 #endif
             objects.Add(obj);
         }
+
         public override void Set(T obj)
         {
 #if UNITY_EDITOR || SANGO_DEBUG
@@ -50,6 +53,7 @@ namespace Sango.Game
 #endif
             objects[obj.Id] = obj;
         }
+
         public override void Remove(T obj)
         {
 #if UNITY_EDITOR || SANGO_DEBUG
@@ -78,6 +82,7 @@ namespace Sango.Game
         {
             return objects[index];
         }
+
         public override void ForEach(Action<T> action)
         {
             for (int i = objects.Count - 1; i >= 0; i--)
@@ -102,20 +107,23 @@ namespace Sango.Game
         {
             return objects.Find(match);
         }
+
         public override List<T> FindAll(Predicate<T> match)
         {
             return objects.FindAll(match);
         }
+
         public override void Sort(IComparer<T> comparer)
         {
             objects.Sort(comparer);
         }
+
         public override void Sort(Comparison<T> comparison)
         {
             objects.Sort(comparison);
         }
-        public override T this[int aIndex] { get { return objects[aIndex]; } set { } }
 
+        public override T this[int aIndex] { get { return objects[aIndex]; } set { } }
 
         public override T Find(int id)
         {
@@ -137,6 +145,7 @@ namespace Sango.Game
         {
             return objects.Contains(t);
         }
+
         public override IEnumerator GetEnumerator()
         {
             return objects.GetEnumerator();

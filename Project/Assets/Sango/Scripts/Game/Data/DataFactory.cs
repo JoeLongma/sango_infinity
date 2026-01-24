@@ -1,9 +1,4 @@
-﻿using SimpleJSON;
-using System;
-using System.Collections;
-using System.IO;
-using Newtonsoft.Json;
-using System.Xml;
+﻿using System.IO;
 
 namespace Sango.Game
 {
@@ -13,10 +8,12 @@ namespace Sango.Game
         {
             return null;
         }
+
         public virtual IDataObject Create(System.Xml.XmlNode node)
         {
             return null;
         }
+
         public virtual IDataObject Create(SimpleJSON.JSONNode node)
         {
             return null;

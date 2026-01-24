@@ -43,7 +43,6 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public int ActionPoint { get; set; }
 
-
         public Color Color => Color.cyan;
         public int Index => 1;
 
@@ -52,9 +51,7 @@ namespace Sango.Game
 
         public int BorderCityCount { get; set; }
 
-
         public Queue<System.Func<Corps, Scenario, bool>> AICommandQueue = new Queue<Func<Corps, Scenario, bool>>();
-
 
         public override void OnScenarioPrepare(Scenario scenario)
         {
@@ -70,6 +67,7 @@ namespace Sango.Game
             ActionOver = false;
             return true;
         }
+
         public void AddActionPoint(Scenario scenario)
         {
             /*

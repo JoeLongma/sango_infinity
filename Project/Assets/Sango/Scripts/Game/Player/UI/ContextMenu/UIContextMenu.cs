@@ -27,6 +27,7 @@ namespace Sango.Game.Render.UI
             rs.gameObject.SetActive(true);
             return rs;
         }
+
         private void Recycle(int index, UIMenuItem obj)
         {
             obj.gameObject.SetActive(false);
@@ -49,6 +50,7 @@ namespace Sango.Game.Render.UI
             rs.gameObject.SetActive(true);
             return rs;
         }
+
         private void Recycle(int index, GameObject obj)
         {
             obj.gameObject.SetActive(false);

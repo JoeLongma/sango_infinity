@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Sango.Game.Render.UI
+﻿namespace Sango.Game.Render.UI
 {
     public class TroopInteractiveDialogData : ITroopInteractiveDialogData
     {
         public static TroopInteractiveDialogData InteractiveDialogData = new TroopInteractiveDialogData();
-
         public string content;
         public System.Action sureAction;
 

@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Sango.Game.Action;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Sango.Game
@@ -268,7 +266,6 @@ namespace Sango.Game
             return true;
         }
 
-
         public bool DoBuildingBehaviour(Scenario scenario)
         {
             if (buildingBaseList.Count <= 0)
@@ -470,6 +467,7 @@ namespace Sango.Game
         {
             return base.OnMonthStart(scenario);
         }
+
         public override bool OnSeasonStart(Scenario scenario)
         {
             Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(100);
@@ -604,7 +602,6 @@ namespace Sango.Game
                 }
             }
         }
-
 
         public void GainTechniquePoint(int value)
         {

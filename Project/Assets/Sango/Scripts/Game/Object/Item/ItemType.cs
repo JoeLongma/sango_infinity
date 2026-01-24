@@ -61,7 +61,6 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public int p3;
 
-
         public bool IsValid(Force force)
         {
             if (validTechId > 0)
@@ -70,6 +69,7 @@ namespace Sango.Game
             // 检查科技
             return true;
         }
+
         public bool IsWeapon()
         {
             return kind == (int)ItemKindType.Weapon;

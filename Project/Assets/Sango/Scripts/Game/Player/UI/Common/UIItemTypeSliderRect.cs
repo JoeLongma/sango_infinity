@@ -1,5 +1,4 @@
-﻿using Sango.Loader;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +13,7 @@ namespace Sango.Game.Render.UI
         public ScrollRect scrollRect;
         public OnItemTypeShow onItemTypeShow;
         List<UIItemTypeSlider> uIItemTypeSliders = new List<UIItemTypeSlider>();
+
         public void Init()
         {
             for (int i = 0; i < Scenario.Cur.CommonData.ItemTypeList.Count; i++)

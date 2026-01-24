@@ -414,7 +414,6 @@ namespace Sango.Game
             return true;
         }
 
-
         public static bool AIBuilding(City city, Scenario scenario)
         {
             if (city.IsEnemiesRound())
@@ -1368,8 +1367,5 @@ namespace Sango.Game
             troop.missionTarget = target.Id;
             return troop;
         }
-
     }
-
-
 }

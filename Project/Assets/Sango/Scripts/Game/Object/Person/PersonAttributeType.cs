@@ -1,5 +1,4 @@
-﻿using System.IO;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Sango.Game
 {
@@ -30,7 +29,6 @@ namespace Sango.Game
     [JsonObject(MemberSerialization.OptIn)]
     public class PersonAttributeType : SangoObject
     {
-
         public int nameID;
         //public override void Load(BinaryReader reader)
         //{

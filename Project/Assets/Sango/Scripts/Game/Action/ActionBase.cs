@@ -55,9 +55,7 @@ namespace Sango.Game.Action
             Register("BuildingImproveGoldGain", CraeteHandle<BuildingImproveGoldGain>);
             Register("BuildingImproveFoodGainByCityTroops", CraeteHandle<BuildingImproveFoodGainByCityTroops>);
             Register("CityImproveJobResult", CraeteHandle<CityImproveJobResult>);
-            Register("CityImproveJobCounterResult", CraeteHandle<CityImproveJobCounterResult>);
-      
+            Register("CityImproveJobCounterResult", CraeteHandle<CityImproveJobCounterResult>);      
         }
-
     }
 }

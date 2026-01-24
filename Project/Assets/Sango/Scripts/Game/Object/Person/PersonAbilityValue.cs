@@ -38,6 +38,7 @@ namespace Sango.Game
         {
             value = (byte)(Math.Min(Scenario.Cur.Variables.MaxAbilityLevel, baseValue + (valueExp / Scenario.Cur.Variables.AbilityExpLevelNeed)));
         }
+
         public void SetExp(ushort exp)
         {
             if (value >= Scenario.Cur.Variables.MaxAbilityLevel)
@@ -62,6 +63,5 @@ namespace Sango.Game
         //    writer.Write(baseValue);
         //    writer.Write(valueExp);
         //}
-
     }
 }

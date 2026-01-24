@@ -18,12 +18,14 @@ namespace Sango.Game.Render.UI
             name.text = n;
             return this;
         }
+
         public UIForceElementItem BindCall(UnityAction call)
         {
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(call);
             return this;
         }
+
         public UIForceElementItem SetIcon(string asset)
         {
             icon.sprite = ObjectLoader.LoadObject<UnityEngine.Sprite>(asset);
@@ -111,6 +113,5 @@ namespace Sango.Game.Render.UI
                 MapRender.Instance.MoveCameraTo(position);
             }
         }
-
     }
 }

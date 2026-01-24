@@ -15,7 +15,6 @@ namespace Sango.Game.Action
     /// </summary>
     public class TroopChangeTroops : TroopTroopActionBase
     {
-
         public override void Init(JObject p, params SangoObject[] sangoObjects)
         {
             base.Init(p, sangoObjects);

@@ -22,7 +22,6 @@ namespace Sango.Game.Player
         /// </summary>
         public override void OnDestroy()
         {
-
             ContextMenu.CloseAll();
         }
 

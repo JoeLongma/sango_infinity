@@ -1,9 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Sango.Game.Render;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine;
 
 namespace Sango.Game
 {
@@ -28,6 +24,5 @@ namespace Sango.Game
             AICommandList.Add(CityAI.AITransfromToBelongCity);
             GameEvent.OnCityAIPrepare?.Invoke(this, scenario);
         }
-
     }
 }

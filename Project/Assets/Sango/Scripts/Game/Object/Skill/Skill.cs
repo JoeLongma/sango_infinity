@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using UnityEngine;
+using System.Collections.Generic;
 
 namespace Sango.Game
 {
@@ -262,6 +260,5 @@ namespace Sango.Game
         {
             return kind == 3;
         }
-
     }
 }

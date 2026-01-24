@@ -1,6 +1,4 @@
-﻿using System.IO;
-using Newtonsoft.Json;
-using System.Xml;
+﻿using Newtonsoft.Json;
 
 namespace Sango.Game
 {
@@ -32,6 +30,7 @@ namespace Sango.Game
         {
             state = 0;
         }
+
         public void SetAll()
         {
             state = ulong.MaxValue;

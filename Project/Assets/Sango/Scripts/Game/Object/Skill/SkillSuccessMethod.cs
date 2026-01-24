@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,21 +10,27 @@ namespace Sango.Game
     public abstract class SkillSuccessMethod
     {
         public SkillInstance master;
+
         public virtual void Init(JObject p, SkillInstance master) { this.master = master; }
+
         public abstract int Calculate(SkillInstance skillInstance, Troop troop, Cell spellCell);
+
         public virtual void Clear() { }
 
         public delegate SkillSuccessMethod SkillSuccessMethodCreator();
 
         public static Dictionary<string, SkillSuccessMethodCreator> CreateMap = new Dictionary<string, SkillSuccessMethodCreator>();
+
         public static void Register(string name, SkillSuccessMethodCreator action)
         {
             CreateMap[name] = action;
         }
+
         public static SkillSuccessMethod CraeteHandle<T>() where T : SkillSuccessMethod, new()
         {
             return new T();
         }
+
         public static SkillSuccessMethod Create(string name)
         {
             SkillSuccessMethodCreator creator;
@@ -58,7 +63,6 @@ namespace Sango.Game
                 return V;
             }
         }
-
 
         /*
              1)	火计：

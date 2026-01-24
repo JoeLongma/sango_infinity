@@ -1,7 +1,4 @@
-﻿
-using Newtonsoft.Json;
-
-namespace Sango.Game
+﻿namespace Sango.Game
 {
     public class Argumentation : SangoObject
     {
@@ -56,7 +53,5 @@ namespace Sango.Game
         /// 对忠诚的影响
         /// </summary>
         public int loyaltyAdd;
-
-
     }
 }

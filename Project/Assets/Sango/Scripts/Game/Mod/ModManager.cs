@@ -1,5 +1,4 @@
-﻿
-using Sango.Game;
+﻿using Sango.Game;
 using System.Collections.Generic;
 using System.IO;
 
@@ -125,7 +124,6 @@ namespace Sango.Mod
             }
         }
 
-
         public string[] LoadModList()
         {
             string list_path = $"{MOD_ROOT_DIR}/modList.txt";
@@ -158,9 +156,7 @@ namespace Sango.Mod
         {
             if (modNames == null)
                 modNames = LoadModList();
-
-
-           
+                       
             Scenario.OnModInitStart();
 
             mModList.Clear();

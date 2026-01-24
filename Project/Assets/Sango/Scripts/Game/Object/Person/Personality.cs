@@ -1,7 +1,4 @@
-﻿
-using Newtonsoft.Json;
-
-namespace Sango.Game
+﻿namespace Sango.Game
 {
     public class Personality : SangoObject
     {
@@ -51,6 +48,5 @@ namespace Sango.Game
         ///// 作为主将释放[内讧]的暴击率加成
         ///// </summary>
         //public int infightingCriticalAdd;
-
     }
 }

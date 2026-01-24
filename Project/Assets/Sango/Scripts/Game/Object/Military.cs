@@ -1,7 +1,4 @@
-﻿
-using Sango.Game.Render;
-using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Sango.Game
 {
@@ -24,7 +21,7 @@ namespace Sango.Game
         public Force BelongForce;
 
         /// <summary>
-        /// 所属势力
+        /// 所属军团
         /// </summary>
         [JsonConverter(typeof(Id2ObjConverter<Corps>))]
         [JsonProperty]
@@ -56,20 +53,21 @@ namespace Sango.Game
         /// 士气
         /// </summary>
         [JsonProperty] public int morale;
+
         /// <summary>
         /// 战意
         /// </summary>
         [JsonProperty] public int energy;
+
         /// <summary>
         /// 数量
         /// </summary>
         [JsonProperty] public int troops;
+
         /// <summary>
         /// 伤兵数量
         /// </summary>
-        [JsonProperty] public int woundedTroops;
-
-       
+        [JsonProperty] public int woundedTroops;             
 
         public int MoveAbility { get { return TroopType.move; } set { } }
 
@@ -110,6 +108,5 @@ namespace Sango.Game
                     return 0;
             }
         }
-
     }
 }

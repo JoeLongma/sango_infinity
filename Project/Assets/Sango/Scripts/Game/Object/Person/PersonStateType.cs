@@ -1,7 +1,4 @@
-﻿using System.IO;
-using Newtonsoft.Json;
-
-namespace Sango.Game
+﻿namespace Sango.Game
 {
     public enum PersonStateType : int
     {
@@ -10,9 +7,9 @@ namespace Sango.Game
         /// </summary>
         Invalid = 0,
 
-        ///// <summary>
-        ///// 普通
-        ///// </summary>
+        /// <summary>
+        /// 普通
+        /// </summary>
         Normal = 1,
 
         /// <summary>
@@ -20,25 +17,24 @@ namespace Sango.Game
         /// </summary>
         Invisible = 2,
 
-        ///// <summary>
-        ///// 君主
-        ///// </summary>
+        /// <summary>
+        /// 君主
+        /// </summary>
         Governor = 3,
 
-        ///// <summary>
-        ///// 俘虏
-        ///// </summary>
+        /// <summary>
+        /// 俘虏
+        /// </summary>
         Prisoner = 4,
 
-        ///// <summary>
-        ///// 都督
-        ///// </summary>
+        /// <summary>
+        /// 都督
+        /// </summary>
         Dudu = 5,
 
-        ///// <summary>
-        ///// 死亡
-        ///// </summary>
+        /// <summary>
+        /// 死亡
+        /// </summary>
         Dead = 6,
     }
-
 }

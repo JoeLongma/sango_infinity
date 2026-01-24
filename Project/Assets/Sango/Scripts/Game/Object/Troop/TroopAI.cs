@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Sango.Game
+﻿namespace Sango.Game
 {
     public class TroopAI
-    {
-        
+    {        
 
     }
 }

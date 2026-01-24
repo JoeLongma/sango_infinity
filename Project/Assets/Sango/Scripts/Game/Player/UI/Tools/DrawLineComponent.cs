@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +17,7 @@ public class DrawLineComponent : Graphic
     [SerializeField] protected float m_ChartWidth;
     [NonSerialized] private bool m_RefreshChart = false;
     public float chartWidth { get { return m_ChartWidth; } }
+
     public LineType LineType
     {
         get => lineType;
@@ -40,11 +40,13 @@ public class DrawLineComponent : Graphic
         if (LineType == LineType.Smooth)
             line = new SmoothLine();
     }
+
     protected override void OnPopulateMesh(VertexHelper vh)
     {
         vh.Clear();
         line.DrawLine(vh);
     }
+
     private void Update()
     {
         CheckRefreshChart();
@@ -65,11 +67,13 @@ public class DrawLineComponent : Graphic
             m_RefreshChart = false;
         }
     }
+
     public void AddPoint(Vector3 v3)
     {
         line.AddPoint(v3);
         m_RefreshChart = true;
     }
+
     public void AddPoint(List<Vector3> points)
     {
         line.AddPoint(points);
@@ -83,12 +87,14 @@ public class DrawLineComponent : Graphic
         m_RefreshChart = true;
 
     }
+
     public void SetColor(Color color)
     {
         line.lineColor = color;
         m_RefreshChart = true;
 
     }
+
     public void SetSmoothness(float smoothness)
     {
         if (LineType == LineType.Smooth)
@@ -97,6 +103,7 @@ public class DrawLineComponent : Graphic
         m_RefreshChart = true;
 
     }
+
     public void SetLineSmoothStyle(float smoothStyle)
     {
         if (LineType == LineType.Smooth)
@@ -116,15 +123,18 @@ public class Line
     public virtual void DrawLine(VertexHelper vh)
     {
     }
+
     public void AddPoint(Vector3 p)
     {
         dataPoints.Add(p);
     }
+
     public void AddPoint(List<Vector3> points)
     {
         dataPoints.AddRange(points);
     }
 }
+
 public class StraightLine : Line
 {
     public override void DrawLine(VertexHelper vh)
@@ -138,6 +148,7 @@ public class StraightLine : Line
         }
     }
 }
+
 public class SmoothLine:Line
 {
     /// <summary>
@@ -149,8 +160,8 @@ public class SmoothLine:Line
     /// </summary>
     [SerializeField] public float lineSmoothStyle = 2;
 
-
     private List<Vector3> bezierPoints = new List<Vector3>();
+
     public override void DrawLine(VertexHelper vh)
     {
         Vector3 lp = Vector3.zero;
@@ -175,8 +186,4 @@ public class SmoothLine:Line
             }
         }
     }
-
-
 }
-
-

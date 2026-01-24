@@ -16,6 +16,7 @@ namespace Sango.Game.Render.UI
         public UIAnimationText aniText;
         public Troop troop;
         public Animation foodAni;
+
         public void Init(Troop troop)
         {
             aniText = null;
@@ -96,6 +97,7 @@ namespace Sango.Game.Render.UI
                 aniText.onAnimationComplate = OnAnimationComplate;
             }
         }
+
         void OnAnimationComplate()
         {
             aniText = null;

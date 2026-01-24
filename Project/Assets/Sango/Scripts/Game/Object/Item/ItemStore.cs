@@ -6,6 +6,7 @@ namespace Sango.Game
     public class ItemStore : IAarryDataObject
     {
         public Dictionary<int, int> Items = new Dictionary<int, int>();
+
         public int TotalNumber { get; private set; }
 
         public IAarryDataObject FromArray(int[] values)
@@ -92,7 +93,6 @@ namespace Sango.Game
             Items.Add(itemTypeId, number);
             return number;
         }
-
 
         public void Add(ItemStore itemStore)
         {
@@ -281,6 +281,5 @@ namespace Sango.Game
             Items.Clear();
             TotalNumber = 0;
         }
-
     }
 }

@@ -1,8 +1,6 @@
 ﻿using HybridCLR;
-
 using Sango.Game;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -113,6 +111,7 @@ namespace Sango.Mod
                 Window.Instance.AddPackage(file, packageName);
             });
         }
+
         public void LoadPackage()
         {
             string path = GetFullPath("Package");
@@ -137,6 +136,7 @@ namespace Sango.Mod
                 GameLanguage.AddFile(file);
             });
         }
+
         public void LoadScenario()
         {
             string path = GetFullPath("Scenario");
@@ -148,6 +148,7 @@ namespace Sango.Mod
                 ShortScenario.Add(file);
             });
         }
+
         public string GetFullPath(string path)
         {
             return $"{ModDir}/{path}";

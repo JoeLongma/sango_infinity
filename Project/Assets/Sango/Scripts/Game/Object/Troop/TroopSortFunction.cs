@@ -44,6 +44,7 @@
             valueGetCall = x => x.Defence,
             personSortFunc = (a, b) => a.Defence.CompareTo(b.Defence),
         };
+
         public static SortTitle<int> SortByAttack = new SortTitle<int>()
         {
             name = "攻击",
@@ -52,6 +53,7 @@
             valueGetCall = x => x.Attack,
             personSortFunc = (a, b) => a.Attack.CompareTo(b.Attack),
         };
+
         public static SortTitle<int> SortByMoveability = new SortTitle<int>()
         {
             name = "移动",
@@ -60,6 +62,7 @@
             valueGetCall = x => x.MoveAbility,
             personSortFunc = (a, b) => a.MoveAbility.CompareTo(b.MoveAbility),
         };
+
         public static SortTitle<int> SortByBuild = new SortTitle<int>()
         {
             name = "建设",
@@ -78,5 +81,4 @@
             personSortFunc = (a, b) => a.Intelligence.CompareTo(b.Intelligence),
         };
     }
-
 }

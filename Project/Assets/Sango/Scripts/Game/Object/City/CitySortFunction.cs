@@ -1,13 +1,10 @@
-﻿using Sango.Game.Player;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Sango.Game
 {
     public enum CitySortTileType : int
     {
         Name = 0,
-
     }
 
     public enum CitySortGroupType : int
@@ -221,7 +218,5 @@ namespace Sango.Game
             valueGetCall = x => x.BelongCity?.Name ?? "无",
             citySortFunc = (a, b) => SangoObject.Compare(a.BelongCity, b.BelongCity),
         };
-
     }
-
 }

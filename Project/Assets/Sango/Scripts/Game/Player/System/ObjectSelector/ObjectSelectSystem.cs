@@ -21,6 +21,7 @@ namespace Sango.Game.Player
             this.customSortTitleName = cutomSortTitleName;
             GameSystemManager.Instance.Push(this);
         }
+        
         public void OnSure()
         {
             sureAction?.Invoke(selected);
@@ -46,6 +47,7 @@ namespace Sango.Game.Player
         {
             selected.Remove(Objects[index]);
         }
+
         public int RemoveFront()
         {
             if (selected.Count == 0) return -1;

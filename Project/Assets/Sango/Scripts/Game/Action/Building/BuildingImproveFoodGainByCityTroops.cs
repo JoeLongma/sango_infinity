@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Sango.Game.Tools;
 using System;
-using System.Collections.Generic;
 
 namespace Sango.Game.Action
 {

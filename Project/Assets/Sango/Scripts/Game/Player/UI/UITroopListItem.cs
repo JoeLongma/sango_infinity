@@ -15,9 +15,9 @@ public class UITroopListItem : MonoBehaviour
         index = idx;
         onShow?.Invoke(this);
     }
+
     public void OnClick()
     {
         onSelected?.Invoke(index);
     }
-
 }

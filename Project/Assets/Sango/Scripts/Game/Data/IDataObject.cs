@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace Sango.Game
 {
@@ -16,5 +11,4 @@ namespace Sango.Game
         public void Save(BinaryWriter node);
         public void Load(BinaryReader node);
     }
-
 }

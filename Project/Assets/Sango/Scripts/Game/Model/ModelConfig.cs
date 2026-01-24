@@ -1,6 +1,4 @@
-using System.IO;
 using Newtonsoft.Json;
-using System.Xml;
 
 namespace Sango.Game
 {
@@ -54,8 +52,5 @@ namespace Sango.Game
         //    writer.Write(texture);
         //    writer.Write(package);
         //}
-
-
-
     }
 }

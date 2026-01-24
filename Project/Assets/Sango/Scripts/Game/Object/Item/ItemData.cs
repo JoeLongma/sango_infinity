@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Sango.Game
+﻿namespace Sango.Game
 {
     public struct ItemData
     {

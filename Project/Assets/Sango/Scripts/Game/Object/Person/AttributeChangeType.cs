@@ -1,8 +1,5 @@
-﻿using SimpleJSON;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.IO;
-using Newtonsoft.Json;
-using System.Xml;
 
 namespace Sango.Game
 {
@@ -15,8 +12,10 @@ namespace Sango.Game
             public int factor;
             public AgeFactor(int a, int f) { age = a; factor = f; }
         }
+
         [JsonProperty]
         public List<AgeFactor> ageFactorList = new List<AgeFactor>();
+
         public int GetAgeFactor(int age)
         {
             if (ageFactorList.Count == 0)

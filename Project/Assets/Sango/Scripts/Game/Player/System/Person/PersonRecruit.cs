@@ -1,5 +1,4 @@
-﻿using Sango.Game.Render;
-using Sango.Game.Render.UI;
+﻿using Sango.Game.Render.UI;
 
 namespace Sango.Game.Player
 {
@@ -72,7 +71,7 @@ namespace Sango.Game.Player
         {
             "杀了我吧，我是不会加入你们的！！",
             "休想让我替你卖命！！",
-            "宁死不降！！"
+            "忠臣不是二主，我宁死不降！！"
         };
 
         // 招募
@@ -133,7 +132,6 @@ namespace Sango.Game.Player
                 tryLimit--;
             }
         }
-
 
         // 释放
         public void ReleaseTarget()

@@ -1,9 +1,4 @@
-﻿using Sango.Game.Player;
-using Sango.Loader;
-using Sango.Render;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
