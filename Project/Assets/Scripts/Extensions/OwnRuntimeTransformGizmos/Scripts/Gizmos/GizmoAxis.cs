@@ -1,28 +1,27 @@
 ﻿namespace RTEditor
 {
     /// <summary>
-    /// Represents a gizmo axis. This enum is used by all gizmo types to
-    /// differentiate between their X, Y and Z axes.
+    /// 表示控件轴。此枚举由所有gizmo类型用于区分它们的X、Y和Z轴
     /// </summary>
     public enum GizmoAxis
     {
         /// <summary>
-        /// The gizmo X axis.
+        /// 控件X轴
         /// </summary>
         X = 0,
 
         /// <summary>
-        /// The gizmo Y axis.
+        /// 控件Y轴.
         /// </summary>
         Y,
 
         /// <summary>
-        /// The gimzo Z axis.
+        /// 控件 Z轴
         /// </summary>
         Z,
 
         /// <summary>
-        /// Used in certain situations like specifying that no gizmo axis is currently selected.
+        /// 用于某些情况，如指定当前未选择gizmo轴
         /// </summary>
         None
     }

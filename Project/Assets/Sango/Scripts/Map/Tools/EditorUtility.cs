@@ -1,7 +1,7 @@
-﻿using HSVPicker;
+﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
+using HSVPicker;
 using UnityEngine.Events;
 
 namespace Sango.Tools
@@ -106,7 +106,6 @@ namespace Sango.Tools
 
         static public Vector2 Vector2Field(UnityEngine.Rect position, Vector2 v, int width)
         {
-
             GUILayout.BeginHorizontal();
             changed = false;
             float x = FloatField(position, v.x);
@@ -447,9 +446,7 @@ namespace Sango.Tools
                         picker.onValueChanged.RemoveAllListeners();
                         picker.onValueChanged.AddListener(changeCall);
                     }
-
                 }
-
             }
         }
         public static string lastOpenFilePath;

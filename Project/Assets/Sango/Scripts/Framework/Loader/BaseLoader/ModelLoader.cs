@@ -49,6 +49,19 @@ namespace Sango.Loader
             public UnityEngine.Object rsObject;
         }
 
+        private static ModelLoadData CreateModelLoadData(string texturePath, bool textureNeedCompress, string matName, bool shareMaterial, object customData, OnObjectLoaded onCSharpLoadedFunc)
+        {
+            return new ModelLoadData
+            {
+                texturePath = texturePath,
+                textureNeedCompress = textureNeedCompress,
+                matName = matName,
+                shareMaterial = shareMaterial,
+                customData = customData,
+                onCSharpLoadedFunc = onCSharpLoadedFunc,
+            };
+        }
+
         public static void OnModelObjectLoaded(UnityEngine.Object obj, object customData)
         {
             ModelLoadData data = (ModelLoadData)customData;
@@ -57,7 +70,7 @@ namespace Sango.Loader
             GameObject go = obj as GameObject;
             if (go != null)
             {
-                Renderer r = go.GetComponentInChildren<Renderer>();
+                Renderer r = go.GetComponentInChildren<Renderer>();     //GetComponentInChildren用于查找go对象及其所有子对象中第一个匹配 T 类型的Renderer组件
                 if (r != null)
                 {
                     if (r.sharedMaterial == null)
@@ -123,19 +136,6 @@ namespace Sango.Loader
             }
         }
 
-        private static ModelLoadData CreateModelLoadData(string texturePath, bool textureNeedCompress, string matName, bool shareMaterial, object customData, OnObjectLoaded onCSharpLoadedFunc)
-        {
-            return new ModelLoadData
-            {
-                texturePath = texturePath,
-                textureNeedCompress = textureNeedCompress,
-                matName = matName,
-                shareMaterial = shareMaterial,
-                customData = customData,
-                onCSharpLoadedFunc = onCSharpLoadedFunc,
-            };
-        }
-
         public static void LoadFromFile(string filePath, string texturePath, bool textureNeedCompress, string matName, bool shareMaterial, object customData, OnObjectLoaded onCSharpLoadedFunc = null)
         {
             CheckHelper();
@@ -186,7 +186,6 @@ namespace Sango.Loader
                 CreateModelLoadData(texturePath, textureNeedCompress, matName, shareMaterial, customData, onCSharpLoadedFunc));
 
             usingList.Add(loadData);
-
 
            // AssetLoaderContext context = AssetLoader.LoadModelFromFile(finalPath, null, OnModelFullyLoad, null, OnError, null, null, loadData);
 

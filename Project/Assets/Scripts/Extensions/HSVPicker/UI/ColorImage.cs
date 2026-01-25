@@ -26,5 +26,4 @@ namespace HSVPicker
             image.color = newColor;
         }
     }
-
 }

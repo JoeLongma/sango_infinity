@@ -8,9 +8,7 @@ using UnityEditor;
 namespace RTEditor
 {
     /// <summary>
-    /// The gizmo system manages all the gizmos. It controls their position and orientation
-    /// based on what happens in the scene (i.e. how the user moves the mouse, what objects
-    /// are selected etc). 
+    /// Gizmo 系统管理所有的 Gizmo。它根据场景中发生的事件（例如用户如何移动鼠标、选择了哪些对象等）来控制它们的位置和方向
     /// </summary>
     public class EditorGizmoSystem : MonoSingletonBase<EditorGizmoSystem>, IMessageListener
     {
@@ -87,19 +85,19 @@ namespace RTEditor
         };
 
         /// <summary>
-        /// The translation gizmo which is used to move objects in the scene.
+        /// 用于在场景中移动对象的平移gizmo控件
         /// </summary>
         [SerializeField]
         private TranslationGizmo _translationGizmo;
 
         /// <summary>
-        /// The rotation gizmo which is used to rotate objects in the scene.
+        /// 用于旋转场景中对象的旋转gizmo控件
         /// </summary>
         [SerializeField]
         private RotationGizmo _rotationGizmo;
 
         /// <summary>
-        /// The scale gizmo which is used to scale objects in the scene.
+        /// 用于缩放场景中对象的缩放gizmo控件
         /// </summary>
         [SerializeField]
         private ScaleGizmo _scaleGizmo;
@@ -108,32 +106,28 @@ namespace RTEditor
         private VolumeScaleGizmo _volumeScaleGizmo;
 
         /// <summary>
-        /// This is the gizmo that is currently being used to transform objects in the scene.
+        /// 这是当前用于变换场景中对象的gizmo控件
         /// </summary>
         /// <remarks>
-        /// By 'active' it is meant that it was selected by the user to be used for object manipulation.
-        /// It does not necessarily mean that it is active in the scene. For example, when there is no
-        /// object selected in the scene, '_activeGizmo' will reference a gizmo object which is inactive
-        /// in the scene.
+        /// 所谓“active激活”是指它是由用户选择用于对象操作的
+        /// 这并不一定意味着它在场景中是活动的。例如，当场景中没有选定对象时，“_activeGizmo”将引用处于非活动场景的gizmo对象
         /// </remarks>
         private Gizmo _activeGizmo;
 
         /// <summary>
-        /// This is the transform space in which the gizmos will be transforming their controlled objects. You
-        /// can change this from the Inspector GUI to establish the initial transform space.
+        /// 这是小控件将在其中变换其受控对象的变换空间。您可以在Inspector GUI中对此进行更改，以建立初始变换空间
         /// </summary>
         [SerializeField]
         private TransformSpace _transformSpace = TransformSpace.Global;
 
         /// <summary>
-        /// Stores the type of the currently active gizmo. You can change this in the Inspector GUI to establish
-        /// the initial transform gizmo that must be activated on the first object selection operation.
+        /// 存储当前活动gizmo的类型。可以在Inspector GUI中对此进行更改，以建立必须在第一次对象选择操作中激活的初始变换gizmo
         /// </summary>
         [SerializeField]
         private GizmoType _activeGizmoType = GizmoType.Translation;
 
         /// <summary>
-        /// This is the transform pivot point which must be used by all gizmos to transform their objects.
+        /// 这是所有Gizmo都必须使用的变换轴心点，以变换其对象
         /// </summary>
         [SerializeField]
         private TransformPivotPoint _transformPivotPoint = TransformPivotPoint.Center;
@@ -145,17 +139,14 @@ namespace RTEditor
         };
 
         /// <summary>
-        /// If this variable is set to true, gizmos are turned off. This means that when objects are selected,
-        /// no gizmo will be shown. This mode is useful when the user would like to perform simple object selections
-        /// without having to worry about the gizmos.
+        /// 如果此变量设置为true，则小控件将关闭。这意味着当选择对象时，将不显示小控件。当用户希望执行简单的对象选择而不必担心小控件时，此模式非常有用
         /// </summary>
         private bool _areGizmosTurnedOff = false;
         #endregion
 
         #region Public Properties
         /// <summary>
-        /// Gets/sets the associated translation gizmo. Settings the gizmo to null or to a prefab,
-        /// will have no effect. Only non-null scene object instances are allowed.
+        /// 获取/设置关联的平移 Gizmo。将 Gizmo 设置为 null 或预制体将不会产生任何效果。只允许非空的场景对象实例
         /// </summary>
         public TranslationGizmo TranslationGizmo
         {
@@ -175,8 +166,7 @@ namespace RTEditor
         }
 
         /// <summary>
-        /// Gets/sets the associated rotation gizmo. Settings the gizmo to null or to a prefab,
-        /// will have no effect. Only non-null scene object instances are allowed.
+        /// 获取/设置关联的旋转 Gizmo。将 Gizmo 设置为 null 或预制体将不会产生任何效果。只允许非空的场景对象实例
         /// </summary>
         public RotationGizmo RotationGizmo
         {
@@ -185,7 +175,7 @@ namespace RTEditor
             {
                 if (value == null) return;
 
-                // Allow only scene objects
+                // 只允许场景对象
                 #if UNITY_EDITOR
                 if (value.gameObject.IsSceneObject()) _rotationGizmo = value;
                 else Debug.LogWarning("EditorGizmoSystem.RotationGizmo: Only scene gizmo object instances are allowed.");
@@ -196,8 +186,7 @@ namespace RTEditor
         }
 
         /// <summary>
-        /// Gets/sets the associated scale gizmo. Settings the gizmo to null or to a prefab,
-        /// will have no effect. Only non-null scene object instances are allowed.
+        /// 获取/设置关联的缩放 Gizmo。将 Gizmo 设置为 null 或预制体将不会产生任何效果。只允许非空的场景对象实例
         /// </summary>
         public ScaleGizmo ScaleGizmo
         {
@@ -206,7 +195,7 @@ namespace RTEditor
             {
                 if (value == null) return;
 
-                // Allow only scene objects
+                // 只允许场景对象
                 #if UNITY_EDITOR
                 if (value.gameObject.IsSceneObject()) _scaleGizmo = value;
                 else Debug.LogWarning("EditorGizmoSystem.ScaleGizmo: Only scene gizmo object instances are allowed.");
@@ -223,7 +212,7 @@ namespace RTEditor
             {
                 if (value == null) return;
 
-                // Allow only scene objects
+                // 只允许场景对象
                 #if UNITY_EDITOR
                 if (value.gameObject.IsSceneObject()) _volumeScaleGizmo = value;
                 else Debug.LogWarning("EditorGizmoSystem.VolumeScaleGizmo: Only scene gizmo object instances are allowed.");
@@ -288,10 +277,10 @@ namespace RTEditor
         }
 
         /// <summary>
-        /// Checks if the active gizmo is ready for object manipulation.
+        /// 检查活动的 Gizmo 是否准备好进行对象操作
         /// </summary>
         /// <remarks>
-        /// If the active gizmo is not active in the scene, the method returns false.
+        /// 如果活动的 Gizmo 在场景中未激活，则该方法返回 false
         /// </remarks>
         public bool IsActiveGizmoReadyForObjectManipulation()
         {
@@ -300,11 +289,10 @@ namespace RTEditor
         }
 
         /// <summary>
-        /// This method will turn of all gizmo objects. After calling this method, no gizmo
-        /// will be active in the scene, not even when the user is selecting objects.
+        /// 此方法将关闭所有 Gizmo 对象。调用此方法后，场景中将没有任何 Gizmo 处于活动状态，即使用户在选择对象时也是如此
         /// </summary>
         /// <remarks>
-        /// Gizmos can be turned on again by setting the 'ActiveGizmoType' property.
+        /// 通过设置 'ActiveGizmoType' 属性，可以再次打开 Gizmos
         /// </remarks>
         public void TurnOffGizmos()
         {
@@ -315,19 +303,19 @@ namespace RTEditor
 
         #region Private Methods
         /// <summary>
-        /// Performs any necessary initializations.
+        /// 执行任何必要的初始化
         /// </summary>
         private void Start()
         {
-            // Make sure all properties are valid
+            // 确保所有属性都是有效的
             ValidatePropertiesForRuntime();
 
-            DeactivateAllGizmoObjects();                        // Initially, all gizmo objects are deactivated. Whenever the user selects the first object (or group of objects), the correct gizmo will be activated).
-            ConnectObjectSelectionToGizmos();                   // Make sure the gizmos know which objects they control
-            ChangeActiveGizmo(_activeGizmoType);                // Make sure we are using the correct gizmo initially 
-            ChangeTransformPivotPoint(_transformPivotPoint);    // Make sure the transform pivot point is setup correctly
-         
-            // Register as listener
+            DeactivateAllGizmoObjects(); // 最初，所有小工具Gizmo对象都被停用。每当用户选择第一个对象（或对象组）时，正确的小工具Gizmo将被激活
+            ConnectObjectSelectionToGizmos(); // 确保小工具Gizmo知道它们控制哪些对象
+            ChangeActiveGizmo(_activeGizmoType); // 确保最初使用正确的小工具Gizmo
+            ChangeTransformPivotPoint(_transformPivotPoint); // 确保变换中心点设置正确
+
+            // 注册为监听器
             MessageListenerDatabase listenerDatabase = MessageListenerDatabase.Instance;
             listenerDatabase.RegisterListenerForMessage(MessageType.GizmoTransformedObjects, this);
             listenerDatabase.RegisterListenerForMessage(MessageType.GizmoTransformOperationWasUndone, this);
@@ -359,12 +347,11 @@ namespace RTEditor
         }
 
         /// <summary>
-        /// The method ensures that all properties are valid such that the gizmo system
-        /// can be used at runtime.
+        /// 该方法确保所有属性都是有效的，以便可以在运行时使用gizmo系统
         /// </summary>
         private void ValidatePropertiesForRuntime()
         {
-            // Make sure all properties have been set up correctly
+            // 确保所有属性都已正确设置
             bool allPropertiesAreValid = true;
             if (_translationGizmo == null)
             {
@@ -390,14 +377,12 @@ namespace RTEditor
                 allPropertiesAreValid = false;
             }
 
-            // If not all properties have been set up correctly, we will quit the application
+            // 如果没有正确设置所有属性，我们将退出应用程序
             if (!allPropertiesAreValid) ApplicationHelper.Quit();
         }
 
         /// <summary>
-        /// This method is called from 'Start' in order to connect the object selection collection
-        /// to each of the 3 gizmos. We need to do this because the gizmos need to know about the
-        /// objects that they control.
+        /// 从“Start”调用此方法，以便连接3个Gizmo的对象选择集合。我们需要这样做，因为Gizmo小控件需要了解它们控制的对象
         /// </summary>
         private void ConnectObjectSelectionToGizmos()
         {
@@ -409,7 +394,7 @@ namespace RTEditor
         }
 
         /// <summary>
-        /// Deactivates all gizmo objects.
+        /// 禁用所有gizmo对象
         /// </summary>
         private void DeactivateAllGizmoObjects()
         {
@@ -420,89 +405,82 @@ namespace RTEditor
         }
 
         /// <summary>
-        /// Changes the active gizmo to the gizmo which is identified by the specified type.
+        /// 将活动gizmo更改为由指定类型标识的gizmo
         /// </summary>
         /// <remarks>
-        /// Calling this method will set the '_areGizmosTurnedOff' boolean to false (i.e. will
-        /// reenable gizmos).
+        /// 调用此方法会将“_areGizmosTurnedOff”布尔值设置为false（即将重新启用Gizmo）
         /// </remarks>
         public void ChangeActiveGizmo(GizmoType gizmoType)
         {
             if (!IsGizmoTypeAvailable(gizmoType)) return;
 
-            // Gizmos are no longer turned off
+            // Gizmo不再关闭
             _areGizmosTurnedOff = false;
 
-            // We will need this later
+            // 我们稍后需要这个
             Gizmo oldActiveGizmo = _activeGizmo;
 
-            // Change the active gizmo type
+            // 更改活动gizmo类型
             bool sameGizmoType = (gizmoType == _activeGizmoType);
             _activeGizmoType = gizmoType;
             _activeGizmo = GetGizmoByType(gizmoType);
 
-            // Deactivate the old active gizmo and make sure that the new gizmo has its position and
-            // orientation updated accordingly.
+            // 停用旧的活动gizmo，并确保新gizmo的位置和方向相应更新
             if (oldActiveGizmo != null)
             {
-                // Deactivate the old gizmo
+                // 停用旧gizmo
                 oldActiveGizmo.gameObject.SetActive(false);
 
                 EstablishActiveGizmoPosition();
                 UpdateActiveGizmoRotation();
             }
 
-            // If there are any objects selected, we will make sure that the new active gizmo is active in the scene.
-            // If no objects are selected, we will deactivate it. We do this because we only want to draw the active
-            // gizmo when there are selected objects in the scene. If no objects are selected, there is nothing to
-            // transform.
+            // 如果选择了任何对象，我们将确保新的活动gizmo在场景中处于活动状态。如果没有选择任何对象，我们将停用它
+            // 这样做是因为我们只想在场景中有选定对象时绘制活动gizmo。如果未选择任何对象，则没有要变换的对象
             if (EditorObjectSelection.Instance.NumberOfSelectedObjects != 0) _activeGizmo.gameObject.SetActive(true);
             else _activeGizmo.gameObject.SetActive(false);
 
-            // When the active gizmo is changed, always make sure that vertex snapping is disabled for the translation gizmo.
-            // Otherwise, if you change from translation to rotation while vertex snapping is enabled and then enable the
-            // translation gizmo again, it will be activated with vertex snapping enabled, which is not really desirable.
-            // TODO: Remove this????
-            //_translationGizmo.SnapSettings.IsVertexSnappingEnabled = false;
+            // 更改活动gizmo时，请始终确保禁用平移gizmo的顶点捕捉。否则，如果在启用顶点捕捉的情况下从平移更改为旋转，然后再次启用平移gizmo，则它将在启用顶点捕获的情况下激活，这不是真正需要的
+            // TODO: Remove this????    TODO:删除此_translationGizmo
+            //_translationGizmo.SnapSettings.IsVertexSnappingEnabled = false;   SnapSettings(快照设置)
 
             if (!sameGizmoType && ActiveGizmoTypeChanged != null) ActiveGizmoTypeChanged(_activeGizmoType);
         }
 
         /// <summary>
-        /// Changes the active transform space to the specified value.
+        /// 将活动变换空间更改为指定值
         /// </summary>
         private void ChangeTransformSpace(TransformSpace transformSpace)
         {
             if (transformSpace == _transformSpace) return;
 
-            // Set the new transform space and make sure the active gizmo has its rotation updated accordingly
+            // 设置新的变换空间，并确保活动gizmo的旋转已相应更新
             _transformSpace = transformSpace;
             UpdateActiveGizmoRotation();
         }
 
         /// <summary>
-        /// Changes the transform pivot point to the specified value.
+        /// 将变换轴心点更改为指定值
         /// </summary>
         private void ChangeTransformPivotPoint(TransformPivotPoint transformPivotPoint)
         {
             if (_transformPivotPoint == transformPivotPoint) return;
 
-            // Store the new pivot point
+            // 存储新的轴心点
             _transformPivotPoint = transformPivotPoint;
 
-            // Set the pivot point for each gizmo
+            // 为每个gizmo设置轴心点
             _translationGizmo.TransformPivotPoint = _transformPivotPoint;
             _rotationGizmo.TransformPivotPoint = _transformPivotPoint;
             _scaleGizmo.TransformPivotPoint = _transformPivotPoint;
             _volumeScaleGizmo.TransformPivotPoint = _transformPivotPoint;
 
-            // Establish the position of the active gizmo
+            // 建立活动gizmo的位置
             EstablishActiveGizmoPosition();
         }
 
         /// <summary>
-        /// The method will return one of the gizmos managed by the gizmo system which corresponds
-        /// to the specified gizmo type.
+        /// 该方法将返回由gizmo系统管理的一个gizmo，该gizmo与指定的gizmo类型相对应
         /// </summary>
         private Gizmo GetGizmoByType(GizmoType gizmoType)
         {
@@ -513,16 +491,14 @@ namespace RTEditor
         }
 
         /// <summary>
-        /// This method is called whenever the position of the active gizmo needs to be updated.
+        /// 只要需要更新活动gizmo的位置，就会调用此方法
         /// </summary>
         private void EstablishActiveGizmoPosition()
         {
             EditorObjectSelection objectSelection = EditorObjectSelection.Instance;
-            if (_activeGizmo.GetGizmoType() != GizmoType.VolumeScale && _activeGizmo != null /*&& !_activeGizmo.IsTransformingObjects()*/) // TODO: Why was this here? Seems that it is not necessary...
-            {             
-                // Update the position based on the specified transform pivot point. If the transform pivot
-                // point is set to 'MeshPivot', we will set the position of the gizmo to the position of the
-                // last selected game objects. Otherwise, we will set it to the center of the selection.
+            if (_activeGizmo.GetGizmoType() != GizmoType.VolumeScale && _activeGizmo != null /*&& !_activeGizmo.IsTransformingObjects()*/) // TODO: 为什么会在这里？似乎没有必要
+            {
+                // 基于指定的变换轴心点更新位置。如果变换轴心点设置为“MeshPivot”，我们将把gizmo的位置设置为最后一个选定游戏对象的位置。否则，我们将把它设置为选择的中心
                 if (_transformPivotPoint == TransformPivotPoint.MeshPivot && objectSelection.LastSelectedGameObject != null) _activeGizmo.transform.position = objectSelection.LastSelectedGameObject.transform.position;
                 else _activeGizmo.transform.position = objectSelection.GetSelectionWorldCenter();
             }
@@ -535,8 +511,7 @@ namespace RTEditor
         }
 
         /// <summary>
-        /// Updates the rotation of the active gizmo by taking into consideration
-        /// all necessary factors such as the active gizmo transform space.
+        /// 通过考虑所有必要因素（如活动gizmo变换空间）来更新活动gizmo的旋转
         /// </summary>
         private void UpdateActiveGizmoRotation()
         {
@@ -548,11 +523,9 @@ namespace RTEditor
                 return;
             }
             else
-            {               
-                // If the global transform space is used, we will set the gizmo's rotation to identity. Otherwise,
-                // we will set the rotation to the rotation of the last object which was selected in the scene.
-                // Note: The scale gizmo will always be oriented in the last selected object's local space because
-                //       the scale gizmo always scales along the objects' local axes.
+            {
+                // 如果使用全局变换空间，我们将把gizmo的旋转设置为identity。否则，我们将把旋转设置为场景中最后一个选定对象的旋转
+                // 【注意】：缩放gizmo将始终在上一个选定对象的局部空间中定向，因为缩放gizmo始终沿对象的局部轴缩放
                 if ((_transformSpace == TransformSpace.Global && _activeGizmoType != GizmoType.Scale) || objectSelection.LastSelectedGameObject == null) _activeGizmo.transform.rotation = Quaternion.identity;
                 else _activeGizmo.transform.rotation = objectSelection.LastSelectedGameObject.transform.rotation;
             }
@@ -564,26 +537,26 @@ namespace RTEditor
             EditorObjectSelection objectSelection = EditorObjectSelection.Instance;
             if (_activeGizmo == null) return;
 
-            // If no objects are selected, we will deactivate the active gizmo
+            // 如果未选择任何对象，我们将停用活动gizmo小控件
             if (objectSelection.NumberOfSelectedObjects == 0) _activeGizmo.gameObject.SetActive(false);
             else
-            // If the gizmos are not turned off, we may need to enable the active gizmo in the scene
+            // 如果小控件没有关闭，我们可能需要启用场景中的活动小控件
             if (!_areGizmosTurnedOff)
             {
-                // If there are objects selected, we will make sure the active gizmo is enabled in the scene.
+                // 如果选择了对象，我们将确保在场景中启用活动gizmo.
                 if (objectSelection.NumberOfSelectedObjects != 0 && !_activeGizmo.gameObject.activeSelf) _activeGizmo.gameObject.SetActive(true);
             }
 
-            // Make sure the position of the active gizmo is updated correctly
+            // 确保活动gizmo的位置已正确更新
             EstablishActiveGizmoPosition();
 
-            // Now we must make sure that the active gizmo is oriented accordingly
+            // 现在，我们必须确保活动gizmo的方向相应
             UpdateActiveGizmoRotation();
         }
 
         #region Message Handlers
         /// <summary>
-        /// 'IMessageListener' interface method implementation.
+        /// 'IMessageListener' 接口方法实现
         /// </summary>
         public void RespondToMessage(Message message)
         {
@@ -618,35 +591,31 @@ namespace RTEditor
         }
 
         /// <summary>
-        /// This method is called to respond to a gizmo transform operation undone message.
+        /// 调用此方法是为了响应gizmo变换操作撤消的消息
         /// </summary>
         private void RespondToMessage(GizmoTransformOperationWasUndoneMessage message)
         {
-            // When the transform operation is undone, it means the objects position/rotation/scale
-            // has changed, so we have to recalculate the position and orientation of the active gizmo.
+            // 变换操作撤消后，意味着对象的位置/旋转/比例已更改，因此我们必须重新计算活动gizmo的位置和方向
             EstablishActiveGizmoPosition();
             UpdateActiveGizmoRotation();
         }
 
         /// <summary>
-        /// This method is called to respond to a gizmo transform operation redone message.
+        /// 调用此方法是为了响应gizmo变换操作重做消息
         /// </summary>
         private void RespondToMessage(GizmoTransformOperationWasRedoneMessage message)
         {
-            // When the transform operation is redone, it means the objects position/rotation/scale
-            // has changed, so we have to recalculate the position and orientation of the active gizmo.
+            // 重做变换操作时，意味着对象的位置/旋转/比例已更改，因此我们必须重新计算活动gizmo的位置和方向
             EstablishActiveGizmoPosition();
             UpdateActiveGizmoRotation();
         }
 
         /// <summary>
-        /// This method is called to respond to a vertex snapping disabled message.
+        /// 调用此方法是为了响应顶点捕捉禁用消息
         /// </summary>
         private void RespondToMessage(VertexSnappingDisabledMessage message)
         {
-            // When vertex snapping is disabled, make sure that the active gizmo is positioned
-            // accordingly because when vertex snapping is used, its position my change to that
-            // of the object mesh vertices.
+            // 禁用顶点捕捉后，请确保相应地定位活动gizmo，因为使用顶点捕捉时，其位置将更改为对象网格顶点的位置
             EstablishActiveGizmoPosition();
         }
         #endregion

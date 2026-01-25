@@ -111,6 +111,5 @@ namespace Sango.Game
         {
             GameAIDebug.Enabled = !GameAIDebug.Enabled;
         }
-
     }
 }

@@ -3,28 +3,27 @@
 namespace RTEditor
 {
     /// <summary>
-    /// This class represents a message that can be sent to listeners. It is a base
-    /// abstract class which must be derived by each type of message that can be sent.
+    /// 此类表示可以发送给侦听器的消息它是一个基本抽象类，必须由可以发送的每种类型的消息派生
     /// </summary>
     public abstract class Message
     {
         #region Private Variables
         /// <summary>
-        /// The message type.
+        /// 消息类型
         /// </summary>
         private MessageType _type;
         #endregion
 
         #region Public Properties
         /// <summary>
-        /// Returns the message type.
+        /// 返回消息类型
         /// </summary>
         public MessageType Type { get { return _type; } }
         #endregion
 
         #region Constructors
         /// <summary>
-        /// Constructor.
+        /// Constructor创建者
         /// </summary>
         public Message(MessageType type)
         {

@@ -7,23 +7,22 @@ using UnityEditor;
 namespace RTEditor
 {
     /// <summary>
-    /// This is a static class that implements some useful 'GameObject' extension methods.
+    /// 这是一个静态类，实现了一些有用的 'GameObject' 扩展方法
     /// </summary>
     public static class GameObjectExtensions
     {
         #region Public Static Functions
         #if UNITY_EDITOR
         /// <summary>
-        /// Can be used to check if the specified game object is a scene object. This is useful
-        /// when wanting to avoid assigning prefabs to 'GameObject' references.
+        /// 可用于检查指定的游戏对象是否为场景对象。当想要避免将预制件分配给“游戏对象”引用时，这很有用
         /// </summary>
         public static bool IsSceneObject(this GameObject gameObject)
         {
             PrefabType prefabType = PrefabUtility.GetPrefabType(gameObject);
 
             // Make sure the specified game object is not a prefab. A game object is not a prefab if
-            // 'prefabType' is either 'None' or if the value specifies that object is some kind of
-            // a prefab instance. If it is an instance it means it exists inside the scene.
+            // 确保指定的游戏对象不是预制的。如果“presebType”为“None”，或者该值指定游戏对象是某种预制实例，则该对象不是预制对象
+            // 如果它是一个实例，则表示它存在于场景中
             return prefabType == PrefabType.None || prefabType == PrefabType.PrefabInstance ||
                    prefabType == PrefabType.DisconnectedPrefabInstance || prefabType == PrefabType.MissingPrefabInstance;
         }

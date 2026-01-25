@@ -65,16 +65,12 @@ public class HexMapManager
         {
             for (int j = 0; j < col; j++)
             {
-
                 int index=i*m_Col + j;
                 HexCell xHexCell = new HexCell(i, j, index, m_Size);
                 m_CellList.Add(xHexCell);
                 m_cellDic[index] = xHexCell;
             }
         }
-
-       
-
 
         //m_XCells = new XHexCell[row, col];
         //XHexCommon.m_OuterRadius = size;
@@ -192,8 +188,5 @@ public class HexMapManager
         //        }
         //    }
         //}
-
-
-
     }
 }

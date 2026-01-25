@@ -3,32 +3,30 @@
 namespace RTEditor
 {
     /// <summary>
-    /// Monobehaviours can implement this interface so that they can be able to 
-    /// listen to different types of events and take action as needed.
+    /// Monobhaviors可以实现这个接口，以便他们能够倾听不同类型的事件并根据需要采取行动
     /// </summary>
     public interface IRTEditorEventListener
     {
         /// <summary>
-        /// Called before an object is about to be selected. Must return true if the
-        /// object can be selected and false otherwise.
+        /// 在将要选择对象之前调用。如果可以选择对象，则必须返回true，否则必须返回false
         /// </summary>
         bool OnCanBeSelected(ObjectSelectEventArgs selectEventArgs);
 
         /// <summary>
-        /// Called when the object has been selected.
+        /// 在选择对象时调用
         /// </summary>
         void OnSelected(ObjectSelectEventArgs selectEventArgs);
 
         /// <summary>
-        /// Called when the object has been deselected.
+        /// 在取消选择对象时调用
         /// </summary>
         void OnDeselected(ObjectDeselectEventArgs deselectEventArgs);
 
         /// <summary>
-        /// Called when the object is altered (moved, rotated or scaled) by a transform gizmo.
+        /// 当变换控件更改（移动、旋转或缩放）对象时调用
         /// </summary>
         /// <param name="gizmo">
-        /// The transform gzimo which alters the object.
+        /// 改变对象的变换控件
         /// </param>
         void OnAlteredByTransformGizmo(Gizmo gizmo);
     }

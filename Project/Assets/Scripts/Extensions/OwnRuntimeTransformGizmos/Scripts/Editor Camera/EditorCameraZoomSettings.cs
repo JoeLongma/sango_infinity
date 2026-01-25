@@ -4,62 +4,56 @@ using System;
 namespace RTEditor
 {
     /// <summary>
-    /// Holds zoom settings which can be associated with the editor camera.
+    /// 用于保存与编辑器相机关联的缩放设置
     /// </summary>
     [Serializable]
     public class EditorCameraZoomSettings
     {
         #region Private Variables
         /// <summary>
-        /// The camera zoom mode.
+        /// 相机缩放模式
         /// </summary>
         [SerializeField]
         private EditorCameraZoomMode _zoomMode = EditorCameraZoomMode.Standard;
 
         /// <summary>
-        /// Can be used to toggle camera zoom on/off as needed.
+        /// 用于根据需要切换相机缩放的开关
         /// </summary>
         [SerializeField]
         private bool _isZoomEnabled = true;
 
         /// <summary>
-        /// The smooth value used when the zoom mode is set to 'Smooth' and the camera works
-        /// in orthographic mode.
+        /// 当缩放模式设置为“Smooth”且相机工作在正交模式下时使用的平滑值
         /// </summary>
         [SerializeField]
         private float _orthographicSmoothValue = 0.1f;
 
         /// <summary>
-        /// The smooth value used when the zoom mode is set to 'Smooth' and the camera works
-        /// in perspective mode.
+        /// 当缩放模式设置为“Smooth”且相机工作在透视模式下时使用的平滑值
         /// </summary>
         [SerializeField]
         private float _perspectiveSmoothValue = 0.2f;
 
         /// <summary>
-        /// This is the camera zoom speed when the camera works in orthographic mode and when
-        /// the zoom mode is set to 'Standard'.
+        /// 当缩放模式设置为“Standard”且相机工作在正交模式下时的相机缩放速度
         /// </summary>
         [SerializeField]
         private float _orthographicStandardZoomSpeed = 10.0f;
 
         /// <summary>
-        /// This is the camera zoom speed when the camera works in perspective mode and when
-        /// the zoom mode is set to 'Standard'.
+        /// 当缩放模式设置为“Standard”且相机工作在透视模式下时的相机缩放速度
         /// </summary>
         [SerializeField]
         private float _perspectiveStandardZoomSpeed = 400.0f;
 
         /// <summary>
-        /// This is the camera zoom speed when the camera works in orthographic mode and when
-        /// the zoom mode is set to 'Smooth'.
+        /// 当缩放模式设置为“Smooth”且相机工作在正交模式下时的相机缩放速度
         /// </summary>
         [SerializeField]
         private float _orthographicSmoothZoomSpeed = 65.0f;
 
         /// <summary>
-        /// This is the camera zoom speed when the camera works in perspective mode and when
-        /// the zoom mode is set to 'Smooth'.
+        /// 当缩放模式设置为“Smooth”且相机工作在透视模式下时的相机缩放速度
         /// </summary>
         [SerializeField]
         private float _perspectiveSmoothZoomSpeed = 400.0f;
@@ -67,71 +61,65 @@ namespace RTEditor
 
         #region Public Static Properties
         /// <summary>
-        /// Returns the minimum zoom speed which applies to both orthographic and perspective cameras.
+        /// 适用于正交和透视相机的最小缩放速度
         /// </summary>
         public static float MinZoomSpeed { get { return 0.01f; } }
 
         /// <summary>
-        /// Returns the minimum zoom smooth value.
+        /// 最小的平滑值
         /// </summary>
         public static float MinSmoothValue { get { return 1e-5f; } }
 
         /// <summary>
-        /// Returns the maximum zoom smooth value.
+        /// 最大的平滑值
         /// </summary>
         public static float MaxSmoothValue { get { return 1.0f; } }
         #endregion
 
         #region Public Properties
         /// <summary>
-        /// Gets/sets the zoom mode.
+        /// 获取/设置缩放模式
         /// </summary>
         public EditorCameraZoomMode ZoomMode { get { return _zoomMode; } set { _zoomMode = value; } }
 
         /// <summary>
-        /// Gets/sets the boolean flag which specifies if camera zoom is enabled.
+        /// 获取/设置指定相机缩放是否启用的布尔标志
         /// </summary>
         public bool IsZoomEnabled { get { return _isZoomEnabled; } set { _isZoomEnabled = value; } }
 
         /// <summary>
-        /// Gets/sets the smooth value used when the zoom mode is set to 'Smooth' and the camera works
-        /// in orthographic mode. This property can take on values within the [MinSmoothValue, MaxSmoothValue] 
-        /// interval. Values outside this interval are clamped accordingly.
+        /// 获取/设置当缩放模式设置为“Smooth”且相机工作在正交模式下时使用的平滑值
+        /// 该属性的值可以在 [MinSmoothValue, MaxSmoothValue] 区间内。超出此区间的值将被相应地夹紧
         /// </summary>
         public float OrthographicSmoothValue { get { return _orthographicSmoothValue; } set { _orthographicSmoothValue = Mathf.Min(MaxSmoothValue, Mathf.Max(MinSmoothValue, value)); } }
 
         /// <summary>
-        /// Gets/sets the smooth value used when the zoom mode is set to 'Smooth' and the camera works
-        /// in perspective mode. This property can take on values within the [MinSmoothValue, MaxSmoothValue] 
-        /// interval. Values outside this interval are clamped accordingly.
+        /// 获取/设置当缩放模式设置为“Smooth”且相机工作在透视模式下时使用的平滑值
+        /// 该属性的值可以在 [MinSmoothValue, MaxSmoothValue] 区间内。如果设置的值超出此区间，它将被相应地夹紧
         /// </summary>
         public float PerspectiveSmoothValue { get { return _perspectiveSmoothValue; } set { _perspectiveSmoothValue = Mathf.Min(MaxSmoothValue, Mathf.Max(MinSmoothValue, value)); } }
 
         /// <summary>
-        /// Gets/sets the camera zoom speed for orthographic mode when the zoom mode is set to
-        /// 'Standard'. The minimum zoom speed is given by the 'MinZoomSpeed' property. Values 
-        /// smaller than that will be clamped accordingly.
+        /// 获取/设置当缩放模式设置为“Standard”且相机工作在正交模式下时的相机缩放速度
+        /// 最小缩放速度由 MinZoomSpeed 属性给出。如果设置的值小于该最小速度，它将被相应地夹紧
         /// </summary>
         public float OrthographicStandardZoomSpeed { get { return _orthographicStandardZoomSpeed; } set { _orthographicStandardZoomSpeed = Mathf.Max(value, MinZoomSpeed); } }
 
         /// <summary>
-        /// Gets/sets the camera zoom speed for perspective mode when the zoom mode is set to
-        /// 'Standard'. The minimum zoom speed is given by the 'MinZoomSpeed' property. Values
-        /// smaller than that will be clamped accordingly.
+        /// 获取/设置当缩放模式设置为“Standard”且相机工作在透视模式下时的相机缩放速度
+        /// 最小缩放速度由 MinZoomSpeed 属性给出。如果设置的值小于该最小速度，它将被相应地夹紧
         /// </summary>
         public float PerspectiveStandardZoomSpeed { get { return _perspectiveStandardZoomSpeed; } set { _perspectiveStandardZoomSpeed = Mathf.Max(value, MinZoomSpeed); } }
 
         /// <summary>
-        /// Gets/sets the camera zoom speed for orthographic mode when the zoom mode is set to
-        /// 'Smooth'. The minimum zoom speed is given by the 'MinZoomSpeed' property. Values 
-        /// smaller than that will be clamped accordingly.
+        /// 获取/设置当缩放模式设置为“Smooth”且相机工作在正交模式下时的相机缩放速度
+        /// 最小缩放速度由 MinZoomSpeed 属性给出。如果设置的值小于该最小速度，它将被相应地夹紧
         /// </summary>
         public float OrthographicSmoothZoomSpeed { get { return _orthographicSmoothZoomSpeed; } set { _orthographicSmoothZoomSpeed = Mathf.Max(value, MinZoomSpeed); } }
 
         /// <summary>
-        /// Gets/sets the camera zoom speed for orthographic mode when the zoom mode is set to
-        /// 'Smooth'. The minimum zoom speed is given by the 'MinZoomSpeed' property. Values 
-        /// smaller than that will be clamped accordingly.
+        /// 获取/设置当缩放模式设置为“Smooth”且相机工作在透视模式下时的相机缩放速度
+        /// 最小缩放速度由 MinZoomSpeed 属性给出。如果设置的值小于该最小速度，它将被相应地夹紧
         /// </summary>
         public float PerspectiveSmoothZoomSpeed { get { return _perspectiveSmoothZoomSpeed; } set { _perspectiveSmoothZoomSpeed = Mathf.Max(value, MinZoomSpeed); } }
         #endregion

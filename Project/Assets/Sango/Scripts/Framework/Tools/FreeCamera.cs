@@ -1,129 +1,32 @@
+using Sango.Render;
 using UnityEngine;
-using System.Collections;
 using UnityEngine.EventSystems;
 using System.IO;
-
-using Sango.Render;
 
 namespace Sango
 {
     public class FreeCamera : MonoBehaviour
     {
+        public static Camera viewCamera;
         public Transform lookAt;
+        public int beginSeason = 0;
+        public float keyBoardMoveSpeed = 1f;
+        public Vector3 lookRotate;
+        public float rotSpeed = 0.05f;
+        public float zoomSpeed = 30.0f;
+        public bool changed = false;
+        public float curDistance;
         public Vector2 distanceMax;
         public Vector2 angleMax;
-        public int beginSeason = 0;
-        public float curDistance;
-        public Vector3 lookRotate;
-        public bool changed = false;
+        static Plane viewPlane;
         private int rayCastLayer;
-        bool isPressedUI = false;
+        Ray ray;
         bool isMouseMoving = false;
-        bool isMousePressed = false;
-
-        public void MoveCamera(int dir, float speed)
-        {
-            if (dir == 0) {
-                lookAt.position += -transform.right * speed;
-                UpdateCamera();
-            }
-            else if (dir == 1) {
-                lookAt.position += transform.right * speed;
-                UpdateCamera();
-            }
-            else if (dir == 2) {
-                Vector3 forward = transform.forward;
-                forward.y = 0;
-                forward.Normalize();
-                lookAt.position += forward * speed;
-                UpdateCamera();
-            }
-            else if (dir == 3) {
-                Vector3 forward = transform.forward;
-                forward.y = 0;
-                forward.Normalize();
-                lookAt.position += forward * -speed;
-                UpdateCamera();
-            }
-        }
-
-        public void ZoomCamera(float delta)
-        {
-            curDistance += delta;
-            if (curDistance < distanceMax.x)
-                curDistance = distanceMax.x;
-            else if (curDistance > distanceMax.y)
-                curDistance = distanceMax.y;
-            UpdateCamera();
-        }
-
-        public void OffsetCamera(Vector3 offset)
-        {
-            lookAt.position += offset;
-            UpdateCamera();
-        }
-
-        public void RotateCamera(Vector2 offset)
-        {
-            float angleX = offset.x;
-            float angleY = offset.y;
-            //Debug.Log(string.Format("angleX:{0} angleY:{1} Time.deltaTime{2}", angleX, angleY, Time.deltaTime));
-            lookRotate.x -= angleY;
-            if (lookRotate.x < angleMax.x)
-                lookRotate.x = angleMax.x;
-            else if (lookRotate.x > angleMax.y)
-                lookRotate.x = angleMax.y;
-
-            lookRotate.y += angleX;
-            UpdateCamera();
-        }
-
-        public void UpdateCamera()
-        {
-
-
-            changed = true;
-
-
-        }
-
-        [ContextMenu("Save png")]
-        private void SaveTextureToFile()
-        {
-            if (Camera.main.activeTexture != null) {
-                RenderTexture prev = RenderTexture.active;
-                RenderTexture.active = Camera.main.activeTexture;
-
-                Texture2D png = new Texture2D(Camera.main.activeTexture.width, Camera.main.activeTexture.height, TextureFormat.ARGB32, false);
-                png.ReadPixels(new UnityEngine.Rect(0, 0, Camera.main.activeTexture.width, Camera.main.activeTexture.height), 0, 0);
-                byte[] bytes = png.EncodeToPNG();
-                string path = string.Format("Dump/raw {0}.png", Random.Range(0, 65536).ToString("X"));
-                FileStream file = System.IO.File.Open(path, FileMode.Create);
-
-                BinaryWriter writer = new BinaryWriter(file);
-                writer.Write(bytes);
-                file.Close();
-
-                Texture2D.Destroy(png);
-                png = null;
-
-                RenderTexture.active = prev;
-            }
-
-        }
-
         private Vector3 oldMousePos;
         private Vector3 newMosuePos;
-
+        bool isMousePressed = false;
+        bool isPressedUI = false;
         private Vector3 oldDragPos;
-
-        public float zoomSpeed = 30.0f;
-        public float keyBoardMoveSpeed = 1f;
-        public float rotSpeed = 0.05f;
-
-        public static Camera viewCamera;
-        static Plane viewPlane;
-
 
         private void Awake()
         {
@@ -142,6 +45,31 @@ namespace Sango
             //}
         }
 
+        [ContextMenu("Save png")]
+        private void SaveTextureToFile()
+        {
+            if (Camera.main.activeTexture != null)
+            {
+                RenderTexture prev = RenderTexture.active;
+                RenderTexture.active = Camera.main.activeTexture;
+
+                Texture2D png = new Texture2D(Camera.main.activeTexture.width, Camera.main.activeTexture.height, TextureFormat.ARGB32, false);
+                png.ReadPixels(new UnityEngine.Rect(0, 0, Camera.main.activeTexture.width, Camera.main.activeTexture.height), 0, 0);
+                byte[] bytes = png.EncodeToPNG();
+                string path = string.Format("Dump/raw {0}.png", Random.Range(0, 65536).ToString("X"));
+                FileStream file = System.IO.File.Open(path, FileMode.Create);
+
+                BinaryWriter writer = new BinaryWriter(file);
+                writer.Write(bytes);
+                file.Close();
+
+                Texture2D.Destroy(png);
+                png = null;
+
+                RenderTexture.active = prev;
+            }
+        }
+
         private void OnEnable()
         {
             viewCamera = GetComponent<Camera>();
@@ -153,7 +81,8 @@ namespace Sango
             //ZoomCamera();
             //SuperViewMouse();
 
-            if (changed) {
+            if (changed)
+            {
                 changed = false;
 
                 transform.rotation = Quaternion.Euler(lookRotate);
@@ -164,12 +93,50 @@ namespace Sango
                 //    newMap.UpdateByCamera(viewCamera, lookAt.position, curDistance);
                 //}
             }
-
-
             oldMousePos = Input.mousePosition;
         }
 
+        /// <summary>
+        /// 标记地图网格是否显示的布尔值
+        /// </summary>
         bool gridShow = true;
+
+        public void MoveCamera(int dir, float speed)
+        {
+            if (dir == 0)
+            {
+                lookAt.position += -transform.right * speed;
+                UpdateCamera();
+            }
+            else if (dir == 1)
+            {
+                lookAt.position += transform.right * speed;
+                UpdateCamera();
+            }
+            else if (dir == 2)
+            {
+                Vector3 forward = transform.forward;
+                forward.y = 0;
+                forward.Normalize();
+                lookAt.position += forward * speed;
+                UpdateCamera();
+            }
+            else if (dir == 3)
+            {
+                Vector3 forward = transform.forward;
+                forward.y = 0;
+                forward.Normalize();
+                lookAt.position += forward * -speed;
+                UpdateCamera();
+            }
+        }
+
+        public void OffsetCamera(Vector3 offset)
+        {
+            lookAt.position += offset;
+            UpdateCamera();
+        }
+
         private void MoveCameraKeyBoard()
         {
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))//(Input.GetAxis("Horizontal")<0)
@@ -177,29 +144,33 @@ namespace Sango
                 lookAt.position += -transform.right * keyBoardMoveSpeed;
                 UpdateCamera();
             }
-            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            {
                 lookAt.position += transform.right * keyBoardMoveSpeed;
                 UpdateCamera();
             }
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            {
                 Vector3 forward = transform.forward;
                 forward.y = 0;
                 forward.Normalize();
                 lookAt.position += forward * keyBoardMoveSpeed;
                 UpdateCamera();
-
             }
-            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            {
                 Vector3 forward = transform.forward;
                 forward.y = 0;
                 forward.Normalize();
                 lookAt.position += forward * -keyBoardMoveSpeed;
                 UpdateCamera();
             }
-            if (Input.GetKeyDown(KeyCode.E)) {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
                 //newMap.ChangeSeason(beginSeason++);
             }
-            if (Input.GetKeyDown(KeyCode.R)) {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
                 gridShow = !gridShow;
                 //newMap.ShowGrid(gridShow);
             }
@@ -208,7 +179,8 @@ namespace Sango
         private void ZoomCamera()
         {
             float offset = Input.GetAxis("Mouse ScrollWheel");
-            if (offset != 0) {
+            if (offset != 0)
+            {
                 offset *= zoomSpeed;
                 curDistance -= offset;
                 if (curDistance < distanceMax.x)
@@ -218,23 +190,52 @@ namespace Sango
                 UpdateCamera();
             }
         }
-        Ray ray;
+
+        public void ZoomCamera(float delta)
+        {
+            curDistance += delta;
+            if (curDistance < distanceMax.x)
+                curDistance = distanceMax.x;
+            else if (curDistance > distanceMax.y)
+                curDistance = distanceMax.y;
+            UpdateCamera();
+        }
+
+        public void RotateCamera(Vector2 offset)
+        {
+            float angleX = offset.x;
+            float angleY = offset.y;
+            //Debug.Log(string.Format("angleX:{0} angleY:{1} Time.deltaTime{2}", angleX, angleY, Time.deltaTime));
+            lookRotate.x -= angleY;
+            if (lookRotate.x < angleMax.x)
+                lookRotate.x = angleMax.x;
+            else if (lookRotate.x > angleMax.y)
+                lookRotate.x = angleMax.y;
+
+            lookRotate.y += angleX;
+            UpdateCamera();
+        }
+
         private void SuperViewMouse()
         {
-            if (Input.GetMouseButton(1) && !isPressedUI) {
-
-                if (Input.GetMouseButtonDown(1)) {
+            if (Input.GetMouseButton(1) && !isPressedUI)
+            {
+                if (Input.GetMouseButtonDown(1))
+                {
                     isMouseMoving = false;
                     newMosuePos = Input.mousePosition;
                     oldMousePos = Input.mousePosition;
                 }
-                else {
-                    if (oldMousePos == Input.mousePosition) {
+                else
+                {
+                    if (oldMousePos == Input.mousePosition)
+                    {
                         return;
                     }
                     isMouseMoving = true;
 
                     newMosuePos = Input.mousePosition;
+                    // 计算鼠标位置的偏移量（二维平面上的x和y方向偏移）
                     Vector3 dis = newMosuePos - oldMousePos;
                     oldMousePos = Input.mousePosition;
                     float angleX = dis.x * rotSpeed;
@@ -251,19 +252,21 @@ namespace Sango
                     UpdateCamera();
                 }
             }
-            else if (Input.GetMouseButtonUp(1)) {
+            else if (Input.GetMouseButtonUp(1))
+            {
+                // 当鼠标右键松开时，如果之前鼠标处于移动状态，标记为不再移动并结束本次操作
                 isPressedUI = false;
-                if (isMouseMoving) {
+                if (isMouseMoving)
+                {
                     isMouseMoving = false;
                     return;
                 }
             }
 
-
-
-            if (Input.GetMouseButton(0) && !isPressedUI) {
-
-                if (Input.GetMouseButtonDown(0)) {
+            if (Input.GetMouseButton(0) && !isPressedUI)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
                     isMouseMoving = false;
 
                     ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -272,13 +275,15 @@ namespace Sango
                     if (EventSystem.current.IsPointerOverGameObject())
                         isPressedUI = true;
 
-                    if (viewPlane.Raycast(ray, out dis)) {
+                    if (viewPlane.Raycast(ray, out dis))
+                    {
                         oldDragPos = ray.GetPoint(dis);
                     }
                 }
-                else {
-
-                    if (oldMousePos == Input.mousePosition) {
+                else
+                {
+                    if (oldMousePos == Input.mousePosition)
+                    {
                         return;
                     }
 
@@ -287,16 +292,19 @@ namespace Sango
                     ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     float dis;
 
-                    if (viewPlane.Raycast(ray, out dis)) {
+                    if (viewPlane.Raycast(ray, out dis))
+                    {
                         Vector3 offset = oldDragPos - ray.GetPoint(dis);
                         lookAt.position += offset;
                         UpdateCamera();
                     }
                 }
             }
-            else if (Input.GetMouseButtonUp(0)) {
+            else if (Input.GetMouseButtonUp(0))
+            {
                 isPressedUI = false;
-                if (isMouseMoving) {
+                if (isMouseMoving)
+                {
                     isMouseMoving = false;
                     return;
                 }
@@ -306,7 +314,8 @@ namespace Sango
 
                 ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 2000, rayCastLayer)) {
+                if (Physics.Raycast(ray, out hit, 2000, rayCastLayer))
+                {
                     MapObject mapObjcet = hit.collider.gameObject.GetComponentInParent<MapObject>();
                     //if (OnClickCall != null) {
                         //if (mapObjcet != null) {
@@ -335,13 +344,21 @@ namespace Sango
             }
         }
 
+        public void UpdateCamera()
+        {
+            changed = true;
+        }
+
         private static Vector3[] corners = new Vector3[4];
+
         public static bool GetViewRect(float limitLen, out float x, out float y, out float w, out float h)
         {
-            if (CameraPlaneView.GetPlaneCorners(ref viewPlane, viewCamera, limitLen, ref corners)) {
+            if (CameraPlaneView.GetPlaneCorners(ref viewPlane, viewCamera, limitLen, ref corners))
+            {
                 Vector3 min = viewCamera.transform.position;
                 Vector3 max = min;
-                for (int i = 0; i < corners.Length; ++i) {
+                for (int i = 0; i < corners.Length; ++i)
+                {
                     Vector3 c = corners[i];
                     min.x = Mathf.Min(min.x, c.x);
                     min.z = Mathf.Min(min.z, c.z);

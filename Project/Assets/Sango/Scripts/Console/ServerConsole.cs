@@ -10,9 +10,11 @@ public class ServerConsole : MonoBehaviour
 
     private static bool ishowWindow = false;
     private bool oldWindowState = false;
-	//
-	// Create console window, register callbacks
-	//
+
+    /// <summary>
+    /// 初始化方法
+    /// 在对象唤醒时创建控制台窗口，注册输入回调和日志监听
+    /// </summary>
 	void Awake() 
 	{
         ishowWindow = true;
@@ -36,10 +38,10 @@ public class ServerConsole : MonoBehaviour
         Debug.Log("控制台系统已经成功启动，并可以正常工作");
 	}
  
-	//
-	// Text has been entered into the console
-	// Run it as a console command
-	//
+    /// <summary>
+    /// 输入文本回调方法
+    /// 当用户在控制台输入文本并按下回车时触发
+    /// </summary>
 	void OnInputText( string obj )
 	{
         this.ConsolePrint(obj);
@@ -84,19 +86,22 @@ public class ServerConsole : MonoBehaviour
 
     Encoding utf8 = Encoding.UTF8;
     Encoding defaultCode = Encoding.Unicode;
-    //
-    // Debug.Log* callback
-    //
+	
+    /// <summary>
+    /// Unity日志回调方法
+    /// 捕获Unity的日志输出（Debug.Log/LogWarning/LogError等）并显示到控制台
+    /// </summary>
     void HandleLog( string message, string stackTrace, LogType type )
 	{
+        // 根据日志类型设置控制台文本颜色
         if (type == LogType.Warning)
             System.Console.ForegroundColor = System.ConsoleColor.Yellow;
         else if (type == LogType.Log)
             System.Console.ForegroundColor = System.ConsoleColor.White;
         else
             System.Console.ForegroundColor = System.ConsoleColor.Red;
- 
-		// We're half way through typing something, so clear this line ..
+
+        // 如果光标不在行首，说明用户正在输入，先清除当前输入行..
         if (System.Console.CursorLeft != 0)
 			input?.ClearLine();
 
@@ -113,10 +118,10 @@ public class ServerConsole : MonoBehaviour
 		input?.RedrawInputLine();
 	}
 
-    //
-    // Update the input every frame
-    // This gets new key input and calls the OnInputText callback
-    //
+    /// <summary>
+    /// 更新方法（每帧调用）
+    /// 处理控制台窗口的显示/隐藏切换，以及用户输入检测
+    /// </summary>
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.BackQuote))
@@ -137,7 +142,8 @@ public class ServerConsole : MonoBehaviour
             }
             oldWindowState = ishowWindow;
         }
-        // input update
+
+        // 如果控制台处于显示状态，更新输入检测
         if (ishowWindow && null != input)
         {
             input.Update();
@@ -155,6 +161,10 @@ public class ServerConsole : MonoBehaviour
 	// because compiling will error out in the editor if you don't
 	// because we redirected output. This sets it back to normal.
 	//
+    /// <summary>
+    /// 销毁方法
+    /// 在对象销毁时关闭控制台，恢复系统输出设置
+    /// </summary>
 	void OnDestroy()
 	{
         CloseConsoleWindow();
@@ -169,7 +179,10 @@ public class ServerConsole : MonoBehaviour
             input = null;
         }
     }
-    // control by other .
+
+    /// <summary>
+    /// 外部控制控制台显示状态的方法
+    /// </summary>
     public static void SetIshowWindow(bool flag)
     {   
        ishowWindow = flag;
@@ -190,4 +203,5 @@ public static class ExtendDebugClass
         System.Console.WriteLine(message);
     }
 }
+
 #endif

@@ -11,12 +11,12 @@ namespace HSVPicker
         [SerializeField]
         private Color _color = Color.red;
 
-        [Header("Setup")]
-        public ColorPickerSetup Setup;
+        [Header("设置")]
+        public ColorPickerSetup Setup; // 颜色选择器设置
 
-        [Header("Event")]
-        public ColorChangedEvent onValueChanged = new ColorChangedEvent();
-        public HSVChangedEvent onHSVChanged = new HSVChangedEvent();
+        [Header("事件")]
+        public ColorChangedEvent onValueChanged = new ColorChangedEvent(); // 颜色值改变事件
+        public HSVChangedEvent onHSVChanged = new HSVChangedEvent(); // HSV值改变事件
 
         public Color CurrentColor
         {
@@ -316,7 +316,6 @@ namespace HSVPicker
             Hue.SetActive(false);
             Pick.SetActive(true);
             isPickingColor = true;
-
         }
 
         private void Update()

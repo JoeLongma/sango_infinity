@@ -90,7 +90,7 @@ namespace Sango.Tools
                 GUILayout.BeginHorizontal();
                 if (GUILayout.Button("选择", GUILayout.Width(48)))
                 {
-                    // 镜头切换至模型处,并选择模型
+                    // 镜头切换至模型处，并选择模型
                     brush.editor.ForceCameraToGameObject(bindMapObject.GetGameObject());
                 }
                 GUILayout.Space(3);
@@ -315,7 +315,7 @@ namespace Sango.Tools
             randomDir = GUILayout.Toggle(randomDir, "随机方向");
             if (isShowModelConfig)
             {
-
+                // 如果需要显示模型配置信息
                 if (currentConfigList == null)
                     currentConfigList = configList;
 
@@ -336,11 +336,12 @@ namespace Sango.Tools
                         }
                     }
 
+                    // 开始一个滚动视图
                     scrollPos = GUILayout.BeginScrollView(scrollPos, GUILayout.Width(356), GUILayout.Height(456));
                     for (int i = 0; i < currentConfigList.Count; ++i)
                     {
                         ModelConfig config = currentConfigList[i];
-                        currenShowModelInfo[i].Draw(this, config);
+                        currenShowModelInfo[i].Draw(this, config); // 绘制模型信息
                     }
                     GUILayout.EndScrollView();
                 }

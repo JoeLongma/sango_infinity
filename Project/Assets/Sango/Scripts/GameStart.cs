@@ -1,4 +1,3 @@
-
 using Sango;
 using Sango.Game;
 using System.Collections;
@@ -11,7 +10,6 @@ using UnityEngine.UI;
 /// </summary>
 public class GameStart : MonoBehaviour
 {
-    
     public bool Debug = false;
     public Camera uiCamera;
     public RectTransform uiRoot;

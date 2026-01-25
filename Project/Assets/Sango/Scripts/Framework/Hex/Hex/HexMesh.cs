@@ -4,13 +4,11 @@ using System.Collections.Generic;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class HexMesh : MonoBehaviour
 {
-
     private float SIN30 = Mathf.Sin(Mathf.Deg2Rad * 30);
     private float COS30 = Mathf.Cos(Mathf.Deg2Rad * 30);
 
     private List<HexCell> list = new List<HexCell>();
     private Dictionary<int, GameObject> hexMeshList = new Dictionary<int, GameObject>();
-
 
     public static HexMesh InitXHexMesh(int row, int col, float size, float x_off, float z_off, float y)
     {
@@ -74,7 +72,6 @@ public class HexMesh : MonoBehaviour
 
             hexMeshList[cell.index] = go;
         }
-
     }
 
 
@@ -117,13 +114,11 @@ public class HexMesh : MonoBehaviour
 
         int count2 = vector3s.Count;
 
-
         for (int i = count; i < count2; i++)
         {
             triangles.Add(i);
         }
         mesh.vertices = vector3s.ToArray();
         mesh.triangles = triangles.ToArray();
-
     }
 }

@@ -1,45 +1,46 @@
-Here you can find the default hotkeys. Starting with version 1.2, hotkeys can now be configured inside the Inspector.
-Note: Hotkeys that contains LCTRL will not work properly inside the Game View and you will need to add the SHIFT key to the mix in order to make them work.
+在这里你可以找到默认的热键。从1.2版本开始，现在可以在Inspector中配置热键
+注意：包含LCTRL的热键在游戏视图中无法正常工作，您需要将SHIFT键添加到组合中才能使其工作
 
-1. Camera:
-	> WASD + QE + RMB - move camera;
-	> F - focus camera on selection;
-	> ALT + RMB - orbit around focus point (works only after the camera has been focused);
-	> Mouse Scroll Wheel - zoom camera;
-	> Middle MB - pan camera;
-2. Gizmos:
+1. Camera相机:
+	> WASD + QE + RMB - move camera	移动相机;
+	> F - focus camera on selection	对焦相机选择;
+	> ALT + RMB - orbit around focus point (works only after the camera has been focused) 绕焦点运行（仅在相机对焦后工作）;
+	> Mouse Scroll Wheel - zoom camera	鼠标滚轮-变焦相机;
+	> Middle MB - pan camera	中MB-平移相机;
+2. Gizmos控件:
 	> W, E, R, U - cycle through different gizmo types (move, rotate, scale, volume scale);
-	> Q - toggle gizmos on/off;
-	> P - cycle between Mesh and Center pivot points;
-	> G - change transform space to global;
-	> L - change transform space to local;
-3. Move Gizmo:
-	> LSHIFT - translate along camera local axes;
-	> V - activate vertex snapping;
-	> B - activate box snapping;
-	> SPACE - activate terrain/grid surface placement with Y axis alignment;
-	> SPACE + X - activate terrain/grid surface placement with X axis alignment;
-	> SPACE + Z - activate terrain/grid surface placement with Z axis alignment;
-	> SPACE + LCTRL - activate terrain/grid surface placement with no axis alignment;
-	> LCTRL - activate step snapping;
-	> LALT - activate move scale
-4. Rotation Gizmo:
-	> LCTRL - activate step snapping;
-5. Scale Gizmo:
-	> LCTRL - activate step snapping;
-6. Volume Scale Gimzo:
-	> LCTRL - activate step snapping;
-	> LSHIFT - activate scale by center;
-7. Object Selection:
-	> left click - select object;
-	> left click + LCTRL - add object to selection or deselect if already selected;
-	> left click + mouse drag - select objects using the selection rectangle;
-	> left click + mouse drag + LSHIFT - deselect objects using the selection rectangle;
-	> Delete - delete selected objects;
-8. Misc:
-	> (Editor Play Mode) LSHIFT + LCTRL + Z - Undo;
-	> (Editor Play Mode) LSHIFT + LCTRL + Y - Redo;
-	> (Build) LCTRL + Z - Undo;
-	> (Build) LCTRL + Y - Redo;
-	> (Editor Play Mode) LCTRL + LSHIFT + D - duplicate selected objects;
-	> (Build) LCTRL + D - duplicate selected objects.
+			循环使用不同的控件类型（移动、旋转、缩放、体积比例）
+	> Q - toggle gizmos on/off	打开/关闭小控件;
+	> P - cycle between Mesh and Center pivot points   在“网格”和“中心”轴点之间循环;
+	> G - change transform space to global  将变换空间更改为全局;
+	> L - change transform space to local  将变换空间改为局部空间;
+3. Move Gizmo移动控件:
+	> LSHIFT - translate along camera local axes 	沿摄像机局部轴平移;
+	> V - activate vertex snapping	激活顶点捕捉；
+	> B - activate box snapping	激活框捕捉；
+	> SPACE - activate terrain/grid surface placement with Y axis alignment;	使用Y轴对齐激活地形/栅格曲面放置;
+	> SPACE + X - activate terrain/grid surface placement with X axis alignment;	使用X轴对齐激活地形/栅格曲面放置;
+	> SPACE + Z - activate terrain/grid surface placement with Z axis alignment;	使用Z轴对齐激活地形/栅格曲面放置;
+	> SPACE + LCTRL - activate terrain/grid surface placement with no axis alignment;	激活地形/栅格表面放置，无需对齐轴;
+	> LCTRL - activate step snapping;	激活阶跃捕捉；
+	> LALT - activate move scale	激活移动标尺
+4. Rotation Gizmo旋转控件:
+	> LCTRL - activate step snapping	激活阶跃捕捉;
+5. Scale Gizmo缩放控件:
+	> LCTRL - activate step snapping	激活阶跃捕捉;
+6. Volume Scale Gimzo音量标度控件:
+	> LCTRL - activate step snapping	激活阶跃捕捉;
+	> LSHIFT - activate scale by center	通过中心激活刻度;
+7. Object Selection对象选择:	
+	> left click - select object	左键单击-选择对象;
+	> left click + LCTRL - add object to selection or deselect if already selected	左键单击+LCTRL-将对象添加到选择中，或者如果已经选择则取消选择;
+	> left click + mouse drag - select objects using the selection rectangle	左键单击+鼠标拖动-使用选择矩形选择对象;
+	> left click + mouse drag + LSHIFT - deselect objects using the selection rectangle	左键单击+鼠标拖动+LSHIFT-使用选择矩形取消选择对象;
+	> Delete - delete selected objects	删除-删除选定的对象;
+8. Misc其他:
+	> (Editor Play Mode) LSHIFT + LCTRL + Z - Undo		（编辑器播放模式）LSHIFT+LCTRL+Z-撤消;
+	> (Editor Play Mode) LSHIFT + LCTRL + Y - Redo		（编辑播放模式）LSHIFT+LCTRL+Y-重做;
+	> (Build) LCTRL + Z - Undo	（构建）LCTRL+Z-撤消;
+	> (Build) LCTRL + Y - Redo	（构建）LCTRL+Y-重做;
+	> (Editor Play Mode) LCTRL + LSHIFT + D - duplicate selected objects	（编辑器播放模式）LCTRL+LSHIFT+D-复制选定对象;
+	> (Build) LCTRL + D - duplicate selected objects	（生成）LCTRL+D-复制选定的对象.

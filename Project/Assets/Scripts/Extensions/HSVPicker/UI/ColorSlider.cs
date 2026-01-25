@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace HSVPicker
 {
     /// <summary>
-    /// Displays one of the color values of aColorPicker
+    /// 显示aColorPicker的颜色值之一
     /// </summary>
     [RequireComponent(typeof(Slider))]
     public class ColorSlider : MonoBehaviour, IEndDragHandler
@@ -12,7 +12,7 @@ namespace HSVPicker
         public ColorPicker hsvpicker;
 
         /// <summary>
-        /// Which value this slider can edit.
+        /// 此滑块可以编辑的值。
         /// </summary>
         public ColorValues type;
 

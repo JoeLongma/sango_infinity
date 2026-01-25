@@ -232,7 +232,7 @@ namespace Sango.Render
 
         public bool Overlaps(Sango.Tools.Rect rect)
         {
-            return worldBounds.Overlaps(rect);
+            return worldBounds.Overlaps(rect);  // 判断当前矩形rect与给定worldBound世界边界矩形是否有重叠部分
         }
 
         public virtual void OnClick()
@@ -259,7 +259,7 @@ namespace Sango.Render
 
         protected virtual void OnModelLoaded(UnityEngine.Object obj, object customData, bool dontAsyncCall)
         {
-            isLoading = false;
+            isLoading = false;      // 设置加载状态为false，表示加载完成
             GameObject model = null;
             if (obj != null)
             {
@@ -326,15 +326,17 @@ namespace Sango.Render
 
         public void CreateModel(string meshFile, string textureFile, string shaderName, bool isShareMat = true)
         {
-            isLoading = true;
-            ModelLoader.LoadFromFile(
-				meshFile,
+            isLoading = true;           // 设置加载状态为true，表示开始加载模型
+            ModelLoader.LoadFromFile
+            (
+                meshFile,               // 调用ModelLoader的LoadFromFile方法加载模型  
                 textureFile,
-                true,
+                true,                   // 这个布尔值表示是否加载纹理，具体含义取决于ModelLoader的实现
                 shaderName,
                 isShareMat,
-                null,
-                OnModelLoaded);
+                null,                   // 这个null是一个回调函数参数，用于加载过程中的进度报告，这里不使用 
+                OnModelLoaded           // 当模型加载完成后，调用OnModelLoaded回调函数  
+            );
         }
 
         public void CreateModel(string packagePath, string assetName)

@@ -4,9 +4,7 @@ using System.Collections.Generic;
 namespace RTEditor
 {
     /// <summary>
-    /// This is the database that contains all listeners. Listeners can be registered
-    /// with the database and the database can broadcast messages to all interested
-    /// listeners.
+    /// 这是包含所有侦听器的数据库。监听器可以在数据库中注册，数据库可以向所有感兴趣的监听器广播消息
     /// </summary>
     public class MessageListenerDatabase : MonoSingletonBase<MessageListenerDatabase>
     {

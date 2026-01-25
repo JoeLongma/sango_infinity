@@ -1,9 +1,6 @@
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR
-using UnityEngine;
+﻿#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+
 using System;
-using System.Collections;
-using System.Runtime.InteropServices;
-using System.IO;
 
 namespace ConsoleTestWindows
 {
@@ -16,6 +13,7 @@ namespace ConsoleTestWindows
 		public void ClearLine()
 		{
             //System.Text.Encoding test = Console.InputEncoding;
+            // 将光标移动到行首
             Console.CursorLeft = 0;
 			Console.Write( new String( ' ', Console.BufferWidth ) );
 			Console.CursorTop--;
@@ -105,8 +103,8 @@ namespace ConsoleTestWindows
 				OnEscape();
 				return;
 			}
-
-			if ( key.KeyChar != '\u0000' )
+            // 处理普通字符输入（过滤掉功能键）
+            if (key.KeyChar != '\u0000')// \u0000表示功能键，非可打印字符
 			{
 				inputString += key.KeyChar;
 				RedrawInputLine();
@@ -115,9 +113,10 @@ namespace ConsoleTestWindows
 		}
 
         /// <summary>
-        /// add command line 
+        /// 处理默认命令
+        /// 解析并执行预设的控制台命令（如clear清屏、exit退出等）
         /// </summary>
-        /// <param name="inputStr"></param>
+        /// <param name="inputStr">用户输入的命令字符串</param>
         internal void DefaultCommand(string inputStr)
         {
             if (inputStr.Length == 0) return;

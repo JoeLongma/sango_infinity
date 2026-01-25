@@ -1,17 +1,17 @@
 ﻿namespace RTEditor
 {
     /// <summary>
-    /// Identifies different types of camera zoom modes.
+    /// 用于标识不同类型的相机缩放模式
     /// </summary>
     public enum EditorCameraZoomMode
     {
         /// <summary>
-        /// Standard zoom.
+        /// 标准缩放模式
         /// </summary>
         Standard = 0,
 
         /// <summary>
-        /// Smmoth zoom. The camera zoom speed slowly decreases over time.
+        /// 平滑缩放模式。相机的缩放速度会随着时间的推移而逐渐减慢
         /// </summary>
         Smooth
     }

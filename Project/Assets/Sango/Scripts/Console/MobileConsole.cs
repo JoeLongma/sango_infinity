@@ -1,6 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System.Collections.Generic;
 
 namespace SKFramework
 {
@@ -33,7 +32,6 @@ namespace SKFramework
         GUIStyle errorStyle;
         GUIStyle waringStyle;
         GUIStyle normalStyle;
-
 
         private bool beScroll = false;
         private Vector3 saveLastMousePosition;
@@ -71,7 +69,6 @@ namespace SKFramework
             {
                 if (!beScroll)
                     saveLastMousePosition = Input.mousePosition;
-
             }
 
             if (Input.GetMouseButtonUp(0))

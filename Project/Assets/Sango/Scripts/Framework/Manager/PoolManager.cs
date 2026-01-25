@@ -41,11 +41,12 @@ namespace Sango
             this.key = key;
             RefreshLife();
 
-            // 初始化池数量
+            // 初始化池数量  
             for (int i = 0; i < initCount; ++i)
                 instance_list.Enqueue(node.Create());
-
         }
+
+        // 刷新生命周期  
         public void RefreshLife()
         {
             if (maxlife < 0)
@@ -54,6 +55,8 @@ namespace Sango
             }
             life = maxlife;
         }
+
+        // 从池中获取一个对象  
         public T Get()
         {
             useCount++;
@@ -71,10 +74,14 @@ namespace Sango
             RefreshLife();
             return srcObject.Create();
         }
+
+        // 检查节点是否有效  
         public bool IsValid()
         {
             return useCount > 0;
         }
+
+        // 回收一个对象到池中  
         public void Recycle(T node)
         {
             if (node == null)
@@ -83,6 +90,8 @@ namespace Sango
             srcObject.OnRecycle(ref node);
             instance_list.Enqueue(node);
         }
+
+        // 清除节点  
         public void Clear()
         {
             while (instance_list.Count > 0)
@@ -94,6 +103,8 @@ namespace Sango
             srcObject = null;
             instance_list = null;
         }
+
+        // 更新（当前未实现功能）  
         public bool Update(float dtTime)
         {
             return false;

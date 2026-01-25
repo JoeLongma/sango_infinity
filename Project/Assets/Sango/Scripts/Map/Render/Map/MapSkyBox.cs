@@ -295,7 +295,6 @@ namespace Sango.Render
                     Texture2D.whiteTexture,
                     Texture2D.whiteTexture
                 },
-
             };
 
             curArea = area;

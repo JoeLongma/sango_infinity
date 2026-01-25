@@ -132,7 +132,6 @@ namespace Sango.Render
                     {
                         material.SetTexture("_BumpMap", normal[season]);
                         material.SetTextureScale("_BumpMap", textureScale);
-
                     }
                     if (mask != null)
                     {

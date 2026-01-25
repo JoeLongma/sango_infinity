@@ -261,12 +261,12 @@ namespace Sango.Tools
         {
             switch (brushType)
             {
-                case BrushType.RaiseHeight:
-                case BrushType.LowerHeight:
-                case BrushType.PullHeight:
-                case BrushType.SmoothHeight:
-                case BrushType.Texture:
-                case BrushType.Water:
+                case BrushType.RaiseHeight:     // 升高         
+                case BrushType.LowerHeight:     // 降低
+                case BrushType.PullHeight:      // 平整
+                case BrushType.SmoothHeight:    // 平滑
+                case BrushType.Texture:         // 贴图
+                case BrushType.Water:           // 水面
                     {
 
                         // 吸取目标值
@@ -362,7 +362,6 @@ namespace Sango.Tools
                         break;
                     case BrushType.PullHeight:
                         {
-
                             int destHeight;
                             if (Input.GetKey(KeyCode.LeftShift))
                             {

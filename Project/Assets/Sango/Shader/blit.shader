@@ -60,13 +60,10 @@ Shader "Sango/blit"
 				//}
 				// //float3 gammaToLinear8 = LinearToSRGB(col.rgb);
 				//float3 gammaToLinear8 = SRGBToLinear(col.rgb);
-    //            col.rgb = gammaToLinear8;
+    			//      col.rgb = gammaToLinear8;
 				return col;
-			}
-							
+			}					
 			ENDHLSL
 		}
-
-
 	}
 }

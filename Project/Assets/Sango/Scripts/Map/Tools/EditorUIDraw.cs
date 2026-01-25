@@ -107,7 +107,7 @@ namespace Sango.Tools
             }
             GUILayout.EndScrollView();
 
-            if (GUILayout.Button("添加"))
+            if (GUILayout.Button("添加贴图"))
             {
                 string[] path = WindowDialog.OpenFileDialog("贴图文件(*.png)|*.png\0", true);
                 if (path != null)
@@ -205,7 +205,6 @@ namespace Sango.Tools
             light.lightIntensity = Tools.EditorUtility.FloatField(light.lightIntensity, "灯光强度");
             Tools.EditorUtility.ColorField(light.shadowColor, "阴影颜色", (color) => { light.shadowColor = color; });
             light.shadowStrength = Tools.EditorUtility.FloatField(light.shadowStrength, "阴影强度");
-
         }
 
         public static void OnGUI(Render.MapModels models)

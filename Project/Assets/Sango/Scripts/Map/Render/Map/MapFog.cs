@@ -35,7 +35,6 @@ namespace Sango.Render
                 writer.Write(fog_end[i]);
                 writer.Write(fog_density[i]);
             }
-
         }
 
         internal override void OnLoad(int versionCode, BinaryReader reader)

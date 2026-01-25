@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
+
 namespace Sango
 {
     /// <summary>
@@ -42,10 +43,12 @@ namespace Sango
         /// 框架根游戏物体，脚本依赖此根，通常会挂到此游戏物体下
         /// </summary>
         internal MonoBehaviour rootBehaviour;
+
         /// <summary>
         /// 框架根行为脚本
         /// </summary>
         internal GameObject rootGameObject;
+
         /// <summary>
         /// 更新对象
         /// </summary>
@@ -89,33 +92,42 @@ namespace Sango
         }
 
         public virtual void Shutdown(){ }
+
         public virtual void Pause() { }
+
         public virtual void Resume() { }
+
         public Coroutine StartCoroutine(string methodName)
         {
             object value = null;
             return StartCoroutine(methodName, value);
         }
+
         public Coroutine StartCoroutine(string methodName, [DefaultValue("null")] object value)
         {
             return rootBehaviour.StartCoroutine(methodName, value);
         }
+
         public Coroutine StartCoroutine(IEnumerator routine)
         {
             return rootBehaviour.StartCoroutine(routine);
         }
+
         public void StopCoroutine(IEnumerator routine)
         {
             rootBehaviour.StopCoroutine(routine);
         }
+
         public void StopCoroutine(Coroutine routine)
         {
             rootBehaviour.StopCoroutine(routine);
         }
+
         public void StopCoroutine(string methodName)
         {
             rootBehaviour.StopCoroutine(methodName);
         }
+
         public void StopAllCoroutines()
         {
             rootBehaviour.StopAllCoroutines();

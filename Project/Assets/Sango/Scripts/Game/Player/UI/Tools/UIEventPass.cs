@@ -17,7 +17,7 @@ public class UIEventPass : MonoBehaviour, IPointerClickHandler, IPointerDownHand
 
         GameObject currObj = gameObject;
         int currIndex = -1;
-        for (int i = 0; i < results.Count; i++)
+        for(int i = 0; i < results.Count; i++)
         {
             if (currIndex >= 0)
             {

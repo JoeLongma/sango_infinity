@@ -1,34 +1,32 @@
 ﻿namespace RTEditor
 {
     /// <summary>
-    /// This enum holds the possible types of messages that can be sent to listeners.
+    /// 此枚举包含可以发送给侦听器的可能类型的消息
     /// </summary>
     public enum MessageType
     {
         /// <summary>
-        /// This message can be sent when a gizmo transforms the game objects it controls.
+        /// 当控件变换其控制的游戏对象时，可以发送此消息
         /// </summary>
         GizmoTransformedObjects = 0,
 
         /// <summary>
-        /// This message is sent when the transform applied to a collection of game objects
-        /// via a transform gizmo is undone.
+        /// 当通过变换控件应用于游戏对象集合的变换撤消时，会发送此消息
         /// </summary>
         GizmoTransformOperationWasUndone,
 
         /// <summary>
-        /// This message is sent when the transform applied to a collection of game objects
-        /// via a transform gizmo is redone.
+        /// 当通过变换控件应用于游戏对象集合的变换被重做时，会发送此消息
         /// </summary>
         GizmoTransformOperationWasRedone,
 
         /// <summary>
-        /// This message is sent when vertex snapping is enabled.
+        /// 此消息是在启用顶点捕捉时发送的
         /// </summary>
         VertexSnappingEnabled,
 
         /// <summary>
-        /// This message is sent when vertex snapping is disabled.
+        /// 禁用顶点捕捉时会发送此消息
         /// </summary>
         VertexSnappingDisabled,
     }

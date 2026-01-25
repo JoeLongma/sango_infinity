@@ -40,13 +40,14 @@ namespace Sango.Tools
         public MapData.VertexData[][] vertexMapData { get { return map.mapData.vertexDatas; } }
         public MapData mapData { get { return map.mapData; } }
 
-        // 可编辑的物件层
+        // 可编辑的物件层  rayCastLayer 属性：这个属性可能是用于射线投射（Raycast）的图层编号
         internal int rayCastLayer;
         internal int rayCastObjectLayer;
 
-        // 编辑器UI框体范围
+        // 编辑器UI框体范围    windowRect属性：参数代表编辑器UI框体坐标（x,y） 及宽高（width,higth）
         internal UnityEngine.Rect windowRect = new UnityEngine.Rect(500, 400, 240, 100);
 
+        // 笔刷组：这个数组包含了不同的笔刷对象，如地形笔刷、地格笔刷、模型笔刷
         BrushBase[] brushes;
         internal TerrainBrush terrain_brush;
         internal GridBrush grid_brush;
@@ -63,20 +64,21 @@ namespace Sango.Tools
 
             IsEditOn = true;
 
-            // 创建笔刷
+            // 创建三种不同的笔刷对象：地形笔刷(TerrainBrush)，地格笔刷(GridBrush)，和模型笔刷(ModelBrush)。这些笔刷可能用于在地图上进行绘制操作
             terrain_brush = new TerrainBrush(this);
             grid_brush = new GridBrush(this);
             model_brush = new ModelBrush(this);
             brushes = new BrushBase[] { terrain_brush, grid_brush, model_brush };
 
-            // 关闭游戏主相机
+            // 关闭游戏主相机，防止在编辑器打开时游戏相机干扰地图编辑
             Camera.main.gameObject.SetActive(false);
 
-            // 加载模型编辑工具, 设置监听
+            // 加载模型编辑工具，设置对EditorObjectSelection事件的监听，当选择被删除时以及选择改变时，都会触发相应的事件处理程序
             GameObject.Instantiate(Resources.Load("New(Singleton)RTEditor.RuntimeEditorApplication"));
             EditorObjectSelection.Instance.SelectionDeleted += SelectionDeletedHandler;
             EditorObjectSelection.Instance.SelectionChanged += SelectionChangedHandler;
 
+            // 创建2个窗口，一是工具栏窗口，二是属性窗口，并将这两个窗口添加到编辑器窗口中，同时设置2个窗口的关闭属性为不可关闭
             editorToolsBarWindow = EditorWindow.AddWindow(0, windowRect, DrawToolbarWindow, "地图编辑器");
             editorToolsBarWindow.canClose = false;
             editorContentWindow = EditorWindow.AddWindow(1, windowRect, DrawContentWindow, "属性窗口");
@@ -92,19 +94,21 @@ namespace Sango.Tools
 
         protected void Start()
         {
+            // 首先寻找场景中的"Directional Light"和"post"对象，如果找到，就将它们设置为非活动状态
             GameObject l = GameObject.Find("Directional Light");
             if (l != null) l.SetActive(false);
             l = GameObject.Find("post");
             if (l != null) l.SetActive(false);
 
+            // 创建名为rayCastLayer的层遮罩，对应的是"Map"层
             rayCastLayer = LayerMask.GetMask(new string[] { "Map" });
             rayCastObjectLayer = LayerMask.GetMask(new string[] { "Building" });
 
-            // 创建空地图
+            // 如果地图对象map为空，创建空地图，大小为1024x1024
             if (map == null)
                 CreateEmptyMap(1024, 1024);
 
-            // 设置基础可视化距离
+            // 设置基础可视化距离。然后，它将地图的显示限制长度设置为3500
             map.showLimitLength = 3500;
             map.mapFog.fogEnabled = false;
 
@@ -112,7 +116,8 @@ namespace Sango.Tools
             Shader.SetGlobalFloat("_BrushType", 0);
             Shader.SetGlobalFloat("_TerrainTypeShowFlag", 0);
 
-            // 不使用游戏相机逻辑,采用另外的编辑机相机逻辑
+            // 不使用游戏相机逻辑，采用另外的编辑机相机逻辑
+            // 禁用了地图相机，并使用主相机替换它
             map.mapCamera.enabled = false;
             map.mapCamera.SetCamera(Camera.main);
             EditorFreeCamera editorfree = Camera.main.gameObject.AddComponent<Sango.Tools.EditorFreeCamera>();
@@ -170,8 +175,6 @@ namespace Sango.Tools
         public void SelectionChangedHandler(ObjectSelectionChangedEventArgs selectionChangedEventArgs)
         {
             // 这里处理模型的相关数据展示
-
-
         }
 
         public void SetModelSelectionMod(bool b)
@@ -196,7 +199,7 @@ namespace Sango.Tools
         }
 
         /// <summary>
-        /// 设置相机控制模式: 0:自由相机模式 1,游戏相机模式 
+        /// 设置相机控制模式: 0为编辑器自由相机模式，1为游戏地图相机模式
         /// </summary>
         /// <param name="t"></param>
         public void SetCameraControlType(int t)
@@ -303,11 +306,14 @@ namespace Sango.Tools
         {
             "基础编辑", "编辑地形", "编辑地格", "模型放置", "设置说明" //编辑地格 显示光环
         };
+
         private string[] toolbarSeason = new string[]
         {
             "春", "夏", "秋", "冬"
         };
+
         bool viewIs311Camera = true;
+
         void DrawToolbarWindow(int windowID, EditorWindow window)
         {
             GUILayout.Label($"当前鼠标格子:{{{SelectedCoord.col},{SelectedCoord.row}}}");

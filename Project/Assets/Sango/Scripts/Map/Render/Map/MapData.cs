@@ -314,15 +314,17 @@ namespace Sango.Render
                 return;
             }
             MapUVPiece = new Vector2(1.0f / vertex_width, 1.0f / vertex_height);
+
             vertex_x_max = w + 1;
             vertex_y_max = h + 1;
+
             vertexDatas = new VertexData[vertex_x_max][];
             for (int x = 0; x < vertex_x_max; x++)
             {
                 vertexDatas[x] = new VertexData[vertex_y_max];
             }
 
-            //// --- 检查数据
+            // 检查数据
             BmpLoader.BmpInfo height_bmpInfo = new BmpLoader.BmpInfo(heightFileName);
             if (!height_bmpInfo.Valid() || height_bmpInfo.width != vertex_x_max || height_bmpInfo.height != vertex_y_max)
             {
@@ -435,7 +437,6 @@ namespace Sango.Render
 
         public void SaveHeight(string heightFileName)
         {
-
             string path = WindowDialog.SaveFileDialog("height.bmp", "贴图文件(*.bmp)|*.bmp\0");
             if (path != null)
             {
@@ -468,7 +469,7 @@ namespace Sango.Render
 
         public void LoadLayer(string layerFileName)
         {
-            //// --- 检查数据
+            // 进行数据有效性检查，读取并更新顶点数据中的纹理索引信息
             BmpLoader.BmpInfo layer_bmpInfo = new BmpLoader.BmpInfo(layerFileName);
             if (!layer_bmpInfo.Valid())
             {
@@ -535,7 +536,7 @@ namespace Sango.Render
 
         public void LoadWater(string waterFileName)
         {
-            //// --- 检查数据
+            // 进行数据有效性检查，读取并更新顶点数据中的水相关信息
             BmpLoader.BmpInfo water_bmpInfo = new BmpLoader.BmpInfo(waterFileName);
             if (!water_bmpInfo.Valid())
             {
@@ -548,12 +549,12 @@ namespace Sango.Render
             int maxHeight = Math.Min(vertex_y_max, water_bmpInfo.height);
             water_bmpInfo.BeginRead();
             int rw = 255;
+
             // 地图信息是左上0,0. unity BMP信息是
             for (int y = bmpHeight - 1; y >= 0; y--)
             {
                 for (int x = 0; x < bmpWidth; x++)
                 {
-
                     if (x < vertex_x_max - 1 && y > 0)
                     {
                         water_bmpInfo.ReadB(out rw);
@@ -578,7 +579,7 @@ namespace Sango.Render
             {
 #if UNITY_STANDALONE_WIN
 
-                System.Drawing.Bitmap bitmapSrc = new System.Drawing.Bitmap(vertex_x_max, vertex_y_max);//获取的位图大小
+                System.Drawing.Bitmap bitmapSrc = new System.Drawing.Bitmap(vertex_x_max, vertex_y_max);    // 获取的位图大小
                 for (int y = vertex_y_max - 1; y >= 0; y--)
                 {
                     for (int x = 0; x < vertex_x_max; x++)

@@ -38,7 +38,6 @@ namespace Sango
             
             transform.LookAt(pos + cacheCameraTrans.rotation * Vector3.back,
                 cacheCameraTrans.rotation * Vector3.up);
-
         }
     }
 }

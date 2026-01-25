@@ -40,7 +40,6 @@ namespace Sango.Game
             Register("Stun", CraeteHandle<Stun>);
             Register("Escape", CraeteHandle<Escape>);
             //Register("AddBuff", CraeteHandle<AddBuff>);
-
         }
     }
 }

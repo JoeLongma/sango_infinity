@@ -13,7 +13,6 @@ namespace UnityEngine.UI
             get { return topColor; }
             set { topColor = value; }
         }
-
         [SerializeField]
         private Color32 bottomColor = Color.black;
 

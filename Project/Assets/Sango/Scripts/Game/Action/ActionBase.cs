@@ -6,11 +6,13 @@ namespace Sango.Game.Action
     public abstract class ActionBase
     {
         public abstract void Init(JObject p, params SangoObject[] sangoObjects);
+
         public abstract void Clear();
 
         public delegate ActionBase ActionCreator();
 
         public static Dictionary<string, ActionCreator> CreateMap = new Dictionary<string, ActionCreator>();
+
         public static void Register(string name, ActionCreator action)
         {
             CreateMap[name] = action;
@@ -20,6 +22,7 @@ namespace Sango.Game.Action
         {
             return new T();
         }
+
         public static ActionBase Create(string name)
         {
             ActionCreator actionBaseCreator;

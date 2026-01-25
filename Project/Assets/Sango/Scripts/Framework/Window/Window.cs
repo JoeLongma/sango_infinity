@@ -1,6 +1,4 @@
-﻿//using FairyGUI;
-
-using Sango.Loader;
+﻿using Sango.Loader;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -56,6 +54,7 @@ namespace Sango
             public string name;
             public int count;
         }
+
         Dictionary<string, PackageInfo> packageMap = new Dictionary<string, PackageInfo>();
 
         public struct WindowInfo

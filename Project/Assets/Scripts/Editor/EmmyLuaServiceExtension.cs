@@ -422,7 +422,7 @@ namespace EmmyLua
                 from type in assembly.GetExportedTypes()
                 where type.BaseType != typeof(MulticastDelegate)
                       && !type.IsInterface
-                      // && !type.IsEnum
+                      //&& !type.IsEnum
                       //&& !type.IsGenericType
                       //&& !type.IsGenericTypeDefinition
                       && !type.IsNested

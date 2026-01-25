@@ -72,11 +72,13 @@ namespace Sango.Render
         public override void UpdateRender()
         {
             if (light == null) return;
+            // 更新主光源方向（高度角+方位角转旋转）
             //light.transform.rotation = Quaternion.Euler(light_direction[curSeason]);
             // 更新光源颜色和强度
             light.color = light_color[curSeason];
             //light.intensity = light_intensity[curSeason];
             //light.intensity = 1.2f;
+            // 更新阴影属性
             Shader.SetGlobalColor("_ShadowColor", shadow_color[curSeason]);
             Shader.SetGlobalFloat("_ShadowStrength", shadow_strength[curSeason]);
         }

@@ -6,18 +6,26 @@ namespace Sango.Tools
     public class EditorFreeCamera : MonoBehaviour
     {
         public Render.MapRender newMap;
+        public static Camera viewCamera;
         public Transform lookAt;
         public int beginSeason = 0;
+        public float keyBoardMoveSpeed = 300f;
         public Vector3 lookRotate;
+        public float rotSpeed = 0.1f;
+        public float zoomSpeed = 400.0f;
         public bool changed = false;
         public float curDistance = 500;
         public Vector2 distanceMax = new Vector2(100, 1500);
         public Vector2 angleMax = new Vector2(22.5f, 70);
+        static Plane viewPlane;
         private int rayCastLayer;
-
+        Ray ray;
         bool isMouseMoving = false;
+        private Vector3 oldMousePos;
+        private Vector3 newMosuePos;
         bool isMousePressed = false;
         bool isPressedUI = false;
+        private Vector3 oldDragPos;
 
         private void Awake()
         {
@@ -32,7 +40,6 @@ namespace Sango.Tools
 
             if (newMap != null)
             {
-
                 UpdateCamera();
                 newMap.ChangeSeason(beginSeason);
             }
@@ -65,6 +72,11 @@ namespace Sango.Tools
 
             oldMousePos = Input.mousePosition;
         }
+
+        /// <summary>
+        /// 标记地图网格是否显示的布尔值
+        /// </summary>
+        bool gridShow = true;
 
         public void MoveCamera(int dir, float speed)
         {
@@ -127,19 +139,6 @@ namespace Sango.Tools
             UpdateCamera();
         }
 
-        private Vector3 oldMousePos;
-        private Vector3 newMosuePos;
-        private Vector3 oldDragPos;
-
-        public float zoomSpeed = 400.0f;
-        public float keyBoardMoveSpeed = 300f;
-        public float rotSpeed = 0.1f;
-
-        public static Camera viewCamera;
-        static Plane viewPlane;
-
-        bool gridShow = true;
-
         private void MoveCameraKeyBoard()
         {
             if (/*Input.GetKey(KeyCode.A) || */Input.GetKey(KeyCode.LeftArrow))//(Input.GetAxis("Horizontal")<0)
@@ -185,7 +184,6 @@ namespace Sango.Tools
             }
         }
 		
-        Ray ray;
 
         private void SuperViewMouse()
         {
@@ -209,8 +207,8 @@ namespace Sango.Tools
                     newMosuePos = Input.mousePosition;
                     Vector3 dis = newMosuePos - oldMousePos;
                     oldMousePos = Input.mousePosition;
-                    float angleX = dis.x * rotSpeed ;
-                    float angleY = dis.y * rotSpeed ;
+                    float angleX = dis.x * rotSpeed;
+                    float angleY = dis.y * rotSpeed;
                     //Debug.Log(string.Format("angleX:{0} angleY:{1} Time.deltaTime{2}", angleX, angleY, Time.deltaTime));
                     lookRotate.x -= angleY;
                     if (lookRotate.x < angleMax.x)

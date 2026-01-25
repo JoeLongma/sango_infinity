@@ -7,7 +7,7 @@ namespace Sango.Data
     public class BmpLoader
     {
         static Vector3Int[] indexKey = new Vector3Int[]
-         {
+        {
         new Vector3Int(129,190,225),
         new Vector3Int(170,22,255),
         new Vector3Int(127,115,78),
@@ -43,7 +43,7 @@ namespace Sango.Data
         new Vector3Int(228,188,84),
         new Vector3Int(179,218,143),
 
-        new Vector3Int(35,120,18),
+        new Vector3Int(35,120,18),          // 36,120,19  绿色RGB 颜色
         new Vector3Int(195,173,118),
         new Vector3Int(133,174,107),
         new Vector3Int(254,255,190),
@@ -109,10 +109,10 @@ namespace Sango.Data
                 int b = fileStream.ReadByte();
                 int g = fileStream.ReadByte();
                 int r = fileStream.ReadByte();
-                Color c = new Color(r, g, b);
+                Color color = new Color(r, g, b);
                 if (bitCount > 24)
-                    c.a = fileStream.ReadByte();
-                return c;
+                    color.a = fileStream.ReadByte();
+                return color;
             }
 
             public void ReadColor(out int r, out int g, out int b, out int a)

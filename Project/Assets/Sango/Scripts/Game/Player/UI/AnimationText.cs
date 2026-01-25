@@ -70,6 +70,7 @@ namespace UnityEngine.UI
 
         [System.NonSerialized]
         int counter = 0;
+
         void OnEnable()
         {
 #if UNITY_EDITOR
@@ -93,6 +94,7 @@ namespace UnityEngine.UI
             //    flip = 1;
 
         }
+
         void Start()
         {
 #if UNITY_EDITOR

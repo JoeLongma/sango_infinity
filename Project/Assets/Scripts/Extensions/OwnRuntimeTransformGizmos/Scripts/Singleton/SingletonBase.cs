@@ -3,8 +3,7 @@
 namespace RTEditor
 {
     /// <summary>
-    /// Abstract base singleton class which can be derived by all non-monobehaviour classes
-    /// in order to get access to singleton behaviour.
+    /// 抽象的基本单例类，它可以由所有非单例行为类派生，以便访问单例行为
     /// </summary>
     /// <remarks>
     /// The implementation requires that the derived classes have a public parameterless
@@ -16,14 +15,14 @@ namespace RTEditor
     {
         #region Private Static Variables
         /// <summary>
-        /// The singleton instance.
+        /// 单例
         /// </summary>
         private static T _instance = new T();
         #endregion
 
         #region Public Static Properties
         /// <summary>
-        /// Returns the singleton instance.
+        /// 返回单例
         /// </summary>
         public static T Instance { get { return _instance; } }
         #endregion

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace RTEditor
 {
     /// <summary>
-    /// This message is sent when a gizmo transforms (i.e. translates, rotates or scales) its controlled game objects.
+    /// 当控件变换（即平移、旋转或缩放）其控制的游戏对象时，会发送此消息
     /// </summary>
     public class GizmoTransformedObjectsMessage : Message
     {
@@ -51,7 +51,7 @@ namespace RTEditor
     }
 
     /// <summary>
-    /// This message is sent when a gizmo transform operation is undone.
+    /// 此消息是在控件变换操作撤消时发送的
     /// </summary>
     public class GizmoTransformOperationWasUndoneMessage : Message
     {
@@ -100,7 +100,7 @@ namespace RTEditor
     }
 
     /// <summary>
-    /// This message is sent when a gizmo transform operation is redone.
+    /// 此消息是在重做控件变换操作时发送的
     /// </summary>
     public class GizmoTransformOperationWasRedoneMessage : Message
     {
@@ -149,7 +149,7 @@ namespace RTEditor
     }
 
     /// <summary>
-    /// This message is sent when vertex snapping is enabled.
+    /// 此消息是在启用顶点捕捉时发送的
     /// </summary>
     public class VertexSnappingEnabledMessage : Message
     {
@@ -177,7 +177,7 @@ namespace RTEditor
     }
 
     /// <summary>
-    /// This message is sent when vertex snapping is disabled.
+    /// 禁用顶点捕捉时会发送此消息
     /// </summary>
     public class VertexSnappingDisabledMessage : Message
     {

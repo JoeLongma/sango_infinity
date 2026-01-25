@@ -4,7 +4,6 @@ using System.IO;
 using System.Collections.Generic;
 using System.Text;
 
-
 public static class SangoEditorTools
 {
     [MenuItem("Sango/头像编辑工具导出头像名字批处理")]
@@ -42,9 +41,7 @@ public static class SangoEditorTools
                 Sango.File.Move(f, string.Format("{0}/layer_{1}.png", savedir, id));
             }
         }
-
     }
-
 
     [MenuItem("Sango/模型WKMD->WKM")]
     public static void RenameWKMD2WKM()
@@ -93,7 +90,6 @@ public static class SangoEditorTools
         }
     }
 
-
     [MenuItem("Assets/精灵图集/处理精灵信息")]
     static void ProcessToSpriteInfo()
     {
@@ -115,7 +111,6 @@ public static class SangoEditorTools
         }
 
         File.WriteAllText(rootPath + "/" + image.name + "/" + image.name + ".tpsheet", sb.ToString());
-
     }
 
     [MenuItem("Sango/贴图后缀小写")]
@@ -204,7 +199,6 @@ public static class SangoEditorTools
         }
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
-
     }
 
     [MenuItem("Sango/材质球MainTex->BaseTex")]
@@ -226,5 +220,4 @@ public static class SangoEditorTools
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
-
 }

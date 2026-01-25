@@ -1,5 +1,4 @@
-﻿using Sango.Game.Action;
-using Sango.Game.Player;
+﻿using Sango.Game.Player;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -35,11 +34,13 @@ namespace Sango.Game
             }
             return result;
         }
+
         class systemData
         {
             public System.Type t;
             public GameSystemAttribute attribute;
         }
+
         /// <summary>
         /// 这里会自动创建所有GameSystem子类的单例
         /// </summary>

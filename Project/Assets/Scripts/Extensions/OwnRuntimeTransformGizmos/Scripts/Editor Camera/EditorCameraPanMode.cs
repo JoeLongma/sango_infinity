@@ -1,17 +1,17 @@
 ﻿namespace RTEditor
 {
     /// <summary>
-    /// Identifies different types of camera pan modes.
+    /// 用于标识不同的相机平移模式
     /// </summary>
     public enum EditorCameraPanMode
     {
         /// <summary>
-        /// Standard pan.
+        /// 标准的平移模式
         /// </summary>
         Standard = 0,
 
         /// <summary>
-        /// Smooth pan. The pan speed slowly decreases over time.
+        /// 平滑的平移模式。平移速度会随着时间的推移逐渐减慢
         /// </summary>
         Smooth
     }

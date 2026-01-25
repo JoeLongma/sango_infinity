@@ -3,82 +3,76 @@
 namespace RTEditor
 {
     /// <summary>
-    /// This is a static class that can be used to apply zoom to a camera.
+    /// 对相机进行缩放操作   定义了用于应用缩放效果到相机的静态类
     /// </summary>
     public static class EditorCameraZoom
     {
         #region Public Static Functions
         /// <summary>
-        /// Zooms the specified camera by the specified amount.
+        /// 通过指定的量对相机进行缩放
         /// </summary>
         /// <param name="camera">
-        /// The camera which must be zoomed.
+        /// 需要进行缩放的相机
         /// </param>
         /// <param name="zoomAmount">
-        /// The zoom amount. Positive values will zoom in and negative values will zoom out.
+        /// 缩放的量。正值将放大相机视图，负值将缩小相机视图
         /// </param>
         public static void ZoomCamera(Camera camera, float zoomAmount)
         {
-            // We will call 'ZoomOrthoCameraViewVolume' even if the camera is not orthographic because
-            // that will ensure correct behaviour when switching from perspective to ortho.
+            // 函数会根据相机的类型调用 ZoomOrthoCameraViewVolume，即使相机不是正交相机，也会调用该函数以确保在透视和正交相机之间切换时能够正确工作
             float zoomAmountScale = 1.0f;
             zoomAmountScale = ZoomOrthoCameraViewVolume(camera, zoomAmount);
 
-            // If the camera is not orthographc, we will not limit the amount of zoom
+            // 如果相机不是正交相机，将不会限制缩放的量
             if (!camera.orthographic) zoomAmountScale = 1.0f;
-           // else camera.nearClipPlane += zoomAmount;
+            // else camera.nearClipPlane += zoomAmount;
 
-            // Regardless of the type of camera we are using, we will also move the position of the camera. It may appear
-            // strange that we are doing this for an orthographic camera also but this is actually necessary because a camera
-            // has a near and a far clip plane. If we don't move the camera along its look vector, objects may get clipped
-            // by the near or far clip plane regardless of the zoom factor that is applied to the camera.
-            // Note: We make sure to scale the zoom amount by the 'zoomAmountScale' variable.
+            // 无论使用何种类型的相机，都会移动相机的位置。这是必要的，因为相机有近裁剪面和远裁剪面
+            // 如果不沿着相机的视线方向移动相机，对象可能会被近裁剪面或远裁剪面裁剪，而不考虑应用到相机的缩放因素
+            // 注意：确保将缩放量按照 zoomAmountScale 变量进行缩放
             Transform cameraTransform = camera.transform;
             cameraTransform.position += cameraTransform.forward * zoomAmount * zoomAmountScale;
         }
 
         /// <summary>
-        /// This function can be called to apply a zoom effect to an ortho camera's view volume.
+        /// 应用缩放效果到正交相机的视图体积
         /// </summary>
         /// <returns>
-        /// A scale factor which can be used to scale the zoom amount that is applied to
-        /// the camera to achieve the zoom effect. The position of the camera must be adjusted
-        /// by taking this value into account (e.g. pos = pos + look * zoomAmount * zoomScale).
+        /// 返回值：一个缩放因子，可以用于缩放应用到相机的缩放量以实现缩放效果
+        /// 相机的位置必须根据此值进行调整（例如，pos = pos + look * zoomAmount * zoomScale）
         /// </returns>
         public static float ZoomOrthoCameraViewVolume(Camera camera, float zoomAmount)
         {
-            // Start with a zoom scale of 1. We will modify this if needed.
+            // 参数 camera：需要应用缩放效果的相机    参数 zoomAmount：缩放的量
+            // 函数会从 1.0 的缩放比例开始。如果需要，会进行修改
             float zoomAmountScale = 1.0f;
 
-            // We will use a minimum value for the orthographic size. This is because if we allow the size
-            // to become < than 0, the scene will be inverted. Having it set to 0, is also not good because
-            // exceptions will be thrown.
+            // 函数使用一个最小值来限制正交大小。这是因为如果允许大小小于 0，场景将被翻转。将其设置为 0 也不好，因为会引发异常
             const float minOrthoSize = 0.001f;
 
-            // Calculate the new ortho size 
+            // 计算新的正交大小
             float newOrthoSize = camera.orthographicSize - zoomAmount * 0.5f;
 
-            // Is the new ortho size < than the allowed minimum?
+            // 如果新的正交大小小于允许的最小值，则需要进行处理：
             // Note: If it is, what we would normally have to do is to just clamp the size to the
             //       minimum value. However, we must calculate the the zoom ammount scale factor
             //       so that we can correctly return it from the function.
             if (newOrthoSize < minOrthoSize)
             {
-                float delta = minOrthoSize - newOrthoSize;                  // Holds the amount which must be subtracted from the zoom
-                float percentageOfRemovedZoom = delta / zoomAmount;         // Holds the percentage of zoom which was removed
+                float delta = minOrthoSize - newOrthoSize;                  // 计算需要从缩放中减去的量
+                float percentageOfRemovedZoom = delta / zoomAmount;         // 计算已移除的缩放量的百分比
 
-                // Clamp the new ortho size to the allowed minimum
+                // 将新的正交大小限制为允许的最小值
                 newOrthoSize = minOrthoSize;
 
-                // Calculate the zoom scale factor. We start from 1 and subtract the
-                // percentage which was removed earlier.
+                // 计算缩放因子：从 1 开始减去之前移除的百分比
                 zoomAmountScale = 1.0f - percentageOfRemovedZoom;
             }
 
-            // Set the new ortho size
+            // 设置新的正交大小
             camera.orthographicSize = Mathf.Max(minOrthoSize, newOrthoSize);
 
-            // Return the established zoom amount scale
+            // 返回确定的缩放量比例
             return zoomAmountScale;
         }
         #endregion

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System;
 
 public class CameraPlaneView : MonoBehaviour
 {
@@ -12,17 +11,13 @@ public class CameraPlaneView : MonoBehaviour
 #if UNITY_EDITOR
     void Update()
     {
-
-
         Vector3[] corners;
         if (GetPlaneCorners(Vector3.up, Vector3.zero, viewCamera, out corners))
         {
-            Debug.DrawLine(corners[0], corners[1], Color.green);    // bottom
-            Debug.DrawLine(corners[1], corners[2], Color.green);    // right
-            Debug.DrawLine(corners[2], corners[3], Color.green);    // top
-            Debug.DrawLine(corners[3], corners[0], Color.green);    // left
-
-
+            Debug.DrawLine(corners[0], corners[1], Color.green);    // 底部
+            Debug.DrawLine(corners[1], corners[2], Color.green);    // 右边
+            Debug.DrawLine(corners[2], corners[3], Color.green);    // 顶部
+            Debug.DrawLine(corners[3], corners[0], Color.green);    // 左边
         }
 
         if (CameraPlaneView.GetFarPlaneCorners(ref splane, viewCamera, slimitLen, ref corners))
@@ -42,42 +37,51 @@ public class CameraPlaneView : MonoBehaviour
             corners[2] = new Vector3(max.x, 0, max.z);
             corners[3] = new Vector3(max.x, 0, min.z);
 
-
-            Debug.DrawLine(corners[0], corners[1], Color.red);    // bottom
-            Debug.DrawLine(corners[1], corners[2], Color.red);    // right
-            Debug.DrawLine(corners[2], corners[3], Color.red);    // top
-            Debug.DrawLine(corners[3], corners[0], Color.red);    // left
+            Debug.DrawLine(corners[0], corners[1], Color.red);    // 底部
+            Debug.DrawLine(corners[1], corners[2], Color.red);    // 右边
+            Debug.DrawLine(corners[2], corners[3], Color.red);    // 顶部
+            Debug.DrawLine(corners[3], corners[0], Color.red);    // 左边
         }
 
         foreach (Rect r in rectList)
         {
             DrawRect(r);
         }
-
     }
 #endif
 
+    /// <summary>
+    /// 绘制一个蓝色矩形
+    /// </summary>
     public static void DrawRect(Rect r)
     {
         Vector3 r1 = new Vector3(r.min.x, 0, r.min.y);
         Vector3 r2 = new Vector3(r.min.x, 0, r.max.y);
         Vector3 r3 = new Vector3(r.max.x, 0, r.max.y);
         Vector3 r4 = new Vector3(r.max.x, 0, r.min.y);
-        Debug.DrawLine(r1, r2, Color.blue);    // bottom
-        Debug.DrawLine(r2, r3, Color.blue);    // right
-        Debug.DrawLine(r3, r4, Color.blue);    // top
-        Debug.DrawLine(r4, r1, Color.blue);    // left
+        Debug.DrawLine(r1, r2, Color.blue);    // 底部
+        Debug.DrawLine(r2, r3, Color.blue);    // 右边
+        Debug.DrawLine(r3, r4, Color.blue);    // 顶部
+        Debug.DrawLine(r4, r1, Color.blue);    // 左边
     }
+
+    /// <summary>
+    /// 将矩形添加到一个矩形列表中
+    /// </summary>
     public static void AddDrawRect(Rect r)
     {
         rectList.Add(r);
     }
+
+    /// <summary>
+    /// 将矩形添加到一个矩形列表中
+    /// </summary>
     public static void AddDrawRect(float x, float y, float w, float h)
     {
         rectList.Add(new Rect(x, y, w, h));
     }
-    #endregion
 
+    #endregion
 
     /// <summary>
     /// 获取摄像机在平面上的视野范围的4个角的顶点
@@ -121,7 +125,6 @@ public class CameraPlaneView : MonoBehaviour
         }
     }
 
-
     public static bool GetPlaneCorners(Vector3 normal, Vector3 planePoint, Camera camera, float limitLen, out Vector3[] corners)
     {
         Plane plane = new Plane(normal, planePoint);
@@ -152,6 +155,10 @@ public class CameraPlaneView : MonoBehaviour
             return true;
         }
     }
+
+    /// <summary>
+    /// 获取摄像机在平面上的远处的两个角的顶点
+    /// </summary>
     public static bool GetFarPlaneCorners(ref Plane plane, Camera camera, float limitLen, ref Vector3[] corners)
     {
 #if UNITY_EDITOR
@@ -172,9 +179,11 @@ public class CameraPlaneView : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 计算射线与平面的交点
+    /// </summary>
     public static bool GetRayPlaneIntersection(ref Plane plane, Ray ray, float limitLen, out Vector3 intersection)
     {
-
         float dis;
         if (!plane.Raycast(ray, out dis))
         {
@@ -184,7 +193,7 @@ public class CameraPlaneView : MonoBehaviour
 
         // 下面是获取t的公式
         // 注意，你需要先判断射线与平面是否平行，如果平面和射线平行，那么平面法线和射线方向的点积为0，即除数为0.
-        //float t = (Vector3.Dot(normal, planePoint) - Vector3.Dot(normal, ray.origin)) / Vector3.Dot(normal, ray.direction.normalized);
+        // float t = (Vector3.Dot(normal, planePoint) - Vector3.Dot(normal, ray.origin)) / Vector3.Dot(normal, ray.direction.normalized);
         if (dis >= 0)
         {
             intersection = ray.GetPoint(dis);

@@ -42,6 +42,8 @@ namespace Sango
             if (factor != tempFactor)
             {
                 tempFactor = factor;
+                // 使用计算得出的缩放因子，通过线性插值（Lerp）方法来调整该UI元素对象的缩放比例
+                // 在初始缩放向量（initScale）乘以x方向缩放因子（scaleFactor.x）和初始缩放向量乘以y方向缩放因子（scaleFactor.y）之间进行插值，使缩放比例根据factor的值动态变化
                 transform.localScale = Vector3.Lerp(initScale * scaleFactor.x, initScale * scaleFactor.y, factor);
                 transform.localPosition = cacheOffset + Vector3.Lerp(offsetFactor, Vector3.zero, factor);
             }

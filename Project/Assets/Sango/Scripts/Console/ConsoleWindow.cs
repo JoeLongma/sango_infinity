@@ -46,7 +46,7 @@ namespace ConsoleTestWindows
 			}
 
             Console.WriteLine("Current ConsoleCP: {0}",  GetConsoleCP());
-            SetConsoleCP(65001);
+            SetConsoleCP(65001); // 65001 = UTF8±àÂë
             Console.WriteLine("Current ConsoleCP: {0}",  GetConsoleCP());
             Console.WriteLine("Current Output ConsoleCP: {0}", GetConsoleOutputCP());
             SetConsoleOutputCP(65001);

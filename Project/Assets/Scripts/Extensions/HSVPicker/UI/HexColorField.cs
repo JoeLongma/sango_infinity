@@ -16,7 +16,7 @@ namespace HSVPicker
         {
             hexInputField = GetComponent<TMP_InputField>();
 
-            // Add listeners to keep text (and color) up to date
+            // 添加监听器以保持文本（和颜色）保持最新
             hexInputField.onEndEdit.AddListener(UpdateColor);
             hsvpicker.onValueChanged.AddListener(UpdateHex);
         }
@@ -40,7 +40,7 @@ namespace HSVPicker
             if (ColorUtility.TryParseHtmlString(newHex, out color))
                 hsvpicker.CurrentColor = color;
             else
-                Debug.Log("hex value is in the wrong format, valid formats are: #RGB, #RGBA, #RRGGBB and #RRGGBBAA (# is optional)");
+                Debug.Log("十六进制值格式不正确，有效格式包括：#RGB、 #RGBA、#RRGGBB 和 #RRGGBBAA（# 是可选的）");
         }
 
         private string ColorToHex(Color32 color)

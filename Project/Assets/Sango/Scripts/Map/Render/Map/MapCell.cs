@@ -57,7 +57,6 @@ namespace Sango.Render
             quadBounds = bounds;
             position = new Vector3(startCoords.y * map.mapData.quadSize, 0, startCoords.x * map.mapData.quadSize);
             this.bounds = new Sango.Tools.Rect(0, 0, quadBounds.x * map.mapData.quadSize, quadBounds.y * map.mapData.quadSize);
-
         }
 
         public override void Init()
@@ -93,7 +92,6 @@ namespace Sango.Render
 
             for (int i = 0; i < maxLayer; ++i)
             {
-
                 MapLayer.LayerData layerData = map.mapLayer.layerDatas[i];
 
                 Mesh tempMesh = new Mesh();
@@ -166,7 +164,6 @@ namespace Sango.Render
                 _PrepareDatas(null);
                 OnAsyncPrepareDatasDone(threadBeginLayer, lmdCache);
             }
-
             threadBeginLayer = maxLayer;
             OnLoadDone();
         }
@@ -408,7 +405,6 @@ namespace Sango.Render
         public void CreateLayers(int layer, int lod)
         {
             if (mesh[layer] == null) return;
-
             byte bLayer = (byte)layer;
             int x_end = startCoords.x + quadBounds.x;
             int y_end = startCoords.y + quadBounds.y;
@@ -432,7 +428,7 @@ namespace Sango.Render
 
                 for (int y = startCoords.y; y < y_end; y += lodL)
                 {
-
+                    //在内层循环中，根据当前的 x 和 y 值，从 vertexMap 中获取对应的顶点数据
                     int xL = x + lodL;
                     int yL = y + lodL;
 
@@ -452,6 +448,7 @@ namespace Sango.Render
 
                     int lowestLayer = layerIsWater ? 0 : Math.Min(Math.Min(Math.Min(start0.textureIndex, start1.textureIndex), start2.textureIndex), start3.textureIndex);
 
+                    // index0  小正方形左下角索引
                     int index0 = xIndexCache[0];
                     if (index0 == 0)
                     {
@@ -477,7 +474,7 @@ namespace Sango.Render
                         }
                     }
 
-
+                    // index1 小正方形右下角索引
                     int index1 = xIndexCache[1];
                     if (index1 == 0)
                     {
@@ -495,10 +492,11 @@ namespace Sango.Render
                     yIndexCache[normalY] = index1;
                     diffyIndexCache[normalY] = true;
                     AddVertex(ref start2, xL, yL, layer, lowestLayer, layerIsWater);
+                    // index2 小正方形右上角索引
                     int index2 = maxIndex++;
                     xIndexCache[1] = index2;
 
-
+                    // index3 小正方形左上角索引
                     int index3 = yIndexCache[normalY + lodL];
                     if (index3 == 0)
                     {
@@ -572,7 +570,6 @@ namespace Sango.Render
             {
                 if (threadBeginLayer < mesh.Length)
                 {
-
                     OnAsyncPrepareDatasDone(threadBeginLayer, lmdCache);
                     threadBeginLayer++;
                     threadLoadDone = false;

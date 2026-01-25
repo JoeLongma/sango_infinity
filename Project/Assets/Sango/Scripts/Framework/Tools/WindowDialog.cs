@@ -1,9 +1,7 @@
-using UnityEngine;
-using System.Collections;
 using System;
-using System.Runtime.InteropServices;
-using System.Collections.Generic;
 using System.IO;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
 
@@ -11,10 +9,10 @@ using System.IO;
 public class DialogConfig
 {
     #region Config Field
-    public int structSize = 0;//设置窗口大小
+    public int structSize = 0;          //设置窗口大小
     public IntPtr dlgOwner = IntPtr.Zero;
     public IntPtr instance = IntPtr.Zero;
-    public String filter = null;//文件类型
+    public String filter = null;        //文件类型
     public String customFilter = null;
     public int maxCustFilter = 0;
     public int filterIndex = 0;
@@ -23,8 +21,8 @@ public class DialogConfig
     public int maxFile = 0;
     public String fileTitle = null;
     public int maxFileTitle = 0;
-    public String initialDir = null;//指定路劲
-    public String title = null;//窗口名称
+    public String initialDir = null;    //指定路径
+    public String title = null;         //窗口名称
     public int flags = 0;
     public short fileOffset = 0;
     public short fileExtension = 0;
@@ -233,7 +231,7 @@ public class WindowDialog
         ofn.initialDir = initDir;
         ofn.title = title;
         ofn.flags = OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_NOCHANGEDIR;
-        ofn.dlgOwner = GetForegroundWindow(); //这一步将文件选择窗口置顶。
+        ofn.dlgOwner = GetForegroundWindow(); //这一步将文件选择窗口置顶
         if (!GetSaveFileName(ofn)) {
             return null;
         }

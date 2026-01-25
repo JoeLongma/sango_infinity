@@ -15,61 +15,36 @@ namespace Sango.Render
         Transform lookAt;
         Transform transform;
         public Camera camera;
-
-        public float fov = 30f;
-        public float near_clip = 0.3f;
-        public float far_clip = 950;
-        public float cameraDistanceFactor = 1;
-
         public Vector3 look_position = new Vector3(1407, 0, 796);
+        public float keyBoardMoveSpeed = 300f;
+        public Vector3 look_rotate = new Vector3(45f, -90f, 0f);
+        public float rotSpeed = 0.1f;
+        public float zoomSpeed = 30;
+        bool changed = false;
+        public float cur_distance = 300f;
+
+        public float cameraDistanceFactor = 1;
         public Vector2 limitDistance = new Vector2(200f, 630f);
         public Vector2 limitAngle = new Vector2(22.5f, 70f);
-        public float cur_distance = 300f;
-        public Vector3 look_rotate = new Vector3(45f, -90f, 0f);
-        public float zoomSpeed = 30;
-        public float keyBoardMoveSpeed = 300f;
-        public float rotSpeed = 0.1f;
 
         public float safeBoder = 560f;
-
-        bool changed = false;
-
+        private Plane viewPlane;
+        Ray ray;
+        bool isMouseMoving = false;
+        bool isMouseRotate = false;
+        Vector3 oldMousePos;
+        Vector3 newMosuePos;
+        public float fov = 30f;
+        public float near_clip = 0.3f;
+        public float far_clip = 950f;
         public MapCamera(MapRender map) : base(map)
         {
             viewPlane = new Plane(Vector3.up, Vector3.zero);
         }
 
-        private Plane viewPlane;
-        private Vector3[] corners = new Vector3[4];
-
-        public bool GetViewRect(float limitLen, out float x, out float y, out float w, out float h)
-        {
-            if (CameraPlaneView.GetPlaneCorners(ref viewPlane, camera, limitLen, ref corners))
-            {
-                Vector3 min = camera.transform.position;
-                Vector3 max = min;
-                for (int i = 0; i < corners.Length; ++i)
-                {
-                    Vector3 c = corners[i];
-                    min.x = Mathf.Min(min.x, c.x);
-                    min.z = Mathf.Min(min.z, c.z);
-                    max.x = Mathf.Max(max.x, c.x);
-                    max.z = Mathf.Max(max.z, c.z);
-                }
-                x = min.z;
-                y = min.x;
-                w = max.z - min.z;
-                h = max.x - min.x;
-                return true;
-            }
-            x = 0; y = 0; w = 0; h = 0;
-            return false;
-        }
-
         public override void Init()
         {
             base.Init();
-
             camera = Camera.main;
             if (camera == null)
             {
@@ -89,7 +64,6 @@ namespace Sango.Render
             //  }
 
             lookAt.position = look_position;
-
             enabled = true;
             NeedUpdateCamera();
         }
@@ -109,7 +83,7 @@ namespace Sango.Render
         }
 
         internal override void OnSave(BinaryWriter writer)
-        {
+        {   // 17行写入代码
             //writer.Write(fov);
             //writer.Write(near_clip);
             //writer.Write(far_clip);
@@ -134,6 +108,7 @@ namespace Sango.Render
         {
             if (versionCode <= 2)
             {
+                // 17行读取代码      ReadSingle函数从当前流中读取 4 字节浮点值，并使流的当前位置提升 4 个字节
                 reader.ReadSingle();
                 reader.ReadSingle();
                 reader.ReadSingle();
@@ -161,7 +136,6 @@ namespace Sango.Render
             //fov = reader.ReadSingle();
             //near_clip = reader.ReadSingle();
             //far_clip = reader.ReadSingle();
-
             //position = new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
             //limitDistance = new Vector2(reader.ReadSingle(), reader.ReadSingle());
             //limitAngle = new Vector2(reader.ReadSingle(), reader.ReadSingle());
@@ -170,7 +144,6 @@ namespace Sango.Render
             //zoomSpeed = reader.ReadSingle();
             //keyBoardMoveSpeed = reader.ReadSingle();
             //rotSpeed = reader.ReadSingle();
-
         }
 
         public bool enabled
@@ -178,6 +151,10 @@ namespace Sango.Render
             get; set;
         }
 
+        public Transform GetCenterTransform()
+        {
+            return lookAt;
+        }
         public Vector3 position
         {
             get { return look_position; }
@@ -216,11 +193,6 @@ namespace Sango.Render
                 look_rotate = value;
                 NeedUpdateCamera();
             }
-        }
-
-        public Transform GetCenterTransform()
-        {
-            return lookAt;
         }
 
         public void MoveCamera(int dir, float speed)
@@ -345,12 +317,6 @@ namespace Sango.Render
             return (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) || (MapEditor.IsEditOn && EditorWindow.IsPointOverUI())  /* || FairyGUI.Stage.isTouchOnUI*/;
         }
 
-        Ray ray;
-        bool isMouseMoving = false;
-        bool isMouseRotate = false;
-        Vector3 oldMousePos;
-        Vector3 newMosuePos;
-
         private void RotateCamera()
         {
             if (Input.GetMouseButton(1) && !IsOverUI() && !isMouseMoving)
@@ -437,7 +403,6 @@ namespace Sango.Render
                 transform.LookAt(lookAt);
                 map.onValueChanged?.Invoke(this);
             }
-
             oldMousePos = Input.mousePosition;
         }
 
@@ -705,6 +670,33 @@ namespace Sango.Render
                     }
                 }
             }
+        }
+		
+		
+		private Vector3[] corners = new Vector3[4];
+
+        public bool GetViewRect(float limitLen, out float x, out float y, out float w, out float h)
+        {
+            if (CameraPlaneView.GetPlaneCorners(ref viewPlane, camera, limitLen, ref corners))
+            {
+                Vector3 min = camera.transform.position;
+                Vector3 max = min;
+                for (int i = 0; i < corners.Length; ++i)
+                {
+                    Vector3 c = corners[i];
+                    min.x = Mathf.Min(min.x, c.x);
+                    min.z = Mathf.Min(min.z, c.z);
+                    max.x = Mathf.Max(max.x, c.x);
+                    max.z = Mathf.Max(max.z, c.z);
+                }
+                x = min.z;
+                y = min.x;
+                w = max.z - min.z;
+                h = max.x - min.x;
+                return true;
+            }
+            x = 0; y = 0; w = 0; h = 0;
+            return false;
         }
     }
 }

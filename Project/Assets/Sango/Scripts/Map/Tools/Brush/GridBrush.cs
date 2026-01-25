@@ -31,14 +31,14 @@ namespace Sango.Tools
             "无",
             "类型",
             "区域",
-            ////"lpB",
+            //"lpB",
             //"陷阱",
             //"方向",
             "内政",
             "防守",
             "贼",
             //"水淹",
-            ////"种类?火焰",
+            //"种类?火焰",
             //"遗迹（庙）"
         };
         private int currentEditMode = 0;
@@ -55,7 +55,8 @@ namespace Sango.Tools
             //"editor_flood_type",        //8.水淹用地
             //"editor_ruins_type",        //9.遗迹（庙）
         };
-        public Texture[] terrainTypeTexes = new Texture[] {
+        public Texture[] terrainTypeTexes = new Texture[]
+        {
             Texture2D.whiteTexture,
             Texture2D.whiteTexture,
             Texture2D.whiteTexture,
@@ -70,24 +71,27 @@ namespace Sango.Tools
         public Texture2D terrainTypeMaskTex;
         public int terrainTypeMaskCol = 4;
         public int terrainTypeMaskRow = 8;
-
         public bool showTerrainType = false;
         private bool showGrid = true;
         internal UnityEngine.Rect maskWindowRect = new UnityEngine.Rect(20, 20, 256, 256);
 
-        private string[] dirTypeTitle = new string[] {
+        private string[] dirTypeTitle = new string[]
+        {
             "左上", "上", "右上", "右下", "下", "左下", "无"
         };
-        private string[] trapTypeTitle = new string[] {
+        private string[] trapTypeTitle = new string[]
+        {
             "无", "堤防", "落石",
         };
-        private string[] terrainTypeTitle = new string[] {
+        private string[] terrainTypeTitle = new string[]
+        {
         "草地", "土地", "砂地", "湿地",
         "毒泉", "森林", "江河", "河道",
         "大海", "荒地", "道路", "栈道",
-        "桥", "浅滩", "岸", "山崖",
-        "都市", "港", "关所", "间道"};
-
+        "桥梁", "浅滩", "岸滩", "山崖",
+        "城池", "港口", "关隘", "间道"
+        };
+		
         EditorWindow infoWind;
         float gridInfoAlpha = 1;
 
@@ -586,7 +590,6 @@ namespace Sango.Tools
                     break;
             }
             Shader.SetGlobalTexture("_TerrainTypeTex", terrainTypeTexes[(int)b]);
-
             Shader.SetGlobalFloat("_terrainTypeMaskCol", terrainTypeMaskCol);
             Shader.SetGlobalFloat("_terrainTypeMaskRow", terrainTypeMaskRow);
 
@@ -702,7 +705,7 @@ namespace Sango.Tools
                 }
             }
             GUI.backgroundColor = lastColor;
-            infoWind.visible = GUILayout.Toggle(infoWind.visible, "显示信息图");
+            infoWind.visible = GUILayout.Toggle(infoWind.visible, "信息视图");
             bool show = GUILayout.Toggle(showGrid, "显示地格");
             if (show != showGrid)
             {
@@ -817,6 +820,7 @@ namespace Sango.Tools
                 editor.map.mapGrid.SetRangMaskColor(coord.col, coord.row, UnityEngine.Color.clear);
                 changed = true;
             }
+
             tempHexList.Clear();
             hex.Spiral(size, tempHexList);
             for (int i = 0; i < tempHexList.Count; i++)

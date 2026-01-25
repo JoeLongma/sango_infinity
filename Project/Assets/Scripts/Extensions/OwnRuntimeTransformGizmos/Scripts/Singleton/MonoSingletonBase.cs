@@ -3,10 +3,7 @@
 namespace RTEditor
 {
     /// <summary>
-    /// This is a class which implements the functionality for retrieving a 
-    /// singleton instance of a specified type. The class can be inherited by
-    /// all classes which must derive from 'MonoBehaviour' while still taking
-    /// advantage of singleton functionality.
+    /// 这是一个实现检索指定类型的单例实例的功能的类。该类可以由所有类继承，这些类必须派生自“MonoBehavior”，同时仍然利用singleton功能
     /// </summary>
     /// <typeparam name="T">
     /// Generic parameter which must be set to the type of the class that derives
