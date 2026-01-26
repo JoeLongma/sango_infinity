@@ -14,6 +14,7 @@ namespace Sango.Game
     public class BuildingWorking : GameSystem
     {
         public Building TargetBuilding { get; set; }
+        public City TargetCity { get; set; }
 
         public override void Init()
         {
@@ -24,6 +25,7 @@ namespace Sango.Game
             GameEvent.OnCitySeasonStart += OnCitySeasonStart;
             GameEvent.OnCityTurnStart += OnCityTurnStart;
             GameEvent.OnCityTurnEnd += OnCityTurnEnd;
+            GameEvent.OnCityContextMenuShow += OnCityContextMenuShow;
         }
 
         public override void Clear()
@@ -35,6 +37,30 @@ namespace Sango.Game
             GameEvent.OnCitySeasonStart -= OnCitySeasonStart;
             GameEvent.OnCityTurnStart -= OnCityTurnStart;
             GameEvent.OnCityTurnEnd -= OnCityTurnEnd;
+            GameEvent.OnCityContextMenuShow -= OnCityContextMenuShow;
+        }
+
+        void OnCityContextMenuShow(IContextMenuData menuData, City city)
+        {
+            TargetCity = city;
+            if (city.IsCity() && city.BelongForce != null && city.BelongForce.IsPlayer && city.BelongForce == Scenario.Cur.CurRunForce)
+            {
+                bool b = city.GetExtensionData<bool>("AppointWorking");
+                if (!b)
+                    menuData.Add("都市/自动委任工作", 0, city, OnClickMenuItem_CityAutoWorking, true);
+                else
+                    menuData.Add("都市/取消自动委任工作", 0, city, OnClickMenuItem_CityAutoWorking, true);
+            }
+        }
+
+        void OnClickMenuItem_CityAutoWorking(IContextMenuItem contextMenuItem)
+        {
+            bool b = TargetCity.GetExtensionData<bool>("AppointWorking");
+            TargetCity.SetExtensionData<bool>("AppointWorking", !b);
+            if (b)
+            {
+                AppointWorking(TargetCity, Scenario.Cur);
+            }
         }
 
         protected virtual void OnBuildingContextMenuShow(IContextMenuData menuData, BuildingBase building)
@@ -204,7 +230,7 @@ namespace Sango.Game
 
 
 
-        int GetCityLeaderInfuse(City city, int effectAttrType)
+        public int GetCityLeaderInfuse(City city, int effectAttrType)
         {
             Person leader = city.Leader;
             int leaderAttrValue = 0;
@@ -212,6 +238,21 @@ namespace Sango.Game
                 leaderAttrValue = leader.GetAttribute(effectAttrType);
             // 计算公式
             return 100 + (int)((Mathf.Pow(Mathf.Max(40, leaderAttrValue), 1.5f) / 10 - 25) / 3f);
+        }
+
+        public int GetPersonInfuse(Person[] workers, int effectAttrType)
+        {
+            int person_factor = 100;
+            if (workers == null) return person_factor;
+            for (int i = 0; i < workers.Length; i++)
+            {
+                Person person = workers[i];
+                if (person != null)
+                {
+                    person_factor += (int)(Mathf.Pow(Mathf.Max(40, person.GetAttribute(effectAttrType)), 0.5f) * 100 / (8 * (i+1)));
+                }
+            }
+            return person_factor;
         }
 
         List<Person> worker_list = new List<Person>();
@@ -232,11 +273,8 @@ namespace Sango.Game
 
             // 计算太守对于收入的影响
             int leader_factor = GetCityLeaderInfuse(belongCity, buildingType.effectAttrType);
-            worker_list.Clear();
-
-            int person_factor = 100;
-            int index = 1;
             bool hasWorker = false;
+            worker_list.Clear();
             if (building.Workers != null)
             {
                 for (int i = 0; i < buildingType.workerLimit; i++)
@@ -248,13 +286,12 @@ namespace Sango.Game
                     {
                         worker_list.Add(person);
                         hasWorker = true;
-                        person_factor += (int)(Mathf.Pow(Mathf.Max(40, person.GetAttribute(buildingType.effectAttrType)), 0.5f) * 100 / (8 * index));
-                        index++;
                     }
                 }
             }
-
             Person[] personArray = worker_list.ToArray();
+
+            int person_factor = GetPersonInfuse(personArray, buildingType.effectAttrType);
 
             int totalFactor = leader_factor * person_factor;
             int jobId = buildingType.jobId;
@@ -384,7 +421,7 @@ namespace Sango.Game
         /// </summary>
         /// <param name="scenario"></param>
         /// <returns></returns>
-        public void OnCitySeasonStart(City city, Scenario scenario)
+        void OnCitySeasonStart(City city, Scenario scenario)
         {
             if (city.BelongCorps == null)
                 return;
@@ -411,7 +448,7 @@ namespace Sango.Game
         /// </summary>
         /// <param name="scenario"></param>
         /// <returns></returns>
-        public void OnCityMonthStart(City city, Scenario scenario)
+        void OnCityMonthStart(City city, Scenario scenario)
         {
             if (city.BelongCorps == null)
                 return;
@@ -623,7 +660,7 @@ namespace Sango.Game
         /// </summary>
         /// <param name="scenario"></param>
         /// <returns></returns>
-        public void OnCityTurnEnd(City city, Scenario scenario)
+        void OnCityTurnEnd(City city, Scenario scenario)
         {
             if (city.BelongCorps == null)
                 return;
@@ -660,7 +697,7 @@ namespace Sango.Game
         /// </summary>
         /// <param name="scenario"></param>
         /// <returns></returns>
-        public void OnCityTurnStart(City city, Scenario scenario)
+        void OnCityTurnStart(City city, Scenario scenario)
         {
             if (city.BelongCorps == null)
                 return;
@@ -753,6 +790,8 @@ namespace Sango.Game
                 }
             });
 
+            if (city.BelongCorps.IsPlayer && !city.GetExtensionData<bool>("AppointWorking"))
+                return;
 
             AppointWorking(city, scenario);
         }

@@ -95,8 +95,9 @@ namespace Sango.Game
 
         }
 
-        public virtual void Init() {; }
+        public virtual void Init() { }
         public virtual void Clear() {; }
+
         /// <summary>
         /// 系统之间的消息处理
         /// </summary>
