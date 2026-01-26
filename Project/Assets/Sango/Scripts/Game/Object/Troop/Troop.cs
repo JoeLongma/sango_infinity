@@ -469,7 +469,7 @@ namespace Sango.Game
         public int IsWithOutFood()
         {
             if (food == 0) return 0;
-            if (food < foodCost * 6) return 1;
+            if (food < foodCost * 4) return 1;
             return 2;
         }
 

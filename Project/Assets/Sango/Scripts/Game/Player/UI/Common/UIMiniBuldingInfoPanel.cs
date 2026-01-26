@@ -18,20 +18,22 @@ namespace Sango.Game.Render.UI
             SetCorps(c.BelongCorps);
             durability.text = $"{c.durability}/{c.DurabilityLimit}";
 
-            for (int i = 0; i < worker.Length; i++)
+            if(worker != null)
             {
-                UITextField uIWorker = worker[i];
-                uIWorker.gameObject.SetActive((c.Workers != null && !c.isComplate && i < c.Workers.Count) || i < c.BuildingType.workerLimit);
-                if (c.Workers != null && i < c.Workers.Count)
+                for (int i = 0; i < worker.Length; i++)
                 {
-                    uIWorker.text = c.Workers[i].Name;
-                }
-                else
-                {
-                    uIWorker.text = "--";
+                    UITextField uIWorker = worker[i];
+                    uIWorker.gameObject.SetActive((c.Workers != null && !c.isComplate && i < c.Workers.Count) || i < c.BuildingType.workerLimit);
+                    if (c.Workers != null && i < c.Workers.Count)
+                    {
+                        uIWorker.text = c.Workers[i].Name;
+                    }
+                    else
+                    {
+                        uIWorker.text = "--";
+                    }
                 }
             }
-
             return this;
         }
 

@@ -13,9 +13,17 @@ namespace Sango.Game.Render.UI
         public object CustomData { get; set; }
         public List<ContextMenuItem> children = new List<ContextMenuItem>();
         public bool valid;
+        public UIMenuItem targetItem;
+
+        public void SetTitle(string t)
+        {
+            if (targetItem == null) return;
+            targetItem.SetTitle(t);
+        }
 
         public void OnClick(UIMenuItem item)
         {
+            targetItem = item;
             if (action == null)
             {
                 RectTransform rect = item.GetComponent<RectTransform>();

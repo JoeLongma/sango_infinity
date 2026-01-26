@@ -1125,37 +1125,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9037201326558585467, guid: e43064dac9b7df14d84627ae12a0557b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e43064dac9b7df14d84627ae12a0557b, type: 3}
---- !u!1 &5911411703569794332 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9037201326558585467, guid: e43064dac9b7df14d84627ae12a0557b, type: 3}
-  m_PrefabInstance: {fileID: 3414602794268354407}
-  m_PrefabAsset: {fileID: 0}
---- !u!223 &7128912754075471945
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5911411703569794332}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 1
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 32767
-  m_TargetDisplay: 0
 --- !u!224 &6097302023718264152 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8934839040840350271, guid: e43064dac9b7df14d84627ae12a0557b, type: 3}
@@ -1858,6 +1831,10 @@ PrefabInstance:
     - target: {fileID: 3078423664813607265, guid: 2df241007ddfa8a4192758075b16e9f7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6427389037059801368, guid: 2df241007ddfa8a4192758075b16e9f7, type: 3}
+      propertyPath: m_Direction
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2df241007ddfa8a4192758075b16e9f7, type: 3}

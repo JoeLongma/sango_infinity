@@ -1,8 +1,7 @@
 ﻿using Sango.Game.Render;
-using Sango.Game.Tools;
+using Sango.Game.Render.UI;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace Sango.Game
 {
@@ -16,9 +15,58 @@ namespace Sango.Game
         public Building TargetBuilding { get; set; }
         public City TargetCity { get; set; }
 
+        public List<ObjectSortTitle> customTitleList;
+        public string customTitleName;
+        public string windowName = "window_building_work_set";
+        // 基于经典产出的比例
+        int classiceGainFactor = 5;
+        int selectedWorkingType = 0;
+
         public override void Init()
         {
-            // 增加建筑菜单
+            // 增加剧本参数,用来修改内政类型, 工作模块启动的时候默认为当前类型,修改后才可以启动经典内政
+            GameEvent.OnScenarioVariablesSetting += OnScenarioVariablesSetting;
+
+            // 剧本初始化的时候启用设置好的内政类型
+            GameEvent.OnScenarioInit += OnScenarioInit;
+            GameEvent.OnScenarioEnd += OnScenarioEnd;
+            GameEvent.OnWindowCreate += OnWindowCreate;
+        }
+
+        public override void Clear()
+        {
+            GameEvent.OnScenarioVariablesSetting -= OnScenarioVariablesSetting;
+            GameEvent.OnScenarioInit += OnScenarioInit;
+            GameEvent.OnScenarioEnd += OnScenarioEnd;
+            GameEvent.OnWindowCreate -= OnWindowCreate;
+        }
+
+        void OnScenarioInit(Scenario scenario)
+        {
+            if (selectedWorkingType == 0)
+            {
+                Singleton<ClassicsCityWorking>.Instance.Clear();
+                ScenarioInit();
+
+                customTitleName = "建筑工作";
+                customTitleList = new List<ObjectSortTitle>()
+                {
+                    PersonSortFunction.SortByName,
+                    PersonSortFunction.SortByPolitics,
+                };
+            }
+        }
+
+        void OnScenarioEnd(Scenario scenario)
+        {
+            if (selectedWorkingType == 0)
+            {
+                ScenarioClear();
+            }
+        }
+
+        void ScenarioInit()
+        {
             GameEvent.OnBuildingContextMenuShow += OnBuildingContextMenuShow;
             GameEvent.OnBuildingTurnEnd += OnBuildingTurnEnd;
             GameEvent.OnCityMonthStart += OnCityMonthStart;
@@ -26,11 +74,11 @@ namespace Sango.Game
             GameEvent.OnCityTurnStart += OnCityTurnStart;
             GameEvent.OnCityTurnEnd += OnCityTurnEnd;
             GameEvent.OnCityContextMenuShow += OnCityContextMenuShow;
+            GameEvent.OnCityAIPrepare += OnCityAIPrepare;
         }
 
-        public override void Clear()
+        void ScenarioClear()
         {
-            // 增加建筑菜单
             GameEvent.OnBuildingContextMenuShow -= OnBuildingContextMenuShow;
             GameEvent.OnBuildingTurnEnd -= OnBuildingTurnEnd;
             GameEvent.OnCityMonthStart -= OnCityMonthStart;
@@ -38,6 +86,54 @@ namespace Sango.Game
             GameEvent.OnCityTurnStart -= OnCityTurnStart;
             GameEvent.OnCityTurnEnd -= OnCityTurnEnd;
             GameEvent.OnCityContextMenuShow -= OnCityContextMenuShow;
+            GameEvent.OnCityAIPrepare -= OnCityAIPrepare;
+        }
+
+        void OnCityAIPrepare(City city, Scenario scenario)
+        {
+            CityAI.CityBuildingTemplate = CityBuildingTemplate;
+            List<System.Func<City, Scenario, bool>> AICommandList = city.AICommandList;
+            if (city.IsBorderCity)
+            {
+                AICommandList.Add(CityAI.AIAttack);
+                AICommandList.Add(CityAI.AITradeFood);
+                
+                AICommandList.Add(CityAI.AIIntrior);
+            }
+            else
+            {
+                AICommandList.Add(CityAI.AITradeFood);
+                // 物资输送
+                AICommandList.Add(CityAI.AITransfrom);
+                AICommandList.Add(CityAI.AIIntrior);
+            }
+        }
+
+        void OnWindowCreate(string winName, Window.WindowInterface windowInterface)
+        {
+            if (winName == "window_object_pop_info")
+            {
+                UIObjectPopInfo uIObjectPopInfo = windowInterface.ugui_instance as UIObjectPopInfo;
+                if (uIObjectPopInfo != null)
+                {
+                    uIObjectPopInfo.buildindUsingIndex = 1 - selectedWorkingType;
+                }
+            }
+        }
+
+        void OnScenarioVariablesSetting(IVariablesSetting variablesSetting, Scenario scenario)
+        {
+            selectedWorkingType = 0;
+            variablesSetting.AddDropdownItem(GameLanguage.GetString(10000010), selectedWorkingType,
+                new List<string>(new string[]
+                {
+                    GameLanguage.GetString(10000009),
+                    GameLanguage.GetString(10000008)
+                }),
+                (index) =>
+                {
+                    selectedWorkingType = index;
+                });
         }
 
         void OnCityContextMenuShow(IContextMenuData menuData, City city)
@@ -47,19 +143,24 @@ namespace Sango.Game
             {
                 bool b = city.GetExtensionData<bool>("AppointWorking");
                 if (!b)
-                    menuData.Add("都市/自动委任工作", 0, city, OnClickMenuItem_CityAutoWorking, true);
+                    menuData.Add(GameLanguage.GetString(10000003), 0, city, OnClickMenuItem_CityAutoWorking, true);
                 else
-                    menuData.Add("都市/取消自动委任工作", 0, city, OnClickMenuItem_CityAutoWorking, true);
+                    menuData.Add(GameLanguage.GetString(10000004), 0, city, OnClickMenuItem_CityAutoWorking, true);
             }
         }
 
         void OnClickMenuItem_CityAutoWorking(IContextMenuItem contextMenuItem)
         {
-            bool b = TargetCity.GetExtensionData<bool>("AppointWorking");
-            TargetCity.SetExtensionData<bool>("AppointWorking", !b);
+            bool b = !TargetCity.GetExtensionData<bool>("AppointWorking");
+            TargetCity.SetExtensionData<bool>("AppointWorking", b);
             if (b)
             {
+                contextMenuItem.SetTitle(GameLanguage.GetString(10000004));
                 AppointWorking(TargetCity, Scenario.Cur);
+            }
+            else
+            {
+                contextMenuItem.SetTitle(GameLanguage.GetString(10000003));
             }
         }
 
@@ -80,8 +181,7 @@ namespace Sango.Game
         protected virtual void OnClickMenuItem_WorkerSet(IContextMenuItem contextMenuItem)
         {
             // 工作设置
-
-
+            Enter();
         }
 
         protected virtual void OnClickMenuItem_AutoWorkerSet(IContextMenuItem contextMenuItem)
@@ -249,7 +349,7 @@ namespace Sango.Game
                 Person person = workers[i];
                 if (person != null)
                 {
-                    person_factor += (int)(Mathf.Pow(Mathf.Max(40, person.GetAttribute(effectAttrType)), 0.5f) * 100 / (8 * (i+1)));
+                    person_factor += (int)(Mathf.Pow(Mathf.Max(40, person.GetAttribute(effectAttrType)), 0.5f) * 100 / (8 * (i + 1)));
                 }
             }
             return person_factor;
@@ -302,7 +402,7 @@ namespace Sango.Game
             // 建筑累积收益
             if (buildingType.foodGain > 0)
             {
-                int value = buildingType.foodGain * totalFactor / 10000;
+                int value = buildingType.foodGain / classiceGainFactor * totalFactor / 10000;
                 overrideData = GameUtility.IntOverrideData.Set(value);
                 GameEvent.OnBuildingCalculateFoodGain?.Invoke(building, overrideData);
                 building.AccumulatedFood += overrideData.Value;
@@ -310,7 +410,7 @@ namespace Sango.Game
 
             if (buildingType.goldGain > 0)
             {
-                int value = buildingType.goldGain * totalFactor / 10000;
+                int value = buildingType.goldGain / classiceGainFactor * totalFactor / 10000;
                 overrideData = GameUtility.IntOverrideData.Set(value);
                 GameEvent.OnBuildingCalculateGoldGain?.Invoke(building, overrideData);
                 building.AccumulatedGold += overrideData.Value;
@@ -318,7 +418,7 @@ namespace Sango.Game
 
             if (buildingType.populationGain > 0)
             {
-                int value = buildingType.populationGain * totalFactor / 10000;
+                int value = buildingType.populationGain / classiceGainFactor * totalFactor / 10000;
                 overrideData = GameUtility.IntOverrideData.Set(value);
                 GameEvent.OnBuildingCalculatePopulationGain?.Invoke(building, overrideData);
                 building.AccumulatedPopulation += overrideData.Value;
@@ -460,7 +560,7 @@ namespace Sango.Game
             city.allBuildings.ForEach(building =>
             {
 
-                if(building.AccumulatedGold > 0)
+                if (building.AccumulatedGold > 0)
                 {
                     totalValue += building.AccumulatedGold;
                     //Sango.Log.Error($"建筑:{building.Name}, AccumulatedGold{building.AccumulatedGold}, t:{totalValue}");
@@ -473,7 +573,7 @@ namespace Sango.Game
             city.AddGold(totalValue);
 
 #if SANGO_DEBUG
-            Sango.Log.Print($"城市：{city.Name}, 收获资金：{totalValue}, 现有资金: {city.gold}");
+            Sango.Log.Print($"城市：{city.Name},  收获资金：{totalValue}, 现有资金: {city.gold}");
 #endif
             city.Render?.ShowInfo(totalValue, (int)InfoType.Gold);
 
@@ -579,7 +679,7 @@ namespace Sango.Game
 
                                 int targetIndex = GameRandom.RandomWeightIndex(levelTotal);
                                 building.ProductItemId = targetIndex + 2;
-                                
+
                             }
                         }
                         break;
@@ -795,5 +895,186 @@ namespace Sango.Game
 
             AppointWorking(city, scenario);
         }
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            Window.Instance.Open(windowName);
+        }
+
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+            Window.Instance.Close(windowName);
+        }
+
+        public void SetBuildingWorker(Building building, List<Person> workers)
+        {
+            if(building.Workers == null)
+            {
+                building.Workers = new SangoObjectList<Person>();
+            }
+
+            building.RemoveAllWorkers();
+
+            foreach (var worker in workers)
+            {
+                building.AddWorker(worker);
+            }
+        }
+
+        static int[][] CityBuildingTemplate = new int[][] {
+            // 后方城市
+            new int[] {
+                // 基础建筑
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Barracks,
+                (int)BuildingKindType.BlacksmithShop,
+                (int)BuildingKindType.PatrolBureau,
+                (int)BuildingKindType.TrainTroopBuilding,
+                (int)BuildingKindType.RecruitBuilding,
+                (int)BuildingKindType.Farm,// 10小城
+
+                (int)BuildingKindType.MechineFactory,
+                (int)BuildingKindType.Market, // 12小城
+
+                (int)BuildingKindType.Stable,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 16中城
+
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.BoatFactory,
+                (int)BuildingKindType.Farm,// 20中城
+
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 24大城
+
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 28巨巨城
+            },
+
+            // 边境城市
+            new int[] {
+                // 基础建筑
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Barracks,
+                (int)BuildingKindType.BlacksmithShop,
+                (int)BuildingKindType.PatrolBureau,
+                (int)BuildingKindType.TrainTroopBuilding,
+                (int)BuildingKindType.RecruitBuilding,
+                (int)BuildingKindType.Farm,// 10小城
+
+                (int)BuildingKindType.MechineFactory,
+                (int)BuildingKindType.Market, // 12小城
+
+                (int)BuildingKindType.Stable,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 16中城
+
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.BoatFactory,
+                (int)BuildingKindType.Farm,// 20中城
+
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 24大城
+
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 28巨巨城
+            },
+
+            // 后方港口城市
+            new int[] {
+                // 基础建筑
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Barracks,
+                (int)BuildingKindType.BlacksmithShop,
+                (int)BuildingKindType.PatrolBureau,
+                (int)BuildingKindType.TrainTroopBuilding,
+                (int)BuildingKindType.RecruitBuilding,
+                (int)BuildingKindType.Farm,// 10小城
+
+                (int)BuildingKindType.MechineFactory,
+                (int)BuildingKindType.BoatFactory, // 12小城
+
+                (int)BuildingKindType.Stable,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 16中城
+
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Farm,// 20中城
+
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 24大城
+
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 28巨巨城
+            },
+
+             // 边境港口城市
+            new int[] {
+                // 基础建筑
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Barracks,
+                (int)BuildingKindType.BlacksmithShop,
+                (int)BuildingKindType.PatrolBureau,
+                (int)BuildingKindType.TrainTroopBuilding,
+                (int)BuildingKindType.RecruitBuilding,
+                (int)BuildingKindType.Farm,// 10小城
+
+                (int)BuildingKindType.MechineFactory,
+                (int)BuildingKindType.BoatFactory, // 12小城
+
+                (int)BuildingKindType.Stable,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 16中城
+
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 20中城
+
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 24大城
+
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,
+                (int)BuildingKindType.Farm,
+                (int)BuildingKindType.Market,// 28巨巨城
+            },
+        };
     }
 }

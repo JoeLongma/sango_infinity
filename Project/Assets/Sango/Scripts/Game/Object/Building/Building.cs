@@ -362,5 +362,38 @@ namespace Sango.Game
             BelongCity?.OnBuildingDestroy(this);
             Clear();
         }
+
+        public void RemoveWorker(Person person)
+        {
+            if (Workers == null) return;
+            if (person.workingBuilding == this)
+            {
+                Workers.Remove(person);
+                person.workingBuilding = null;
+            }
+        }
+
+        public void RemoveAllWorkers()
+        {
+            if (Workers == null) return;
+            Workers.ForEach(worker =>
+            {
+                worker.workingBuilding = null;
+            });
+            Workers.Clear();
+        }
+
+        public void AddWorker(Person person)
+        {
+            if (Workers == null) Workers = new SangoObjectList<Person>();
+            if (person.workingBuilding != null)
+            {
+                person.workingBuilding.RemoveWorker(person);
+                person.workingBuilding.Render?.UpdateRender();
+            }
+
+            Workers.Add(person);
+            person.workingBuilding = this;
+        }
     }
 }

@@ -13,29 +13,40 @@ namespace Sango.Game.Player
         {
             GameEvent.OnClick += OnClick;
 
-
             Singleton<CityBuildBuilding>.Instance.Init();
-            Singleton<CityRecruitTroops>.Instance.Init();   // 征兵
-            //Singleton<CityCreateBoat>.Instance.Init();
-            Singleton<CityCreateItems>.Instance.Init();
-            //Singleton<CityCreateMachine>.Instance.Init();
-            Singleton<CityDevelop>.Instance.Init();
-            Singleton<CityFarming>.Instance.Init();
-            Singleton<CityInspection>.Instance.Init();
+
             Singleton<CityTrade>.Instance.Init();
             //Singleton<CityTechniqueResearch>.Instance.Init();
 
             //军事
-            Singleton<CityExpedition>.Instance.Init();      // 出征
-            Singleton<CityTrainTroops>.Instance.Init();     // 训练
-            Singleton<CityTransport>.Instance.Init();     // 训练
+            Singleton<CityExpedition>.Instance.Init();    // 出征
+            Singleton<CityTransport>.Instance.Init();     // 运输
 
             //人事
             Singleton<CityCallPerson>.Instance.Init();
             Singleton<CityTransformPerson>.Instance.Init();
-            Singleton<CitySeraching>.Instance.Init();
             Singleton<CityRecruit>.Instance.Init();
             Singleton<CityReward>.Instance.Init();
+        }
+
+        public override void Clear()
+        {
+            GameEvent.OnClick -= OnClick;
+
+            Singleton<CityBuildBuilding>.Instance.Clear();
+
+            Singleton<CityTrade>.Instance.Clear();
+            //Singleton<CityTechniqueResearch>.Instance.Init();
+
+            //军事
+            Singleton<CityExpedition>.Instance.Clear();    // 出征
+            Singleton<CityTransport>.Instance.Clear();     // 运输
+
+            //人事
+            Singleton<CityCallPerson>.Instance.Clear();
+            Singleton<CityTransformPerson>.Instance.Clear();
+            Singleton<CityRecruit>.Instance.Clear();
+            Singleton<CityReward>.Instance.Clear();
         }
 
         void OnClick(Cell clickCell, Vector3 clickPosition, bool isOverUI)

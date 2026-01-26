@@ -233,7 +233,7 @@ namespace Sango.Game
         public float extraPopulationFactor = 1;
 
 
-        float population_increase_factor = 0;
+        public float population_increase_factor = 0;
         internal int borderLine;
         public bool IsBorderCity => borderLine == 0;
         public int BorderLine => borderLine;
@@ -552,44 +552,7 @@ namespace Sango.Game
 
         public void CalculateHarvest()
         {
-            ScenarioVariables variables = Scenario.Cur.Variables;
-
-            // 人口增长率
-            population_increase_factor = variables.populationIncreaseBaseFactor;
-
-            // 计算基础收入
-            totalGainFood = BaseGainFood + agriculture * variables.agriculture_add_food;
-            totalGainGold = BaseGainGold + commerce * variables.commerce_add_gold;
-
-            // 计算建筑收入
-            allBuildings.ForEach(x =>
-            {
-                if (x.isComplate)
-                {
-                    Tools.OverrideData<int> overrideData = GameUtility.IntOverrideData.Set(x.BuildingType.foodGain);
-                    GameEvent.OnBuildingCalculateFoodGain?.Invoke(x, overrideData);
-                    totalGainFood += overrideData.Value;
-
-                    overrideData = GameUtility.IntOverrideData.Set(x.BuildingType.goldGain);
-                    GameEvent.OnBuildingCalculateGoldGain?.Invoke(x, overrideData);
-                    totalGainGold += overrideData.Value;
-
-                    overrideData = GameUtility.IntOverrideData.Set(x.BuildingType.populationGain);
-                    GameEvent.OnBuildingCalculatePopulationGain?.Invoke(x, overrideData);
-                    population_increase_factor += overrideData.Value;
-                }
-            });
-
-            float securityInfluence = (((float)security / variables.securityInfluenceMax) - 1) * variables.securityInfluence;
-            float popularSupportInfluence = (((float)popularSupport / variables.popularSupportInfluenceMax) - 1) * variables.popularSupportInfluence;
-            float leftInfluence = 1.0f + securityInfluence + popularSupportInfluence;
-
-            //totalGainFood = Mathf.CeilToInt(leftInfluence * totalGainFood * (variables.foodFactor + extraGainFoodFactor));
-            //totalGainGold = Mathf.CeilToInt(leftInfluence * totalGainGold * (variables.goldFactor + extraGainGoldFactor));
-            totalGainFood = Mathf.CeilToInt(totalGainFood * (variables.foodFactor + extraGainFoodFactor));
-            totalGainGold = Mathf.CeilToInt(totalGainGold * (variables.goldFactor + extraGainGoldFactor));
-
-            population_increase_factor *= extraPopulationFactor;
+            GameEvent.OnCityCalculateHarvest?.Invoke(this);
         }
 
         public void ForeachNeighborCities(Action<City> action)
@@ -683,6 +646,13 @@ namespace Sango.Game
 
             GameEvent.OnCityMonthStart?.Invoke(this, scenario);
 
+            int cost = -GoldCost(scenario);
+            AddGold(cost);
+            Render?.ShowInfo(cost, (int)InfoType.Gold);
+
+#if SANGO_DEBUG
+            Sango.Log.Print($"城市：{Name},  支出：{cost}, 现有资金: {gold}");
+#endif
             return base.OnMonthStart(scenario);
         }
         public override bool OnDayStart(Scenario scenario)

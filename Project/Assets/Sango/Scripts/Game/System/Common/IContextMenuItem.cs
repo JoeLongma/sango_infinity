@@ -7,5 +7,6 @@ namespace Sango.Game
     public interface IContextMenuItem 
     {
         public object CustomData { get; set; }
+        public void SetTitle(string t);
     }
 }

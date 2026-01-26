@@ -40,7 +40,7 @@ namespace Sango.Game
                     {
                         if (city.AttackTroopsCount < Math.Max(3, city.EnemyCount + 2))
                         {
-                            Troop troop = AIMakeTroop(city, 15, false, scenario);
+                            Troop troop = AIMakeTroop(city, 20, false, scenario);
                             if (troop != null)
                             {
                                 troop = city.EnsureTroop(troop, scenario);
@@ -557,7 +557,7 @@ namespace Sango.Game
             return true;
         }
 
-        static int[][] CityBuildingTemplate = new int[][] {
+        public static int[][] CityBuildingTemplate = new int[][] {
             // 后方城市
             new int[] {
                 // 基础建筑

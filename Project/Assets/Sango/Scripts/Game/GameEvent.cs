@@ -327,6 +327,13 @@ namespace Sango.Game
         public static EventDelegate<City, OverrideData<int>> OnCityCalculateMaxDurability;
 
         /// <summary>
+        /// 计算城池收入
+        /// City, Troop, OverrideData
+        /// </summary>
+        public static EventDelegate<City> OnCityCalculateHarvest;
+
+
+        /// <summary>
         /// 可监听改计算部队最大兵力
         /// City, Troop, OverrideData
         /// </summary>
