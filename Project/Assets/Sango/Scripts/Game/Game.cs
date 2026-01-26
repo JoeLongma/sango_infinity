@@ -68,6 +68,8 @@ namespace Sango.Game
             GameState.Instance.ChangeState((int)GameState.State.GAME_START_MENU);
             Window.Instance.Open("window_start");
             Window.Instance.Close("window_loading");
+            CursorManager.Instance.InitCursorTextures();
+            CursorManager.Instance.SetCursorStyle(1);
             //Scenario scenario = new Scenario();
             //string path = Path.FindFile("Data/Scenario/Scenario.json");
             //scenario.FilePath = path;
