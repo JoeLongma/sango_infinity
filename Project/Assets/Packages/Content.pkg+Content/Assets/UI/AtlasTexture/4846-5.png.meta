@@ -146,7 +146,7 @@ TextureImporter:
         serializedVersion: 2
         x: 208
         y: 418
-        width: 304
+        width: 302
         height: 22
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -165,9 +165,9 @@ TextureImporter:
       name: 4846-5_1
       rect:
         serializedVersion: 2
-        x: 208
+        x: 209
         y: 396
-        width: 304
+        width: 303
         height: 22
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -377,7 +377,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 368
-        width: 208
+        width: 210
         height: 72
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

@@ -37,8 +37,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000015258789}
-  m_SizeDelta: {x: 16, y: -32}
+  m_AnchoredPosition: {x: 0, y: -0.06929016}
+  m_SizeDelta: {x: 16, y: -32.541}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5324469926361870000
 CanvasRenderer:
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d270f8c6359664649bbc43379b1b77e6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ef233c7ace95bea4cba0e90bff4ba108, type: 3}
   m_Type: 2
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -126,7 +126,19 @@ MonoBehaviour:
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIPlayerInfoPanel, Assembly-CSharp
+        m_MethodName: OnScrollBarValueChange
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2048307404890789167
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,7 +206,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 72c5971431a5fa94c87dd5c31344438c, type: 3}
+  m_Sprite: {fileID: -446281157, guid: 1101cdff52019c44d8868cafcdf4105d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -233,10 +245,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: 1b8d7a7f664a3c544a7de5b4378fd098, type: 3}
-    m_PressedSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: -414754158, guid: 1101cdff52019c44d8868cafcdf4105d, type: 3}
+    m_PressedSprite: {fileID: -211234299, guid: 1101cdff52019c44d8868cafcdf4105d, type: 3}
     m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 21300000, guid: 8be42ce85c59bc14fb89079e1582d021, type: 3}
+    m_DisabledSprite: {fileID: -211234299, guid: 1101cdff52019c44d8868cafcdf4105d, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -247,7 +259,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8048397381082954981}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIPlayerInfoPanel, Assembly-CSharp
+        m_MethodName: UpShow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3102566825355363797
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,7 +339,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3bbfd08a0d538fd419a01d75fd1f9215, type: 3}
+  m_Sprite: {fileID: 80163446, guid: 1101cdff52019c44d8868cafcdf4105d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -354,10 +378,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: b7e7eeeff7082d54fbc00adde05c3944, type: 3}
-    m_PressedSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 945400576, guid: 1101cdff52019c44d8868cafcdf4105d, type: 3}
+    m_PressedSprite: {fileID: 304283414, guid: 1101cdff52019c44d8868cafcdf4105d, type: 3}
     m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 21300000, guid: e5f6a97b9b5b95243b2d3822c2903784, type: 3}
+    m_DisabledSprite: {fileID: 304283414, guid: 1101cdff52019c44d8868cafcdf4105d, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -368,7 +392,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1916962015118287232}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIPlayerInfoPanel, Assembly-CSharp
+        m_MethodName: DownShow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7276981314846153501
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,8 +479,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.5, y: 0}
-  m_SizeDelta: {x: -1, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -2, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1198924974735681517
 CanvasRenderer:
@@ -474,7 +510,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5766fff8856039844abf1a8f34615d6c, type: 3}
+  m_Sprite: {fileID: 376201173, guid: 1101cdff52019c44d8868cafcdf4105d, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
