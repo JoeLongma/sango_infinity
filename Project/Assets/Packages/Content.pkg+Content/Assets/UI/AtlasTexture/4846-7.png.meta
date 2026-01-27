@@ -1956,7 +1956,7 @@ TextureImporter:
         height: 42
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 42, y: 0, z: 42, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -1977,7 +1977,7 @@ TextureImporter:
         height: 42
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 42, y: 0, z: 42, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -1998,7 +1998,7 @@ TextureImporter:
         height: 42
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 42, y: 0, z: 42, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -2019,7 +2019,7 @@ TextureImporter:
         height: 42
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 42, y: 0, z: 42, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -2040,7 +2040,7 @@ TextureImporter:
         height: 33
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 32, y: 0, z: 32, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -2061,7 +2061,7 @@ TextureImporter:
         height: 33
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 32, y: 0, z: 32, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -2082,7 +2082,7 @@ TextureImporter:
         height: 34
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 32, y: 0, z: 32, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -2103,7 +2103,7 @@ TextureImporter:
         height: 34
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 32, y: 0, z: 32, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0

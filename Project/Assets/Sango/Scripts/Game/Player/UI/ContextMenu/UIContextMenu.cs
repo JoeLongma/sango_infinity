@@ -63,10 +63,12 @@ namespace Sango.Game.Render.UI
             if (root != null)
             {
                 root.gameObject.SetActive(true);
-                UIMenuItem srcObj = menuItem[showDepth];
-                RectTransform rectTransform = srcObj.GetComponent<RectTransform>();
                 if (depth > 0)
-                    screenPoint += new Vector2(rectTransform.sizeDelta.x + 2, 0);
+                {
+                    UIMenuItem srcObj = menuItem[showDepth - 1];
+                    RectTransform rectTransform = srcObj.GetComponent<RectTransform>();
+                    screenPoint += new Vector2(rectTransform.sizeDelta.x - 4, 0);
+                }
                 root.anchoredPosition = screenPoint;
                 for (int i = 0; i < menuItems.Count; i++)
                 {
