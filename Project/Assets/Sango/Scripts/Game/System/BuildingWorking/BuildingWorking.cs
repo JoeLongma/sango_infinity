@@ -15,7 +15,7 @@ namespace Sango.Game
         public Building TargetBuilding { get; set; }
         public City TargetCity { get; set; }
 
-        public List<ObjectSortTitle> customTitleList;
+        public List<ObjectSortTitle>[] customTitleList;
         public string customTitleName;
         public string windowName = "window_building_work_set";
         // 基于经典产出的比例
@@ -49,10 +49,44 @@ namespace Sango.Game
                 ScenarioInit();
 
                 customTitleName = "建筑工作";
-                customTitleList = new List<ObjectSortTitle>()
+                customTitleList = new List<ObjectSortTitle>[]
                 {
-                    PersonSortFunction.SortByName,
-                    PersonSortFunction.SortByPolitics,
+                    new List<ObjectSortTitle>()
+                    {
+                        PersonSortFunction.SortByName,
+                        PersonSortFunction.SortByCommand,
+                        PersonSortFunction.SortByWork,
+                        PersonSortFunction.SortByFeatureList,
+                    },
+                    new List<ObjectSortTitle>()
+                    {
+                        PersonSortFunction.SortByName,
+                        PersonSortFunction.SortByStrength,
+                        PersonSortFunction.SortByWork,
+                        PersonSortFunction.SortByFeatureList,
+                    },
+                    new List<ObjectSortTitle>()
+                    {
+                        PersonSortFunction.SortByName,
+                        PersonSortFunction.SortByIntelligence,
+                        PersonSortFunction.SortByWork,
+                        PersonSortFunction.SortByFeatureList,
+                    },
+                    new List<ObjectSortTitle>()
+                    {
+                        PersonSortFunction.SortByName,
+                        PersonSortFunction.SortByPolitics,
+                        PersonSortFunction.SortByWork,
+                        PersonSortFunction.SortByFeatureList,
+                    },
+                    new List<ObjectSortTitle>()
+                    {
+                        PersonSortFunction.SortByName,
+                        PersonSortFunction.SortByGlamour,
+                        PersonSortFunction.SortByWork,
+                        PersonSortFunction.SortByFeatureList,
+                    },
+
                 };
             }
         }
@@ -97,7 +131,7 @@ namespace Sango.Game
             {
                 AICommandList.Add(CityAI.AIAttack);
                 AICommandList.Add(CityAI.AITradeFood);
-                
+
                 AICommandList.Add(CityAI.AIIntrior);
             }
             else
@@ -910,7 +944,7 @@ namespace Sango.Game
 
         public void SetBuildingWorker(Building building, List<Person> workers)
         {
-            if(building.Workers == null)
+            if (building.Workers == null)
             {
                 building.Workers = new SangoObjectList<Person>();
             }

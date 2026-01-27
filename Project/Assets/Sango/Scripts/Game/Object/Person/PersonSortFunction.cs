@@ -591,6 +591,14 @@ namespace Sango.Game
             valueGetCall = x => x.Mother.Name,
             personSortFunc = (a, b) => SangoObject.Compare(a.Mother, b.Mother),
         };
+
+        public static SortTitle SortByWork = new SortTitle()
+        {
+            name = "工作",
+            width = 50,
+            valueGetCall = x => x.workingBuilding?.Name ?? "-",
+            personSortFunc = (a, b) => Building.Compare(a.workingBuilding, b.workingBuilding),
+        };
     }
 
 }

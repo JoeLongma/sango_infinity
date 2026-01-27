@@ -36,7 +36,12 @@ namespace Sango.Game.Render.UI
                     selectedPersonList.Add(p);
                 });
 
+            ShowContent();
+        }
 
+        void ShowContent()
+        {
+            BuildingType targetBuildingType = TargetBuilding.BuildingType;
             for (int i = 0; i < personItems.Length; ++i)
             {
                 UIPersonItem personItem = personItems[i];
@@ -60,6 +65,7 @@ namespace Sango.Game.Render.UI
         public void OnSure()
         {
             buildingWorking.SetBuildingWorker(TargetBuilding, selectedPersonList);
+            TargetBuilding.Render?.UpdateRender();
             buildingWorking.Done();
         }
 
@@ -68,23 +74,17 @@ namespace Sango.Game.Render.UI
             buildingWorking.Exit();
         }
 
-        public void OnAuto()
-        {
-            buildingWorking.AutoSetWorker(TargetBuilding);
-            OnShow();
-        }
-
         public virtual void OnSelectPerson()
         {
             Singleton<PersonSelectSystem>.Instance.Start(TargetBuilding.BelongCity.freePersons,
-               selectedPersonList, 3, OnPersonChange, buildingWorking.customTitleList, buildingWorking.customTitleName);
+               selectedPersonList, 3, OnPersonChange, buildingWorking.customTitleList[TargetBuilding.BuildingType.effectAttrType], buildingWorking.customTitleName);
 
         }
 
         public virtual void OnPersonChange(List<Person> personList)
         {
             selectedPersonList = personList;
-            OnShow();
+            ShowContent();
         }
     }
 }

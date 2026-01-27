@@ -63,13 +63,17 @@ namespace Sango.Game
             //yield return new WaitForSeconds(0.5f);
             yield return null;
             ModManager.Instance.InitMods();
+
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+            CursorManager.Instance.InitCursorTextures();
+            CursorManager.Instance.SetCursorStyle(0);
+#endif
             GameData.Instance.Init();
             GameEvent.OnGameInit?.Invoke();
             GameState.Instance.ChangeState((int)GameState.State.GAME_START_MENU);
             Window.Instance.Open("window_start");
             Window.Instance.Close("window_loading");
-            CursorManager.Instance.InitCursorTextures();
-            CursorManager.Instance.SetCursorStyle(1);
+
             //Scenario scenario = new Scenario();
             //string path = Path.FindFile("Data/Scenario/Scenario.json");
             //scenario.FilePath = path;

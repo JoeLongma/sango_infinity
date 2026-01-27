@@ -42,7 +42,7 @@ namespace Sango
         };
 
         // 资源路径配置
-        public static string cursorResourcePath = "Assets/UI/AtlasTexture/cursor/";
+        public static string cursorResourcePath = "Assets/Cursor/";
 
         // 初始化加载所有鼠标纹理
         public void InitCursorTextures()

@@ -43,6 +43,22 @@ namespace Sango.Game
         public int cellHarvestTotalGold = 0;
         public List<ActionBase> actionList;
 
+        public static int Compare(Building a, Building b)
+        {
+            if (a != null && b != null)
+            {
+                return a.Name.CompareTo(b.Name);
+            }
+
+            if (a != null)
+                return 1;
+
+            if (b != null)
+                return -1;
+
+            return 0;
+        }
+
         public override void OnScenarioPrepare(Scenario scenario)
         {
             base.OnScenarioPrepare(scenario);

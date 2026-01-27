@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sango;
 using Sango.Mod;
+using System.Linq;
 
 namespace Sango
 {
@@ -61,6 +62,13 @@ namespace Sango
 #if UNITY_EDITOR
             string assetsPath = $"Assets/Packages/{packageName}.pkg+{ModManager.EditModName ?? "Content"}/{assetName}";
             UnityEngine.Object editorObj = UnityEditor.AssetDatabase.LoadAssetAtPath(assetsPath, assetType);
+            if(editorObj == null && assetType == typeof(UnityEngine.Sprite))
+            {
+                string [] pngAndSprite = assetsPath.Split('!');
+                UnityEngine.Object[] sprites = UnityEditor.AssetDatabase.LoadAllAssetsAtPath(pngAndSprite[0]);
+                editorObj = sprites.First(x => x.name == pngAndSprite[1]);
+            }
+
             if (editorObj != null) return editorObj;
 #endif
             PackageInfo packageInfo = null;
