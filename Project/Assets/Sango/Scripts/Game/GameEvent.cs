@@ -1,4 +1,5 @@
 ﻿using Sango.Game.Tools;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Sango.Game
@@ -117,6 +118,33 @@ namespace Sango.Game
 
         public static EventDelegate<ITroopInteractiveDialogData, Troop, Cell> OnTroopInteractiveContextDialogShow;
         public static EventDelegate<IVariablesSetting, Scenario> OnScenarioVariablesSetting;
+
+
+        /// <summary>
+        /// 城池tips信息板,监听可以增减信息展示条目
+        /// </summary>
+        public static EventDelegate<List<ObjectSortTitle>> OnInitCityMiniPanel;
+
+        /// <summary>
+        /// 部队tips信息板,监听可以增减信息展示条目
+        /// </summary>
+        public static EventDelegate<List<ObjectSortTitle>> OnInitTroopMiniPanel;
+
+        /// <summary>
+        /// 港口tips信息板,监听可以增减信息展示条目
+        /// </summary>
+        public static EventDelegate<List<ObjectSortTitle>> OnInitPortMiniPanel;
+
+        /// <summary>
+        /// 关卡信息板,监听可以增减信息展示条目
+        /// </summary>
+        public static EventDelegate<List<ObjectSortTitle>> OnInitGateMiniPanel;
+
+        /// <summary>
+        /// 建筑tips信息板,监听可以增减信息展示条目
+        /// </summary>
+        public static EventDelegate<List<ObjectSortTitle>> OnInitBuildingMiniPanel;
+
         #endregion Window
 
         #region Game
