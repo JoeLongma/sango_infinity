@@ -52,6 +52,18 @@ namespace Sango.Game
             {
                 return citySortFunc.Invoke((City)a, (City)b);
             }
+
+            public SortTitle Copy()
+            {
+                return new SortTitle
+                {
+                    name = name,
+                    alignment = alignment,
+                    width = width,
+                    valueGetCall = valueGetCall,
+                    citySortFunc = citySortFunc,
+                };
+            }
         }
 
         public void GetSortTitleGroup(CitySortGroupType citySortTileGroupType, List<ObjectSortTitle> titleList)
@@ -116,6 +128,14 @@ namespace Sango.Game
             width = 100,
             valueGetCall = x => x.Name,
             citySortFunc = (a, b) => a.Name.CompareTo(b.Name),
+        };
+
+        public static SortTitle SortByLeader = new SortTitle()
+        {
+            name = "太守",
+            width = 100,
+            valueGetCall = x => x.Leader?.Name ?? "---",
+            citySortFunc = (a, b) => SangoObject.Compare(a.Leader, b.Leader),
         };
 
         public static SortTitle SortByPersonCount = new SortTitle()
@@ -222,6 +242,46 @@ namespace Sango.Game
             citySortFunc = (a, b) => SangoObject.Compare(a.BelongCity, b.BelongCity),
         };
 
+        public static SortTitle SortBySecurity = new SortTitle()
+        {
+            name = "治安",
+            width = 60,
+            valueGetCall = x => x.security.ToString(),
+            citySortFunc = (a, b) => a.security.CompareTo(b.security),
+        };
+
+        public static SortTitle SortBySecurity_SecurityLimit = new SortTitle()
+        {
+            name = "治安",
+            width = 60,
+            valueGetCall = x => $"{x.security}/100",
+            citySortFunc = (a, b) => a.security.CompareTo(b.security),
+        };
+
+
+        public static SortTitle SortByDurability = new SortTitle()
+        {
+            name = "耐久",
+            width = 60,
+            valueGetCall = x => x.durability.ToString(),
+            citySortFunc = (a, b) => a.durability.CompareTo(b.durability),
+        };
+
+        public static SortTitle SortByDurability_DurabilityLimit = new SortTitle()
+        {
+            name = "耐久",
+            width = 60,
+            valueGetCall = x => $"{x.durability}/{x.durabilityLimit}",
+            citySortFunc = (a, b) => a.durability.CompareTo(b.durability),
+        };
+
+        public static SortTitle SortByAllPersonCountInfo = new SortTitle()
+        {
+            name = "现役",
+            width = 60,
+            valueGetCall = x => $"{x.freePersons.Count}/{x.allPersons.Count}",
+            citySortFunc = (a, b) => a.allPersons.Count.CompareTo(b.allPersons.Count),
+        };
     }
 
 }

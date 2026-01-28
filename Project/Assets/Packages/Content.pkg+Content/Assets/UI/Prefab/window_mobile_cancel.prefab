@@ -53,8 +53,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 370194d3861052b40a08ef39bf1f341f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tran: {fileID: 0}
-  parentTran: {fileID: 0}
   dragRect: {fileID: 6180945499214224410}
 --- !u!222 &4607555302192937807
 CanvasRenderer:
@@ -84,7 +82,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b018c8a03ad6d6a498974372d0edfac3, type: 3}
+  m_Sprite: {fileID: -1301231121, guid: 73e08d404e3b1954d804104f753fd178, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -213,7 +211,7 @@ PrefabInstance:
     - target: {fileID: 2747488509861702531, guid: b6ca83a866413de4fa6bc8021f74d52a, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: f68eba4aad3ef6e4ca84eca6e8c8764c, type: 3}
+      objectReference: {fileID: 924927957, guid: 9d094c1c7cdf87e4b8354bb33cd88739, type: 3}
     - target: {fileID: 2904138685985169836, guid: b6ca83a866413de4fa6bc8021f74d52a, type: 3}
       propertyPath: m_Text
       value: "\u53F3\u952E"
