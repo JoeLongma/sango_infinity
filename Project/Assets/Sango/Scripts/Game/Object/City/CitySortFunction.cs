@@ -40,12 +40,12 @@ namespace Sango.Game
 
         public class SortTitle : ObjectSortTitle
         {
-            public CityValueStrGet valueGetCall;
+            public CityValueStrGet valueStrGetCall;
             public CitySortFunc citySortFunc;
 
             public override string GetValueStr(SangoObject obj)
             {
-                return valueGetCall.Invoke((City)obj);
+                return valueStrGetCall.Invoke((City)obj);
             }
 
             public override int Sort(SangoObject a, SangoObject b)
@@ -60,7 +60,7 @@ namespace Sango.Game
                     name = name,
                     alignment = alignment,
                     width = width,
-                    valueGetCall = valueGetCall,
+                    valueStrGetCall = valueStrGetCall,
                     citySortFunc = citySortFunc,
                 };
             }
@@ -126,7 +126,7 @@ namespace Sango.Game
         {
             name = "城池",
             width = 100,
-            valueGetCall = x => x.Name,
+            valueStrGetCall = x => x.Name,
             citySortFunc = (a, b) => a.Name.CompareTo(b.Name),
         };
 
@@ -134,7 +134,7 @@ namespace Sango.Game
         {
             name = "太守",
             width = 100,
-            valueGetCall = x => x.Leader?.Name ?? "---",
+            valueStrGetCall = x => x.Leader?.Name ?? "---",
             citySortFunc = (a, b) => SangoObject.Compare(a.Leader, b.Leader),
         };
 
@@ -142,7 +142,7 @@ namespace Sango.Game
         {
             name = "现役",
             width = 60,
-            valueGetCall = x => x.allPersons.Count.ToString(),
+            valueStrGetCall = x => x.allPersons.Count.ToString(),
             citySortFunc = (a, b) => a.allPersons.Count.CompareTo(b.allPersons.Count),
         };
 
@@ -150,7 +150,7 @@ namespace Sango.Game
         {
             name = "士兵",
             width = 100,
-            valueGetCall = x => x.troops.ToString(),
+            valueStrGetCall = x => x.troops.ToString(),
             citySortFunc = (a, b) => a.troops.CompareTo(b.troops),
         };
 
@@ -158,7 +158,7 @@ namespace Sango.Game
         {
             name = "士兵上限",
             width = 100,
-            valueGetCall = x => x.TroopsLimit.ToString(),
+            valueStrGetCall = x => x.TroopsLimit.ToString(),
             citySortFunc = (a, b) => a.TroopsLimit.CompareTo(b.TroopsLimit),
         };
 
@@ -166,7 +166,7 @@ namespace Sango.Game
         {
             name = "资金",
             width = 100,
-            valueGetCall = x => x.gold.ToString(),
+            valueStrGetCall = x => x.gold.ToString(),
             citySortFunc = (a, b) => a.gold.CompareTo(b.gold),
         };
 
@@ -174,7 +174,7 @@ namespace Sango.Game
         {
             name = "资金上限",
             width = 100,
-            valueGetCall = x => x.GoldLimit.ToString(),
+            valueStrGetCall = x => x.GoldLimit.ToString(),
             citySortFunc = (a, b) => a.GoldLimit.CompareTo(b.GoldLimit),
         };
 
@@ -182,7 +182,7 @@ namespace Sango.Game
         {
             name = "兵粮",
             width = 100,
-            valueGetCall = x => x.food.ToString(),
+            valueStrGetCall = x => x.food.ToString(),
             citySortFunc = (a, b) => a.food.CompareTo(b.food),
         };
 
@@ -190,7 +190,7 @@ namespace Sango.Game
         {
             name = "兵粮上限",
             width = 100,
-            valueGetCall = x => x.FoodLimit.ToString(),
+            valueStrGetCall = x => x.FoodLimit.ToString(),
             citySortFunc = (a, b) => a.FoodLimit.CompareTo(b.FoodLimit),
         };
 
@@ -198,7 +198,7 @@ namespace Sango.Game
         {
             name = "等级",
             width = 60,
-            valueGetCall = x => x.CityLevelType.Name,
+            valueStrGetCall = x => x.CityLevelType.Name,
             citySortFunc = (a, b) => a.CityLevelType.Id.CompareTo(b.CityLevelType.Id),
         };
 
@@ -206,15 +206,23 @@ namespace Sango.Game
         {
             name = "空闲",
             width = 60,
-            valueGetCall = x => x.freePersons.Count.ToString(),
+            valueStrGetCall = x => x.freePersons.Count.ToString(),
             citySortFunc = (a, b) => a.freePersons.Count.CompareTo(b.freePersons.Count),
         };
 
-        public static SortTitle SortByIsWild = new SortTitle()
+        public static SortTitle SortByCaptiveCount = new SortTitle()
+        {
+            name = "俘虏",
+            width = 60,
+            valueStrGetCall = x => x.captiveList.Count.ToString(),
+            citySortFunc = (a, b) => a.captiveList.Count.CompareTo(b.captiveList.Count),
+        };
+
+        public static SortTitle SortByWildCount= new SortTitle()
         {
             name = "在野",
             width = 60,
-            valueGetCall = x => x.wildPersons.Count.ToString(),
+            valueStrGetCall = x => x.wildPersons.Count.ToString(),
             citySortFunc = (a, b) => a.wildPersons.Count.CompareTo(b.wildPersons.Count),
         };
 
@@ -222,7 +230,7 @@ namespace Sango.Game
         {
             name = "势力",
             width = 60,
-            valueGetCall = x => x.BelongForce?.Name ?? "无",
+            valueStrGetCall = x => x.BelongForce?.Name ?? "无",
             citySortFunc = (a, b) => SangoObject.Compare(a.BelongForce, b.BelongForce),
         };
 
@@ -230,7 +238,7 @@ namespace Sango.Game
         {
             name = "军团",
             width = 100,
-            valueGetCall = x => x.BelongCorps?.Name ?? "无",
+            valueStrGetCall = x => x.BelongCorps?.Name ?? "无",
             citySortFunc = (a, b) => SangoObject.Compare(a.BelongCorps, b.BelongCorps),
         };
 
@@ -238,7 +246,7 @@ namespace Sango.Game
         {
             name = "所属",
             width = 60,
-            valueGetCall = x => x.BelongCity?.Name ?? "无",
+            valueStrGetCall = x => x.BelongCity?.Name ?? "无",
             citySortFunc = (a, b) => SangoObject.Compare(a.BelongCity, b.BelongCity),
         };
 
@@ -246,7 +254,7 @@ namespace Sango.Game
         {
             name = "治安",
             width = 60,
-            valueGetCall = x => x.security.ToString(),
+            valueStrGetCall = x => x.security.ToString(),
             citySortFunc = (a, b) => a.security.CompareTo(b.security),
         };
 
@@ -254,7 +262,7 @@ namespace Sango.Game
         {
             name = "治安",
             width = 60,
-            valueGetCall = x => $"{x.security}/100",
+            valueStrGetCall = x => $"{x.security}/100",
             citySortFunc = (a, b) => a.security.CompareTo(b.security),
         };
 
@@ -263,7 +271,7 @@ namespace Sango.Game
         {
             name = "耐久",
             width = 60,
-            valueGetCall = x => x.durability.ToString(),
+            valueStrGetCall = x => x.durability.ToString(),
             citySortFunc = (a, b) => a.durability.CompareTo(b.durability),
         };
 
@@ -271,7 +279,7 @@ namespace Sango.Game
         {
             name = "耐久",
             width = 60,
-            valueGetCall = x => $"{x.durability}/{x.durabilityLimit}",
+            valueStrGetCall = x => $"{x.durability}/{x.durabilityLimit}",
             citySortFunc = (a, b) => a.durability.CompareTo(b.durability),
         };
 
@@ -279,9 +287,88 @@ namespace Sango.Game
         {
             name = "现役",
             width = 60,
-            valueGetCall = x => $"{x.freePersons.Count}/{x.allPersons.Count}",
+            valueStrGetCall = x => $"{x.freePersons.Count}/{x.allPersons.Count}",
             citySortFunc = (a, b) => a.allPersons.Count.CompareTo(b.allPersons.Count),
         };
-    }
 
+        public static SortTitle SortByBuildingBuildCount_TotalCount = new SortTitle()
+        {
+            name = "设施",
+            width = 100,
+            valueStrGetCall = x => $"{x.GetInteriorCellUsedCount()}/{x.InteriorCellCount}",
+            citySortFunc = (a, b) => a.InteriorCellCount.CompareTo(b.InteriorCellCount),
+        };
+
+        public static SortTitle SortByMorale_MoraleLimit = new SortTitle()
+        {
+            name = "气力",
+            width = 60,
+            valueStrGetCall = x => $"{x.morale}/{x.MaxMorale}",
+            citySortFunc = (a, b) => a.morale.CompareTo(b.morale),
+        };
+
+        public static SortTitle SortByMorale = new SortTitle()
+        {
+            name = "气力",
+            width = 60,
+            valueStrGetCall = x => x.morale.ToString(),
+            citySortFunc = (a, b) => a.morale.CompareTo(b.morale),
+        };
+
+        public static SortTitle GetSortByItemId(int id)
+        {
+            ItemType itemType = Scenario.Cur.GetObject<ItemType>(id);
+            return new SortTitle()
+            {
+                name = itemType.Name,
+                width = 50,
+                valueStrGetCall = x => x.itemStore.GetNumber(itemType.subKind).ToString(),
+                citySortFunc = (a, b) => a.itemStore.GetNumber(itemType.subKind).CompareTo(b.itemStore.GetNumber(itemType.subKind)),
+            };
+        }
+
+        public static SortTitle GetSortByItemId(int id, City city)
+        {
+            ItemType itemType = Scenario.Cur.GetObject<ItemType>(id);
+            if (itemType.kind == 3 || itemType.kind == 4)
+            {
+                ItemType tempType = Scenario.Cur.GetObject<ItemType>(id + 1);
+                if (tempType.subKind == itemType.subKind && tempType.IsValid(city.BelongForce))
+                {
+                    itemType = tempType;
+                }
+            }
+            return new SortTitle()
+            {
+                name = itemType.Name,
+                width = 50,
+                valueStrGetCall = x => x.itemStore.GetNumber(itemType.subKind).ToString(),
+                citySortFunc = (a, b) => a.itemStore.GetNumber(itemType.subKind).CompareTo(b.itemStore.GetNumber(itemType.subKind)),
+            };
+        }
+
+        public static SortTitle SortByTotalGainGold = new SortTitle()
+        {
+            name = "资金收入",
+            width = 60,
+            valueStrGetCall = x => x.totalGainGold.ToString(),
+            citySortFunc = (a, b) => a.totalGainGold.CompareTo(b.totalGainGold),
+        };
+
+        public static SortTitle SortByTotalGainFood = new SortTitle()
+        {
+            name = "兵粮收入",
+            width = 60,
+            valueStrGetCall = x => x.totalGainFood.ToString(),
+            citySortFunc = (a, b) => a.totalGainFood.CompareTo(b.totalGainFood),
+        };
+
+        public static SortTitle SortByHasBusiness = new SortTitle()
+        {
+            name = "市价",
+            width = 60,
+            valueStrGetCall = x => x.hasBusiness.ToString(),
+            citySortFunc = (a, b) => a.hasBusiness.CompareTo(b.hasBusiness),
+        };
+    }
 }

@@ -904,7 +904,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5d6125d06f1fef4aa9861c00314c119, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originalHeight: 900
 --- !u!1001 &724987993149157297
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2473,6 +2472,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8734080045334747305}
     m_Modifications:
+    - target: {fileID: 1858939636119430173, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 5.0200195
+      objectReference: {fileID: 0}
     - target: {fileID: 4047078994823135925, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2598,13 +2601,33 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7175181193469252479, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -4.9884033
+      objectReference: {fileID: 0}
+    - target: {fileID: 7175181193469252479, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7203431696601505871, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 75d587cd8eb9ed54f8807b87ab1d8f11, type: 3}
     - target: {fileID: 7283794659537304192, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 8060966292485083266, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: fbd269daeb182254b9f0b78d705cade0, type: 3}
+    - target: {fileID: 8145107261436835383, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: cecfdcfe89cc9f14cb42679b96923262, type: 3}
+    - target: {fileID: 8567409250123222778, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f6241228b49b98245a6dd142e7ee1dab, type: 3}
     - target: {fileID: 8781529737710856827, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_Layer
       value: 5
@@ -2641,6 +2664,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 11.976929
       objectReference: {fileID: 0}
+    - target: {fileID: 9010271449503537046, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b246134ad7f24034cafcc1fe98d5c425, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
 --- !u!224 &5207262687183987893 stripped

@@ -1,6 +1,8 @@
 
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -62,6 +64,7 @@ public static class SangeEditorTools
 
     }
 
+    [MenuItem("Assets/选中图集拆小图")]
     [MenuItem("Sango/选中图集拆小图")]
     static void ProcessToSprite()
     {
@@ -71,7 +74,8 @@ public static class SangeEditorTools
 
         TextureImporter texImp = AssetImporter.GetAtPath(path) as TextureImporter;
 
-        AssetDatabase.CreateFolder(rootPath, image.name);//创建文件夹
+        if (!AssetDatabase.IsValidFolder(rootPath))
+            AssetDatabase.CreateFolder(rootPath, image.name);//创建文件夹
 
         foreach (SpriteMetaData metaData in texImp.spritesheet)//遍历小图集
         {
@@ -92,7 +96,17 @@ public static class SangeEditorTools
             }
             var pngData = myimage.EncodeToPNG();
 
-            System.IO.File.WriteAllBytes(rootPath + "/" + image.name + "/" + metaData.name + ".png", pngData);
+            string dstPng = rootPath + "/" + image.name + "/" + metaData.name + ".png";
+            System.IO.File.WriteAllBytes(dstPng, pngData);
+            AssetDatabase.Refresh();
+
+            TextureImporter spriteImp = AssetImporter.GetAtPath(dstPng) as TextureImporter;
+            if (spriteImp.textureType != TextureImporterType.Sprite)
+            {
+                spriteImp.textureType = TextureImporterType.Sprite;
+                spriteImp.spriteBorder = metaData.border;
+                spriteImp.SaveAndReimport();
+            }
         }
     }
 
@@ -210,17 +224,17 @@ public static class SangeEditorTools
 
     }
 
-    [MenuItem("Sango/材质求MainTex->BaseTex")]
+    [MenuItem("Sango/材质球MainTex->BaseTex")]
     public static void MatSaveMainTex2BaseTex()
     {
         Object[] objects = Selection.objects;
-        foreach(Object o in objects)
+        foreach (Object o in objects)
         {
             Material material = o as Material;
-            if(material != null)
+            if (material != null)
             {
                 Texture tex = material.GetTexture("_MainTex");
-                if(tex != null)
+                if (tex != null)
                 {
                     material.SetTexture("_BaseMap", tex);
                 }
@@ -230,4 +244,130 @@ public static class SangeEditorTools
         AssetDatabase.Refresh();
     }
 
+    [MenuItem("Assets/UIprefab重定向为小图sprite")]
+    [MenuItem("Sango/UIprefab重定向为小图sprite")]
+    public static void UIPrefabResetSprite()
+    {
+        Object[] objects = Selection.objects;
+        foreach (Object o in objects)
+        {
+            GameObject uiPrefab = o as GameObject;
+            if (uiPrefab != null)
+            {
+                bool changed = false;
+                UnityEngine.UI.Image[] images = uiPrefab.GetComponentsInChildren<UnityEngine.UI.Image>(true);
+                if (images != null)
+                {
+                    foreach (UnityEngine.UI.Image image in images)
+                    {
+                        if (image.sprite != null)
+                        {
+                            string srcPath = AssetDatabase.GetAssetPath(image.sprite);
+                            if (System.IO.Path.GetFileNameWithoutExtension(srcPath) != image.sprite.name)
+                            {
+                                string name = image.sprite.name;
+                                string[] dir = name.Split('_');
+                                if (dir.Length > 0)
+                                {
+                                    string dstDir = dir[0];
+                                    Sprite spr = AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/Packages/Content.pkg+Content/Assets/UI/AtlasTexture/{dstDir}/{name}.png");
+                                    if (spr != null)
+                                    {
+                                        Debug.Log($"Sprite替换 {image.sprite.name}");
+                                        image.sprite = spr;
+                                        changed = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                UnityEngine.UI.Button[] buttons = uiPrefab.GetComponentsInChildren<UnityEngine.UI.Button>(true);
+                if (buttons != null)
+                {
+                    foreach (UnityEngine.UI.Button image in buttons)
+                    {
+                        UnityEngine.UI.SpriteState spriteState = image.spriteState;
+
+                        if (spriteState.highlightedSprite != null)
+                        {
+                            string srcPath = AssetDatabase.GetAssetPath(spriteState.highlightedSprite);
+                            if (System.IO.Path.GetFileNameWithoutExtension(srcPath) != spriteState.highlightedSprite.name)
+                            {
+                                string name = spriteState.highlightedSprite.name;
+                                string[] dir = name.Split('_');
+                                if (dir.Length > 0)
+                                {
+                                    string dstDir = dir[0];
+                                    Sprite spr = AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/Packages/Content.pkg+Content/Assets/UI/AtlasTexture/{dstDir}/{name}.png");
+                                    if (spr != null)
+                                    {
+                                        Debug.Log($"Sprite替换 {spr.name}");
+                                        spriteState.highlightedSprite = spr;
+                                        changed = true;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (spriteState.pressedSprite != null)
+                        {
+                            string srcPath = AssetDatabase.GetAssetPath(spriteState.pressedSprite);
+                            if (System.IO.Path.GetFileNameWithoutExtension(srcPath) != spriteState.pressedSprite.name)
+                            {
+                                string name = spriteState.pressedSprite.name;
+                                string[] dir = name.Split('_');
+                                if (dir.Length > 0)
+                                {
+                                    string dstDir = dir[0];
+                                    Sprite spr = AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/Packages/Content.pkg+Content/Assets/UI/AtlasTexture/{dstDir}/{name}.png");
+                                    if (spr != null)
+                                    {
+                                        Debug.Log($"Sprite替换 {spr.name}");
+                                        spriteState.pressedSprite = spr;
+                                        changed = true;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (spriteState.disabledSprite != null)
+                        {
+                            string srcPath = AssetDatabase.GetAssetPath(spriteState.disabledSprite);
+                            if (System.IO.Path.GetFileNameWithoutExtension(srcPath) != spriteState.disabledSprite.name)
+                            {
+                                string name = spriteState.disabledSprite.name;
+                                string[] dir = name.Split('_');
+                                if (dir.Length > 0)
+                                {
+                                    string dstDir = dir[0];
+                                    Sprite spr = AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/Packages/Content.pkg+Content/Assets/UI/AtlasTexture/{dstDir}/{name}.png");
+                                    if (spr != null)
+                                    {
+                                        Debug.Log($"Sprite替换 {spr.name}");
+                                        spriteState.disabledSprite = spr;
+                                        changed = true;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (changed)
+                        {
+                            image.spriteState = spriteState;
+                        }
+                    }
+                }
+
+                if (changed)
+                {
+                    EditorUtility.SetDirty(uiPrefab);
+                    AssetDatabase.SaveAssetIfDirty(o);
+                }
+            }
+        }
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+    }
 }

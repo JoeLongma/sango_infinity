@@ -26,6 +26,7 @@ namespace Sango.Game.Render.UI
         {
             nameLabel.text = c.Name;
             SetCorps(c.BelongCorps);
+            ResetPool();
             List<ObjectSortTitle> SortTitles = new List<ObjectSortTitle>(objectSortTitles);
             GameEvent.OnInitCityMiniPanel?.Invoke(SortTitles);
             for (int i = 0; i < SortTitles.Count; i++)

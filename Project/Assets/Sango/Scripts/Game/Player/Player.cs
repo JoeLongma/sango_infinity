@@ -25,13 +25,13 @@ namespace Sango.Game.Player
         public void Init()
         {
             //都市
-            Singleton<CitySystem>.Instance.Init();
+            //Singleton<CitySystem>.Instance.Init();
 
             // 建筑
-            Singleton<BuildingSystem>.Instance.Init();
+            //Singleton<BuildingSystem>.Instance.Init();
 
             // 部队
-            Singleton<TroopSystem>.Instance.Init();
+            //Singleton<TroopSystem>.Instance.Init();
 
             // 其他
             Singleton<GameSave>.Instance.Init();

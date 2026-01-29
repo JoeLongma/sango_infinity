@@ -39,7 +39,7 @@ namespace Sango.Game.Render.UI
             return textField;
         }
 
-        public virtual void OnDisable()
+        protected void ResetPool()
         {
             contentFieldList_pool.AddRange(contentFieldList_used);
             foreach (var v in contentFieldList_pool)
@@ -69,6 +69,7 @@ namespace Sango.Game.Render.UI
             UITextField textField = Create();
             textField.text = content;
             textField.titleLabel.text = title;
+            textField.label.alignment = TextAnchor.MiddleCenter;
         }
         public void AddInfo(string title, string content, int alignment)
         {

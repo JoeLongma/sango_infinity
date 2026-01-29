@@ -121,6 +121,14 @@ namespace Sango.Game
 
 
         /// <summary>
+        /// 城池点开的详细Tips信息板,监听可以增减信息展示条目
+        /// customData 为 ObjectSortTitle 则是横向两条信息(参考枪+冲车)
+        /// customData 为 0 则接着创建一个line
+        /// customData 为 1 则是横向两条信息但是只设置第一条,第二条隐藏
+        /// </summary>
+        public static EventDelegate<List<ObjectSortTitle>> OnInitCityInfoPanel;
+
+        /// <summary>
         /// 城池tips信息板,监听可以增减信息展示条目
         /// </summary>
         public static EventDelegate<List<ObjectSortTitle>> OnInitCityMiniPanel;
