@@ -411,5 +411,11 @@ namespace Sango.Game
             Workers.Add(person);
             person.workingBuilding = this;
         }
+
+        public Person GetWorker(int index)
+        {
+            if (Workers == null || index >= Workers.Count) return null;
+            return Workers[index];
+        }
     }
 }

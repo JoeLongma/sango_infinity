@@ -71,7 +71,7 @@ namespace Sango.Game.Render.UI
 
             name.text = city.Name;
 
-            GameEvent.OnInitCityInfoPanel?.Invoke(objectSortTitles);
+            GameEvent.OnInitCityInfoPanel?.Invoke(city, objectSortTitles);
             for (int i = 0; i < objectSortTitles.Count; i++)
             {
                 ObjectSortTitle title = objectSortTitles[i];

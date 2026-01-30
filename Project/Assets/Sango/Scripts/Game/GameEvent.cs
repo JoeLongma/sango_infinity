@@ -126,32 +126,32 @@ namespace Sango.Game
         /// customData 为 0 则接着创建一个line
         /// customData 为 1 则是横向两条信息但是只设置第一条,第二条隐藏
         /// </summary>
-        public static EventDelegate<List<ObjectSortTitle>> OnInitCityInfoPanel;
+        public static EventDelegate<City, List<ObjectSortTitle>> OnInitCityInfoPanel;
 
         /// <summary>
         /// 城池tips信息板,监听可以增减信息展示条目
         /// </summary>
-        public static EventDelegate<List<ObjectSortTitle>> OnInitCityMiniPanel;
+        public static EventDelegate<City, List<ObjectSortTitle>> OnInitCityMiniPanel;
 
         /// <summary>
         /// 部队tips信息板,监听可以增减信息展示条目
         /// </summary>
-        public static EventDelegate<List<ObjectSortTitle>> OnInitTroopMiniPanel;
+        public static EventDelegate<Troop, List<ObjectSortTitle>> OnInitTroopMiniPanel;
 
         /// <summary>
         /// 港口tips信息板,监听可以增减信息展示条目
         /// </summary>
-        public static EventDelegate<List<ObjectSortTitle>> OnInitPortMiniPanel;
+        public static EventDelegate<Port, List<ObjectSortTitle>> OnInitPortMiniPanel;
 
         /// <summary>
         /// 关卡信息板,监听可以增减信息展示条目
         /// </summary>
-        public static EventDelegate<List<ObjectSortTitle>> OnInitGateMiniPanel;
+        public static EventDelegate<Gate, List<ObjectSortTitle>> OnInitGateMiniPanel;
 
         /// <summary>
         /// 建筑tips信息板,监听可以增减信息展示条目
         /// </summary>
-        public static EventDelegate<List<ObjectSortTitle>> OnInitBuildingMiniPanel;
+        public static EventDelegate<Building, List<ObjectSortTitle>> OnInitBuildingMiniPanel;
 
         #endregion Window
 

@@ -30,7 +30,7 @@ namespace Sango.Game
             // 剧本初始化的时候启用设置好的内政类型
             GameEvent.OnScenarioInit += OnScenarioInit;
             GameEvent.OnScenarioEnd += OnScenarioEnd;
-            GameEvent.OnWindowCreate += OnWindowCreate;
+            GameEvent.OnInitBuildingMiniPanel += OnInitBuildingMiniPanel;
         }
 
         public override void Clear()
@@ -38,7 +38,7 @@ namespace Sango.Game
             GameEvent.OnScenarioVariablesSetting -= OnScenarioVariablesSetting;
             GameEvent.OnScenarioInit += OnScenarioInit;
             GameEvent.OnScenarioEnd += OnScenarioEnd;
-            GameEvent.OnWindowCreate -= OnWindowCreate;
+            GameEvent.OnInitBuildingMiniPanel -= OnInitBuildingMiniPanel;
         }
 
         void OnScenarioInit(Scenario scenario)
@@ -143,15 +143,11 @@ namespace Sango.Game
             }
         }
 
-        void OnWindowCreate(string winName, Window.WindowInterface windowInterface)
+        void OnInitBuildingMiniPanel(Building building, List<ObjectSortTitle> objectSortTitles)
         {
-            if (winName == "window_object_pop_info")
+            for (int i = 0; i < building.BuildingType.workerLimit; i++)
             {
-                UIObjectPopInfo uIObjectPopInfo = windowInterface.ugui_instance as UIObjectPopInfo;
-                if (uIObjectPopInfo != null)
-                {
-                    uIObjectPopInfo.buildindUsingIndex = 1 - selectedWorkingType;
-                }
+                objectSortTitles.Add(BuildingSortFunction.GetSortByWorkSlot(i).SetAlignment((int)TextAnchor.MiddleCenter));
             }
         }
 

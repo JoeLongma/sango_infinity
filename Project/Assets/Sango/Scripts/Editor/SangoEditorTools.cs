@@ -70,12 +70,13 @@ public static class SangeEditorTools
     {
         Texture2D image = Selection.activeObject as Texture2D;//获取旋转的对象
         string rootPath = System.IO.Path.GetDirectoryName(AssetDatabase.GetAssetPath(image));//获取路径名称
+
         string path = rootPath + "/" + image.name + ".png";//图片路径名称
 
         TextureImporter texImp = AssetImporter.GetAtPath(path) as TextureImporter;
 
-        if (!AssetDatabase.IsValidFolder(rootPath))
-            AssetDatabase.CreateFolder(rootPath, image.name);//创建文件夹
+        if (!AssetDatabase.IsValidFolder(rootPath.Replace("\\cutAtlas", "") + "/" + image.name))
+            AssetDatabase.CreateFolder(rootPath.Replace("\\cutAtlas", ""), image.name);//创建文件夹
 
         foreach (SpriteMetaData metaData in texImp.spritesheet)//遍历小图集
         {
@@ -96,7 +97,7 @@ public static class SangeEditorTools
             }
             var pngData = myimage.EncodeToPNG();
 
-            string dstPng = rootPath + "/" + image.name + "/" + metaData.name + ".png";
+            string dstPng = rootPath.Replace("\\cutAtlas", "") + "/" + image.name + "/" + metaData.name + ".png";
             System.IO.File.WriteAllBytes(dstPng, pngData);
             AssetDatabase.Refresh();
 
@@ -243,6 +244,42 @@ public static class SangeEditorTools
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
+
+    [MenuItem("Assets/UIprefab重定设置Outline颜色为不透明黑色")]
+    [MenuItem("Sango/UIprefab重定设置Outline颜色为不透明黑色")]
+    public static void UIPrefabResetOutlineColor()
+    {
+        Object[] objects = Selection.objects;
+        foreach (Object o in objects)
+        {
+            GameObject uiPrefab = o as GameObject;
+            if (uiPrefab != null)
+            {
+                bool changed = false;
+                UnityEngine.UI.Outline[] images = uiPrefab.GetComponentsInChildren<UnityEngine.UI.Outline>(true);
+                if (images != null)
+                {
+                    foreach (UnityEngine.UI.Outline image in images)
+                    {
+                        if (image.effectColor != UnityEngine.Color.black)
+                        {
+                            image.effectColor = UnityEngine.Color.black;
+                            changed = true;
+                        }
+                    }
+                }
+
+                if (changed)
+                {
+                    EditorUtility.SetDirty(uiPrefab);
+                    AssetDatabase.SaveAssetIfDirty(o);
+                }
+            }
+        }
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+    }
+
 
     [MenuItem("Assets/UIprefab重定向为小图sprite")]
     [MenuItem("Sango/UIprefab重定向为小图sprite")]

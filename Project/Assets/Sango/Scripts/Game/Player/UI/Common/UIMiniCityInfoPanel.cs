@@ -1,8 +1,5 @@
-﻿using Sango.Loader;
-using Sango.Render;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
@@ -28,7 +25,7 @@ namespace Sango.Game.Render.UI
             SetCorps(c.BelongCorps);
             ResetPool();
             List<ObjectSortTitle> SortTitles = new List<ObjectSortTitle>(objectSortTitles);
-            GameEvent.OnInitCityMiniPanel?.Invoke(SortTitles);
+            GameEvent.OnInitCityMiniPanel?.Invoke(c, SortTitles);
             for (int i = 0; i < SortTitles.Count; i++)
             {
                 ObjectSortTitle title = SortTitles[i];
