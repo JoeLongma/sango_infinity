@@ -144,20 +144,20 @@ Shader "UI/TextOutline"
             {
                 const fixed sinArray[12] = { 0, 0.5, 0.866, 1, 0.866, 0.5, 0, -0.5, -0.866, -1, -0.866, -0.5 };
                 const fixed cosArray[12] = { 1, 0.866, 0.5, 0, -0.5, -0.866, -1, -0.866, -0.5, 0, 0.5, 0.866 };
-                float2 pos = IN.texcoord + _MainTex_TexelSize.xy * float2(cosArray[pIndex], sinArray[pIndex]) * IN.normal.z;	//normal.z ´æ·Å _OutlineWidth
-                return IsInRect(pos, IN.uv1, IN.uv2) * (tex2D(_MainTex, pos) + _TextureSampleAdd).w * IN.tangent.w;		//tangent.w ´æ·Å _OutlineColor.w
+                float2 pos = IN.texcoord + _MainTex_TexelSize.xy * float2(cosArray[pIndex], sinArray[pIndex]) * IN.normal.z;	//normal.z å­˜æ”¾ _OutlineWidth
+                return IsInRect(pos, IN.uv1, IN.uv2) * (tex2D(_MainTex, pos) + _TextureSampleAdd).w * IN.tangent.w;		//tangent.w å­˜æ”¾ _OutlineColor.w
             }
 
             fixed4 frag(v2f IN) : SV_Target
             {
                 fixed4 color = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;
-            //if (IN.normal.z > 0)	//normal.z ´æ·Å _OutlineWidth
+            //if (IN.normal.z > 0)	//normal.z å­˜æ”¾ _OutlineWidth
             //{
-                color.w *= IsInRect(IN.texcoord, IN.uv1, IN.uv2);	//uv1 uv2 ´æ×ÅÔ­Ê¼×ÖµÄuv³¤·½ĞÎÇøÓò´óĞ¡
+                color.w *= IsInRect(IN.texcoord, IN.uv1, IN.uv2);	//uv1 uv2 å­˜ç€åŸå§‹å­—çš„uvé•¿æ–¹å½¢åŒºåŸŸå¤§å°
                 half3 c = half3(IN.uv3.x, IN.uv3.y, IN.tangent.z);
 
                 //c = pow(c, 2.2);
-                half4 val = half4(c, 0);		//uv3.xy tangent.z ·Ö±ğ´æ·Å×Å _OutlineColorµÄrgb
+                half4 val = half4(c, 0);		//uv3.xy tangent.z åˆ†åˆ«å­˜æ”¾ç€ _OutlineColorçš„rgb
                 val.w += SampleAlpha(0, IN);
                 val.w += SampleAlpha(1, IN);
                 val.w += SampleAlpha(2, IN);
@@ -173,16 +173,16 @@ Shader "UI/TextOutline"
                 val.w = saturate(val.w);
                 color = (val * (1.0 - color.a)) + (color * color.a);
                 color = val;
-                //color.a *= IN.color.a ;	//×ÖÖğ½¥Òş²ØÊ±£¬Ãè±ßÒ²ÒªÒş²Ø
+                //color.a *= IN.color.a ;	//å­—é€æ¸éšè—æ—¶ï¼Œæè¾¹ä¹Ÿè¦éšè—
 
                 //}
 
                 //Add for RectMask2D 
                     half2 m = saturate((_ClipRect.zw - _ClipRect.xy - abs(IN.mask.xy)) * IN.mask.zw);
-                   // color.a *= m.x * m.y;
+                    color.a *= m.x * m.y;
 
 #ifdef UNITY_UI_ALPHACLIP
-                //clip(color.a - 0.001);
+                clip(color.a - 0.001);
 #endif
                 //End for RectMask2D 
 
@@ -295,20 +295,20 @@ Shader "UI/TextOutline"
                 {
                     const fixed sinArray[12] = { 0, 0.5, 0.866, 1, 0.866, 0.5, 0, -0.5, -0.866, -1, -0.866, -0.5 };
                     const fixed cosArray[12] = { 1, 0.866, 0.5, 0, -0.5, -0.866, -1, -0.866, -0.5, 0, 0.5, 0.866 };
-                    float2 pos = IN.texcoord + _MainTex_TexelSize.xy * float2(cosArray[pIndex], sinArray[pIndex]) * IN.normal.z;	//normal.z ´æ·Å _OutlineWidth
-                    return IsInRect(pos, IN.uv1, IN.uv2) * (tex2D(_MainTex, pos) + _TextureSampleAdd).w * IN.tangent.w;		//tangent.w ´æ·Å _OutlineColor.w
+                    float2 pos = IN.texcoord + _MainTex_TexelSize.xy * float2(cosArray[pIndex], sinArray[pIndex]) * IN.normal.z;	//normal.z å­˜æ”¾ _OutlineWidth
+                    return IsInRect(pos, IN.uv1, IN.uv2) * (tex2D(_MainTex, pos) + _TextureSampleAdd).w * IN.tangent.w;		//tangent.w å­˜æ”¾ _OutlineColor.w
                 }
 
                 fixed4 frag(v2f IN) : SV_Target
                 {
                     fixed4 color = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;
                     color.w *= IsInRect(IN.texcoord, IN.uv1, IN.uv2);
-                    ////if (IN.normal.z > 0)	//normal.z ´æ·Å _OutlineWidth
+                    ////if (IN.normal.z > 0)	//normal.z å­˜æ”¾ _OutlineWidth
                     ////{
-                    //	color.w *= IsInRect(IN.texcoord, IN.uv1, IN.uv2);	//uv1 uv2 ´æ×ÅÔ­Ê¼×ÖµÄuv³¤·½ĞÎÇøÓò´óĞ¡
+                    //	color.w *= IsInRect(IN.texcoord, IN.uv1, IN.uv2);	//uv1 uv2 å­˜ç€åŸå§‹å­—çš„uvé•¿æ–¹å½¢åŒºåŸŸå¤§å°
                     //	half3 c =half3(IN.uv3.x, IN.uv3.y, IN.tangent.z);
         //                c= pow(c, 2.2);
-        //                half4 val = half4(c, 0);		//uv3.xy tangent.z ·Ö±ğ´æ·Å×Å _OutlineColorµÄrgb
+        //                half4 val = half4(c, 0);		//uv3.xy tangent.z åˆ†åˆ«å­˜æ”¾ç€ _OutlineColorçš„rgb
                     //	val.w += SampleAlpha(0, IN);
                     //	val.w += SampleAlpha(1, IN);    
                     //	val.w += SampleAlpha(2, IN);
@@ -324,7 +324,7 @@ Shader "UI/TextOutline"
 
                     //	color = (val * (1.0 - color.a)) + (color * color.a);
 
-                        color.a *= IN.color.a;	//×ÖÖğ½¥Òş²ØÊ±£¬Ãè±ßÒ²ÒªÒş²Ø
+                        color.a *= IN.color.a;	//å­—é€æ¸éšè—æ—¶ï¼Œæè¾¹ä¹Ÿè¦éšè—
 
                         //}
 

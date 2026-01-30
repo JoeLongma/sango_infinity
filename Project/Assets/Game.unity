@@ -909,7 +909,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4714337929903018782, guid: f4882400008b6734689ca818a9fe1895, type: 3}
       propertyPath: m_Text
-      value: 1111
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4714337929903018782, guid: f4882400008b6734689ca818a9fe1895, type: 3}
       propertyPath: m_Color.b
@@ -945,7 +945,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4714337930053198723, guid: f4882400008b6734689ca818a9fe1895, type: 3}
       propertyPath: m_RenderMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4714337931479443000, guid: f4882400008b6734689ca818a9fe1895, type: 3}
       propertyPath: m_IsActive
