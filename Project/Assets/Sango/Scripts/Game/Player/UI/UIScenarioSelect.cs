@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
@@ -21,9 +22,17 @@ namespace Sango.Game.Render.UI
         public RectTransform mapBounds;
         List<GameObject> cityList = new List<GameObject>();
 
+        public GameObject sureButton;
+
         public override void OnShow()
         {
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+            curSelectIndex = -1;
+            sureButton.SetActive(false);
+#else
             curSelectIndex = 0;
+            sureButton.SetActive(true);
+#endif
             int count = ShortScenario.all_scenario_info_list.Count;
             for (int i = 0; i < count; i++)
             {
@@ -40,7 +49,15 @@ namespace Sango.Game.Render.UI
                 }
                 item.gameObject.SetActive(true);
                 int selIndex = i;
-                item.SetName(scenario.Info.name).SetSelected(i == curSelectIndex).BindCall(() => { OnSelectScenario(selIndex); });
+                item.targetIndex = selIndex;
+                item.SetName(scenario.Info.name).SetSelected(i == curSelectIndex);
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+                item.BindCall(() => { OnNext(); });
+#else
+                item.BindCall(() => { OnSelectScenario(selIndex); });
+#endif
+
+
             }
 
             for (int i = count; i < selectedItems.Count; i++)
@@ -67,6 +84,20 @@ namespace Sango.Game.Render.UI
 
         public void ShowScenario(int index)
         {
+            if (index == curSelectIndex)
+                return;
+
+            curSelectIndex = index;
+            if (index < 0)
+            {
+                scenarioInfoText.text = "";
+                scenarioDescText.text = "";
+                for (int j = 0; j < cityList.Count; j++)
+                {
+                    cityList[j].SetActive(false);
+                }
+                return;
+            }
 
             ShortScenario scenario = ShortScenario.all_scenario_info_list[curSelectIndex];
             ScenarioInfo scenarioInfo = scenario.Info;
@@ -78,7 +109,6 @@ namespace Sango.Game.Render.UI
 
                 if (city.BuildingType > 1) continue;
                 if (city.Id == 0) continue;
-
 
                 GameObject cityObj;
                 if (i >= cityList.Count)
@@ -139,6 +169,23 @@ namespace Sango.Game.Render.UI
             Window.Instance.Open("window_scenario_force_select");
             Window.Instance.Close("window_scenario_select");
         }
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+        private void Update()
+        {
 
+            for(int i = 0; i < selectedItems.Count; i++)
+            {
+                UIScenarioItem uIScenarioItem = selectedItems[i];
+                if(RectTransformUtility.RectangleContainsScreenPoint(uIScenarioItem.root, Input.mousePosition, Game.Instance.UICamera))
+                {
+                    ShowScenario(uIScenarioItem.targetIndex);
+                    return;
+                }
+            }
+
+            ShowScenario(-1);
+
+        }
+#endif
     }
 }
