@@ -5,6 +5,7 @@ using System.Text;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static class SangeEditorTools
 {
@@ -256,14 +257,68 @@ public static class SangeEditorTools
             if (uiPrefab != null)
             {
                 bool changed = false;
+                TextOutline[] images = uiPrefab.GetComponentsInChildren<TextOutline>(true);
+                if (images != null)
+                {
+                    foreach (TextOutline image in images)
+                    {
+                        UnityEngine.Color c = new UnityEngine.Color(0.12f, 0.12f, 0.12f);
+                        if (image.m_OutlineColor != c)
+                        image.m_OutlineColor = c;
+                        changed = true;
+                    }
+                }
+
+                if (changed)
+                {
+                    EditorUtility.SetDirty(uiPrefab);
+                    AssetDatabase.SaveAssetIfDirty(o);
+                }
+            }
+        }
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+    }
+
+    [MenuItem("Assets/UIprefab outline -> TextOutline")]
+    [MenuItem("Sango/UIprefab outline -> TextOutline")]
+    public static void UIPrefabResetOutlineColor2()
+    {
+        Object[] objects = Selection.objects;
+        foreach (Object o in objects)
+        {
+            GameObject uiPrefab = o as GameObject;
+            if (uiPrefab != null)
+            {
+                bool changed = false;
                 UnityEngine.UI.Outline[] images = uiPrefab.GetComponentsInChildren<UnityEngine.UI.Outline>(true);
                 if (images != null)
                 {
                     foreach (UnityEngine.UI.Outline image in images)
                     {
-                        if (image.effectColor != UnityEngine.Color.black)
+                        Text text = image.GetComponent<Text>();
+                        if (text != null)
                         {
-                            image.effectColor = UnityEngine.Color.black;
+                            text.material = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>("Assets/Sango/Resources/OutlineMat.mat");
+                            TextOutline textOutline = image.gameObject.AddComponent<TextOutline>();
+                            GameObject.DestroyImmediate(image, true);
+                            changed = true;
+                        }
+                    }
+                }
+
+                UnityEngine.UI.Shadow[] images_shadow = uiPrefab.GetComponentsInChildren<UnityEngine.UI.Shadow>(true);
+                if (images_shadow != null)
+                {
+                    foreach (UnityEngine.UI.Shadow image in images_shadow)
+                    {
+                        Text text = image.GetComponent<Text>();
+                        if (text != null)
+                        {
+                            text.material = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>("Assets/Sango/Resources/OutlineMat.mat");
+
+                            TextOutline textOutline = image.gameObject.AddComponent<TextOutline>();
+                            GameObject.DestroyImmediate(image, true);
                             changed = true;
                         }
                     }

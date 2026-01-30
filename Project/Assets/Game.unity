@@ -202,7 +202,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: -1
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -843,6 +843,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 138966664}
     m_Modifications:
+    - target: {fileID: 4277027664261074695, guid: f4882400008b6734689ca818a9fe1895, type: 3}
+      propertyPath: m_OutlineWidth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277027664261074695, guid: f4882400008b6734689ca818a9fe1895, type: 3}
+      propertyPath: m_OutlineColor.b
+      value: 0.11764706
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277027664261074695, guid: f4882400008b6734689ca818a9fe1895, type: 3}
+      propertyPath: m_OutlineColor.g
+      value: 0.11764706
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277027664261074695, guid: f4882400008b6734689ca818a9fe1895, type: 3}
+      propertyPath: m_OutlineColor.r
+      value: 0.11764706
+      objectReference: {fileID: 0}
     - target: {fileID: 4714337929706889581, guid: f4882400008b6734689ca818a9fe1895, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -893,7 +909,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4714337929903018782, guid: f4882400008b6734689ca818a9fe1895, type: 3}
       propertyPath: m_Text
-      value: 
+      value: 1111
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714337929903018782, guid: f4882400008b6734689ca818a9fe1895, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714337929903018782, guid: f4882400008b6734689ca818a9fe1895, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714337929903018782, guid: f4882400008b6734689ca818a9fe1895, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714337929903018782, guid: f4882400008b6734689ca818a9fe1895, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4714337929903018783, guid: f4882400008b6734689ca818a9fe1895, type: 3}
       propertyPath: m_LocalScale.x
@@ -906,6 +938,14 @@ PrefabInstance:
     - target: {fileID: 4714337929903018783, guid: f4882400008b6734689ca818a9fe1895, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714337930053198723, guid: f4882400008b6734689ca818a9fe1895, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714337930053198723, guid: f4882400008b6734689ca818a9fe1895, type: 3}
+      propertyPath: m_RenderMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4714337931479443000, guid: f4882400008b6734689ca818a9fe1895, type: 3}
       propertyPath: m_IsActive
