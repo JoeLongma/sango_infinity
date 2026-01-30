@@ -53,7 +53,7 @@ namespace Sango.Game.Render.UI
                 if (obj is City)
                 {
                     name.text = obj.Name;
-                    name.color = Color.white;
+                    name.color = GameDefine.whiteText;
                     icon.enabled = false;
                 }
                 else if (obj is Person)
@@ -63,18 +63,18 @@ namespace Sango.Game.Render.UI
                     Person p = (Person)obj;
                     if (p.BelongTroop != null)
                     {
-                        name.color = p.BelongTroop.ActionOver ? Color.gray : Color.white;
+                        name.color = p.BelongTroop.ActionOver ? Color.gray : GameDefine.whiteText;
                     }
                     else
                     {
-                        name.color = obj.ActionOver ? Color.gray : Color.white;
+                        name.color = obj.ActionOver ? Color.gray : GameDefine.whiteText;
                     }
                     icon.enabled = false;
                 }
                 else if (obj is Troop)
                 {
                     name.text = obj.Name;
-                    name.color = obj.ActionOver ? Color.gray : Color.white;
+                    name.color = obj.ActionOver ? Color.gray : GameDefine.whiteText;
                     icon.enabled = false;
                 }
             }

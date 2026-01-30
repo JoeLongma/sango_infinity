@@ -235,10 +235,10 @@ namespace Sango.Game.Render.UI
         }
 
         string[] seasonIconPath = new string[] {
-            "Assets/UI/AtlasTexture/4846-6.png!4846-6_8",
-            "Assets/UI/AtlasTexture/4846-6.png!4846-6_9",
-            "Assets/UI/AtlasTexture/4846-6.png!4846-6_10",
-            "Assets/UI/AtlasTexture/4846-6.png!4846-6_11"
+            "Assets/UI/AtlasTexture/4846-6/4846-6_8.png",
+            "Assets/UI/AtlasTexture/4846-6/4846-6_9.png",
+            "Assets/UI/AtlasTexture/4846-6/4846-6_10.png",
+            "Assets/UI/AtlasTexture/4846-6/4846-6_11.png"
         };
         public void OnDayUpdate(Scenario scenario)
         {

@@ -1,40 +1,42 @@
-﻿using Sango.Loader;
-using Sango.Render;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
 {
     public class UIMiniBuldingInfoPanel : UIMiniInfoPanel
     {
-        public UITextField durability;
-        public UITextField product;
-        public UITextField[] worker;
+        private int delayOneFrame = 1;
+        List<ObjectSortTitle> objectSortTitles = new List<ObjectSortTitle>()
+        {
+            BuildingSortFunction.SortByDurability_DurabilityLimit.Copy().SetAlignment((int)TextAnchor.MiddleCenter),
+        };
 
         public UIMiniBuldingInfoPanel Show(Building c)
         {
             nameLabel.text = c.Name;
             SetCorps(c.BelongCorps);
-            durability.text = $"{c.durability}/{c.DurabilityLimit}";
-
-            if(worker != null)
+            ResetPool();
+            List<ObjectSortTitle> SortTitles = new List<ObjectSortTitle>(objectSortTitles);
+            GameEvent.OnInitBuildingMiniPanel?.Invoke(c, SortTitles);
+            for (int i = 0; i < SortTitles.Count; i++)
             {
-                for (int i = 0; i < worker.Length; i++)
-                {
-                    UITextField uIWorker = worker[i];
-                    uIWorker.gameObject.SetActive((c.Workers != null && !c.isComplate && i < c.Workers.Count) || i < c.BuildingType.workerLimit);
-                    if (c.Workers != null && i < c.Workers.Count)
-                    {
-                        uIWorker.text = c.Workers[i].Name;
-                    }
-                    else
-                    {
-                        uIWorker.text = "--";
-                    }
-                }
+                ObjectSortTitle title = SortTitles[i];
+                AddInfo(title.name, title.GetValueStr(c), title.alignment);
             }
+            delayOneFrame = 1;
             return this;
+        }
+        void Update()
+        {
+            if (delayOneFrame > 0)
+            {
+                delayOneFrame--;
+            }
+            else if (delayOneFrame == 0)
+            {
+                LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
+            }
         }
 
     }

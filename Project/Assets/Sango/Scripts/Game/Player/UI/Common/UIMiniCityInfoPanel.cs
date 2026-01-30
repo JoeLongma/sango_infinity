@@ -1,7 +1,5 @@
-﻿using Sango.Loader;
-using Sango.Render;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
@@ -9,27 +7,44 @@ namespace Sango.Game.Render.UI
     public class UIMiniCityInfoPanel : UIMiniInfoPanel
     {
         public Image icon;
-        public UITextField leader;
-        public UITextField gold;
-        public UITextField food;
-        public UITextField security;
-        public UITextField durability;
-        public UITextField troops;
-        public UITextField persons;
+        private int delayOneFrame = 1;
+        List<ObjectSortTitle> objectSortTitles = new List<ObjectSortTitle>()
+        {
+            CitySortFunction.SortByLeader.Copy().SetAlignment((int)TextAnchor.MiddleCenter),
+            CitySortFunction.SortByGold.Copy().SetAlignment((int)TextAnchor.MiddleRight),
+            CitySortFunction.SortByFood.Copy().SetAlignment((int)TextAnchor.MiddleRight),
+            CitySortFunction.SortBySecurity_SecurityLimit.Copy().SetAlignment((int)TextAnchor.MiddleRight),
+            CitySortFunction.SortByDurability_DurabilityLimit.Copy().SetAlignment((int)TextAnchor.MiddleRight),
+            CitySortFunction.SortByTroops.Copy().SetAlignment((int)TextAnchor.MiddleRight),
+            CitySortFunction.SortByAllPersonCountInfo.Copy().SetAlignment((int)TextAnchor.MiddleRight),
+        };
 
         public UIMiniCityInfoPanel Show(City c)
         {
             nameLabel.text = c.Name;
             SetCorps(c.BelongCorps);
-            leader.text = c.Leader != null ? c.Leader.Name : "----";
-            gold.text = c.gold.ToString();
-            food.text = c.food.ToString();
-            security.text = c.security.ToString();
-            durability.text = $"{c.durability}/{c.DurabilityLimit}";
-            troops.text = c.troops.ToString();
-            persons.text = $"{c.FreePersonCount}/{c.allPersons.Count}";
+            ResetPool();
+            List<ObjectSortTitle> SortTitles = new List<ObjectSortTitle>(objectSortTitles);
+            GameEvent.OnInitCityMiniPanel?.Invoke(c, SortTitles);
+            for (int i = 0; i < SortTitles.Count; i++)
+            {
+                ObjectSortTitle title = SortTitles[i];
+                AddInfo(title.name, title.GetValueStr(c), title.alignment);
+            }
+            delayOneFrame = 1;
             return this;
         }
 
+        void Update()
+        {
+            if(delayOneFrame > 0)
+            {
+                delayOneFrame--;
+            }
+            else if(delayOneFrame == 0)
+            {
+                LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
+            }
+        }
     }
 }

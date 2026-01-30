@@ -10,24 +10,14 @@ namespace Sango.Game.Render.UI
 {
     public class UIObjectPopInfo : UGUIWindow
     {
-        public UIMiniBuldingInfoPanel[] buildingInfoPanels;
-        public UIMiniCityInfoPanel[] cityInfoPanels;
-        public UIMiniPortInfoPanel[] portInfoPanels;
-        public UIMiniTroopInfoPanel[] troopInfoPanels;
-
-        public int buildindUsingIndex = 0;
-        public int cityUsingIndex = 0;
-        public int protUsingIndex = 0;
-        public int troopUsingIndex = 0;
+        public UIMiniBuldingInfoPanel buildingInfoPanel;
+        public UIMiniCityInfoPanel cityInfoPanel;
+        public UIMiniPortInfoPanel portInfoPanel;
+        public UIMiniGateInfoPanel gateInfoPanel;
+        public UIMiniTroopInfoPanel troopInfoPanel;
 
         UIMiniInfoPanel currentPanel;
         SangoObject currentObject;
-
-        UIMiniBuldingInfoPanel buildingInfoPanel => buildingInfoPanels[buildindUsingIndex];
-        UIMiniCityInfoPanel cityInfoPanel => cityInfoPanels[cityUsingIndex];
-        UIMiniPortInfoPanel portInfoPanel => portInfoPanels[protUsingIndex];
-        UIMiniTroopInfoPanel troopInfoPanel => troopInfoPanels[troopUsingIndex];
-
 
         public override void OnShow()
         {
@@ -49,10 +39,16 @@ namespace Sango.Game.Render.UI
 
         void ResetAllPanel(UIMiniInfoPanel except)
         {
-            ResetAllPanel(except, buildingInfoPanels);
-            ResetAllPanel(except, cityInfoPanels);
-            ResetAllPanel(except, portInfoPanels);
-            ResetAllPanel(except, troopInfoPanels);
+            if (except != buildingInfoPanel && buildingInfoPanel.gameObject.activeSelf)
+                buildingInfoPanel.gameObject.SetActive(false);
+            if (except != cityInfoPanel && cityInfoPanel.gameObject.activeSelf)
+                cityInfoPanel.gameObject.SetActive(false);
+            if (except != portInfoPanel && portInfoPanel.gameObject.activeSelf)
+                portInfoPanel.gameObject.SetActive(false);
+            if (except != troopInfoPanel && troopInfoPanel.gameObject.activeSelf)
+                troopInfoPanel.gameObject.SetActive(false);
+            if (except != gateInfoPanel && gateInfoPanel.gameObject.activeSelf)
+                gateInfoPanel.gameObject.SetActive(false);
             currentPanel = null;
             currentObject = null;
         }
@@ -101,11 +97,17 @@ namespace Sango.Game.Render.UI
                     cityInfoPanel.Show(cell.building as City);
                     currentPanel = cityInfoPanel;
                 }
-                else if (cell.building.IsCityBase())
+                else if (cell.building.IsPort())
                 {
                     ResetAllPanel(portInfoPanel);
-                    portInfoPanel.Show(cell.building as City);
+                    portInfoPanel.Show(cell.building as Port);
                     currentPanel = portInfoPanel;
+                }
+                else if (cell.building.IsGate())
+                {
+                    ResetAllPanel(gateInfoPanel);
+                    gateInfoPanel.Show(cell.building as Gate);
+                    currentPanel = gateInfoPanel;
                 }
                 else
                 {

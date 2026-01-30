@@ -7,9 +7,16 @@ namespace Sango.Game.Render.UI
 {
     public class UIScenarioItem : MonoBehaviour
     {
+        public RectTransform root;
         public Text name;
         public Image select;
         public Button button;
+        public int targetIndex;
+        private void Awake()
+        {
+            root = GetComponent<RectTransform>();
+        }
+
         public bool IsSelected()
         {
             return select.gameObject.activeSelf;

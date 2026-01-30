@@ -12,7 +12,6 @@ namespace Sango.Game.Player
         public override void Init()
         {
             GameEvent.OnClick += OnClick;
-
             Singleton<CityBuildBuilding>.Instance.Init();
 
             Singleton<CityTrade>.Instance.Init();

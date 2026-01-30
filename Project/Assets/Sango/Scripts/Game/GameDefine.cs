@@ -26,6 +26,7 @@
             SeasonType.Winter,
             };
 
+        public static UnityEngine.Color whiteText = new UnityEngine.Color(0.862745f, 0.862745f, 0.862745f);
     }
 
 
@@ -210,4 +211,5 @@
         Durability,
         Security
     }
+
 }

@@ -1,4 +1,5 @@
 ﻿using Sango.Game.Tools;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Sango.Game
@@ -117,6 +118,41 @@ namespace Sango.Game
 
         public static EventDelegate<ITroopInteractiveDialogData, Troop, Cell> OnTroopInteractiveContextDialogShow;
         public static EventDelegate<IVariablesSetting, Scenario> OnScenarioVariablesSetting;
+
+
+        /// <summary>
+        /// 城池点开的详细Tips信息板,监听可以增减信息展示条目
+        /// customData 为 ObjectSortTitle 则是横向两条信息(参考枪+冲车)
+        /// customData 为 0 则接着创建一个line
+        /// customData 为 1 则是横向两条信息但是只设置第一条,第二条隐藏
+        /// </summary>
+        public static EventDelegate<City, List<ObjectSortTitle>> OnInitCityInfoPanel;
+
+        /// <summary>
+        /// 城池tips信息板,监听可以增减信息展示条目
+        /// </summary>
+        public static EventDelegate<City, List<ObjectSortTitle>> OnInitCityMiniPanel;
+
+        /// <summary>
+        /// 部队tips信息板,监听可以增减信息展示条目
+        /// </summary>
+        public static EventDelegate<Troop, List<ObjectSortTitle>> OnInitTroopMiniPanel;
+
+        /// <summary>
+        /// 港口tips信息板,监听可以增减信息展示条目
+        /// </summary>
+        public static EventDelegate<Port, List<ObjectSortTitle>> OnInitPortMiniPanel;
+
+        /// <summary>
+        /// 关卡信息板,监听可以增减信息展示条目
+        /// </summary>
+        public static EventDelegate<Gate, List<ObjectSortTitle>> OnInitGateMiniPanel;
+
+        /// <summary>
+        /// 建筑tips信息板,监听可以增减信息展示条目
+        /// </summary>
+        public static EventDelegate<Building, List<ObjectSortTitle>> OnInitBuildingMiniPanel;
+
         #endregion Window
 
         #region Game
