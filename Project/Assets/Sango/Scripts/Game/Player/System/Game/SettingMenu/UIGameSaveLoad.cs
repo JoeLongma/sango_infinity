@@ -20,7 +20,7 @@ namespace Sango.Game.Render.UI
         public Toggle[] pageToggles; // 拖入第1-4页Toggle
         public UIScenarioSaveItem[] selectedItems;
 
-        [Header("标题与详情面板")]
+        [Header("详情面板")]
         public Text titleLabel;
         public UITextField id, name, forceName, playYear, playNum, day, time, playTime, desc;
         public RawImage head;
@@ -54,8 +54,7 @@ namespace Sango.Game.Render.UI
             // 绑定Toggle翻页事件
             InitPageToggles();
             // 默认显示第1页
-            SetToggleSelected(0);
-            ShowPage(0);
+            SetToggleSelected(1);
         }
 
         /// <summary>
@@ -163,6 +162,7 @@ namespace Sango.Game.Render.UI
             time.SetText("");
             playTime.SetText("");
             desc.SetText("");
+            head.enabled = false;
             head.texture = null;
         }
 
@@ -228,6 +228,7 @@ namespace Sango.Game.Render.UI
             name.SetText($"{scenarioInfo.year} 年 {scenarioInfo.month}月 {scenarioInfo.day}日   {scenarioInfo.name}");
 
             ShortForce force = scenario.forceSet[scenarioInfo.playerForceList[0]];
+            head.enabled = true;
             head.texture = GameRenderHelper.LoadHeadIcon(scenario.personSet[force.Governor].headIconID);
             forceName.SetText(force.Name);
             playYear.SetText($"{scenarioInfo.year} 年 {scenarioInfo.month}月 {scenarioInfo.day}日");

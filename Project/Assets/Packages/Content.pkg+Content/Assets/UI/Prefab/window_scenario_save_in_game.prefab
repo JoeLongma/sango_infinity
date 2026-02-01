@@ -3317,13 +3317,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6247851032322636701}
     m_Modifications:
+    - target: {fileID: 662903506747421245, guid: 7ac78021f7cbab849b1bc2d1bfbb46b3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1910490762321852222, guid: 7ac78021f7cbab849b1bc2d1bfbb46b3, type: 3}
       propertyPath: m_Name
       value: head
-      objectReference: {fileID: 0}
-    - target: {fileID: 1910490762321852222, guid: 7ac78021f7cbab849b1bc2d1bfbb46b3, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7125490820418968063, guid: 7ac78021f7cbab849b1bc2d1bfbb46b3, type: 3}
       propertyPath: m_Pivot.x

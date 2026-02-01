@@ -7,18 +7,13 @@ namespace Sango.Game
 {
     public class GameController : Singleton<GameController>
     {
-        public float moveThreshold = 5f;    // 鼠标移动灵敏度阈值（像素），避免微小移动触发样式切换
-        public Vector3 _lastMousePos = Input.mousePosition; // 初始化鼠标位置
-        public float mouseIdleThreshold = 0.2f; // 鼠标静止多久恢复（秒）
-        public float mouseIdleTimer = 0f;   // 鼠标静止计时
-
         public bool Enabled { get; set; }
         public bool KeyboardMoveEnabled { get; set; }
         public bool RotateViewEnabled { get; set; }
         public bool DragMoveViewEnabled { get; set; }
         public bool ZoomViewEnabled { get; set; }
         public bool BorderMoveViewEnabled { get; set; }
-        
+
         enum ControlType : byte
         {
             None = 0,
@@ -69,17 +64,10 @@ namespace Sango.Game
 
         public bool IsOverUI()
         {
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR
-            CursorManager.Instance.SetCursorStyle(13);
-#endif
             return (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())/* || FairyGUI.Stage.isTouchOnUI*/;
         }
-
         public bool IsOverUI(int fingerId)
         {
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR
-            CursorManager.Instance.SetCursorStyle(13);
-#endif
             return (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(fingerId))/* || FairyGUI.Stage.isTouchOnUI*/;
         }
 
@@ -329,7 +317,7 @@ namespace Sango.Game
                     if (controlType != ControlType.Move)
                         return;
 
-                    if (!dragPosition.Equals(touch.position) )
+                    if (!dragPosition.Equals(touch.position))
                     {
                         Vector3 touchPos = touch.position;
                         if ((dragPosition - touchPos).sqrMagnitude >= clickSafeSqrDistance)
@@ -573,26 +561,6 @@ namespace Sango.Game
         {
             GameSystemManager.Instance.Update();
 
-            // 1. 检测鼠标是否移动
-            bool isMouseMoved = (Input.mousePosition - _lastMousePos).sqrMagnitude > moveThreshold * moveThreshold;
-            if (isMouseMoved)
-            {
-                // 2. 鼠标移动，设置对应方向
-                DetectMouseDirection();
-                _lastMousePos = Input.mousePosition;
-                mouseIdleTimer = 0f; // 鼠标移动，重置静止计时
-            }
-            else
-            {
-                // 3. 鼠标未移动，累计计时
-                mouseIdleTimer += Time.deltaTime;
-                // 4. 超过阈值，恢复默认方向
-                if (mouseIdleTimer >= mouseIdleThreshold)
-                {
-                    CursorManager.Instance.SetDefaultCursor(); 
-                }
-            }
-
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
             HandleOverCell();
 #endif
@@ -605,89 +573,6 @@ namespace Sango.Game
 #else
             HandleMobileEvent();
 #endif
-        }
-
-        /// <summary>
-        /// 检测鼠标移动方向并切换对应光标样式
-        /// </summary>
-        private void DetectMouseDirection()
-        {
-            // 获取当前鼠标位置
-            Vector3 currentMousePos = Input.mousePosition;
-
-            // 计算鼠标移动偏移量
-            Vector3 delta = currentMousePos - _lastMousePos;
-
-            // 仅当移动距离超过阈值时触发样式切换
-            if (delta.magnitude > moveThreshold)
-            {
-                // 计算移动方向（角度）
-                float angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;
-                // 转换为0-360度范围
-                angle = (angle + 360) % 360;
-
-                // 根据角度判断方向并切换光标
-                SwitchCursorByAngle(angle);
-            }
-
-            // 更新上一帧鼠标位置
-            _lastMousePos = currentMousePos;
-        }
-
-        /// <summary>
-        /// 根据角度切换对应方向的光标样式，角度划分：
-        /// - 左上:[112.5°, 157.5°)
-        /// - 上  :[67.5°, 112.5°)
-        /// - 右上:[22.5°, 67.5°)
-        /// - 右  :[337.5°, 360°) ∪ [0°, 22.5°)
-        /// - 右下:[292.5°, 337.5°)
-        /// - 下  :[247.5°, 292.5°)
-        /// - 左下:[202.5°, 247.5°)	
-        /// - 左  :[157.5°, 202.5°)
-        /// </summary>
-        /// <param name="angle">鼠标移动角度（0-360°）</param>
-        private void SwitchCursorByAngle(float angle)
-        {
-            if (angle >= 112.5 && angle < 157.5)
-            {
-                // 左上方向 - ArrowUpLeft（索引1）
-                CursorManager.Instance.SetCursorStyle(1);
-            }
-            else if (angle >= 67.5 && angle < 112.5)
-            {
-                // 上方向 - ArrowUp（索引2）
-                CursorManager.Instance.SetCursorStyle(2);
-            }
-            else if (angle >= 22.5 && angle < 67.5)
-            {
-                // 右上方向 - ArrowUpRight（索引3）
-                CursorManager.Instance.SetCursorStyle(3);
-            }
-            else if ((angle >= 337.5 && angle < 360) || (angle < 22.5 && angle >= 0))
-            {
-                // 右方向 - ArrowRight（索引4）
-                CursorManager.Instance.SetCursorStyle(4);
-            }
-            else if (angle >= 292.5 && angle < 337.5)
-            {
-                // 右下方向 - ArrowDownRight（索引5）
-                CursorManager.Instance.SetCursorStyle(5);
-            }
-            else if (angle >= 247.5 && angle < 292.5)
-            {
-                // 下方向 - ArrowDown（索引6）
-                CursorManager.Instance.SetCursorStyle(6);
-            }
-            else if (angle >= 202.5 && angle < 247.5)
-            {
-                // 左下方向 - ArrowDownLeft（索引7）
-                CursorManager.Instance.SetCursorStyle(7);
-            }
-            else if (angle >= 157.5 && angle < 202.5)
-            {
-                // 左方向 - ArrowLeft（索引8）
-                CursorManager.Instance.SetCursorStyle(8);
-            }
         }
 
         public void OnClickWorld()
@@ -724,5 +609,6 @@ namespace Sango.Game
             GameSystemManager.Instance.HandleEvent(CommandEventType.Cancel, null, clickPosition, false);
             //Sango.Game.Render.UI.ContextMenu.Close();
         }
+
     }
 }
