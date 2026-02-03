@@ -1,6 +1,4 @@
-﻿using Sango.Game.Player;
-using Sango.Game.Render.UI;
-using Sango.Render;
+﻿using Sango.Render;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -102,7 +100,6 @@ namespace Sango.Game
         bool isRotateMoving = false;
         Vector3 rotatePosition;
         Vector3 dragPosition;
-
         Vector3 worldPlaneDragPosition;
 
         public void HandleOverCell()
@@ -283,6 +280,7 @@ namespace Sango.Game
                 }
             }
         }
+
         public void HandleMobileEvent()
         {
             if (Input.touchCount == 1)
@@ -319,7 +317,7 @@ namespace Sango.Game
                     if (controlType != ControlType.Move)
                         return;
 
-                    if (!dragPosition.Equals(touch.position) )
+                    if (!dragPosition.Equals(touch.position))
                     {
                         Vector3 touchPos = touch.position;
                         if ((dragPosition - touchPos).sqrMagnitude >= clickSafeSqrDistance)
@@ -455,7 +453,6 @@ namespace Sango.Game
             }
         }
 
-
         bool[] keyFlags = new bool[4];
         bool hasKey = false;
         private bool MoveCameraKeyBoard()
@@ -577,6 +574,7 @@ namespace Sango.Game
             HandleMobileEvent();
 #endif
         }
+
         public void OnClickWorld()
         {
             if (onClickHandle != null && mouseOverCell != null)
@@ -612,7 +610,5 @@ namespace Sango.Game
             //Sango.Game.Render.UI.ContextMenu.Close();
         }
 
-
     }
-
 }

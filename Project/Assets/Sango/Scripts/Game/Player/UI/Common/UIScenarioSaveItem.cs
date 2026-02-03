@@ -1,5 +1,4 @@
-﻿using Sango.Loader;
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -47,7 +46,20 @@ namespace Sango.Game.Render.UI
             newText.enabled = b;
             return this;
         }
-        
+
+        public UIScenarioSaveItem SetSaveTime(long t)
+        {
+            if (t < 0)
+            {
+                time.text = "";
+                return this;
+            }
+
+            DateTime date = DateTime.FromFileTime(t);
+            time.text = date.ToString("yyyy-MM-dd HH:mm");
+            return this;
+        }
+
         public UIScenarioSaveItem SetTime(long t)
         {
             if(t < 0)

@@ -5,25 +5,25 @@ namespace Sango.Game.Render.UI
 {
     public class UIPersonItem : MonoBehaviour
     {
-        public Text name;
         public RawImage headIcon;
+        public Text name;
         public Text feature;
 
         public void SetPerson(Person person)
         {
             if (person != null)
             {
+                headIcon.texture = GameRenderHelper.LoadHeadIcon(person.headIconID);
+                headIcon.enabled = true;
                 name.text = person.Name;
                 if (person.FeatureList != null && person.FeatureList.Count > 0)
                     feature.text = person.FeatureList[0].Name;
                 else
                     feature.text = "";
-                name.text = person.Name;
-                headIcon.texture = GameRenderHelper.LoadHeadIcon(person.headIconID);
-                headIcon.enabled = true;
             }
             else
             {
+                headIcon.texture = null; 
                 headIcon.enabled = false;
                 name.text = "";
                 feature.text = "";
