@@ -15,6 +15,8 @@ namespace Sango.Game.Render.UI
         public Image save;
         public Button button;
         public Button sureBtn;
+        public RectTransform root;
+        public int targetIndex;
 
         public UIScenarioSaveItem SetName(string n)
         {

@@ -2167,7 +2167,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: -1
   m_SortingLayerID: -903361245
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -2203,16 +2203,7 @@ MonoBehaviour:
   curShowPage: 0
   CountInPage: 10
   curSelectIndex: 0
-  titleLabel: {fileID: 7077153837325365175}
-  id: {fileID: 4085222365993739145}
-  name: {fileID: 1051196927946083780}
-  head: {fileID: 8385439393922729502}
-  forceName: {fileID: 3564676158537994615}
-  playYear: {fileID: 5241585882298058348}
-  playNum: {fileID: 6603248700024034325}
-  time: {fileID: 8084269129755607703}
-  playTime: {fileID: 8755968555215856746}
-  desc: {fileID: 4639758641832239073}
+  pageToggles: []
   selectedItems:
   - {fileID: 8422321103607604838}
   - {fileID: 7729862427136022332}
@@ -2224,6 +2215,17 @@ MonoBehaviour:
   - {fileID: 3910861175910683208}
   - {fileID: 1731908135913884382}
   - {fileID: 2344484122977700145}
+  titleLabel: {fileID: 7077153837325365175}
+  id: {fileID: 4085222365993739145}
+  name: {fileID: 1051196927946083780}
+  forceName: {fileID: 3564676158537994615}
+  playYear: {fileID: 5241585882298058348}
+  playNum: {fileID: 6603248700024034325}
+  day: {fileID: 0}
+  time: {fileID: 8084269129755607703}
+  playTime: {fileID: 8755968555215856746}
+  desc: {fileID: 4639758641832239073}
+  head: {fileID: 8385439393922729502}
   cityObject: {fileID: 5843862052577369187}
   mapBounds: {fileID: 2026753479867919479}
 --- !u!1001 &23361882197082327

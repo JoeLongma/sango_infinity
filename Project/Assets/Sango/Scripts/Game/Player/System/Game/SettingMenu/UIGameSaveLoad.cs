@@ -12,9 +12,9 @@ namespace Sango.Game.Render.UI
     public class UIGameSaveLoad : UGUIWindow
     {
         bool isSave = false;
-        public int curShowPage;
+        public int curShowPage = -1;
         public int CountInPage = 8;
-        public int curSelectIndex = 0;
+        public int curSelectIndex = -1;
 
         [Header("分页控制")]
         public Toggle[] pageToggles; // 拖入第1-4页Toggle
@@ -35,6 +35,13 @@ namespace Sango.Game.Render.UI
 
         public override void OnShow(params object[] objects)
         {
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+            curSelectIndex = -1;
+#else
+            curSelectIndex = 0;
+#endif
+
+
             isSave = (bool)objects[0];
             titleLabel.text = isSave ? "储存" : "读档";
             long t = 0;
@@ -53,8 +60,10 @@ namespace Sango.Game.Render.UI
             }
             // 绑定Toggle翻页事件
             InitPageToggles();
+
             // 默认显示第1页
-            SetToggleSelected(1);
+            SetToggleSelected(0);
+            ShowPage(0);
         }
 
         /// <summary>
@@ -102,6 +111,7 @@ namespace Sango.Game.Render.UI
                 UIScenarioSaveItem item = selectedItems[i];
                 item.SetIsLoad(!isSave);
                 item.SetSelected(false);
+                item.targetIndex = index;
                 if (scenario == null)
                 {
                     item.SetId(index + 1)          // 显示存档编号（如1、2、3...）
@@ -164,6 +174,10 @@ namespace Sango.Game.Render.UI
             desc.SetText("");
             head.enabled = false;
             head.texture = null;
+            for (int j = 0; j < cityList.Count; j++)
+            {
+                cityList[j].SetActive(false);
+            }
         }
 
         public void Save(int index)
@@ -193,6 +207,8 @@ namespace Sango.Game.Render.UI
 
         public void ShowScenario(int index)
         {
+
+
             if (isSave)
             {
                 Save(index);
@@ -223,6 +239,21 @@ namespace Sango.Game.Render.UI
 
         public bool ShowScenarioDetail(int index, ShortScenario scenario)
         {
+            if (index == curSelectIndex)
+                return false;
+
+            if (index < 0)
+            {
+                ResetScenarioDetail();
+                return false;
+            }
+
+            if (scenario == null)
+            {
+                ResetScenarioDetail();
+                return false;
+            }
+
             ScenarioInfo scenarioInfo = scenario.Info;
             id.SetText((index + 1).ToString());
             name.SetText($"{scenarioInfo.year} 年 {scenarioInfo.month}月 {scenarioInfo.day}日   {scenarioInfo.name}");
@@ -311,10 +342,30 @@ namespace Sango.Game.Render.UI
             else Singleton<GameLoad>.Instance.Done();
         }
 
-        public void OnPage1(bool select) { if (select) ShowPage(0); }
-        public void OnPage2(bool select) { if (select) ShowPage(1); }
-        public void OnPage3(bool select) { if (select) ShowPage(2); }
-        public void OnPage4(bool select) { if (select) ShowPage(3); }
+        //public void OnPage1(bool select) { if (select) ShowPage(0); }
+        //public void OnPage2(bool select) { if (select) ShowPage(1); }
+        //public void OnPage3(bool select) { if (select) ShowPage(2); }
+        //public void OnPage4(bool select) { if (select) ShowPage(3); }
 
+
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+        private void Update()
+        {
+
+            for (int i = 0; i < selectedItems.Length; i++)
+            {
+                UIScenarioSaveItem uIScenarioItem = selectedItems[i];
+                if (RectTransformUtility.RectangleContainsScreenPoint(uIScenarioItem.root, Input.mousePosition, Game.Instance.UICamera))
+                {
+                    ShortScenario scenario = Player.Player.Instance.all_saved_scenario_list[uIScenarioItem.targetIndex];
+                    ShowScenarioDetail(uIScenarioItem.targetIndex, scenario);
+                    return;
+                }
+            }
+
+            ShowScenarioDetail(-1, null);
+
+        }
+#endif
     }
 }

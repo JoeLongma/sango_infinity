@@ -7,7 +7,7 @@ namespace Sango.Game
 {
     public class GameRenderHelper
     {
-        public static string BuildingTypeIconPath = "Assets/UI/AtlasTexture/facilities";
+        public static string BuildingTypeIconPath = "Assets/UI/AtlasTexture";
         public static string TroopStatePath = "Assets/UI/AtlasTexture/Troopstate";
 
         public static string HeadIconPath = "Assets/UI/Texture/Face";
