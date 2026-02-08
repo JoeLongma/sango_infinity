@@ -16,6 +16,8 @@ namespace Sango.Game
         /// </summary>
         [JsonProperty] public byte subKind;
 
+        [JsonProperty] public int nextId;
+
         /// <summary>
         /// 描述
         /// </summary>
@@ -89,5 +91,6 @@ namespace Sango.Game
         {
             return kind == (int)ItemKindType.Horse;
         }
+
     }
 }

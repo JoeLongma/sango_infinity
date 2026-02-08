@@ -27,11 +27,11 @@ namespace Sango.Game.Render.UI
         public UITextField dayTurnLabel;
 
 
-        public UITextField atkLaebl;
-        public UITextField defLaebl;
-        public UITextField intLaebl;
-        public UITextField buildLaebl;
-        public UITextField moveLaebl;
+        //public UITextField atkLaebl;
+        //public UITextField defLaebl;
+        //public UITextField intLaebl;
+        //public UITextField buildLaebl;
+        //public UITextField moveLaebl;
         public UITextField typeLaebl;
         public UITextField abilityLaebl;
         public UITextField energyLaebl;
@@ -43,7 +43,7 @@ namespace Sango.Game.Render.UI
         public UITextField itemGoldLabel;
         public UITextField itemFoodLabel;
 
-        
+
         public UITextField action_value;
 
         public Slider troopsSlider;
@@ -265,7 +265,6 @@ namespace Sango.Game.Render.UI
 
             UpdateTroopStatus();
             UpdateTroopsInfo();
-            statusItem.SetTroop(cityExpeditionSys.TargetTroop);
         }
 
         void UpdateTroopStatus()
@@ -318,11 +317,14 @@ namespace Sango.Game.Render.UI
                 abilityLaebl.text = Scenario.Cur.Variables.GetAbilityName(targetTroop.WaterTroopTypeLv);
             }
 
-            atkLaebl.text = atk.ToString();
-            defLaebl.text = def.ToString();
-            intLaebl.text = intel.ToString();
-            buildLaebl.text = build.ToString();
-            moveLaebl.text = move.ToString();
+
+            statusItem.SetTroopStatus(atk, def, intel, build, move);
+
+            //atkLaebl.text = atk.ToString();
+            //defLaebl.text = def.ToString();
+            //intLaebl.text = intel.ToString();
+            //buildLaebl.text = build.ToString();
+            //moveLaebl.text = move.ToString();
             energyLaebl.text = targetTroop.morale.ToString();
         }
 
@@ -367,8 +369,10 @@ namespace Sango.Game.Render.UI
             {
                 ItemType itemType = Scenario.Cur.CommonData.ItemTypes.Get(i);
                 if (itemType == null || itemType.cost == 0) continue;
+                if (!itemType.store || itemType.nextId > 0) continue;
+
                 itemLabels[showIndex].gameObject.SetActive(true);
-                int has = targetCity.itemStore.GetNumber(itemType.Id);
+                int has = targetCity.itemStore.GetNumber(itemType.subKind);
                 int use = 0;
                 if (targetTroop.LandTroopType.costItems != null)
                 {

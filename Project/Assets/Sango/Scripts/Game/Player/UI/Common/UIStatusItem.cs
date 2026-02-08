@@ -7,9 +7,8 @@ namespace Sango.Game.Render.UI
     {
         public float maxValue = 100f;
         public DrawStatusComponent status;
-        public Text [] statusTitle1;
-        public Text [] statusTitle2;
-        public Text[] statusValue;
+        public Text[] statusTitle1;
+        public UITextField[] statusValue;
 
         public void SetStatus(int index, string title, int value)
         {
@@ -18,7 +17,7 @@ namespace Sango.Game.Render.UI
                 return;
             }
             statusTitle1[index].text = title;
-            statusTitle2[index].text = title;
+            statusValue[index].titleLabel.text = title;
             statusValue[index].text = value.ToString();
             status.scaleLenth[index] = Mathf.Min(1, value / maxValue);
             status.UpdateContent();
@@ -26,7 +25,7 @@ namespace Sango.Game.Render.UI
 
         public void SetPerson(Person person)
         {
-            if(person == null)
+            if (person == null)
             {
                 SetStatus(0, PersonSortFunction.SortByStrength.name, 0);
                 SetStatus(1, PersonSortFunction.SortByCommand.name, 0);
@@ -60,6 +59,16 @@ namespace Sango.Game.Render.UI
             SetStatus(2, TroopSortFunction.SortByIntelligence.name, troop.Intelligence);
             SetStatus(3, TroopSortFunction.SortByBuild.name, troop.BuildPower);
             SetStatus(4, TroopSortFunction.SortByMoveability.name, troop.MoveAbility);
+        }
+
+        public void SetTroopStatus(int v1, int v2, int v3, int v4, int v5)
+        {
+
+            SetStatus(0, TroopSortFunction.SortByAttack.name, v1);
+            SetStatus(1, TroopSortFunction.SortByDefence.name, v2);
+            SetStatus(2, TroopSortFunction.SortByIntelligence.name, v3);
+            SetStatus(3, TroopSortFunction.SortByBuild.name, v4);
+            SetStatus(4, TroopSortFunction.SortByMoveability.name, v5);
         }
     }
 }
