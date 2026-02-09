@@ -127,7 +127,7 @@ namespace Sango.Game.Render.UI
                 RectTransform rectTransform = cityObj.GetComponent<RectTransform>();
                 float x = city.x * mapBounds.sizeDelta.x / scenario.Map.Width - mapBounds.sizeDelta.x / 2;
                 float y = mapBounds.sizeDelta.y / 2 - city.y * mapBounds.sizeDelta.y / scenario.Map.Height;
-                rectTransform.anchoredPosition = new Vector2(x, y);
+                rectTransform.anchoredPosition = new Vector2((int)(x + 0.5f), (int)(y + 0.5f));
 
                 Image bgImg = cityObj.transform.GetChild(0).GetComponent<Image>();
                 if (city.BelongForce > 0)
@@ -173,10 +173,10 @@ namespace Sango.Game.Render.UI
         private void Update()
         {
 
-            for(int i = 0; i < selectedItems.Count; i++)
+            for (int i = 0; i < selectedItems.Count; i++)
             {
                 UIScenarioItem uIScenarioItem = selectedItems[i];
-                if(RectTransformUtility.RectangleContainsScreenPoint(uIScenarioItem.root, Input.mousePosition, Game.Instance.UICamera))
+                if (RectTransformUtility.RectangleContainsScreenPoint(uIScenarioItem.root, Input.mousePosition, Game.Instance.UICamera))
                 {
                     ShowScenario(uIScenarioItem.targetIndex);
                     return;
