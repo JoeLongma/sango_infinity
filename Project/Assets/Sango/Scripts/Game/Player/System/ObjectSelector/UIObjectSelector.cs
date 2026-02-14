@@ -5,9 +5,19 @@ namespace Sango.Game.Render.UI
 {
     public class UIObjectSelector : UIObjectDisplay
     {
-        public RectTransform[] uIObjectListItemsRect;
+        RectTransform[] uIObjectListItemsRect;
         ObjectSelectSystem objectSelectSystem;
         bool dragFlag = false;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            uIObjectListItemsRect = new RectTransform[uIObjectListItems.Length];
+            for(int i = 0; i < uIObjectListItems.Length; i++)
+            {
+                uIObjectListItemsRect[i] = uIObjectListItems[i].GetComponent<RectTransform>();
+            }
+        }
 
         public override void Init(ObjectsDisplaySystem objectSelectSystem)
         {
@@ -17,7 +27,7 @@ namespace Sango.Game.Render.UI
 
         public override void UpdateItemStartIndex(int startIndex)
         {
-            for (int i = 0; i < uIObjectListItems.Length; i++)
+            for (int i = 0; i < itemCount; i++)
             {
                 UIObjectListItem listItem = uIObjectListItems[i];
                 int destIndex = i + startIndex;
@@ -56,7 +66,7 @@ namespace Sango.Game.Render.UI
                 int lastIndex = objectSelectSystem.RemoveFront();
                 if(lastIndex >= 0)
                 {
-                    for (int i = 0; i < uIObjectListItems.Length; i++)
+                    for (int i = 0; i < itemCount; i++)
                     {
                         UIObjectListItem listItem = uIObjectListItems[i];
                         int destIndex = i + startIndex;
@@ -109,7 +119,7 @@ namespace Sango.Game.Render.UI
                 objectSelectSystem.Add(item.index);
             }
 
-            for (int i = 0; i < uIObjectListItems.Length; i++)
+            for (int i = 0; i < itemCount; i++)
             {
                 RectTransform itemRect = uIObjectListItemsRect[i];
                 UIObjectListItem listItem = uIObjectListItems[i];

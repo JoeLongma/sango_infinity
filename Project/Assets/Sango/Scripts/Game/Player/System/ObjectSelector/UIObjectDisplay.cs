@@ -11,16 +11,23 @@ namespace Sango.Game.Render.UI
 {
     public class UIObjectDisplay : UGUIWindow
     {
+        public Text title;
         public List<ObjectSortTitle> sortItems;
         public Toggle[] toggleGroup;
         public UIObjectListItem[] uIObjectListItems;
+        public UIObjectListItem creatItemObj;
         public Scrollbar scrollbar;
+        public Scrollbar scrollbar_h;
         protected List<UISortButton> sortButtonPool = new List<UISortButton>();
         public UISortButton sortTitleItem;
         public GameObject selectSortBtn;
         public RectTransform sorltTitleTransform;
+        public RectTransform maskRect;
+        public RectTransform[] contentRect;
         ObjectsDisplaySystem objectSelectSystem;
         protected int startIndex = 0;
+        protected int itemWidth = 0;
+        protected int itemCount = 0;
         protected override void Awake()
         {
             for (int i = 0; i < toggleGroup.Length; i++)
@@ -42,27 +49,72 @@ namespace Sango.Game.Render.UI
         public virtual void Init(ObjectsDisplaySystem objectSelectSystem)
         {
             this.objectSelectSystem = objectSelectSystem;
-            toggleGroup[0].GetComponentInChildren<Text>(true).text = objectSelectSystem.customSortTitleName;
+            title.text = objectSelectSystem.customSortTitleName;
             sortItems = objectSelectSystem.customSortItems;
+
+            itemWidth = GetContentWidth();
+            itemCount = uIObjectListItems.Length;
+            bool show_scrollbar_h = maskRect.rect.width < itemWidth;
+            scrollbar_h.gameObject.SetActive(show_scrollbar_h);
+            if (show_scrollbar_h)
+            {
+                itemCount--;
+                scrollbar_h.size = (float)maskRect.rect.width / (float)itemWidth;
+                scrollbar_h.SetValueWithoutNotify(0);
+                uIObjectListItems[uIObjectListItems.Length - 1].gameObject.SetActive(false);
+            }
+            else
+            {
+                uIObjectListItems[uIObjectListItems.Length - 1].gameObject.SetActive(false);
+            }
+
+            toggleGroup[0].GetComponentInChildren<Text>(true).text = objectSelectSystem.customSortTitleName;
             toggleGroup[0].isOn = true;
             for (int i = 1; i < toggleGroup.Length; i++)
                 toggleGroup[i].GetComponentInChildren<Text>(true).text = objectSelectSystem.GetSortTitleGroupName(i);
 
             startIndex = 0;
             int dataCount = objectSelectSystem.Objects.Count;
-            if (dataCount < uIObjectListItems.Length)
+            if (dataCount < itemCount)
             {
                 scrollbar.transform.parent.gameObject.SetActive(false);
             }
             else
             {
                 scrollbar.transform.parent.gameObject.SetActive(true);
-                scrollbar.size = (float)uIObjectListItems.Length / (float)dataCount;
+                scrollbar.size = (float)itemCount / (float)dataCount;
                 scrollbar.SetValueWithoutNotify(0);
+            }
+
+            for (int j = 0; j < uIObjectListItems.Length; j++)
+            {
+                UIObjectListItem listItem = uIObjectListItems[j];
+                Vector2 p = listItem.contentRect.anchoredPosition;
+                p.x = 0;
+                listItem.contentRect.anchoredPosition = p;
             }
 
             UpdateSortContent();
             OnScrollBarValueChange(0);
+
+            foreach (RectTransform r in contentRect)
+            {
+                Vector2 p = r.anchoredPosition;
+                p.x = 0;
+                r.anchoredPosition = p;
+            }
+
+        }
+
+        public int GetContentWidth()
+        {
+            int w = 0;
+            for (int i = 0; i < sortItems.Count; i++)
+            {
+                ObjectSortTitle sortTitle = sortItems[i];
+                w += sortTitle.width;
+            }
+            return w + 24;
         }
 
         public void UpdateSortContent()
@@ -72,7 +124,6 @@ namespace Sango.Game.Render.UI
                 UIObjectListItem listItem = uIObjectListItems[j];
                 listItem.Clear();
             }
-
             for (int i = 0; i < sortItems.Count; i++)
             {
                 ObjectSortTitle sortTitle = sortItems[i];
@@ -93,10 +144,13 @@ namespace Sango.Game.Render.UI
                     OnScrollBarValueChange(0);
                 };
 
-                for (int j = 0; j < uIObjectListItems.Length; j++)
+                if (i > 0)
                 {
-                    UIObjectListItem listItem = uIObjectListItems[j];
-                    listItem.Add("", sortTitle.width);
+                    for (int j = 0; j < itemCount; j++)
+                    {
+                        UIObjectListItem listItem = uIObjectListItems[j];
+                        listItem.Add("", sortTitle.width);
+                    }
                 }
             }
 
@@ -109,27 +163,48 @@ namespace Sango.Game.Render.UI
             if (startIndex > 0)
                 startIndex--;
             UpdateItemStartIndex(startIndex);
-            scrollbar.SetValueWithoutNotify((float)startIndex / (objectSelectSystem.Objects.Count - uIObjectListItems.Length));
+            scrollbar.SetValueWithoutNotify((float)startIndex / (objectSelectSystem.Objects.Count - itemCount));
         }
 
         public void DownShow()
         {
-            if (startIndex < objectSelectSystem.Objects.Count - uIObjectListItems.Length)
+            if (startIndex < objectSelectSystem.Objects.Count - itemCount)
                 startIndex++;
 
             UpdateItemStartIndex(startIndex);
-            scrollbar.SetValueWithoutNotify((float)startIndex / (objectSelectSystem.Objects.Count - uIObjectListItems.Length));
+            scrollbar.SetValueWithoutNotify((float)startIndex / (objectSelectSystem.Objects.Count - itemCount));
         }
 
         public void OnScrollBarValueChange(float value)
         {
-            startIndex = (int)UnityEngine.Mathf.Lerp(0, objectSelectSystem.Objects.Count - uIObjectListItems.Length, value);
+            startIndex = (int)UnityEngine.Mathf.Lerp(0, objectSelectSystem.Objects.Count - itemCount, value);
             UpdateItemStartIndex(startIndex);
         }
 
+        public void OnScrollBar_H_ValueChange(float value)
+        {
+            float dis = (float)itemWidth - (float)maskRect.rect.width;
+            float pos = -(int)UnityEngine.Mathf.Lerp(0, dis, value);
+            foreach (RectTransform r in contentRect)
+            {
+                Vector2 p = r.anchoredPosition;
+                p.x = pos;
+                r.anchoredPosition = p;
+            }
+
+            for (int j = 0; j < uIObjectListItems.Length; j++)
+            {
+                UIObjectListItem listItem = uIObjectListItems[j];
+                Vector2 p = listItem.contentRect.anchoredPosition;
+                p.x = pos;
+                listItem.contentRect.anchoredPosition = p;
+            }
+        }
+
+
         public virtual void UpdateItemStartIndex(int startIndex)
         {
-            for (int i = 0; i < uIObjectListItems.Length; i++)
+            for (int i = 0; i < itemCount; i++)
             {
                 UIObjectListItem listItem = uIObjectListItems[i];
                 SangoObject sango = objectSelectSystem.Objects[i + startIndex];

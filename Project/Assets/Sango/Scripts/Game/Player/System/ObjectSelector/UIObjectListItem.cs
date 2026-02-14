@@ -15,7 +15,7 @@ namespace Sango.Game.Render.UI
         public delegate void OnShow(UIObjectListItem item);
         public OnSelect onSelected;
         public OnShow onShow;
-
+        public RectTransform contentRect;
         void ScrollCellIndex(int idx)
         {
             index = idx;
@@ -36,12 +36,17 @@ namespace Sango.Game.Render.UI
             usedItems.Clear();
         }
 
+        public void Set(string content)
+        {
+            textItem.SetText(content);
+        }
+
         public void Add(string content, int width)
         {
             UITextItem item;
             if (pool.Count == 0)
             {
-                GameObject obj = GameObject.Instantiate(textItem.gameObject, textItem.transform.parent);
+                GameObject obj = GameObject.Instantiate(textItem.gameObject, contentRect);
                 item = obj.GetComponent<UITextItem>();
             }
             else
@@ -57,12 +62,16 @@ namespace Sango.Game.Render.UI
 
         public void Set(int index, string content)
         {
-            usedItems[index].SetText(content);
+            if (index == 0)
+                Set(content);
+            else
+                usedItems[index - 1].SetText(content);
         }
 
         public void SetSelected(bool b)
         {
             selectItem.SetSelected(b);
+            textItem.SetSelected(b);
             for (int i = 0; i < usedItems.Count; i++)
             {
                 usedItems[i].SetSelected(b);
