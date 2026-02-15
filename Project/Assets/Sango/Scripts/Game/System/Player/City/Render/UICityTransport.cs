@@ -27,6 +27,11 @@ namespace Sango.Game.Render.UI
         public Slider troopsSlider;
         public Slider goldSlider;
         public Slider foodSlider;
+        bool showLand = true;
+        public UIStatusItem statusItem;
+        public UITextField typeLaebl;
+        public UITextField energyLaebl;
+        public UITextField[] itemLabels;
 
         CityTransport cityTransportSys;
         Dictionary<int, UIItemType> id2UIItemType = new Dictionary<int, UIItemType>();
@@ -34,6 +39,7 @@ namespace Sango.Game.Render.UI
         Troop targetTroop;
         public override void OnShow()
         {
+            showLand = true; 
             cityTransportSys = Singleton<CityTransport>.Instance;
             targetCity = cityTransportSys.TargetCity;
             targetTroop = cityTransportSys.TargetTroop;
@@ -153,6 +159,7 @@ namespace Sango.Game.Render.UI
                     personItems[i].SetPerson(null);
             }
 
+            UpdateTroopStatus();
             UpdateTroopsInfo();
         }
 
@@ -191,6 +198,49 @@ namespace Sango.Game.Render.UI
             SetItemLabel(itemTroopsLabel, targetCity.troops, targetTroop.troops);
             SetItemLabel(itemGoldLabel, targetCity.gold, targetTroop.gold);
             SetItemLabel(itemFoodLabel, targetCity.food, targetTroop.food);
+
+            int itemCount = Scenario.Cur.CommonData.ItemTypeList.Count;
+            int showIndex = 0;
+            for (int i = 0; i < itemCount; i++)
+            {
+                ItemType itemType = Scenario.Cur.CommonData.ItemTypeList[i];
+
+                itemLabels[showIndex].gameObject.SetActive(true);
+                int has = targetCity.itemStore.GetNumber(itemType.subKind);
+                int use = 0;
+                if (targetTroop.LandTroopType.costItems != null)
+                {
+                    for (int j = 0; j < targetTroop.LandTroopType.costItems.Length; j += 2)
+                    {
+                        int itemId = targetTroop.LandTroopType.costItems[j];
+                        if (itemId == i)
+                        {
+                            int need = targetTroop.LandTroopType.costItems[j + 1];
+                            use = need * targetTroop.troops / 1000;
+                        }
+                    }
+                }
+                if (targetTroop.WaterTroopType.costItems != null)
+                {
+                    for (int j = 0; j < targetTroop.WaterTroopType.costItems.Length; j += 2)
+                    {
+                        int itemId = targetTroop.WaterTroopType.costItems[j];
+                        if (itemId == i)
+                        {
+                            int need = targetTroop.WaterTroopType.costItems[j + 1];
+                            use = need * targetTroop.troops / 1000;
+                        }
+                    }
+                }
+                itemLabels[showIndex].SetTitle(itemType.Name);
+                SetItemLabel(itemLabels[showIndex], has, use);
+                showIndex++;
+            }
+
+            for (int i = showIndex; i < itemLabels.Length; i++)
+            {
+                itemLabels[i].gameObject.SetActive(false);
+            }
         }
 
         public void OnPersonChange(List<Person> personList)
@@ -223,6 +273,78 @@ namespace Sango.Game.Render.UI
             targetTroop.food = 0;
             targetTroop.gold = 0;
             UpdateContent();
+        }
+
+        public void OnTroopTypeShowLand(bool b)
+        {
+            if (b)
+            {
+                showLand = true;
+                UpdateTroopStatus();
+            }
+        }
+
+        public void OnTroopTypeShowWater(bool b)
+        {
+            if (b)
+            {
+                showLand = false;
+                UpdateTroopStatus();
+            }
+        }
+
+
+        void UpdateTroopStatus()
+        {
+            int atk, def, intel, build, move;
+            bool hasPeson = cityTransportSys.personList.Count > 0;
+            Troop targetTroop = cityTransportSys.TargetTroop;
+            if (showLand)
+            {
+                if (hasPeson)
+                {
+                    atk = targetTroop.landAttack;
+                    def = targetTroop.landDefence;
+                    intel = targetTroop.Intelligence;
+                    build = targetTroop.BuildPower;
+                    move = targetTroop.landMoveAbility;
+                }
+                else
+                {
+                    atk = targetTroop.LandTroopType.atk;
+                    def = targetTroop.LandTroopType.def;
+                    intel = targetTroop.Intelligence;
+                    build = targetTroop.BuildPower;
+                    move = targetTroop.LandTroopType.move;
+                }
+
+                typeLaebl.text = targetTroop.LandTroopType.Name;
+            }
+            else
+            {
+                if (hasPeson)
+                {
+                    atk = targetTroop.waterAttack;
+                    def = targetTroop.waterDefence;
+                    intel = targetTroop.Intelligence;
+                    build = targetTroop.BuildPower;
+                    move = targetTroop.waterMoveAbility;
+                }
+                else
+                {
+                    atk = targetTroop.WaterTroopType.atk;
+                    def = targetTroop.WaterTroopType.def;
+                    intel = targetTroop.Intelligence;
+                    build = targetTroop.BuildPower;
+                    move = targetTroop.WaterTroopType.move;
+                }
+
+                typeLaebl.text = targetTroop.WaterTroopType.Name;
+            }
+
+
+            statusItem.SetTroopStatus(atk, def, intel, build, move);
+            energyLaebl.text = targetTroop.morale.ToString();
         }
     }
 }

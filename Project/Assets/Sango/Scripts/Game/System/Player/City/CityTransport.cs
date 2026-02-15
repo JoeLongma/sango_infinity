@@ -81,7 +81,6 @@ namespace Sango.Game.Player
             personList.Clear();
             TargetTroop = new Troop();
             Scenario scenario = Scenario.Cur;
-            TroopType troopType = scenario.GetObject<TroopType>(6);
             Person[] persons = ForceAI.CounsellorRecommendTransportTroop(TargetCity.freePersons);
             Person leader = persons[0];
 
@@ -94,13 +93,15 @@ namespace Sango.Game.Player
             TargetTroop.Leader = leader;
             TargetTroop.Member1 = null;
             TargetTroop.Member2 = null;
-            TargetTroop.TroopType = troopType;
+            TargetTroop.LandTroopType = scenario.GetObject<TroopType>(6);
+            TargetTroop.WaterTroopType = scenario.GetObject<TroopType>(8);
             if (TargetTroop.troops == 0)
             {
                 TargetTroop.troops = 1;
                 TargetTroop.food = Math.Min(20, TargetCity.food);
             }
             TargetTroop.missionType = (int)MissionType.TroopTransformGoodsToCity;
+            TargetTroop.CalculateAttribute(Scenario.Cur);
             Window.Instance.Open(windowName);
         }
 

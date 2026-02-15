@@ -363,13 +363,11 @@ namespace Sango.Game.Render.UI
             SetItemLabel(itemGoldLabel, targetCity.gold, targetTroop.gold);
             SetItemLabel(itemFoodLabel, targetCity.food, targetTroop.food);
 
-            int itemCount = Scenario.Cur.CommonData.ItemTypes.Count;
+            int itemCount = Scenario.Cur.CommonData.ItemTypeList.Count;
             int showIndex = 0;
-            for (int i = 1; i < itemCount; i++)
+            for (int i = 0; i < itemCount; i++)
             {
-                ItemType itemType = Scenario.Cur.CommonData.ItemTypes.Get(i);
-                if (itemType == null || itemType.cost == 0) continue;
-                if (!itemType.store || itemType.nextId > 0) continue;
+                ItemType itemType = Scenario.Cur.CommonData.ItemTypeList[i];
 
                 itemLabels[showIndex].gameObject.SetActive(true);
                 int has = targetCity.itemStore.GetNumber(itemType.subKind);

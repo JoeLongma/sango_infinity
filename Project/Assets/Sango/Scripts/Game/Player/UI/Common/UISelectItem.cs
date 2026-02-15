@@ -7,6 +7,7 @@ namespace Sango.Game.Render.UI
     public class UISelectItem : MonoBehaviour
     {
         public Image select;
+        public GameObject selNode;
 
         public bool IsSelected()
         {
@@ -26,6 +27,11 @@ namespace Sango.Game.Render.UI
             LayoutElement layoutElement = GetComponent<LayoutElement>();
             if (layoutElement != null)
                 layoutElement.preferredWidth = width;
+            return this;
+        }
+        public UISelectItem SetVisible(bool b)
+        {
+            selNode.SetActive(b);
             return this;
         }
 

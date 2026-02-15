@@ -22,6 +22,8 @@ namespace Sango.Game.Render.UI
         }
         public UIItemTypeSlider SetValid(bool b)
         {
+            item.interactable = b;
+            numberSlider.interactable = b;
             return this;
         }
 

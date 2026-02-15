@@ -40,7 +40,7 @@ namespace Sango.Game.Render.UI
 
         protected UISortButton CreateSortButtonItem()
         {
-            GameObject btn = GameObject.Instantiate(sortTitleItem.gameObject, sortTitleItem.transform.parent);
+            GameObject btn = GameObject.Instantiate(sortTitleItem.gameObject, sorltTitleTransform);
             UISortButton sortBtn = btn.GetComponent<UISortButton>();
             sortButtonPool.Add(sortBtn);
             return sortBtn;
@@ -65,7 +65,7 @@ namespace Sango.Game.Render.UI
             }
             else
             {
-                uIObjectListItems[uIObjectListItems.Length - 1].gameObject.SetActive(false);
+                uIObjectListItems[uIObjectListItems.Length - 1].gameObject.SetActive(true);
             }
 
             toggleGroup[0].GetComponentInChildren<Text>(true).text = objectSelectSystem.customSortTitleName;
@@ -128,10 +128,20 @@ namespace Sango.Game.Render.UI
             {
                 ObjectSortTitle sortTitle = sortItems[i];
                 UISortButton uIPersonSortButton;
-                if (i < sortButtonPool.Count)
-                    uIPersonSortButton = sortButtonPool[i];
+
+                if (i == 0)
+                {
+                    uIPersonSortButton = sortTitleItem;
+                }
                 else
-                    uIPersonSortButton = CreateSortButtonItem();
+                {
+                    if (i - 1 < sortButtonPool.Count)
+                        uIPersonSortButton = sortButtonPool[i - 1];
+                    else
+                        uIPersonSortButton = CreateSortButtonItem();
+                }
+
+
 
                 uIPersonSortButton.gameObject.SetActive(true);
                 uIPersonSortButton.Clear().SetWidth(sortTitle.width).SetName(sortTitle.name);
@@ -152,9 +162,17 @@ namespace Sango.Game.Render.UI
                         listItem.Add("", sortTitle.width);
                     }
                 }
+                else
+                {
+                    for (int j = 0; j < itemCount; j++)
+                    {
+                        UIObjectListItem listItem = uIObjectListItems[j];
+                        listItem.textItem.SetWidth(sortTitle.width);
+                    }
+                }
             }
 
-            for (int i = sortItems.Count; i < sortButtonPool.Count; i++)
+            for (int i = sortItems.Count - 1; i < sortButtonPool.Count; i++)
                 sortButtonPool[i].gameObject.SetActive(false);
         }
 

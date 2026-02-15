@@ -28,6 +28,8 @@ namespace Sango.Game.Render.UI
 
         public void Clear()
         {
+            selectItem.SetVisible(false);
+            textItem.SetText("");
             for (int i = 0; i < usedItems.Count; i++)
             {
                 usedItems[i].gameObject.SetActive(false);
@@ -38,6 +40,7 @@ namespace Sango.Game.Render.UI
 
         public void Set(string content)
         {
+            selectItem.SetVisible(!string.IsNullOrEmpty(content));
             textItem.SetText(content);
         }
 

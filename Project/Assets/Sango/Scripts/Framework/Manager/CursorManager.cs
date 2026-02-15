@@ -71,6 +71,7 @@ namespace Sango
             {
                 // 箭头类光标（热点通常在尖端）
                 case 0:
+                    return new Vector2(5, 0);
                 case 1:
                 case 2:
                 case 3:

@@ -147,7 +147,7 @@ namespace Sango.Game
             ItemTypeList = new List<ItemType>();
             ItemTypes.ForEach(type =>
             {
-                if (type.store)
+                if (type.store && type.validTechId <= 0)
                 {
                     ItemTypeList.Add(type);
                 }
