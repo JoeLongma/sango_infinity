@@ -20,7 +20,9 @@ namespace Sango.Game.Render.UI
         public UITextField buildCountLabel;
         public UITextField cityGoldLabel;
 
-        public Text buildingTypeDescLabel;
+        public UITextField durablityLabel;
+        public UITextField featrueLabel;
+        public UITextField buildingTypeDescLabel;
 
         TroopActionBuild troopCommandBuildSys;
 

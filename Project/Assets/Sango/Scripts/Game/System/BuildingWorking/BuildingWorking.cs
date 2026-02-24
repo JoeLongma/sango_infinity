@@ -185,12 +185,14 @@ namespace Sango.Game
             TargetCity.SetExtensionData<bool>("AppointWorking", b);
             if (b)
             {
-                contextMenuItem.SetTitle(GameLanguage.GetString(10000004));
+                string[] ts = GameLanguage.GetString(10000004).Split("/");
+                contextMenuItem.SetTitle(ts[ts.Length-1]);
                 AppointWorking(TargetCity, Scenario.Cur);
             }
             else
             {
-                contextMenuItem.SetTitle(GameLanguage.GetString(10000003));
+                string[] ts = GameLanguage.GetString(10000003).Split("/");
+                contextMenuItem.SetTitle(ts[ts.Length - 1]);
             }
         }
 

@@ -121,7 +121,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5fd3912c82305c9499b4f2dabb1a07c0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 939bff0e7cbf91e4fb6a75abcf38e5c0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -144,10 +144,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites:
-  - {fileID: 21300000, guid: 5fd3912c82305c9499b4f2dabb1a07c0, type: 3}
-  - {fileID: 21300000, guid: 6dad005424212ac4c8099fb0017cb790, type: 3}
-  - {fileID: 21300000, guid: 64c83255a520de8448acea7785ed842b, type: 3}
-  - {fileID: 21300000, guid: 09c24ff04ff00594d896dd52ec32fadd, type: 3}
+  - {fileID: 21300000, guid: 939bff0e7cbf91e4fb6a75abcf38e5c0, type: 3}
+  - {fileID: 21300000, guid: e1fa98cdf5f7556419bc403bf9ddf9f1, type: 3}
+  - {fileID: 21300000, guid: 81ba5c38581142246832238f9302ce11, type: 3}
+  - {fileID: 21300000, guid: 551b24fc0351991409f88f272ec08501, type: 3}
   image: {fileID: 8013593654983580701}
   speed: 0.4
 --- !u!1 &9039031632039893254
@@ -233,4 +233,4 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0

@@ -38,7 +38,7 @@ public class TextOutline : BaseMeshEffect
     {
         base.Awake();
         text = GetComponent<Text>();
-        OnFreshCavasCommon();
+        if(text.enabled == true ) { OnFreshCavasCommon(); }
     }
 
     protected override void OnEnable()
@@ -55,9 +55,12 @@ public class TextOutline : BaseMeshEffect
 
     private void OnFontTextureRebuilt(Font font)
     {
-        needUpdateMat = true;
-        StopAllCoroutines();
-        StartCoroutine(DoUpdateMat());
+        if (text.enabled == true)
+        {
+            needUpdateMat = true;
+            StopAllCoroutines();
+            StartCoroutine(DoUpdateMat());
+        }
         //#if UNITY_EDITOR
         //        Debug.Log("OnFontTextureRebuilt");
         //#endif
