@@ -10,12 +10,11 @@ namespace Sango.Game.Render.UI
         public Text titleText;
         public UIPersonItem personItem;
         public UIStatusItem statusItem;
-        public Text ageText;
-        public Text sexText;
-        public Text featureText;
-        public Text featureDescriptionText;
-        public Text[] abilityLevelText;
-        public Text[] abilityLevelName;
+        public UITextField ageText;
+        public UITextField sexText;
+        public UITextField featureText;
+        public UITextField featureDescriptionText;
+        public UITextField[] abilityLevel;
         public Text descriptionText;
 
         public GameObject btnGroup_1;
@@ -115,8 +114,7 @@ namespace Sango.Game.Render.UI
 
             for (int i = 0; i < sortTitles.Count; i++)
             {
-                abilityLevelName[i].text = sortTitles[i].name;
-                abilityLevelText[i].text = sortTitles[i].GetValueStr(person);
+                abilityLevel[i].SetTitle(sortTitles[i].name).SetText(sortTitles[i].GetValueStr(person));
             }
 
             descriptionText.text = PersonSortFunction.SortByDescription.GetValueStr(person);

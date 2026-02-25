@@ -5569,10 +5569,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: personArea
       objectReference: {fileID: 0}
+    - target: {fileID: 3370769370496485193, guid: 071d4ca5774f3bc4d8d319de5a666441, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3473858187991225269, guid: 071d4ca5774f3bc4d8d319de5a666441, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2221739089784695191}
+    - target: {fileID: 5675831474420866357, guid: 071d4ca5774f3bc4d8d319de5a666441, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7550403143767420543, guid: 071d4ca5774f3bc4d8d319de5a666441, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 071d4ca5774f3bc4d8d319de5a666441, type: 3}
 --- !u!114 &630322130601428437 stripped
