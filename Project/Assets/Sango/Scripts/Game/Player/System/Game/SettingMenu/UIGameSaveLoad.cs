@@ -335,7 +335,7 @@ namespace Sango.Game.Render.UI
             else Load(curSelectIndex);
         }
 
-        public void OnClose()
+        public void OnReturn()
         {
             Clear();
             if (isSave) Singleton<GameSave>.Instance.Done();
