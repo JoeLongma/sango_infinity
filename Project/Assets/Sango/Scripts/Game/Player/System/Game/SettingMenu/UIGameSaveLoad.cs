@@ -40,8 +40,6 @@ namespace Sango.Game.Render.UI
 #else
             curSelectIndex = 0;
 #endif
-
-
             isSave = (bool)objects[0];
             titleLabel.text = isSave ? "储存" : "读档";
             long t = 0;
@@ -115,8 +113,8 @@ namespace Sango.Game.Render.UI
                 if (scenario == null)
                 {
                     item.SetId(index + 1)          // 显示存档编号（如1、2、3...）
-                        .SetInactive(false)        // 显示空卡槽
-                        .SetName("点击存档")        // 空存档提示
+                        .SetInactive(isSave ? false : true)        // 显示空卡槽
+                        .SetName(isSave ? "点击存档" : "")        // 空存档提示
                         .SetSaveTime(-1)           // 未存档标记
                         .SetNew(false);
                 }

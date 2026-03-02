@@ -95,6 +95,7 @@ namespace Sango.Game.Render.UI
                 selectedItem.SetSelected(false);
             }
             techniqueItem.SetSelected(true);
+            selectedItem = techniqueItem;
             selectTech = techniqueItem.technique;
 
             techDesc.text = selectTech.desc;

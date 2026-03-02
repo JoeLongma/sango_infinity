@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
-    public class CityReward : CommandSystemBase
+    public class CityReward : GameSystem
     {
         public City TargetCity { get; set; }
         public List<Person> personList = new List<Person>();
@@ -56,7 +56,7 @@ namespace Sango.Game.Player
             GameEvent.OnCityContextMenuShow -= OnCityContextMenuShow;
         }
 
-        public override bool IsValid
+        public bool IsValid
         {
             get
             {

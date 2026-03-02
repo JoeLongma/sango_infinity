@@ -87,7 +87,6 @@ namespace Sango.Game.Render.UI
             sureBtn.gameObject.SetActive(b);
             return this;
         }
-
         public UIScenarioSaveItem BindSureCall(UnityAction call)
         {
             sureBtn.onClick.RemoveAllListeners();

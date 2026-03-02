@@ -23,9 +23,9 @@ namespace Sango.Game.Player
 
             //人事
             Singleton<CityCallPerson>.Instance.Init();
-            Singleton<CityTransformPerson>.Instance.Init();
+            //Singleton<CityTransformPerson>.Instance.Init();
             Singleton<CityRecruit>.Instance.Init();
-            Singleton<CityReward>.Instance.Init();
+            //Singleton<CityReward>.Instance.Init();
         }
 
         public override void Clear()
@@ -43,9 +43,9 @@ namespace Sango.Game.Player
 
             //人事
             Singleton<CityCallPerson>.Instance.Clear();
-            Singleton<CityTransformPerson>.Instance.Clear();
+            //Singleton<CityTransformPerson>.Instance.Clear();
             Singleton<CityRecruit>.Instance.Clear();
-            Singleton<CityReward>.Instance.Clear();
+            //Singleton<CityReward>.Instance.Clear();
         }
 
         void OnClick(Cell clickCell, Vector3 clickPosition, bool isOverUI)

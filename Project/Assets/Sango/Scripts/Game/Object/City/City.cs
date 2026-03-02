@@ -1207,7 +1207,7 @@ namespace Sango.Game
         public int Distance(City other)
         {
             if (this == other)
-                return 0;
+                return 1;
 
             if (BelongCity != null)
                 return BelongCity.Distance(other);
@@ -1215,7 +1215,7 @@ namespace Sango.Game
             if (other.BelongCity != null)
                 other = other.BelongCity;
 
-            return Scenario.Cur.GetCityDistance(this, other);
+            return Mathf.Max(1, Scenario.Cur.GetCityDistance(this, other));
         }
 
         public void OnPersonReturnCity(Person person)
