@@ -7,26 +7,20 @@ namespace Sango.Game.Render.UI
     /// <summary>
     /// 剧本选择界面
     /// </summary>
-    public class UITechniqueItem : UGUIWindow
+    public class UITechniqueItem : MonoBehaviour
     {
         public RectTransform root;
-        public RectTransform doneRect;
 
         public Text techName;
-        public Text costGold;
-        public Text costTP;
-        public Text costCounter;
+        //public Text costGold;
+        //public Text costTP;
+        //public Text costCounter;
         public Image progress;
         public Image doneImg;
         public Image selectImg;
         public Image bg;
         public Text needAttributeType;
         public RectTransform itemNode;
-        public RectTransform lineNode;
-
-        public RectTransform lineMid;
-        public RectTransform lineDown;
-        public RectTransform lineUp;
         public Image invalidMask;
 
         public Technique technique;
@@ -37,11 +31,12 @@ namespace Sango.Game.Render.UI
         {
             technique = t;
             techName.text = t.Name;
-            costGold.text = t.goldCost.ToString();
-            costTP.text = t.techPointCost.ToString();
-            costCounter.text = t.counter.ToString();
+            //costGold.text = t.goldCost.ToString();
+            //costTP.text = t.techPointCost.ToString();
+            //costCounter.text = t.counter.ToString();
             needAttributeType.text = Scenario.Cur.Variables.GetAttributeNameWithColor(t.needAttr);
             bg.color = t.tabColor;
+            doneImg.color = t.tabColor;
             return this;
         }
 
@@ -58,8 +53,7 @@ namespace Sango.Game.Render.UI
 
         public UITechniqueItem SetValid(bool b)
         {
-            doneImg.enabled = b;
-            doneRect.gameObject.SetActive(b);
+            doneImg.gameObject.SetActive(b);
             return this;
         }
         public bool IsValid() { return doneImg.enabled; }
@@ -79,6 +73,7 @@ namespace Sango.Game.Render.UI
 
         public UITechniqueItem SetSelected(bool b)
         {
+            selectImg.enabled = b;
             return this;
         }
 

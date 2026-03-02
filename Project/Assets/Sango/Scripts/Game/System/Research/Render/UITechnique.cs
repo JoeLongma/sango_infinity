@@ -10,11 +10,14 @@ namespace Sango.Game.Render.UI
     /// </summary>
     public class UITechnique : UGUIWindow
     {
+        public UITechniqueArea techniqueArea;
+
         public UITechniqueItem techniqueItem;
         List<UITechniqueItem> techniqueItemList = new List<UITechniqueItem>();
         public RectTransform techNode;
         public RectTransform personNode;
         public ScrollRect scrollRect;
+        public RectTransform titleNode;
 
         public Button sureBtn;
 
@@ -42,39 +45,6 @@ namespace Sango.Game.Render.UI
         UITechniqueItem selectedItem;
         Technique selectTech;
 
-        void InitItems()
-        {
-            if (techniqueItemList.Count > 0)
-                return;
-            Scenario.Cur.CommonData.Techniques.ForEach(technique =>
-            {
-                AddTechniqueItem(technique);
-            });
-
-            for (int i = 0; i < techniqueItemList.Count; i++)
-            {
-                CompleteTheLine(techniqueItemList[i]);
-            }
-
-            RectTransform scroll = scrollRect.GetComponent<RectTransform>();
-            scrollRect.horizontal = techNode.sizeDelta.x > scroll.sizeDelta.x;
-            scrollRect.vertical = techNode.sizeDelta.y > scroll.sizeDelta.y;
-        }
-
-        public UITechniqueItem AddTechniqueItem(Technique technique)
-        {
-            UITechniqueItem techItem = GameObject.Instantiate(techniqueItem.gameObject, techniqueItem.transform.parent).GetComponent<UITechniqueItem>();
-            techItem.gameObject.SetActive(true);
-            techniqueItemList.Add(techItem);
-            techItem.root.anchoredPosition = new Vector2(technique.col * itemWidth + woffset, -(technique.row * itemHeight) - hoffset);
-            maxCol = Mathf.Max(maxCol, technique.col);
-            maxRow = Mathf.Max(maxRow, technique.row);
-            techNode.sizeDelta = new Vector2((maxCol + 1) * itemWidth + 2f * woffset, (maxRow + 1) * itemHeight + 2f * hoffset);
-            techItem.SetTechnique(technique);
-            techItem.onClick = OnSelectTechniqueItem;
-            return techItem;
-        }
-
         public void UpdateItems()
         {
             for (int i = 0; i < techniqueItemList.Count; i++)
@@ -85,54 +55,6 @@ namespace Sango.Game.Render.UI
             }
         }
 
-        public void CompleteTheLine(UITechniqueItem techniqueItem)
-        {
-            Technique technique = techniqueItem.technique;
-            if (technique.needTechs == null || technique.needTechs.Length == 0)
-            {
-                techniqueItem.lineNode.gameObject.SetActive(false);
-                return;
-            }
-
-            techniqueItem.lineNode.gameObject.SetActive(true);
-            Scenario scenario = Scenario.Cur;
-            // 连线
-            for (int i = 0; i < technique.needTechs.Length; i++)
-            {
-                Technique dep = scenario.GetObject<Technique>(technique.needTechs[i]);
-                int colDis = technique.col - dep.col;
-                int rowDis = technique.row - dep.row;
-
-                int width = colDis * linwWidth;
-                int height = rowDis * linhHeight;
-                if (rowDis == 0)
-                {
-                    RectTransform linRect = GameObject.Instantiate(techniqueItem.lineMid.gameObject, techniqueItem.lineMid.transform.parent).GetComponent<RectTransform>();
-                    linRect.gameObject.SetActive(true);
-                    Vector2 size = linRect.sizeDelta;
-                    size.x = width;
-                    linRect.sizeDelta = size;
-                }
-                else if (rowDis > 0)
-                {
-                    RectTransform linRect = GameObject.Instantiate(techniqueItem.lineDown.gameObject, techniqueItem.lineDown.transform.parent).GetComponent<RectTransform>();
-                    linRect.gameObject.SetActive(true);
-                    Vector2 size = linRect.sizeDelta;
-                    size.y = height;
-                    linRect.sizeDelta = size;
-                }
-                else
-                {
-                    RectTransform linRect = GameObject.Instantiate(techniqueItem.lineUp.gameObject, techniqueItem.lineUp.transform.parent).GetComponent<RectTransform>();
-                    linRect.gameObject.SetActive(true);
-                    Vector2 size = linRect.sizeDelta;
-                    size.y = height;
-                    linRect.sizeDelta = size;
-                }
-            }
-        }
-
-
         public override void OnShow()
         {
             sureBtn.interactable = false;
@@ -140,8 +62,16 @@ namespace Sango.Game.Render.UI
             techniqueResearchSys = GameSystemManager.Instance.GetSystem<TechniqueResearch>();
             targetForce = techniqueResearchSys.TargetCity.BelongForce;
             targetCity = techniqueResearchSys.TargetCity;
-            InitItems();
-            UpdateItems();
+            techniqueArea.CreateTitles(targetForce, titleNode);
+            techniqueArea.ShowForceTechnique(targetForce, techniqueItemList);
+            for (int i = 0; i < techniqueItemList.Count; i++)
+            {
+                UITechniqueItem techItem = techniqueItemList[i];
+                techItem.onClick = OnSelectTechniqueItem;
+                Technique technique = techItem.technique;
+                techItem.SetValid(technique.IsValid(targetForce)).SetCanResearch(technique.CanResearch(targetForce)).SetSelected(techItem == selectedItem);
+            }
+            
             actionPointValue.text = $"{JobType.GetJobCostAP((int)CityJobType.Research)}/{techniqueResearchSys.TargetCity.BelongCorps.ActionPoint}";
 
         }

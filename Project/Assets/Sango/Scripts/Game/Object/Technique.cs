@@ -20,7 +20,7 @@ namespace Sango.Game
         [JsonProperty] public int goldCost;
         [JsonProperty] public int techPointCost;
         [JsonProperty] public int counter;
-        [JsonProperty] public int[] needTechs;
+        [JsonProperty] public int needTech;
         [JsonProperty] public JArray effects;
         [JsonProperty] public int col;
         [JsonProperty] public int row;
@@ -32,13 +32,10 @@ namespace Sango.Game
         {
             if (force == null) return false;
             if (force.HasTechnique(Id)) return false;
-            if (needTechs != null)
+            if (needTech > 0)
             {
-                for (int i = 0; i < needTechs.Length; i++)
-                {
-                    if (!force.HasTechnique(needTechs[i]))
-                        return false;
-                }
+                if (!force.HasTechnique(needTech))
+                    return false;
             }
             return true;
         }

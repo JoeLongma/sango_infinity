@@ -47,11 +47,19 @@ namespace Sango.Game
         public SangoObjectList<Alliance> AllianceList = new SangoObjectList<Alliance>();
 
         /// <summary>
-        /// 联盟信息
+        /// 势力独有的初始化科技信息,以此为入口,且可以为势力设置独特的科技树
+        /// </summary>
+        [JsonConverter(typeof(SangoObjectListIDConverter<Technique>))]
+        [JsonProperty]
+        public SangoObjectList<Technique> InitTechniques = new SangoObjectList<Technique>();
+
+        /// <summary>
+        /// 已完成的科技信息
         /// </summary>
         [JsonConverter(typeof(SangoObjectListIDConverter<Technique>))]
         [JsonProperty]
         public SangoObjectList<Technique> Techniques = new SangoObjectList<Technique>();
+
 
         /// <summary>
         /// 本国被俘虏
@@ -105,7 +113,17 @@ namespace Sango.Game
         /// </summary>
         Queue<BuildingBase> buildingBaseList = new Queue<BuildingBase>();
 
+        /// <summary>
+        /// 当前可以研发的科技列表
+        /// </summary>
         public List<Technique> canResearchTechniqueList = new List<Technique>();
+
+        /// <summary>
+        /// 国家科技树
+        /// </summary>
+        public List<ForceTechnique> techniqueTree = new List<ForceTechnique>();
+        public int techniqueMaxLevel = 0;
+        public int techniqueMaxRow = 0;
 
         public int PersonCount { get; set; }
         public int CityCount { get; set; }
@@ -129,10 +147,47 @@ namespace Sango.Game
 
         void prepareTechniqueList(Scenario scenario)
         {
+            techniqueMaxLevel = 0;
+
+            // 在这里初始化科技树
+            techniqueTree.Clear();
+            InitTechniques.ForEach(x =>
+            {
+                ForceTechnique forceTechnique = new ForceTechnique()
+                {
+                    technique = x,
+                    y = 0,
+                };
+                techniqueMaxLevel = Mathf.Max(techniqueMaxLevel, forceTechnique.FillChildren(scenario.CommonData.Techniques));
+                techniqueTree.Add(forceTechnique);
+            });
+            techniqueTree.Sort((a, b) => a.technique.Id.CompareTo(b.technique.Id));
+            techniqueMaxLevel++;
+
+            for (int i = 0; i < techniqueTree.Count; i++)
+            {
+                int upY = 0, downY = 0;
+                techniqueTree[i].UpdateY(ref upY, ref downY);
+
+            }
+
+            int startY = 0;
+            for (int i = 0; i < techniqueTree.Count; i++)
+            {
+                ForceTechnique forceTechnique = techniqueTree[i];
+                int minY = 0, maxY = 0;
+                forceTechnique.GetMinMaxY(ref minY, ref maxY);
+                int total = maxY - minY;
+                forceTechnique.y = startY - minY;
+                startY += total + 1;
+            }
+            techniqueMaxRow = startY + 1;
+
+            // 初始化可研究的科技
             canResearchTechniqueList.Clear();
             scenario.CommonData.Techniques.ForEach(x =>
             {
-                if(x.Id != ResearchTechnique)
+                if (x.Id != ResearchTechnique)
                 {
                     if (x.CanResearch(this))
                     {

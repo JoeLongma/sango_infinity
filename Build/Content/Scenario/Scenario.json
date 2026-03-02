@@ -49198,7 +49198,18 @@
       "Counsellor": 64,
       "Flag": 1,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "2": {
       "Id": 2,
@@ -49206,7 +49217,18 @@
       "Counsellor": 290,
       "Flag": 2,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "3": {
       "Id": 3,
@@ -49214,7 +49236,18 @@
       "Counsellor": 246,
       "Flag": 3,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "4": {
       "Id": 4,
@@ -49222,7 +49255,18 @@
       "Counsellor": 559,
       "Flag": 4,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "5": {
       "Id": 5,
@@ -49230,7 +49274,18 @@
       "Counsellor": 167,
       "Flag": 5,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "6": {
       "Id": 6,
@@ -49238,7 +49293,18 @@
       "Counsellor": 605,
       "Flag": 6,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "7": {
       "Id": 7,
@@ -49246,7 +49312,18 @@
       "Counsellor": 55,
       "Flag": 7,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "8": {
       "Id": 8,
@@ -49254,7 +49331,18 @@
       "Counsellor": 476,
       "Flag": 8,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "9": {
       "Id": 9,
@@ -49262,7 +49350,18 @@
       "Counsellor": 579,
       "Flag": 9,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "10": {
       "Id": 10,
@@ -49270,7 +49369,18 @@
       "Counsellor": 22,
       "Flag": 10,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "11": {
       "Id": 11,
@@ -49278,7 +49388,18 @@
       "Counsellor": 447,
       "Flag": 11,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "12": {
       "Id": 12,
@@ -49286,7 +49407,18 @@
       "Counsellor": 112,
       "Flag": 12,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "13": {
       "Id": 13,
@@ -49294,7 +49426,18 @@
       "Counsellor": 94,
       "Flag": 13,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "14": {
       "Id": 14,
@@ -49302,7 +49445,18 @@
       "Counsellor": 131,
       "Flag": 14,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "15": {
       "Id": 15,
@@ -49310,7 +49464,18 @@
       "Counsellor": 259,
       "Flag": 15,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "16": {
       "Id": 16,
@@ -49318,7 +49483,18 @@
       "Counsellor": 228,
       "Flag": 16,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "17": {
       "Id": 17,
@@ -49326,7 +49502,18 @@
       "Counsellor": 35,
       "Flag": 17,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "18": {
       "Id": 18,
@@ -49334,7 +49521,18 @@
       "Counsellor": 10,
       "Flag": 18,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "19": {
       "Id": 19,
@@ -49342,7 +49540,18 @@
       "Counsellor": 450,
       "Flag": 19,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "20": {
       "Id": 20,
@@ -49350,7 +49559,18 @@
       "Counsellor": 0,
       "Flag": 20,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "21": {
       "Id": 21,
@@ -49358,7 +49578,18 @@
       "Counsellor": 0,
       "Flag": 21,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "22": {
       "Id": 22,
@@ -49366,7 +49597,18 @@
       "Counsellor": 152,
       "Flag": 22,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "23": {
       "Id": 23,
@@ -49374,7 +49616,18 @@
       "Counsellor": 0,
       "Flag": 23,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "24": {
       "Id": 24,
@@ -49382,7 +49635,18 @@
       "Counsellor": 239,
       "Flag": 24,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "25": {
       "Id": 25,
@@ -49390,7 +49654,18 @@
       "Counsellor": 61,
       "Flag": 25,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "26": {
       "Id": 26,
@@ -49398,7 +49673,18 @@
       "Counsellor": 393,
       "Flag": 26,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "27": {
       "Id": 27,
@@ -49406,7 +49692,18 @@
       "Counsellor": 0,
       "Flag": 27,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "28": {
       "Id": 28,
@@ -49414,7 +49711,18 @@
       "Counsellor": 436,
       "Flag": 28,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "29": {
       "Id": 29,
@@ -49422,7 +49730,18 @@
       "Counsellor": 670,
       "Flag": 29,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "30": {
       "Id": 30,
@@ -49430,7 +49749,18 @@
       "Counsellor": 0,
       "Flag": 30,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "31": {
       "Id": 31,
@@ -49438,7 +49768,18 @@
       "Counsellor": 0,
       "Flag": 31,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "32": {
       "Id": 32,
@@ -49446,7 +49787,18 @@
       "Counsellor": 0,
       "Flag": 32,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "33": {
       "Id": 33,
@@ -49454,14 +49806,36 @@
       "Counsellor": 0,
       "Flag": 33,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "34": {
       "Id": 34,
       "Governor": 633,
       "Flag": 34,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "35": {
       "Id": 35,
@@ -49469,7 +49843,18 @@
       "Counsellor": 9,
       "Flag": 35,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "36": {
       "Id": 36,
@@ -49477,7 +49862,18 @@
       "Counsellor": 483,
       "Flag": 36,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "37": {
       "Id": 37,
@@ -49485,12 +49881,23 @@
       "Counsellor": 83,
       "Flag": 37,
       "TechniquePoint": 0,
-      "PolicyType": 1
+      "PolicyType": 1,
+      "InitTechniques": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33
+      ]
     },
     "38": {
       "Id": 38,
       "Governor": 724,
-      "Counsellor": 315,
+      "Counsellor": 0,
       "Flag": 38,
       "TechniquePoint": 0,
       "PolicyType": 1

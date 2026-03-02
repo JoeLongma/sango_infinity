@@ -119,7 +119,7 @@ namespace Sango.Game
         public SangoObjectMap<Buff> Buffs = new SangoObjectMap<Buff>();
 
         /// <summary>
-        /// 工作类型
+        /// 科技
         /// </summary>
         [JsonConverter(typeof(SangoObjectMaptConverter<Technique>))]
         [JsonProperty]

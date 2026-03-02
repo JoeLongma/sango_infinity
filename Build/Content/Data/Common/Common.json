@@ -6009,9 +6009,7 @@
       ],
       "techPointCost": 3000,
       "counter": 4,
-      "needTechs": [
-        1
-      ]
+      "needTech": 1
     },
     "3": {
       "Id": 3,
@@ -6030,9 +6028,7 @@
       ],
       "techPointCost": 5000,
       "counter": 6,
-      "needTechs": [
-        2
-      ]
+      "needTech": 2
     },
     "4": {
       "Id": 4,
@@ -6051,9 +6047,7 @@
       ],
       "techPointCost": 8000,
       "counter": 9,
-      "needTechs": [
-        3
-      ],
+      "needTech": 3,
       "effects": [
         {
           "class": "TroopChangeTroops",
@@ -6129,9 +6123,7 @@
       ],
       "techPointCost": 3000,
       "counter": 4,
-      "needTechs": [
-        5
-      ]
+      "needTech": 5
     },
     "7": {
       "Id": 7,
@@ -6150,9 +6142,7 @@
       ],
       "techPointCost": 5000,
       "counter": 6,
-      "needTechs": [
-        6
-      ]
+      "needTech": 6
     },
     "8": {
       "Id": 8,
@@ -6171,9 +6161,7 @@
       ],
       "techPointCost": 8000,
       "counter": 9,
-      "needTechs": [
-        7
-      ],
+      "needTech": 7,
       "effects": [
         {
           "class": "TroopChangeTroops",
@@ -6249,9 +6237,7 @@
       ],
       "techPointCost": 3000,
       "counter": 4,
-      "needTechs": [
-        9
-      ]
+      "needTech": 9
     },
     "11": {
       "Id": 11,
@@ -6270,9 +6256,7 @@
       ],
       "techPointCost": 5000,
       "counter": 6,
-      "needTechs": [
-        10
-      ]
+      "needTech": 10
     },
     "12": {
       "Id": 12,
@@ -6291,9 +6275,7 @@
       ],
       "techPointCost": 8000,
       "counter": 9,
-      "needTechs": [
-        11
-      ],
+      "needTech": 11,
       "effects": [
         {
           "class": "TroopChangeTroops",
@@ -6369,9 +6351,7 @@
       ],
       "techPointCost": 3000,
       "counter": 4,
-      "needTechs": [
-        13
-      ]
+      "needTech": 13
     },
     "15": {
       "Id": 15,
@@ -6390,9 +6370,7 @@
       ],
       "techPointCost": 5000,
       "counter": 6,
-      "needTechs": [
-        14
-      ]
+      "needTech": 14
     },
     "16": {
       "Id": 16,
@@ -6411,9 +6389,7 @@
       ],
       "techPointCost": 8000,
       "counter": 9,
-      "needTechs": [
-        15
-      ],
+      "needTech": 15,
       "effects": [
         {
           "class": "TroopChangeTroops",
@@ -6486,9 +6462,7 @@
       ],
       "techPointCost": 3000,
       "counter": 4,
-      "needTechs": [
-        17
-      ]
+      "needTech": 17
     },
     "19": {
       "Id": 19,
@@ -6507,9 +6481,7 @@
       ],
       "techPointCost": 5000,
       "counter": 6,
-      "needTechs": [
-        18
-      ],
+      "needTech": 18,
       "effects": [
         {
           "class": "ForceTroopMaxTroop",
@@ -6534,9 +6506,7 @@
       ],
       "techPointCost": 8000,
       "counter": 9,
-      "needTechs": [
-        19
-      ]
+      "needTech": 19
     },
     "21": {
       "Id": 21,
@@ -6583,9 +6553,7 @@
       ],
       "techPointCost": 3000,
       "counter": 4,
-      "needTechs": [
-        21
-      ]
+      "needTech": 21
     },
     "23": {
       "Id": 23,
@@ -6604,9 +6572,7 @@
       ],
       "techPointCost": 5000,
       "counter": 6,
-      "needTechs": [
-        22
-      ]
+      "needTech": 22
     },
     "24": {
       "Id": 24,
@@ -6625,9 +6591,7 @@
       ],
       "techPointCost": 8000,
       "counter": 9,
-      "needTechs": [
-        23
-      ]
+      "needTech": 23
     },
     "25": {
       "Id": 25,
@@ -6664,9 +6628,7 @@
       ],
       "techPointCost": 3000,
       "counter": 5,
-      "needTechs": [
-        25
-      ]
+      "needTech": 25
     },
     "27": {
       "Id": 27,
@@ -6685,9 +6647,7 @@
       ],
       "techPointCost": 5000,
       "counter": 7,
-      "needTechs": [
-        26
-      ],
+      "needTech": 26,
       "effects": [
         {
           "class": "CityDurabilityLimit",
@@ -6717,9 +6677,324 @@
       ],
       "techPointCost": 8000,
       "counter": 10,
-      "needTechs": [
-        27
+      "needTech": 27,
+      "effects": [
+        {
+          "class": "BuildingBaseAttackBack",
+          "value": "200"
+        }
       ]
+    },
+    "29": {
+      "Id": 29,
+      "Name": "开发木兽",
+      "desc": "可使用兵装「木兽」",
+      "kind": 8,
+      "level": 0,
+      "col": 0,
+      "row": 7,
+      "needAttr": 2,
+      "goldCost": 1000,
+      "tabColor": [
+        100,
+        255,
+        255
+      ],
+      "techPointCost": 2000,
+      "counter": 3
+    },
+    "30": {
+      "Id": 30,
+      "Name": "神火计",
+      "desc": "可于３区格范围内执行火计",
+      "kind": 8,
+      "level": 1,
+      "col": 1,
+      "row": 7,
+      "needAttr": 2,
+      "goldCost": 2000,
+      "tabColor": [
+        100,
+        255,
+        255
+      ],
+      "techPointCost": 3000,
+      "counter": 4,
+      "needTech": 29
+    },
+    "31": {
+      "Id": 31,
+      "Name": "炼成火药",
+      "desc": "可使用陷阱「火焰种、火焰球」",
+      "kind": 8,
+      "level": 2,
+      "col": 2,
+      "row": 7,
+      "needAttr": 2,
+      "goldCost": 3000,
+      "tabColor": [
+        100,
+        255,
+        255
+      ],
+      "techPointCost": 5000,
+      "counter": 6,
+      "needTech": 30
+    },
+    "32": {
+      "Id": 32,
+      "Name": "炼成炸药",
+      "desc": "可使用陷阱「业火种、业火球」，增强火势",
+      "kind": 8,
+      "level": 3,
+      "col": 3,
+      "row": 7,
+      "needAttr": 2,
+      "goldCost": 5000,
+      "tabColor": [
+        100,
+        255,
+        255
+      ],
+      "techPointCost": 8000,
+      "counter": 9,
+      "needTech": 31
+    },
+    "33": {
+      "Id": 33,
+      "Name": "木牛流马",
+      "desc": "提升输送队的移动力",
+      "kind": 9,
+      "level": 0,
+      "col": 0,
+      "row": 8,
+      "needAttr": 3,
+      "goldCost": 1000,
+      "tabColor": [
+        255,
+        150,
+        100
+      ],
+      "techPointCost": 2000,
+      "counter": 4,
+      "effects": [
+        {
+          "class": "TroopAddMoveAbility",
+          "value": 6,
+          "kinds": [
+            7
+          ]
+        }
+      ]
+    },
+    "34": {
+      "Id": 34,
+      "Name": "扩展港关",
+      "desc": "提升关所、港的最大资金、兵粮、士兵、兵装",
+      "kind": 9,
+      "level": 1,
+      "col": 1,
+      "row": 8,
+      "needAttr": 3,
+      "goldCost": 2000,
+      "tabColor": [
+        255,
+        150,
+        100
+      ],
+      "techPointCost": 3000,
+      "counter": 5,
+      "needTech": 33
+    },
+    "35": {
+      "Id": 35,
+      "Name": "整备政令",
+      "desc": "治安变得不容易下降",
+      "kind": 9,
+      "level": 2,
+      "col": 2,
+      "row": 8,
+      "needAttr": 3,
+      "goldCost": 3000,
+      "tabColor": [
+        255,
+        150,
+        100
+      ],
+      "techPointCost": 5000,
+      "counter": 7,
+      "needTech": 34
+    },
+    "36": {
+      "Id": 36,
+      "Name": "掌握人心",
+      "desc": "麾下武将的忠诚变得不容易下降",
+      "kind": 9,
+      "level": 3,
+      "col": 3,
+      "row": 8,
+      "needAttr": 3,
+      "goldCost": 5000,
+      "tabColor": [
+        255,
+        150,
+        100
+      ],
+      "techPointCost": 8000,
+      "counter": 10,
+      "needTech": 35
+    },
+    "37": {
+      "Id": 37,
+      "Name": "测试1",
+      "desc": "以枪兵攻击时，夺取敌方部队的兵粮",
+      "kind": 1,
+      "level": 2,
+      "col": 1,
+      "row": 0,
+      "needAttr": 0,
+      "goldCost": 2000,
+      "tabColor": [
+        255,
+        100,
+        100
+      ],
+      "techPointCost": 3000,
+      "counter": 4,
+      "needTech": 1
+    },
+    "38": {
+      "Id": 38,
+      "Name": "测试2",
+      "desc": "以枪兵攻击时，夺取敌方部队的兵粮",
+      "kind": 1,
+      "level": 2,
+      "col": 1,
+      "row": 0,
+      "needAttr": 0,
+      "goldCost": 2000,
+      "tabColor": [
+        255,
+        100,
+        100
+      ],
+      "techPointCost": 3000,
+      "counter": 4,
+      "needTech": 1
+    },
+    "39": {
+      "Id": 39,
+      "Name": "测试3",
+      "desc": "以枪兵攻击时，夺取敌方部队的兵粮",
+      "kind": 1,
+      "level": 3,
+      "col": 1,
+      "row": 0,
+      "needAttr": 0,
+      "goldCost": 2000,
+      "tabColor": [
+        255,
+        100,
+        100
+      ],
+      "techPointCost": 3000,
+      "counter": 4,
+      "needTech": 1
+    },
+    "40": {
+      "Id": 40,
+      "Name": "测试4",
+      "desc": "以枪兵攻击时，夺取敌方部队的兵粮",
+      "kind": 1,
+      "level": 3,
+      "col": 1,
+      "row": 0,
+      "needAttr": 0,
+      "goldCost": 2000,
+      "tabColor": [
+        255,
+        100,
+        100
+      ],
+      "techPointCost": 3000,
+      "counter": 4,
+      "needTech": 1
+    },
+    "41": {
+      "Id": 41,
+      "Name": "测试5",
+      "desc": "以枪兵攻击时，夺取敌方部队的兵粮",
+      "kind": 1,
+      "level": 3,
+      "col": 1,
+      "row": 0,
+      "needAttr": 0,
+      "goldCost": 2000,
+      "tabColor": [
+        255,
+        100,
+        100
+      ],
+      "techPointCost": 3000,
+      "counter": 4,
+      "needTech": 2
+    },
+    "42": {
+      "Id": 42,
+      "Name": "测试6",
+      "desc": "以枪兵攻击时，夺取敌方部队的兵粮",
+      "kind": 1,
+      "level": 3,
+      "col": 1,
+      "row": 0,
+      "needAttr": 0,
+      "goldCost": 2000,
+      "tabColor": [
+        255,
+        100,
+        100
+      ],
+      "techPointCost": 3000,
+      "counter": 4,
+      "needTech": 2
+    },
+    "43": {
+      "Id": 43,
+      "Name": "测试7",
+      "desc": "以枪兵攻击时，夺取敌方部队的兵粮",
+      "kind": 1,
+      "level": 3,
+      "col": 1,
+      "row": 0,
+      "needAttr": 0,
+      "goldCost": 2000,
+      "tabColor": [
+        255,
+        100,
+        100
+      ],
+      "techPointCost": 3000,
+      "counter": 4,
+      "needTech": 3
+    },
+    "44": {
+      "Id": 44,
+      "Name": "测试8",
+      "desc": "以枪兵攻击时，夺取敌方部队的兵粮",
+      "kind": 1,
+      "level": 3,
+      "col": 1,
+      "row": 0,
+      "needAttr": 0,
+      "goldCost": 2000,
+      "tabColor": [
+        255,
+        100,
+        100
+      ],
+      "techPointCost": 3000,
+      "counter": 4,
+      "needTech": 3
     }
   },
   "TerrainTypes": {
