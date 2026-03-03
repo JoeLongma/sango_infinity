@@ -7,7 +7,7 @@ namespace Sango.Game.Render.UI
     public class UICitySearching : UGUIWindow
     {
         public Text windiwTitle;
-        public Text personCountLabel;
+        public UITextField personCountLabel;
 
         public UIPersonItem personItems;
         public UITextField action_value;

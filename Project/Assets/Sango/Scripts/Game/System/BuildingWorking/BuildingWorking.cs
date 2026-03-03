@@ -9,7 +9,7 @@ namespace Sango.Game
     /// 建筑工作模块
     /// 可指派武将到建筑工作以提升建筑的功能产出
     /// </summary>
-    [GameSystem(order = 100)]
+    [GameSystem(auto = true, order = 100)]
     public class BuildingWorking : GameSystem
     {
         public Building TargetBuilding { get; set; }

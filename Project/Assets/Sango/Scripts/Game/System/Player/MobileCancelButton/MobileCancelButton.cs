@@ -3,6 +3,7 @@
     /// <summary>
     /// 移动端的一个取消按钮
     /// </summary>
+    [GameSystem(auto = true)]
     public class MobileCancelButton : GameSystem
     {
         public override void Init()

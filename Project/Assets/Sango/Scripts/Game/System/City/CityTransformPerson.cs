@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
+    [GameSystem(auto = true)]
     public class CityTransformPerson : CityBaseSystem
     {
         public List<City> transformTo = new List<City>();
@@ -43,6 +44,12 @@ namespace Sango.Game.Player
                 CitySortFunction.SortByLevel,
             };
         }
+
+        protected override bool MenuCanShow()
+        {
+            return true;
+        }
+
 
         public override bool IsValid
         {

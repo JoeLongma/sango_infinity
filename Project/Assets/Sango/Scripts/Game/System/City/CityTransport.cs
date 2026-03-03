@@ -1,60 +1,39 @@
 ﻿using Sango.Game.Render.UI;
 using System;
 using System.Collections.Generic;
-using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Player
 {
-    public class CityTransport : CommandSystemBase
+    [GameSystem(auto = true)]
+    public class CityTransport : CityBaseSystem
     {
-        public City TargetCity { get; set; }
-        public List<Person> personList = new List<Person>();
-
-        string windowName = "window_city_create_transport";
-        public string customTitleName = "运输";
-        public List<ObjectSortTitle> customTitleList = new List<ObjectSortTitle>()
+        public CityTransport()
         {
-            PersonSortFunction.SortByName,
-            PersonSortFunction.SortByLevel,
-            PersonSortFunction.SortByTroopsLimit,
-            PersonSortFunction.SortByCommand,
-            PersonSortFunction.SortByStrength,
-            PersonSortFunction.SortByIntelligence,
-            PersonSortFunction.SortByPolitics,
-            PersonSortFunction.SortByGlamour,
-            PersonSortFunction.SortBySpearLv,
-            PersonSortFunction.SortByHalberdLv,
-            PersonSortFunction.SortByCrossbowLv,
-            PersonSortFunction.SortByRideLv,
-            PersonSortFunction.SortByWaterLv,
-            PersonSortFunction.SortByMachineLv,
-            PersonSortFunction.SortByFeatureList,
-        };
+            customTitleName = "运输";
+            customTitleList = new List<ObjectSortTitle>()
+            {
+                PersonSortFunction.SortByName,
+                PersonSortFunction.SortByLevel,
+                PersonSortFunction.SortByTroopsLimit,
+                PersonSortFunction.SortByCommand,
+                PersonSortFunction.SortByStrength,
+                PersonSortFunction.SortByIntelligence,
+                PersonSortFunction.SortByPolitics,
+                PersonSortFunction.SortByGlamour,
+                PersonSortFunction.SortBySpearLv,
+                PersonSortFunction.SortByHalberdLv,
+                PersonSortFunction.SortByCrossbowLv,
+                PersonSortFunction.SortByRideLv,
+                PersonSortFunction.SortByWaterLv,
+                PersonSortFunction.SortByMachineLv,
+                PersonSortFunction.SortByFeatureList,
+            };
+            customMenuName = "军事/运输";
+            customMenuOrder = 110;
+            windowName = "window_city_create_transport";
+        }
 
         public Troop TargetTroop { get; set; }
-
-        public override void Init()
-        {
-            GameEvent.OnCityContextMenuShow += OnCityContextMenuShow;
-        }
-
-        public override void Clear()
-        {
-            GameEvent.OnCityContextMenuShow -= OnCityContextMenuShow;
-        }
-
-        void OnCityContextMenuShow(IContextMenuData menuData, City city)
-        {
-            TargetCity = city;
-            if (city.BelongForce != null && city.BelongForce.IsPlayer && city.BelongForce == Scenario.Cur.CurRunForce)
-                menuData.Add("军事/运输", 110, city, OnClickMenuItem, IsValid);
-        }
-
-        void OnClickMenuItem(IContextMenuItem contextMenuItem)
-        {
-            TargetCity = contextMenuItem.CustomData as City;
-            GameSystemManager.Instance.Push(this);
-        }
 
         public override bool IsValid
         {
@@ -64,7 +43,7 @@ namespace Sango.Game.Player
                     TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.MakeTansport);
             }
         }
-        public void UpdateJobValue()
+        public override void UpdateJobValue()
         {
             if (personList.Count == 0) return;
 
@@ -86,7 +65,7 @@ namespace Sango.Game.Player
 
             if (leader != null)
                 personList.Add(leader);
-            
+
             TargetTroop.morale = TargetCity.morale;
             TargetTroop.MaxMorale = TargetCity.MaxMorale;
             TargetTroop.energy = TargetCity.energy;
@@ -103,11 +82,6 @@ namespace Sango.Game.Player
             TargetTroop.missionType = (int)MissionType.TroopTransformGoodsToCity;
             TargetTroop.CalculateAttribute(Scenario.Cur);
             Window.Instance.Open(windowName);
-        }
-
-        public override void OnDestroy()
-        {
-            Window.Instance.Close(windowName);
         }
 
         public void MakeTroop()
@@ -140,17 +114,6 @@ namespace Sango.Game.Player
             if (whoGone is ObjectSelectSystem) return;
             Window.Instance.SetVisible(windowName, true);
             TargetTroop.EnterCity(TargetCity);
-        }
-
-        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)
-        {
-            switch (eventType)
-            {
-                case CommandEventType.Cancel:
-                case CommandEventType.RClickUp:
-                    GameSystemManager.Instance.Back(); break;
-            }
-
         }
     }
 }

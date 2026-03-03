@@ -7,6 +7,7 @@ namespace Sango.Game.Player
     /// <summary>
     /// 城市菜单系统
     /// </summary>
+    [GameSystem(auto = true)]
     public class CitySystem : GameSystem
     {
         public override void Init()

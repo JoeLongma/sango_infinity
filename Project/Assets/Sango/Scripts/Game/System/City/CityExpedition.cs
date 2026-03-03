@@ -5,32 +5,9 @@ using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Player
 {
-    public class CityExpedition : CommandSystemBase
+    [GameSystem(auto = true)]
+    public class CityExpedition : CityBaseSystem
     {
-        public City TargetCity { get; set; }
-        public List<Person> personList = new List<Person>();
-
-        string windowName = "window_city_create_troop";
-        public string customTitleName = "出征";
-        public List<ObjectSortTitle> customTitleList = new List<ObjectSortTitle>()
-        {
-            PersonSortFunction.SortByName,
-            PersonSortFunction.SortByLevel,
-            PersonSortFunction.SortByTroopsLimit,
-            PersonSortFunction.SortByCommand,
-            PersonSortFunction.SortByStrength,
-            PersonSortFunction.SortByIntelligence,
-            PersonSortFunction.SortByPolitics,
-            PersonSortFunction.SortByGlamour,
-            PersonSortFunction.SortBySpearLv,
-            PersonSortFunction.SortByHalberdLv,
-            PersonSortFunction.SortByCrossbowLv,
-            PersonSortFunction.SortByRideLv,
-            PersonSortFunction.SortByWaterLv,
-            PersonSortFunction.SortByMachineLv,
-            PersonSortFunction.SortByFeatureList,
-        };
-
         public List<TroopType> ActivedLandTroopTypes = new List<TroopType>();
         public List<TroopType> ActivedWaterTroopTypes = new List<TroopType>();
 
@@ -39,27 +16,30 @@ namespace Sango.Game.Player
 
         public Troop TargetTroop { get; set; }
 
-        public override void Init()
+        public CityExpedition()
         {
-            GameEvent.OnCityContextMenuShow += OnCityContextMenuShow;
-        }
-
-        public override void Clear()
-        {
-            GameEvent.OnCityContextMenuShow -= OnCityContextMenuShow;
-        }
-
-        void OnCityContextMenuShow(IContextMenuData menuData, City city)
-        {
-            TargetCity = city;
-            if (city.BelongForce != null && city.BelongForce.IsPlayer && city.BelongForce == Scenario.Cur.CurRunForce)
-                menuData.Add("军事/出征", 100, city, OnClickMenuItem, IsValid);
-        }
-
-        void OnClickMenuItem(IContextMenuItem contextMenuItem)
-        {
-            TargetCity = contextMenuItem.CustomData as City;
-            GameSystemManager.Instance.Push(this);
+            customTitleName = "出征";
+            customTitleList = new List<ObjectSortTitle>()
+            {
+                PersonSortFunction.SortByName,
+                PersonSortFunction.SortByLevel,
+                PersonSortFunction.SortByTroopsLimit,
+                PersonSortFunction.SortByCommand,
+                PersonSortFunction.SortByStrength,
+                PersonSortFunction.SortByIntelligence,
+                PersonSortFunction.SortByPolitics,
+                PersonSortFunction.SortByGlamour,
+                PersonSortFunction.SortBySpearLv,
+                PersonSortFunction.SortByHalberdLv,
+                PersonSortFunction.SortByCrossbowLv,
+                PersonSortFunction.SortByRideLv,
+                PersonSortFunction.SortByWaterLv,
+                PersonSortFunction.SortByMachineLv,
+                PersonSortFunction.SortByFeatureList,
+            };
+            customMenuName = "军事/出征";
+            customMenuOrder = 100;
+            windowName = "window_city_create_troop";
         }
 
         public override bool IsValid
@@ -70,7 +50,7 @@ namespace Sango.Game.Player
                     TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.MakeTroop);
             }
         }
-        public void UpdateJobValue()
+        public override void UpdateJobValue()
         {
             if (personList.Count == 0) return;
 
@@ -130,12 +110,7 @@ namespace Sango.Game.Player
             Window.Instance.Open(windowName);
         }
 
-        public override void OnDestroy()
-        {
-            Window.Instance.Close(windowName);
-        }
-
-        public void MakeTroop()
+        public override void DoJob()
         {
             if (TargetTroop.troops <= 0) return;
             if (TargetTroop.food <= 0) return;
@@ -252,17 +227,6 @@ namespace Sango.Game.Player
 
             TargetTroop.troops = maxTroopNum;
             TargetTroop.food = food;
-        }
-
-        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)
-        {
-            switch (eventType)
-            {
-                case CommandEventType.Cancel:
-                case CommandEventType.RClickUp:
-                    GameSystemManager.Instance.Back(); break;
-            }
-
         }
     }
 }

@@ -122,7 +122,7 @@ namespace Sango.Game.Render.UI
 
         public void OnOK()
         {
-            cityExpeditionSys.MakeTroop();
+            cityExpeditionSys.DoJob();
         }
 
         public void OnBuildTroopType1()

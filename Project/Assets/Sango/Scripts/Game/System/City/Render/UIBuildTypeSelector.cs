@@ -146,7 +146,7 @@ namespace Sango.Game.Render.UI
 
         public void OnSelectBuildingType(BuildingType targetBuildingType)
         {
-            buildCountLabel.text = $"{buildBuildingSys.wonderBuildCounter}回";
+            buildCountLabel.text = $"{buildBuildingSys.wonderNumber}回";
             cityGoldLabel.text = $"{targetBuildingType.cost}/{buildBuildingSys.TargetCity.gold}";
 
             durabilityLabel.text = targetBuildingType.durabilityLimit.ToString();
@@ -181,7 +181,7 @@ namespace Sango.Game.Render.UI
             buildBuildingSys.personList = personList;
 
             buildBuildingSys.UpdateJobValue();
-            buildCountLabel.text = $"{buildBuildingSys.wonderBuildCounter}回";
+            buildCountLabel.text = $"{buildBuildingSys.wonderNumber}回";
 
             for (int i = 0; i < personItems.Length; ++i)
             {

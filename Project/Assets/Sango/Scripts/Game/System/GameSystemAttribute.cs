@@ -13,9 +13,9 @@ namespace Sango.Game
     public class GameSystemAttribute : Attribute
     {
         /// <summary>
-        /// 是否忽略创建,为true则不会创建
+        /// 是否自动创建,默认不会创建
         /// </summary>
-        public bool ignore;
+        public bool auto;
 
         /// <summary>
         /// 排序标志, 越小越前面, nickName相同则只会创建order最大的

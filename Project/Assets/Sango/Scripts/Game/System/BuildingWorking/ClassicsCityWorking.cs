@@ -11,7 +11,7 @@ namespace Sango.Game
     /// 经典内政系统
     /// 可指派武将到建筑工作以提升建筑的功能产出
     /// </summary>
-    [GameSystem(order = 99)]
+    [GameSystem(auto = true, order = 99)]
     public class ClassicsCityWorking : GameSystem
     {
         public Building TargetBuilding { get; set; }

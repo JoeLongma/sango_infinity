@@ -4,7 +4,8 @@ using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Player
 {
-    public class CityTrade : CityComandBase
+    [GameSystem(auto = true)]
+    public class CityTrade : CityBaseSystem
     {
         public CityTrade()
         {
@@ -16,7 +17,7 @@ namespace Sango.Game.Player
             };
             customMenuName = "都市/商人";
             customMenuOrder = 25;
-            windowName = "window_city_command_base";
+            windowName = "window_city_trade";
         }
 
         public override bool IsValid
@@ -31,29 +32,12 @@ namespace Sango.Game.Player
             }
         }
 
-        protected override void OnUIInit()
-        {
-            base.OnUIInit();
-            targetUI.title_value.gameObject.SetActive(true);
-            targetUI.value_value.gameObject.SetActive(true);
-            targetUI.title_gold.gameObject.SetActive(true);
-            targetUI.value_gold.gameObject.SetActive(true);
-
-            targetUI.title_value.text = "治安";
-            targetUI.title_gold.text = "资金";
-            targetUI.value_value.text = $"{TargetCity.security}→{TargetCity.security + wonderNumber}";
-            targetUI.value_gold.text = $"{TargetCity.GetJobCost(CityJobType.Inspection)}/{TargetCity.gold}";
-
-            targetUI.action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.TradeFood)}/{TargetCity.BelongCorps.ActionPoint}";
-
-        }
-
         public override int CalculateWonderNumber()
         {
             return TargetCity.JobInspection(personList.ToArray(), true);
         }
 
-        public override void InitPersonList()
+        public override void RecommandPersonList()
         {
             personList.Clear();
             Person[] people = ForceAI.CounsellorRecommendInspection(TargetCity.freePersons);

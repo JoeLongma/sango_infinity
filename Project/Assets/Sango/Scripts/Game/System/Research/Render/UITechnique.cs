@@ -20,6 +20,7 @@ namespace Sango.Game.Render.UI
         public RectTransform titleNode;
 
         public Button sureBtn;
+        public Button personBtn;
 
         public UITextField techDesc;
         public UITextField techCount;
@@ -71,7 +72,11 @@ namespace Sango.Game.Render.UI
                 Technique technique = techItem.technique;
                 techItem.SetValid(technique.IsValid(targetForce)).SetCanResearch(technique.CanResearch(targetForce)).SetSelected(techItem == selectedItem);
             }
-            
+            personBtn.interactable = false;
+            for(int i = 0; i < 3; i++)
+            {
+                personItems[i].SetPerson(null);
+            }
             actionPointValue.text = $"{JobType.GetJobCostAP((int)CityJobType.Research)}/{techniqueResearchSys.TargetCity.BelongCorps.ActionPoint}";
 
         }
@@ -95,6 +100,7 @@ namespace Sango.Game.Render.UI
                 selectedItem.SetSelected(false);
             }
             techniqueItem.SetSelected(true);
+            personBtn.interactable = true;
             selectedItem = techniqueItem;
             selectTech = techniqueItem.technique;
 

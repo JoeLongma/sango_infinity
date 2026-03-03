@@ -52,9 +52,9 @@ namespace Sango.Game
             {
                 GameSystemAttribute moduleAttribute = type.GetCustomAttribute<GameSystemAttribute>(false);
                 if (moduleAttribute == null)
-                    moduleAttribute = new GameSystemAttribute() { order = 0, ignore = false, nickName = type.Name };
+                    continue;
 
-                if (moduleAttribute.ignore)
+                if (!moduleAttribute.auto)
                     continue;
 
                 if (string.IsNullOrEmpty(moduleAttribute.nickName))

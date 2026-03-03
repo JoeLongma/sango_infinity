@@ -11,7 +11,7 @@ namespace Sango.Game.Render.UI
     /// </summary>
     public class UIGameSaveLoad : UGUIWindow
     {
-        bool isSave = false;
+        int sysType = 0;
         public int curShowPage = -1;
         public int CountInPage = 8;
         public int curSelectIndex = -1;
@@ -32,6 +32,7 @@ namespace Sango.Game.Render.UI
         List<GameObject> cityList = new List<GameObject>();
         ShortScenario newestData;
         UIScenarioSaveItem curSelectedItem;
+        bool isSave => sysType == 0;
 
         public override void OnShow(params object[] objects)
         {
@@ -40,7 +41,7 @@ namespace Sango.Game.Render.UI
 #else
             curSelectIndex = 0;
 #endif
-            isSave = (bool)objects[0];
+            sysType = (int)objects[0];
             titleLabel.text = isSave ? "储存" : "读档";
             long t = 0;
             // 遍历存档列表，找到最新的存档
@@ -342,8 +343,15 @@ namespace Sango.Game.Render.UI
         public void OnReturn()
         {
             Clear();
+
             if (isSave) Singleton<GameSave>.Instance.Done();
             else Singleton<GameLoad>.Instance.Done();
+
+            if (sysType == 2)
+            {
+                Hide();
+                return;
+            }
         }
 
         //public void OnPage1(bool select) { if (select) ShowPage(0); }

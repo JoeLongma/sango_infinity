@@ -27,7 +27,7 @@ namespace Sango.Game.Render.UI
 
         public void OnLoadGame()
         {
-            Window.Instance.Open("window_scenario_save", false);
+            Window.Instance.Open("window_scenario_save", 2);
         }
 
         public void OnTest()

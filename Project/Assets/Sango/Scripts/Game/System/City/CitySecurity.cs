@@ -7,7 +7,7 @@ namespace Sango.Game
     /// <summary>
     /// 城池治安系统逻辑
     /// </summary>
-    [GameSystem(order = 100)]
+    [GameSystem(auto = true, order = 100)]
     public class CitySecurity : GameSystem
     {
         /// <summary>

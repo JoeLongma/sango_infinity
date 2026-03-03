@@ -2,6 +2,7 @@
 
 namespace Sango.Game.Player
 {
+    [GameSystem(auto = true)]
     public class CityCallPerson : CityBaseSystem
     {
         public CityCallPerson()
@@ -31,6 +32,10 @@ namespace Sango.Game.Player
             customMenuOrder = 211;
             windowName = "window_city_person_call";
 
+        }
+        protected override bool MenuCanShow()
+        {
+            return true;
         }
 
         public override bool IsValid

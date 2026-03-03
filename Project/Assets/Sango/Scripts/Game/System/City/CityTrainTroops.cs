@@ -1,10 +1,8 @@
-﻿using Sango.Game.Render.UI;
-using System.Collections.Generic;
-using static Sango.Game.PersonSortFunction;
+﻿using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
-    public class CityTrainTroops : CityComandBase
+    public class CityTrainTroops : CityBaseSystem
     {
         public CityTrainTroops()
         {
@@ -16,7 +14,7 @@ namespace Sango.Game.Player
             };
             customMenuName = "军事/训练";
             customMenuOrder = 103;
-            windowName = "window_city_command_base";
+            windowName = "window_city_train_troops";
         }
 
         protected override bool MenuCanShow()
@@ -35,26 +33,12 @@ namespace Sango.Game.Player
             }
         }
 
-        protected override void OnUIInit()
-        {
-            base.OnUIInit();
-            targetUI.title_value.gameObject.SetActive(true);
-            targetUI.value_value.gameObject.SetActive(true);
-
-            int destValue = TargetCity.morale + wonderNumber;
-            if (destValue > TargetCity.MaxMorale)
-                destValue = TargetCity.MaxMorale;
-
-            targetUI.title_value.text = "士气";
-            targetUI.value_value.text = $"{TargetCity.morale}→{destValue}";
-        }
-
         public override int CalculateWonderNumber()
         {
             return TargetCity.JobTrainTroops(personList.ToArray(), true);
         }
 
-        public override void InitPersonList()
+        public override void RecommandPersonList()
         {
             personList.Clear();
             Person[] people = ForceAI.CounsellorRecommendTrainTroops(TargetCity.freePersons);

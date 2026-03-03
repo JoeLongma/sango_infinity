@@ -1,39 +1,31 @@
-﻿using Sango.Game.Render.UI;
-using Sango.Render;
+﻿using Sango.Render;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Sango.Game.Player
 {
-    public class CityBuildBuilding : CommandSystemBase
+    [GameSystem(auto = true)]
+    public class CityBuildBuilding : CityBaseSystem
     {
-        public City TargetCity { get; set; }
         public Cell TargetCell { get; set; }
         public MapObject SelectBuildingObject { get; set; }
         public List<Cell> buildRangeCell = new List<Cell>();
         public List<BuildingType> canBuildBuildingType = new List<BuildingType>();
 
-        public List<Person> personList = new List<Person>();
-        public int wonderBuildCounter = 0;
-
-        public string customTitleName = "开发";
-        public List<ObjectSortTitle> customTitleList = new List<ObjectSortTitle>()
-        {
-            PersonSortFunction.SortByName,
-            PersonSortFunction.SortByPolitics,
-        };
-
         public BuildingType TargetBuildingType { get; set; }
 
-        public override void Init()
+        public CityBuildBuilding()
         {
-            GameEvent.OnCityContextMenuShow += OnCityContextMenuShow;
-        }
-
-        public override void Clear()
-        {
-            GameEvent.OnCityContextMenuShow -= OnCityContextMenuShow;
+            customTitleName = "开发";
+            customTitleList = new List<ObjectSortTitle>()
+            {
+                PersonSortFunction.SortByName,
+                PersonSortFunction.SortByPolitics,
+            };
+            customMenuName = "都市/开发";
+            customMenuOrder = 0;
+            windowName = "window_city_trade";
         }
 
         public override bool IsValid
@@ -48,20 +40,6 @@ namespace Sango.Game.Player
                     && TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.Build);
             }
         }
-
-        void OnCityContextMenuShow(IContextMenuData menuData, City city)
-        {
-            TargetCity = city;
-            if (city.IsCity() && city.BelongForce != null && city.BelongForce.IsPlayer && city.BelongForce == Scenario.Cur.CurRunForce)
-                menuData.Add("都市/开发", 0, city, OnClickMenuItem, IsValid);
-        }
-
-        void OnClickMenuItem(IContextMenuItem contextMenuItem)
-        {
-            TargetCity = contextMenuItem.CustomData as City;
-            GameSystemManager.Instance.Push(this);
-        }
-
         void InitCanBuildingTypes()
         {
             canBuildBuildingType.Clear();
@@ -74,14 +52,14 @@ namespace Sango.Game.Player
             });
         }
 
-        public void UpdateJobValue()
+        public override void UpdateJobValue()
         {
             if (personList.Count <= 0)
                 return;
 
             int buildAbility = GameUtility.Method_PersonBuildAbility(personList.ToArray());
             int turnCount = TargetBuildingType.durabilityLimit % buildAbility == 0 ? 0 : 1;
-            wonderBuildCounter = Math.Min(Scenario.Cur.Variables.BuildMaxTurn, TargetBuildingType.durabilityLimit / buildAbility + turnCount);
+            wonderNumber = Math.Min(Scenario.Cur.Variables.BuildMaxTurn, TargetBuildingType.durabilityLimit / buildAbility + turnCount);
         }
 
         public override void OnEnter()
@@ -208,11 +186,11 @@ namespace Sango.Game.Player
             }
         }
 
-        public void DoBuildBuilding()
+        public override void DoJob()
         {
             if (personList.Count <= 0)
                 return;
-            TargetCity.JobBuildBuilding(TargetCell, personList.ToArray(), TargetBuildingType, wonderBuildCounter);
+            TargetCity.JobBuildBuilding(TargetCell, personList.ToArray(), TargetBuildingType, wonderNumber);
         }
 
         protected void ShowBuildRange()
@@ -282,7 +260,7 @@ namespace Sango.Game.Player
                         if (buildRangeCell.Contains(cell) && cell.building == null)
                         {
                             TargetCell = cell;
-                            DoBuildBuilding();
+                            DoJob();
                             Done();
                         }
                         break;

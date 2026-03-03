@@ -11,7 +11,7 @@
 
         public override void OnEnter()
         {
-            Window.WindowInterface windowInterface = Window.Instance.Open(windowName, false);
+            Window.WindowInterface windowInterface = Window.Instance.Open(windowName, 1);
         }
 
         public override void OnDestroy()

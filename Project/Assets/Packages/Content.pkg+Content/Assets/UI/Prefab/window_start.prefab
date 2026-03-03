@@ -502,8 +502,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\nBug\u6C47\u62A5\u5730\u5740:\u3010\u817E\u8BAF\u6587\u6863\u3011bug\u6C47\u603B\r:\n<color=#ff00ff>https://docs.qq.com/sheet/DY2h5bGVXeEtKUXpQ?tab=BB08J2</color>\n\n\u6B22\u8FCE\u5173\u6CE8\u3010<color=#ffff00>infility\u4E09\u56FD\u5FD7\u5427</color>\u3011\u8D34\u5427\u83B7\u53D6\u6700\u65B0\u6E38\u620F\u8D44\u8BAF\n\nQQ\u4EA4\u6D41\u7FA4:
-    <color=#00ff00>526620498</color>\n\n\n"
+  m_Text: "\nBug\u6C47\u62A5\u5730\u5740:\u3010\u817E\u8BAF\u6587\u6863\u3011bug\u6C47\u603B\r:\n<color=#ff00ff>https://docs.qq.com/sheet/DY2h5bGVXeEtKUXpQ?tab=BB08J2</color>\n\n\u6B22\u8FCE\u5173\u6CE8\u3010<color=#ffff00>infinity\u4E09\u56FD\u5FD7\u5427</color>\u3011\u8D34\u5427\u83B7\u53D6\u6700\u65B0\u6E38\u620F\u8D44\u8BAF\n\nQQ\u4EA4\u6D41\u7FA4:
+    <color=#00ff00>1085266330</color>\n\n\n"
 --- !u!114 &-279333457613969420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1715,7 +1715,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6362917048539030077
 RectTransform:
   m_ObjectHideFlags: 0

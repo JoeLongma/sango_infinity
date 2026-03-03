@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
-    [GameSystem(ignore = true)]
     public class CityBaseSystem : GameSystem
     {
         public City TargetCity { get; set; }
@@ -29,7 +28,7 @@ namespace Sango.Game.Player
 
         protected virtual bool MenuCanShow()
         {
-            return true;
+            return TargetCity.IsCity();
         }
 
         public virtual bool IsValid => true;

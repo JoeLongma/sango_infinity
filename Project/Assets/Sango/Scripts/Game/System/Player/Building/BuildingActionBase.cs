@@ -2,7 +2,6 @@
 
 namespace Sango.Game.Player
 {
-    [GameSystem(ignore = true)]
     public class BuildingActionBase : GameSystem
     {
         public virtual bool IsValid { get; protected set; }

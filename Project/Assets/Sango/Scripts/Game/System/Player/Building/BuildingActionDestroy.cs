@@ -5,6 +5,7 @@ namespace Sango.Game.Player
     /// <summary>
     /// 建筑拆除
     /// </summary>
+    [GameSystem(auto = true)]
     public class BuildingActionDestroy : BuildingActionBase
     {
         public BuildingActionDestroy()
