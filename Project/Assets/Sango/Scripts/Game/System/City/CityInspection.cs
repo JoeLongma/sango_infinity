@@ -1,10 +1,9 @@
-﻿using Sango.Game.Render.UI;
-using System.Collections.Generic;
-using static Sango.Game.PersonSortFunction;
+﻿using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
-    public class CityInspection : CityComandBase
+    [GameSystem(ignore = true)]
+    public class CityInspection : CityBaseSystem
     {
         public CityInspection()
         {
@@ -16,41 +15,19 @@ namespace Sango.Game.Player
             };
             customMenuName = "都市/巡视";
             customMenuOrder = 20;
-            windowName = "window_city_command_base";
+            windowName = "window_city_Inspection";
         }
 
         public override bool IsValid
         {
             get
             {
-                return TargetCity.freePersons.Count > 0 && 
+                return TargetCity.freePersons.Count > 0 &&
                     TargetCity.security < 100 &&
-                    TargetCity.CheckJobCost(CityJobType.Inspection) && 
-                    TargetCity.GetJobCounter((int)CityJobType.Inspection) == 0 
+                    TargetCity.CheckJobCost(CityJobType.Inspection) &&
+                    TargetCity.GetJobCounter((int)CityJobType.Inspection) == 0
                     && TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.Inspection);
             }
-        }
-
-        protected override void OnUIInit()
-        {
-            base.OnUIInit();
-            targetUI.title_value.gameObject.SetActive(true);
-            targetUI.value_value.gameObject.SetActive(true);
-            targetUI.title_gold.gameObject.SetActive(true);
-            targetUI.value_gold.gameObject.SetActive(true);
-
-            targetUI.title_value.text = "治安";
-            targetUI.title_gold.text = "资金";
-
-            int destValue = TargetCity.security + wonderNumber;
-            if (destValue > 100)
-                destValue = 100;
-
-            targetUI.value_value.text = $"{TargetCity.security}→{destValue}";
-            targetUI.value_gold.text = $"{TargetCity.GetJobCost(CityJobType.Inspection)}/{TargetCity.gold}";
-
-            targetUI.action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.Inspection)}/{TargetCity.BelongCorps.ActionPoint}";
-
         }
 
         public override int CalculateWonderNumber()
@@ -58,7 +35,7 @@ namespace Sango.Game.Player
             return TargetCity.JobInspection(personList.ToArray(), true);
         }
 
-        public override void InitPersonList()
+        public override void RecommandPersonList()
         {
             personList.Clear();
             Person[] people = ForceAI.CounsellorRecommendInspection(TargetCity.freePersons);

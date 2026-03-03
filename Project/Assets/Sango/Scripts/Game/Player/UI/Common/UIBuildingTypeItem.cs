@@ -7,6 +7,8 @@ namespace Sango.Game.Render.UI
     public class UIBuildingTypeItem : MonoBehaviour
     {
         public Image icon;
+        public Image icon1;
+        public GameObject titleObj;
         public Text nameLabel;
         public Text costLabel;
         public Text numLabel;
@@ -69,6 +71,8 @@ namespace Sango.Game.Render.UI
                 nameLabel.text = buildingType.Name;
                 costLabel.text = buildingType.cost.ToString();
                 icon.sprite = GameRenderHelper.LoadBuildingTypeIcon(buildingType.icon);
+                if (icon1 != null)
+                    icon1.sprite = icon.sprite;
                 numLabel.text = "";
             }
             return this;
@@ -89,6 +93,8 @@ namespace Sango.Game.Render.UI
                 nameLabel.text = itemType.Name;
                 costLabel.text = itemType.cost.ToString();
                 icon.sprite = GameRenderHelper.LoadBuildingTypeIcon(itemType.icon);
+                if (icon1 != null)
+                    icon1.sprite = icon.sprite;
                 numLabel.text = "";
                 icon.color = new Color(0.85f, 0.85f, 0.85f);
             }
@@ -110,6 +116,8 @@ namespace Sango.Game.Render.UI
                 nameLabel.text = troopType.Name;
                 costLabel.text = "";
                 icon.sprite = GameRenderHelper.LoadBuildingTypeIcon(troopType.icon);
+                if (icon1 != null)
+                    icon1.sprite = icon.sprite;
                 numLabel.text = "";
                 icon.color = new Color(0.85f, 0.85f, 0.85f);
             }

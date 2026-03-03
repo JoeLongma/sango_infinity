@@ -2,7 +2,8 @@
 
 namespace Sango.Game.Player
 {
-    public class CityCreateItems : CityComandBase
+    [GameSystem(ignore = true)]
+    public class CityCreateItems : CityBaseSystem
     {
         public class ItemTypeInfo
         {
@@ -139,7 +140,7 @@ namespace Sango.Game.Player
             return TurnAndDestNumber[1];
         }
 
-        public override void InitPersonList()
+        public override void RecommandPersonList()
         {
             personList.Clear();
             Person[] people = ForceAI.CounsellorRecommendCreateItems(TargetCity.freePersons);

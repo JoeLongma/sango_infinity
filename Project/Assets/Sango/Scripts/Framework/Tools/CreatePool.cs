@@ -47,6 +47,13 @@ namespace Sango
             instance_list.Clear();
         }
 
+        public T Get(int index)
+        {
+            if(index >= 0 && index < instance_list.Count)
+                return instance_list[index];
+            return null;
+        }
+
         public void Clear()
         {
             Reset();

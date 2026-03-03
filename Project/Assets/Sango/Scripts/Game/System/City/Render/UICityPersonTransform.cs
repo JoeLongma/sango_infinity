@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json.Utilities.LinqBridge;
-using Sango.Game.Player;
-using System;
+﻿using Sango.Game.Player;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
@@ -20,7 +18,6 @@ namespace Sango.Game.Render.UI
         public UITextField action_value;
         public Button sureBtn;
 
-        public System.Action initAction;
         CityTransformPerson currentSystem;
         public override void OnShow()
         {

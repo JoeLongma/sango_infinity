@@ -61,9 +61,9 @@ namespace Sango.Game.Player
         public void Save(int index)
         {
             string fileName = $"{Path.SaveRootPath}/Save/save{index+1}.json";
+            GameEvent.OnGameSave?.Invoke(Scenario.Cur, index);
             Scenario.Cur.Save(fileName);
             all_saved_scenario_list[index] = new ShortScenario(fileName);
-            GameEvent.OnGameSave?.Invoke(Scenario.Cur, index);
         }
 
         public void Load(int index)

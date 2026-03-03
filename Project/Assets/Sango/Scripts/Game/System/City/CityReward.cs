@@ -3,17 +3,9 @@ using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
-    public class CityReward : GameSystem
+    public class CityReward : CityBaseSystem
     {
-        public City TargetCity { get; set; }
-        public List<Person> personList = new List<Person>();
         public List<Person> targetList = new List<Person>();
-
-        public string customTitleName;
-        public List<ObjectSortTitle> customTitleList;
-        public string customMenuName;
-        public int customMenuOrder;
-        public string windowName;
 
         public CityReward()
         {
@@ -45,18 +37,7 @@ namespace Sango.Game.Player
 
         }
 
-
-        public override void Init()
-        {
-            GameEvent.OnCityContextMenuShow += OnCityContextMenuShow;
-        }
-
-        public override void Clear()
-        {
-            GameEvent.OnCityContextMenuShow -= OnCityContextMenuShow;
-        }
-
-        public bool IsValid
+        public override bool IsValid
         {
             get
             {
@@ -64,25 +45,9 @@ namespace Sango.Game.Player
             }
         }
 
-        protected virtual void OnCityContextMenuShow(IContextMenuData menuData, City city)
-        {
-            TargetCity = city;
-            if (TargetCity.IsCity() && city.BelongForce != null && city.BelongForce.IsPlayer && city.BelongForce == Scenario.Cur.CurRunForce)
-            {
-                menuData.Add(customMenuName, customMenuOrder, city, OnClickMenuItem, IsValid);
-            }
-        }
-
-        protected virtual void OnClickMenuItem(IContextMenuItem contextMenuItem)
-        {
-            TargetCity = contextMenuItem.CustomData as City;
-            GameSystemManager.Instance.Push(this);
-        }
-
         public override void OnEnter()
         {
             targetList.Clear();
-            personList.Clear();
             TargetCity.BelongForce.ForEachPerson(x =>
             {
                 if (x != TargetCity.BelongForce.Governor && x.BelongTroop == null && x.loyalty < 100)
@@ -91,35 +56,23 @@ namespace Sango.Game.Player
                 }
             });
             targetList.Sort((a, b) => -PersonSortFunction.SortByLoyalty.personSortFunc.Invoke(a, b));
-            Window.Instance.Open(windowName);
+            base.OnEnter();
         }
+
         public override void OnDestroy()
         {
             UIDialog.Close();
-            Window.Instance.Close(windowName);
+            base.OnDestroy();
         }
 
-        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)
-        {
-            switch (eventType)
-            {
-                case CommandEventType.Cancel:
-                case CommandEventType.RClickUp:
-                    {
-                        GameSystemManager.Instance.Back();
-                        break;
-                    }
-            }
-        }
 
-        public void DoJob()
+        public override void DoJob()
         {
             if (personList.Count <= 0)
                 return;
 
             TargetCity.JobRewardPersons(personList.ToArray());
-
-            Done();
+            base.Done();
         }
 
     }

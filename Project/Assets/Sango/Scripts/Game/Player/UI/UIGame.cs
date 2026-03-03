@@ -380,8 +380,8 @@ namespace Sango.Game.Render.UI
         {
             int count = Scenario.all_scenario_list.Count;
             string savePath = Path.ContentRootPath + $"/Scenario/scenario_save_{count}.json";
-            Scenario.Cur.Save(savePath);
             GameEvent.OnGameSave?.Invoke(Scenario.Cur, count);
+            Scenario.Cur.Save(savePath);
         }
 
         public void OnSave()

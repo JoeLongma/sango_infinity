@@ -31,6 +31,18 @@ namespace Sango.Game
             GameEvent.OnScenarioInit += OnScenarioInit;
             GameEvent.OnScenarioEnd += OnScenarioEnd;
             GameEvent.OnInitBuildingMiniPanel += OnInitBuildingMiniPanel;
+            GameEvent.OnGameSave += OnGameSave;
+
+        }
+
+        /// <summary>
+        /// 保存自定义数据
+        /// </summary>
+        /// <param name="scenario"></param>
+        /// <param name="index"></param>
+        void OnGameSave(Scenario scenario, int index)
+        {
+            scenario.Variables.SetExtensionData("WorkingType", selectedWorkingType);
         }
 
         public override void Clear()
@@ -39,10 +51,14 @@ namespace Sango.Game
             GameEvent.OnScenarioInit += OnScenarioInit;
             GameEvent.OnScenarioEnd += OnScenarioEnd;
             GameEvent.OnInitBuildingMiniPanel -= OnInitBuildingMiniPanel;
+            GameEvent.OnGameSave -= OnGameSave;
         }
 
         void OnScenarioInit(Scenario scenario)
         {
+            if (scenario.Variables.HasExtensionData("WorkingType"))
+                selectedWorkingType = scenario.Variables.GetExtensionData<int>("WorkingType");
+
             if (selectedWorkingType == 0)
             {
                 Singleton<ClassicsCityWorking>.Instance.Clear();
@@ -186,7 +202,7 @@ namespace Sango.Game
             if (b)
             {
                 string[] ts = GameLanguage.GetString(10000004).Split("/");
-                contextMenuItem.SetTitle(ts[ts.Length-1]);
+                contextMenuItem.SetTitle(ts[ts.Length - 1]);
                 AppointWorking(TargetCity, Scenario.Cur);
             }
             else

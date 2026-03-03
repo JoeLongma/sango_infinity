@@ -22,8 +22,8 @@ namespace Sango.Game
             // 增加建筑菜单
             Singleton<CityRecruitTroops>.Instance.Init();   // 征兵
             Singleton<CityCreateItems>.Instance.Init();
-            Singleton<CityDevelop>.Instance.Init();
-            Singleton<CityFarming>.Instance.Init();
+            //Singleton<CityDevelop>.Instance.Init();
+            //Singleton<CityFarming>.Instance.Init();
             Singleton<CityInspection>.Instance.Init();
             Singleton<CityTrainTroops>.Instance.Init();     // 训练
 
@@ -40,8 +40,8 @@ namespace Sango.Game
             // 增加建筑菜单
             Singleton<CityRecruitTroops>.Instance.Clear();   // 征兵
             Singleton<CityCreateItems>.Instance.Clear();
-            Singleton<CityDevelop>.Instance.Clear();
-            Singleton<CityFarming>.Instance.Clear();
+            //Singleton<CityDevelop>.Instance.Clear();
+            //Singleton<CityFarming>.Instance.Clear();
             Singleton<CityInspection>.Instance.Clear();
             Singleton<CityTrainTroops>.Instance.Clear();     // 训练
 

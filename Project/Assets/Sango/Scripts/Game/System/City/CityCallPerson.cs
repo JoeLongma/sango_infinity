@@ -2,9 +2,8 @@
 
 namespace Sango.Game.Player
 {
-    public class CityCallPerson : CityComandBase
+    public class CityCallPerson : CityBaseSystem
     {
-        List<ObjectSortTitle> citySortTitleList;
         public CityCallPerson()
         {
             customTitleName = "召唤";
@@ -30,13 +29,10 @@ namespace Sango.Game.Player
             };
             customMenuName = "人事/召唤";
             customMenuOrder = 211;
-            windowName = "window_city_command_base";
+            windowName = "window_city_person_call";
 
         }
-        protected override bool MenuCanShow()
-        {
-            return true;
-        }
+
         public override bool IsValid
         {
             get
@@ -47,26 +43,6 @@ namespace Sango.Game.Player
             }
         }
 
-        protected override void OnUIInit()
-        {
-            base.OnUIInit();
-            targetUI.person_extra_value.gameObject.SetActive(true);
-            targetUI.person_extra_value.text = $"{personList.Count}人";
-
-            targetUI.action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.CallPerson)}/{TargetCity.BelongCorps.ActionPoint}";
-
-        }
-
-        public override int CalculateWonderNumber()
-        {
-            return personList.Count;
-        }
-
-        public override void InitPersonList()
-        {
-            personList.Clear();
-        }
-
         public override void DoJob()
         {
             if (personList.Count == 0) return;
@@ -75,25 +51,7 @@ namespace Sango.Game.Player
             {
                 personList[i].TransformToCity(TargetCity);
             }
-            Done();
+            base.DoJob();
         }
-
-        public override void OnSelectPerson()
-        {
-            List<Person> list = new List<Person>();
-            TargetCity.BelongForce.ForEachCityBase(city =>
-            {
-                if (city != TargetCity)
-                {
-                    list.AddRange(city.freePersons);
-                }
-            });
-
-            Singleton<PersonSelectSystem>.Instance.Start(list,
-               personList, list.Count, OnPersonChange, customTitleList, customTitleName);
-
-        }
-
-
     }
 }

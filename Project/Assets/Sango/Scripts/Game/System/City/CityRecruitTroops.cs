@@ -1,10 +1,9 @@
-﻿using Sango.Game.Render.UI;
-using System.Collections.Generic;
-using static Sango.Game.PersonSortFunction;
+﻿using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
-    public class CityRecruitTroops : CityComandBase
+    [GameSystem(ignore = true)]
+    public class CityRecruitTroops : CityBaseSystem
     {
         public CityRecruitTroops()
         {
@@ -16,7 +15,7 @@ namespace Sango.Game.Player
             };
             customMenuName = "都市/征兵";
             customMenuOrder = 15;
-            windowName = "window_city_command_base";
+            windowName = "window_city_recruit_troops";
         }
 
         public override bool IsValid
@@ -30,35 +29,35 @@ namespace Sango.Game.Player
             }
         }
 
-        protected override void OnUIInit()
-        {
-            base.OnUIInit();
-            targetUI.title_value.gameObject.SetActive(true);
-            targetUI.value_value.gameObject.SetActive(true);
-            targetUI.title_gold.gameObject.SetActive(true);
-            targetUI.value_gold.gameObject.SetActive(true);
+        //protected override void OnUIInit()
+        //{
+        //    base.OnUIInit();
+        //    targetUI.title_value.gameObject.SetActive(true);
+        //    targetUI.value_value.gameObject.SetActive(true);
+        //    targetUI.title_gold.gameObject.SetActive(true);
+        //    targetUI.value_gold.gameObject.SetActive(true);
 
-            targetUI.title_value.text = "士兵";
-            targetUI.title_gold.text = "资金";
+        //    targetUI.title_value.text = "士兵";
+        //    targetUI.title_gold.text = "资金";
 
 
-            int destValue = TargetCity.troops + wonderNumber;
-            if (destValue > TargetCity.TroopsLimit)
-                destValue = TargetCity.TroopsLimit;
+        //    int destValue = TargetCity.troops + wonderNumber;
+        //    if (destValue > TargetCity.TroopsLimit)
+        //        destValue = TargetCity.TroopsLimit;
 
-            targetUI.value_value.text = $"{TargetCity.troops}→{destValue}";
-            targetUI.value_gold.text = $"{TargetCity.GetJobCost(CityJobType.RecuritTroops)}/{TargetCity.gold}";
+        //    targetUI.value_value.text = $"{TargetCity.troops}→{destValue}";
+        //    targetUI.value_gold.text = $"{TargetCity.GetJobCost(CityJobType.RecuritTroops)}/{TargetCity.gold}";
 
-            targetUI.action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.RecuritTroops)}/{TargetCity.BelongCorps.ActionPoint}";
+        //    targetUI.action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.RecuritTroops)}/{TargetCity.BelongCorps.ActionPoint}";
 
-        }
+        //}
 
         public override int CalculateWonderNumber()
         {
             return TargetCity.JobRecuritTroop(personList.ToArray(), true);
         }
 
-        public override void InitPersonList()
+        public override void RecommandPersonList()
         {
             personList.Clear();
             Person[] people = ForceAI.CounsellorRecommendRecuritTroop(TargetCity.freePersons);

@@ -194,6 +194,11 @@ namespace Sango.Game.Render.UI
         public void Load(int index)
         {
             ShortScenario scenario = Player.Player.Instance.all_saved_scenario_list[index];
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+            GameSystemManager.Instance.Done();
+            Player.Player.Instance.Load(index);
+            UIDialog.Close();
+#else
             string content = $"是否加载{index + 1}号存档？";
             UIDialog.Open(content, () =>
             {
@@ -201,6 +206,7 @@ namespace Sango.Game.Render.UI
                 Player.Player.Instance.Load(index);
                 UIDialog.Close();
             });
+#endif
         }
 
         public void ShowScenario(int index)
