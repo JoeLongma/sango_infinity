@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace Sango.Game.Player
 {
-    public class TroopInteractiveDialog : CommandSystemBase
+    [GameSystem(auto = true)]
+    public class TroopInteractiveDialog : GameSystem
     {
         public List<Cell> MovePath;
         public Troop TargetTroop { get; set; }

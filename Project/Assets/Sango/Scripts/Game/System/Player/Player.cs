@@ -12,16 +12,6 @@ namespace Sango.Game.Player
     {
         public ShortScenario[] all_saved_scenario_list = new ShortScenario[50];
 
-        /// <summary>
-        /// 玩家系统集合
-        /// </summary>
-        Dictionary<string, CommandSystemBase> playerSystemMap = new Dictionary<string, CommandSystemBase>();
-
-        public void RegisterSystem(string name, CommandSystemBase system)
-        {
-            playerSystemMap[name] = system;
-        }
-
         public void Init()
         {
             //都市
@@ -34,10 +24,10 @@ namespace Sango.Game.Player
             //Singleton<TroopSystem>.Instance.Init();
 
             // 其他
-            Singleton<GameSave>.Instance.Init();
-            Singleton<GameLoad>.Instance.Init();
-            Singleton<GameBackToMain>.Instance.Init();
-            Singleton<PlayerEndTurn>.Instance.Init();
+            //Singleton<GameSave>.Instance.Init();
+            //Singleton<GameLoad>.Instance.Init();
+            //Singleton<GameBackToMain>.Instance.Init();
+            //Singleton<PlayerEndTurn>.Instance.Init();
 
             InitSaveFile();
         }

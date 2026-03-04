@@ -3,7 +3,8 @@ using Sango.Game.Render.UI;
 
 namespace Sango.Game.Player
 {
-    public class PersonRecruit : CommandSystemBase
+    [GameSystem(auto = true)]
+    public class PersonRecruit : GameSystem
     {
         public Person target;
         public Person recruitor;

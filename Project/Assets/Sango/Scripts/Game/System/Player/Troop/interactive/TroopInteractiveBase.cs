@@ -2,12 +2,14 @@
 
 namespace Sango.Game.Player
 {
-    public class TroopInteractiveBase : CommandSystemBase
+    [GameSystem(auto = true)]
+    public class TroopInteractiveBase : GameSystem
     {
         public Troop TargetTroop { get; set; }
         public Cell ActionCell { get; set; }
 
         public string content;
+        public virtual bool IsValid { get; protected set; }
 
         public override void Init()
         {

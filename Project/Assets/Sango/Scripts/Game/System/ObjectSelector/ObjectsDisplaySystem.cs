@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
-    public class ObjectsDisplaySystem : CommandSystemBase
+    [GameSystem(auto = true)]
+    public class ObjectsDisplaySystem : GameSystem
     {
         public List<SangoObject> Objects;
         protected PersonSortGroupType sangoObjectSortGroupType;

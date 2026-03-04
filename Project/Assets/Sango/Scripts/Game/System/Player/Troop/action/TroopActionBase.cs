@@ -2,10 +2,12 @@
 
 namespace Sango.Game.Player
 {
-    public class TroopActionBase : CommandSystemBase
+    [GameSystem(auto = true)]
+    public class TroopActionBase : GameSystem
     {
         public Troop TargetTroop { get; set; }
         public Cell ActionCell { get; set; }
+        public virtual bool IsValid { get; protected set; }
 
         public string customMenuName;
         public int customMenuOrder;

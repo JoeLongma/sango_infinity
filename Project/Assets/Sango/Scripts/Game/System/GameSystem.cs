@@ -12,6 +12,17 @@ namespace Sango.Game
     /// </summary>
     public class GameSystem : ICommandEvent
     {
+        public virtual void Push()
+        {
+            GameSystemManager.Instance.Push(this);
+        }
+
+        public virtual void Back()
+        {
+            if (GameSystemManager.Instance.CurrentCommand == this)
+                GameSystemManager.Instance.Back();
+        }
+
         /// <summary>
         /// 提供给外部获取的属性
         /// </summary>

@@ -2,7 +2,8 @@
 
 namespace Sango.Game.Player
 {
-    public class PlayerTurnStartGreeting : CommandSystemBase
+    [GameSystem(auto = true)]
+    public class PlayerTurnStartGreeting : GameSystem
     {
         public PlayerTurnStartGreeting()
         {

@@ -4,7 +4,7 @@ using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Player
 {
-    public class CityDevelop : CityComandBase
+    public class CityDevelop : CityBaseSystem
     {
         public CityDevelop()
         {
@@ -30,35 +30,35 @@ namespace Sango.Game.Player
             }
         }
 
-        protected override void OnUIInit()
-        {
-            base.OnUIInit();
-            targetUI.title_value.gameObject.SetActive(true);
-            targetUI.value_value.gameObject.SetActive(true);
-            targetUI.title_gold.gameObject.SetActive(true);
-            targetUI.value_gold.gameObject.SetActive(true);
+        //protected override void OnUIInit()
+        //{
+        //    base.OnUIInit();
+        //    targetUI.title_value.gameObject.SetActive(true);
+        //    targetUI.value_value.gameObject.SetActive(true);
+        //    targetUI.title_gold.gameObject.SetActive(true);
+        //    targetUI.value_gold.gameObject.SetActive(true);
 
-            targetUI.title_value.text = "商业";
-            targetUI.title_gold.text = "资金";
+        //    targetUI.title_value.text = "商业";
+        //    targetUI.title_gold.text = "资金";
 
-            int destValue = TargetCity.commerce + wonderNumber;
-            if (destValue > TargetCity.CommerceLimit)
-                destValue = TargetCity.CommerceLimit;
+        //    int destValue = TargetCity.commerce + wonderNumber;
+        //    if (destValue > TargetCity.CommerceLimit)
+        //        destValue = TargetCity.CommerceLimit;
 
-            targetUI.value_value.text = $"{TargetCity.commerce}→{destValue}";
-            targetUI.value_gold.text = $"{TargetCity.GetJobCost(CityJobType.Develop)}/{TargetCity.gold}";
+        //    targetUI.value_value.text = $"{TargetCity.commerce}→{destValue}";
+        //    targetUI.value_gold.text = $"{TargetCity.GetJobCost(CityJobType.Develop)}/{TargetCity.gold}";
 
-            targetUI.action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.Develop)}/{TargetCity.BelongCorps.ActionPoint}";
+        //    targetUI.action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.Develop)}/{TargetCity.BelongCorps.ActionPoint}";
 
 
-        }
+        //}
 
         public override int CalculateWonderNumber()
         {
             return TargetCity.JobDevelop(personList.ToArray(), true);
         }
 
-        public override void InitPersonList()
+        public override void RecommandPersonList()
         {
             personList.Clear();
             Person[] people = ForceAI.CounsellorRecommendDevelop(TargetCity.freePersons);

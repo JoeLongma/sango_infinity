@@ -41,6 +41,10 @@ namespace Sango.Game.Player
             customMenuOrder = 100;
             windowName = "window_city_create_troop";
         }
+        protected override bool MenuCanShow()
+        {
+            return true;
+        }
 
         public override bool IsValid
         {

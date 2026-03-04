@@ -4,7 +4,7 @@ using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Player
 {
-    public class CityFarming : CityComandBase
+    public class CityFarming : CityBaseSystem
     {
         public CityFarming()
         {
@@ -30,34 +30,34 @@ namespace Sango.Game.Player
             }
         }
 
-        protected override void OnUIInit()
-        {
-            base.OnUIInit();
-            targetUI.title_value.gameObject.SetActive(true);
-            targetUI.value_value.gameObject.SetActive(true);
-            targetUI.title_gold.gameObject.SetActive(true);
-            targetUI.value_gold.gameObject.SetActive(true);
+        //protected override void OnUIInit()
+        //{
+        //    base.OnUIInit();
+        //    targetUI.title_value.gameObject.SetActive(true);
+        //    targetUI.value_value.gameObject.SetActive(true);
+        //    targetUI.title_gold.gameObject.SetActive(true);
+        //    targetUI.value_gold.gameObject.SetActive(true);
 
-            targetUI.title_value.text = "农业";
-            targetUI.title_gold.text = "资金";
+        //    targetUI.title_value.text = "农业";
+        //    targetUI.title_gold.text = "资金";
 
-            int destValue = TargetCity.agriculture + wonderNumber;
-            if (destValue > TargetCity.AgricultureLimit)
-                destValue = TargetCity.AgricultureLimit;
+        //    int destValue = TargetCity.agriculture + wonderNumber;
+        //    if (destValue > TargetCity.AgricultureLimit)
+        //        destValue = TargetCity.AgricultureLimit;
 
-            targetUI.value_value.text = $"{TargetCity.agriculture}→{destValue}";
-            targetUI.value_gold.text = $"{TargetCity.GetJobCost(CityJobType.Farming)}/{TargetCity.gold}";
+        //    targetUI.value_value.text = $"{TargetCity.agriculture}→{destValue}";
+        //    targetUI.value_gold.text = $"{TargetCity.GetJobCost(CityJobType.Farming)}/{TargetCity.gold}";
 
-            targetUI.action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.Farming)}/{TargetCity.BelongCorps.ActionPoint}";
+        //    targetUI.action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.Farming)}/{TargetCity.BelongCorps.ActionPoint}";
 
-        }
+        //}
 
         public override int CalculateWonderNumber()
         {
             return TargetCity.JobFarming(personList.ToArray(), true);
         }
 
-        public override void InitPersonList()
+        public override void RecommandPersonList()
         {
             personList.Clear();
             Person[] people = ForceAI.CounsellorRecommendFarming(TargetCity.freePersons);

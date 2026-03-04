@@ -3,17 +3,13 @@ using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
-    public class CityRecruit : CommandSystemBase
+    [GameSystem(auto = true)]
+    public class CityRecruit : CityBaseSystem
     {
-        public City TargetCity { get; set; }
-        public List<Person> personList = new List<Person>();
         public string customTargetTitleName;
         public string customActionTitleName;
         public List<ObjectSortTitle> customTargetTitleList;
         public List<ObjectSortTitle> customActionTitleList;
-        public string customMenuName;
-        public int customMenuOrder;
-        public string windowName;
         public List<Person> targetList = new List<Person>();
         public List<Person> target = new List<Person>();
 
@@ -37,16 +33,6 @@ namespace Sango.Game.Player
 
         }
 
-        public override void Init()
-        {
-            GameEvent.OnCityContextMenuShow += OnCityContextMenuShow;
-        }
-
-        public override void Clear()
-        {
-            GameEvent.OnCityContextMenuShow -= OnCityContextMenuShow;
-        }
-
         public override bool IsValid
         {
             get
@@ -54,21 +40,6 @@ namespace Sango.Game.Player
                 return TargetCity.freePersons.Count > 0 &&
                     TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.RecuritPerson);
             }
-        }
-
-        protected virtual void OnCityContextMenuShow(IContextMenuData menuData, City city)
-        {
-            TargetCity = city;
-            if (TargetCity.IsCity() && city.BelongForce != null && city.BelongForce.IsPlayer && city.BelongForce == Scenario.Cur.CurRunForce)
-            {
-                menuData.Add(customMenuName, customMenuOrder, city, OnClickMenuItem, IsValid);
-            }
-        }
-
-        protected virtual void OnClickMenuItem(IContextMenuItem contextMenuItem)
-        {
-            TargetCity = contextMenuItem.CustomData as City;
-            GameSystemManager.Instance.Push(this);
         }
 
         public override void OnEnter()
@@ -128,18 +99,6 @@ namespace Sango.Game.Player
             Window.Instance.Close(windowName);
         }
 
-        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)
-        {
-            switch (eventType)
-            {
-                case CommandEventType.Cancel:
-                case CommandEventType.RClickUp:
-                    {
-                        GameSystemManager.Instance.Back();
-                        break;
-                    }
-            }
-        }
         public void SetTarget(List<Person> target)
         {
             this.target = target;
@@ -154,7 +113,7 @@ namespace Sango.Game.Player
             }
         }
 
-        public void DoJob()
+        public override void DoJob()
         {
             if (personList.Count <= 0 || target.Count <= 0)
                 return;

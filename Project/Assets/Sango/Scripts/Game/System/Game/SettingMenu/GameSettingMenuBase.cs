@@ -2,13 +2,11 @@
 
 namespace Sango.Game.Player
 {
-    public class GameSettingMenuBase : CommandSystemBase
+    public class GameSettingMenuBase : GameSystem
     {
         public string customMenuName;
         public int customMenuOrder;
         public string windowName;
-
-        public override bool IsValid => true;
 
         public override void Init()
         {
@@ -22,7 +20,7 @@ namespace Sango.Game.Player
 
         protected virtual void OnGameSettingContextMenuShow(IContextMenuData menuData)
         {
-             menuData.Add(customMenuName, customMenuOrder, null, OnClickMenuItem, IsValid);
+             menuData.Add(customMenuName, customMenuOrder, null, OnClickMenuItem);
         }
 
         protected virtual void OnClickMenuItem(IContextMenuItem contextMenuItem)

@@ -35,6 +35,11 @@ namespace Sango.Game.Player
 
         public Troop TargetTroop { get; set; }
 
+        protected override bool MenuCanShow()
+        {
+            return true;
+        }
+
         public override bool IsValid
         {
             get

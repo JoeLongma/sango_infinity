@@ -2,9 +2,10 @@
 
 namespace Sango.Game.Player
 {
-    public class PersonInfo : CommandSystemBase
+    [GameSystem(auto = true)]
+    public class PlayerEndTurn : GameSystem
     {
-        public PersonInfo() {
+        public PlayerEndTurn() {
             
         }
 

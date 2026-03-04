@@ -4,7 +4,9 @@ using ContextMenu = Sango.Game.Render.UI.ContextMenu;
 
 namespace Sango.Game.Player
 {
-    public class GameSettingSystem : CommandSystemBase
+    [GameSystem(auto = true)]
+
+    public class GameSettingSystem : GameSystem
     {
         public void Start(Vector3 startPoint)
         {

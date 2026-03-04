@@ -1,5 +1,6 @@
 ﻿namespace Sango.Game.Player
 {
+    [GameSystem(auto = true)]
     public class GameLoad : GameSettingMenuBase
     {
         public GameLoad()
