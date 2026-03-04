@@ -159,6 +159,7 @@ namespace Sango.Game.Render.UI
             itemList.Add(obj);
             obj.GetComponent<UITitleField>().Set(title);
             obj.SetActive(true);
+            obj.transform.SetAsLastSibling();
             return obj;
         }
 
@@ -178,6 +179,7 @@ namespace Sango.Game.Render.UI
             itemList.Add(obj);
             obj.GetComponent<UITitleField>().Set(title);
             obj.SetActive(true);
+            obj.transform.SetAsLastSibling();
             return obj;
         }
 
@@ -199,6 +201,7 @@ namespace Sango.Game.Render.UI
             itemList.Add(obj);
             obj.GetComponent<UIIntegerField>().Set(title, number, min, max, onChange);
             obj.SetActive(true);
+            obj.transform.SetAsLastSibling();
             return obj;
         }
 
@@ -218,6 +221,7 @@ namespace Sango.Game.Render.UI
             itemList.Add(obj);
             obj.GetComponent<UIFloatField>().Set(title, number, min, max, onChange);
             obj.SetActive(true);
+            obj.transform.SetAsLastSibling();
             return obj;
         }
 
@@ -237,6 +241,7 @@ namespace Sango.Game.Render.UI
             itemList.Add(obj);
             obj.GetComponent<UIIntegerSliderField>().Set(title, value, min, max, onValueChange);
             obj.SetActive(true);
+            obj.transform.SetAsLastSibling();
             return obj;
         }
 
@@ -256,6 +261,7 @@ namespace Sango.Game.Render.UI
             itemList.Add(obj);
             obj.GetComponent<UIFloatSliderField>().Set(title, value, min, max, onValueChange);
             obj.SetActive(true);
+            obj.transform.SetAsLastSibling();
             return obj;
         }
 
@@ -275,6 +281,7 @@ namespace Sango.Game.Render.UI
             itemList.Add(obj);
             obj.GetComponent<UIToggleField>().Set(title, value, onValueChange);
             obj.SetActive(true);
+            obj.transform.SetAsLastSibling();
             return obj;
         }
 
@@ -294,6 +301,7 @@ namespace Sango.Game.Render.UI
             itemList.Add(obj);
             obj.GetComponent<UIDropdownField>().Set(title, value, values, onValueChange);
             obj.SetActive(true);
+            obj.transform.SetAsLastSibling();
             return obj;
         }
 
@@ -313,6 +321,7 @@ namespace Sango.Game.Render.UI
             itemList.Add(obj);
             obj.GetComponent<UIToggleGroupField>().Set(title, value, values, onValueChange);
             obj.SetActive(true);
+            obj.transform.SetAsLastSibling();
             return obj;
         }
 
