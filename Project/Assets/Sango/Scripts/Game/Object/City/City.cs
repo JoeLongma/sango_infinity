@@ -349,6 +349,7 @@ namespace Sango.Game
 
         public int AddGold(int v)
         {
+            if (v == 0) return gold;
             gold += v;
             if (gold > GoldLimit)
                 gold = GoldLimit;
@@ -359,6 +360,7 @@ namespace Sango.Game
 
         public int AddFood(int v)
         {
+            if (v == 0) return food;
             food += v;
             if (food > FoodLimit)
                 food = FoodLimit;
@@ -368,6 +370,7 @@ namespace Sango.Game
         }
         public int AddTroops(int v)
         {
+            if (v == 0) return troops;
             troops += v;
             if (troops > TroopsLimit)
                 troops = TroopsLimit;
@@ -2721,6 +2724,9 @@ namespace Sango.Game
 
                 AddGold(-goldNum);
                 AddFood(totalValue);
+
+                Render?.ShowInfo(-goldNum, (int)InfoType.Gold);
+                Render?.ShowInfo(totalValue, (int)InfoType.Food);
 #if SANGO_DEBUG
                 Sango.Log.Print($"@内政@[{BelongForce.Name}]{person.Name}在<{Name}>花费{goldNum}交易到了{totalValue}粮食, 现有粮食:{food}");
 #endif
@@ -2732,6 +2738,9 @@ namespace Sango.Game
                     totalValue = goldLimit - gold;
                 AddGold(totalValue);
                 AddFood(goldNum);
+
+                Render?.ShowInfo(goldNum, (int)InfoType.Gold);
+                Render?.ShowInfo(totalValue, (int)InfoType.Food);
 
 #if SANGO_DEBUG
                 Sango.Log.Print($"@内政@[{BelongForce.Name}]{person.Name}在<{Name}>花费{-goldNum}交易到了{totalValue}资金, 现有资金:{gold}");

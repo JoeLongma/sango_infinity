@@ -60,7 +60,11 @@ namespace Sango.Game.Player
         {
             if (personList.Count > 0)
             {
-                TargetCity.JobTradeFood(personList.ToArray(), targetValue);
+                if (targetValue != 0)
+                {
+                    TargetCity.JobTradeFood(personList.ToArray(), targetValue);
+                   
+                }
                 Done();
             }
         }

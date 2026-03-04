@@ -8,7 +8,7 @@
 ## 安装HybridCLR参考[https://www.hybridclr.cn/docs/basic/install](https://www.hybridclr.cn/docs/basic/install)
 
 ## 第一次启动
-初始启动会有一个弹窗需要选择到Build文件夹，打包直接生成在Build文件夹即可。  
+初始启动会有一个弹窗需要选择到Build文件夹，打包直接生成在Build文件夹即可。如果当时未选中,游戏启动会报错找不到Mods文件夹，此时可通过菜单<Sango->工具->重设项目文件夹>重新选中Build文件夹即可  
 
 打包前需要选择菜单Sango->模组->资源包导出 会在Build/Package下生成资源包  
 

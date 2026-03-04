@@ -172,8 +172,8 @@ MonoBehaviour:
   targetPersonItems: {fileID: 806990651980900066}
   targetStatusItem: {fileID: 2143557156690790385}
   targetEffectValue: {fileID: 2563189639388342669}
-  targetGold: {fileID: 6044517506255999673}
-  targetFood: {fileID: 3311133201393639221}
+  targetGoldLabel: {fileID: 6044517506255999673}
+  targetFoodLabel: {fileID: 3311133201393639221}
   targetPercent: {fileID: 4372027684086792368}
   tradeSlider: {fileID: 915678068344700744}
   action_value: {fileID: 3842726730203427811}
@@ -1056,6 +1056,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0.06650543
       objectReference: {fileID: 0}
+    - target: {fileID: 7656195138066121513, guid: e64d8887c55cbb246b105bc7dfc5b54f, type: 3}
+      propertyPath: m_FontData.m_Alignment
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7942463515631351145, guid: e64d8887c55cbb246b105bc7dfc5b54f, type: 3}
       propertyPath: m_SizeDelta.x
       value: 74.117
@@ -1288,7 +1292,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2761087404555505171, guid: e64d8887c55cbb246b105bc7dfc5b54f, type: 3}
       propertyPath: m_Text
-      value: "\u8D44\u91D1"
+      value: "\u5175\u7CAE"
       objectReference: {fileID: 0}
     - target: {fileID: 2931458507376203425, guid: e64d8887c55cbb246b105bc7dfc5b54f, type: 3}
       propertyPath: m_AnchoredPosition.y

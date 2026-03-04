@@ -77,7 +77,7 @@ namespace Sango.Game.Render.UI
         public virtual void OnSelectPerson()
         {
             Singleton<PersonSelectSystem>.Instance.Start(TargetBuilding.BelongCity.freePersons,
-               selectedPersonList, 3, OnPersonChange, buildingWorking.customTitleList[TargetBuilding.BuildingType.effectAttrType], buildingWorking.customTitleName);
+               selectedPersonList, TargetBuilding.BuildingType.workerLimit, OnPersonChange, buildingWorking.customTitleList[TargetBuilding.BuildingType.effectAttrType], buildingWorking.customTitleName);
 
         }
 

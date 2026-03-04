@@ -12,8 +12,8 @@ namespace Sango.Game.Render.UI
         public UIPersonItem targetPersonItems;
         public UIStatusItem targetStatusItem;
         public UITextField targetEffectValue;
-        public UITextField targetGold;
-        public UITextField targetFood;
+        public UITextField targetGoldLabel;
+        public UITextField targetFoodLabel;
         public UITextField targetPercent;
         public Slider tradeSlider;
 
@@ -21,7 +21,8 @@ namespace Sango.Game.Render.UI
 
         City TargetCity;
         CityTrade currentSystem;
-        float trade_p = 0;
+        float totalFood = 0;
+        float currentP = 0;
         public Button sureButton;
 
         public override void OnShow()
@@ -29,23 +30,43 @@ namespace Sango.Game.Render.UI
             currentSystem = Singleton<CityTrade>.Instance;
             TargetCity = currentSystem.TargetCity;
             windiwTitle.text = currentSystem.customTitleName;
-            int gold = TargetCity.gold;
-            int food = TargetCity.food;
-            int totalFood = food + currentSystem.wonderNumber * gold * TargetCity.hasBusiness / 100;
-            trade_p = food / totalFood;
-            tradeSlider.SetValueWithoutNotify(trade_p);
+            totalFood = TargetCity.food + currentSystem.wonderNumber * TargetCity.gold * TargetCity.hasBusiness / 100;
+            currentP = TargetCity.food / totalFood;
+            tradeSlider.SetValueWithoutNotify(currentP);
+            action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.TradeFood)}/{TargetCity.BelongCorps.ActionPoint}";
+            targetPercent.text = $"1 : {TargetCity.hasBusiness}";
+            UpdatePerson();
             UpdateContent();
+        }
+
+        void UpdatePerson()
+        {
+            if (currentSystem.personList.Count > 0)
+            {
+                Person person = currentSystem.personList[0];
+                targetPersonItems.SetPerson(person);
+                targetStatusItem.SetPerson(person);
+            }
+            else
+            {
+                targetStatusItem.SetPerson(null);
+                targetPersonItems.SetPerson(null);
+            }
+
+            targetEffectValue.text = $"{currentSystem.wonderNumber}%";
         }
 
         public void UpdateContent()
         {
-            int count = currentSystem.personList.Count;
-            Person target = count > 0 ? currentSystem.personList[0] : null;
-            action_value.text = $"{count * JobType.GetJobCostAP((int)CityJobType.TradeFood)}/{TargetCity.BelongCorps.ActionPoint}";
-            sureButton.interactable = target != null;
-            targetPersonItems.SetPerson(target);
-            targetStatusItem.SetPerson(target);
-            targetGold.text = $"{(count * JobType.GetJobCost((int)CityJobType.TradeFood))}/{TargetCity.gold}";
+            int targetFood = (int)(totalFood * currentP);
+            int costGold = (int)((targetFood - TargetCity.food) / TargetCity.hasBusiness / currentSystem.wonderNumber * 100);
+            targetGoldLabel.text = $"{TargetCity.gold}→{TargetCity.gold - costGold}";
+            targetFoodLabel.text = $"{TargetCity.food}→{targetFood}";
+            if (costGold > 0)
+                currentSystem.targetValue = (int)costGold;
+            else
+                currentSystem.targetValue = -(TargetCity.food - targetFood);
+
         }
 
         public void OnSure()
@@ -68,6 +89,8 @@ namespace Sango.Game.Render.UI
         {
             currentSystem.personList = (personList);
             currentSystem.UpdateJobValue();
+            totalFood = TargetCity.food + currentSystem.wonderNumber * TargetCity.gold * TargetCity.hasBusiness / 100;
+            UpdatePerson();
             UpdateContent();
         }
 
@@ -78,7 +101,8 @@ namespace Sango.Game.Render.UI
 
         public void OnTradeSliderValueChanged(float p)
         {
-
+            currentP = p;
+            UpdateContent();
         }
     }
 }
