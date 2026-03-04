@@ -1,1 +1,1 @@
-无限三国.exe -console
+Infinity三国志.exe -console
