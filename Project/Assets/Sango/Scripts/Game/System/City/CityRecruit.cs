@@ -15,7 +15,9 @@ namespace Sango.Game.Player
 
         public CityRecruit()
         {
+
             customTargetTitleName = "登庸武将";
+            customTitleName = customTargetTitleName;
             customActionTitleName = "执行武将";
 
             customMenuName = "人事/登庸武将";

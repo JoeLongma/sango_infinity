@@ -565,6 +565,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0.99998474
       objectReference: {fileID: 0}
+    - target: {fileID: 2952306590412944044, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+      propertyPath: m_Text
+      value: "\u767B\u5EB8\u6B66\u5C06"
+      objectReference: {fileID: 0}
     - target: {fileID: 4047078994823135925, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

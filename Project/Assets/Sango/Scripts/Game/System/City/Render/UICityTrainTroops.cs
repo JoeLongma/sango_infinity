@@ -21,6 +21,7 @@ namespace Sango.Game.Render.UI
         public override void OnShow()
         {
             currentSystem = Singleton<CityTrainTroops>.Instance;
+            windiwTitle.text = currentSystem.customTitleName;
             TargetCity = currentSystem.TargetCity;
             UpdateContent();
         }

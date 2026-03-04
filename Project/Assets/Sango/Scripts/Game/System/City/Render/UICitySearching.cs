@@ -20,6 +20,7 @@ namespace Sango.Game.Render.UI
         public override void OnShow()
         {
             currentSystem = Singleton<CitySeraching>.Instance;
+            windiwTitle.text = currentSystem.customTitleName;
             TargetCity = currentSystem.TargetCity;
             personItems.SetPerson(null);
             if (currentSystem.personList.Count > 0 )

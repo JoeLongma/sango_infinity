@@ -43,6 +43,8 @@ namespace Sango.Game.Render.UI
 
         public void UpdateTroopState()
         {
+            if (troop.BelongForce == null) return;
+
             // 除开自己以外全部不显示
             if (troop.BelongForce.IsPlayer)
             {

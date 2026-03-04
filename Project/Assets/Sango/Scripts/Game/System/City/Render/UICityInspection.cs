@@ -22,6 +22,7 @@ namespace Sango.Game.Render.UI
         public override void OnShow()
         {
             currentSystem = Singleton<CityInspection>.Instance;
+            windiwTitle.text = currentSystem.customTitleName;
             TargetCity = currentSystem.TargetCity;
             UpdateContent();
         }

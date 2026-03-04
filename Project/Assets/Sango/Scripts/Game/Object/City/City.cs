@@ -979,6 +979,10 @@ namespace Sango.Game
 
         public bool ChangeTroops(int num, SangoObject atk, bool showDamage = true)
         {
+            // 白城直接占领
+            if (this.BelongForce == null)
+                return false;
+
             if (showDamage)
                 Render?.ShowInfo(num, (int)InfoType.Troop);
 
