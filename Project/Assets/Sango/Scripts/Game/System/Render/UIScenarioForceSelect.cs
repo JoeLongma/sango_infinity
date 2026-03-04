@@ -32,7 +32,7 @@ namespace Sango.Game.Render.UI
             forceInfo.text = "";
             playerList.Clear();
             ShortScenario scenario = ShortScenario.CurSelected;
-            nextBtn.interactable = false;
+            //nextBtn.interactable = false;
             int i = 0;
 
             foreach (var city in scenario.citySet.Values)
@@ -95,7 +95,7 @@ namespace Sango.Game.Render.UI
                 playerList.Remove(force);
             }
 
-            nextBtn.interactable = playerList.Count > 0;
+            //nextBtn.interactable = playerList.Count > 0;
 
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < playerList.Count; i++)

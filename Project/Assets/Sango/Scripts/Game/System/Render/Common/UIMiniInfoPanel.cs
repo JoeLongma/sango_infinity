@@ -64,19 +64,21 @@ namespace Sango.Game.Render.UI
                 corpsId.text = "-";
             }
         }
-        public void AddInfo(string title, string content)
+        public UITextField AddInfo(string title, string content)
         {
             UITextField textField = Create();
             textField.text = content;
             textField.titleLabel.text = title;
             textField.label.alignment = TextAnchor.MiddleCenter;
+            return textField;
         }
-        public void AddInfo(string title, string content, int alignment)
+        public UITextField AddInfo(string title, string content, int alignment)
         {
             UITextField textField = Create();
             textField.text = content;
             textField.titleLabel.text = title;
             textField.label.alignment = (TextAnchor)alignment;
+            return textField;
         }
     }
 }

@@ -27,10 +27,10 @@ using System;
 using System.Runtime.Serialization;
 using System.Reflection;
 using System.Globalization;
-using Newtonsoft.Json.Utilities;
+using TKNewtonsoft.Json.Utilities;
 using System.Collections.Generic;
 
-namespace Newtonsoft.Json.Serialization
+namespace TKNewtonsoft.Json.Serialization
 {
     /// <summary>
     /// The default serialization binder used when resolving and loading classes from type names.

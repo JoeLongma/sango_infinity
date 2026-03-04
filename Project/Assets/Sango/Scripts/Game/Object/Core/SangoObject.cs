@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using TKNewtonsoft.Json;
+using TKNewtonsoft.Json.Linq;
 using Sango.Game.Render;
 
 namespace Sango.Game

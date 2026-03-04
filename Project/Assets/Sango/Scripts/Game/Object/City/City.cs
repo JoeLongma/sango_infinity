@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using TKNewtonsoft.Json;
 using Sango.Game.Action;
 using Sango.Game.Render;
 using Sango.Game.Tools;
@@ -2678,11 +2678,10 @@ namespace Sango.Game
         /// <returns></returns>
         public bool JobTradeFood(Person[] personList, int goldNum)
         {
-            if (personList == null || personList.Length == 0 || goldNum <= 0) return false;
+            if (personList == null || personList.Length == 0 || goldNum == 0) return false;
+            if (hasBusiness == 0) return false;
 
             Scenario scenario = Scenario.Cur;
-
-            if (security < 60) return false;
 
             ScenarioVariables variables = scenario.Variables;
             int jobId = (int)CityJobType.TradeFood;
@@ -2712,127 +2711,42 @@ namespace Sango.Game
             techniquePointGain = overrideData.Value;
 
             // TODO : 城市粮价
-            totalValue = totalValue * goldNum * 5 / 100;
+            int p = hasBusiness;
 
-            if (totalValue + food > foodLimit)
-                totalValue = foodLimit - food;
+            if(goldNum > 0)
+            {
+                totalValue = totalValue * goldNum * p / 100;
+                if (totalValue + food > foodLimit)
+                    totalValue = foodLimit - food;
 
-            AddGold(-goldNum);
-            AddFood(totalValue);
+                AddGold(-goldNum);
+                AddFood(totalValue);
+#if SANGO_DEBUG
+                Sango.Log.Print($"@内政@[{BelongForce.Name}]{person.Name}在<{Name}>花费{goldNum}交易到了{totalValue}粮食, 现有粮食:{food}");
+#endif
+            }
+            else
+            {
+                totalValue = totalValue * (-goldNum / p) / 100;
+                if (totalValue + gold > goldLimit)
+                    totalValue = goldLimit - gold;
+                AddGold(totalValue);
+                AddFood(goldNum);
+
+#if SANGO_DEBUG
+                Sango.Log.Print($"@内政@[{BelongForce.Name}]{person.Name}在<{Name}>花费{-goldNum}交易到了{totalValue}资金, 现有资金:{gold}");
+#endif
+            }
+
             BelongCorps.ReduceActionPoint(JobType.GetJobCostAP(jobId));
 
             AddJobCounter(jobId);
 
             BelongForce.GainTechniquePoint(techniquePointGain);
-#if SANGO_DEBUG
-            Sango.Log.Print($"@内政@[{BelongForce.Name}]{person.Name}在<{Name}>花费{goldNum}交易到了{totalValue}粮食, 现有粮食:{food}");
-#endif
+
             ClearJobFeature();
             return true;
         }
-
-//        /// <summary>
-//        /// 研究
-//        /// </summary>
-//        /// <param name="personList"></param>
-//        /// <returns></returns>
-//        public int[] JobResearch(Person[] personList, Technique technique, bool isTest)
-//        {
-//            if (personList == null || personList.Length == 0) return null;
-
-//            Scenario scenario = Scenario.Cur;
-//            ScenarioVariables variables = scenario.Variables;
-//            int jobId = (int)CityJobType.Research;
-//            InitJobFeature(personList);
-
-//            int goldNeed = technique.goldCost;
-//            int tpNeed = technique.techPointCost;
-//            int turnCount = technique.counter;
-
-//            int totalValue = 0;
-//            for (int i = 0; i < personList.Length; i++)
-//            {
-//                Person person = personList[i];
-//                if (person == null) continue;
-//                switch (technique.needAttr)
-//                {
-//                    case (int)AttributeType.Command:
-//                        totalValue += person.Command;
-//                        break;
-//                    case (int)AttributeType.Strength:
-//                        totalValue += person.Strength;
-//                        break;
-//                    case (int)AttributeType.Intelligence:
-//                        totalValue += person.Intelligence;
-//                        break;
-//                    case (int)AttributeType.Politics:
-//                        totalValue += person.Politics;
-//                        break;
-//                    case (int)AttributeType.Glamour:
-//                        totalValue += person.Glamour;
-//                        break;
-//                }
-//            }
-
-//            turnCount = GameUtility.Method_ResearchCounter(totalValue, turnCount);
-
-//            Tools.OverrideData<int> goldOverride = GameUtility.IntOverrideData.Set(goldNeed);
-//            Tools.OverrideData<int> tpOverride = new OverrideData<int>(tpNeed);
-//            Tools.OverrideData<int> turnCountOveride = new OverrideData<int>(turnCount);
-//            GameEvent.OnCityResearchCost?.Invoke(this, personList, technique, goldOverride, tpOverride, turnCountOveride);
-//            goldNeed = goldOverride.Value;
-//            tpNeed = tpOverride.Value;
-//            turnCount = turnCountOveride.Value;
-
-//            if (isTest)
-//            {
-//                ClearJobFeature();
-//                return new int[] { goldNeed, tpNeed, turnCount };
-//            }
-
-//            if (gold < goldNeed || BelongForce.TechniquePoint < tpNeed)
-//            {
-//                ClearJobFeature();
-//                return null;
-//            }
-
-//            gold -= goldNeed;
-//            BelongForce.GainTechniquePoint(-tpNeed);
-//            BelongCorps.ReduceActionPoint(JobType.GetJobCostAP(jobId));
-
-//            int meritGain = JobType.GetJobMeritGain(jobId);
-
-//#if SANGO_DEBUG
-//            StringBuilder stringBuilder = new StringBuilder();
-//#endif
-//            for (int i = 0; i < personList.Length; i++)
-//            {
-//                Person person = personList[i];
-//                if (person == null) continue;
-
-//                person.merit += meritGain;
-//                person.GainExp(meritGain);
-//                person.SetMission(MissionType.PersonResearch, technique, turnCount);
-//                freePersons.Remove(person);
-//#if SANGO_DEBUG
-//                stringBuilder.Append(person.Name);
-//                stringBuilder.Append(",");
-//#endif
-//                person.ActionOver = true;
-//            }
-
-//            BelongForce.ResearchTechnique = technique.Id;
-//            BelongForce.ResearchLeftCounter = turnCount;
-
-//            BelongCorps.ReduceActionPoint(JobType.GetJobCostAP(jobId));
-
-//#if SANGO_DEBUG
-//            Sango.Log.Print($"@内政@[{BelongForce.Name}]{stringBuilder}在<{Name}>开始研究科技: [{technique.Name}], 研究需要{turnCount}回合!");
-//#endif
-
-//            ClearJobFeature();
-//            return null;
-//        }
 
         /// <summary>
         /// 获取城池的攻击力

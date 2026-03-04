@@ -27,12 +27,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using Newtonsoft.Json.Utilities;
+using TKNewtonsoft.Json.Utilities;
 using System;
 using System.Data;
-using Newtonsoft.Json.Serialization;
+using TKNewtonsoft.Json.Serialization;
 
-namespace Newtonsoft.Json.Converters
+namespace TKNewtonsoft.Json.Converters
 {
     /// <summary>
     /// Converts a <see cref="DataTable"/> to and from JSON.

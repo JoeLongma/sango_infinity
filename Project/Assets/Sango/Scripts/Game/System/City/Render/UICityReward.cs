@@ -24,6 +24,7 @@ namespace Sango.Game.Render.UI
         {
             currentSystem = Singleton<CityReward>.Instance;
             TargetCity = currentSystem.TargetCity;
+            windiwTitle.text = currentSystem.customTitleName;
             UpdateContent();
         }
 

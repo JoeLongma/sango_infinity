@@ -30,7 +30,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Newtonsoft.Json.Utilities
+namespace TKNewtonsoft.Json.Utilities
 {
     internal static class AsyncUtils
     {

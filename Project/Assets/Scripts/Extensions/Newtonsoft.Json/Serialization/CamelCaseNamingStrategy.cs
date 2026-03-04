@@ -23,9 +23,9 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
-using Newtonsoft.Json.Utilities;
+using TKNewtonsoft.Json.Utilities;
 
-namespace Newtonsoft.Json.Serialization
+namespace TKNewtonsoft.Json.Serialization
 {
     /// <summary>
     /// A camel case naming strategy.

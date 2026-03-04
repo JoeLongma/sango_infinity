@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Converters;
+﻿using TKNewtonsoft.Json.Converters;
 using System;
 
 namespace Sango.Game

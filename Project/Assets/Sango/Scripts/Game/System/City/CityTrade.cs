@@ -7,6 +7,8 @@ namespace Sango.Game.Player
     [GameSystem(auto = true)]
     public class CityTrade : CityBaseSystem
     {
+        public int targetValue;
+
         public CityTrade()
         {
             customTitleName = "交易";
@@ -25,22 +27,24 @@ namespace Sango.Game.Player
             get
             {
                 return TargetCity.FreePersonCount > 0 && 
-                    TargetCity.security < 100 &&
+                    TargetCity.hasBusiness > 0 &&
                     TargetCity.CheckJobCost(CityJobType.TradeFood) &&
                     TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.TradeFood);
-
             }
         }
 
         public override int CalculateWonderNumber()
         {
-            return TargetCity.JobInspection(personList.ToArray(), true);
+            if(personList.Count == 0)
+                return 0;
+            wonderNumber = GameUtility.Method_Trade(personList[0].Politics);
+            return wonderNumber;
         }
 
         public override void RecommandPersonList()
         {
             personList.Clear();
-            Person[] people = ForceAI.CounsellorRecommendInspection(TargetCity.freePersons);
+            Person[] people = ForceAI.CounsellorRecommendTrade(TargetCity.freePersons);
             if (people != null)
             {
                 for (int i = 0; i < people.Length; ++i)
@@ -56,7 +60,7 @@ namespace Sango.Game.Player
         {
             if (personList.Count > 0)
             {
-                TargetCity.JobInspection(personList.ToArray());
+                TargetCity.JobTradeFood(personList.ToArray(), targetValue);
                 Done();
             }
         }

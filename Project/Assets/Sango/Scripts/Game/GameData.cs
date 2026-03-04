@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using TKNewtonsoft.Json;
 using Sango.Mod;
 using System.Xml;
 
@@ -29,7 +29,7 @@ namespace Sango.Game
             string commonDataFileName = "Data/Common/Common.json";
             ModManager.Instance.LoadFile(commonDataFileName, file =>
             {
-                scenarioCommonData = Newtonsoft.Json.JsonConvert.DeserializeObject<ScenarioCommonData>(File.ReadAllText(file));
+                scenarioCommonData = TKNewtonsoft.Json.JsonConvert.DeserializeObject<ScenarioCommonData>(File.ReadAllText(file));
             });
             //SimpleJSON.JSONClass node = new SimpleJSON.JSONClass();
             //ScenarioCommonData.Save(node);
@@ -46,7 +46,7 @@ namespace Sango.Game
             string commonDataFileName = "Data/Common/Common.json";
             ModManager.Instance.LoadFile(commonDataFileName, file =>
             {
-                Newtonsoft.Json.JsonConvert.PopulateObject(File.ReadAllText(file), ScenarioCommonData);
+                TKNewtonsoft.Json.JsonConvert.PopulateObject(File.ReadAllText(file), ScenarioCommonData);
             });
             //SimpleJSON.JSONClass node = new SimpleJSON.JSONClass();
             //ScenarioCommonData.Save(node);
@@ -68,7 +68,7 @@ namespace Sango.Game
                 //ModelConfigs.Load(xmlDocument.LastChild);
                 JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings();
                 jsonSerializerSettings.Converters.Add(new SangoObjectMaptConverter<ModelConfig>());
-                ModelConfigs = Newtonsoft.Json.JsonConvert.DeserializeObject<SangoObjectMap<ModelConfig>>(File.ReadAllText(file), jsonSerializerSettings);
+                ModelConfigs = TKNewtonsoft.Json.JsonConvert.DeserializeObject<SangoObjectMap<ModelConfig>>(File.ReadAllText(file), jsonSerializerSettings);
 
             });
             

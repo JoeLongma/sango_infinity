@@ -908,32 +908,6 @@ namespace Sango.Game
             return true;
         }
 
-        //public static bool AIResearch(City city, Scenario scenario)
-        //{
-        //    if (city.freePersons.Count < 3) return true;
-        //    if (city.BelongForce.ResearchTechnique > 0) return true;
-        //    if (city.BelongForce.TechniquePoint < 1000) return true;
-        //    if (city.gold < 2000) return true;
-
-        //    Force force = city.BelongForce;
-        //    for (int i = 0; i < force.canResearchTechniqueList.Count; i++)
-        //    {
-        //        Technique technique = force.canResearchTechniqueList[i];
-        //        if (technique == null) continue;
-        //        if (technique.goldCost <= city.gold && technique.techPointCost <= city.BelongForce.TechniquePoint)
-        //        {
-        //            Person[] ps = ForceAI.CounsellorRecommendResearch(city.freePersons, technique);
-        //            if (ps != null)
-        //            {
-        //                city.JobResearch(ps, technique, false);
-        //                break;
-        //            }
-        //        }
-        //    }
-        //    return true;
-        //}
-
-
         /// <summary>
         /// AI交易粮食
         /// </summary>

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using TKNewtonsoft.Json;
 using Sango.Game.Render;
 using Sango.Render;
 using System;
@@ -1177,7 +1177,7 @@ namespace Sango.Game
             Info.dateTime = DateTime.Now.ToFileTime();
             Sango.Directory.Create(path, false);
             JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings();
-            jsonSerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+            jsonSerializerSettings.Formatting = TKNewtonsoft.Json.Formatting.Indented;
             jsonSerializerSettings.NullValueHandling = NullValueHandling.Ignore;
             JsonSerializer serializer = JsonSerializer.CreateDefault(jsonSerializerSettings);
             using (StreamWriter writer = System.IO.File.CreateText(path))

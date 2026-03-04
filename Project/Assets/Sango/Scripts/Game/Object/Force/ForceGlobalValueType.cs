@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+﻿using TKNewtonsoft.Json;
+using TKNewtonsoft.Json.Serialization;
 using UnityEngine;
 
 namespace Sango.Game

@@ -25,11 +25,11 @@
 
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json.Utilities;
+using TKNewtonsoft.Json.Serialization;
+using TKNewtonsoft.Json.Utilities;
 using System.Reflection;
 
-namespace Newtonsoft.Json.Converters
+namespace TKNewtonsoft.Json.Converters
 {
     /// <summary>
     /// Converts a <see cref="KeyValuePair{TKey,TValue}"/> to and from JSON.

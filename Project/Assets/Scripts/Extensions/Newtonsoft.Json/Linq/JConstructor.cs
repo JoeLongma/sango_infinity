@@ -26,10 +26,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Newtonsoft.Json.Utilities;
+using TKNewtonsoft.Json.Utilities;
 using System.Globalization;
 
-namespace Newtonsoft.Json.Linq
+namespace TKNewtonsoft.Json.Linq
 {
     /// <summary>
     /// Represents a JSON constructor.

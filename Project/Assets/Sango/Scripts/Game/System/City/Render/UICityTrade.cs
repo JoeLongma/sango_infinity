@@ -21,12 +21,19 @@ namespace Sango.Game.Render.UI
 
         City TargetCity;
         CityTrade currentSystem;
+        float trade_p = 0;
         public Button sureButton;
 
         public override void OnShow()
         {
             currentSystem = Singleton<CityTrade>.Instance;
             TargetCity = currentSystem.TargetCity;
+            windiwTitle.text = currentSystem.customTitleName;
+            int gold = TargetCity.gold;
+            int food = TargetCity.food;
+            int totalFood = food + currentSystem.wonderNumber * gold * TargetCity.hasBusiness / 100;
+            trade_p = food / totalFood;
+            tradeSlider.SetValueWithoutNotify(trade_p);
             UpdateContent();
         }
 
@@ -71,7 +78,7 @@ namespace Sango.Game.Render.UI
 
         public void OnTradeSliderValueChanged(float p)
         {
-            
+
         }
     }
 }

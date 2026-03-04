@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
+﻿using TKNewtonsoft.Json;
+using TKNewtonsoft.Json.Linq;
+using TKNewtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 

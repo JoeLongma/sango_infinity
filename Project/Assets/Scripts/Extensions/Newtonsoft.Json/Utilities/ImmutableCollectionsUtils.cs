@@ -27,21 +27,21 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 #if !HAVE_LINQ
-using Newtonsoft.Json.Utilities.LinqBridge;
+using TKNewtonsoft.Json.Utilities.LinqBridge;
 #else
 using System.Linq;
 #endif
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
-using Newtonsoft.Json.Serialization;
+using TKNewtonsoft.Json.Serialization;
 
-namespace Newtonsoft.Json.Utilities
+namespace TKNewtonsoft.Json.Utilities
 {
     /// <summary>
     /// Helper class for serializing immutable collections.
     /// Note that this is used by all builds, even those that don't support immutable collections, in case the DLL is GACed
-    /// https://github.com/JamesNK/Newtonsoft.Json/issues/652
+    /// https://github.com/JamesNK/TKNewtonsoft.Json/issues/652
     /// </summary>
     internal static class ImmutableCollectionsUtils
     {

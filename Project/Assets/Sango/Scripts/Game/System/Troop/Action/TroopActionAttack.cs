@@ -7,6 +7,7 @@ using ContextMenu = Sango.Game.Render.UI.ContextMenu;
 
 namespace Sango.Game.Player
 {
+    [GameSystem(auto = true)]
     public class TroopActionAttack : TroopActionBase
     {
         protected List<Cell> MovePath { get; set; }

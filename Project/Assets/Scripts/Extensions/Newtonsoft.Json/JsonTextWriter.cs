@@ -32,10 +32,10 @@ using System.Numerics;
 using System.Text;
 using System.IO;
 using System.Xml;
-using Newtonsoft.Json.Utilities;
+using TKNewtonsoft.Json.Utilities;
 using System.Diagnostics;
 
-namespace Newtonsoft.Json
+namespace TKNewtonsoft.Json
 {
     /// <summary>
     /// Represents a writer that provides a fast, non-cached, forward-only way of generating JSON data.

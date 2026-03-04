@@ -38,17 +38,17 @@ using System.Numerics;
 #endif
 using System.Reflection;
 using System.Runtime.Serialization;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Utilities;
+using TKNewtonsoft.Json.Linq;
+using TKNewtonsoft.Json.Utilities;
 using System.Runtime.CompilerServices;
 using System.Diagnostics.CodeAnalysis;
 #if !HAVE_LINQ
-using Newtonsoft.Json.Utilities.LinqBridge;
+using TKNewtonsoft.Json.Utilities.LinqBridge;
 #else
 using System.Linq;
 #endif
 
-namespace Newtonsoft.Json.Serialization
+namespace TKNewtonsoft.Json.Serialization
 {
     internal class JsonSerializerInternalReader : JsonSerializerInternalBase
     {

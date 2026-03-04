@@ -5,13 +5,13 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 #if !HAVE_LINQ
-using Newtonsoft.Json.Utilities.LinqBridge;
+using TKNewtonsoft.Json.Utilities.LinqBridge;
 #else
 using System.Linq;
 #endif
-using Newtonsoft.Json.Utilities;
+using TKNewtonsoft.Json.Utilities;
 
-namespace Newtonsoft.Json.Linq.JsonPath
+namespace TKNewtonsoft.Json.Linq.JsonPath
 {
     internal enum QueryOperator
     {

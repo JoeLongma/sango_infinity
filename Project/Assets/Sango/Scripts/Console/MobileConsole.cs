@@ -42,6 +42,12 @@ namespace SKFramework
         private float CoolDown_ = 0;
         void Update()
         {
+            if (Visible && Input.GetKeyDown(KeyCode.Escape))
+            {
+                Visible = false;
+                return;
+            }
+
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
             //if (Input.GetMouseButton(0) && Input.GetMouseButton(1) && Time.time - CoolDown_ > 2.0f)
 #else
@@ -78,6 +84,9 @@ namespace SKFramework
             {
 
             }
+
+
+
         }
 
         void WindowFunc(int id)

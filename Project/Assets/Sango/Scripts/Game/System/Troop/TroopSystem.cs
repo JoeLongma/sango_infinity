@@ -50,7 +50,8 @@ namespace Sango.Game.Player
 
         public void Start(Troop troop, Vector3 startPoint)
         {
-
+            TargetTroop = troop;
+            Enter();
         }
 
         public override void OnEnter()

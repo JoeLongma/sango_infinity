@@ -76,9 +76,11 @@ namespace Sango.Game.Render.UI
         public void OnSelectScenario(int index)
         {
             if (curSelectIndex != index)
-                selectedItems[curSelectIndex].SetSelected(false);
-            curSelectIndex = index;
-            selectedItems[curSelectIndex].SetSelected(true);
+            {
+                if(curSelectIndex >= 0 &&  curSelectIndex < selectedItems.Count)
+                    selectedItems[curSelectIndex].SetSelected(false);
+            }
+            selectedItems[index].SetSelected(true);
             ShowScenario(index);
         }
 
@@ -172,7 +174,6 @@ namespace Sango.Game.Render.UI
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
         private void Update()
         {
-
             for (int i = 0; i < selectedItems.Count; i++)
             {
                 UIScenarioItem uIScenarioItem = selectedItems[i];

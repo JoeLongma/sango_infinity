@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+﻿using TKNewtonsoft.Json;
+using TKNewtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 

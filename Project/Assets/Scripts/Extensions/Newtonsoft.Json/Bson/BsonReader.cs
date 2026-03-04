@@ -28,18 +28,18 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.IO;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json.Utilities;
-using Newtonsoft.Json.Linq;
+using TKNewtonsoft.Json.Serialization;
+using TKNewtonsoft.Json.Utilities;
+using TKNewtonsoft.Json.Linq;
 
 #nullable disable
 
-namespace Newtonsoft.Json.Bson
+namespace TKNewtonsoft.Json.Bson
 {
     /// <summary>
     /// Represents a reader that provides fast, non-cached, forward-only access to serialized BSON data.
     /// </summary>
-    [Obsolete("BSON reading and writing has been moved to its own package. See https://www.nuget.org/packages/Newtonsoft.Json.Bson for more details.")]
+    [Obsolete("BSON reading and writing has been moved to its own package. See https://www.nuget.org/packages/TKNewtonsoft.Json.Bson for more details.")]
     public class BsonReader : JsonReader
     {
         private const int MaxCharBytesSize = 128;

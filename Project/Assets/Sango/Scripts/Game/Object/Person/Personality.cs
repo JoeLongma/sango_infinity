@@ -1,5 +1,5 @@
 ﻿
-using Newtonsoft.Json;
+using TKNewtonsoft.Json;
 
 namespace Sango.Game
 {

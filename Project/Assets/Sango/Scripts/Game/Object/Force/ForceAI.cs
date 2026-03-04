@@ -884,7 +884,7 @@ namespace Sango.Game
         /// <summary>
         /// 军师交易推荐
         /// </summary>
-        public static Person[] CounsellorRecommendTrade(List<Person> personList)
+        public static Person[] CounsellorRecommendTrade(List<Person> personList, int[] commandFeatures = null)
         {
             return CounsellorRecommend1Person(personList, (ref int[] maxValue, Person check1) =>
             {

@@ -1,5 +1,5 @@
 {
-    "name": "Newtonsoft.Json",
+    "name": "TKNewtonsoft.Json",
     "rootNamespace": "",
     "references": [],
     "includePlatforms": [],
@@ -7,7 +7,7 @@
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [
-        "Newtonsoft.Json.dll"
+        "TKNewtonsoft.Json.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

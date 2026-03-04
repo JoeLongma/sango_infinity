@@ -23,12 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json.Utilities;
+using TKNewtonsoft.Json.Serialization;
+using TKNewtonsoft.Json.Utilities;
 using System;
 using System.Globalization;
 
-namespace Newtonsoft.Json
+namespace TKNewtonsoft.Json
 {
     /// <summary>
     /// Converts an object to and from JSON.

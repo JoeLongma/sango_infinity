@@ -46,7 +46,7 @@ namespace Sango.Game.Render.UI
             // 除开自己以外全部不显示
             if (troop.BelongForce.IsPlayer)
             {
-                string spName = troop.ActionOver ? "4845_8_17" : "4845_8_18";
+                string spName = troop.ActionOver ? "4846-9/4846-9_17" : "4846-9/4846-9_18";
                 if (state.sprite == null || !state.sprite.name.Equals(spName))
                     state.sprite = GameRenderHelper.LoadTroopStateIcon(spName);
                 state.enabled = true;
@@ -57,7 +57,7 @@ namespace Sango.Game.Render.UI
                 if (alliance != null)
                 {
                     //TODO: 根据联盟类型显示(同盟或者停战)
-                    string spName = "4845_8_20";
+                    string spName = "4846-9/4846-9_20";
                     if (state.sprite == null || !state.sprite.name.Equals(spName))
                         state.sprite = GameRenderHelper.LoadTroopStateIcon(spName);
                     state.enabled = true;

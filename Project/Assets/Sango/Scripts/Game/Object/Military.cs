@@ -1,7 +1,7 @@
 ﻿
 using Sango.Game.Render;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using TKNewtonsoft.Json;
 
 namespace Sango.Game
 {

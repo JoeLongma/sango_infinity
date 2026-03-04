@@ -30,10 +30,10 @@ using System.Globalization;
 #if HAVE_BIG_INTEGER
 using System.Numerics;
 #endif
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json.Utilities;
+using TKNewtonsoft.Json.Serialization;
+using TKNewtonsoft.Json.Utilities;
 
-namespace Newtonsoft.Json
+namespace TKNewtonsoft.Json
 {
     /// <summary>
     /// Represents a reader that provides fast, non-cached, forward-only access to serialized JSON data.

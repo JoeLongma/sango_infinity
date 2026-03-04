@@ -3,7 +3,7 @@
 using System;
 using System.Reflection;
 
-namespace Newtonsoft.Json
+namespace TKNewtonsoft.Json
 {
     /// <summary>
     /// Allows users to control class loading and mandate what class to load.

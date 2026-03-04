@@ -485,25 +485,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8734080045334747305}
     m_Modifications:
-    - target: {fileID: 1738026507753113980, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2952306590412944044, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_Text
-      value: "\u8BBE\u7F6E"
+      value: "\u5EFA\u9020"
       objectReference: {fileID: 0}
-    - target: {fileID: 3219593708140394726, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 69.9
+    - target: {fileID: 4047078994823135925, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1925432745009273659}
+    - target: {fileID: 4047078994823135925, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnBuild
       objectReference: {fileID: 0}
-    - target: {fileID: 3219593708140394726, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 4864162001864629904, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -3.9960938
+    - target: {fileID: 4047078994823135925, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Sango.Game.Render.UI.UITroopCommandBuild, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5788964857443963546, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -511,7 +507,7 @@ PrefabInstance:
       objectReference: {fileID: 1925432745009273659}
     - target: {fileID: 5788964857443963546, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnBuild
+      value: OnCancel
       objectReference: {fileID: 0}
     - target: {fileID: 5788964857443963546, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -604,10 +600,6 @@ PrefabInstance:
     - target: {fileID: 6591836239096336499, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
       propertyPath: m_Name
       value: win_frame
-      objectReference: {fileID: 0}
-    - target: {fileID: 8883377178705910344, guid: eba30dda6e43fa247845faa58e681a84, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -1.7580566
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eba30dda6e43fa247845faa58e681a84, type: 3}

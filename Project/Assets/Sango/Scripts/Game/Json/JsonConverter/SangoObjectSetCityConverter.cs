@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using TKNewtonsoft.Json;
+using TKNewtonsoft.Json.Linq;
 using System;
 using Unity.Burst.Intrinsics;
 

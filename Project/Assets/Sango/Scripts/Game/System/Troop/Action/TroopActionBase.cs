@@ -2,7 +2,6 @@
 
 namespace Sango.Game.Player
 {
-    [GameSystem(auto = true)]
     public class TroopActionBase : GameSystem
     {
         public Troop TargetTroop { get; set; }

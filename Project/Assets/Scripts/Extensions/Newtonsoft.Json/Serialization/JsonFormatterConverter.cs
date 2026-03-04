@@ -27,10 +27,10 @@
 using System;
 using System.Globalization;
 using System.Runtime.Serialization;
-using Newtonsoft.Json.Utilities;
-using Newtonsoft.Json.Linq;
+using TKNewtonsoft.Json.Utilities;
+using TKNewtonsoft.Json.Linq;
 
-namespace Newtonsoft.Json.Serialization
+namespace TKNewtonsoft.Json.Serialization
 {
     internal class JsonFormatterConverter : IFormatterConverter
     {

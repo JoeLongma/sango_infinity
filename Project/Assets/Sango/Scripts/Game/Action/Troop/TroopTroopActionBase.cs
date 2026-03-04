@@ -1,6 +1,6 @@
 ﻿using Sango.Game.Tools;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
+using TKNewtonsoft.Json.Linq;
+using TKNewtonsoft.Json;
 
 namespace Sango.Game.Action
 {

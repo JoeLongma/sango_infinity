@@ -28,7 +28,7 @@ using System.Collections;
 #if HAVE_CONCURRENT_DICTIONARY
 using System.Collections.Concurrent;
 #endif
-using Newtonsoft.Json.Schema;
+using TKNewtonsoft.Json.Schema;
 using System.Collections.Generic;
 using System.ComponentModel;
 #if HAVE_DYNAMIC
@@ -41,19 +41,19 @@ using System.Runtime.Serialization;
 #if HAVE_CAS
 using System.Security.Permissions;
 #endif
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Utilities;
-using Newtonsoft.Json.Linq;
+using TKNewtonsoft.Json.Converters;
+using TKNewtonsoft.Json.Utilities;
+using TKNewtonsoft.Json.Linq;
 using System.Runtime.CompilerServices;
 #if !HAVE_LINQ
-using Newtonsoft.Json.Utilities.LinqBridge;
+using TKNewtonsoft.Json.Utilities.LinqBridge;
 #else
 using System.Linq;
 
 #endif
-using Newtonsoft.Json.Serialization;
+using TKNewtonsoft.Json.Serialization;
 
-namespace Newtonsoft.Json.Serialization
+namespace TKNewtonsoft.Json.Serialization
 {
     /// <summary>
     /// Used by <see cref="JsonSerializer"/> to resolve a <see cref="JsonContract"/> for a given <see cref="System.Type"/>.
@@ -425,7 +425,7 @@ namespace Newtonsoft.Json.Serialization
             }
 
             // serializing DirectoryInfo without ISerializable will stackoverflow
-            // https://github.com/JamesNK/Newtonsoft.Json/issues/1541
+            // https://github.com/JamesNK/TKNewtonsoft.Json/issues/1541
             if (Array.IndexOf(BlacklistedTypeNames, objectType.FullName) != -1)
             {
                 contract.OnSerializingCallbacks.Add(ThrowUnableToSerializeError);

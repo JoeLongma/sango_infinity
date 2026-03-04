@@ -32,9 +32,9 @@ using System.Threading;
 using System.Numerics;
 #endif
 using System.Threading.Tasks;
-using Newtonsoft.Json.Utilities;
+using TKNewtonsoft.Json.Utilities;
 
-namespace Newtonsoft.Json
+namespace TKNewtonsoft.Json
 {
     public abstract class JsonWriter
     {
@@ -1781,7 +1781,7 @@ namespace Newtonsoft.Json
                         }
 #endif
 
-                        // write an unknown null value, fix https://github.com/JamesNK/Newtonsoft.Json/issues/1460
+                        // write an unknown null value, fix https://github.com/JamesNK/TKNewtonsoft.Json/issues/1460
                         if (value == null)
                         {
                             return writer.WriteNullAsync(cancellationToken);

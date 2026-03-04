@@ -1,8 +1,8 @@
 ﻿
 #if !HAVE_TRACE_WRITER
-using Newtonsoft.Json.Serialization;
+using TKNewtonsoft.Json.Serialization;
 
-namespace Newtonsoft.Json
+namespace TKNewtonsoft.Json
 {
     /// <summary>
     /// Specifies what messages to output for the <see cref="ITraceWriter"/> class.

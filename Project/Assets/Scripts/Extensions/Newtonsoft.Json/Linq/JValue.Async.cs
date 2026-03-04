@@ -32,9 +32,9 @@ using System.Numerics;
 #endif
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Utilities;
+using TKNewtonsoft.Json.Utilities;
 
-namespace Newtonsoft.Json.Linq
+namespace TKNewtonsoft.Json.Linq
 {
     public class JValue
     {

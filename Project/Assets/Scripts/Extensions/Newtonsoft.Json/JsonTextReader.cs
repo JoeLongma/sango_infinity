@@ -31,9 +31,9 @@ using System.Diagnostics;
 #if HAVE_BIG_INTEGER
 using System.Numerics;
 #endif
-using Newtonsoft.Json.Utilities;
+using TKNewtonsoft.Json.Utilities;
 
-namespace Newtonsoft.Json
+namespace TKNewtonsoft.Json
 {
     internal enum ReadType
     {

@@ -7,6 +7,7 @@ using ContextMenu = Sango.Game.Render.UI.ContextMenu;
 
 namespace Sango.Game.Player
 {
+    [GameSystem(auto = true)]
     public class TroopActionBuild : TroopActionBase
     {
         public List<Cell> MovePath { get; set; }
@@ -29,7 +30,7 @@ namespace Sango.Game.Player
             canBuildBuildingType.Clear();
             Scenario.Cur.CommonData.BuildingTypes.ForEach(x =>
             {
-                if (x.IsOutside && x.kind > 3 && x.IsValid(TargetTroop.BelongForce))
+                if (x.IsOutside && x.canBuild && x.kind > 3 && x.IsValid(TargetTroop.BelongForce))
                 {
                     canBuildBuildingType.Add(x);
                 }

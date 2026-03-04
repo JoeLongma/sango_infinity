@@ -32,10 +32,10 @@ using System.Threading;
 using System.Numerics;
 #endif
 using System.Threading.Tasks;
-using Newtonsoft.Json.Utilities;
+using TKNewtonsoft.Json.Utilities;
 using System.Diagnostics;
 
-namespace Newtonsoft.Json
+namespace TKNewtonsoft.Json
 {
     public class JsonTextWriter
     {

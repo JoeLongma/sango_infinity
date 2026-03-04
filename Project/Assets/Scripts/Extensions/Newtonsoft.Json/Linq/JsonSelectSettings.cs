@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Newtonsoft.Json.Linq
+namespace TKNewtonsoft.Json.Linq
 {
     /// <summary>
     /// Specifies the settings used when selecting JSON.

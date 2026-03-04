@@ -1,4 +1,4 @@
-﻿namespace Newtonsoft.Json.Serialization
+﻿namespace TKNewtonsoft.Json.Serialization
 {
     /// <summary>
     /// The default naming strategy. Property names and dictionary keys are unchanged.

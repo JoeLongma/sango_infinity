@@ -25,10 +25,10 @@
 
 using System;
 using System.Reflection;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json.Utilities;
+using TKNewtonsoft.Json.Serialization;
+using TKNewtonsoft.Json.Utilities;
 
-namespace Newtonsoft.Json.Converters
+namespace TKNewtonsoft.Json.Converters
 {
     /// <summary>
     /// Creates a custom object.

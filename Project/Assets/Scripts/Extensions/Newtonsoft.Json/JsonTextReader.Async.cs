@@ -32,11 +32,11 @@ using System.Threading;
 using System.Numerics;
 #endif
 using System.Threading.Tasks;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json.Utilities;
+using TKNewtonsoft.Json.Serialization;
+using TKNewtonsoft.Json.Utilities;
 using System.Diagnostics;
 
-namespace Newtonsoft.Json
+namespace TKNewtonsoft.Json
 {
     public class JsonTextReader
     {

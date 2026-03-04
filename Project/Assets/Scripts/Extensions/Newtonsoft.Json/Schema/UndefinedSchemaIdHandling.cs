@@ -27,7 +27,7 @@ using System;
 
 #nullable disable
 
-namespace Newtonsoft.Json.Schema
+namespace TKNewtonsoft.Json.Schema
 {
     /// <summary>
     /// <para>
