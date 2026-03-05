@@ -230,6 +230,11 @@ namespace Sango.Game
         public static EventDelegate<Force, int> OnForceGainTechniquePoint;
         public static EventDelegate<Force, Technique> OnForceResearchComplete;
 
+        /// <summary>
+        /// 势力更换军师
+        /// </summary>
+        public static EventDelegate<Force, Person> OnForceChangeCounsellor;
+
         #endregion Force
 
 

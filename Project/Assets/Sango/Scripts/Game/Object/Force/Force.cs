@@ -680,5 +680,12 @@ namespace Sango.Game
             technique.InitActions(actionList, this);
             return technique;
         }
+
+        public void ChangeCounsellor(Person dest)
+        {
+            Person old = Counsellor;
+            Counsellor = dest;
+            GameEvent.OnForceChangeCounsellor?.Invoke(this, old);
+        }
     }
 }

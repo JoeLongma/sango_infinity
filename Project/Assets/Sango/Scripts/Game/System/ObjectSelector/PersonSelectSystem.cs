@@ -4,6 +4,7 @@ using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Player
 {
+    [GameSystem(auto = true)]
     public class PersonSelectSystem : ObjectSelectSystem
     {
         Action<List<Person>> finishAction;
