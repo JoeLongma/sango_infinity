@@ -19,15 +19,16 @@ namespace Sango.Game.Render.UI
 
         public UITextField action_value;
 
-        BuildingWorking buildingWorking;
+        BuildingWorking currentSystem;
         Building TargetBuilding { get; set; }
 
         List<Person> selectedPersonList = new List<Person>();
 
         public override void OnShow()
         {
-            buildingWorking = Singleton<BuildingWorking>.Instance;
-            TargetBuilding = buildingWorking.TargetBuilding;
+            currentSystem = GameSystem.GetSystem<BuildingWorking>();
+            windiwTitle.text = currentSystem.customTitleName;
+            TargetBuilding = currentSystem.TargetBuilding;
             BuildingType targetBuildingType = TargetBuilding.BuildingType;
             selectedPersonList.Clear();
             if (TargetBuilding.Workers != null)
@@ -64,20 +65,20 @@ namespace Sango.Game.Render.UI
 
         public void OnSure()
         {
-            buildingWorking.SetBuildingWorker(TargetBuilding, selectedPersonList);
+            currentSystem.SetBuildingWorker(TargetBuilding, selectedPersonList);
             TargetBuilding.Render?.UpdateRender();
-            buildingWorking.Done();
+            currentSystem.Done();
         }
 
         public void OnCancel()
         {
-            buildingWorking.Exit();
+            currentSystem.Exit();
         }
 
         public virtual void OnSelectPerson()
         {
-            Singleton<PersonSelectSystem>.Instance.Start(TargetBuilding.BelongCity.freePersons,
-               selectedPersonList, TargetBuilding.BuildingType.workerLimit, OnPersonChange, buildingWorking.customTitleList[TargetBuilding.BuildingType.effectAttrType], buildingWorking.customTitleName);
+            GameSystem.GetSystem<PersonSelectSystem>().Start(TargetBuilding.BelongCity.freePersons,
+               selectedPersonList, TargetBuilding.BuildingType.workerLimit, OnPersonChange, currentSystem.customTitleList[TargetBuilding.BuildingType.effectAttrType], currentSystem.customTitleName);
 
         }
 

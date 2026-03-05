@@ -27,7 +27,7 @@ namespace Sango.Game.Render.UI
 
         public override void OnShow()
         {
-            currentSystem = Singleton<CityTrade>.Instance;
+            currentSystem = GameSystem.GetSystem<CityTrade>();
             TargetCity = currentSystem.TargetCity;
             windiwTitle.text = currentSystem.customTitleName;
             totalFood = TargetCity.food + currentSystem.wonderNumber * TargetCity.gold * TargetCity.hasBusiness / 100;
@@ -81,7 +81,7 @@ namespace Sango.Game.Render.UI
 
         public void OnSelectPerson()
         {
-            Singleton<PersonSelectSystem>.Instance.Start(currentSystem.TargetCity.freePersons,
+            GameSystem.GetSystem<PersonSelectSystem>().Start(currentSystem.TargetCity.freePersons,
                currentSystem.personList, 1, OnPersonChange, currentSystem.customTitleList, currentSystem.customTitleName);
         }
 

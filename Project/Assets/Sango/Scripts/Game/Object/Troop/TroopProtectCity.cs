@@ -1,5 +1,4 @@
 ﻿using static Sango.Game.City;
-using static Sango.Game.TroopAIUtility;
 
 namespace Sango.Game
 {

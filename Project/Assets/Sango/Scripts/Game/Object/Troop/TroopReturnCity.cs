@@ -1,5 +1,4 @@
-﻿using System;
-using static Sango.Game.TroopAIUtility;
+﻿using static Sango.Game.TroopAIUtility;
 
 namespace Sango.Game
 {

@@ -10,11 +10,14 @@ namespace Sango.Game
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             writer.WriteStartArray();
-            SangoObjectList<T> dest = value as SangoObjectList<T>;
-            dest.ForEach(x =>
+            if(value != null )
             {
-                writer.WriteValue(x.Id);
-            });
+                SangoObjectList<T> dest = value as SangoObjectList<T>;
+                dest.ForEach(x =>
+                {
+                    writer.WriteValue(x.Id);
+                });
+            }
             writer.WriteEndArray();
         }
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)

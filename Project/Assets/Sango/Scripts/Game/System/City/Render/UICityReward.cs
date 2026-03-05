@@ -22,7 +22,7 @@ namespace Sango.Game.Render.UI
 
         public override void OnShow()
         {
-            currentSystem = Singleton<CityReward>.Instance;
+            currentSystem = GameSystem.GetSystem<CityReward>();
             TargetCity = currentSystem.TargetCity;
             windiwTitle.text = currentSystem.customTitleName;
             UpdateContent();
@@ -55,7 +55,7 @@ namespace Sango.Game.Render.UI
             int maxCount = Math.Min(currentSystem.targetList.Count, TargetCity.BelongCorps.ActionPoint / JobType.GetJobCostAP((int)CityJobType.Reward));
             maxCount = Math.Min(maxCount, TargetCity.gold / JobType.GetJobCost((int)CityJobType.Reward));
 
-            Singleton<PersonSelectSystem>.Instance.Start(currentSystem.targetList,
+            GameSystem.GetSystem<PersonSelectSystem>().Start(currentSystem.targetList,
                currentSystem.personList, maxCount, OnTargetPersonChange, currentSystem.customTitleList, currentSystem.customTitleName);
         }
 

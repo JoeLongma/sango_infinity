@@ -22,18 +22,19 @@ namespace Sango.Game.Render.UI
 
         public UITextField action_value;
 
-        BuildingActionUpgrade buildingActionUpgrade;
+        BuildingActionUpgrade currentSystem;
 
 
         public override void OnShow()
         {
-            buildingActionUpgrade = Singleton<BuildingActionUpgrade>.Instance;
+            currentSystem = GameSystem.GetSystem<BuildingActionUpgrade>();
+            windiwTitle.text = currentSystem.customTitleName;
 
             for (int i = 0; i < personItems.Length; ++i)
             {
-                if (i < buildingActionUpgrade.personList.Count)
+                if (i < currentSystem.personList.Count)
                 {
-                    personItems[i].SetPerson(buildingActionUpgrade.personList[i]);
+                    personItems[i].SetPerson(currentSystem.personList[i]);
                 }
                 else
                 {
@@ -41,42 +42,42 @@ namespace Sango.Game.Render.UI
                 }
             }
 
-            value_turn.text = $"{buildingActionUpgrade.wonderBuildCounter * 10}日";
-            value_gold.text = $"{buildingActionUpgrade.TargetUpgradeType.cost}/{buildingActionUpgrade.TargetBuilding.BelongCity.gold}";
+            value_turn.text = $"{currentSystem.wonderBuildCounter * 10}日";
+            value_gold.text = $"{currentSystem.TargetUpgradeType.cost}/{currentSystem.TargetBuilding.BelongCity.gold}";
 
-            destBuldingName.text = buildingActionUpgrade.TargetUpgradeType.Name;
-            if (buildingActionUpgrade.TargetUpgradeType.goldGain == 0)
+            destBuldingName.text = currentSystem.TargetUpgradeType.Name;
+            if (currentSystem.TargetUpgradeType.goldGain == 0)
                 destGoldProduction.text = "---";
             else
-                destGoldProduction.text = $"{buildingActionUpgrade.TargetBuilding.BuildingType.goldGain} → {buildingActionUpgrade.TargetUpgradeType.goldGain}";
-            if (buildingActionUpgrade.TargetUpgradeType.foodGain == 0)
+                destGoldProduction.text = $"{currentSystem.TargetBuilding.BuildingType.goldGain} → {currentSystem.TargetUpgradeType.goldGain}";
+            if (currentSystem.TargetUpgradeType.foodGain == 0)
                 destFoodProduction.text = "---";
             else
-                destFoodProduction.text = $"{buildingActionUpgrade.TargetBuilding.BuildingType.foodGain} → {buildingActionUpgrade.TargetUpgradeType.foodGain}";
-            action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.UpgradeBuilding)}/{buildingActionUpgrade.TargetBuilding.BelongCorps.ActionPoint}";
+                destFoodProduction.text = $"{currentSystem.TargetBuilding.BuildingType.foodGain} → {currentSystem.TargetUpgradeType.foodGain}";
+            action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.UpgradeBuilding)}/{currentSystem.TargetBuilding.BelongCorps.ActionPoint}";
         }
 
 
         public void OnSure()
         {
-            buildingActionUpgrade.DoJob();
+            currentSystem.DoJob();
         }
 
         public void OnCancel()
         {
-            buildingActionUpgrade.Exit();
+            currentSystem.Exit();
         }
         public virtual void OnSelectPerson()
         {
-            Singleton<PersonSelectSystem>.Instance.Start(buildingActionUpgrade.TargetBuilding.BelongCity.freePersons,
-               buildingActionUpgrade.personList, 3, OnPersonChange, buildingActionUpgrade.customTitleList, buildingActionUpgrade.customTitleName);
+            GameSystem.GetSystem<PersonSelectSystem>().Start(currentSystem.TargetBuilding.BelongCity.freePersons,
+               currentSystem.personList, 3, OnPersonChange, currentSystem.customTitleList, currentSystem.customTitleName);
 
         }
 
         public virtual void OnPersonChange(List<Person> personList)
         {
-            buildingActionUpgrade.personList = personList;
-            buildingActionUpgrade.UpdateJobValue();
+            currentSystem.personList = personList;
+            currentSystem.UpdateJobValue();
             OnShow();
         }
 

@@ -344,8 +344,8 @@ namespace Sango.Game.Render.UI
         {
             Clear();
 
-            if (isSave) Singleton<GameSave>.Instance.Done();
-            else Singleton<GameLoad>.Instance.Done();
+            if (isSave) GameSystem.GetSystem<GameSave>().Done();
+            else GameSystem.GetSystem<GameLoad>().Done();
 
             if (sysType == 2)
             {

@@ -18,8 +18,8 @@ namespace Sango.Game.Render.UI
         public Button sureButton;
 
         public override void OnShow()
-        {
-            currentSystem = Singleton<CitySeraching>.Instance;
+        {   
+            currentSystem = GameSystem.GetSystem<CitySeraching>();
             windiwTitle.text = currentSystem.customTitleName;
             TargetCity = currentSystem.TargetCity;
             personItems.SetPerson(null);
@@ -64,7 +64,7 @@ namespace Sango.Game.Render.UI
 
         public void OnSelectPerson()
         {
-            Singleton<PersonSelectSystem>.Instance.Start(TargetCity.freePersons,
+            GameSystem.GetSystem<PersonSelectSystem>().Start(TargetCity.freePersons,
                currentSystem.personList, TargetCity.BelongCorps.ActionPoint / JobType.GetJobCostAP((int)CityJobType.Searching), OnPersonChange, currentSystem.customTitleList, currentSystem.customTitleName);
         }
 

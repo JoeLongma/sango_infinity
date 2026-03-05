@@ -29,7 +29,7 @@ namespace Sango.Game.Render.UI
             base.OnShow();
             btnGroup_1.gameObject.SetActive(false);
             btnGroup_2.gameObject.SetActive(false);
-            personRecruit = Singleton<PersonRecruit>.Instance;
+            personRecruit = GameSystem.GetSystem<PersonRecruit>();
             if (personRecruit.recruitType == 0)
             {
                 titleText.text = "发现武将";

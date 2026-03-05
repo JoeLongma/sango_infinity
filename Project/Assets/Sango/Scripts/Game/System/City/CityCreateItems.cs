@@ -2,6 +2,7 @@
 
 namespace Sango.Game.Player
 {
+    [GameSystem(auto = true)]
     public class CityCreateItems : CityBaseSystem
     {
         public class ItemTypeInfo

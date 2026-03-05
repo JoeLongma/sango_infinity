@@ -40,7 +40,7 @@ namespace Sango.Game.Render
                 UIDialog.Close();
 
                 //展示武将
-                Singleton<Player.PersonRecruit>.Instance.Start(person, target, 0, 1, x =>
+                GameSystem.GetSystem<PersonRecruit>().Start(person, target, 0, 1, x =>
                 {
                     if (x.result == 1)
                     {

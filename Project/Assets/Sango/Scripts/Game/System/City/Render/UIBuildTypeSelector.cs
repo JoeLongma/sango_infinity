@@ -38,7 +38,7 @@ namespace Sango.Game.Render.UI
             durabilityLabel.text = "";
 
 
-            buildBuildingSys = Singleton<CityBuildBuilding>.Instance;
+            buildBuildingSys = GameSystem.GetSystem<CityBuildBuilding>();
             BuildingTypes = buildBuildingSys.canBuildBuildingType;
             curPage = 0;
             maxPage = BuildingTypes.Count / buildingTypeItems.Length;
@@ -195,7 +195,7 @@ namespace Sango.Game.Render.UI
 
         public void OnSelectPerson()
         {
-            Singleton<PersonSelectSystem>.Instance.Start(buildBuildingSys.TargetCity.freePersons,
+            GameSystem.GetSystem<PersonSelectSystem>().Start(buildBuildingSys.TargetCity.freePersons,
                 buildBuildingSys.personList, 3, OnPersonChange, buildBuildingSys.customTitleList, buildBuildingSys.customTitleName);
         }
     }

@@ -35,9 +35,9 @@ namespace Sango.Game.Player
 
         public override void OnEnter()
         {
-            MovePath = Singleton<TroopSystem>.Instance.movePath;
-            Singleton<TroopSystem>.Instance.ShowMoveRange();
-            Singleton<TroopSystem>.Instance.ShowMovePath();
+            MovePath = GameSystem.GetSystem<TroopSystem>().movePath;
+            GameSystem.GetSystem<TroopSystem>().ShowMoveRange();
+            GameSystem.GetSystem<TroopSystem>().ShowMovePath();
         }
 
         /// <summary>
@@ -51,8 +51,8 @@ namespace Sango.Game.Player
         public override void OnDestroy()
         {
             UIDialog.Close();
-            Singleton<TroopSystem>.Instance.ClearShowMovePath();
-            Singleton<TroopSystem>.Instance.ClearShowMoveRange();
+            GameSystem.GetSystem<TroopSystem>().ClearShowMovePath();
+            GameSystem.GetSystem<TroopSystem>().ClearShowMoveRange();
         }
 
         public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)

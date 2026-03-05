@@ -39,6 +39,17 @@ namespace Sango
             }
         }
 
+
+        public void Recycle(T obj)
+        {
+            if (instance_list.Contains(obj))
+            {
+                instance_list.Remove(obj);
+                pool_list.Add(obj);
+                obj.gameObject.SetActive(false);
+            }
+        }
+
         public void Reset()
         {
             pool_list.AddRange(instance_list);
@@ -53,6 +64,7 @@ namespace Sango
                 return instance_list[index];
             return null;
         }
+
 
         public void Clear()
         {

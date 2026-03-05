@@ -22,7 +22,24 @@ namespace Sango.Game.Player
                 GameEvent.OnRightMouseButtonContextMenuShow?.Invoke(ContextMenuData.MenuData);
                 if (!ContextMenuData.MenuData.IsEmpty())
                 {
-                    Render.UI.ContextMenu.Show(ContextMenuData.MenuData, clickPosition);
+                    // 特殊处理<进行>
+                    UIContextMenu contextMenu = Render.UI.ContextMenu.Show(ContextMenuData.MenuData, clickPosition, ContextMenuType.Command);
+                    PlayerEndTurn playerEndTurn = GameSystem.GetSystem<PlayerEndTurn>();
+                    if (playerEndTurn != null)
+                    {
+                        if (contextMenu != null && contextMenu.menuItem.Length > 1)
+                        {
+                            UIMenuItem item = contextMenu.menuItem[1];
+                            if (item != null)
+                            {
+                                item.SetTitle(playerEndTurn.customTitleName).SetListener(() =>
+                                {
+                                    Render.UI.ContextMenu.CloseAll();
+                                    playerEndTurn.Push();
+                                });
+                            }
+                        }
+                    }
                     Enter();
                 }
             }

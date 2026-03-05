@@ -404,8 +404,9 @@ namespace Sango.Game
             if (Workers == null) Workers = new SangoObjectList<Person>();
             if (person.workingBuilding != null)
             {
-                person.workingBuilding.RemoveWorker(person);
-                person.workingBuilding.Render?.UpdateRender();
+                Building workingBuilding = person.workingBuilding;
+                workingBuilding.RemoveWorker(person);
+                workingBuilding.Render?.UpdateRender();
             }
 
             Workers.Add(person);

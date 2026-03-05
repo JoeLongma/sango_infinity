@@ -48,7 +48,16 @@ namespace Sango.Game.Render.UI
             // 除开自己以外全部不显示
             if (troop.BelongForce.IsPlayer)
             {
-                string spName = troop.ActionOver ? "4846-9/4846-9_17" : "4846-9/4846-9_18";
+                string spName;
+                if(troop.missionType > 0)
+                {
+                    spName = troop.ActionOver ? "4846-9/4846-9_21" : "4846-9/4846-9_19";
+                }
+                else
+                {
+                    spName = troop.ActionOver ? "4846-9/4846-9_17" : "4846-9/4846-9_18";
+                }
+
                 if (state.sprite == null || !state.sprite.name.Equals(spName))
                     state.sprite = GameRenderHelper.LoadTroopStateIcon(spName);
                 state.enabled = true;

@@ -60,7 +60,7 @@ namespace Sango.Game.Render.UI
         {
             sureBtn.interactable = false;
             selectedItem = null;
-            techniqueResearchSys = GameSystemManager.Instance.GetSystem<TechniqueResearch>();
+            techniqueResearchSys = GameSystem.GetSystem<TechniqueResearch>();
             targetForce = techniqueResearchSys.TargetCity.BelongForce;
             targetCity = techniqueResearchSys.TargetCity;
             techniqueArea.CreateTitles(targetForce, titleNode);
@@ -162,7 +162,7 @@ namespace Sango.Game.Render.UI
 
         public void OnSelectPerson()
         {
-            Singleton<PersonSelectSystem>.Instance.Start(targetCity.freePersons,
+            GameSystem.GetSystem<PersonSelectSystem>().Start(targetCity.freePersons,
                 techniqueResearchSys.personList, 3, OnPersonChange, techniqueResearchSys.customTitleList, techniqueResearchSys.customTitleName);
         }
 

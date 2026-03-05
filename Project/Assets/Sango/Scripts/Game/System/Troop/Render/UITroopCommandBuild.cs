@@ -32,7 +32,7 @@ namespace Sango.Game.Render.UI
             cityGoldLabel.text = "";
             buildCountLabel.text = "";
             buildButtonObj.interactable = (false);
-            troopCommandBuildSys = Singleton<TroopActionBuild>.Instance;
+            troopCommandBuildSys = GameSystem.GetSystem<TroopActionBuild>();
             BuildingTypes = troopCommandBuildSys.canBuildBuildingType;
             curPage = 0;
             maxPage = BuildingTypes.Count / buildingTypeItems.Length;

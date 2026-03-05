@@ -86,7 +86,7 @@ namespace Sango.Game.Player
             isShow = false;
             isMoving = false;
             ContextMenu.SetVisible(false);
-            MovePath = Singleton<TroopSystem>.Instance.movePath;
+            MovePath = GameSystem.GetSystem<TroopSystem>().movePath;
             Window.Instance.Open("window_troop_build");
         }
 
@@ -163,7 +163,13 @@ namespace Sango.Game.Player
                     if (TargetTroop.BuildBuilding(targetBuildCell, targetBuildingType))
                     {
                         TargetTroop.ActionOver = true;
+                        // 委任维修
+                        if(!targetBuildCell.building.isComplate)
+                        {
+                            TargetTroop.SetMission(MissionType.TroopFixBuilding, targetBuildCell.building.Id);
+                        }
                         TargetTroop.Render?.UpdateRender();
+
                         Done();
                     }
                 }
@@ -198,7 +204,7 @@ namespace Sango.Game.Player
                             Cell stayCell = MovePath[MovePath.Count - 1];
                             targetBuildCell = cell;
 
-                            Singleton<TroopActionMenu>.Instance.troopRender.Clear();
+                            GameSystem.GetSystem<TroopActionMenu>().troopRender.Clear();
                             ContextMenu.CloseAll();
                             Cell start = TargetTroop.cell;
 

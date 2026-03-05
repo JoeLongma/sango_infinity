@@ -157,7 +157,7 @@ namespace Sango.Game.Render
 
         public override void SetFlash(bool b)
         {
-            BuildingModel.SetFlash(b);
+            BuildingModel?.SetFlash(b);
         }
     }
 }

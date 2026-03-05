@@ -219,7 +219,7 @@ namespace Sango.Game.Render.UI
             if (force.IsPlayer)
             {
                 uIPlayerInfoPanel.UpdateShowType();
-                Singleton<PlayerTurnStartGreeting>.Instance.Push();
+                GameSystem.GetSystem<PlayerTurnStartGreeting>().Push();
             }
         }
 
@@ -408,7 +408,7 @@ namespace Sango.Game.Render.UI
             if (GameSystemManager.Instance.CurrentCommand != null)
                 return;
             ContextMenu.CloseAll();
-            Singleton<PlayerEndTurn>.Instance.Push();
+            GameSystem.GetSystem<PlayerEndTurn>().Push();
         }
 
         public void OnSwitchCityInfoShow()
@@ -433,7 +433,7 @@ namespace Sango.Game.Render.UI
                 return;
             Window.Instance.Close("window_city_info_panel");
             Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(Game.Instance.UICamera, gameSettingRect.position);
-            Singleton<GameSettingSystem>.Instance.Start(screenPos + new Vector2(0, -gameSettingRect.sizeDelta.y - 5));
+            GameSystem.GetSystem<GameSettingSystem>().Start(screenPos + new Vector2(0, -gameSettingRect.sizeDelta.y - 5));
         }
 
         public void OnSpeedChange()

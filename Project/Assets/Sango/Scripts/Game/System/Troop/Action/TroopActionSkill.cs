@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
+    [GameSystem(auto = true)]
     public class TroopActionSkill : TroopActionAttack
     {
         public TroopActionSkill()
@@ -73,7 +74,7 @@ namespace Sango.Game.Player
             isMoving = false;
             spellRangeCell.Clear();
             ContextMenu.SetVisible(false);
-            MovePath = Singleton<TroopSystem>.Instance.movePath;
+            MovePath = GameSystem.GetSystem<TroopSystem>().movePath;
             Cell stayCell = ActionCell;
             if (spellSkill.CanBeSpell(TargetTroop))
             {

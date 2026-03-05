@@ -35,7 +35,7 @@ namespace Sango.Game.Player
             troopRender = new TroopRender(TargetTroop, false);
             troopRender.SetPosition(TargetCell.Position);
             troopRender.SetForward(TargetTroop.Render.GetForward());
-            MovePath = Singleton<TroopSystem>.Instance.movePath;
+            MovePath = GameSystem.GetSystem<TroopSystem>().movePath;
             List<SkillInstance> list;
             if (TargetCell.TerrainType.isWater)
                 list = TargetTroop.waterSkills;

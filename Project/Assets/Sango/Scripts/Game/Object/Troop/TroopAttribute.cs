@@ -1,10 +1,4 @@
-﻿using TKNewtonsoft.Json;
-using Sango.Game.Render;
-using Sango.Tools;
-using System;
-using System.Collections.Generic;
-
-namespace Sango.Game
+﻿namespace Sango.Game
 {
     public class TroopAttribute
     {

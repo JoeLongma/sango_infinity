@@ -54,7 +54,7 @@ namespace Sango.Game.Render
             else
             {
                 //展示武将
-                Singleton<Player.PersonRecruit>.Instance.Start(targetCity, atk, captiveList[0], recruitType, 3, x =>
+                GameSystem.GetSystem<PersonRecruit>().Start(targetCity, atk, captiveList[0], recruitType, 3, x =>
                 {
                     captiveList.RemoveAt(0);
                     Next();

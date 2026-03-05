@@ -26,7 +26,7 @@ namespace Sango.Game.Render.UI
 
         public override void OnShow()
         {
-            currentSystem = Singleton<CityRecruit>.Instance;
+            currentSystem = GameSystem.GetSystem<CityRecruit>();
             TargetCity = currentSystem.TargetCity;
             windiwTitle.text = currentSystem.customTitleName;
             UpdateContent();
@@ -73,14 +73,14 @@ namespace Sango.Game.Render.UI
 
         public void OnSelectTargetPerson()
         {
-            Singleton<PersonSelectSystem>.Instance.Start(currentSystem.targetList,
+            GameSystem.GetSystem<PersonSelectSystem>().Start(currentSystem.targetList,
                currentSystem.target, 1, OnTargetPersonChange, currentSystem.customTargetTitleList, currentSystem.customTargetTitleName);
 
         }
 
         public void OnSelectActionPerson()
         {
-            Singleton<PersonSelectSystem>.Instance.Start(TargetCity.freePersons,
+            GameSystem.GetSystem<PersonSelectSystem>().Start(TargetCity.freePersons,
                currentSystem.personList, 1, OnActionPersonChange, currentSystem.customActionTitleList, currentSystem.customActionTitleName);
 
         }

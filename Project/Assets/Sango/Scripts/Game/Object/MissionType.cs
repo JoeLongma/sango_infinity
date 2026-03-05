@@ -14,6 +14,7 @@
         TroopProtectTroop,
         TroopProtectCity,
         TroopBuildBuilding,
+        TroopFixBuilding,
         TroopTransformGoodsToCity,
 
 

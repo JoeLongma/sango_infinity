@@ -1,7 +1,7 @@
 ﻿using Sango.Game.Render;
 using Sango.Game.Render.UI;
 
-namespace Sango.Game.Player
+namespace Sango.Game
 {
     [GameSystem(auto = true)]
     public class PersonRecruit : GameSystem

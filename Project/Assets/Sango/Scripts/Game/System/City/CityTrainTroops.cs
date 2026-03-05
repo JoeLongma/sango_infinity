@@ -2,6 +2,7 @@
 
 namespace Sango.Game.Player
 {
+    [GameSystem(auto = true)]
     public class CityTrainTroops : CityBaseSystem
     {
         public CityTrainTroops()

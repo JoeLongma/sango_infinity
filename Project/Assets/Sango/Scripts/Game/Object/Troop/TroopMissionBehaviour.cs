@@ -45,6 +45,8 @@ namespace Sango.Game
                     return new TroopReturnCity();
                 case (int)MissionType.TroopBuildBuilding:
                     return new TroopBuildBuilding();
+                case (int)MissionType.TroopFixBuilding:
+                    return new TroopFixBuilding();
                 case (int)MissionType.TroopTransformGoodsToCity:
                     return new TroopTransformGoodsToCity();
                 default:

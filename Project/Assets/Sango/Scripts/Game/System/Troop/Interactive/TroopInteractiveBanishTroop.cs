@@ -1,0 +1,73 @@
+﻿namespace Sango.Game.Player
+{
+    /// <summary>
+    /// 部队委任-占领城池
+    /// </summary>
+    [GameSystem(auto = true)]
+    public class TroopInteractiveBanishTroop : TroopInteractiveBase
+    {
+        public Troop DestTroop { get; set; }
+
+        public Cell TargetCell { get; set; }
+
+        public override bool IsValid
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        protected override bool Check(Troop troop, Cell actionCell)
+        {
+            if (troop.IsTransport()) return false;
+
+            if (actionCell.troop == null) return false;
+
+            if (!actionCell.troop.IsEnemy(TargetTroop)) return false;
+
+            if (troop.MoveRange.Contains(actionCell)) return false;
+
+            DestTroop = actionCell.troop as Troop;
+            content = string.Format("前往驱逐敌方部队<color=#85B964>{0}</color>。\n确定吗？", DestTroop.Name);
+            return true;
+
+        }
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+
+            TargetTroop.missionTarget = DestTroop.Id;
+            TargetTroop.SetMission(MissionType.TroopBanishTroop, DestTroop.Id);
+            TargetTroop.Render?.UpdateRender();
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            if (!TargetTroop.DoAI(Scenario.Cur))
+                return;
+
+            OnAIDone();
+        }
+
+        public override void OnDestroy()
+        {
+
+        }
+
+        public void OnAIDone()
+        {
+            TargetTroop.ActionOver = true;
+            TargetTroop.Render?.UpdateRender();
+            Done();
+        }
+
+        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)
+        {
+
+        }
+
+    }
+}

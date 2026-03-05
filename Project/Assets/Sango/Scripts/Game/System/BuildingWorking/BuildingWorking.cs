@@ -61,7 +61,7 @@ namespace Sango.Game
 
             if (selectedWorkingType == 0)
             {
-                Singleton<ClassicsCityWorking>.Instance.Clear();
+                GameSystem.GetSystem<ClassicsCityWorking>().Clear();
                 ScenarioInit();
 
                 customTitleName = "建筑工作";

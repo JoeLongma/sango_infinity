@@ -1,8 +1,5 @@
-﻿using Sango.Game.Render.UI;
-
-namespace Sango.Game.Player
+﻿namespace Sango.Game.Player
 {
-    [GameSystem(auto = true)]
     public class TroopInteractiveBase : GameSystem
     {
         public Troop TargetTroop { get; set; }

@@ -110,7 +110,7 @@ namespace Sango.Game.Player
             TargetCity.Render?.UpdateRender();
             TargetCity.EnsureTroop(TargetTroop, Scenario.Cur);
             Window.Instance.SetVisible(windowName, false);
-            Singleton<TroopSystem>.Instance.Start(TargetTroop);
+            GameSystem.GetSystem<TroopSystem>().Start(TargetTroop);
         }
 
         public override void OnBack(ICommandEvent whoGone)

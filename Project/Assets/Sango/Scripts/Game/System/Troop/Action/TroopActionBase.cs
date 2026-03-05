@@ -40,6 +40,7 @@ namespace Sango.Game.Player
         {
             TargetTroop = troop;
             ActionCell = actionCell;
+            troop.ClearMission();
             GameSystemManager.Instance.Push(this);
         }
     }

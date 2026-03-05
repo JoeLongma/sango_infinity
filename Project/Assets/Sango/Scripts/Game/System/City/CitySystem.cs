@@ -13,19 +13,19 @@ namespace Sango.Game.Player
         public override void Init()
         {
             GameEvent.OnClick += OnClick;
-            Singleton<CityBuildBuilding>.Instance.Init();
+            //GameSystem.GetSystem<CityBuildBuilding>().Init();
 
-            Singleton<CityTrade>.Instance.Init();
+            //GameSystem.GetSystem<CityTrade>().Init();
             //Singleton<CityTechniqueResearch>.Instance.Init();
 
             //军事
-            Singleton<CityExpedition>.Instance.Init();    // 出征
-            Singleton<CityTransport>.Instance.Init();     // 运输
+            //GameSystem.GetSystem<CityExpedition>().Init();    // 出征
+            //GameSystem.GetSystem<CityTransport>().Init();     // 运输
 
             //人事
-            Singleton<CityCallPerson>.Instance.Init();
+            //GameSystem.GetSystem<CityCallPerson>().Init();
             //Singleton<CityTransformPerson>.Instance.Init();
-            Singleton<CityRecruit>.Instance.Init();
+            //GameSystem.GetSystem<CityRecruit>().Init();
             //Singleton<CityReward>.Instance.Init();
         }
 
@@ -33,19 +33,19 @@ namespace Sango.Game.Player
         {
             GameEvent.OnClick -= OnClick;
 
-            Singleton<CityBuildBuilding>.Instance.Clear();
+            GameSystem.GetSystem<CityBuildBuilding>().Clear();
 
-            Singleton<CityTrade>.Instance.Clear();
+            GameSystem.GetSystem<CityTrade>().Clear();
             //Singleton<CityTechniqueResearch>.Instance.Init();
 
             //军事
-            Singleton<CityExpedition>.Instance.Clear();    // 出征
-            Singleton<CityTransport>.Instance.Clear();     // 运输
+            GameSystem.GetSystem<CityExpedition>().Clear();    // 出征
+            GameSystem.GetSystem<CityTransport>().Clear();     // 运输
 
             //人事
-            Singleton<CityCallPerson>.Instance.Clear();
+            GameSystem.GetSystem<CityCallPerson>().Clear();
             //Singleton<CityTransformPerson>.Instance.Clear();
-            Singleton<CityRecruit>.Instance.Clear();
+            GameSystem.GetSystem<CityRecruit>().Clear();
             //Singleton<CityReward>.Instance.Clear();
         }
 

@@ -5,43 +5,65 @@ namespace Sango.Game.Player
     [GameSystem(auto = true)]
     public class PlayerEndTurn : GameSystem
     {
-        public PlayerEndTurn() {
-            
-        }
+
+        bool updateTroopAI = false;
+        public string customTitleName;
 
         public override void Init()
         {
-            GameEvent.OnRightMouseButtonContextMenuShow += OnRightMouseButtonContextMenuShow;
+            customTitleName = "进行";
+            //GameEvent.OnRightMouseButtonContextMenuShow += OnRightMouseButtonContextMenuShow;
         }
 
         public override void Clear()
         {
-            GameEvent.OnRightMouseButtonContextMenuShow -= OnRightMouseButtonContextMenuShow;
+            //GameEvent.OnRightMouseButtonContextMenuShow -= OnRightMouseButtonContextMenuShow;
         }
 
-        protected virtual void OnRightMouseButtonContextMenuShow(IContextMenuData menuData)
-        {
-            menuData.Add("结束回合", 0, null, OnClickMenuItem, true);
-        }
+        //protected virtual void OnRightMouseButtonContextMenuShow(IContextMenuData menuData)
+        //{
+        //    menuData.Add("进行", -9999, null, OnClickMenuItem, true);
+        //}
 
-        protected virtual void OnClickMenuItem(IContextMenuItem contextMenuItem)
-        {
-            ContextMenu.CloseAll();
-            GameSystemManager.Instance.Push(this);
-        }
+        //protected virtual void OnClickMenuItem(IContextMenuItem contextMenuItem)
+        //{
+        //    ContextMenu.CloseAll();
+        //    GameSystemManager.Instance.Push(this);
+        //}
 
         public override void OnEnter()
         {
+            updateTroopAI = false;
             UIDialog.Open("是否需要结束玩家回合", () =>
             {
-                Scenario.Cur.CurRunForce.CurRunCorps.ActionOver = true;
+                updateTroopAI = true;
+
                 UIDialog.Close();
-                Done();
             }).cancelAction = ()=>
             {
                 UIDialog.Close();
                 Done();
             };
+        }
+
+        public override void Update()
+        {
+            if (!updateTroopAI) return;
+            base.Update();
+            Force force = Scenario.Cur.CurRunForce;
+            Scenario scenario = Scenario.Cur;
+            for (int i = 0; i < scenario.troopsSet.Count; ++i)
+            {
+                var c = scenario.troopsSet[i];
+                if (c != null && c.IsAlive && c.BelongForce == force && !c.ActionOver && c.missionType > 0)
+                {
+                    if (!c.DoAI(scenario))
+                        return;
+                    c.Render?.UpdateRender();
+                }
+            }
+            Scenario.Cur.CurRunForce.CurRunCorps.ActionOver = true;
+            Done();
         }
 
         public override void OnDestroy()

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
+    [GameSystem(auto = true)]
     public class TroopActionStrategy : TroopActionAttack
     {
         public TroopActionStrategy()
@@ -42,7 +43,7 @@ namespace Sango.Game.Player
                                 }
                             }
                         }
-                        menuData.Add($"计略/{skill.Name}({skill.costEnergy})", skill.costEnergy, skill, OnClickMenuItem, isValid);
+                        menuData.Add($"计略/{skill.Name}({skill.costEnergy})", customMenuOrder, skill, OnClickMenuItem, isValid);
                     }
                 }
             }
@@ -70,7 +71,7 @@ namespace Sango.Game.Player
             isMoving = false;
             spellRangeCell.Clear();
             ContextMenu.SetVisible(false);
-            MovePath = Singleton<TroopSystem>.Instance.movePath;
+            MovePath = GameSystem.GetSystem<TroopSystem>().movePath;
             Cell stayCell = ActionCell;
             if (spellSkill.CanBeSpell(TargetTroop))
             {

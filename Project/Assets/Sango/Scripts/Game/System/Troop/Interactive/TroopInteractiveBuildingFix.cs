@@ -1,17 +1,16 @@
 ﻿
 using Sango.Game.Render;
-using Sango.Game.Render.UI;
 using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
+    /// <summary>
+    /// 部队委任-建造建筑
+    /// </summary>
+    [GameSystem(auto = true)]
     public class TroopInteractiveBuildingFix : TroopInteractiveBase
     {
         List<Cell> MovePath { get; set; }
-
-        public TroopInteractiveBuildingFix()
-        {
-        }
 
         public override bool IsValid
         {
@@ -33,7 +32,7 @@ namespace Sango.Game.Player
         public override void OnEnter()
         {
             base.OnEnter();
-            MovePath = Singleton<TroopSystem>.Instance.movePath;
+            MovePath = GameSystem.GetSystem<TroopSystem>().movePath;
             if (MovePath.Count <= 1)
             {
                 OnMoveDone();

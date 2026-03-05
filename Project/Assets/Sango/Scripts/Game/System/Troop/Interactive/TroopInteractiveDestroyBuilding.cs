@@ -1,0 +1,72 @@
+﻿namespace Sango.Game.Player
+{
+    /// <summary>
+    /// 部队委任-占领城池
+    /// </summary>
+    [GameSystem(auto = true)]
+    public class TroopInteractiveDestroyBuilding : TroopInteractiveBase
+    {
+        public Building TargetBuilding { get; set; }
+        public Cell TargetCell { get; set; }
+
+        public override bool IsValid
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        protected override bool Check(Troop troop, Cell actionCell)
+        {
+            if(troop.IsTransport()) return false;
+
+            if (actionCell.building == null || actionCell.building.IsCityBase()) return false;
+
+            if (actionCell.building.BelongForce == troop.BelongForce) return false;
+
+            if (troop.MoveRange.Contains(actionCell)) return false;
+
+            TargetBuilding = actionCell.building as Building;
+            content = string.Format("前往摧毁建筑<color=#85B964>{0}</color>。\n确定吗？", actionCell.building.Name);
+            return true;
+
+        }
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+
+            TargetTroop.missionTarget = TargetBuilding.Id;
+            TargetTroop.SetMission(MissionType.TroopDestroyBuilding, TargetBuilding.Id);
+            TargetTroop.Render?.UpdateRender();
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            if (!TargetTroop.DoAI(Scenario.Cur))
+                return;
+
+            OnAIDone();
+        }
+
+        public override void OnDestroy()
+        {
+
+        }
+
+        public void OnAIDone()
+        {
+            TargetTroop.ActionOver = true;
+            TargetTroop.Render?.UpdateRender();
+            Done();
+        }
+
+        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)
+        {
+
+        }
+
+    }
+}

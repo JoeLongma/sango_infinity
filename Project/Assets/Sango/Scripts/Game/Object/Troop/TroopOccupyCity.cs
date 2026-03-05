@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using static Sango.Game.TroopAIUtility;
-
-namespace Sango.Game
+﻿namespace Sango.Game
 {
     public class TroopOccupyCity : TroopMissionBehaviour
     {

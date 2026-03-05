@@ -9,16 +9,6 @@ namespace Sango.Game.Player
         public override void Init()
         {
             GameEvent.OnClick += OnClick;
-            Singleton<TroopActionStay>.Instance.Init();
-            Singleton<TroopActionSkill>.Instance.Init();
-            Singleton<TroopActionAttack>.Instance.Init();
-            Singleton<TroopActionBuild>.Instance.Init();
-            Singleton<TroopActionBuildingFix>.Instance.Init();
-
-            Singleton<TroopActionStrategy>.Instance.Init();
-
-            Singleton<TroopInteractiveBuildingFix>.Instance.Init();
-            Singleton<TroopInteractiveCityEnter>.Instance.Init();
         }
 
         void OnClick(Cell clickCell, Vector3 clickPosition, bool isOverUI)
@@ -34,7 +24,7 @@ namespace Sango.Game.Player
             }
             else
             {
-                Singleton<TroopMenu>.Instance.Start(troop, clickPosition);
+                GameSystem.GetSystem<TroopMenu>().Start(troop, clickPosition);
             }
         }
 
@@ -158,14 +148,17 @@ namespace Sango.Game.Player
                         if (isOverUI) return;
 
                         if (!moveRange.Contains(cell))
+                        {
+                            GameSystem.GetSystem<TroopInteractiveDialog>().Start(TargetTroop, cell, clickPosition);
                             return;
+                        }
 
                         // 排除出征城市,出征城市无法原地进行行为
                         if ((cell == TargetTroop.cell && cell.building == null) || cell.IsEmpty())
                         {
                             movePath.Clear();
                             Scenario.Cur.Map.GetMovePath(TargetTroop, cell, movePath);
-                            Singleton<TroopActionMenu>.Instance.Start(TargetTroop, cell, clickPosition);
+                            GameSystem.GetSystem<TroopActionMenu>().Start(TargetTroop, cell, clickPosition);
                             return;
                         }
 
@@ -176,7 +169,7 @@ namespace Sango.Game.Player
                         movePath.Clear();
                         Scenario.Cur.Map.GetMovePath(TargetTroop, cell, movePath);
                         // 进入
-                        Singleton<TroopInteractiveDialog>.Instance.Start(TargetTroop, cell, clickPosition);
+                        GameSystem.GetSystem<TroopInteractiveDialog>().Start(TargetTroop, cell, clickPosition);
 
 
                         //if (cell.building != null)

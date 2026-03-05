@@ -21,7 +21,7 @@ namespace Sango.Game.Render.UI
         CityTransformPerson currentSystem;
         public override void OnShow()
         {
-            currentSystem = Singleton<CityTransformPerson>.Instance;
+            currentSystem = GameSystem.GetSystem<CityTransformPerson>();
             windiwTitle.text = currentSystem.customTitleName;
             ResetContent();
         }
@@ -67,7 +67,7 @@ namespace Sango.Game.Render.UI
 
         public void OnSelectPerson()
         {
-            Singleton<PersonSelectSystem>.Instance.Start(currentSystem.TargetCity.freePersons,
+            GameSystem.GetSystem<PersonSelectSystem>().Start(currentSystem.TargetCity.freePersons,
              currentSystem.personList, 3, OnPersonChange, currentSystem.customTitleList, currentSystem.customTitleName);
 
         }
@@ -89,7 +89,7 @@ namespace Sango.Game.Render.UI
                 }
             });
 
-            Singleton<CitySelectSystem>.Instance.Start(cities,
+            GameSystem.GetSystem<CitySelectSystem>().Start(cities,
               currentSystem.transformTo, 1, OnCityChange, currentSystem.citySortTitleList, "目的城池选择");
 
         }

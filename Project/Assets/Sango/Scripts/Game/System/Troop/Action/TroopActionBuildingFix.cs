@@ -65,7 +65,7 @@ namespace Sango.Game.Player
             isShow = false;
             isMoving = false;
             ContextMenu.SetVisible(false);
-            MovePath = Singleton<TroopSystem>.Instance.movePath;
+            MovePath = GameSystem.GetSystem<TroopSystem>().movePath;
             ShowFixCells();
         }
 
@@ -154,7 +154,7 @@ namespace Sango.Game.Player
                             Cell stayCell = MovePath[MovePath.Count - 1];
                             targetBuildCell = cell;
 
-                            Singleton<TroopActionMenu>.Instance.troopRender.Clear();
+                            GameSystem.GetSystem<TroopActionMenu>().troopRender.Clear();
                             ContextMenu.CloseAll();
                             Cell start = TargetTroop.cell;
 

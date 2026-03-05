@@ -40,7 +40,7 @@ namespace Sango.Game.Render.UI
         public override void OnShow()
         {
             showLand = true; 
-            cityTransportSys = Singleton<CityTransport>.Instance;
+            cityTransportSys = GameSystem.GetSystem<CityTransport>();
             targetCity = cityTransportSys.TargetCity;
             targetTroop = cityTransportSys.TargetTroop;
 
@@ -253,7 +253,7 @@ namespace Sango.Game.Render.UI
 
         public void OnSelectPerson()
         {
-            Singleton<PersonSelectSystem>.Instance.Start(cityTransportSys.TargetCity.freePersons,
+            GameSystem.GetSystem<PersonSelectSystem>().Start(cityTransportSys.TargetCity.freePersons,
                 cityTransportSys.personList, 3, OnPersonChange, cityTransportSys.customTitleList, cityTransportSys.customTitleName);
         }
 

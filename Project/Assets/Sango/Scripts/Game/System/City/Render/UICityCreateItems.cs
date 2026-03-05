@@ -35,7 +35,7 @@ namespace Sango.Game.Render.UI
 
         public override void OnShow()
         {
-            currentSystem = Singleton<CityCreateItems>.Instance;
+            currentSystem = GameSystem.GetSystem<CityCreateItems>();
             windiwTitle.text = currentSystem.customTitleName;
 
             itemInfoLabel.text = "兵装";
@@ -141,7 +141,7 @@ namespace Sango.Game.Render.UI
 
         public void OnSelectPerson()
         {
-            Singleton<PersonSelectSystem>.Instance.Start(currentSystem.TargetCity.freePersons,
+            GameSystem.GetSystem<PersonSelectSystem>().Start(currentSystem.TargetCity.freePersons,
                 currentSystem.personList, 3, OnPersonChange, currentSystem.customTitleList, currentSystem.customTitleName);
         }
 

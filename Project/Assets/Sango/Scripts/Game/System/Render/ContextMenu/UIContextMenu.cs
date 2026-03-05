@@ -7,52 +7,38 @@ namespace Sango.Game.Render.UI
     {
         public RectTransform[] menuRoot;
         public UIMenuItem[] menuItem;
-        public GameObject menuLine;
+        public RectTransform menuLine;
         private List<UIMenuItem>[] nodePool = new List<UIMenuItem>[] { new List<UIMenuItem>(), new List<UIMenuItem>(), new List<UIMenuItem>() };
-        private List<GameObject> linePool = new List<GameObject>();
+        //private List<GameObject> linePool = new List<GameObject>();
+
+        private CreatePool<UIMenuItem>[] menuPools;
+        private CreatePool<RectTransform> linePool;
+
+        protected override void Awake()
+        {
+            menuPools = new CreatePool<UIMenuItem>[menuItem.Length];
+            for (int i = 0; i < menuItem.Length; i++)
+                menuPools[i] = new CreatePool<UIMenuItem>(menuItem[i]);
+            linePool = new CreatePool<RectTransform>(menuLine);
+        }
+
 
         private UIMenuItem CreteNode(int index)
         {
-            List<UIMenuItem> pool = nodePool[index];
-            UIMenuItem rs;
-            if (pool.Count > 0)
-            {
-                rs = pool[0];
-                pool.RemoveAt(0);
-            }
-            else
-            {
-                rs = GameObject.Instantiate(menuItem[index].gameObject).GetComponent<UIMenuItem>();
-            }
-            rs.gameObject.SetActive(true);
-            return rs;
+            return menuPools[index].Create();
         }
         private void Recycle(int index, UIMenuItem obj)
         {
-            obj.gameObject.SetActive(false);
-            nodePool[index].Add(obj);
+            menuPools[index].Recycle(obj);
         }
 
-        private GameObject CreteLine()
+        private RectTransform CreteLine()
         {
-            List<GameObject> pool = linePool;
-            GameObject rs;
-            if (pool.Count > 0)
-            {
-                rs = pool[0];
-                pool.RemoveAt(0);
-            }
-            else
-            {
-                rs = GameObject.Instantiate(menuLine);
-            }
-            rs.gameObject.SetActive(true);
-            return rs;
+            return linePool.Create();
         }
-        private void Recycle(int index, GameObject obj)
+        private void Recycle(int index, RectTransform obj)
         {
-            obj.gameObject.SetActive(false);
-            linePool.Add(obj);
+            linePool.Recycle(obj);
         }
 
         public int showDepth = -1;
@@ -83,8 +69,8 @@ namespace Sango.Game.Render.UI
                     }
                     else
                     {
-                        GameObject obj = CreteLine();
-                        obj.transform.SetParent(root.transform, false);
+                        RectTransform obj = CreteLine();
+                        obj.SetParent(root.transform, false);
                     }
                 }
             }
@@ -108,7 +94,7 @@ namespace Sango.Game.Render.UI
                         }
                         else
                         {
-                            Recycle(showDepth, trns.gameObject);
+                            Recycle(showDepth, trns.GetComponent<RectTransform>());
                         }
                     }
                 }

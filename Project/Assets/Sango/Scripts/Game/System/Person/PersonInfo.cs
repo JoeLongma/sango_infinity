@@ -9,55 +9,55 @@ namespace Sango.Game.Player
             
         }
 
-        public override void Init()
-        {
-            GameEvent.OnRightMouseButtonContextMenuShow += OnRightMouseButtonContextMenuShow;
-        }
+        //public override void Init()
+        //{
+        //    GameEvent.OnRightMouseButtonContextMenuShow += OnRightMouseButtonContextMenuShow;
+        //}
 
-        public override void Clear()
-        {
-            GameEvent.OnRightMouseButtonContextMenuShow -= OnRightMouseButtonContextMenuShow;
-        }
+        //public override void Clear()
+        //{
+        //    GameEvent.OnRightMouseButtonContextMenuShow -= OnRightMouseButtonContextMenuShow;
+        //}
 
-        protected virtual void OnRightMouseButtonContextMenuShow(IContextMenuData menuData)
-        {
-            menuData.Add("结束回合", 0, null, OnClickMenuItem, true);
-        }
+        //protected virtual void OnRightMouseButtonContextMenuShow(IContextMenuData menuData)
+        //{
+        //    menuData.Add("结束回合", 0, null, OnClickMenuItem, true);
+        //}
 
-        protected virtual void OnClickMenuItem(IContextMenuItem contextMenuItem)
-        {
-            ContextMenu.CloseAll();
-            GameSystemManager.Instance.Push(this);
-        }
+        //protected virtual void OnClickMenuItem(IContextMenuItem contextMenuItem)
+        //{
+        //    ContextMenu.CloseAll();
+        //    GameSystemManager.Instance.Push(this);
+        //}
 
-        public override void OnEnter()
-        {
-            UIDialog.Open("是否需要结束玩家回合", () =>
-            {
-                Scenario.Cur.CurRunForce.CurRunCorps.ActionOver = true;
-                UIDialog.Close();
-                Done();
-            }).cancelAction = ()=>
-            {
-                UIDialog.Close();
-                Done();
-            };
-        }
+        //public override void OnEnter()
+        //{
+        //    UIDialog.Open("是否需要结束玩家回合", () =>
+        //    {
+        //        Scenario.Cur.CurRunForce.CurRunCorps.ActionOver = true;
+        //        UIDialog.Close();
+        //        Done();
+        //    }).cancelAction = ()=>
+        //    {
+        //        UIDialog.Close();
+        //        Done();
+        //    };
+        //}
 
-        public override void OnDestroy()
-        {
-            UIDialog.Close();
-        }
+        //public override void OnDestroy()
+        //{
+        //    UIDialog.Close();
+        //}
 
-        public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)
-        {
-            switch (eventType)
-            {
-                case CommandEventType.Cancel:
-                case CommandEventType.RClickUp:
-                    GameSystemManager.Instance.Back(); break;
-            }
+        //public override void HandleEvent(CommandEventType eventType, Cell cell, UnityEngine.Vector3 clickPosition, bool isOverUI)
+        //{
+        //    switch (eventType)
+        //    {
+        //        case CommandEventType.Cancel:
+        //        case CommandEventType.RClickUp:
+        //            GameSystemManager.Instance.Back(); break;
+        //    }
 
-        }
+        //}
     }
 }

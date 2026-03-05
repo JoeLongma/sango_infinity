@@ -1,11 +1,9 @@
-﻿using TKNewtonsoft.Json;
-using Sango.Game.Action;
+﻿using Sango.Game.Action;
 using Sango.Game.Render;
-using Sango.Game.Tools;
 using Sango.Tools;
 using System;
 using System.Collections.Generic;
-using UnityEngine.AI;
+using TKNewtonsoft.Json;
 
 namespace Sango.Game
 {
@@ -1795,12 +1793,20 @@ namespace Sango.Game
 
         }
 
-
         public List<Cell> MoveRange = new List<Cell>();
         public void SetMission(MissionType missionType, int missionTarget)
         {
             this.missionType = (int)missionType;
             this.missionTarget = missionTarget;
+        }
+
+        public void ClearMission()
+        {
+            this.missionType = 0;
+            this.missionTarget = 0;
+            this.missionTargetCell = null;
+            this.missionParams1 = 0;
+            this.missionParams2 = 0;
         }
 
         TroopMissionBehaviour troopMissionBehaviour;

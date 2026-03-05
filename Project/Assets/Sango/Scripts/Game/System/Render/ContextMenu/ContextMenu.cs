@@ -8,27 +8,32 @@ namespace Sango.Game.Render.UI
     {
         static string[] windowNames = new string[] {
             "window_contextMenu",
-            "window_contextMenu_city",
-            "window_contextMenu_troop",
-            "window_contextMenu_building",
-            "window_contextMenu_setting",
+            "window_contextMenu_command",
+            "window_contextMenu_object",
+            "window_contextMenu_system",
         };
 
         static string currentWindowName;
 
-        public static void Show(ContextMenuData itemData, Vector2 position)
+        public static UIContextMenu Show(ContextMenuData itemData, Vector2 position)
         {
-            Show(itemData.headList, position, ContextMenuType.Common);
-        }
-        public static void Show(List<ContextMenuItem> menuItems, Vector2 position)
-        {
-            Show(menuItems, position, ContextMenuType.Common);
+           return Show(itemData.headList, position, ContextMenuType.Common);
         }
 
-        public static void Show(List<ContextMenuItem> menuItems, Vector2 position, ContextMenuType contentMenuType)
+        public static UIContextMenu Show(ContextMenuData itemData, Vector2 position, ContextMenuType contentMenuType)
+        {
+            return Show(itemData.headList, position, contentMenuType);
+        }
+
+        public static UIContextMenu Show(List<ContextMenuItem> menuItems, Vector2 position)
+        {
+            return Show(menuItems, position, ContextMenuType.Common);
+        }
+
+        public static UIContextMenu Show(List<ContextMenuItem> menuItems, Vector2 position, ContextMenuType contentMenuType)
         {
             if (menuItems.Count == 0)
-                return;
+                return null;
 
             currentWindowName = windowNames[(int)contentMenuType];
             WindowInterface windowInterface = Window.Instance.Open(currentWindowName);
@@ -45,8 +50,11 @@ namespace Sango.Game.Render.UI
                     uIContextMenu.Close(item.depth);
                     menuItems.Sort((a, b) => a.order.CompareTo(b.order));
                     uIContextMenu.Show(anchorPos, item.depth, menuItems);
+                    return uIContextMenu;
                 }
             }
+            return null;
+
         }
 
         public static void SetVisible(bool b)

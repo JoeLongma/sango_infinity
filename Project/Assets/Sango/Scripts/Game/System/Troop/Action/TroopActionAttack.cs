@@ -81,7 +81,7 @@ namespace Sango.Game.Player
             isShow = false;
             isMoving = false;
             ContextMenu.SetVisible(false);
-            MovePath = Singleton<TroopSystem>.Instance.movePath;
+            MovePath = GameSystem.GetSystem<TroopSystem>().movePath;
             ShowSpellRange();
         }
 
@@ -199,7 +199,7 @@ namespace Sango.Game.Player
                                 TargetTroop.BelongCorps.ReduceActionPoint(JobType.GetJobCostAP((int)CityJobType.MakeTroop));
                             }
 
-                            Singleton<TroopActionMenu>.Instance.troopRender.Clear();
+                            GameSystem.GetSystem<TroopActionMenu>().troopRender.Clear();
                             ContextMenu.CloseAll();
                             Cell start = TargetTroop.cell;
 

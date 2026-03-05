@@ -1,17 +1,12 @@
 ﻿using Sango.Game.Render;
-using Sango.Game.Render.UI;
 using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
+    [GameSystem(auto = true)]
     public class TroopInteractiveCityEnter : TroopInteractiveBase
     {
         List<Cell> MovePath { get; set; }
-
-        public TroopInteractiveCityEnter()
-        {
-        }
-
         public override bool IsValid
         {
             get
@@ -26,6 +21,8 @@ namespace Sango.Game.Player
 
             if (actionCell.building.BelongForce != troop.BelongForce) return false;
 
+            if (!troop.MoveRange.Contains(actionCell)) return false;
+
             content = string.Format("即将往<color=#85B964>{0}</color>进行移动。\n确定吗？", actionCell.building.Name);
             return true;
 
@@ -34,7 +31,7 @@ namespace Sango.Game.Player
         public override void OnEnter()
         {
             base.OnEnter();
-            MovePath = Singleton<TroopSystem>.Instance.movePath;
+            MovePath = GameSystem.GetSystem<TroopSystem>().movePath;
             if (MovePath.Count <= 1)
             {
                 OnMoveDone();

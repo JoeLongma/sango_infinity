@@ -20,14 +20,14 @@ namespace Sango.Game
         public override void Init()
         {
             // 增加建筑菜单
-            Singleton<CityRecruitTroops>.Instance.Init();   // 征兵
-            Singleton<CityCreateItems>.Instance.Init();
+            //GameSystem.GetSystem<CityRecruitTroops>().Init();   // 征兵
+            //GameSystem.GetSystem<CityCreateItems>().Init();
             //Singleton<CityDevelop>.Instance.Init();
             //Singleton<CityFarming>.Instance.Init();
-            Singleton<CityInspection>.Instance.Init();
-            Singleton<CityTrainTroops>.Instance.Init();     // 训练
+            //GameSystem.GetSystem<CityInspection>().Init();
+            //GameSystem.GetSystem<CityTrainTroops>().Init();     // 训练
 
-            Singleton<CitySeraching>.Instance.Init();
+            //GameSystem.GetSystem<CitySeraching>().Init();
 
             GameEvent.OnCityMonthStart += OnCityMonthStart;
             GameEvent.OnCitySeasonStart += OnCitySeasonStart;
@@ -38,14 +38,14 @@ namespace Sango.Game
         public override void Clear()
         {
             // 增加建筑菜单
-            Singleton<CityRecruitTroops>.Instance.Clear();   // 征兵
-            Singleton<CityCreateItems>.Instance.Clear();
+            GameSystem.GetSystem<CityRecruitTroops>().Clear();   // 征兵
+            GameSystem.GetSystem<CityCreateItems>().Clear();
             //Singleton<CityDevelop>.Instance.Clear();
             //Singleton<CityFarming>.Instance.Clear();
-            Singleton<CityInspection>.Instance.Clear();
-            Singleton<CityTrainTroops>.Instance.Clear();     // 训练
+            GameSystem.GetSystem<CityInspection>().Clear();
+            GameSystem.GetSystem<CityTrainTroops>().Clear();     // 训练
 
-            Singleton<CitySeraching>.Instance.Clear();
+            GameSystem.GetSystem<CitySeraching>().Clear();
 
             GameEvent.OnCityMonthStart -= OnCityMonthStart;
             GameEvent.OnCitySeasonStart -= OnCitySeasonStart;

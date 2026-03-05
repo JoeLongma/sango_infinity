@@ -40,9 +40,9 @@ namespace Sango.Game.Player
         {
             base.OnEnter();
             ContextMenu.CloseAll();
-            Singleton<TroopActionMenu>.Instance.ShowSpellRange();
-            Singleton<TroopActionMenu>.Instance.troopRender.Clear();
-            MovePath = Singleton<TroopSystem>.Instance.movePath;
+            GameSystem.GetSystem<TroopActionMenu>().ShowSpellRange();
+            GameSystem.GetSystem<TroopActionMenu>().troopRender.Clear();
+            MovePath = GameSystem.GetSystem<TroopSystem>().movePath;
 
             if (TargetTroop.cell == TargetTroop.BelongCity.CenterCell)
             {

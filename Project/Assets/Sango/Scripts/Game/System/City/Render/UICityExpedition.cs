@@ -58,7 +58,7 @@ namespace Sango.Game.Render.UI
         public override void OnShow()
         {
 
-            cityExpeditionSys = Singleton<CityExpedition>.Instance;
+            cityExpeditionSys = GameSystem.GetSystem<CityExpedition>();
             targetCity = cityExpeditionSys.TargetCity;
             targetTroop = cityExpeditionSys.TargetTroop;
             showLand = true;
@@ -437,7 +437,7 @@ namespace Sango.Game.Render.UI
 
         public void OnSelectPerson()
         {
-            Singleton<PersonSelectSystem>.Instance.Start(cityExpeditionSys.TargetCity.freePersons,
+            GameSystem.GetSystem<PersonSelectSystem>().Start(cityExpeditionSys.TargetCity.freePersons,
                 cityExpeditionSys.personList, 3, OnPersonChange, cityExpeditionSys.customTitleList, cityExpeditionSys.customTitleName);
         }
     }

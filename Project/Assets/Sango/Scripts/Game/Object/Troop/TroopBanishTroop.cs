@@ -1,15 +1,21 @@
-﻿using System;
-
-namespace Sango.Game
+﻿namespace Sango.Game
 {
-    public class TroopBanishTroop : TroopMissionBehaviour
+    public class TroopBanishTroop : TroopDestroyTroop
     {
         public override MissionType MissionType { get { return MissionType.TroopBanishTroop; } }
-        public override bool IsMissionComplete => throw new NotImplementedException();
-
-        public override bool DoAI(Troop troop, Scenario scenario)
+        public override bool IsMissionComplete
         {
-            return true;
+            get
+            {
+                return (TargetTroop == null ||
+                    !TargetTroop.IsAlive ||
+                    !TargetTroop.IsEnemy(Troop) ||
+
+                    // 出了边境即可
+                    TargetTroop.cell.BelongCity != Troop.BelongCity && TargetTroop.cell.BelongCity.BelongCity != Troop.BelongCity
+                    );
+            }
         }
+
     }
 }
