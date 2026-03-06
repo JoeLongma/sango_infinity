@@ -728,7 +728,7 @@ namespace Sango.Game
             });
 
             // 粮食消耗
-            FoodCost(scenario);
+            CostFood(scenario);
 
             // 耐久自修复
             if (durability < DurabilityLimit)
@@ -775,7 +775,14 @@ namespace Sango.Game
             return base.OnForceTurnEnd(scenario);
         }
 
-        public void FoodCost(Scenario scenario)
+        public int FoodCost(Scenario scenario)
+        {
+            int foodCost = 0;
+            foodCost += (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInCity * (troops + woundedTroops));
+            return foodCost;
+        }
+
+        public void CostFood(Scenario scenario)
         {
             if (food > 0)
             {

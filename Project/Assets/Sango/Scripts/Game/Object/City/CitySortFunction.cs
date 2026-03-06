@@ -367,7 +367,7 @@ namespace Sango.Game
         {
             name = "市价",
             width = 60,
-            valueStrGetCall = x => x.hasBusiness.ToString(),
+            valueStrGetCall = x => $"兵粮{x.hasBusiness}=资金1",
             valueSortFunc = (a, b) => a.hasBusiness.CompareTo(b.hasBusiness),
         };
     }

@@ -27,6 +27,9 @@
             };
 
         public static UnityEngine.Color whiteText = new UnityEngine.Color(0.862745f, 0.862745f, 0.862745f);
+
+        public static string o = "○";
+        public static string x = "×";
     }
 
 
@@ -55,7 +58,7 @@
         ＳＳR,
     }
 
-    //public string ox = "○×";
+    
 
     /// <summary>
     /// 对象枚举类型：宝物类型

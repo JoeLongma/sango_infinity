@@ -33,19 +33,19 @@ namespace Sango.Game.Player
         {
             GameEvent.OnClick -= OnClick;
 
-            GameSystem.GetSystem<CityBuildBuilding>().Clear();
+            //GameSystem.GetSystem<CityBuildBuilding>().Clear();
 
-            GameSystem.GetSystem<CityTrade>().Clear();
+            //GameSystem.GetSystem<CityTrade>().Clear();
             //Singleton<CityTechniqueResearch>.Instance.Init();
 
             //军事
-            GameSystem.GetSystem<CityExpedition>().Clear();    // 出征
-            GameSystem.GetSystem<CityTransport>().Clear();     // 运输
+            //GameSystem.GetSystem<CityExpedition>().Clear();    // 出征
+            //GameSystem.GetSystem<CityTransport>().Clear();     // 运输
 
             //人事
-            GameSystem.GetSystem<CityCallPerson>().Clear();
+            //GameSystem.GetSystem<CityCallPerson>().Clear();
             //Singleton<CityTransformPerson>.Instance.Clear();
-            GameSystem.GetSystem<CityRecruit>().Clear();
+            //GameSystem.GetSystem<CityRecruit>().Clear();
             //Singleton<CityReward>.Instance.Clear();
         }
 

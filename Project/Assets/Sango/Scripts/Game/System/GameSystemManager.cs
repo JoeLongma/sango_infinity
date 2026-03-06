@@ -200,6 +200,9 @@ namespace Sango.Game
         {
             CurrentCommand?.Update();
         }
+
+        Cell RClickCell;
+
         public void HandleEvent(CommandEventType eventType, Cell clickCell, Vector3 clickPosition, bool isOverUI)
         {
             if (CurrentCommand != null)
@@ -218,6 +221,17 @@ namespace Sango.Game
                 case CommandEventType.RClick:
                     {
                         GameEvent.OnRClick?.Invoke(clickCell, clickPosition, isOverUI);
+                    }
+                    break;
+                case CommandEventType.RClickUp:
+                    {
+                        if (RClickCell == clickCell && !clickCell.IsEmpty())
+                            GameEvent.OnRClickObject?.Invoke(clickCell, clickPosition, isOverUI);
+                    }
+                    break;
+                case CommandEventType.RClickDown:
+                    {
+                        RClickCell = clickCell;
                     }
                     break;
                 case CommandEventType.Cancel:

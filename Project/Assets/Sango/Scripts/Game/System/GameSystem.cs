@@ -12,6 +12,8 @@ namespace Sango.Game
     /// </summary>
     public class GameSystem : ICommandEvent
     {
+        public string Name {  get; protected set; }
+
         public static T GetSystem<T>(string name) where T : GameSystem
         {
             return GameSystemManager.Instance.GetSystem<T>(name);

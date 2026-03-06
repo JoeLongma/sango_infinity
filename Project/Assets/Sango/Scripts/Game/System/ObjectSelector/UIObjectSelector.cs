@@ -73,6 +73,7 @@ namespace Sango.Game.Render.UI
                         if (destIndex == lastIndex)
                         {
                             listItem.SetSelected(false);
+                            break;
                         }
                     }
                 }

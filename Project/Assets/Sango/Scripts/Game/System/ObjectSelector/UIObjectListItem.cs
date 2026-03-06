@@ -73,7 +73,7 @@ namespace Sango.Game.Render.UI
 
         public void SetSelected(bool b)
         {
-            selectItem.SetSelected(b);
+            selectItem?.SetSelected(b);
             textItem.SetSelected(b);
             for (int i = 0; i < usedItems.Count; i++)
             {

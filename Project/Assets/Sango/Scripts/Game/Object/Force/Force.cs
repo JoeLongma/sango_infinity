@@ -5,6 +5,7 @@ using TKNewtonsoft.Json.Linq;
 using TKNewtonsoft.Json.Serialization;
 using Sango.Game.Action;
 using UnityEngine;
+using System.Linq;
 
 namespace Sango.Game
 {
@@ -124,6 +125,7 @@ namespace Sango.Game
         public List<ForceTechnique> techniqueTree = new List<ForceTechnique>();
         public int techniqueMaxLevel = 0;
         public int techniqueMaxRow = 0;
+        public List<ItemType> createdItemTypes = new List<ItemType>();
 
         public int PersonCount { get; set; }
         public int CityCount { get; set; }
@@ -143,6 +145,7 @@ namespace Sango.Game
             });
 
             prepareTechniqueList(scenario);
+            UpdateValidCreatedItemTypes();
         }
 
         void prepareTechniqueList(Scenario scenario)
@@ -467,6 +470,7 @@ namespace Sango.Game
                     c.OnForceTurnStart(scenario);
                 }
             }
+            UpdateValidCreatedItemTypes();
 
             return base.OnForceTurnStart(scenario);
         }
@@ -686,6 +690,34 @@ namespace Sango.Game
             Person old = Counsellor;
             Counsellor = dest;
             GameEvent.OnForceChangeCounsellor?.Invoke(this, old);
+        }
+
+        public void UpdateValidCreatedItemTypes()
+        {
+            createdItemTypes.Clear();
+            Scenario scenario = Scenario.Cur;
+            Dictionary<int, ItemType> itemMap = new Dictionary<int, ItemType>();
+            scenario.CommonData.ItemTypes.ForEach(it =>
+            {
+                if (it.cost > 0 && it.IsValid(this))
+                {
+                    ItemType itemType;
+                    if (itemMap.TryGetValue(it.subKind, out itemType))
+                    {
+                        if (it.Id > itemType.Id)
+                        {
+                            itemMap[it.subKind] = it;
+                        }
+                    }
+                    else
+                    {
+                        itemMap[it.subKind] = it;
+                    }
+                }
+            });
+
+            createdItemTypes.AddRange(itemMap.Values.ToArray());
+            createdItemTypes.Sort(SangoObject.Compare);
         }
     }
 }

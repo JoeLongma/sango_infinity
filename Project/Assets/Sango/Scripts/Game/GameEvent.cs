@@ -32,6 +32,7 @@ namespace Sango.Game
 
         public static EventDelegate<Cell, Vector3, bool> OnClick;
         public static EventDelegate<Cell, Vector3, bool> OnRClick;
+        public static EventDelegate<Cell, Vector3, bool> OnRClickObject;
         public static EventDelegate<Cell, Vector3, bool> OnCancel;
         /// <summary>
         /// 在最后一个系统出栈时候
@@ -113,6 +114,11 @@ namespace Sango.Game
         public static EventDelegate<IContextMenuData, Troop> OnTroopContextMenuShow;
         public static EventDelegate<IContextMenuData, Troop, Cell> OnTroopActionContextMenuShow;
         public static EventDelegate<IContextMenuData> OnRightMouseButtonContextMenuShow;
+        public static EventDelegate<IContextMenuData, City> OnCityRightMouseButtonContextMenuShow;
+        public static EventDelegate<IContextMenuData, Building> OnBuildingRightMouseButtonContextMenuShow;
+        public static EventDelegate<IContextMenuData, Troop> OnTroopRightMouseButtonContextMenuShow;
+        public static EventDelegate<IContextMenuData, Port> OnPortRightMouseButtonContextMenuShow;
+        public static EventDelegate<IContextMenuData, Gate> OnGateRightMouseButtonContextMenuShow;
 
         public static EventDelegate<IContextMenuData> OnGameSettingContextMenuShow;
 
