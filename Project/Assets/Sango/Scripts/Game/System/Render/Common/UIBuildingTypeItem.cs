@@ -27,9 +27,11 @@ namespace Sango.Game.Render.UI
             icon.color = color;
             GetComponent<Button>().interactable = b;
             nameLabel.color = color;
-            costLabel.color = color;
-            numLabel.color = color;
-            select.color = color;
+            if (costLabel != null)
+                costLabel.color = color;
+            if (numLabel != null)
+                numLabel.color = color;
+            if (select != null) select.color = color;
             return this;
         }
 
@@ -43,12 +45,14 @@ namespace Sango.Game.Render.UI
         {
             Color color = b ? Color.white : new Color(0.85f, 0.85f, 0.85f);
             icon.color = color;
-            select.gameObject.SetActive(b);
+            if (select != null) select.gameObject.SetActive(b);
             return this;
         }
 
         public UIBuildingTypeItem SetNum(int c)
         {
+            if (numLabel == null) return this;
+
             if (c < 0)
                 numLabel.text = "";
             else
@@ -62,18 +66,22 @@ namespace Sango.Game.Render.UI
             {
                 icon.enabled = false;
                 nameLabel.text = "";
-                costLabel.text = "";
-                numLabel.text = "";
+                if (costLabel != null)
+                    costLabel.text = "";
+                if (numLabel != null)
+                    numLabel.text = "";
             }
             else
             {
                 icon.enabled = true;
                 nameLabel.text = buildingType.Name;
-                costLabel.text = buildingType.cost.ToString();
+                if (costLabel != null)
+                    costLabel.text = buildingType.cost.ToString();
                 icon.sprite = GameRenderHelper.LoadBuildingTypeIcon(buildingType.icon);
                 if (icon1 != null)
                     icon1.sprite = icon.sprite;
-                numLabel.text = "";
+                if (numLabel != null)
+                    numLabel.text = "";
             }
             return this;
         }
@@ -84,18 +92,22 @@ namespace Sango.Game.Render.UI
             {
                 icon.enabled = false;
                 nameLabel.text = "";
-                costLabel.text = "";
-                numLabel.text = "";
+                if (costLabel != null)
+                    costLabel.text = "";
+                if (numLabel != null)
+                    numLabel.text = "";
             }
             else
             {
                 icon.enabled = true;
                 nameLabel.text = itemType.Name;
-                costLabel.text = itemType.cost.ToString();
+                if (costLabel != null)
+                    costLabel.text = itemType.cost.ToString();
                 icon.sprite = GameRenderHelper.LoadBuildingTypeIcon(itemType.icon);
                 if (icon1 != null)
                     icon1.sprite = icon.sprite;
-                numLabel.text = "";
+                if (numLabel != null)
+                    numLabel.text = "";
                 icon.color = new Color(0.85f, 0.85f, 0.85f);
             }
             return this;
@@ -107,18 +119,22 @@ namespace Sango.Game.Render.UI
             {
                 icon.enabled = false;
                 nameLabel.text = "";
-                costLabel.text = "";
-                numLabel.text = "";
+                if (costLabel != null)
+                    costLabel.text = "";
+                if (numLabel != null)
+                    numLabel.text = "";
             }
             else
             {
                 icon.enabled = true;
                 nameLabel.text = troopType.Name;
-                costLabel.text = "";
+                if (costLabel != null)
+                    costLabel.text = "";
                 icon.sprite = GameRenderHelper.LoadBuildingTypeIcon(troopType.icon);
                 if (icon1 != null)
                     icon1.sprite = icon.sprite;
-                numLabel.text = "";
+                if (numLabel != null)
+                    numLabel.text = "";
                 icon.color = new Color(0.85f, 0.85f, 0.85f);
             }
             return this;

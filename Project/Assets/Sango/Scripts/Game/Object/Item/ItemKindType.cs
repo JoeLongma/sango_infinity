@@ -4,7 +4,7 @@ namespace Sango.Game
 {
     /*
      * 
-     *  剑	0
+     *  剑	1
         枪	1
         刀	1
         弓	1
@@ -43,28 +43,44 @@ namespace Sango.Game
         Boat
     }
 
+    /*
+     * 
+     *  剑	1
+        枪	2
+        戟	3
+        弓	4
+        军马	5
+        冲车	7
+        木兽	7
+        井阑	8
+        投石	8
+        走舸	9
+        楼船	9
+        斗舰	9
+     * */
     public enum ItemSubKindType : int
     {
         None = 0,
 
-        /// <summary>
-        /// 兵器
-        /// </summary>
-        Weapon,
+        Sword = 1,
+        Spear = 2,
+        Halberd = 3,
+        Crossbow = 4,
+        Horse = 5,
 
         /// <summary>
-        /// 战马
+        /// 冲车
         /// </summary>
-        Horse,
+        Helepolis = 7,
 
         /// <summary>
-        /// 器械
+        /// 投石
         /// </summary>
-        Machine,
+        Catapult = 8,
 
         /// <summary>
         /// 船
         /// </summary>
-        Boat
+        Boat = 9
     }
 }

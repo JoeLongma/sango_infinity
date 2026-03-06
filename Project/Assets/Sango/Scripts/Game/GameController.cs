@@ -136,7 +136,8 @@ namespace Sango.Game
                 {
                     bool isOverUI = IsOverUI();
 
-                    GameSystemManager.Instance.HandleEvent(CommandEventType.ClickDown, mouseOverCell, dragPosition, isOverUI);
+                    clickPosition = Input.mousePosition;
+                    GameSystemManager.Instance.HandleEvent(CommandEventType.ClickDown, mouseOverCell, clickPosition, isOverUI);
 
                     if (controlType != ControlType.None)
                         return;
@@ -195,16 +196,16 @@ namespace Sango.Game
                 //    return;
                 controlType = ControlType.None;
                 bool isOverUI = IsOverUI();
+                clickPosition = Input.mousePosition;
 
                 if (isDragMoving)
                 {
                     isDragMoving = false;
-                    GameSystemManager.Instance.HandleEvent(CommandEventType.ClickUp, mouseOverCell, dragPosition, isOverUI);
+                    GameSystemManager.Instance.HandleEvent(CommandEventType.ClickUp, mouseOverCell, clickPosition, isOverUI);
                     return;
                 }
-                clickPosition = Input.mousePosition;
                 OnClickWorld();
-                GameSystemManager.Instance.HandleEvent(CommandEventType.ClickUp, mouseOverCell, dragPosition, isOverUI);
+                GameSystemManager.Instance.HandleEvent(CommandEventType.ClickUp, mouseOverCell, clickPosition, isOverUI);
 
             }
             else if (Input.GetMouseButton(1) && !isDragMoving)
@@ -212,7 +213,8 @@ namespace Sango.Game
                 if (Input.GetMouseButtonDown(1))
                 {
                     bool isOverUI = IsOverUI();
-                    GameSystemManager.Instance.HandleEvent(CommandEventType.RClickDown, mouseOverCell, dragPosition, isOverUI);
+                    clickPosition = Input.mousePosition;
+                    GameSystemManager.Instance.HandleEvent(CommandEventType.RClickDown, mouseOverCell, clickPosition, isOverUI);
 
                     rotatePosition = Input.mousePosition;
                     if (controlType != ControlType.None)
@@ -249,10 +251,11 @@ namespace Sango.Game
             else if (Input.GetMouseButtonUp(1) && !isDragMoving)
             {
                 bool isOverUI = IsOverUI();
+                clickPosition = Input.mousePosition;
 
                 if (controlType != ControlType.Rotate)
                 {
-                    GameSystemManager.Instance.HandleEvent(CommandEventType.RClickUp, mouseOverCell, dragPosition, isOverUI);
+                    GameSystemManager.Instance.HandleEvent(CommandEventType.RClickUp, mouseOverCell, clickPosition, isOverUI);
                     return;
                 }
 
@@ -261,12 +264,11 @@ namespace Sango.Game
                 if (isRotateMoving)
                 {
                     isRotateMoving = false;
-                    GameSystemManager.Instance.HandleEvent(CommandEventType.RClickUp, mouseOverCell, dragPosition, isOverUI);
+                    GameSystemManager.Instance.HandleEvent(CommandEventType.RClickUp, mouseOverCell, clickPosition, isOverUI);
                     return;
                 }
-                clickPosition = Input.mousePosition;
                 OnRClickWorld();
-                GameSystemManager.Instance.HandleEvent(CommandEventType.RClickUp, mouseOverCell, dragPosition, isOverUI);
+                GameSystemManager.Instance.HandleEvent(CommandEventType.RClickUp, mouseOverCell, clickPosition, isOverUI);
             }
             else
             {

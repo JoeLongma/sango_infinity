@@ -55,11 +55,13 @@ namespace Sango.Game.Render.UI
                 }
             }
 
-            if(startIndex + itemCount < selectedIndex)
+            if(startIndex + itemCount <= selectedIndex)
             {
-                startIndex = selectedIndex - itemCount;
+                startIndex = selectedIndex - itemCount + 1;
                 scrollbar.SetValueWithoutNotify((float)startIndex / (totalCount - itemCount));
             }
+
+            UpdateItemStartIndex(startIndex);
         }
 
         public void OnScrollBarValueChange(float value)
@@ -117,8 +119,7 @@ namespace Sango.Game.Render.UI
             for (int i = 0; i < itemCount; i++)
             {
                 UIObjectListItem listItem = uIObjectListItems[i];
-                int itemIndex = i + startIndex;
-                if (itemIndex == selectedIndex)
+                if (listItem.index == selectedIndex)
                 {
                     listItem.SetSelected(false);
                     break;

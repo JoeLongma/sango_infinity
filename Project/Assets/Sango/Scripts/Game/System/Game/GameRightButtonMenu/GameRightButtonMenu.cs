@@ -51,6 +51,7 @@ namespace Sango.Game.Player
             if (Scenario.Cur.CurRunForce.IsPlayer)
             {
                 ContextMenuData.MenuData.Clear();
+                ContextMenuType menuType = ContextMenuType.System;
                 if (clickCell.building != null)
                 {
                     if(clickCell.building.IsPort())
@@ -79,7 +80,7 @@ namespace Sango.Game.Player
                 if (!ContextMenuData.MenuData.IsEmpty())
                 {
                     // 特殊处理<进行>
-                    UIContextMenu contextMenu = Render.UI.ContextMenu.Show(ContextMenuData.MenuData, clickPosition, ContextMenuType.Command);
+                    UIContextMenu contextMenu = Render.UI.ContextMenu.Show(ContextMenuData.MenuData, clickPosition, menuType);
                     PlayerEndTurn playerEndTurn = GameSystem.GetSystem<PlayerEndTurn>();
                     if (playerEndTurn != null)
                     {

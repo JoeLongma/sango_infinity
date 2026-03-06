@@ -262,6 +262,7 @@ namespace Sango.Game
         /// 所有部队
         /// </summary>
         public List<Troop> allAttackTroops = new List<Troop>();
+        public List<Troop> allTroops = new List<Troop>();
 
         /// <summary>
         /// 城池直辖范围cell
@@ -1107,6 +1108,7 @@ namespace Sango.Game
 
             // 处理缓存队伍信息
             allAttackTroops.Clear();
+            allTroops.Clear();
 
             for (int i = allPersons.Count - 1; i >= 0; --i)
             {

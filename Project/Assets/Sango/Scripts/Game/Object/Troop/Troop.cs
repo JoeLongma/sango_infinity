@@ -354,6 +354,7 @@ namespace Sango.Game
             CalculateAttribute(scenario);
             if (LandTroopType.isFight && LandTroopType.Id != 1)
                 BelongCity.allAttackTroops.Add(this);
+            BelongCity.allTroops.Add(this);
             cell.troop = this;
             Render = new TroopRender(this);
             foodCost = (int)System.Math.Ceiling(scenario.Variables.baseFoodCostInTroop * (troops + woundedTroops) * TroopType.foodCostFactor);
@@ -1648,7 +1649,7 @@ namespace Sango.Game
 
             if (LandTroopType.isFight && LandTroopType.Id != 1)
                 BelongCity.allAttackTroops.Remove(this);
-
+            BelongCity.allTroops.Remove(this);
             city.Render.UpdateRender();
 
             if (city == BelongCity)
@@ -1705,7 +1706,7 @@ namespace Sango.Game
 
             if (LandTroopType.isFight && LandTroopType.Id != 1)
                 BelongCity.allAttackTroops.Remove(this);
-
+            BelongCity.allTroops.Remove(this);
             Scenario.Cur.Remove(this);
             ForEachPerson((person) =>
             {

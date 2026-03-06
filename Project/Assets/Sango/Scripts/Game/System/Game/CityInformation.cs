@@ -15,7 +15,9 @@ namespace Sango.Game
 
         public override void Init()
         {
+            Name = "都市情报";
             GameEvent.OnCityRightMouseButtonContextMenuShow += OnCityRightMouseButtonContextMenuShow;
+            GameEvent.OnScenarioInit += OnScenarioInit;
         }
 
         public override void Clear()
@@ -26,13 +28,23 @@ namespace Sango.Game
         protected virtual void OnCityRightMouseButtonContextMenuShow(IContextMenuData menuData, City city)
         {
             TargetCity = city;
-            menuData.Add("都市情报", 20, null, OnClickMenuItem, true);
+            menuData.Add("详细情报", 20, null, OnClickMenuItem, true);
         }
 
         protected virtual void OnClickMenuItem(IContextMenuItem contextMenuItem)
         {
             ContextMenu.CloseAll();
             GameSystemManager.Instance.Push(this);
+        }
+
+        public void OnScenarioInit(Scenario scenario)
+        {
+            all_citits.Clear();
+            scenario.citySet.ForEach(city => {
+                if (city.IsCity())
+                    all_citits.Add(city);
+
+            });
         }
 
         public override void OnEnter()

@@ -28,7 +28,11 @@ namespace Sango.Game.Player
             if (index >= sprites.Length)
                 index = 0;
             if (image != null)
-                image.sprite = sprites[index];
+            {
+                UnityEngine.Sprite spr = sprites[index];
+                image.enabled = (spr != null);
+                image.sprite = spr;
+            }
         }
     }
 }

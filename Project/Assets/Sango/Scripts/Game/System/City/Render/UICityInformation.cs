@@ -43,13 +43,14 @@ namespace Sango.Game.Render.UI
         public UITextField securityLabel;
         public UITextField bussinessLabel;
         public UITextField featureLabel;
-        public Button [] disaster_icon_list;
+        public Button[] disaster_icon_list;
 
         public UIBuildingTypeItem boatItem;
         public UIBuildingTypeItem itemObject;
         CreatePool<UIBuildingTypeItem> itemPool;
 
         public UIBuildingTypeItem buildingItemObject;
+        public UITextField buildingNumLabel;
         CreatePool<UIBuildingTypeItem> buildingPool;
 
         City TargetCity;
@@ -57,6 +58,10 @@ namespace Sango.Game.Render.UI
 
         bool items_inited = false;
         bool buildings_inited = false;
+
+        public Button port_gate_btn;
+        public Button troop_btn;
+        public Button person_btn;
 
         protected override void Awake()
         {
@@ -72,6 +77,7 @@ namespace Sango.Game.Render.UI
             uIObjectList.SelectDefaultObject(TargetCity);
             windiwTitle.text = currentSystem.Name;
             tabs[0].isOn = true;
+            ShowCity(TargetCity);
         }
 
         void OnObjectSelected(int index)
@@ -94,6 +100,11 @@ namespace Sango.Game.Render.UI
             corpsNameLabel.text = CitySortFunction.SortByBelongCorps.GetValueStr(city);
             captiveCountLabel.text = CitySortFunction.SortByCaptiveCount.GetValueStr(city);
             wildCountLabel.text = CitySortFunction.SortByWildCount.GetValueStr(city);
+
+            port_gate_btn.interactable = (city.portList.Count + city.gateList.Count) > 0;
+            troop_btn.interactable = city.allTroops.Count > 0;
+            person_btn.interactable = city.allPersons.Count > 0;
+
             // TODO: 皇帝
             emperorLabel.text = "";
             UpdateCityStateContent();
@@ -130,7 +141,7 @@ namespace Sango.Game.Render.UI
 
         void UpdateCityItemsContent()
         {
-            if(items_inited) return;
+            if (items_inited) return;
             itemPool.Reset();
             List<ItemType> ItemTypes = TargetCity.BelongForce.createdItemTypes;
             int len = ItemTypes.Count;
@@ -138,8 +149,15 @@ namespace Sango.Game.Render.UI
             {
                 ItemType itemType = ItemTypes[i];
                 int totalNum = TargetCity.itemStore.GetNumber(itemType.Id);
-                UIBuildingTypeItem cityBuildingSlot = itemPool.Create();
-                cityBuildingSlot.SetItemType(itemType).SetIndex(i).SetSelected(false).SetNum(totalNum);
+                if (itemType.subKind == (int)ItemSubKindType.Boat)
+                {
+                    boatItem.SetItemType(itemType).SetIndex(i).SetNum(totalNum);
+                }
+                else
+                {
+                    UIBuildingTypeItem cityBuildingSlot = itemPool.Create();
+                    cityBuildingSlot.SetItemType(itemType).SetIndex(i).SetNum(totalNum);
+                }
             }
         }
 
@@ -148,12 +166,13 @@ namespace Sango.Game.Render.UI
             if (buildings_inited) return;
             City city = TargetCity;
             buildingPool.Reset();
+            buildingNumLabel.text = $"{city.InteriorCellCount - city.GetInteriorCellUsedCount()}/{city.InteriorCellCount}";
             Dictionary<BuildingType, int> building_num = new Dictionary<BuildingType, int>();
             city.allBuildings.ForEach(b =>
             {
                 if (!b.IsIntorBuilding()) return;
                 int num;
-                if(building_num.TryGetValue(b.BuildingType, out num))
+                if (building_num.TryGetValue(b.BuildingType, out num))
                 {
                     building_num[b.BuildingType] = num + 1;
                 }
@@ -163,7 +182,7 @@ namespace Sango.Game.Render.UI
                 }
             });
 
-            foreach(var buildingType in building_num.Keys)
+            foreach (var buildingType in building_num.Keys)
             {
                 UIBuildingTypeItem item = buildingPool.Create();
                 item.SetBuildingType(buildingType).nameLabel.text = $"{buildingType.Name}（{building_num[buildingType]}）";
@@ -191,10 +210,25 @@ namespace Sango.Game.Render.UI
 
         public void OnCityBuildingsTab(bool b)
         {
-            if(b)
+            if (b)
             {
                 UpdateCityBuildingsContent();
             }
+        }
+
+        public void OnGatePortButton()
+        {
+
+        }
+
+        public void OnTroopButton()
+        {
+
+        }
+
+        public void OnPersonButton()
+        {
+
         }
     }
 }

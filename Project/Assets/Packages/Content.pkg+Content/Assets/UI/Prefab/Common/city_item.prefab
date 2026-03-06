@@ -182,6 +182,7 @@ GameObject:
   - component: {fileID: 298653642360869725}
   - component: {fileID: 286216898017246953}
   - component: {fileID: 4042214770275644362}
+  - component: {fileID: 5230894341612248969}
   m_Layer: 5
   m_Name: effect
   m_TagString: Untagged
@@ -207,7 +208,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 12, y: 12}
+  m_SizeDelta: {x: 18, y: 18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &298653642360869725
 MonoBehaviour:
@@ -228,8 +229,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 431033896ff10d0479f0a7427ef49006, type: 3}
   - {fileID: 21300000, guid: c0afb033048aed143ac0df46a7bf526c, type: 3}
   - {fileID: 21300000, guid: bbbad108ad3e9454bbd56aeebf7d8683, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   image: {fileID: 0}
-  speed: 1
+  speed: 0.1
 --- !u!222 &286216898017246953
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -268,3 +273,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!111 &5230894341612248969
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8751582024203057265}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: c5186532d7d202642b897461469cd288, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: c5186532d7d202642b897461469cd288, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0

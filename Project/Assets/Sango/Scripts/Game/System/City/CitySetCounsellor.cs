@@ -43,7 +43,7 @@ namespace Sango.Game.Player
             counsellor = TargetForce.Counsellor;
             Scenario.Cur.personSet.ForEach(x =>
             {
-                if(x.BelongForce == TargetForce && x != TargetForce.Governor)
+                if (x.BelongForce == TargetForce && x != TargetForce.Governor && x != TargetForce.Counsellor)
                 {
                     targetList.Add(x);
                 }
@@ -67,7 +67,7 @@ namespace Sango.Game.Player
             if (personList.Count <= 0)
             {
                 TargetForce.ChangeCounsellor(null);
-                Done(); 
+                Done();
                 return;
             }
 

@@ -3001,7 +3001,7 @@ PrefabInstance:
     - target: {fileID: 2220643449552010829, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6118451680107317337}
     - target: {fileID: 2220643449552010829, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -3012,7 +3012,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2220643449552010829, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Sango.Game.Render.UI.UIObjectSelector, Assembly-CSharp
+      value: Sango.Game.Render.UI.UIObjectList, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2220643449552010829, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
