@@ -301,7 +301,7 @@ namespace Sango.Game
         public int bannedForceId;
 
         [JsonProperty]
-        [JsonConverter(typeof(SangoObjectListIDConverter<Building>))]
+        [JsonConverter(typeof(Id2ObjConverter<Building>))]
         public Building workingBuilding;
 
         public bool HasItem(int itemTypeId)
