@@ -14,7 +14,7 @@ namespace Sango.Game.Player
             GameEvent.OnGameSettingContextMenuShow?.Invoke(ContextMenuData.MenuData);
             if (!ContextMenuData.MenuData.IsEmpty())
             {
-                ContextMenu.Show(ContextMenuData.MenuData, startPoint);
+                ContextMenu.Show(ContextMenuData.MenuData, startPoint, ContextMenuType.System);
                 GameSystemManager.Instance.Push(this);
             }
         }

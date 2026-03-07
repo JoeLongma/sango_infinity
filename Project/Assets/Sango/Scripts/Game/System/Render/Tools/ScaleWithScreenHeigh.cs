@@ -7,9 +7,9 @@ namespace Sango.Game.Player
     {
         private void Start()
         {
-            float s = Game.Instance.CanvasScalerFactor;
-            if (s < 1)
-                transform.localScale = new Vector3(s, s, s);
+            //float s = Game.Instance.CanvasScalerFactor;
+            //if (s < 1)
+            //    transform.localScale = new Vector3(s, s, s);
         }
     }
 }

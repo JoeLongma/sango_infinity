@@ -49,7 +49,7 @@ namespace Sango.Game.Render.UI
                 item.gameObject.SetActive(true);
                 int selIndex = i;
                 item.targetIndex = selIndex;
-                item.SetName(scenario.Info.name).SetSelected(i == curSelectIndex);
+                item.SetName(scenario.GetIDName()).SetSelected(i == curSelectIndex);
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
                 item.BindCall(() => { OnNext(); });
 #else
@@ -105,7 +105,7 @@ namespace Sango.Game.Render.UI
 
             ShortScenario scenario = ShortScenario.all_scenario_info_list[curSelectIndex];
             ScenarioInfo scenarioInfo = scenario.Info;
-            scenarioInfoText.text = $"{scenarioInfo.year} 年 {scenarioInfo.month}月 {scenarioInfo.day}日  {scenarioInfo.name}";
+            scenarioInfoText.text = scenario.GetDateName();
             scenarioDescText.text = scenarioInfo.description;
             int i = 0;
             foreach (var city in scenario.citySet.Values)

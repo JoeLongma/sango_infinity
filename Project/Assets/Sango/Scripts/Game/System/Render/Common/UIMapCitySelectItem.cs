@@ -15,7 +15,7 @@ namespace Sango.Game.Render.UI
         public Action<City, bool> onSelectAction;
 
         public ShortCity shortCity;
-        public Action<ShortCity, bool> onSelectShortAction;
+        public Action<UIMapCitySelectItem, ShortCity, bool> onSelectShortAction;
 
         public void OnSelect()
         {
@@ -26,7 +26,7 @@ namespace Sango.Game.Render.UI
             }
             if (shortCity != null)
             {
-                onSelectShortAction?.Invoke(shortCity, selectedObj.activeSelf);
+                onSelectShortAction?.Invoke(this, shortCity, selectedObj.activeSelf);
             }
         }
 

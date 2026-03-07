@@ -7097,6 +7097,7 @@ MonoBehaviour:
   fpsText: {fileID: 1736327339562251730}
   cellInfoLabel: {fileID: 4025692457087652356}
   seasonImg: {fileID: 7608096300762083905}
+  seasonLabel: {fileID: 2818746129304977102}
   actionNumberLabel: {fileID: 7420130880490294399}
   techPointLabel: {fileID: 7663244617401529095}
   frameBtnText: {fileID: 7954775363053532271}
@@ -7358,7 +7359,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5449869254770133771, guid: bcdd1c32b23820243b4d431b102f7499, type: 3}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5449869254770133771, guid: bcdd1c32b23820243b4d431b102f7499, type: 3}
       propertyPath: m_RootOrder
@@ -7422,7 +7423,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5449869254770133771, guid: bcdd1c32b23820243b4d431b102f7499, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -317.04
+      value: -133.56046
       objectReference: {fileID: 0}
     - target: {fileID: 5449869254770133771, guid: bcdd1c32b23820243b4d431b102f7499, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

@@ -157,5 +157,17 @@ namespace Sango.Game
             }
             Map.Init(this);
         }
+
+        public string GetIDName()
+        {
+            ScenarioInfo scenarioInfo = Info;
+            return $"   {scenarioInfo.id}  {scenarioInfo.year}年 {scenarioInfo.month}月 {scenarioInfo.name}";
+        }
+
+        public string GetDateName()
+        {
+            ScenarioInfo scenarioInfo = Info;
+            return $"{scenarioInfo.year}年 {scenarioInfo.month}月 {scenarioInfo.name}";
+        }
     }
 }

@@ -14,33 +14,86 @@ namespace Sango.Game.Render.UI
     /// </summary>
     public class UIScenarioForceSelect : UGUIWindow
     {
+        public UITextField scenarioNameLabel;
+        public UITextField[] selectedForceNameLabel;
+        public UITextField selectedForceCountLabel;
+
+        public UITextField forceNameLabel;
         public RawImage forceHead;
-        public Text forceInfo;
-        public Text forceDesc;
+        public UITextField forceCityLabel;
+        public UITextField forceCityCountLabel;
+        public UITextField forcePersonCountLabel;
+        public UITextField forceDifficultyLabel;
+        public UITextField forceGoldLabel;
+        public UITextField forceFoodLabel;
+        public UITextField forceTroopsLabel;
+        public UITextField forceCounsellorLabel;
+        public UITextField forceOfficialLabel;
+        public UITextField forceFriendLabel;
+        public UITextField forceEnemyLabel;
+
+        public UITextField forceInfoLabel;
+
         public RectTransform mapBounds;
 
         public Button nextBtn;
         public GameObject cityObject;
-
+        int MaxSelect = 8;
         List<GameObject> cityList = new List<GameObject>();
+        List<UIMapCitySelectItem> cityToggleList = new List<UIMapCitySelectItem>();
         List<ShortForce> playerList = new List<ShortForce>();
+
+        protected override void Awake()
+        {
+            base.Awake();
+            GameEvent.OnScenarioInit += OnScenarioInit;
+        }
+
+        void OnScenarioInit(Scenario scenario)
+        {
+            Clear();
+        }
+
+        public void Clear()
+        {
+            playerList.Clear();
+        }
+
+        void SetSelectedForceName()
+        {
+            ShortScenario scenario = ShortScenario.CurSelected;
+            for (int i = 0; i < selectedForceNameLabel.Length; i++)
+            {
+                if (i < playerList.Count)
+                {
+                    ShortForce force_sel = playerList[i];
+                    ShortPerson governor = scenario.personSet[force_sel.Governor];
+                    selectedForceNameLabel[i].text = governor.Name;
+                }
+                else
+                {
+                    selectedForceNameLabel[i].text = "";
+                }
+            }
+        }
 
         public override void OnShow()
         {
-            forceDesc.text = "";
-            forceHead.texture = null;
-            forceInfo.text = "";
-            playerList.Clear();
+            cityToggleList.Clear();
             ShortScenario scenario = ShortScenario.CurSelected;
+            selectedForceCountLabel.text = $"{playerList.Count}/{selectedForceNameLabel.Length}";
+            scenarioNameLabel.text = scenario.GetDateName();
+            if(playerList.Count > 0)
+                ShowForce(playerList[playerList.Count - 1]);
+            else
+                ShowForce((ShortForce)null);
+            SetSelectedForceName();
             //nextBtn.interactable = false;
             int i = 0;
-
             foreach (var city in scenario.citySet.Values)
             {
                 if (city.BuildingType > 1) return;
                 if (city.Id == 0) continue;
-
-
                 GameObject cityObj;
                 if (i >= cityList.Count)
                 {
@@ -67,8 +120,9 @@ namespace Sango.Game.Render.UI
                     {
                         ShortForce shortForce = scenario.forceSet[city.BelongForce];
                         Flag flag = scenario.CommonData.Flags[shortForce.Flag];
-                        toggle.SetSelected(false).SetInavtive(false).SetColor(flag.color).onSelectShortAction = SetPlayer;
+                        toggle.SetSelected(playerList.Contains(shortForce)).SetInavtive(false).SetColor(flag.color).onSelectShortAction = SetPlayer;
                     }
+                    cityToggleList.Add(toggle);
                 }
 
                 RectTransform rectTransform = cityObj.GetComponent<RectTransform>();
@@ -80,76 +134,141 @@ namespace Sango.Game.Render.UI
             }
         }
 
-        public void SetPlayer(ShortCity city, bool b)
+        void ShowForce(ShortCity city)
+        {
+            if (city == null)
+            {
+                ShowForce((ShortForce)null);
+                return;
+            }
+
+            ShortScenario scenario = ShortScenario.CurSelected;
+            ShortForce force = scenario.forceSet[city.BelongForce];
+            ShowForce(force);
+        }
+
+        void ShowForce(ShortForce force)
+        {
+            if (force == null)
+            {
+                forceNameLabel.text = "";
+                forceHead.enabled = false;
+                forceCityLabel.text = "";
+                forceCityCountLabel.text = "";
+                forcePersonCountLabel.text = "";
+                forceDifficultyLabel.text = "";
+                forceGoldLabel.text = "";
+                forceFoodLabel.text = "";
+                forceTroopsLabel.text = "";
+                forceCounsellorLabel.text = "";
+                forceOfficialLabel.text = "";
+                forceFriendLabel.text = "";
+                forceEnemyLabel.text = "";
+                forceInfoLabel.text = "";
+            }
+            else
+            {
+                ShortScenario scenario = ShortScenario.CurSelected;
+                int personCount = 0;
+                foreach (var x in scenario.personSet.Values)
+                {
+                    if (x.BelongForce == force.Id)
+                        personCount++;
+                }
+
+                int cityCount = 0;
+                int foodCount = 0;
+                int troopsCount = 0;
+                int goldCount = 0;
+
+                ShortPerson governor = scenario.personSet[force.Governor];
+                ShortPerson counsellor = null;
+                if (force.Counsellor > 0)
+                    counsellor = scenario.personSet[force.Counsellor];
+                ShortCity centerCity = scenario.citySet[governor.BelongCity];
+                foreach (var x in scenario.citySet.Values)
+                {
+                    if (x.BelongForce == force.Id && x.BuildingType == 1)
+                    {
+                        cityCount++;
+                        foodCount += x.food;
+                        troopsCount += x.troops;
+                        goldCount += x.gold;
+                    }
+                }
+                forceNameLabel.text = governor.Name;
+                forceHead.enabled = true;
+                forceHead.texture = GameRenderHelper.LoadHeadIcon(ShortScenario.CurSelected.personSet[force.Governor].headIconID, 2);
+                forceCityLabel.text = centerCity.Name;
+                forceCityCountLabel.text = cityCount.ToString();
+                forcePersonCountLabel.text = personCount.ToString();
+                forceDifficultyLabel.text = "";
+                forceGoldLabel.text = goldCount.ToString();
+                forceFoodLabel.text = foodCount.ToString();
+                forceTroopsLabel.text = troopsCount.ToString();
+                forceCounsellorLabel.text = counsellor?.Name ?? "";
+                forceOfficialLabel.text = "";
+                forceFriendLabel.text = "";
+                forceEnemyLabel.text = "";
+                forceInfoLabel.text = "";
+            }
+        }
+
+        public void SetPlayer(UIMapCitySelectItem item, ShortCity city, bool b)
         {
             ShortScenario scenario = ShortScenario.CurSelected;
             ShortForce force = scenario.forceSet[city.BelongForce];
             if (force == null) return;
 
+            
+
             if (b)
             {
-                playerList.Add(force);
+                if (playerList.Count < selectedForceNameLabel.Length)
+                    playerList.Add(force);
+                else
+                {
+                    item.SetSelected(false);
+                    return;
+                }
             }
             else
             {
                 playerList.Remove(force);
             }
 
-            //nextBtn.interactable = playerList.Count > 0;
-
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < playerList.Count; i++)
+            for (int i = 0; i < cityToggleList.Count; i++)
             {
-                ShortForce force_sel = playerList[i];
-                stringBuilder.Append(ShortScenario.CurSelected.personSet[force_sel.Governor].Name);
-                if (i < playerList.Count - 1)
-                    stringBuilder.Append(",");
+                UIMapCitySelectItem toggle = cityToggleList[i];
+                if (toggle.shortCity.BelongForce == city.BelongForce)
+                {
+                    toggle.SetSelected(b);
+                }
             }
 
-            forceDesc.text = $"已选择: {stringBuilder}";
+            selectedForceCountLabel.text = $"{playerList.Count}/{selectedForceNameLabel.Length}";
+
+            //nextBtn.interactable = playerList.Count > 0;
+
+            SetSelectedForceName();
 
             if (!b)
             {
                 if (playerList.Count == 0)
                 {
-                    forceHead.texture = null;
-                    forceInfo.text = "";
+                    ShowForce((ShortForce)null);
                     return;
                 }
                 else
                 {
                     force = playerList[playerList.Count - 1];
+                    ShowForce(force);
                 }
             }
-
-            int personCount = 0;
-
-            foreach (var x in ShortScenario.CurSelected.personSet.Values)
+            else
             {
-                if (x.BelongForce == force.Id)
-                {
-                    personCount++;
-                }
+                ShowForce(force);
             }
-
-            int cityCount = 0;
-            int foodCount = 0;
-            int troopsCount = 0;
-            int goldCount = 0;
-
-            foreach (var x in ShortScenario.CurSelected.citySet.Values)
-            {
-                if (x.BelongForce == force.Id && x.BuildingType == 1)
-                {
-                    cityCount++;
-                    foodCount += x.food;
-                    troopsCount += x.troops;
-                    goldCount += x.gold;
-                }
-            }
-
-            forceHead.texture = GameRenderHelper.LoadHeadIcon(ShortScenario.CurSelected.personSet[force.Governor].headIconID, 1);
-            forceInfo.text = $"{force.Name}\n城池:{cityCount} 武将:{personCount} \n士兵: {troopsCount} 粮食:{foodCount} 金钱:{goldCount}";
         }
 
         public override void OnHide()
@@ -159,7 +278,6 @@ namespace Sango.Game.Render.UI
                 cityList[i].SetActive(false);
             }
         }
-
 
         public void OnReturn()
         {

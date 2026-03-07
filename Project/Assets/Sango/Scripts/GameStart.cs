@@ -36,7 +36,7 @@ public class GameStart : MonoBehaviour
 #endif
 
 #if UNITY_ANDROID
-        canvasScaler.referenceResolution = new Vector2(1280, 720);
+        canvasScaler.referenceResolution = new Vector2(1280, 800);
 #endif
         Screen.sleepTimeout = UnityEngine.SleepTimeout.NeverSleep;
         Sango.Path.Init();

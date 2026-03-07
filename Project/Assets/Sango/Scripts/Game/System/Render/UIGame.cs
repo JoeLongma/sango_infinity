@@ -18,6 +18,7 @@ namespace Sango.Game.Render.UI
 
         public Text cellInfoLabel;
         public Image seasonImg;
+        public Text seasonLabel;
         public Text actionNumberLabel;
         public Text techPointLabel;
 
@@ -247,6 +248,7 @@ namespace Sango.Game.Render.UI
         public void OnSeasonUpdate(Scenario scenario)
         {
             seasonImg.sprite = ObjectLoader.LoadObject<UnityEngine.Sprite>(seasonIconPath[(int)scenario.CurSeason]);
+            seasonLabel.text = GameDefine.seasonName[(int)scenario.CurSeason];
         }
 
         public void OnBtnPause()

@@ -8,6 +8,7 @@
         Winter = 3,
     }
 
+
     public class GameDefine
     {
         //--- 每个月对应的季节
@@ -25,6 +26,8 @@
             SeasonType.Winter,
             SeasonType.Winter,
             };
+
+        public static string[] seasonName = { "秋", "春", "夏", "冬" };
 
         public static UnityEngine.Color whiteText = new UnityEngine.Color(0.862745f, 0.862745f, 0.862745f);
 
@@ -58,7 +61,7 @@
         ＳＳR,
     }
 
-    
+
 
     /// <summary>
     /// 对象枚举类型：宝物类型
