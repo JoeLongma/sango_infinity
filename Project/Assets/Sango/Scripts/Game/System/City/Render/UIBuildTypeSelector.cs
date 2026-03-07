@@ -172,8 +172,17 @@ namespace Sango.Game.Render.UI
         /// </summary>
         public void OnBuild()
         {
-            buildBuildingSys.OnSelectCell();
-            Hide();
+            if (buildBuildingSys.TargetCell == null)
+            {
+                buildBuildingSys.OnSelectCell();
+                Hide();
+            }
+            else
+            {
+                Hide();
+                buildBuildingSys.DoJob();
+                buildBuildingSys.Done();
+            }
         }
 
         public void OnPersonChange(List<Person> personList)

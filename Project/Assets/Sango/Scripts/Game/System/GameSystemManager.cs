@@ -205,6 +205,9 @@ namespace Sango.Game
 
         public void HandleEvent(CommandEventType eventType, Cell clickCell, Vector3 clickPosition, bool isOverUI)
         {
+            if(eventType == CommandEventType.RClickDown)
+                RClickCell = clickCell;
+
             if (CurrentCommand != null)
             {
                 CurrentCommand.HandleEvent(eventType, clickCell, clickPosition, isOverUI);
@@ -231,7 +234,7 @@ namespace Sango.Game
                     break;
                 case CommandEventType.RClickDown:
                     {
-                        RClickCell = clickCell;
+                       
                     }
                     break;
                 case CommandEventType.Cancel:

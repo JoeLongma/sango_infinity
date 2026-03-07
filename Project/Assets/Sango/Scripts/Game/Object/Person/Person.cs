@@ -18,7 +18,7 @@ namespace Sango.Game
         public Force BelongForce { get; set; }
 
         /// <summary>
-        /// 所属势力
+        /// 所属军团
         /// </summary>
         [JsonProperty]
         [JsonConverter(typeof(Id2ObjConverter<Force>))]
@@ -136,6 +136,11 @@ namespace Sango.Game
         /// 功绩
         /// </summary>
         [JsonProperty] public int merit;
+
+        /// <summary>
+        /// 体力
+        /// </summary>
+        [JsonProperty] public int stamina;
 
         /// <summary>
         /// 经验

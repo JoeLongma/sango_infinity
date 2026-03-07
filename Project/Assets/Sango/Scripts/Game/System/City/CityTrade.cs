@@ -15,7 +15,7 @@ namespace Sango.Game.Player
             customTitleList = new List<ObjectSortTitle>()
             {
                 PersonSortFunction.SortByName,
-                PersonSortFunction.SortByStrength,
+                PersonSortFunction.SortByPolitics,
             };
             customMenuName = "都市/商人";
             customMenuOrder = 25;

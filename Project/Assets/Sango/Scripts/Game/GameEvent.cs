@@ -110,6 +110,7 @@ namespace Sango.Game
         public static EventDelegate<IContextMenuData> OnContextMenuShow;
 
         public static EventDelegate<IContextMenuData, BuildingBase> OnBuildingContextMenuShow;
+        public static EventDelegate<IContextMenuData, Cell> OnCellContextMenuShow;
         public static EventDelegate<IContextMenuData, City> OnCityContextMenuShow;
         public static EventDelegate<IContextMenuData, Troop> OnTroopContextMenuShow;
         public static EventDelegate<IContextMenuData, Troop, Cell> OnTroopActionContextMenuShow;

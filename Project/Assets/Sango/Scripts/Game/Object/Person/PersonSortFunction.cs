@@ -60,54 +60,77 @@ namespace Sango.Game
                 case PersonSortGroupType.Belong:
                     {
                         titleList.Add(SortByName);
+                        titleList.Add(SortByBelongForce);
+                        titleList.Add(SortByBelongCorps);
+                        titleList.Add(SortByBelongCity);
+//                        titleList.Add(SortByBelongCity);//应该是所在城市，剧本缺
+                        titleList.Add(SortByState);
+                        titleList.Add(SortByIsCityLeader);
+                        titleList.Add(SortByLoyalty);
+                        titleList.Add(SortByMerit);
                         break;
                     }
                 case PersonSortGroupType.Attribute:
                     {
                         titleList.Add(SortByName);
-                        titleList.Add(SortByTroopsLimit);
+                        titleList.Add(SortByState);
+//                        titleList.Add(SortByTroopsLimit);//删
                         titleList.Add(SortByCommand);
                         titleList.Add(SortByStrength);
                         titleList.Add(SortByIntelligence);
                         titleList.Add(SortByPolitics);
                         titleList.Add(SortByGlamour);
-                        titleList.Add(SortByFeatureList);
+                        titleList.Add(SortByStamina);
+                        //剧本缺 伤病、道具  保留空位
+//                        titleList.Add(SortByFeatureList);//删
                         break;
                     }
                 case PersonSortGroupType.Feature:
                     {
                         titleList.Add(SortByName);
                         titleList.Add(SortByFeatureList);
+                        titleList.Add(SortByFeatureDesc);
                         break;
                     }
                 case PersonSortGroupType.Ability:
                     {
                         titleList.Add(SortByName);
+                        titleList.Add(SortBySpearLv);
                         titleList.Add(SortByHalberdLv);
                         titleList.Add(SortByCrossbowLv);
-                        titleList.Add(SortBySpearLv);
                         titleList.Add(SortByRideLv);
-                        titleList.Add(SortByWaterLv);
                         titleList.Add(SortByMachineLv);
-                        titleList.Add(SortByFeatureList);
+                        titleList.Add(SortByWaterLv);
+//                        titleList.Add(SortByFeatureList);//删
                         break;
                     }
                 case PersonSortGroupType.Mission:
                     {
-
                         titleList.Add(SortByName);
+                        titleList.Add(SortByMissionType);
+                        titleList.Add(SortByMissionTarget);
+//                        titleList.Add(GetSortByDistanceDay);
+                        titleList.Add(SortByAction);
                         break;
                     }
                 case PersonSortGroupType.Personal:
                     {
-
                         titleList.Add(SortByName);
+                        titleList.Add(SortByOfficial);
+                        titleList.Add(SortByTroopsLimit);
+                        //剧本缺 俸禄 保留空位
+                        titleList.Add(SortByPersonality);
+                        titleList.Add(SortByAge);
+                        titleList.Add(SortBySex);
                         break;
                     }
                 case PersonSortGroupType.Consanguinity:
                     {
-
                         titleList.Add(SortByName);
+                        titleList.Add(SortByFather);
+                        titleList.Add(SortByMother);
+                        titleList.Add(SortByBrother);
+                        titleList.Add(SortBySpouse);
                         break;
                     }
             }
@@ -309,10 +332,9 @@ namespace Sango.Game
         public static SortTitle SortByFeatureList = new SortTitle()
         {
             name = "特技",
-            width = 150,
+            width = 50,
             valueGetCall = x =>
             {
-
                 StringBuilder sb = new StringBuilder();
                 if (x.FeatureList != null)
                 {
@@ -335,6 +357,28 @@ namespace Sango.Game
                     return 1;
                 return a.FeatureList.Count.CompareTo(b.FeatureList.Count);
             }
+        };
+
+        public static SortTitle SortByFeatureDesc = new SortTitle()
+        {
+            name = "說明",
+            width = 500,
+            valueGetCall = x =>
+            {
+                if (x.FeatureList == null || x.FeatureList.Count == 0)
+                    return string.Empty;
+
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < x.FeatureList.Count; i++)
+                {
+                    var feat = x.FeatureList[i];
+                    sb.Append(feat.desc ?? string.Empty);
+                    if (i < x.FeatureList.Count - 1)
+                        sb.Append("\n");
+                }
+                return sb.ToString();
+            },
+            personSortFunc = (a, b) => 0
         };
 
         public static SortTitle SortBySex = new SortTitle()
@@ -423,6 +467,29 @@ namespace Sango.Game
             };
         }
 
+        public static SortTitle SortByAction = new SortTitle()
+        {
+            name = "行动",
+            width = 50,
+            valueGetCall = x => x == null ? "—" : (x.ActionOver ? "已" : "未"),
+            personSortFunc = (a, b) => a.ActionOver.CompareTo(b.ActionOver)
+        };
+
+        public static SortTitle SortByMissionType = new SortTitle()
+        {
+            name = "任务",
+            width = 50,
+            valueGetCall = x => x == null ? "—" : (x.missionType == 0 ? "无" : x.missionType.ToString()),
+            personSortFunc = (a, b) => a.missionType.CompareTo(b.missionType)
+        };
+
+        public static SortTitle SortByMissionTarget = new SortTitle()
+        {
+            name = "目标",
+            width = 50,
+            valueGetCall = x => x == null ? "—" : (x.missionTarget == 0 ? "无" : x.missionTarget.ToString()),
+            personSortFunc = (a, b) => a.missionTarget.CompareTo(b.missionTarget)
+        };
 
         public static SortTitle SortByIsFree = new SortTitle()
         {
@@ -563,15 +630,67 @@ namespace Sango.Game
         public static SortTitle SortByState = new SortTitle()
         {
             name = "身份",
-            width = 50,
-            valueGetCall = x => x.state.ToString(),
+            width = 70,
+            valueGetCall = x =>
+            {
+                if (x == null) return "未知";
+                switch (x.state)
+                {
+                    case 1: return "一般";
+                    case 2: return "未发现";
+                    case 3: return "君主";
+                    case 4: return "都督";
+                    case 6: return "死亡";
+                    default: return x.state.ToString();
+                }
+            },
             personSortFunc = (a, b) => a.state.CompareTo(b.state),
+        };
+
+        public static SortTitle SortByIsCityLeader = new SortTitle()
+        {
+            name = "太守",
+            width = 50,
+            valueGetCall = x =>
+            {
+                if (x.BelongCity == null)
+                    return "✕";
+                return x == x.BelongCity.Leader ? "○" : "✕";
+            },
+            personSortFunc = (a, b) =>
+            {
+                bool aIsLeader = a.BelongCity != null && a == a.BelongCity.Leader;
+                bool bIsLeader = b.BelongCity != null && b == b.BelongCity.Leader;
+                return bIsLeader.CompareTo(aIsLeader);
+            }
+        };
+
+        public static SortTitle SortByStamina = new SortTitle()
+        {
+            name = "体力",
+            width = 50,
+            valueGetCall = x => x.stamina.ToString(),
+            personSortFunc = (a, b) => a.stamina.CompareTo(b.stamina),
+        };
+
+        // 性格（小写！！！）
+        public static SortTitle SortByPersonality = new SortTitle()
+        {
+            name = "性格",
+            width = 50,
+            valueGetCall = x => x == null || x.personality == null ? "—" : x.personality.Name,
+            personSortFunc = (a, b) =>
+            {
+                string aName = a?.personality?.Name ?? "";
+                string bName = b?.personality?.Name ?? "";
+                return aName.CompareTo(bName);
+            }
         };
 
         public static SortTitle SortByOfficial = new SortTitle()
         {
             name = "官职",
-            width = 50,
+            width = 80,
             valueGetCall = x => x.Official.Name,
             personSortFunc = (a, b) => SangoObject.Compare(a.Official, b.Official),
         };
@@ -579,17 +698,53 @@ namespace Sango.Game
         public static SortTitle SortByFather = new SortTitle()
         {
             name = "父亲",
-            width = 50,
-            valueGetCall = x => x.Father.Name,
-            personSortFunc = (a, b) => SangoObject.Compare(a.Father, b.Father),
+            width = 60,
+            valueGetCall = x => x == null || x.Father == null ? " " : x.Father.Name,
+            personSortFunc = (a, b) => SangoObject.Compare(a?.Father, b?.Father)
         };
 
         public static SortTitle SortByMother = new SortTitle()
         {
             name = "母亲",
-            width = 50,
-            valueGetCall = x => x.Mother.Name,
-            personSortFunc = (a, b) => SangoObject.Compare(a.Mother, b.Mother),
+            width = 60,
+            valueGetCall = x => x == null || x.Mother == null ? " " : x.Mother.Name,
+            personSortFunc = (a, b) => SangoObject.Compare(a?.Mother, b?.Mother)
+        };
+
+        public static SortTitle SortByBrother = new SortTitle()
+        {
+            name = "兄弟",
+            width = 180,
+            valueGetCall = x =>
+            {
+                if (x == null) return " ";
+                if (x.BrotherList == null || x.BrotherList.Count == 0) return " ";
+
+                var names = new System.Collections.Generic.List<string>();
+                foreach (Person brother in x.BrotherList)
+                {
+                    if (brother != null) names.Add(brother.Name);
+                }
+                return names.Count == 0 ? " " : string.Join("，", names);
+            }
+        };
+
+        public static SortTitle SortBySpouse = new SortTitle()
+        {
+            name = "配偶",
+            width = 180,
+            valueGetCall = x =>
+            {
+                if (x == null) return " ";
+                if (x.SpouseList == null || x.SpouseList.Count == 0) return " ";
+
+                var names = new System.Collections.Generic.List<string>();
+                foreach (Person spouse in x.SpouseList)
+                {
+                    if (spouse != null) names.Add(spouse.Name);
+                }
+                return names.Count == 0 ? " " : string.Join("，", names);
+            }
         };
 
         public static SortTitle SortByWork = new SortTitle()

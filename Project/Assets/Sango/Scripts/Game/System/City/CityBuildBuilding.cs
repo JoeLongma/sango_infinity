@@ -28,6 +28,35 @@ namespace Sango.Game.Player
             windowName = "window_city_trade";
         }
 
+        public override void Init()
+        {
+            base.Init();
+            GameEvent.OnCellContextMenuShow += OnCellContextMenuShow;
+        }
+
+        public override void Clear()
+        {
+            base.Clear();
+            GameEvent.OnCellContextMenuShow -= OnCellContextMenuShow;
+        }
+
+        protected virtual void OnCellContextMenuShow(IContextMenuData menuData, Cell cell)
+        {
+            if (cell.IsEmpty() && cell.IsInterior)
+            {
+                TargetCity = cell.BelongCity;
+                if (!TargetCity.IsCity())
+                    TargetCity = TargetCity.BelongCity;
+                menuData.Add(customTitleName, customMenuOrder, cell, OnClickCellMenuItem, IsValid);
+            }
+        }
+
+        protected virtual void OnClickCellMenuItem(IContextMenuItem contextMenuItem)
+        {
+            TargetCell = contextMenuItem.CustomData as Cell;
+            GameSystemManager.Instance.Push(this);
+        }
+
         public override bool IsValid
         {
             get
@@ -101,7 +130,7 @@ namespace Sango.Game.Player
             GameController.Instance.ZoomViewEnabled = false;
             GameController.Instance.KeyboardMoveEnabled = false;
             GameController.Instance.DragMoveViewEnabled = false;
-
+            TargetCell = null;
             if (SelectBuildingObject != null)
             {
                 SelectBuildingObject.Clear();

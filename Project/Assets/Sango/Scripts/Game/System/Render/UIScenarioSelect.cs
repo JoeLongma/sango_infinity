@@ -26,11 +26,10 @@ namespace Sango.Game.Render.UI
 
         public override void OnShow()
         {
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
             curSelectIndex = -1;
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
             sureButton.SetActive(false);
 #else
-            curSelectIndex = 0;
             sureButton.SetActive(true);
 #endif
             int count = ShortScenario.all_scenario_info_list.Count;
@@ -64,8 +63,11 @@ namespace Sango.Game.Render.UI
             {
                 selectedItems[i].gameObject.SetActive(false);
             }
-
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
             ShowScenario(curSelectIndex);
+#else
+            ShowScenario(0);
+#endif
         }
 
         public void Clear()
@@ -162,6 +164,8 @@ namespace Sango.Game.Render.UI
 
         public void OnNext()
         {
+            if (curSelectIndex == -1) return;
+
             Clear();
             ShortScenario scenario = ShortScenario.all_scenario_info_list[curSelectIndex];
             ShortScenario.CurSelected = scenario;
