@@ -7,9 +7,12 @@ namespace Sango.Game.Player
     public class ObjectsDisplaySystem : GameSystem
     {
         public List<SangoObject> Objects;
-        protected PersonSortGroupType sangoObjectSortGroupType;
         public string customSortTitleName;
         public List<ObjectSortTitle> customSortItems;
+        /// <summary>
+        /// 点选模式
+        /// </summary>
+        public bool ClickMode { get; set; }
 
         public void Start(List<SangoObject> sangoObjects, List<ObjectSortTitle> customSortTitles, string cutomSortTitleName)
         {
@@ -18,7 +21,7 @@ namespace Sango.Game.Player
             this.customSortTitleName = cutomSortTitleName;
             GameSystemManager.Instance.Push(this);
         }
-      
+
         public void OnCancel()
         {
             GameSystemManager.Instance.Back();

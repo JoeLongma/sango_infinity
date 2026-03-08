@@ -16,6 +16,10 @@ namespace Sango.Game.Render.UI
         public OnSelect onSelected;
         public OnShow onShow;
         public RectTransform contentRect;
+        public Image selectImg;
+        public Image overImg;
+        public Image pressImg;
+
         void ScrollCellIndex(int idx)
         {
             index = idx;
@@ -74,15 +78,23 @@ namespace Sango.Game.Render.UI
         public void SetSelected(bool b)
         {
             selectItem?.SetSelected(b);
-            textItem.SetSelected(b);
-            for (int i = 0; i < usedItems.Count; i++)
-            {
-                usedItems[i].SetSelected(b);
-            }
+            selectImg.enabled = b;
         }
+
         public bool IsSelected()
         {
-            return selectItem.IsSelected();
+            return selectImg.enabled;
         }
+
+        public void SetOver(bool b)
+        {
+            overImg.enabled = b;
+        }
+
+        public void SetPressd(bool b)
+        {
+            pressImg.enabled = b;
+        }
+
     }
 }

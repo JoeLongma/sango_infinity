@@ -164,6 +164,7 @@ GameObject:
   - component: {fileID: 2083743472045156132}
   - component: {fileID: 6965405672376581577}
   - component: {fileID: 1703329699838359365}
+  - component: {fileID: 7882036734454990032}
   m_Layer: 5
   m_Name: toggle_2
   m_TagString: Untagged
@@ -261,6 +262,20 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &7882036734454990032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4930224973812936245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfffd0a79b4fc23449e329869e0ef72d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: {fileID: 699396147999762360}
+  toggle: {fileID: 6965405672376581577}
 --- !u!1 &5274826004143115023
 GameObject:
   m_ObjectHideFlags: 0

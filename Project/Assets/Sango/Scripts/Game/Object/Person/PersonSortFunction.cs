@@ -63,7 +63,7 @@ namespace Sango.Game
                         titleList.Add(SortByBelongForce);
                         titleList.Add(SortByBelongCorps);
                         titleList.Add(SortByBelongCity);
-//                        titleList.Add(SortByBelongCity);//应该是所在城市，剧本缺
+                        //                        titleList.Add(SortByBelongCity);//应该是所在城市，剧本缺
                         titleList.Add(SortByState);
                         titleList.Add(SortByIsCityLeader);
                         titleList.Add(SortByLoyalty);
@@ -74,7 +74,7 @@ namespace Sango.Game
                     {
                         titleList.Add(SortByName);
                         titleList.Add(SortByState);
-//                        titleList.Add(SortByTroopsLimit);//删
+                        //                        titleList.Add(SortByTroopsLimit);//删
                         titleList.Add(SortByCommand);
                         titleList.Add(SortByStrength);
                         titleList.Add(SortByIntelligence);
@@ -82,7 +82,7 @@ namespace Sango.Game
                         titleList.Add(SortByGlamour);
                         titleList.Add(SortByStamina);
                         //剧本缺 伤病、道具  保留空位
-//                        titleList.Add(SortByFeatureList);//删
+                        //                        titleList.Add(SortByFeatureList);//删
                         break;
                     }
                 case PersonSortGroupType.Feature:
@@ -101,7 +101,7 @@ namespace Sango.Game
                         titleList.Add(SortByRideLv);
                         titleList.Add(SortByMachineLv);
                         titleList.Add(SortByWaterLv);
-//                        titleList.Add(SortByFeatureList);//删
+                        //                        titleList.Add(SortByFeatureList);//删
                         break;
                     }
                 case PersonSortGroupType.Mission:
@@ -109,7 +109,7 @@ namespace Sango.Game
                         titleList.Add(SortByName);
                         titleList.Add(SortByMissionType);
                         titleList.Add(SortByMissionTarget);
-//                        titleList.Add(GetSortByDistanceDay);
+                        //                        titleList.Add(GetSortByDistanceDay);
                         titleList.Add(SortByAction);
                         break;
                     }
@@ -726,6 +726,21 @@ namespace Sango.Game
                     if (brother != null) names.Add(brother.Name);
                 }
                 return names.Count == 0 ? " " : string.Join("，", names);
+            },
+            personSortFunc = (a, b) =>
+            {
+                if (a.BrotherList != null && b.BrotherList != null)
+                {
+                    return a.BrotherList.Count.CompareTo(b.BrotherList.Count);
+                }
+
+                if (a.BrotherList != null)
+                    return 1;
+
+                if (b.BrotherList != null)
+                    return -1;
+
+                return 0;
             }
         };
 
@@ -744,6 +759,21 @@ namespace Sango.Game
                     if (spouse != null) names.Add(spouse.Name);
                 }
                 return names.Count == 0 ? " " : string.Join("，", names);
+            },
+            personSortFunc = (a, b) =>
+            {
+                if (a.SpouseList != null && b.SpouseList != null)
+                {
+                    return a.SpouseList.Count.CompareTo(b.SpouseList.Count);
+                }
+
+                if (a.SpouseList != null)
+                    return 1;
+
+                if (b.SpouseList != null)
+                    return -1;
+
+                return 0;
             }
         };
 

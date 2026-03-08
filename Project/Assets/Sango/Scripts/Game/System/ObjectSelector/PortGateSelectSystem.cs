@@ -5,7 +5,7 @@ using static Sango.Game.CitySortFunction;
 namespace Sango.Game.Player
 {
     [GameSystem(auto = true)]
-    public class CitySelectSystem : ObjectSelectSystem
+    public class PortGateSelectSystem : ObjectSelectSystem
     {
         Action<List<City>> finishAction;
 
@@ -18,7 +18,6 @@ namespace Sango.Game.Player
             selected = new List<SangoObject>(resultList);
             customSortItems = customSortTitles;
             this.customSortTitleName = cutomSortTitleName;
-            ClickMode = true;
             GameSystemManager.Instance.Push(this);
         }
 

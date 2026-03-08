@@ -8,12 +8,13 @@ namespace Sango.Game.Render.UI
         RectTransform[] uIObjectListItemsRect;
         ObjectSelectSystem objectSelectSystem;
         bool dragFlag = false;
+        UIObjectListItem currentSelectItem;
 
         protected override void Awake()
         {
             base.Awake();
             uIObjectListItemsRect = new RectTransform[uIObjectListItems.Length];
-            for(int i = 0; i < uIObjectListItems.Length; i++)
+            for (int i = 0; i < uIObjectListItems.Length; i++)
             {
                 uIObjectListItemsRect[i] = uIObjectListItems[i].GetComponent<RectTransform>();
             }
@@ -47,13 +48,44 @@ namespace Sango.Game.Render.UI
                 {
                     listItem.SetSelected(false);
                 }
-                
+
             }
         }
 
         public void OnSure()
         {
             objectSelectSystem.OnSure();
+        }
+
+        public void OnPersonListItemPressDown(UIObjectListItem item)
+        {
+            item.SetPressd(true);
+            currentSelectItem = item;
+            dragFlag = !item.IsSelected();
+        }
+
+        public void OnPersonListItemPressUp(UIObjectListItem item)
+        {
+            item.SetPressd(false);
+            for (int i = 0; i < itemCount; i++)
+            {
+                RectTransform itemRect = uIObjectListItemsRect[i];
+                UIObjectListItem listItem = uIObjectListItems[i];
+                if (listItem == currentSelectItem && RectTransformUtility.RectangleContainsScreenPoint(itemRect, Input.mousePosition, Sango.Game.Game.Instance.UICamera))
+                {
+                    OnPersonListSelected(item);
+                    break;
+                }
+            }
+        }
+
+        public void OnPersonListItemPointEnter(UIObjectListItem item)
+        {
+            item.SetOver(true);
+        }
+        public void OnPersonListItemPointExit(UIObjectListItem item)
+        {
+            item.SetOver(false);
         }
 
         public void OnPersonListSelected(UIObjectListItem item)
@@ -64,7 +96,7 @@ namespace Sango.Game.Render.UI
             if (!item.IsSelected() && objectSelectSystem.IsPersonLimit())
             {
                 int lastIndex = objectSelectSystem.RemoveFront();
-                if(lastIndex >= 0)
+                if (lastIndex >= 0)
                 {
                     for (int i = 0; i < itemCount; i++)
                     {
@@ -80,7 +112,7 @@ namespace Sango.Game.Render.UI
                 item.SetSelected(true);
                 objectSelectSystem.Add(item.index);
                 return;
-            }   
+            }
 
             item.SetSelected(!item.IsSelected());
             if (item.IsSelected())
@@ -91,11 +123,6 @@ namespace Sango.Game.Render.UI
             {
                 objectSelectSystem.Remove(item.index);
             }
-        }
-
-        public void OnPointDownPersonListSelected(UIObjectListItem item)
-        {
-            dragFlag = !item.IsSelected();
         }
 
         public void OnDragPersonListSelected(UIObjectListItem item)

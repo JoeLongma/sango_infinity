@@ -40,6 +40,12 @@ namespace Sango.Game.Player
         public void Add(int index)
         {
             selected.Add(Objects[index]);
+
+            // 点选模式
+            if (ClickMode)
+            {
+                OnSure();
+            }
         }
 
         public void Remove(int index)

@@ -13,7 +13,7 @@ namespace Sango.Game.Render.UI
     {
         public Text title;
         public List<ObjectSortTitle> sortItems;
-        public Toggle[] toggleGroup;
+        public UIToggleItem[] toggleGroup;
         public UIObjectListItem[] uIObjectListItems;
         public UIObjectListItem creatItemObj;
         public Scrollbar scrollbar;
@@ -28,13 +28,19 @@ namespace Sango.Game.Render.UI
         protected int startIndex = 0;
         protected int itemWidth = 0;
         protected int itemCount = 0;
+
+        public UIButtonItem[] brownButtons;
+        public UIButtonItem[] blueButtons;
+
+        bool clickMode = false;
+
         protected override void Awake()
         {
             for (int i = 0; i < toggleGroup.Length; i++)
             {
-                toggleGroup[i].onValueChanged.RemoveAllListeners();
+                toggleGroup[i].toggle.onValueChanged.RemoveAllListeners();
                 int btIndex = i;
-                toggleGroup[i].onValueChanged.AddListener((b) => OnSortGroupChanged(btIndex, b));
+                toggleGroup[i].toggle.onValueChanged.AddListener((b) => OnSortGroupChanged(btIndex, b));
             }
         }
 
@@ -52,6 +58,10 @@ namespace Sango.Game.Render.UI
             title.text = objectSelectSystem.customSortTitleName;
             sortItems = objectSelectSystem.customSortItems;
 
+            // 点选模式
+            clickMode = objectSelectSystem.ClickMode;
+            selectSortBtn.SetActive(!clickMode);
+
             itemWidth = GetContentWidth();
             itemCount = uIObjectListItems.Length;
             bool show_scrollbar_h = maskRect.rect.width < itemWidth;
@@ -68,10 +78,20 @@ namespace Sango.Game.Render.UI
                 uIObjectListItems[uIObjectListItems.Length - 1].gameObject.SetActive(true);
             }
 
-            toggleGroup[0].GetComponentInChildren<Text>(true).text = objectSelectSystem.customSortTitleName;
-            toggleGroup[0].isOn = true;
+            toggleGroup[0].SetTitle(objectSelectSystem.customSortTitleName).toggle.isOn = true;
             for (int i = 1; i < toggleGroup.Length; i++)
-                toggleGroup[i].GetComponentInChildren<Text>(true).text = objectSelectSystem.GetSortTitleGroupName(i);
+            {
+                string groupName = objectSelectSystem.GetSortTitleGroupName(i);
+                if(string.IsNullOrEmpty(groupName))
+                {
+                    toggleGroup[i].gameObject.SetActive(false);
+                }
+                else
+                {
+                    toggleGroup[i].SetTitle(groupName);
+                    toggleGroup[i].gameObject.SetActive(true);
+                }
+            }
 
             startIndex = 0;
             int dataCount = objectSelectSystem.Objects.Count;
@@ -92,6 +112,7 @@ namespace Sango.Game.Render.UI
                 Vector2 p = listItem.contentRect.anchoredPosition;
                 p.x = 0;
                 listItem.contentRect.anchoredPosition = p;
+                listItem.selectItem.gameObject.SetActive(!clickMode);
             }
 
             UpdateSortContent();

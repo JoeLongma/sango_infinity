@@ -18,12 +18,6 @@ namespace Sango.Game.Render.UI
             return this;
         }
 
-        public UITextItem SetSelected(bool b)
-        {
-            image.enabled = b;
-            return this;
-        }
-
         public UITextItem SetText(string lab)
         {
             label.text = lab;
