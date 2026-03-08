@@ -84,7 +84,7 @@ namespace Sango.Game.Render.UI
                     int buildedNum = buildBuildingSys.TargetCity.GetBuildingNumber(buildingType.kind);
                     if (buildedNum > 0)
                     {
-                        item.name = $"{buildingType.Name}({buildedNum})";
+                        item.nameLabel.text = $"{buildingType.Name}（{buildedNum}）";
                         if (buildingType.buildNumLimit > 0)
                         {
                             if (buildedNum >= buildingType.buildNumLimit)

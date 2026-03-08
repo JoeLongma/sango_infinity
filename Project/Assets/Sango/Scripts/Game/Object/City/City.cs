@@ -289,6 +289,7 @@ namespace Sango.Game
         /// 所有设施
         /// </summary>
         public SangoObjectList<Building> allBuildings = new SangoObjectList<Building>();
+        public Dictionary<int, int> buildingCountMap = new Dictionary<int, int>();
 
 
         //public SangoObjectList<Building> allIntriorBuildings = new SangoObjectList<Building>();
@@ -677,12 +678,22 @@ namespace Sango.Game
         public void OnBuildingCreate(Building building)
         {
             allBuildings.Add(building);
+            int buildingKind = building.BuildingType.kind;
+            int count;
+            if (buildingCountMap.TryGetValue(buildingKind, out count))
+                buildingCountMap[buildingKind] = count + 1;
+            else
+                buildingCountMap.Add(buildingKind, 1);
         }
 
         public void OnBuildingDestroy(Building building)
         {
             allBuildings.Remove(building);
             this.CalculateHarvest();
+            int buildingKind = building.BuildingType.kind;
+            int count;
+            if (buildingCountMap.TryGetValue(buildingKind, out count))
+                buildingCountMap[buildingKind] = count - 1;
         }
 
         /// <summary>
@@ -2729,7 +2740,7 @@ namespace Sango.Game
             // TODO : 城市粮价
             int p = hasBusiness;
 
-            if(goldNum > 0)
+            if (goldNum > 0)
             {
                 totalValue = totalValue * goldNum * p / 100;
                 if (totalValue + food > foodLimit)
@@ -3151,14 +3162,10 @@ namespace Sango.Game
         /// <returns></returns>
         public int GetBuildingNumber(int buildingKindId)
         {
-            int complateNum = 0;
-            for (int i = 0; i < allBuildings.Count; i++)
-            {
-                Building building = allBuildings[i];
-                if (building.BuildingType.kind == buildingKindId)
-                    complateNum++;
-            }
-            return complateNum;
+            int count;
+            if (buildingCountMap.TryGetValue(buildingKindId, out count))
+                return count;
+            return 0;
         }
 
         public bool IsInteriorBuildFull()

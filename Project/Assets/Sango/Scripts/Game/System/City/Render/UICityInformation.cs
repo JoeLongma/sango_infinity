@@ -167,25 +167,29 @@ namespace Sango.Game.Render.UI
             City city = TargetCity;
             buildingPool.Reset();
             buildingNumLabel.text = $"{city.InteriorCellCount - city.GetInteriorCellUsedCount()}/{city.InteriorCellCount}";
-            Dictionary<BuildingType, int> building_num = new Dictionary<BuildingType, int>();
-            city.allBuildings.ForEach(b =>
+            List<BuildingType> canBuildBuildingType = new List<BuildingType>();
+            Scenario.Cur.CommonData.BuildingTypes.ForEach(x =>
             {
-                if (!b.IsIntorBuilding()) return;
-                int num;
-                if (building_num.TryGetValue(b.BuildingType, out num))
+                if (x.IsIntrior && x.level == 1 && x.IsValid(TargetCity.BelongForce) && x.canBuild)
                 {
-                    building_num[b.BuildingType] = num + 1;
-                }
-                else
-                {
-                    building_num[b.BuildingType] = 1;
+                    canBuildBuildingType.Add(x);
                 }
             });
 
-            foreach (var buildingType in building_num.Keys)
+            foreach (var buildingType in canBuildBuildingType)
             {
                 UIBuildingTypeItem item = buildingPool.Create();
-                item.SetBuildingType(buildingType).nameLabel.text = $"{buildingType.Name}（{building_num[buildingType]}）";
+                int buildingNum = city.GetBuildingNumber(buildingType.kind);
+                if(buildingNum > 0)
+                {
+                    item.SetBuildingType(buildingType).nameLabel.text = $"{buildingType.Name}（{buildingNum}）";
+                    item.SetValid(true);
+                }
+                else
+                {
+                    item.SetBuildingType(buildingType).nameLabel.text = $"{buildingType.Name}";
+                    item.SetValid(false);
+                }
             }
 
         }

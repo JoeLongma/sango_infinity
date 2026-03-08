@@ -273,5 +273,13 @@ namespace Sango.Game
         {
             return DurabilityLimit;
         }
+
+        public BuildingType GetBuiildingKindType()
+        {
+            if (BuildingType.Id == BuildingType.kind)
+                return BuildingType;
+            else
+                return Scenario.Cur.GetObject<BuildingType>(BuildingType.kind);
+        }
     }
 }
