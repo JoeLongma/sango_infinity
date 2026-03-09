@@ -9,6 +9,15 @@ namespace Sango.Game.Player
         public List<SangoObject> Objects;
         public string customSortTitleName;
         public List<ObjectSortTitle> customSortItems;
+        public struct ButtonData
+        {
+            public string title;
+            public int style;
+            public System.Action action;
+        }
+
+        public List<ButtonData> buttonDatas;
+
         /// <summary>
         /// 点选模式
         /// </summary>

@@ -8,6 +8,26 @@ namespace Sango.Game.Player
     public class CitySelectSystem : ObjectSelectSystem
     {
         Action<List<City>> finishAction;
+        public List<ButtonData> selectButtons;
+
+        public override void Init()
+        {
+            base.Init();
+            selectButtons = new List<ButtonData>()
+            {
+                new ButtonData()
+                {
+                    title = "地图",
+                    action = SelectOnMap,
+                    style = 1
+                }
+            };
+        }
+
+        void SelectOnMap()
+        {
+
+        }
 
         public void Start(List<City> cities, List<City> resultList, int limit, Action<List<City>> action, List<ObjectSortTitle> customSortTitles, string cutomSortTitleName)
         {
@@ -18,7 +38,8 @@ namespace Sango.Game.Player
             selected = new List<SangoObject>(resultList);
             customSortItems = customSortTitles;
             this.customSortTitleName = cutomSortTitleName;
-            ClickMode = true;
+            ClickMode = limit == 1;
+            buttonDatas = selectButtons;
             GameSystemManager.Instance.Push(this);
         }
 

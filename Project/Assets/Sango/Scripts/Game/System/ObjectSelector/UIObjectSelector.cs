@@ -20,10 +20,10 @@ namespace Sango.Game.Render.UI
             }
         }
 
-        public override void Init(ObjectsDisplaySystem objectSelectSystem)
+        public override void OnShow(params object[] objects)
         {
-            this.objectSelectSystem = objectSelectSystem as ObjectSelectSystem;
-            base.Init(objectSelectSystem);
+            this.objectSelectSystem = objects[0] as ObjectSelectSystem;
+            base.OnShow(objectSelectSystem);
         }
 
         public override void UpdateItemStartIndex(int startIndex)

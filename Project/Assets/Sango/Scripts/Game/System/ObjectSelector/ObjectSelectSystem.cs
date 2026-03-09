@@ -9,6 +9,7 @@ namespace Sango.Game.Player
         public List<SangoObject> selected = new List<SangoObject>();
         protected Action<List<SangoObject>> sureAction;
         public int selectLimit = 0;
+        protected Window.WindowInterface WindowInterface { set; get; }
 
         public void Start(List<SangoObject> sangoObjects, List<SangoObject> resultList, int limit, Action<List<SangoObject>> action, List<ObjectSortTitle> customSortTitles, string cutomSortTitleName)
         {
@@ -65,15 +66,7 @@ namespace Sango.Game.Player
         /// </summary>
         public override void OnEnter()
         {
-            Window.WindowInterface win = Window.Instance.Open("window_object_selector");
-            if (win != null)
-            {
-                UIObjectSelector uIObjectSelector = win.ugui_instance as UIObjectSelector;
-                if (uIObjectSelector != null)
-                {
-                    uIObjectSelector.Init(this);
-                }
-            }
+            WindowInterface = Window.Instance.Open("window_object_selector", this);
         }
     }
 }

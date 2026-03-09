@@ -8,10 +8,55 @@ namespace Sango.Game.Player
     public class PersonSelectSystem : ObjectSelectSystem
     {
         Action<List<Person>> finishAction;
+        public List<ButtonData> selectButtons;
+
+
+        public override void Init()
+        {
+            base.Init();
+            selectButtons = new List<ButtonData>()
+            {
+                new ButtonData()
+                {
+                    title = "一并",
+                    action = SelectAll
+                }
+                ,
+                new ButtonData()
+                {
+                    title = "一并解除",
+                    action = UnSelectAll
+                }
+            };
+        }
+
+        public void SelectAll()
+        {
+            if(selected.Count < selectLimit)
+            {
+                for(int i = 0; i < Objects.Count; i++)
+                {
+                    SangoObject dest = Objects[i];
+                    if(!selected.Contains(dest))
+                    {
+                        selected.Add(dest);
+                        if (selected.Count >= selectLimit)
+                            break;
+                    }
+                }
+                WindowInterface?.Refresh();
+            }
+        }
+
+        public void UnSelectAll()
+        {
+            selected.Clear();
+            WindowInterface?.Refresh();
+        }
 
         public void Start(List<Person> persons, List<Person> resultList, int limit, Action<List<Person>> action, List<ObjectSortTitle> customSortTitles, string cutomSortTitleName)
         {
-            selectLimit =  Math.Min(limit, persons.Count);
+            selectLimit = Math.Min(limit, persons.Count);
             Objects = new List<SangoObject>(persons);
             finishAction = action;
             sureAction = OnBaseSure;
@@ -19,6 +64,16 @@ namespace Sango.Game.Player
             selected.RemoveAll(x => x == null);
             customSortItems = customSortTitles;
             this.customSortTitleName = cutomSortTitleName;
+
+            ClickMode = limit == 1;
+            if (ClickMode)
+            {
+                buttonDatas = null;
+            }
+            else
+            {
+                buttonDatas = selectButtons;
+            }
             //if (customSortTitles.Count > 1)
             //    Objects.Sort(customSortItems[1].Sort);
             GameSystemManager.Instance.Push(this);

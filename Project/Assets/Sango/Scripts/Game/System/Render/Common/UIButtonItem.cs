@@ -1,5 +1,4 @@
-﻿using Sango.Loader;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
@@ -9,10 +8,27 @@ namespace Sango.Game.Render.UI
         public Text title;
         public Button button;
 
+        public UnityEngine.Sprite[] normal;
+        public UnityEngine.Sprite[] pressed;
+
+        public System.Action clickAction;
+
+        public void OnClick()
+        {
+            clickAction?.Invoke();
+        }
+
         public UIButtonItem SetTitle(string s)
         {
-            if(title != null)
+            if (title != null)
                 title.text = s;
+            return this;
+        }
+
+        public UIButtonItem BindAction(System.Action action)
+        {
+            clickAction = action;
+            button.interactable = (clickAction != null);
             return this;
         }
 
@@ -23,6 +39,18 @@ namespace Sango.Game.Render.UI
             LayoutElement layoutElement = GetComponent<LayoutElement>();
             if (layoutElement != null)
                 layoutElement.preferredWidth = width;
+            return this;
+        }
+
+        public UIButtonItem SetStyle(int style)
+        {
+            if (style < normal.Length)
+            {
+                SpriteState spriteState = button.spriteState;
+                spriteState.pressedSprite = pressed[style];
+                button.spriteState = spriteState;
+                button.image.sprite = normal[style];
+            }
             return this;
         }
     }

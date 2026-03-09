@@ -156,7 +156,10 @@ namespace Sango
         {
 
         }
+        public virtual void OnRefresh()
+        {
 
+        }
 
         public virtual void Hide()
         {
@@ -167,6 +170,12 @@ namespace Sango
             OnHide();
             IsOpen = false;
         }
+
+        public virtual void Refresh()
+        {
+            OnRefresh();
+        }
+
 
         public virtual void OnHide()
         {

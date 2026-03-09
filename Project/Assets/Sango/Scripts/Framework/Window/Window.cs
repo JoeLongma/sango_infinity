@@ -52,6 +52,11 @@ namespace Sango
                 //fgui_instance?.Hide();
                 ugui_instance?.Hide();
             }
+            public void Refresh()
+            {
+                //fgui_instance?.Refresh();
+                ugui_instance?.Refresh();
+            }
         }
 
         public struct PackageInfo

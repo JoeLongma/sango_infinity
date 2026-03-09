@@ -29,8 +29,8 @@ namespace Sango.Game.Render.UI
         protected int itemWidth = 0;
         protected int itemCount = 0;
 
-        public UIButtonItem[] brownButtons;
-        public UIButtonItem[] blueButtons;
+        public RectTransform btnRoot;
+        public UIButtonItem[] buttons;
 
         bool clickMode = false;
 
@@ -50,6 +50,11 @@ namespace Sango.Game.Render.UI
             UISortButton sortBtn = btn.GetComponent<UISortButton>();
             sortButtonPool.Add(sortBtn);
             return sortBtn;
+        }
+        public override void OnShow(params object[] objects)
+        {
+            this.objectSelectSystem = objects[0] as ObjectSelectSystem;
+            Init(objectSelectSystem);
         }
 
         public virtual void Init(ObjectsDisplaySystem objectSelectSystem)
@@ -82,7 +87,7 @@ namespace Sango.Game.Render.UI
             for (int i = 1; i < toggleGroup.Length; i++)
             {
                 string groupName = objectSelectSystem.GetSortTitleGroupName(i);
-                if(string.IsNullOrEmpty(groupName))
+                if (string.IsNullOrEmpty(groupName))
                 {
                     toggleGroup[i].gameObject.SetActive(false);
                 }
@@ -113,6 +118,7 @@ namespace Sango.Game.Render.UI
                 p.x = 0;
                 listItem.contentRect.anchoredPosition = p;
                 listItem.selectItem.gameObject.SetActive(!clickMode);
+                listItem.SetOver(false);
             }
 
             UpdateSortContent();
@@ -123,6 +129,24 @@ namespace Sango.Game.Render.UI
                 Vector2 p = r.anchoredPosition;
                 p.x = 0;
                 r.anchoredPosition = p;
+            }
+
+            bool hasButtons = objectSelectSystem.buttonDatas != null;
+            btnRoot.gameObject.SetActive(hasButtons);
+            if (hasButtons)
+            {
+                for (int i = 0; i < buttons.Length; i++)
+                {
+                    UIButtonItem buttonItem = buttons[i];
+                    if (i >= objectSelectSystem.buttonDatas.Count)
+                    {
+                        buttonItem.gameObject.SetActive(false);
+                        continue;
+                    }
+                    ObjectsDisplaySystem.ButtonData buttonData = objectSelectSystem.buttonDatas[i];
+                    buttonItem.gameObject.SetActive(true);
+                    buttonItem.SetTitle(buttonData.title).SetStyle(buttonData.style).BindAction(buttonData.action);
+                }
             }
 
         }
@@ -195,6 +219,12 @@ namespace Sango.Game.Render.UI
 
             for (int i = sortItems.Count - 1; i < sortButtonPool.Count; i++)
                 sortButtonPool[i].gameObject.SetActive(false);
+        }
+
+        public override void OnRefresh()
+        {
+            base.OnRefresh();
+            UpdateItemStartIndex(startIndex);
         }
 
         public void UpShow()
