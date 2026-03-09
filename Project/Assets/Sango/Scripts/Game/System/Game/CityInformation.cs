@@ -33,18 +33,39 @@ namespace Sango.Game
         {
             Name = "都市情报";
             GameEvent.OnCityRightMouseButtonContextMenuShow += OnCityRightMouseButtonContextMenuShow;
+#if UNITY_ANDROID
+            GameEvent.OnCityContextMenuShow += OnCityContextMenuShow;
+#endif
             GameEvent.OnScenarioInit += OnScenarioInit;
         }
 
+       
+
         public override void Clear()
         {
+#if UNITY_ANDROID
+            GameEvent.OnCityContextMenuShow -= OnCityContextMenuShow;
+#endif
             GameEvent.OnCityRightMouseButtonContextMenuShow -= OnCityRightMouseButtonContextMenuShow;
         }
+#if UNITY_ANDROID
+        protected virtual bool CityMenuCanShow()
+        {
+            return TargetCity.IsCity();
+        }
+
+        protected virtual void OnCityContextMenuShow(IContextMenuData menuData, City city)
+        {
+            TargetCity = city;
+            if(CityMenuCanShow())
+                menuData.Add("情报", 1000, city, OnClickMenuItem, true);
+        }
+#endif
 
         protected virtual void OnCityRightMouseButtonContextMenuShow(IContextMenuData menuData, City city)
         {
             TargetCity = city;
-            menuData.Add("详细情报", 20, null, OnClickMenuItem, true);
+            menuData.Add(Name, 20, null, OnClickMenuItem, true);
         }
 
         protected virtual void OnClickMenuItem(IContextMenuItem contextMenuItem)
@@ -54,7 +75,7 @@ namespace Sango.Game
             Push();
         }
 
-        public void OnScenarioInit(Scenario scenario)
+        public virtual void OnScenarioInit(Scenario scenario)
         {
             default_citits.Clear();
             scenario.citySet.ForEach(city => {
