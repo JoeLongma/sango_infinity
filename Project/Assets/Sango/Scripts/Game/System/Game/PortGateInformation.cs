@@ -14,13 +14,10 @@ namespace Sango.Game
         {
             windowName = "window_information_port_gate";
         }
-
-#if UNITY_ANDROID
         protected override bool CityMenuCanShow()
         {
             return !TargetCity.IsCity();
         }
-#endif
 
         public override void Init()
         {

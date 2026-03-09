@@ -136,8 +136,8 @@ namespace Sango.Game.Render.UI
 
         void Start()
         {
-            GameEvent.OnTroopCreated += OnTroopChange;
-            GameEvent.OnTroopDestroyed += OnTroopChange;
+            //GameEvent.OnTroopCreated += OnTroopChange;
+            //GameEvent.OnTroopDestroyed += OnTroopChange;
             GameEvent.OnForceTurnStart += OnForceStart;
             GameEvent.OnDayUpdate += OnDayUpdate;
             GameEvent.OnCityFall += OnCityFall;
@@ -171,8 +171,8 @@ namespace Sango.Game.Render.UI
 
         protected override void OnDestroy()
         {
-            GameEvent.OnTroopCreated -= OnTroopChange;
-            GameEvent.OnTroopDestroyed -= OnTroopChange;
+            //GameEvent.OnTroopCreated -= OnTroopChange;
+            //GameEvent.OnTroopDestroyed -= OnTroopChange;
             GameEvent.OnForceTurnStart -= OnForceStart;
             GameEvent.OnDayUpdate -= OnDayUpdate;
             GameEvent.OnCityFall -= OnCityFall;

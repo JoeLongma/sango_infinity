@@ -38,8 +38,10 @@ namespace Sango.Game
 #endif
             GameEvent.OnScenarioInit += OnScenarioInit;
         }
-
-       
+        protected virtual bool CityMenuCanShow()
+        {
+            return TargetCity.IsCity();
+        }
 
         public override void Clear()
         {
@@ -49,10 +51,7 @@ namespace Sango.Game
             GameEvent.OnCityRightMouseButtonContextMenuShow -= OnCityRightMouseButtonContextMenuShow;
         }
 #if UNITY_ANDROID
-        protected virtual bool CityMenuCanShow()
-        {
-            return TargetCity.IsCity();
-        }
+
 
         protected virtual void OnCityContextMenuShow(IContextMenuData menuData, City city)
         {

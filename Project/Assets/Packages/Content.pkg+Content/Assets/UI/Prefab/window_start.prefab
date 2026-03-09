@@ -555,7 +555,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 88.7, y: 8.61}
+  m_AnchoredPosition: {x: 45, y: -11}
   m_SizeDelta: {x: 100, y: 49.6}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &9203872332242279052
@@ -613,7 +613,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_OutlineColor: {r: 0.12, g: 0.12, b: 0.12, a: 1}
-  m_OutlineWidth: 1
+  m_OutlineWidth: 1.5
   m_gray: 0
 --- !u!1 &3308195017447873618
 GameObject:
@@ -1207,7 +1207,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 88.7, y: 70}
+  m_AnchoredPosition: {x: 44.999985, y: 50.390015}
   m_SizeDelta: {x: 636.6155, y: 80.85379}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &8555467137489933782
@@ -1439,7 +1439,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 16, y: -12}
-  m_SizeDelta: {x: 489.5657, y: 224.1861}
+  m_SizeDelta: {x: 588, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &4886754380188860181
 CanvasRenderer:
