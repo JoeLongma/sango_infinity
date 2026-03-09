@@ -56,10 +56,12 @@ namespace Sango.Game.Player
                 {
                     if(clickCell.building.IsPort())
                     {
+                        GameEvent.OnCityRightMouseButtonContextMenuShow?.Invoke(ContextMenuData.MenuData, clickCell.building as City);
                         GameEvent.OnPortRightMouseButtonContextMenuShow?.Invoke(ContextMenuData.MenuData, clickCell.building as Port);
                     }
                     else if (clickCell.building.IsGate())
                     {
+                        GameEvent.OnCityRightMouseButtonContextMenuShow?.Invoke(ContextMenuData.MenuData, clickCell.building as City);
                         GameEvent.OnGateRightMouseButtonContextMenuShow?.Invoke(ContextMenuData.MenuData, clickCell.building as Gate);
                     }
                     else if (clickCell.building.IsCity())

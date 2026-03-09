@@ -65,7 +65,8 @@ namespace Sango.Game
         protected virtual void OnCityRightMouseButtonContextMenuShow(IContextMenuData menuData, City city)
         {
             TargetCity = city;
-            menuData.Add(Name, 20, null, OnClickMenuItem, true);
+            if (CityMenuCanShow())
+                menuData.Add(Name, 20, null, OnClickMenuItem, true);
         }
 
         protected virtual void OnClickMenuItem(IContextMenuItem contextMenuItem)

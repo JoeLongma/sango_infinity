@@ -22,22 +22,10 @@ namespace Sango.Game
         }
 #endif
 
-
         public override void Init()
         {
+            base.Init();
             Name = "港关情报";
-#if UNITY_ANDROID
-            GameEvent.OnCityContextMenuShow += OnCityContextMenuShow;
-#endif
-            GameEvent.OnScenarioInit += OnScenarioInit;
-        }
-
-        public override void Clear()
-        {
-#if UNITY_ANDROID
-            GameEvent.OnCityContextMenuShow -= OnCityContextMenuShow;
-#endif
-            GameEvent.OnScenarioInit -= OnScenarioInit;
         }
 
         public override void OnScenarioInit(Scenario scenario)
