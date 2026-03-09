@@ -1,15 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using static Sango.Game.CitySortFunction;
 
 namespace Sango.Game.Player
 {
     [GameSystem(auto = true)]
     public class CitySelectSystem : ObjectSelectSystem
     {
-        Action<List<City>> finishAction;
+        protected Action<List<City>> finishAction;
         public List<ButtonData> selectButtons;
-
+        public string defualtTitleName = "城市";
+        public List<ObjectSortTitle> defualtTitleList = new List<ObjectSortTitle>()
+            {
+                CitySortFunction.SortByName,
+                CitySortFunction.SortByPersonCount,
+                CitySortFunction.SortByBelongCity,
+                CitySortFunction.SortByTroops,
+                CitySortFunction.SortByGold,
+                CitySortFunction.SortByFood,
+                CitySortFunction.SortByLevel,
+            };
         public override void Init()
         {
             base.Init();
@@ -31,16 +40,17 @@ namespace Sango.Game.Player
 
         public void Start(List<City> cities, List<City> resultList, int limit, Action<List<City>> action, List<ObjectSortTitle> customSortTitles, string cutomSortTitleName)
         {
+            donotFinishThisSystem = false;
             selectLimit = limit;
             Objects = new List<SangoObject>(cities);
             finishAction = action;
             sureAction = OnBaseSure;
             selected = new List<SangoObject>(resultList);
-            customSortItems = customSortTitles;
-            this.customSortTitleName = cutomSortTitleName;
+            customSortItems = customSortTitles != null ? customSortTitles : defualtTitleList;
+            this.customSortTitleName = cutomSortTitleName != null ? cutomSortTitleName : defualtTitleName; ;
             ClickMode = limit == 1;
             buttonDatas = selectButtons;
-            GameSystemManager.Instance.Push(this);
+            Push();
         }
 
         public void OnBaseSure(List<SangoObject> objects)

@@ -9,6 +9,8 @@ namespace Sango.Game.Player
         public List<SangoObject> Objects;
         public string customSortTitleName;
         public List<ObjectSortTitle> customSortItems;
+        public string windowName = "window_object_selector";
+
         public struct ButtonData
         {
             public string title;
@@ -28,12 +30,12 @@ namespace Sango.Game.Player
             Objects = new List<SangoObject>(sangoObjects);
             customSortItems = customSortTitles;
             this.customSortTitleName = cutomSortTitleName;
-            GameSystemManager.Instance.Push(this);
+            Push();
         }
 
         public void OnCancel()
         {
-            GameSystemManager.Instance.Back();
+            Back();
         }
 
         /// <summary>
@@ -41,7 +43,7 @@ namespace Sango.Game.Player
         /// </summary>
         public override void OnEnter()
         {
-            Window.WindowInterface win = Window.Instance.Open("window_object_selector");
+            Window.WindowInterface win = Window.Instance.Open(windowName);
             if (win != null)
             {
                 UIObjectSelector uIObjectSelector = win.ugui_instance as UIObjectSelector;
@@ -54,9 +56,22 @@ namespace Sango.Game.Player
 
         public override void OnDestroy()
         {
-            Window.Instance.Close("window_object_selector");
+            Window.Instance.Close(windowName);
         }
 
+        public override void OnBack(ICommandEvent whoGone)
+        {
+            Window.Instance.SetVisible(windowName, true);
+            if(ClickMode)
+            {
+                Window.Instance.GetWindow(windowName).Refresh();
+            }
+        }
+
+        public override void OnExit()
+        {
+            Window.Instance.SetVisible(windowName, false);
+        }
 
         public virtual List<ObjectSortTitle> GetSortTitleGroup(int index)
         {

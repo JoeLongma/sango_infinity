@@ -1,4 +1,5 @@
-﻿using Sango.Game.Render.UI;
+﻿using Sango.Game.Player;
+using Sango.Game.Render.UI;
 using System.Collections.Generic;
 
 namespace Sango.Game
@@ -10,8 +11,23 @@ namespace Sango.Game
     public class CityInformation : GameSystem
     {
         public City TargetCity;
+        public List<SangoObject> default_citits = new List<SangoObject>();
         public List<SangoObject> all_citits = new List<SangoObject>();
-        string windowName = "window_city_information";
+        protected string windowName = "window_information_city";
+
+        public void Start(City target)
+        {
+            TargetCity = target;
+            all_citits = default_citits;
+            Push();
+        }
+
+        public void Start(City target, List<SangoObject> city_list)
+        {
+            TargetCity = target;
+            all_citits = city_list;
+            Push();
+        }
 
         public override void Init()
         {
@@ -34,22 +50,32 @@ namespace Sango.Game
         protected virtual void OnClickMenuItem(IContextMenuItem contextMenuItem)
         {
             ContextMenu.CloseAll();
-            GameSystemManager.Instance.Push(this);
+            all_citits = default_citits;
+            Push();
         }
 
         public void OnScenarioInit(Scenario scenario)
         {
-            all_citits.Clear();
+            default_citits.Clear();
             scenario.citySet.ForEach(city => {
                 if (city.IsCity())
-                    all_citits.Add(city);
-
+                    default_citits.Add(city);
             });
         }
 
         public override void OnEnter()
         {
-            Window.Instance.Open(windowName);
+            Window.Instance.Open(windowName, this);
+        }
+
+        public override void OnBack(ICommandEvent whoGone)
+        {
+            Window.Instance.SetVisible(windowName, true);
+        }
+
+        public override void OnExit()
+        {
+            Window.Instance.SetVisible(windowName, false);
         }
 
         public override void OnDestroy()

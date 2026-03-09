@@ -69,9 +69,9 @@ namespace Sango.Game.Render.UI
             itemPool = new CreatePool<UIBuildingTypeItem>(itemObject);
         }
 
-        public override void OnShow()
+        public override void OnShow(params object[] objects)
         {
-            currentSystem = GameSystem.GetSystem<CityInformation>();
+            currentSystem = objects[0] as CityInformation;
             TargetCity = currentSystem.TargetCity;
             uIObjectList.Init(currentSystem.all_citits, CitySortFunction.SortByName, OnObjectSelected);
             uIObjectList.SelectDefaultObject(TargetCity);
@@ -99,14 +99,23 @@ namespace Sango.Game.Render.UI
             cityPersonCountLabel.text = CitySortFunction.SortByAllPersonCountInfo.GetValueStr(city);
             corpsNameLabel.text = CitySortFunction.SortByBelongCorps.GetValueStr(city);
             captiveCountLabel.text = CitySortFunction.SortByCaptiveCount.GetValueStr(city);
-            wildCountLabel.text = CitySortFunction.SortByWildCount.GetValueStr(city);
+            if (city.IsCity())
+                wildCountLabel.text = CitySortFunction.SortByWildCount.GetValueStr(city);
 
             port_gate_btn.interactable = (city.portList.Count + city.gateList.Count) > 0;
             troop_btn.interactable = city.allTroops.Count > 0;
             person_btn.interactable = city.allPersons.Count > 0;
 
-            // TODO: 皇帝
-            emperorLabel.text = "";
+            if (city.IsCity())
+            {
+                // TODO: 皇帝
+                emperorLabel.text = "";
+            }
+            else
+            {
+                // TODO: 皇帝
+                emperorLabel.text = city.BelongCity.Name;
+            }
             UpdateCityStateContent();
         }
 
@@ -180,7 +189,7 @@ namespace Sango.Game.Render.UI
             {
                 UIBuildingTypeItem item = buildingPool.Create();
                 int buildingNum = city.GetBuildingNumber(buildingType.kind);
-                if(buildingNum > 0)
+                if (buildingNum > 0)
                 {
                     item.SetBuildingType(buildingType).nameLabel.text = $"{buildingType.Name}（{buildingNum}）";
                     item.SetValid(true);
@@ -220,9 +229,25 @@ namespace Sango.Game.Render.UI
             }
         }
 
-        public void OnGatePortButton()
+        public void OnPortGateButton()
         {
+            List<City> port_gate_list = new List<City>();
+            port_gate_list.AddRange(TargetCity.portList);
+            port_gate_list.AddRange(TargetCity.gateList);
+            List<City> result_list = new List<City>();
+            PortGateSelectSystem portGateSelectSystem = GameSystem.GetSystem<PortGateSelectSystem>();
+            portGateSelectSystem.Start(
+                port_gate_list,
+                result_list, 1, OnPortGateSelected, null, null);
+            portGateSelectSystem.donotFinishThisSystem = true;
+        }
 
+        void OnPortGateSelected(List<City> port_gate)
+        {
+            List<SangoObject> port_gate_list = new List<SangoObject>();
+            port_gate_list.AddRange(TargetCity.portList);
+            port_gate_list.AddRange(TargetCity.gateList);
+            GameSystem.GetSystem<PortGateInformation>().Start(port_gate[0], port_gate_list);
         }
 
         public void OnTroopButton()

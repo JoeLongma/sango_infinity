@@ -7,12 +7,15 @@ namespace Sango.Game.Render.UI
     public class UIScenarioCityMap : MonoBehaviour
     {
         public UICityMapItem cityMapItem;
+        public UICityMapItem portMapItem;
         public RectTransform mapBounds;
         CreatePool<UICityMapItem> cityPool;
+        CreatePool<UICityMapItem> portPool;
 
         private void Awake()
         {
             cityPool = new CreatePool<UICityMapItem>(cityMapItem);
+            portPool = new CreatePool<UICityMapItem>(portMapItem);
         }
 
         public void Show(Scenario scenario)
@@ -48,6 +51,7 @@ namespace Sango.Game.Render.UI
         public void Show(Scenario scenario, City current)
         {
             cityPool.Reset();
+            portPool.Reset();
             scenario.citySet.ForEach(c =>
             {
                 if (c.BuildingType.Id == 1 && c.Id > 0)
@@ -60,7 +64,20 @@ namespace Sango.Game.Render.UI
                     float y = mapBounds.sizeDelta.y / 2 - city.y * mapBounds.sizeDelta.y / scenario.Map.Height;
                     rectTransform.anchoredPosition = new Vector2((int)(x + 0.5f), (int)(y + 0.5f));
                     item.icon.color = city.BelongForce != null ? city.BelongForce.Color : Color.white;
-                    item.effect?.SetActive(city.Id == current.Id);
+                    item.effect?.SetActive(current.IsCity() && city.Id == current.Id);
+                }
+
+                if(!current.IsCity())
+                {
+                    City city = current;
+                    UICityMapItem item = portPool.Create();
+                    item.name = city.Id.ToString();
+                    RectTransform rectTransform = item.root;
+                    float x = city.x * mapBounds.sizeDelta.x / scenario.Map.Width - mapBounds.sizeDelta.x / 2;
+                    float y = mapBounds.sizeDelta.y / 2 - city.y * mapBounds.sizeDelta.y / scenario.Map.Height;
+                    rectTransform.anchoredPosition = new Vector2((int)(x + 0.5f), (int)(y + 0.5f));
+                    item.icon.color = city.BelongForce != null ? city.BelongForce.Color : Color.white;
+                    item.effect?.SetActive(true);
                 }
             });
         }
@@ -68,6 +85,7 @@ namespace Sango.Game.Render.UI
         public void Show(ShortScenario scenario, Force current)
         {
             cityPool.Reset();
+            portPool.Reset();
             foreach (var city in scenario.citySet.Values)
             {
 

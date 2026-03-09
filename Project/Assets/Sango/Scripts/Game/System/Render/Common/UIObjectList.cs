@@ -10,7 +10,12 @@ namespace Sango.Game.Render.UI
         public ObjectSortTitle targetObjectSortTitle;
         public List<SangoObject> objectDatas = new List<SangoObject>();
         public UIObjectListItem[] uIObjectListItems;
+        UIObjectListItem currentSelectItem;
+        RectTransform[] uIObjectListItemsRect;
 
+        public RectTransform sliderRect;
+        public RectTransform contentRect;
+        float content_width;
         public delegate void OnObjectSelected(int index);
         protected OnObjectSelected onObjectSelected;
         protected int startIndex = 0;
@@ -21,6 +26,12 @@ namespace Sango.Game.Render.UI
         private void Awake()
         {
             itemCount = uIObjectListItems.Length;
+            content_width = contentRect.rect.width;
+            uIObjectListItemsRect = new RectTransform[uIObjectListItems.Length];
+            for (int i = 0; i < uIObjectListItems.Length; i++)
+            {
+                uIObjectListItemsRect[i] = uIObjectListItems[i].GetComponent<RectTransform>();
+            }
         }
 
         public void Init(List<SangoObject> objectDatas, ObjectSortTitle objectSortTitle, OnObjectSelected onObjectSelected)
@@ -30,13 +41,19 @@ namespace Sango.Game.Render.UI
             totalCount = objectDatas.Count;
             if (totalCount < itemCount)
             {
-                scrollbar.transform.parent.gameObject.SetActive(false);
+                sliderRect.gameObject.SetActive(false);
+                Vector2 size = contentRect.sizeDelta;
+                size.x = content_width + 15;
+                contentRect.sizeDelta = size;
             }
             else
             {
-                scrollbar.transform.parent.gameObject.SetActive(true);
+                sliderRect.gameObject.SetActive(true);
                 scrollbar.size = (float)itemCount / (float)totalCount;
                 scrollbar.SetValueWithoutNotify(0);
+                Vector2 size = contentRect.sizeDelta;
+                size.x = content_width;
+                contentRect.sizeDelta = size;
             }
             startIndex = 0;
             selectedIndex = 0;
@@ -105,6 +122,37 @@ namespace Sango.Game.Render.UI
 
             UpdateItemStartIndex(startIndex);
             scrollbar.SetValueWithoutNotify((float)startIndex / (totalCount - itemCount));
+        }
+
+
+        public void OnObjectListItemPressDown(UIObjectListItem item)
+        {
+            item.SetPressd(true);
+            currentSelectItem = item;
+        }
+
+        public void OnObjectListItemPressUp(UIObjectListItem item)
+        {
+            item.SetPressd(false);
+            for (int i = 0; i < itemCount; i++)
+            {
+                RectTransform itemRect = uIObjectListItemsRect[i];
+                UIObjectListItem listItem = uIObjectListItems[i];
+                if (listItem == currentSelectItem && RectTransformUtility.RectangleContainsScreenPoint(itemRect, Input.mousePosition, Sango.Game.Game.Instance.UICamera))
+                {
+                    OnItemSelected(item);
+                    break;
+                }
+            }
+        }
+
+        public void OnObjectListItemPointEnter(UIObjectListItem item)
+        {
+            item.SetOver(true);
+        }
+        public void OnObjectListItemPointExit(UIObjectListItem item)
+        {
+            item.SetOver(false);
         }
 
         public virtual void OnItemSelected(UIObjectListItem item)

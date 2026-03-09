@@ -111,6 +111,7 @@ namespace Sango.Game.Render.UI
                 scrollbar.SetValueWithoutNotify(0);
             }
 
+            // 重置状态和位置
             for (int j = 0; j < uIObjectListItems.Length; j++)
             {
                 UIObjectListItem listItem = uIObjectListItems[j];
@@ -224,6 +225,12 @@ namespace Sango.Game.Render.UI
         public override void OnRefresh()
         {
             base.OnRefresh();
+            // 重置状态和位置
+            for (int j = 0; j < uIObjectListItems.Length; j++)
+            {
+                UIObjectListItem listItem = uIObjectListItems[j];
+                listItem.SetOver(false);
+            }
             UpdateItemStartIndex(startIndex);
         }
 

@@ -9,6 +9,7 @@ namespace Sango.Game.Player
         public List<SangoObject> selected = new List<SangoObject>();
         protected Action<List<SangoObject>> sureAction;
         public int selectLimit = 0;
+        public bool donotFinishThisSystem = false;
         protected Window.WindowInterface WindowInterface { set; get; }
 
         public void Start(List<SangoObject> sangoObjects, List<SangoObject> resultList, int limit, Action<List<SangoObject>> action, List<ObjectSortTitle> customSortTitles, string cutomSortTitleName)
@@ -22,10 +23,21 @@ namespace Sango.Game.Player
             this.customSortTitleName = cutomSortTitleName;
             GameSystemManager.Instance.Push(this);
         }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+            if(ClickMode)
+            {
+                selected.Clear();
+            }
+        }
+
         public void OnSure()
         {
             sureAction?.Invoke(selected);
-            GameSystemManager.Instance.Back();
+            if (!donotFinishThisSystem)
+                Back();
         }
 
         public bool IsPersonLimit()
