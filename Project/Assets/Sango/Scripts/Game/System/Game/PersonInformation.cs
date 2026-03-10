@@ -13,7 +13,7 @@ namespace Sango.Game
         public Person Target;
         public List<SangoObject> default_objects = new List<SangoObject>();
         public List<SangoObject> all_objects = new List<SangoObject>();
-        protected string windowName = "window_information_city";
+        protected string windowName = "window_information_person";
 
         public void Start(Person target)
         {
