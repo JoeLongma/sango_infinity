@@ -109,8 +109,13 @@ namespace Sango.Game
         {
             GameController.Instance.Update();
             base.Update();
-            if (Scenario.Cur != null && !Scenario.Cur.useThreadRun)
-                Scenario.Cur.Run();
+            Scenario scenario = Scenario.Cur;
+            if (scenario != null)
+            {
+                GameEvent.OnScenarioTick?.Invoke(scenario, Time.deltaTime);
+                if (!Scenario.Cur.useThreadRun)
+                    Scenario.Cur.Run();
+            }
         }
 
         public static void DebugAI()

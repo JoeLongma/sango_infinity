@@ -220,5 +220,24 @@ namespace Sango.Game
                 interiorModel.gameObject.SetActive(b);
             }
         }
+
+        public void GetVertexs(Vector3[] vectors)
+        {
+            MapRender mapRender = MapRender.Instance;
+            int x_start = x * 4;
+            int y_start =  y * 4 - (y % 2) * 2;
+            
+            for(int j = 0; j < 5; j++)
+            {
+                for(int i = 0; i < 5; i++)
+                {
+                    int vIndex = j * 5 + i;
+                    MapData.VertexData vertexData = mapRender.mapData.GetVertexData(x_start + i, y_start + j);
+                    Vector3 v = vectors[vIndex];
+                    v.y = vertexData.position.y;
+                    vectors[vIndex] = v;
+                }
+            }
+        }
     }
 }

@@ -8,14 +8,17 @@ namespace Sango.Game.Render.UI
     {
         public UICityMapItem cityMapItem;
         public UICityMapItem portMapItem;
+        public UICityMapItem troopMapItem;
         public RectTransform mapBounds;
         CreatePool<UICityMapItem> cityPool;
         CreatePool<UICityMapItem> portPool;
+        CreatePool<UICityMapItem> troopPool;
 
         private void Awake()
         {
             cityPool = new CreatePool<UICityMapItem>(cityMapItem);
             portPool = new CreatePool<UICityMapItem>(portMapItem);
+            troopPool = new CreatePool<UICityMapItem>(troopMapItem);
         }
 
         public void Show(Scenario scenario)
@@ -31,6 +34,8 @@ namespace Sango.Game.Render.UI
         public void Show(Scenario scenario, Force current)
         {
             cityPool.Reset();
+            troopPool.Reset();
+            portPool.Reset();
             scenario.citySet.ForEach(c =>
             {
                 if (c.BuildingType.Id == 1 && c.Id > 0)
@@ -47,10 +52,10 @@ namespace Sango.Game.Render.UI
                 }
             });
         }
-
         public void Show(Scenario scenario, City current)
         {
             cityPool.Reset();
+            troopPool.Reset();
             portPool.Reset();
             scenario.citySet.ForEach(c =>
             {
@@ -77,6 +82,40 @@ namespace Sango.Game.Render.UI
                     float y = mapBounds.sizeDelta.y / 2 - city.y * mapBounds.sizeDelta.y / scenario.Map.Height;
                     rectTransform.anchoredPosition = new Vector2((int)(x + 0.5f), (int)(y + 0.5f));
                     item.icon.color = city.BelongForce != null ? city.BelongForce.Color : Color.white;
+                    item.effect?.SetActive(true);
+                }
+            });
+        }
+        public void Show(Scenario scenario, Troop current)
+        {
+            cityPool.Reset();
+            troopPool.Reset();
+            portPool.Reset();
+            scenario.citySet.ForEach(c =>
+            {
+                if (c.BuildingType.Id == 1 && c.Id > 0)
+                {
+                    City city = c;
+                    UICityMapItem item = cityPool.Create();
+                    item.name = city.Id.ToString();
+                    RectTransform rectTransform = item.root;
+                    float x = city.x * mapBounds.sizeDelta.x / scenario.Map.Width - mapBounds.sizeDelta.x / 2;
+                    float y = mapBounds.sizeDelta.y / 2 - city.y * mapBounds.sizeDelta.y / scenario.Map.Height;
+                    rectTransform.anchoredPosition = new Vector2((int)(x + 0.5f), (int)(y + 0.5f));
+                    item.icon.color = city.BelongForce != null ? city.BelongForce.Color : Color.white;
+                    item.effect?.SetActive(false);
+                }
+
+                if (current != null)
+                {
+                    Troop troop = current;
+                    UICityMapItem item = troopPool.Create();
+                    item.name = troop.Id.ToString();
+                    RectTransform rectTransform = item.root;
+                    float x = troop.x * mapBounds.sizeDelta.x / scenario.Map.Width - mapBounds.sizeDelta.x / 2;
+                    float y = mapBounds.sizeDelta.y / 2 - troop.y * mapBounds.sizeDelta.y / scenario.Map.Height;
+                    rectTransform.anchoredPosition = new Vector2((int)(x + 0.5f), (int)(y + 0.5f));
+                    item.icon.color = troop.BelongForce != null ? troop.BelongForce.Color : Color.white;
                     item.effect?.SetActive(true);
                 }
             });

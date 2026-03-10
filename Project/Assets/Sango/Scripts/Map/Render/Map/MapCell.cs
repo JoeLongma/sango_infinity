@@ -79,7 +79,6 @@ namespace Sango.Render
             mesh = new Mesh[maxLayer];
             meshRenderer = new MeshRenderer[maxLayer];
             meshCollider = new MeshCollider[maxLayer];
-            lod = 0;
             int _vertex_y_max = quadBounds.y + 1;
 
             gameObject.transform.position = position;

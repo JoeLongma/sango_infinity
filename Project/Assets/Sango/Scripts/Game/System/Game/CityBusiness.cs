@@ -1,6 +1,4 @@
-﻿using Sango.Game.Tools;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Sango.Game
 {

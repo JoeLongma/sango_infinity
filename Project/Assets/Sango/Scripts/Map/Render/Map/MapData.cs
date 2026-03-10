@@ -820,6 +820,19 @@ namespace Sango.Render
             return vertexDatas[xCount][yCount];
         }
 
+        public VertexData GetVertexData(int xCount, int yCount)
+        {
+            if (xCount < 0)
+                xCount = 0;
+            if (xCount > vertex_width)
+                xCount = vertex_width;
+            if (yCount < 0)
+                yCount = 0;
+            if (yCount > vertex_height)
+                yCount = vertex_height;
+            return vertexDatas[xCount][yCount];
+        }
+
         public float GetWorldHeight(Vector3 worldPos)
         {
             VertexData data = GetVertexData(worldPos.z, worldPos.x);
