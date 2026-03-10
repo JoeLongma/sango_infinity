@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Sango.Game.Render.UI
 {
-    public class UIGame : UGUIWindow, LoopScrollPrefabSource, LoopScrollDataSource
+    public class UIGame : UGUIWindow
     {
         public UIPlayerInfoPanel uIPlayerInfoPanel;
 
@@ -102,37 +102,37 @@ namespace Sango.Game.Render.UI
         }
 
 
-        public GameObject GetObject(int index)
-        {
-            if (pool.Count == 0)
-            {
-                GameObject obj = Instantiate(troopListItemObj);
-                UITroopListItem uITroopListItem = obj.GetComponent<UITroopListItem>();
-                if (uITroopListItem != null)
-                {
-                    uITroopListItem.onSelected = OnTroopListSelected;
-                    uITroopListItem.onShow = OnTroopListShow;
-                }
-                return obj;
-            }
-            Transform candidate = pool.Pop();
-            candidate.gameObject.SetActive(true);
-            return candidate.gameObject;
-        }
+        //public GameObject GetObject(int index)
+        //{
+        //    if (pool.Count == 0)
+        //    {
+        //        GameObject obj = Instantiate(troopListItemObj);
+        //        UITroopListItem uITroopListItem = obj.GetComponent<UITroopListItem>();
+        //        if (uITroopListItem != null)
+        //        {
+        //            uITroopListItem.onSelected = OnTroopListSelected;
+        //            uITroopListItem.onShow = OnTroopListShow;
+        //        }
+        //        return obj;
+        //    }
+        //    Transform candidate = pool.Pop();
+        //    candidate.gameObject.SetActive(true);
+        //    return candidate.gameObject;
+        //}
 
-        public void ReturnObject(Transform trans)
-        {
-            // Use `DestroyImmediate` here if you don't need Pool
-            trans.SendMessage("ScrollCellReturn", SendMessageOptions.DontRequireReceiver);
-            trans.gameObject.SetActive(false);
-            trans.SetParent(transform, false);
-            pool.Push(trans);
-        }
+        //public void ReturnObject(Transform trans)
+        //{
+        //    // Use `DestroyImmediate` here if you don't need Pool
+        //    trans.SendMessage("ScrollCellReturn", SendMessageOptions.DontRequireReceiver);
+        //    trans.gameObject.SetActive(false);
+        //    trans.SetParent(transform, false);
+        //    pool.Push(trans);
+        //}
 
-        public void ProvideData(Transform transform, int idx)
-        {
-            transform.SendMessage("ScrollCellIndex", idx);
-        }
+        //public void ProvideData(Transform transform, int idx)
+        //{
+        //    transform.SendMessage("ScrollCellIndex", idx);
+        //}
 
         void Start()
         {
@@ -145,8 +145,8 @@ namespace Sango.Game.Render.UI
             GameEvent.OnForceGainTechniquePoint += OnForceGainTechniquePoint;
             GameEvent.OnCorpsActionPointChange += OnCorpsActionPointChange;
 
-            loopScrollRect.prefabSource = this;
-            loopScrollRect.dataSource = this;
+            //loopScrollRect.prefabSource = this;
+            //loopScrollRect.dataSource = this;
 
             itemType = typeof(Troop);
             needUpdateItem = true;
@@ -484,41 +484,41 @@ namespace Sango.Game.Render.UI
 
             deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
 
-            if (!troopListShow) return;
+            //if (!troopListShow) return;
 
-            if (needUpdateItem)
-            {
-                needUpdateItem = false;
-                if (itemType == typeof(Troop))
-                {
+            //if (needUpdateItem)
+            //{
+            //    needUpdateItem = false;
+            //    if (itemType == typeof(Troop))
+            //    {
 
-                    item_list.Clear();
-                    Scenario.Cur.troopsSet.ForEach(t =>
-                    {
-                        if (t.IsAlive)
-                        {
-                            item_list.Add(t);
-                        }
-                    });
+            //        item_list.Clear();
+            //        Scenario.Cur.troopsSet.ForEach(t =>
+            //        {
+            //            if (t.IsAlive)
+            //            {
+            //                item_list.Add(t);
+            //            }
+            //        });
 
-                    loopScrollRect.totalCount = item_list.Count;
-                    loopScrollRect.RefillCells(loopScrollRect.GetFirstItem(out _));
-                }
-                else if (itemType == typeof(City))
-                {
-                    item_list.Clear();
-                    Scenario.Cur.citySet.ForEach(t =>
-                    {
-                        if (t.IsAlive)
-                        {
-                            item_list.Add(t);
-                        }
-                    });
+            //        loopScrollRect.totalCount = item_list.Count;
+            //        loopScrollRect.RefillCells(loopScrollRect.GetFirstItem(out _));
+            //    }
+            //    else if (itemType == typeof(City))
+            //    {
+            //        item_list.Clear();
+            //        Scenario.Cur.citySet.ForEach(t =>
+            //        {
+            //            if (t.IsAlive)
+            //            {
+            //                item_list.Add(t);
+            //            }
+            //        });
 
-                    loopScrollRect.totalCount = item_list.Count;
-                    loopScrollRect.RefillCells(loopScrollRect.GetFirstItem(out _));
-                }
-            }
+            //        loopScrollRect.totalCount = item_list.Count;
+            //        loopScrollRect.RefillCells(loopScrollRect.GetFirstItem(out _));
+            //    }
+            //}
         }
     }
 }

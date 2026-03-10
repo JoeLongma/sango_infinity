@@ -53,7 +53,7 @@ namespace Sango.Game.Render.UI
         public UITextField buildingNumLabel;
         CreatePool<UIBuildingTypeItem> buildingPool;
 
-        City TargetCity;
+        City Target;
         CityInformation currentSystem;
 
         bool items_inited = false;
@@ -62,6 +62,8 @@ namespace Sango.Game.Render.UI
         public Button port_gate_btn;
         public Button troop_btn;
         public Button person_btn;
+        List<Person> personList = new List<Person>();
+        List<Troop> troopList = new List<Troop>();
 
         protected override void Awake()
         {
@@ -72,22 +74,22 @@ namespace Sango.Game.Render.UI
         public override void OnShow(params object[] objects)
         {
             currentSystem = objects[0] as CityInformation;
-            TargetCity = currentSystem.TargetCity;
-            uIObjectList.Init(currentSystem.all_citits, CitySortFunction.SortByName, OnObjectSelected);
-            uIObjectList.SelectDefaultObject(TargetCity);
+            Target = currentSystem.Target;
+            uIObjectList.Init(currentSystem.all_objects, CitySortFunction.SortByName, OnObjectSelected);
+            uIObjectList.SelectDefaultObject(Target);
             windiwTitle.text = currentSystem.Name;
             tabs[0].isOn = true;
-            ShowCity(TargetCity);
+            Show(Target);
         }
 
         void OnObjectSelected(int index)
         {
-            ShowCity(currentSystem.all_citits[index] as City);
+            Show(currentSystem.all_objects[index] as City);
         }
 
-        public void ShowCity(City city)
+        public void Show(City city)
         {
-            TargetCity = city;
+            Target = city;
             items_inited = false;
             buildings_inited = false;
 
@@ -116,12 +118,12 @@ namespace Sango.Game.Render.UI
                 // TODO: 皇帝
                 emperorLabel.text = city.BelongCity.Name;
             }
-            UpdateCityStateContent();
+            UpdateStateContent();
         }
 
-        void UpdateCityStateContent()
+        void UpdateStateContent()
         {
-            City city = TargetCity;
+            City city = Target;
             Scenario scenario = Scenario.Cur;
             scenarioCityMap.Show(scenario, city);
             goldLabel.text = $"{city.gold}/{city.GoldLimit}";
@@ -148,17 +150,17 @@ namespace Sango.Game.Render.UI
             //disaster_icon_list.text = city.security.ToString();
         }
 
-        void UpdateCityItemsContent()
+        void UpdateItemsContent()
         {
             if (items_inited) return;
             itemPool.Reset();
-            List<ItemType> ItemTypes = TargetCity.BelongForce.createdItemTypes;
+            List<ItemType> ItemTypes = Target.BelongForce.createdItemTypes;
             int len = ItemTypes.Count;
             for (int i = 0; i < len; i++)
             {
                 ItemType itemType = ItemTypes[i];
-                int totalNum = TargetCity.itemStore.GetNumber(itemType.Id);
-                if (itemType.subKind == (int)ItemSubKindType.Boat)
+                int totalNum = Target.itemStore.GetNumber(itemType.storeKind);
+                if (itemType.storeKind == (int)ItemSubKindType.Boat)
                 {
                     boatItem.SetItemType(itemType).SetIndex(i).SetNum(totalNum);
                 }
@@ -170,16 +172,16 @@ namespace Sango.Game.Render.UI
             }
         }
 
-        void UpdateCityBuildingsContent()
+        void UpdateBuildingsContent()
         {
             if (buildings_inited) return;
-            City city = TargetCity;
+            City city = Target;
             buildingPool.Reset();
             buildingNumLabel.text = $"{city.InteriorCellCount - city.GetInteriorCellUsedCount()}/{city.InteriorCellCount}";
             List<BuildingType> canBuildBuildingType = new List<BuildingType>();
             Scenario.Cur.CommonData.BuildingTypes.ForEach(x =>
             {
-                if (x.IsIntrior && x.level == 1 && x.IsValid(TargetCity.BelongForce) && x.canBuild)
+                if (x.IsIntrior && x.level == 1 && x.IsValid(Target.BelongForce) && x.canBuild)
                 {
                     canBuildBuildingType.Add(x);
                 }
@@ -217,7 +219,7 @@ namespace Sango.Game.Render.UI
         {
             if (b)
             {
-                UpdateCityItemsContent();
+                UpdateItemsContent();
             }
         }
 
@@ -225,15 +227,15 @@ namespace Sango.Game.Render.UI
         {
             if (b)
             {
-                UpdateCityBuildingsContent();
+                UpdateBuildingsContent();
             }
         }
 
         public void OnPortGateButton()
         {
             List<City> port_gate_list = new List<City>();
-            port_gate_list.AddRange(TargetCity.portList);
-            port_gate_list.AddRange(TargetCity.gateList);
+            port_gate_list.AddRange(Target.portList);
+            port_gate_list.AddRange(Target.gateList);
             List<City> result_list = new List<City>();
             PortGateSelectSystem portGateSelectSystem = GameSystem.GetSystem<PortGateSelectSystem>();
             portGateSelectSystem.Start(
@@ -245,19 +247,54 @@ namespace Sango.Game.Render.UI
         void OnPortGateSelected(List<City> port_gate)
         {
             List<SangoObject> port_gate_list = new List<SangoObject>();
-            port_gate_list.AddRange(TargetCity.portList);
-            port_gate_list.AddRange(TargetCity.gateList);
+            port_gate_list.AddRange(Target.portList);
+            port_gate_list.AddRange(Target.gateList);
             GameSystem.GetSystem<PortGateInformation>().Start(port_gate[0], port_gate_list);
         }
 
         public void OnTroopButton()
         {
+            troopList.Clear();
+            troopList.AddRange(Target.allTroops);
+            List<Troop> result_list = new List<Troop>();
+            TroopSelectSystem troopSelectSystem = GameSystem.GetSystem<TroopSelectSystem>();
+            troopSelectSystem.Start(
+                troopList,
+                result_list, 1, OnTroopSelected, null, null);
+            troopSelectSystem.donotFinishThisSystem = true;
+        }
 
+        void OnTroopSelected(List<Troop> person_list)
+        {
+            List<SangoObject> object_list = new List<SangoObject>();
+            object_list.AddRange(troopList);
+            GameSystem.GetSystem<TroopInformation>().Start(person_list[0], object_list);
         }
 
         public void OnPersonButton()
         {
-
+            personList.Clear();
+            Target.allPersons.ForEach(x =>
+            {
+                personList.Add(x);
+            });
+            personList.AddRange(Target.wildPersons);
+            List<Person> result_list = new List<Person>();
+            PersonSelectSystem personSelectSystem = GameSystem.GetSystem<PersonSelectSystem>();
+            personSelectSystem.Start(
+                personList,
+                result_list, 1, OnPersonSelected, null, null);
+            personSelectSystem.donotFinishThisSystem = true;
         }
+
+        void OnPersonSelected(List<Person> person_list)
+        {
+            List<SangoObject> object_list = new List<SangoObject>();
+            object_list.AddRange(personList);
+            GameSystem.GetSystem<PersonInformation>().Start(person_list[0], object_list);
+        }
+
+
+
     }
 }

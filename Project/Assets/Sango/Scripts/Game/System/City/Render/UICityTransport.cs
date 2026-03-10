@@ -206,7 +206,7 @@ namespace Sango.Game.Render.UI
                 ItemType itemType = Scenario.Cur.CommonData.ItemTypeList[i];
 
                 itemLabels[showIndex].gameObject.SetActive(true);
-                int has = targetCity.itemStore.GetNumber(itemType.subKind);
+                int has = targetCity.itemStore.GetNumber(itemType.storeKind);
                 int use = 0;
                 if (targetTroop.LandTroopType.costItems != null)
                 {

@@ -1620,7 +1620,7 @@ namespace Sango.Game
 
             int empty = StoreLimit - itemStore.TotalNumber;
             totalValue = Math.Min(empty, totalValue);
-            int exsistNumber = itemStore.Add(itemType.subKind, totalValue);
+            int exsistNumber = itemStore.Add(itemType.storeKind, totalValue);
 
             BelongForce.GainTechniquePoint(techniquePointGain);
 
@@ -1815,7 +1815,7 @@ namespace Sango.Game
 
             int empty = StoreLimit - itemStore.TotalNumber;
             totalValue = Math.Min(empty, totalValue);
-            int exsistNumber = itemStore.Add(itemType.subKind, totalValue);
+            int exsistNumber = itemStore.Add(itemType.storeKind, totalValue);
 
             BelongForce.GainTechniquePoint(techniquePointGain);
 

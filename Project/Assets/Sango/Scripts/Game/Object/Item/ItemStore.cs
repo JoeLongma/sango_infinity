@@ -55,7 +55,7 @@ namespace Sango.Game
 
         public int Set(ItemType itemType, int number)
         {
-            return Set(itemType.subKind, number);
+            return Set(itemType.storeKind, number);
         }
 
         public int Set(int itemTypeId, int number)
@@ -75,7 +75,7 @@ namespace Sango.Game
 
         public int Add(ItemType itemType, int number)
         {
-            return Add(itemType.subKind, number);
+            return Add(itemType.storeKind, number);
         }
 
         public int Add(int itemTypeId, int number)
@@ -107,7 +107,7 @@ namespace Sango.Game
 
         public int Remove(ItemType itemType)
         {
-            return Remove(itemType.subKind);
+            return Remove(itemType.storeKind);
         }
 
         public int Remove(int itemTypeId)
@@ -123,7 +123,7 @@ namespace Sango.Game
 
         public int Remove(ItemType itemType, int number)
         {
-            return Remove(itemType.subKind, number);
+            return Remove(itemType.storeKind, number);
         }
 
         public int Remove(int itemTypeId, int number)
@@ -169,15 +169,15 @@ namespace Sango.Game
 
         public int GetNumber(ItemType itemType)
         {
-            if (Items.TryGetValue(itemType.subKind, out int has))
+            if (Items.TryGetValue(itemType.storeKind, out int has))
                 return has;
             return 0;
         }
 
         public int this[ItemType itemType]
         {
-            get { return GetNumber(itemType.subKind); }
-            set { Add(itemType.subKind, value); }
+            get { return GetNumber(itemType.storeKind); }
+            set { Add(itemType.storeKind, value); }
         }
 
         public int this[int itemTypeId]

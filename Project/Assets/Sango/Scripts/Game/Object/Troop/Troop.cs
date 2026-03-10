@@ -495,6 +495,13 @@ namespace Sango.Game
             if (WaterTroopType == null)
                 WaterTroopType = scenario.GetObject<TroopType>(8);
 
+            LandTroopTypeLv = -1;
+            WaterTroopTypeLv = -1;
+            Command = -1;
+            Strength = -1;
+            Intelligence = -1;
+            Politics = -1;
+            Glamour = -1;
             // 计算能力,能力取最大
             ForEachPerson((p) =>
             {
@@ -1886,6 +1893,36 @@ namespace Sango.Game
         public void Burn(Cell dest)
         {
 
+        }
+
+        public int GetItemNumber(int itemKind)
+        {
+            if (IsTransport())
+                return itemStore.GetNumber(itemKind);
+            else
+            {
+                int number = troops + woundedTroops;
+                if (LandTroopType.costItems != null && LandTroopType.costItems.Length > 0)
+                {
+                    for (int i = 0; i < LandTroopType.costItems.Length; i += 2)
+                    {
+                        int itemTypeId = LandTroopType.costItems[i];
+                        if (itemKind == itemTypeId)
+                            return LandTroopType.costItems[i + 1] * number / 1000;
+                    }
+                }
+
+                if (WaterTroopType.costItems != null && WaterTroopType.costItems.Length > 0)
+                {
+                    for (int i = 0; i < WaterTroopType.costItems.Length; i += 2)
+                    {
+                        int itemTypeId = WaterTroopType.costItems[i];
+                        if (itemKind == itemTypeId)
+                            return WaterTroopType.costItems[i + 1] * number / 1000;
+                    }
+                }
+            }
+            return 0;
         }
     }
 }

@@ -35,7 +35,9 @@ namespace Sango.Game.Player
             get
             {
                 TargetUpgradeType = Scenario.Cur.GetObject<BuildingType>(TargetBuilding.BuildingType.nextId);
-                return TargetBuilding.BelongCity.freePersons.Count > 0 && TargetBuilding.BelongCity.gold >= TargetUpgradeType.cost &&!TargetBuilding.isWorking;
+                return TargetBuilding.BelongCity.freePersons.Count > 0 && 
+                    TargetBuilding.BelongCity.gold >= TargetUpgradeType.cost &&
+                    !TargetBuilding.isWorking && TargetBuilding.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.UpgradeBuilding);
             }
         }
         protected override void OnBuildingContextMenuShow(IContextMenuData menuData, BuildingBase building)

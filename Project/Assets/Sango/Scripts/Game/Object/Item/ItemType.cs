@@ -14,7 +14,7 @@ namespace Sango.Game
         /// <summary>
         /// 次类型
         /// </summary>
-        [JsonProperty] public byte subKind;
+        [JsonProperty] public byte storeKind;
 
         [JsonProperty] public int nextId;
 

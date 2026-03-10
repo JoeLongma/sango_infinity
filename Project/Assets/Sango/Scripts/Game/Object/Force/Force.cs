@@ -702,16 +702,16 @@ namespace Sango.Game
                 if (it.cost > 0 && it.IsValid(this))
                 {
                     ItemType itemType;
-                    if (itemMap.TryGetValue(it.subKind, out itemType))
+                    if (itemMap.TryGetValue(it.storeKind, out itemType))
                     {
                         if (it.Id > itemType.Id)
                         {
-                            itemMap[it.subKind] = it;
+                            itemMap[it.storeKind] = it;
                         }
                     }
                     else
                     {
-                        itemMap[it.subKind] = it;
+                        itemMap[it.storeKind] = it;
                     }
                 }
             });

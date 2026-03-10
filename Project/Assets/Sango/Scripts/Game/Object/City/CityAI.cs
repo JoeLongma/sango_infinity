@@ -1150,7 +1150,7 @@ namespace Sango.Game
                 targetItemType = scenario.GetObject<ItemType>(11);
 
             // 获取总兵装
-            int totalNum = city.itemStore.GetNumber(targetItemType.subKind);
+            int totalNum = city.itemStore.GetNumber(targetItemType.storeKind);
             if (totalNum > (city.troops / 2) * targetItemType.p1 / 1000 + 1)
                 return true;
 

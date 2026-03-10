@@ -322,8 +322,8 @@ namespace Sango.Game
             {
                 name = itemType.Name,
                 width = 50,
-                valueStrGetCall = x => x.itemStore.GetNumber(itemType.subKind).ToString(),
-                valueSortFunc = (a, b) => a.itemStore.GetNumber(itemType.subKind).CompareTo(b.itemStore.GetNumber(itemType.subKind)),
+                valueStrGetCall = x => x.itemStore.GetNumber(itemType.storeKind).ToString(),
+                valueSortFunc = (a, b) => a.itemStore.GetNumber(itemType.storeKind).CompareTo(b.itemStore.GetNumber(itemType.storeKind)),
             };
         }
 
@@ -333,7 +333,7 @@ namespace Sango.Game
             if (itemType.kind == 3 || itemType.kind == 4)
             {
                 ItemType tempType = Scenario.Cur.GetObject<ItemType>(id + 1);
-                if (tempType.subKind == itemType.subKind && tempType.IsValid(city.BelongForce))
+                if (tempType.storeKind == itemType.storeKind && tempType.IsValid(city.BelongForce))
                 {
                     itemType = tempType;
                 }
@@ -342,8 +342,8 @@ namespace Sango.Game
             {
                 name = itemType.Name,
                 width = 50,
-                valueStrGetCall = x => x.itemStore.GetNumber(itemType.subKind).ToString(),
-                valueSortFunc = (a, b) => a.itemStore.GetNumber(itemType.subKind).CompareTo(b.itemStore.GetNumber(itemType.subKind)),
+                valueStrGetCall = x => x.itemStore.GetNumber(itemType.storeKind).ToString(),
+                valueSortFunc = (a, b) => a.itemStore.GetNumber(itemType.storeKind).CompareTo(b.itemStore.GetNumber(itemType.storeKind)),
             };
         }
 

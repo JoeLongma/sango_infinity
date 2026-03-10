@@ -8,21 +8,21 @@ namespace Sango.Game
     /// 城池治安系统逻辑
     /// </summary>
     [GameSystem(auto = true)]
-    public class CityInformation : GameSystem
+    public class PersonInformation : GameSystem
     {
-        public City Target;
+        public Person Target;
         public List<SangoObject> default_objects = new List<SangoObject>();
         public List<SangoObject> all_objects = new List<SangoObject>();
         protected string windowName = "window_information_city";
 
-        public void Start(City target)
+        public void Start(Person target)
         {
             Target = target;
             all_objects = default_objects;
             Push();
         }
 
-        public void Start(City target, List<SangoObject> city_list)
+        public void Start(Person target, List<SangoObject> city_list)
         {
             Target = target;
             all_objects = city_list;
@@ -40,7 +40,7 @@ namespace Sango.Game
         }
         protected virtual bool CityMenuCanShow()
         {
-            return Target.IsCity();
+            return true;
         }
 
         public override void Clear()
@@ -63,7 +63,7 @@ namespace Sango.Game
 
         protected virtual void OnCityRightMouseButtonContextMenuShow(IContextMenuData menuData, City city)
         {
-            Target = city;
+            //Target = city;
             if (CityMenuCanShow())
                 menuData.Add(Name, 20, null, OnClickMenuItem, true);
         }

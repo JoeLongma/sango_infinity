@@ -158,7 +158,11 @@ namespace Sango.Game
                 factorDir = 1;
             }
             float v = Mathf.Lerp(flashFactor.x, flashFactor.y, curFactor / flashTime);
+#if UNITY_EDITOR
+            meshRenderer.material.SetFloat(propertyName, v);
+#else
             meshRenderer.sharedMaterial.SetFloat(propertyName, v);
+#endif
         }
     }
 }

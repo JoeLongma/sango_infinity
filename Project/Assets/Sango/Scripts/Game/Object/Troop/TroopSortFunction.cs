@@ -12,7 +12,7 @@
             public TroopSortFunc valueSortFunc;
             public TroopValueGet<T> valueGetCall;
 
-            public  T GetValue(SangoObject obj)
+            public T GetValue(SangoObject obj)
             {
                 return valueGetCall.Invoke((Troop)obj);
             }
@@ -137,22 +137,103 @@
             valueSortFunc = (a, b) => a.troops.CompareTo(b.troops),
         };
 
-        public static SortTitle<string> SortByMember1 = new SortTitle<string>()
+        public static SortTitle<int> SortByMember1 = new SortTitle<int>()
         {
             name = "副将",
             width = 50,
             valueStrGetCall = x => x.Member1 != null ? x.Member1.Name : "",
-            valueGetCall = x => x.Member1 != null ? x.Member1.Name : "",
+            valueGetCall = x => x.Member1?.Id ?? 0,
             valueSortFunc = (a, b) => SangoObject.Compare(a.Member1, b.Member1)
         };
 
-        public static SortTitle<string> SortByMember2 = new SortTitle<string>()
+        public static SortTitle<int> SortByMember2 = new SortTitle<int>()
         {
             name = "副将",
             width = 50,
             valueStrGetCall = x => x.Member2 != null ? x.Member2.Name : "",
-            valueGetCall = x => x.Member2 != null ? x.Member2.Name : "",
+            valueGetCall = x => x.Member2?.Id ?? 0,
             valueSortFunc = (a, b) => SangoObject.Compare(a.Member2, b.Member2)
+        };
+
+        public static SortTitle<int> SortByBelongForce = new SortTitle<int>()
+        {
+            name = "势力",
+            width = 60,
+            valueStrGetCall = x => x.BelongForce?.Name ?? "无",
+            valueSortFunc = (a, b) => SangoObject.Compare(a.BelongForce, b.BelongForce),
+            valueGetCall = x => x.BelongForce?.Id ?? 0,
+        };
+
+        public static SortTitle<int> SortByBelongCorps = new SortTitle<int>()
+        {
+            name = "军团",
+            width = 100,
+            valueStrGetCall = x => x.BelongCorps?.Name ?? "无",
+            valueSortFunc = (a, b) => SangoObject.Compare(a.BelongCorps, b.BelongCorps),
+            valueGetCall = x => x.BelongCorps?.Id ?? 0,
+        };
+
+        public static SortTitle<int> SortByBelongCity = new SortTitle<int>()
+        {
+            name = "所属",
+            width = 60,
+            valueStrGetCall = x => x.BelongCity?.Name ?? "无",
+            valueSortFunc = (a, b) => SangoObject.Compare(a.BelongCity, b.BelongCity),
+            valueGetCall = x => x.BelongCity?.Id ?? 0,
+        };
+
+        public static SortTitle<SangoObjectList<Person>> SortByCaptiveCount = new SortTitle<SangoObjectList<Person>>()
+        {
+            name = "俘虏",
+            width = 60,
+            valueStrGetCall = x => x.captiveList.Count.ToString(),
+            valueSortFunc = (a, b) => a.captiveList.Count.CompareTo(b.captiveList.Count),
+            valueGetCall = x => x.captiveList,
+        };
+
+        public static SortTitle<bool> SortByActionOver = new SortTitle<bool>()
+        {
+            name = "行动",
+            width = 60,
+            valueStrGetCall = x => x.ActionOver ? "未行动" : "行动完",
+            valueSortFunc = (a, b) => a.ActionOver.CompareTo(b.ActionOver),
+            valueGetCall = x => x.ActionOver,
+        };
+
+        public static SortTitle<bool> SortByState = new SortTitle<bool>()
+        {
+            name = "状态",
+            width = 60,
+            valueStrGetCall = x => x.ActionOver ? "行动完" : "未行动",
+            valueSortFunc = (a, b) => a.ActionOver.CompareTo(b.ActionOver),
+            valueGetCall = x => x.ActionOver,
+        };
+
+        public static SortTitle<int> SortByTroopType = new SortTitle<int>()
+        {
+            name = "兵种",
+            width = 60,
+            valueStrGetCall = x => x.TroopType.Name,
+            valueSortFunc = (a, b) => a.TroopType.Id.CompareTo(b.TroopType.Id),
+            valueGetCall = x => x.TroopType.Id,
+        };
+
+        public static SortTitle<int> SortByAbility = new SortTitle<int>()
+        {
+            name = "适应",
+            width = 60,
+            valueStrGetCall = x => Scenario.Cur.Variables.GetAbilityName(x.TroopTypeLv),
+            valueSortFunc = (a, b) => a.TroopTypeLv.CompareTo(b.TroopTypeLv),
+            valueGetCall = x => x.TroopTypeLv,
+        };
+
+        public static SortTitle<int> SortByWaterAbility = new SortTitle<int>()
+        {
+            name = "水军",
+            width = 60,
+            valueStrGetCall = x => Scenario.Cur.Variables.GetAbilityName(x.WaterTroopTypeLv),
+            valueSortFunc = (a, b) => a.WaterTroopTypeLv.CompareTo(b.WaterTroopTypeLv),
+            valueGetCall = x => x.WaterTroopTypeLv,
         };
     }
 

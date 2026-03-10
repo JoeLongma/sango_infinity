@@ -901,7 +901,7 @@ namespace Sango.Game
                         if (building.AccumulatedProduct > 0)
                         {
                             ItemType itemType = scenario.GetObject<ItemType>(building.ProductItemId);
-                            city.AddItem(itemType.subKind, building.AccumulatedProduct);
+                            city.AddItem(itemType.storeKind, building.AccumulatedProduct);
                             city.Render?.UpdateRender();
                             building.Render?.ShowInfo(building.AccumulatedProduct, building.ProductItemId);
                             building.AccumulatedProduct = 0;
@@ -911,7 +911,7 @@ namespace Sango.Game
                         if (building.AccumulatedProduct > 0)
                         {
                             ItemType itemType = scenario.GetObject<ItemType>(building.ProductItemId);
-                            city.AddItem(itemType.subKind, building.AccumulatedProduct);
+                            city.AddItem(itemType.storeKind, building.AccumulatedProduct);
                             city.Render?.UpdateRender();
                             building.Render?.ShowInfo(building.AccumulatedProduct, building.ProductItemId - 1);
                             building.AccumulatedProduct = 0;

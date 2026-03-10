@@ -16,7 +16,7 @@ namespace Sango.Game
         }
         protected override bool CityMenuCanShow()
         {
-            return !TargetCity.IsCity();
+            return !Target.IsCity();
         }
 
         public override void Init()
@@ -27,10 +27,10 @@ namespace Sango.Game
 
         public override void OnScenarioInit(Scenario scenario)
         {
-            default_citits.Clear();
+            default_objects.Clear();
             scenario.citySet.ForEach(city => {
                 if (!city.IsCity())
-                    default_citits.Add(city);
+                    default_objects.Add(city);
             });
         }
     }
