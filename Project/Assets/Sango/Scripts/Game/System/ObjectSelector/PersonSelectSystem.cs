@@ -62,6 +62,11 @@ namespace Sango.Game.Player
             sureAction = OnBaseSure;
             selected = new List<SangoObject>(resultList);
             selected.RemoveAll(x => x == null);
+            if (customSortTitles == null)
+            {
+                customSortTitles = new List<ObjectSortTitle>();
+                PersonSortFunction.Instance.GetSortTitleGroup(PersonSortGroupType.Belong, customSortTitles);
+            }
             customSortItems = customSortTitles;
             this.customSortTitleName = cutomSortTitleName;
 

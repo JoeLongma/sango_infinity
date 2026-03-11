@@ -1076,9 +1076,6 @@
       "personality": 2,
       "Father": 19,
       "Mother": 623,
-      "BrotherList": [
-        623
-      ],
       "LikePersonList": [
         19,
         623
@@ -1145,9 +1142,6 @@
       "argumentation": 4,
       "personality": 3,
       "SpouseList": [
-        623
-      ],
-      "BrotherList": [
         623
       ],
       "LikePersonList": [
@@ -5630,9 +5624,6 @@
       "personality": 4,
       "Father": 569,
       "Mother": 249,
-      "BrotherList": [
-        249
-      ],
       "LikePersonList": [
         109,
         555
@@ -5872,9 +5863,7 @@
       ],
       "argumentation": 1,
       "personality": 4,
-      "BrotherList": [
-        636
-      ],
+      "Brother": 636,
       "LikePersonList": [
         242,
         291,
@@ -6415,9 +6404,7 @@
       "argumentation": 5,
       "personality": 2,
       "Father": 99,
-      "BrotherList": [
-        435
-      ],
+      "Brother": 435,
       "LikePersonList": [
         435
       ],
@@ -6545,9 +6532,7 @@
       ],
       "argumentation": 2,
       "personality": 3,
-      "BrotherList": [
-        110
-      ],
+      "Brother": 110,
       "LikePersonList": [
         526
       ],
@@ -9870,9 +9855,6 @@
       "SpouseList": [
         29
       ],
-      "BrotherList": [
-        290
-      ],
       "LikePersonList": [
         290
       ],
@@ -11805,9 +11787,6 @@
       "SpouseList": [
         366
       ],
-      "BrotherList": [
-        366
-      ],
       "LikePersonList": [
         376,
         636
@@ -12911,9 +12890,6 @@
       "SpouseList": [
         637
       ],
-      "BrotherList": [
-        637
-      ],
       "LikePersonList": [
         631
       ],
@@ -13385,9 +13361,6 @@
       "SpouseList": [
         419
       ],
-      "BrotherList": [
-        419
-      ],
       "LikePersonList": [
         203,
         329,
@@ -13521,9 +13494,6 @@
       "personality": 1,
       "Father": 226,
       "Mother": 419,
-      "BrotherList": [
-        419
-      ],
       "LikePersonList": [
         229,
         293,
@@ -13591,9 +13561,6 @@
       "personality": 2,
       "Father": 226,
       "Mother": 419,
-      "BrotherList": [
-        419
-      ],
       "LikePersonList": [
         228,
         455
@@ -14596,10 +14563,7 @@
       "SpouseList": [
         267
       ],
-      "BrotherList": [
-        267,
-        371
-      ],
+      "Brother": 371,
       "LikePersonList": [
         267,
         371,
@@ -14786,9 +14750,6 @@
       "argumentation": 2,
       "personality": 1,
       "SpouseList": [
-        569
-      ],
-      "BrotherList": [
         569
       ],
       "LikePersonList": [
@@ -15862,9 +15823,6 @@
       "personality": 4,
       "Father": 712,
       "SpouseList": [
-        246
-      ],
-      "BrotherList": [
         246
       ],
       "LikePersonList": [
@@ -17119,9 +17077,6 @@
       "personality": 4,
       "Father": 29,
       "Mother": 166,
-      "BrotherList": [
-        166
-      ],
       "spearLv": [
         1
       ],
@@ -17252,9 +17207,6 @@
       "argumentation": 4,
       "personality": 1,
       "SpouseList": [
-        166
-      ],
-      "BrotherList": [
         166
       ],
       "LikePersonList": [
@@ -17395,9 +17347,6 @@
       "argumentation": 2,
       "personality": 4,
       "SpouseList": [
-        383
-      ],
-      "BrotherList": [
         383
       ],
       "LikePersonList": [
@@ -17935,9 +17884,6 @@
       "argumentation": 1,
       "personality": 4,
       "SpouseList": [
-        348
-      ],
-      "BrotherList": [
         348
       ],
       "LikePersonList": [
@@ -18529,9 +18475,6 @@
       "argumentation": 4,
       "personality": 1,
       "SpouseList": [
-        415
-      ],
-      "BrotherList": [
         415
       ],
       "spearLv": [
@@ -19560,9 +19503,6 @@
       "personality": 4,
       "Father": 348,
       "Mother": 31,
-      "BrotherList": [
-        301
-      ],
       "LikePersonList": [
         226,
         301,
@@ -20167,9 +20107,6 @@
       "personality": 4,
       "Father": 344,
       "Mother": 549,
-      "BrotherList": [
-        549
-      ],
       "LikePersonList": [
         340
       ],
@@ -20235,9 +20172,6 @@
       "personality": 2,
       "Father": 344,
       "Mother": 549,
-      "BrotherList": [
-        549
-      ],
       "LikePersonList": [
         34,
         301,
@@ -20494,9 +20428,6 @@
       "argumentation": 2,
       "personality": 2,
       "SpouseList": [
-        549
-      ],
-      "BrotherList": [
         549
       ],
       "LikePersonList": [
@@ -20769,10 +20700,6 @@
       "SpouseList": [
         31
       ],
-      "BrotherList": [
-        549,
-        301
-      ],
       "LikePersonList": [
         84,
         203,
@@ -21024,9 +20951,6 @@
       "personality": 1,
       "Father": 344,
       "Mother": 549,
-      "BrotherList": [
-        549
-      ],
       "spearLv": [
         0
       ],
@@ -21733,9 +21657,6 @@
       "personality": 2,
       "Father": 366,
       "Mother": 199,
-      "BrotherList": [
-        199
-      ],
       "spearLv": [
         1
       ],
@@ -21848,9 +21769,6 @@
       "argumentation": 2,
       "personality": 4,
       "SpouseList": [
-        199
-      ],
-      "BrotherList": [
         199
       ],
       "LikePersonList": [
@@ -21987,9 +21905,6 @@
       "personality": 2,
       "Father": 366,
       "Mother": 199,
-      "BrotherList": [
-        199
-      ],
       "LikePersonList": [
         243,
         251
@@ -22193,11 +22108,7 @@
       "SpouseList": [
         388
       ],
-      "BrotherList": [
-        199,
-        388,
-        371
-      ],
+      "Brother": 371,
       "LikePersonList": [
         246,
         376,
@@ -22269,9 +22180,6 @@
       "Father": 371,
       "SpouseList": [
         63
-      ],
-      "BrotherList": [
-        603
       ],
       "LikePersonList": [
         603
@@ -22517,9 +22425,6 @@
       "personality": 2,
       "Father": 366,
       "Mother": 199,
-      "BrotherList": [
-        199
-      ],
       "LikePersonList": [
         199,
         267,
@@ -22952,10 +22857,6 @@
       "SpouseList": [
         292
       ],
-      "BrotherList": [
-        199,
-        292
-      ],
       "LikePersonList": [
         292,
         371
@@ -23141,9 +23042,6 @@
       "personality": 2,
       "Father": 366,
       "Mother": 199,
-      "BrotherList": [
-        199
-      ],
       "spearLv": [
         0
       ],
@@ -23270,9 +23168,6 @@
       "personality": 1,
       "Father": 712,
       "SpouseList": [
-        371
-      ],
-      "BrotherList": [
         371
       ],
       "LikePersonList": [
@@ -24870,9 +24765,6 @@
       "SpouseList": [
         311
       ],
-      "BrotherList": [
-        311
-      ],
       "spearLv": [
         0
       ],
@@ -25113,9 +25005,6 @@
       "argumentation": 4,
       "personality": 2,
       "SpouseList": [
-        226
-      ],
-      "BrotherList": [
         226
       ],
       "spearLv": [
@@ -25490,9 +25379,6 @@
       "personality": 1,
       "Father": 26,
       "SpouseList": [
-        661
-      ],
-      "BrotherList": [
         661
       ],
       "LikePersonList": [
@@ -25957,9 +25843,7 @@
       ],
       "argumentation": 5,
       "personality": 2,
-      "BrotherList": [
-        636
-      ],
+      "Brother": 636,
       "LikePersonList": [
         155,
         558,
@@ -26089,9 +25973,7 @@
       "argumentation": 1,
       "personality": 4,
       "Father": 433,
-      "BrotherList": [
-        435
-      ],
+      "Brother": 435,
       "LikePersonList": [
         108
       ],
@@ -31077,9 +30959,7 @@
       ],
       "argumentation": 2,
       "personality": 1,
-      "BrotherList": [
-        110
-      ],
+      "Brother": 110,
       "LikePersonList": [
         508,
         513,
@@ -31894,9 +31774,6 @@
       "argumentation": 4,
       "personality": 3,
       "SpouseList": [
-        636
-      ],
-      "BrotherList": [
         636
       ],
       "spearLv": [
@@ -32903,9 +32780,6 @@
       "argumentation": 3,
       "personality": 1,
       "SpouseList": [
-        344
-      ],
-      "BrotherList": [
         344
       ],
       "spearLv": [
@@ -34107,9 +33981,6 @@
       "argumentation": 5,
       "personality": 1,
       "SpouseList": [
-        249
-      ],
-      "BrotherList": [
         249
       ],
       "LikePersonList": [
@@ -35962,9 +35833,6 @@
       "personality": 4,
       "Father": 63,
       "Mother": 372,
-      "BrotherList": [
-        372
-      ],
       "LikePersonList": [
         578
       ],
@@ -36091,9 +35959,6 @@
       "argumentation": 5,
       "personality": 1,
       "SpouseList": [
-        372
-      ],
-      "BrotherList": [
         372
       ],
       "LikePersonList": [
@@ -37280,9 +37145,6 @@
       "SpouseList": [
         19
       ],
-      "BrotherList": [
-        19
-      ],
       "LikePersonList": [
         18
       ],
@@ -37759,9 +37621,6 @@
       "personality": 2,
       "Father": 637,
       "Mother": 218,
-      "BrotherList": [
-        218
-      ],
       "LikePersonList": [
         218,
         220
@@ -38057,10 +37916,7 @@
       "SpouseList": [
         532
       ],
-      "BrotherList": [
-        532,
-        636
-      ],
+      "Brother": 636,
       "LikePersonList": [
         181,
         290,
@@ -38133,9 +37989,6 @@
       "argumentation": 4,
       "personality": 3,
       "SpouseList": [
-        218
-      ],
-      "BrotherList": [
         218
       ],
       "LikePersonList": [
@@ -39565,9 +39418,6 @@
       "argumentation": 4,
       "personality": 2,
       "SpouseList": [
-        425
-      ],
-      "BrotherList": [
         425
       ],
       "LikePersonList": [

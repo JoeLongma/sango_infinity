@@ -218,9 +218,14 @@ namespace Sango.Game
         /// <summary>
         /// 兄弟
         /// </summary>
-        [JsonConverter(typeof(SangoObjectListIDConverter<Person>))]
+        [JsonConverter(typeof(Id2ObjConverter<Person>))]
         [JsonProperty]
-        public SangoObjectList<Person> BrotherList { get; private set; }
+        public Person Brother { get; set; }
+
+        /// <summary>
+        /// 兄弟
+        /// </summary>
+        public List<Person> BrotherList;
 
         /// <summary>
         /// 喜欢武将
@@ -513,8 +518,17 @@ namespace Sango.Game
             return IsSameForce(BelongForce, other.BelongForce);
         }
 
+
         public override void OnScenarioPrepare(Scenario scenario)
         {
+            if(Brother != null)
+            {
+                if (Brother.BrotherList == null)
+                    Brother.BrotherList = new List<Person>();
+
+                Brother.BrotherList.Add(this);
+            }
+
             if (IsPrisoner)
             {
                 if (BelongTroop != null)
@@ -565,6 +579,25 @@ namespace Sango.Game
 
             OnPersonAgeUpdate(scenario);
         }
+
+        public override void Init(Scenario scenario)
+        {
+            base.Init(scenario);
+
+            if (Brother != null)
+            {
+                if(Brother == this)
+                {
+                    BrotherList.Sort(SangoObject.Compare);
+
+                }
+                else
+                {
+                    BrotherList = Brother.BrotherList;
+                }
+            }
+        }
+
 
         public override bool OnYearStart(Scenario scenario)
         {

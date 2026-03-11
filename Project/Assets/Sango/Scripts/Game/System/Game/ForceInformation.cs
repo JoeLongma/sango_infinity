@@ -8,21 +8,21 @@ namespace Sango.Game
     /// 城池治安系统逻辑
     /// </summary>
     [GameSystem(auto = true)]
-    public class CityInformation : GameSystem
+    public class ForceInformation : GameSystem
     {
-        public City Target;
+        public Force Target;
         public List<SangoObject> default_objects = new List<SangoObject>();
         public List<SangoObject> all_objects = new List<SangoObject>();
-        protected string windowName = "window_information_city";
+        protected string windowName = "window_information_force";
 
-        public void Start(City target)
+        public void Start(Force target)
         {
             Target = target;
             all_objects = default_objects;
             Push();
         }
 
-        public void Start(City target, List<SangoObject> city_list)
+        public void Start(Force target, List<SangoObject> city_list)
         {
             Target = target;
             all_objects = city_list;
@@ -31,84 +31,45 @@ namespace Sango.Game
 
         public override void Init()
         {
-            Name = "都市情报";
+            Name = "势力情报";
             GameEvent.OnCityRightMouseButtonContextMenuShow += OnCityRightMouseButtonContextMenuShow;
             GameEvent.OnGameSettingContextMenuShow += OnGameSettingContextMenuShow;
-
-#if UNITY_ANDROID
-            GameEvent.OnCityContextMenuShow += OnCityContextMenuShow;
-#endif
-            GameEvent.OnScenarioInit += OnScenarioInit;
         }
         protected virtual bool CityMenuCanShow()
         {
-            return Target.IsCity();
+            return true;
         }
 
         public override void Clear()
         {
             GameEvent.OnGameSettingContextMenuShow -= OnGameSettingContextMenuShow;
-#if UNITY_ANDROID
-            GameEvent.OnCityContextMenuShow -= OnCityContextMenuShow;
-#endif
             GameEvent.OnCityRightMouseButtonContextMenuShow -= OnCityRightMouseButtonContextMenuShow;
-            GameEvent.OnScenarioInit -= OnScenarioInit;
         }
-#if UNITY_ANDROID
-
-
-        protected virtual void OnCityContextMenuShow(IContextMenuData menuData, City city)
-        {
-            Target = city;
-            if (CityMenuCanShow())
-                menuData.Add("情报", 1000, city, OnClickMenuItem, true);
-        }
-#endif
         protected virtual void OnGameSettingContextMenuShow(IContextMenuData menuData)
         {
-            Target = default_objects[0] as City;
-            menuData.Add("全都市", 200, null, OnClickMenuItem);
-            menuData.Add("全港关", 220, null, OnClickMenuItem_PortGat);
+            Target = default_objects[0] as Force;
+            menuData.Add("全势力", 400, null, OnClickMenuItem);
         }
 
         protected virtual void OnCityRightMouseButtonContextMenuShow(IContextMenuData menuData, City city)
         {
-            Target = city;
+            Target = city.BelongForce;
             if (CityMenuCanShow())
-                menuData.Add(Name, 20, null, OnClickMenuItem, true);
+                menuData.Add(Name, 20, null, OnClickMenuItem, city.BelongForce != null);
         }
 
         protected virtual void OnClickMenuItem(IContextMenuItem contextMenuItem)
         {
-            ContextMenu.CloseAll();
-            all_objects = default_objects;
-            Push();
-        }
-
-        protected virtual void OnClickMenuItem_PortGat(IContextMenuItem contextMenuItem)
-        {
-            ContextMenu.CloseAll();
-
-            List<SangoObject> port_gate_list = new List<SangoObject>();
-            Scenario.Cur.citySet.ForEach(city =>
+            List<SangoObject> obj_list = new List<SangoObject>();
+            Scenario.Cur.forceSet.ForEach(city =>
             {
-                if (!city.IsCity())
-                    port_gate_list.Add(city);
+                if (city.IsAlive)
+                    obj_list.Add(city);
             });
 
-            all_objects = port_gate_list;
-            Target  = all_objects[0] as City;
+            all_objects = obj_list;
+            Target = all_objects[0] as Force;
             Push();
-        }
-
-        public virtual void OnScenarioInit(Scenario scenario)
-        {
-            default_objects.Clear();
-            scenario.citySet.ForEach(city =>
-            {
-                if (city.IsCity())
-                    default_objects.Add(city);
-            });
         }
 
         public override void OnEnter()

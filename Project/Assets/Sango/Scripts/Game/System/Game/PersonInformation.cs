@@ -31,12 +31,9 @@ namespace Sango.Game
 
         public override void Init()
         {
-            Name = "都市情报";
+            Name = "武将情报";
+            GameEvent.OnGameSettingContextMenuShow += OnGameSettingContextMenuShow;
             GameEvent.OnCityRightMouseButtonContextMenuShow += OnCityRightMouseButtonContextMenuShow;
-#if UNITY_ANDROID
-            GameEvent.OnCityContextMenuShow += OnCityContextMenuShow;
-#endif
-            GameEvent.OnScenarioInit += OnScenarioInit;
         }
         protected virtual bool CityMenuCanShow()
         {
@@ -45,27 +42,35 @@ namespace Sango.Game
 
         public override void Clear()
         {
-#if UNITY_ANDROID
-            GameEvent.OnCityContextMenuShow -= OnCityContextMenuShow;
-#endif
+            GameEvent.OnGameSettingContextMenuShow -= OnGameSettingContextMenuShow;
             GameEvent.OnCityRightMouseButtonContextMenuShow -= OnCityRightMouseButtonContextMenuShow;
         }
-#if UNITY_ANDROID
 
-
-        protected virtual void OnCityContextMenuShow(IContextMenuData menuData, City city)
+        protected virtual void OnGameSettingContextMenuShow(IContextMenuData menuData)
         {
-            TargetCity = city;
-            if(CityMenuCanShow())
-                menuData.Add("情报", 1000, city, OnClickMenuItem, true);
+            default_objects.Clear();
+            Scenario.Cur.personSet.ForEach(person =>
+            {
+                if(person.IsValid) 
+                    default_objects.Add(person);
+            });
+            Target = default_objects[0] as Person;
+            menuData.Add("全武将", 300, null, OnClickMenuItem);
         }
-#endif
 
         protected virtual void OnCityRightMouseButtonContextMenuShow(IContextMenuData menuData, City city)
         {
             //Target = city;
+            default_objects.Clear();
+            city.allPersons.ForEach(person =>
+            {
+                default_objects.Add(person);
+            });
+            default_objects.AddRange(city.wildPersons);
+            if(default_objects.Count > 0) 
+                Target = default_objects[0] as Person;
             if (CityMenuCanShow())
-                menuData.Add(Name, 20, null, OnClickMenuItem, true);
+                menuData.Add(Name, 20, null, OnClickMenuItem, default_objects.Count > 0);
         }
 
         protected virtual void OnClickMenuItem(IContextMenuItem contextMenuItem)
@@ -73,15 +78,6 @@ namespace Sango.Game
             ContextMenu.CloseAll();
             all_objects = default_objects;
             Push();
-        }
-
-        public virtual void OnScenarioInit(Scenario scenario)
-        {
-            default_objects.Clear();
-            scenario.citySet.ForEach(city => {
-                if (city.IsCity())
-                    default_objects.Add(city);
-            });
         }
 
         public override void OnEnter()

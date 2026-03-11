@@ -9,11 +9,11 @@ namespace Sango.Game.Render.UI
         public Text name;
         public Text feature;
 
-        public void SetPerson(Person person)
+        public void SetPerson(Person person, int headIconType = 2)
         {
             if (person != null)
             {
-                headIcon.texture = GameRenderHelper.LoadHeadIcon(person.headIconID);
+                headIcon.texture = GameRenderHelper.LoadHeadIcon(person.headIconID, headIconType);
                 headIcon.enabled = true;
                 name.text = person.Name;
                 if (person.FeatureList != null && person.FeatureList.Count > 0)
@@ -23,11 +23,12 @@ namespace Sango.Game.Render.UI
             }
             else
             {
-                headIcon.texture = null; 
+                headIcon.texture = null;
                 headIcon.enabled = false;
                 name.text = "";
                 feature.text = "";
             }
         }
+
     }
 }

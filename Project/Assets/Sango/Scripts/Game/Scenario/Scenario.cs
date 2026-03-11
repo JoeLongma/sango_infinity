@@ -1179,6 +1179,7 @@ namespace Sango.Game
             JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings();
             jsonSerializerSettings.Formatting = TKNewtonsoft.Json.Formatting.Indented;
             jsonSerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+            jsonSerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; // 忽略循环引用
             JsonSerializer serializer = JsonSerializer.CreateDefault(jsonSerializerSettings);
             using (StreamWriter writer = System.IO.File.CreateText(path))
             {

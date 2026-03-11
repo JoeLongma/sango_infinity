@@ -19,6 +19,12 @@ namespace Sango.Game.Player
             }
         }
 
+        public override void OnBack(ICommandEvent whoGone)
+        {
+            ContextMenu.SetVisible(true);
+        }
+
+
         /// <summary>
         /// 离开当前命令的时候触发
         /// </summary>

@@ -369,9 +369,17 @@ namespace Sango.Game.Render.UI
                 UIScenarioSaveItem uIScenarioItem = selectedItems[i];
                 if (RectTransformUtility.RectangleContainsScreenPoint(uIScenarioItem.root, Input.mousePosition, Game.Instance.UICamera))
                 {
-                    ShortScenario scenario = Player.Player.Instance.all_saved_scenario_list[uIScenarioItem.targetIndex];
-                    ShowScenarioDetail(uIScenarioItem.targetIndex, scenario);
-                    return;
+                    if (uIScenarioItem.targetIndex < Player.Player.Instance.all_saved_scenario_list.Length)
+                    {
+                        ShortScenario scenario = Player.Player.Instance.all_saved_scenario_list[uIScenarioItem.targetIndex];
+                        ShowScenarioDetail(uIScenarioItem.targetIndex, scenario);
+                        return;
+                    }
+                    else
+                    {
+                        ShowScenarioDetail(-1, null);
+                        return;
+                    }
                 }
             }
 

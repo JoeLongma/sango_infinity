@@ -56,8 +56,10 @@ namespace Sango.Game.Render.UI
         City Target;
         CityInformation currentSystem;
 
+        bool state_inited = false;
         bool items_inited = false;
         bool buildings_inited = false;
+        public int showTab = 0;
 
         public Button port_gate_btn;
         public Button troop_btn;
@@ -73,6 +75,7 @@ namespace Sango.Game.Render.UI
 
         public override void OnShow(params object[] objects)
         {
+            showTab = 0;
             currentSystem = objects[0] as CityInformation;
             Target = currentSystem.Target;
             uIObjectList.Init(currentSystem.all_objects, CitySortFunction.SortByName, OnObjectSelected);
@@ -90,6 +93,7 @@ namespace Sango.Game.Render.UI
         public void Show(City city)
         {
             Target = city;
+            state_inited = false;
             items_inited = false;
             buildings_inited = false;
 
@@ -118,11 +122,24 @@ namespace Sango.Game.Render.UI
                 // TODO: 皇帝
                 emperorLabel.text = city.BelongCity.Name;
             }
-            UpdateStateContent();
+            switch (showTab)
+            {
+                case 0:
+                    UpdateStateContent();
+                    break;
+                case 1:
+                    UpdateItemsContent();
+                    break;
+                case 2:
+                    UpdateBuildingsContent();
+                    break;
+            }
         }
 
         void UpdateStateContent()
         {
+            if (state_inited) return;
+            state_inited = true;
             City city = Target;
             Scenario scenario = Scenario.Cur;
             scenarioCityMap.Show(scenario, city);
@@ -153,6 +170,7 @@ namespace Sango.Game.Render.UI
         void UpdateItemsContent()
         {
             if (items_inited) return;
+            items_inited = true;
             itemPool.Reset();
             List<ItemType> ItemTypes = Target.BelongForce.createdItemTypes;
             int len = ItemTypes.Count;
@@ -175,6 +193,7 @@ namespace Sango.Game.Render.UI
         void UpdateBuildingsContent()
         {
             if (buildings_inited) return;
+            buildings_inited = true;
             City city = Target;
             buildingPool.Reset();
             buildingNumLabel.text = $"{city.InteriorCellCount - city.GetInteriorCellUsedCount()}/{city.InteriorCellCount}";
@@ -212,13 +231,18 @@ namespace Sango.Game.Render.UI
 
         public void OnCityStateTab(bool b)
         {
-
+            if (b)
+            {
+                showTab = 0; 
+                UpdateStateContent();
+            }
         }
 
         public void OnCityItemsTab(bool b)
         {
             if (b)
             {
+                showTab = 1;
                 UpdateItemsContent();
             }
         }
@@ -227,6 +251,7 @@ namespace Sango.Game.Render.UI
         {
             if (b)
             {
+                showTab = 2;
                 UpdateBuildingsContent();
             }
         }

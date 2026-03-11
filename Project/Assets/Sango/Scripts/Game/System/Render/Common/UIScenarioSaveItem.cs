@@ -13,7 +13,8 @@ namespace Sango.Game.Render.UI
         public Text newText;
         public Image load;
         public Image save;
-        public Button button;
+        public Button save_button;
+        public Button load_button;
         public Button sureBtn;
         public RectTransform root;
         public int targetIndex;
@@ -96,8 +97,10 @@ namespace Sango.Game.Render.UI
 
         public UIScenarioSaveItem BindCall(UnityAction call)
         {
-            button.onClick.RemoveAllListeners();
-            button.onClick.AddListener(call);
+            save_button.onClick.RemoveAllListeners();
+            load_button.onClick.RemoveAllListeners();
+            save_button.onClick.AddListener(call);
+            load_button.onClick.AddListener(call);
             return this;
         }
 

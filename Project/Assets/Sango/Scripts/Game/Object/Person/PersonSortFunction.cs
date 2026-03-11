@@ -291,7 +291,7 @@ namespace Sango.Game
 
         public static SortTitle SortByHalberdLv = new SortTitle()
         {
-            name = "盾兵",
+            name = "戟兵",
             width = 50,
             valueGetCall = x => Scenario.Cur.Variables.GetAbilityName(x.HalberdLv),
             personSortFunc = (a, b) => a.HalberdLv.CompareTo(b.HalberdLv),
@@ -692,6 +692,14 @@ namespace Sango.Game
             name = "官职",
             width = 80,
             valueGetCall = x => x.Official.Name,
+            personSortFunc = (a, b) => SangoObject.Compare(a.Official, b.Official),
+        };
+
+        public static SortTitle SortByCost = new SortTitle()
+        {
+            name = "俸禄",
+            width = 80,
+            valueGetCall = x => (x.Official?.cost ?? 5).ToString(),
             personSortFunc = (a, b) => SangoObject.Compare(a.Official, b.Official),
         };
 

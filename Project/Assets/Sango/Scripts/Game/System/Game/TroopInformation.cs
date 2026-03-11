@@ -11,6 +11,7 @@ namespace Sango.Game
     public class TroopInformation : GameSystem
     {
         public Troop Target;
+        public City TargetCity;
         public List<SangoObject> default_objects = new List<SangoObject>();
         public List<SangoObject> all_objects = new List<SangoObject>();
         protected string windowName = "window_information_troop";
@@ -33,10 +34,7 @@ namespace Sango.Game
         {
             Name = "部队情报";
             GameEvent.OnTroopRightMouseButtonContextMenuShow += OnTroopRightMouseButtonContextMenuShow;
-#if UNITY_ANDROID
-            GameEvent.OnCityContextMenuShow += OnCityContextMenuShow;
-#endif
-            GameEvent.OnScenarioInit += OnScenarioInit;
+            GameEvent.OnGameSettingContextMenuShow += OnGameSettingContextMenuShow;
         }
         protected virtual bool CityMenuCanShow()
         {
@@ -45,21 +43,23 @@ namespace Sango.Game
 
         public override void Clear()
         {
-#if UNITY_ANDROID
-            GameEvent.OnCityContextMenuShow -= OnCityContextMenuShow;
-#endif
             GameEvent.OnTroopRightMouseButtonContextMenuShow -= OnTroopRightMouseButtonContextMenuShow;
+            GameEvent.OnGameSettingContextMenuShow -= OnGameSettingContextMenuShow;
         }
-#if UNITY_ANDROID
 
-
-        protected virtual void OnCityContextMenuShow(IContextMenuData menuData, City city)
+        protected virtual void OnGameSettingContextMenuShow(IContextMenuData menuData)
         {
-            TargetCity = city;
-            if(CityMenuCanShow())
-                menuData.Add("情报", 1000, city, OnClickMenuItem, true);
+            default_objects.Clear();
+            Scenario.Cur.troopsSet.ForEach(troop =>
+            {
+                default_objects.Add(troop);
+            });
+            if(default_objects.Count > 0)
+            {
+                Target = default_objects[0] as Troop;
+            }
+            menuData.Add("全部队", 300, null, OnClickMenuItem, default_objects.Count > 0);
         }
-#endif
 
         protected virtual void OnTroopRightMouseButtonContextMenuShow(IContextMenuData menuData, Troop troop)
         {
@@ -73,15 +73,6 @@ namespace Sango.Game
             ContextMenu.CloseAll();
             all_objects = default_objects;
             Push();
-        }
-
-        public virtual void OnScenarioInit(Scenario scenario)
-        {
-            default_objects.Clear();
-            scenario.citySet.ForEach(city => {
-                if (city.IsCity())
-                    default_objects.Add(city);
-            });
         }
 
         public override void OnEnter()
