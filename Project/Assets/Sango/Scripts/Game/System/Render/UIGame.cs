@@ -27,6 +27,7 @@ namespace Sango.Game.Render.UI
 
         public GameObject miniMapObj;
         public GameObject miniMapBtnObj;
+        public GameObject messageObj;
 
         public RectTransform gameSettingRect;
 
@@ -427,6 +428,13 @@ namespace Sango.Game.Render.UI
                 return;
             miniMapObj.SetActive(!miniMapObj.activeSelf);
             miniMapBtnObj.SetActive(!miniMapBtnObj.activeSelf);
+        }
+
+        public void OnSwitchMessageShow()
+        {
+            if (GameSystemManager.Instance.CurrentCommand != null)
+                return;
+            messageObj.SetActive(!messageObj.activeSelf);
         }
 
         public void OnGameSetting()

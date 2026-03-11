@@ -20,7 +20,7 @@ namespace Sango.Game
         public string windowName = "window_building_work_set";
         // 基于经典产出的比例
         int classiceGainFactor = 5;
-        int selectedWorkingType = 0;
+        int selectedWorkingType = 1;
 
         public override void Init()
         {
@@ -169,7 +169,7 @@ namespace Sango.Game
 
         void OnScenarioVariablesSetting(IVariablesSetting variablesSetting, Scenario scenario)
         {
-            selectedWorkingType = 0;
+            selectedWorkingType = 1;
             variablesSetting.AddDropdownItem(GameLanguage.GetString(10000010), selectedWorkingType,
                 new List<string>(new string[]
                 {
