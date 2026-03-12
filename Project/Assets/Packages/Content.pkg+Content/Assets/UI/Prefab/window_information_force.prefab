@@ -1379,14 +1379,14 @@ PrefabInstance:
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3907538123243099415}
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnPortGateButton
       objectReference: {fileID: 0}
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Sango.Game.Render.UI.UICityInformation, Assembly-CSharp
+      value: Sango.Game.Render.UI.UIForceInformation, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4011182149419705100, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_Text
@@ -2758,14 +2758,14 @@ PrefabInstance:
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3907538123243099415}
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnPersonButton
       objectReference: {fileID: 0}
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Sango.Game.Render.UI.UICityInformation, Assembly-CSharp
+      value: Sango.Game.Render.UI.UIForceInformation, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6260261271830872574, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_Name
@@ -5850,14 +5850,14 @@ PrefabInstance:
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3907538123243099415}
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnTroopButton
       objectReference: {fileID: 0}
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Sango.Game.Render.UI.UICityInformation, Assembly-CSharp
+      value: Sango.Game.Render.UI.UIForceInformation, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4011182149419705100, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_Text
@@ -6111,14 +6111,14 @@ PrefabInstance:
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3907538123243099415}
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnPortGateButton
+      value: OnCorpsButton
       objectReference: {fileID: 0}
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Sango.Game.Render.UI.UICityInformation, Assembly-CSharp
+      value: Sango.Game.Render.UI.UIForceInformation, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4011182149419705100, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_Text
@@ -6229,14 +6229,14 @@ PrefabInstance:
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3907538123243099415}
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnPersonButton
+      value: OnAabilityButton
       objectReference: {fileID: 0}
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Sango.Game.Render.UI.UICityInformation, Assembly-CSharp
+      value: Sango.Game.Render.UI.UIForceInformation, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4011182149419705100, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_Text
@@ -6449,14 +6449,14 @@ PrefabInstance:
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3907538123243099415}
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnPortGateButton
+      value: OnCityButton
       objectReference: {fileID: 0}
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Sango.Game.Render.UI.UICityInformation, Assembly-CSharp
+      value: Sango.Game.Render.UI.UIForceInformation, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4011182149419705100, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_Text
@@ -6709,14 +6709,14 @@ PrefabInstance:
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3907538123243099415}
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnPersonButton
+      value: OnTechniqueButton
       objectReference: {fileID: 0}
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Sango.Game.Render.UI.UICityInformation, Assembly-CSharp
+      value: Sango.Game.Render.UI.UIForceInformation, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4011182149419705100, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_Text
@@ -9197,14 +9197,14 @@ PrefabInstance:
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3907538123243099415}
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnPersonButton
+      value: OnDiplomacyButton
       objectReference: {fileID: 0}
     - target: {fileID: 4001644825551185091, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Sango.Game.Render.UI.UICityInformation, Assembly-CSharp
+      value: Sango.Game.Render.UI.UIForceInformation, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4011182149419705100, guid: 7d8ca685c27208a42bc9407c795d85a7, type: 3}
       propertyPath: m_Text

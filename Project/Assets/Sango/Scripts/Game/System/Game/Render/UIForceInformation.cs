@@ -424,5 +424,17 @@ namespace Sango.Game.Render.UI
             result_list.AddRange(personList);
             GameSystem.GetSystem<PersonInformation>().Start(person_list[0], result_list);
         }
+
+        public void OnDiplomacyButton()
+        {
+        }
+
+        public void OnTechniqueButton()
+        {
+        }
+
+        public void OnAabilityButton()
+        {
+        }
     }
 }
