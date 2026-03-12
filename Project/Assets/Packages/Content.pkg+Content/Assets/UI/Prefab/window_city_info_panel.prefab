@@ -84,6 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5d6125d06f1fef4aa9861c00314c119, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaleable: 0
 --- !u!114 &1842262425877204385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -680,7 +681,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: -1
   m_SortingLayerID: -903361245
-  m_SortingOrder: -200
+  m_SortingOrder: -49
   m_TargetDisplay: 0
 --- !u!114 &576643473640125865
 MonoBehaviour:
