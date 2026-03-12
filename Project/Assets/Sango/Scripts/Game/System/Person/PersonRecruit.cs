@@ -82,9 +82,9 @@ namespace Sango.Game
             if (tryLimit > 0)
             {
                 if (fallCity != null)
-                    result = recruitor.JobRecuritPerson(target, fallCity, recruitType) == true ? 1 : 0;
+                    result = recruitor.JobRecruitPerson(target, fallCity, recruitType) == true ? 1 : 0;
                 else
-                    result = recruitor.JobRecuritPerson(target, recruitType) == true ? 1 : 0;
+                    result = recruitor.JobRecruitPerson(target, recruitType) == true ? 1 : 0;
                 if (result == 1)
                 {
                     UIDialog dialog1 = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, $"<color=#00ffff>{target}</color>愿为主公献犬马之劳", () =>
@@ -110,9 +110,9 @@ namespace Sango.Game
             if (tryLimit > 0)
             {
                 if (fallCity != null)
-                    result = recruitor.JobRecuritPerson(target, fallCity, recruitType) == true ? 1 : 0;
+                    result = recruitor.JobRecruitPerson(target, fallCity, recruitType) == true ? 1 : 0;
                 else
-                    result = recruitor.JobRecuritPerson(target, recruitType) == true ? 1 : 0;
+                    result = recruitor.JobRecruitPerson(target, recruitType) == true ? 1 : 0;
                 if (result == 0)
                 {
                     UIDialog dialog1 = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, talk[GameRandom.Range(0, talk.Length)], () =>

@@ -108,12 +108,12 @@
         /// <summary>
         /// 招募士兵
         /// </summary>
-        RecuritTroops = 6,
+        RecruitTroops = 6,
 
         /// <summary>
         /// 招募武将
         /// </summary>
-        RecuritPerson = 7,
+        RecruitPerson = 7,
 
         /// <summary>
         /// 生产兵装

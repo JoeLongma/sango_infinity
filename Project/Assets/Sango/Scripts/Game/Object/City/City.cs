@@ -2224,11 +2224,11 @@ namespace Sango.Game
         /// <param name="person"></param>
         /// <param name="dest"></param>
         /// <returns></returns>
-        public bool JobRecuritPerson(Person person, Person dest)
+        public bool JobRecruitPerson(Person person, Person dest)
         {
             Scenario scenario = Scenario.Cur;
             ScenarioVariables variables = scenario.Variables;
-            int jobId = (int)CityJobType.RecuritPerson;
+            int jobId = (int)CityJobType.RecruitPerson;
             int apCost = JobType.GetJobCostAP(jobId);
 
             freePersons.Remove(person);
@@ -2445,11 +2445,11 @@ namespace Sango.Game
         /// </summary>
         /// <param name="personList"></param>
         /// <returns></returns>
-        public int JobRecuritTroop(Person[] personList, bool isTest = false)
+        public int JobRecruitTroop(Person[] personList, bool isTest = false)
         {
             Building barracks = GetFreeBuilding((int)BuildingKindType.Barracks);
             if (barracks == null) return 0;
-            return JobRecuritTroop(personList, barracks, isTest);
+            return JobRecruitTroop(personList, barracks, isTest);
         }
 
         /// <summary>
@@ -2457,7 +2457,7 @@ namespace Sango.Game
         /// </summary>
         /// <param name="personList"></param>
         /// <returns></returns>
-        public int JobRecuritTroop(Person[] personList, Building barracks, bool isTest = false)
+        public int JobRecruitTroop(Person[] personList, Building barracks, bool isTest = false)
         {
             if (personList == null || personList.Length == 0) return 0;
             // 城池满了不再招募
@@ -2466,7 +2466,7 @@ namespace Sango.Game
             Scenario scenario = Scenario.Cur;
             InitJobFeature(personList);
             ScenarioVariables variables = scenario.Variables;
-            int jobId = (int)CityJobType.RecuritTroops;
+            int jobId = (int)CityJobType.RecruitTroops;
 
             int goldNeed = JobType.GetJobCost(jobId);
 
@@ -2492,7 +2492,7 @@ namespace Sango.Game
 
             }
 
-            totalValue = GameUtility.Method_RecuritTroops(totalValue, barracks.BuildingType.level);
+            totalValue = GameUtility.Method_RecruitTroops(totalValue, barracks.BuildingType.level);
 
             overrideData.Value = totalValue;
             GameEvent.OnCityJobResult?.Invoke(this, jobId, personList, overrideData);
@@ -2994,27 +2994,27 @@ namespace Sango.Game
 
                 //if (troops < 20000)
                 //{
-                //    AICommandList.Add(CityAI.AIRecuritTroop);
+                //    AICommandList.Add(CityAI.AIRecruitTroop);
                 //    AICommandList.Add(CityAI.AIIntrior);
                 //}
                 //else
                 //{
                 //    if (scenario.Info.day == 10)
                 //    {
-                //        AICommandList.Add(CityAI.AIRecuritTroop);
+                //        AICommandList.Add(CityAI.AIRecruitTroop);
                 //        AICommandList.Add(CityAI.AICreateItems);
                 //        AICommandList.Add(CityAI.AIIntrior);
                 //    }
                 //    else if (scenario.Info.day == 20)
                 //    {
                 //        AICommandList.Add(CityAI.AIIntrior);
-                //        AICommandList.Add(CityAI.AIRecuritTroop);
+                //        AICommandList.Add(CityAI.AIRecruitTroop);
                 //        AICommandList.Add(CityAI.AICreateItems);
                 //    }
                 //    else
                 //    {
                 //        AICommandList.Add(CityAI.AICreateItems);
-                //        AICommandList.Add(CityAI.AIRecuritTroop);
+                //        AICommandList.Add(CityAI.AIRecruitTroop);
                 //        AICommandList.Add(CityAI.AIIntrior);
                 //    }
                 //}
@@ -3027,7 +3027,7 @@ namespace Sango.Game
                 // 物资输送
                 AICommandList.Add(CityAI.AITransfrom);
                 //if (troops < itemStore.TotalNumber)
-                //    AICommandList.Add(CityAI.AIRecuritTroop);
+                //    AICommandList.Add(CityAI.AIRecruitTroop);
                 //else
                 //    AICommandList.Add(CityAI.AICreateItems);
                 AICommandList.Add(CityAI.AIIntrior);

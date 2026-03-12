@@ -29,7 +29,7 @@ namespace Sango.Game.Render
 
             if (!city.BelongCorps.IsPlayer)
             {
-                person.JobRecuritPerson(target, 3);
+                person.JobRecruitPerson(target, 3);
                 IsDone = true;
                 return;
             }

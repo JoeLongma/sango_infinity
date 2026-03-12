@@ -36,7 +36,7 @@ namespace Sango.Game.Render.UI
         {
             Person target = currentSystem.target.Count > 0 ? currentSystem.target[0] : null;
             Person action = currentSystem.personList.Count > 0 ? currentSystem.personList[0] : null;
-            action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.RecuritPerson)}/{TargetCity.BelongCorps.ActionPoint}";
+            action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.RecruitPerson)}/{TargetCity.BelongCorps.ActionPoint}";
             sureButton.interactable = target != null && action != null;
 
             targetPersonItems.SetPerson(target);

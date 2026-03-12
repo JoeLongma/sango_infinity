@@ -816,9 +816,9 @@ namespace Sango.Game
             return last;
         }
 
-        public bool JobRecuritPerson(Person person, City targetCity, int type)
+        public bool JobRecruitPerson(Person person, City targetCity, int type)
         {
-            int probability = GameFormula.Instance.RecuritPersonProbability(this, person, type);
+            int probability = GameFormula.Instance.RecruitPersonProbability(this, person, type);
 #if SANGO_DEBUG
             Sango.Log.Print($"[{BelongForce.Name}]<{Name}>招募 -> {person.Name} 成功率:{probability}");
 #endif
@@ -860,7 +860,7 @@ namespace Sango.Game
                 person.ActionOver = true;
             }
             ScenarioVariables variables = Scenario.Cur.Variables;
-            int jobId = (int)CityJobType.RecuritPerson;
+            int jobId = (int)CityJobType.RecruitPerson;
             int meritGain = JobType.GetJobLimit(jobId);
             int techniquePointGain = JobType.GetJobTPGain(jobId);
             merit += meritGain;
@@ -869,9 +869,9 @@ namespace Sango.Game
             return success;
         }
 
-        public bool JobRecuritPerson(Person person, int type)
+        public bool JobRecruitPerson(Person person, int type)
         {
-            return JobRecuritPerson(person, BelongCity, type);
+            return JobRecruitPerson(person, BelongCity, type);
         }
 
         /// <summary>

@@ -24,20 +24,20 @@ namespace Sango.Game.Player
             {
                 return TargetCity.FreePersonCount > 0 && 
                     TargetCity.GetFreeBuilding((int)BuildingKindType.Barracks) != null &&
-                    TargetCity.CheckJobCost(CityJobType.RecuritTroops) &&
-                    TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.RecuritTroops);
+                    TargetCity.CheckJobCost(CityJobType.RecruitTroops) &&
+                    TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.RecruitTroops);
             }
         }
         
         public override int CalculateWonderNumber()
         {
-            return TargetCity.JobRecuritTroop(personList.ToArray(), true);
+            return TargetCity.JobRecruitTroop(personList.ToArray(), true);
         }
 
         public override void RecommandPersonList()
         {
             personList.Clear();
-            Person[] people = ForceAI.CounsellorRecommendRecuritTroop(TargetCity.freePersons);
+            Person[] people = ForceAI.CounsellorRecommendRecruitTroop(TargetCity.freePersons);
             if (people != null)
             {
                 for (int i = 0; i < people.Length; ++i)
@@ -53,7 +53,7 @@ namespace Sango.Game.Player
         {
             if (personList.Count > 0)
             {
-                TargetCity.JobRecuritTroop(personList.ToArray());
+                TargetCity.JobRecruitTroop(personList.ToArray());
                 Done();
             }
         }

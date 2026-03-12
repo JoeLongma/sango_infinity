@@ -604,7 +604,7 @@ namespace Sango.Game
         /// <summary>
         /// 军师招募士兵推荐
         /// </summary>
-        public static Person[] CounsellorRecommendRecuritTroop(List<Person> personList)
+        public static Person[] CounsellorRecommendRecruitTroop(List<Person> personList)
         {
             return CounsellorRecommend3Person(personList, (ref int[] maxValue, Person check1, Person check2, Person check3) =>
             {
@@ -1079,14 +1079,14 @@ namespace Sango.Game
         /// <param name="target"></param>
         /// <param name="commandFeatures"></param>
         /// <returns></returns>
-        public static Person CounsellorRecommendRecuritPerson(List<Person> personList, Person target, int[] commandFeatures = null)
+        public static Person CounsellorRecommendRecruitPerson(List<Person> personList, Person target, int[] commandFeatures = null)
         {
             Person maxP = null;
             int max = 0;
             for (int i = 0; i < personList.Count; i++)
             {
                 Person person = personList[i];
-                int probability = GameFormula.Instance.RecuritPersonProbability(person, target, 0);
+                int probability = GameFormula.Instance.RecruitPersonProbability(person, target, 0);
                 if (probability >= 100)
                     return person;
                 else if (probability >= 30)

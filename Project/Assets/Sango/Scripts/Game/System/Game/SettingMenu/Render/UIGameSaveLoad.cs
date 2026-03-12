@@ -32,10 +32,12 @@ namespace Sango.Game.Render.UI
         List<GameObject> cityList = new List<GameObject>();
         ShortScenario newestData;
         UIScenarioSaveItem curSelectedItem;
+        Player.Player player;
         bool isSave => sysType == 0;
 
         public override void OnShow(params object[] objects)
         {
+            player = GameSystem.GetSystem<Player.Player>();
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
             curSelectIndex = -1;
 #else
@@ -45,9 +47,9 @@ namespace Sango.Game.Render.UI
             titleLabel.text = isSave ? "储存" : "读档";
             long t = 0;
             // 遍历存档列表，找到最新的存档
-            for (int k = 0; k < Player.Player.Instance.all_saved_scenario_list.Length; k++)
+            for (int k = 0; k < player.all_saved_scenario_list.Length; k++)
             {
-                ShortScenario scenario = Player.Player.Instance.all_saved_scenario_list[k];
+                ShortScenario scenario = player.all_saved_scenario_list[k];
                 if (scenario != null)
                 {
                     if (scenario.Info.dateTime > t)
@@ -106,7 +108,7 @@ namespace Sango.Game.Render.UI
             for (int i = 0; i < CountInPage; i++)
             {
                 int index = curShowPage * CountInPage + i;
-                ShortScenario scenario = Player.Player.Instance.all_saved_scenario_list[index];
+                ShortScenario scenario = player.all_saved_scenario_list[index];
                 UIScenarioSaveItem item = selectedItems[i];
                 item.SetIsLoad(!isSave);
                 item.SetSelected(false);
@@ -134,7 +136,7 @@ namespace Sango.Game.Render.UI
                     if (curSelectedItem != null)
                         curSelectedItem.SetSelected(false);
                     curSelectedItem = null;
-                    ShortScenario scenario1 = Player.Player.Instance.all_saved_scenario_list[index];
+                    ShortScenario scenario1 = player.all_saved_scenario_list[index];
                     if (scenario1 != null)
                     {
                         curSelectedItem = item;
@@ -181,12 +183,12 @@ namespace Sango.Game.Render.UI
 
         public void Save(int index)
         {
-            ShortScenario scenario = Player.Player.Instance.all_saved_scenario_list[index];
+            ShortScenario scenario = player.all_saved_scenario_list[index];
             string content = scenario != null ? $"是否覆盖{index + 1}号存档" : $"是否保存至{index + 1}号存档";
             UIDialog.Open(content, () =>
             {
-                Player.Player.Instance.Save(index);
-                newestData = Player.Player.Instance.all_saved_scenario_list[index];
+                player.Save(index);
+                newestData = player.all_saved_scenario_list[index];
                 UIDialog.Close();
                 ShowPage(curShowPage);
             });
@@ -194,17 +196,17 @@ namespace Sango.Game.Render.UI
 
         public void Load(int index)
         {
-            ShortScenario scenario = Player.Player.Instance.all_saved_scenario_list[index];
+            ShortScenario scenario = player.all_saved_scenario_list[index];
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
             GameSystemManager.Instance.Done();
-            Player.Player.Instance.Load(index);
+            player.Load(index);
             UIDialog.Close();
 #else
             string content = $"是否加载{index + 1}号存档？";
             UIDialog.Open(content, () =>
             {
                 GameSystemManager.Instance.Done();
-                Player.Player.Instance.Load(index);
+                player.Instance.Load(index);
                 UIDialog.Close();
             });
 #endif
@@ -220,7 +222,7 @@ namespace Sango.Game.Render.UI
             }
 
             curSelectIndex = index;
-            ShortScenario scenario = Player.Player.Instance.all_saved_scenario_list[index];
+            ShortScenario scenario = player.all_saved_scenario_list[index];
 
             if (scenario == null)
             {
@@ -369,9 +371,9 @@ namespace Sango.Game.Render.UI
                 UIScenarioSaveItem uIScenarioItem = selectedItems[i];
                 if (RectTransformUtility.RectangleContainsScreenPoint(uIScenarioItem.root, Input.mousePosition, Game.Instance.UICamera))
                 {
-                    if (uIScenarioItem.targetIndex < Player.Player.Instance.all_saved_scenario_list.Length)
+                    if (uIScenarioItem.targetIndex < player.all_saved_scenario_list.Length)
                     {
-                        ShortScenario scenario = Player.Player.Instance.all_saved_scenario_list[uIScenarioItem.targetIndex];
+                        ShortScenario scenario = player.all_saved_scenario_list[uIScenarioItem.targetIndex];
                         ShowScenarioDetail(uIScenarioItem.targetIndex, scenario);
                         return;
                     }

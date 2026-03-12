@@ -161,7 +161,7 @@ namespace Sango.Game
             //AIIntriorBalance(city, scenario);
 
             //AISearching(city, scenario);
-            //AIRecuritPerson(city, scenario);
+            //AIRecruitPerson(city, scenario);
             //AITrainTroop(city, scenario);
             //AICreateBoat(city, scenario);
             //AICreateMachine(city, scenario);
@@ -199,17 +199,17 @@ namespace Sango.Game
             return true;
         }
 
-        public static bool AIRecuritPerson(City city, Scenario scenario)
+        public static bool AIRecruitPerson(City city, Scenario scenario)
         {
             if (city.wildPersons.Count > 0 && city.freePersons.Count > 0)
             {
                 for (int i = 0; i < city.wildPersons.Count; i++)
                 {
                     Person target = city.wildPersons[i];
-                    Person recommandPerson = ForceAI.CounsellorRecommendRecuritPerson(city.freePersons, target, null);
+                    Person recommandPerson = ForceAI.CounsellorRecommendRecruitPerson(city.freePersons, target, null);
                     if (recommandPerson != null)
                     {
-                        city.JobRecuritPerson(recommandPerson, target);
+                        city.JobRecruitPerson(recommandPerson, target);
                     }
                 }
             }
@@ -887,7 +887,7 @@ namespace Sango.Game
             return true;
         }
 
-        public static bool AIRecuritTroop(City city, Scenario scenario)
+        public static bool AIRecruitTroop(City city, Scenario scenario)
         {
             if (city.freePersons.Count <= 2) return true;
 
@@ -902,9 +902,9 @@ namespace Sango.Game
             Building barracks = city.GetFreeBuilding((int)BuildingKindType.Barracks);
             if (barracks == null) return true;
 
-            Person[] people = ForceAI.CounsellorRecommendRecuritTroop(city.freePersons);
+            Person[] people = ForceAI.CounsellorRecommendRecruitTroop(city.freePersons);
             if (people == null) return true;
-            city.JobRecuritTroop(people, barracks);
+            city.JobRecruitTroop(people, barracks);
             return true;
         }
 

@@ -25,10 +25,10 @@ namespace Sango.Game
         /// <param name="type">0,正常招募 1,俘虏招募 2.破城招募</param>
         /// <param name="probability"></param>
         /// <returns></returns>
-        public virtual bool RecuritPersonProbabilityByRelationship(Person actor, Person target, int type, out int probability)
+        public virtual bool RecruitPersonProbabilityByRelationship(Person actor, Person target, int type, out int probability)
         {
-            if (RecuritPersonProbabilityByRelationshipOverride != null)
-                return RecuritPersonProbabilityByRelationshipOverride(actor, target, type, out probability);
+            if (RecruitPersonProbabilityByRelationshipOverride != null)
+                return RecruitPersonProbabilityByRelationshipOverride(actor, target, type, out probability);
 
             probability = 0;
             if (!target.IsAlive || !actor.IsAlive) return false;
@@ -144,8 +144,8 @@ namespace Sango.Game
             return false;
 
         }
-        public delegate bool RecuritPersonProbabilityByRelationshipCall(Person actor, Person target, int type, out int probability);
-        public static RecuritPersonProbabilityByRelationshipCall RecuritPersonProbabilityByRelationshipOverride;
+        public delegate bool RecruitPersonProbabilityByRelationshipCall(Person actor, Person target, int type, out int probability);
+        public static RecruitPersonProbabilityByRelationshipCall RecruitPersonProbabilityByRelationshipOverride;
 
         /// <summary>
         /// 获取招募概率
@@ -154,10 +154,10 @@ namespace Sango.Game
         /// <param name="target"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public virtual int RecuritPersonProbability(Person actor, Person target, int type)
+        public virtual int RecruitPersonProbability(Person actor, Person target, int type)
         {
-            if (RecuritPersonProbabilityOverride != null)
-                return RecuritPersonProbabilityOverride(actor, target, type);
+            if (RecruitPersonProbabilityOverride != null)
+                return RecruitPersonProbabilityOverride(actor, target, type);
 
             if (!target.IsAlive || !actor.IsAlive) return 0;
 
@@ -165,7 +165,7 @@ namespace Sango.Game
             if (actor.BelongForce == null) return 0;
 
             //检测是否有特殊关系
-            if (RecuritPersonProbabilityByRelationship(actor, target, type, out int p))
+            if (RecruitPersonProbabilityByRelationship(actor, target, type, out int p))
                 return p;
 
             int loyalty = target.loyalty;
@@ -224,8 +224,8 @@ namespace Sango.Game
 
             return n;
         }
-        public delegate int RecuritPersonProbabilityCall(Person actor, Person target, int type);
-        public static RecuritPersonProbabilityCall RecuritPersonProbabilityOverride;
+        public delegate int RecruitPersonProbabilityCall(Person actor, Person target, int type);
+        public static RecruitPersonProbabilityCall RecruitPersonProbabilityOverride;
 
         /// <summary>
         /// 计算武将的逃跑概率(城池)

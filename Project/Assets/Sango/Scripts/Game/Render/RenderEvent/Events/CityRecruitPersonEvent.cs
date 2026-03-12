@@ -35,13 +35,13 @@ namespace Sango.Game.Render
             InitJobFeature(person);
             if (!person.BelongCorps.IsPlayer)
             {
-                person.JobRecuritPerson(target, 0);
+                person.JobRecruitPerson(target, 0);
                 IsDone = true;
                 ClearJobFeature();
                 return;
             }
 
-            if (person.JobRecuritPerson(target, 0))
+            if (person.JobRecruitPerson(target, 0))
             {
                 UIDialog dialog1 = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, $"成功招募了<color=#00ffff>{target}</color>", () =>
                 {

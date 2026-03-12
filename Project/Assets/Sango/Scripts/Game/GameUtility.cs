@@ -181,7 +181,7 @@ namespace Sango.Game
             return Math.Max(1, (int)(Math.Pow(v, 0.5)) - 5);
         }
 
-        public static int Method_RecuritTroops(int v, int buildingTotalLevel)
+        public static int Method_RecruitTroops(int v, int buildingTotalLevel)
         {
             /*
                 以Lv.1设施为准，LV.2设施为1.2倍，Lv.3设施为1.5倍）

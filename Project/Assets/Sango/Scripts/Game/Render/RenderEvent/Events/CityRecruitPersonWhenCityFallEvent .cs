@@ -23,7 +23,7 @@ namespace Sango.Game.Render
                 for (int i = captiveList.Count - 1; i >= 0; i--)
                 {
                     Person person = captiveList[i];
-                    if (atk.BelongForce.Governor.JobRecuritPerson(person, targetCity, recruitType))
+                    if (atk.BelongForce.Governor.JobRecruitPerson(person, targetCity, recruitType))
                     {
 #if SANGO_DEBUG
                         Sango.Log.Print($"{person.Name} 加入了 {atk.BelongForce} 势力!!!");

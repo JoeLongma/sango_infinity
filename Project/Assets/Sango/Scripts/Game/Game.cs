@@ -84,7 +84,7 @@ namespace Sango.Game
             ////EnterMapEdior();
             //Scenario.Start(scenario);
             ////scenario.Save(Path.ContentRootPath + "/Save/Scenario.xml");
-            Player.Player.Instance.Init();
+            //Player.Player.Instance.Init();
         }
 
         public void EnterMapEditor()

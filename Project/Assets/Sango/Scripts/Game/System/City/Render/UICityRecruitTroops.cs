@@ -29,7 +29,7 @@ namespace Sango.Game.Render.UI
 
         public void UpdateContent()
         {
-            action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.RecuritTroops)}/{TargetCity.BelongCorps.ActionPoint}";
+            action_value.text = $"{JobType.GetJobCostAP((int)CityJobType.RecruitTroops)}/{TargetCity.BelongCorps.ActionPoint}";
             sureButton.interactable = currentSystem.personList.Count > 0;
             for (int i = 0; i < 3; i++)
             {
@@ -44,7 +44,7 @@ namespace Sango.Game.Render.UI
                 destValue = TargetCity.TroopsLimit;
 
             targetValue.text = $"{TargetCity.troops}→{destValue}";
-            targetGold.text = $"{TargetCity.GetJobCost(CityJobType.RecuritTroops)}/{TargetCity.gold}";
+            targetGold.text = $"{TargetCity.GetJobCost(CityJobType.RecruitTroops)}/{TargetCity.gold}";
         }
 
         public void OnSure()

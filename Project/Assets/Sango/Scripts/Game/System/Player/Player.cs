@@ -1,42 +1,25 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sango.Game.Player
+﻿namespace Sango.Game.Player
 {
-    public class Player : Singleton<Player>
+    [GameSystem(auto = true)]
+    public class Player : GameSystem
     {
         public ShortScenario[] all_saved_scenario_list = new ShortScenario[50];
 
-        public void Init()
+        public override void Init()
         {
-            //都市
-            //Singleton<CitySystem>.Instance.Init();
-
-            // 建筑
-            //Singleton<BuildingSystem>.Instance.Init();
-
-            // 部队
-            //Singleton<TroopSystem>.Instance.Init();
-
-            // 其他
-            //Singleton<GameSave>.Instance.Init();
-            //Singleton<GameLoad>.Instance.Init();
-            //Singleton<GameBackToMain>.Instance.Init();
-            //Singleton<PlayerEndTurn>.Instance.Init();
-
             InitSaveFile();
+        }
+
+        string GetSaveFileName(int index)
+        {
+            return $"{Path.SaveRootPath}/Save/save{index}.json";
         }
 
         void InitSaveFile()
         {
             for (int i = 1; i <= all_saved_scenario_list.Length; i++)
             {
-                string fileName = $"{Path.SaveRootPath}/Save/save{i}.json";
+                string fileName = GetSaveFileName(i);
                 if (File.Exists(fileName))
                 {
 #if SANGO_DEBUG
@@ -50,7 +33,7 @@ namespace Sango.Game.Player
 
         public void Save(int index)
         {
-            string fileName = $"{Path.SaveRootPath}/Save/save{index+1}.json";
+            string fileName = GetSaveFileName(index + 1);
             GameEvent.OnGameSave?.Invoke(Scenario.Cur, index);
             Scenario.Cur.Save(fileName);
             all_saved_scenario_list[index] = new ShortScenario(fileName);
@@ -61,7 +44,7 @@ namespace Sango.Game.Player
             Window.Instance.CloseAll();
             Window.Instance.Open("window_loading");
             Quit();
-            string fileName = $"{Path.SaveRootPath}/Save/save{index+1}.json";
+            string fileName = GetSaveFileName(index + 1);
             Scenario.CurSelected = new Scenario(fileName);
             Scenario.StartScenario(Scenario.CurSelected);
         }

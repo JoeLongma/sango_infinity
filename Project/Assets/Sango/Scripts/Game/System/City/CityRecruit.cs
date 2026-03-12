@@ -40,7 +40,7 @@ namespace Sango.Game.Player
             get
             {
                 return TargetCity.freePersons.Count > 0 &&
-                    TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.RecuritPerson);
+                    TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.RecruitPerson);
             }
         }
 
@@ -106,7 +106,7 @@ namespace Sango.Game.Player
             this.target = target;
             if (target.Count > 0)
             {
-                Person recommandPerson = ForceAI.CounsellorRecommendRecuritPerson(TargetCity.freePersons, target[0], null);
+                Person recommandPerson = ForceAI.CounsellorRecommendRecruitPerson(TargetCity.freePersons, target[0], null);
                 if (recommandPerson != null)
                 {
                     personList.Clear();
@@ -120,7 +120,7 @@ namespace Sango.Game.Player
             if (personList.Count <= 0 || target.Count <= 0)
                 return;
 
-            if (!TargetCity.JobRecuritPerson(personList[0], target[0]))
+            if (!TargetCity.JobRecruitPerson(personList[0], target[0]))
             {
                 UIDialog dialog1 = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, $"交给我吧", () =>
                 {

@@ -17,7 +17,7 @@ namespace Sango.Game.Player
             {
                 Done();
                 UIDialog.Close();
-                Player.Instance.QuitToMainMenu();
+                GameSystem.GetSystem<Player>().QuitToMainMenu();
             }).cancelAction = () =>
             {
                 UIDialog.Close();
