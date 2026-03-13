@@ -555,14 +555,14 @@ PrefabInstance:
     - target: {fileID: 521504458067094510, guid: 64fee7692ef93b445a31bef4855174ae, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1843384969107107775}
     - target: {fileID: 521504458067094510, guid: 64fee7692ef93b445a31bef4855174ae, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnSelectPerson
       objectReference: {fileID: 0}
     - target: {fileID: 521504458067094510, guid: 64fee7692ef93b445a31bef4855174ae, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Sango.Game.Render.UI.UICityInspection, Assembly-CSharp
+      value: Sango.Game.Render.UI.UICityRecruitTroops, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 923104079715106753, guid: 64fee7692ef93b445a31bef4855174ae, type: 3}
       propertyPath: m_IsActive
