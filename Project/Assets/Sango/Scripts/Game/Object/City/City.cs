@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using Sango.Game.Player;
 
 namespace Sango.Game
 {
@@ -17,6 +18,7 @@ namespace Sango.Game
         public virtual bool AIFinished { get; set; }
         public virtual bool AIPrepared { get; set; }
         public override SangoObjectType ObjectType { get { return SangoObjectType.City; } }
+        public override string ColorName => $"<color=#93C86D>{Name}</color>";
 
         /// <summary>
         /// 粮食
@@ -2252,7 +2254,7 @@ namespace Sango.Game
         }
 
         /// <summary>
-        /// 登庸武将
+        /// 褒奖武将
         /// </summary>
         /// <param name="person"></param>
         /// <param name="dest"></param>
@@ -2348,7 +2350,7 @@ namespace Sango.Game
             return true;
         }
 
-        public bool DoJobSearching(Person person, out Person target)
+        public int DoJobSearching(Person person, out Person target)
         {
             Scenario scenario = Scenario.Cur;
             ScenarioVariables variables = scenario.Variables;
@@ -2359,6 +2361,8 @@ namespace Sango.Game
             target = null;
             freePersons.Remove(person);
             InitJobFeature(person);
+
+            BelongCorps.ReduceActionPoint(apCost);
 
             // 发现人才
             int probality = 20 + person.Politics * 3 / 5;
@@ -2371,6 +2375,13 @@ namespace Sango.Game
                 {
                     target = invisiblePersons[GameRandom.Range(0, invisiblePersons.Count)];
                     target.state = (int)PersonStateType.Normal;
+
+                    if (IsPlayer)
+                    {
+                        PlayerMessage.AddTextMessage($"{person.ColorName}在{ColorName}发现人才{target.ColorName}。",
+                            BelongForce, x, y);
+                    }
+
 #if SANGO_DEBUG
                     Sango.Log.Print($"@内政@[{BelongForce.Name}]<{Name}>的{person.Name}发现了人才->{target.Name}");
 #endif
@@ -2380,7 +2391,7 @@ namespace Sango.Game
                     person.GainExp(meritGain);
                     person.ActionOver = true;
                     ClearJobFeature();
-                    return true;
+                    return 0;
                 }
             }
 
@@ -2395,9 +2406,19 @@ namespace Sango.Game
             probality = person.Politics * 3 / 5;
             if (!person.ActionOver && GameRandom.Chance(probality))
             {
+                int findGold = GameRandom.Range(person.Politics * 2, person.Politics * 3);
+                if (IsPlayer)
+                {
+                    PlayerMessage.AddTextMessage($"{person.ColorName}在{ColorName}发现资金{findGold}。",
+                        BelongForce, x, y);
+                }
+                AddGold(findGold);
+                Render?.ShowInfo(findGold, (int)InfoType.Gold);
+
                 person.merit += meritGain;
                 person.GainExp(meritGain);
                 person.ActionOver = true;
+                return findGold;
             }
 
             //TODO: 触发事件
@@ -2405,12 +2426,17 @@ namespace Sango.Game
             // 什么也没找到
             if (!person.ActionOver)
             {
+                if (IsPlayer)
+                {
+                    PlayerMessage.AddTextMessage($"{person.ColorName}在{ColorName}什么也没发现。",
+                        BelongForce, x, y);
+                }
+
                 person.merit += meritGain;
                 person.GainExp(meritGain);
                 person.ActionOver = true;
             }
 
-            BelongCorps.ReduceActionPoint(apCost);
 
             overrideData.Value = techniquePointGain;
             GameEvent.OnCityJobGainTechniquePoint?.Invoke(this, jobId, new Person[] { person }, overrideData);
@@ -2418,7 +2444,7 @@ namespace Sango.Game
 
             BelongForce.GainTechniquePoint(techniquePointGain);
             ClearJobFeature();
-            return false;
+            return -1;
         }
 
 

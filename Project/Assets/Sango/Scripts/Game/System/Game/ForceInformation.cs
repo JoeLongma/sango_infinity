@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Sango.Game
 {
     /// <summary>
-    /// 城池治安系统逻辑
+    /// 势力情报
     /// </summary>
     [GameSystem(auto = true)]
     public class ForceInformation : GameSystem
@@ -47,7 +47,6 @@ namespace Sango.Game
         }
         protected virtual void OnGameSettingContextMenuShow(IContextMenuData menuData)
         {
-            Target = default_objects[0] as Force;
             menuData.Add("全势力", 400, null, OnClickMenuItem);
         }
 

@@ -28,7 +28,7 @@
             if (troop.MoveRange.Contains(actionCell)) return false;
 
             DestTroop = actionCell.troop as Troop;
-            content = string.Format("前往歼灭敌方部队<color=#85B964>{0}</color>。\n确定吗？", DestTroop.Name);
+            content = string.Format("前往歼灭敌方部队{0}。\n确定吗？", DestTroop.ColorName);
             return true;
 
         }

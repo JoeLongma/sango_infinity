@@ -28,7 +28,7 @@
             if (troop.MoveRange.Contains(actionCell)) return false;
 
             TargetBuilding = actionCell.building as Building;
-            content = string.Format("前往摧毁建筑<color=#85B964>{0}</color>。\n确定吗？", actionCell.building.Name);
+            content = string.Format("前往摧毁建筑{0}。\n确定吗？", actionCell.building.ColorName);
             return true;
 
         }

@@ -25,7 +25,7 @@ namespace Sango.Game.Render.UI
             personItems.SetPerson(null);
             if (currentSystem.personList.Count > 0 )
             {
-                string content = $"最适合担任此任务的人，\n除<color=#00ffff>{currentSystem.personList[0].Name}</color>之外别无其他人选。";
+                string content = $"最适合担任此任务的人，\n除{currentSystem.personList[0].ColorName}之外别无其他人选。";
                 if (currentSystem.personList[0] == TargetCity.BelongForce.Counsellor)
                 {
                     content = $"我对此任务很有信心，\n请务必交给我吧。";

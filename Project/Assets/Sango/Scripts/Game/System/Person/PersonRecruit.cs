@@ -87,7 +87,7 @@ namespace Sango.Game
                     result = recruitor.JobRecruitPerson(target, recruitType) == true ? 1 : 0;
                 if (result == 1)
                 {
-                    UIDialog dialog1 = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, $"<color=#00ffff>{target}</color>愿为主公献犬马之劳", () =>
+                    UIDialog dialog1 = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, $"{target.ColorName}愿为主公献犬马之劳", () =>
                     {
                         UIDialog.Close();
                         Done();
@@ -123,7 +123,7 @@ namespace Sango.Game
                 }
                 else if (result == 1)
                 {
-                    UIDialog dialog1 = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, $"<color=#00ffff>{target}</color>愿为主公献犬马之劳", () =>
+                    UIDialog dialog1 = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, $"{target.ColorName}愿为主公献犬马之劳", () =>
                     {
                         UIDialog.Close();
                         Done();

@@ -51,8 +51,6 @@ namespace Sango.Game.Render.UI
 
         public Button endTurnButton;
 
-
-
         public GameObject[] fpaObj;
 
         int destSaveTurn = -1;
@@ -103,37 +101,7 @@ namespace Sango.Game.Render.UI
         }
 
 
-        //public GameObject GetObject(int index)
-        //{
-        //    if (pool.Count == 0)
-        //    {
-        //        GameObject obj = Instantiate(troopListItemObj);
-        //        UITroopListItem uITroopListItem = obj.GetComponent<UITroopListItem>();
-        //        if (uITroopListItem != null)
-        //        {
-        //            uITroopListItem.onSelected = OnTroopListSelected;
-        //            uITroopListItem.onShow = OnTroopListShow;
-        //        }
-        //        return obj;
-        //    }
-        //    Transform candidate = pool.Pop();
-        //    candidate.gameObject.SetActive(true);
-        //    return candidate.gameObject;
-        //}
-
-        //public void ReturnObject(Transform trans)
-        //{
-        //    // Use `DestroyImmediate` here if you don't need Pool
-        //    trans.SendMessage("ScrollCellReturn", SendMessageOptions.DontRequireReceiver);
-        //    trans.gameObject.SetActive(false);
-        //    trans.SetParent(transform, false);
-        //    pool.Push(trans);
-        //}
-
-        //public void ProvideData(Transform transform, int idx)
-        //{
-        //    transform.SendMessage("ScrollCellIndex", idx);
-        //}
+       
 
         void Start()
         {
@@ -145,6 +113,9 @@ namespace Sango.Game.Render.UI
             GameEvent.OnSeasonUpdate += OnSeasonUpdate;
             GameEvent.OnForceGainTechniquePoint += OnForceGainTechniquePoint;
             GameEvent.OnCorpsActionPointChange += OnCorpsActionPointChange;
+
+            GameSystem.GetSystem<PlayerMessage>().onVisibleChange += OnMessagePlaneVisible;
+
 
             //loopScrollRect.prefabSource = this;
             //loopScrollRect.dataSource = this;
@@ -434,7 +405,8 @@ namespace Sango.Game.Render.UI
         {
             if (GameSystemManager.Instance.CurrentCommand != null)
                 return;
-            messageObj.SetActive(!messageObj.activeSelf);
+            messageObj.SetActive(false);
+            GameSystem.GetSystem<PlayerMessage>().onVisibleChange?.Invoke(true); ;
         }
 
         public void OnGameSetting()
@@ -477,6 +449,11 @@ namespace Sango.Game.Render.UI
         {
             float FPS = 1f / deltaTime;
             fpsText.text = $"FPS:{Math.Floor(FPS)}";
+        }
+
+        void OnMessagePlaneVisible(bool b)
+        {
+            messageObj.SetActive(!b);
         }
 
         public void Update()

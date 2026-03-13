@@ -28,7 +28,7 @@
             if (troop.MoveRange.Contains(actionCell)) return false;
 
             TargetCity = actionCell.building as City;
-            content = string.Format("目标是占领<color=#85B964>{0}</color>。\n确定吗？", actionCell.building.Name);
+            content = string.Format("目标是占领{0}。\n确定吗？", actionCell.building.ColorName);
             return true;
 
         }

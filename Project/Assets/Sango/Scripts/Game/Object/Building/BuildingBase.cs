@@ -6,6 +6,8 @@ namespace Sango.Game
 {
     public abstract class BuildingBase : SangoObject
     {
+        public virtual string ColorName => $"<color=#93C86D>{Name}</color>";
+
         /// <summary>
         /// 所属势力
         /// </summary>
@@ -92,6 +94,8 @@ namespace Sango.Game
         public ObjectRender Render { get; set; }
 
         public override ObjectRender GetRender() { return Render; }
+
+        public bool IsPlayer => BelongForce?.IsPlayer ?? false;
 
         /// <summary>
         /// 作用范围

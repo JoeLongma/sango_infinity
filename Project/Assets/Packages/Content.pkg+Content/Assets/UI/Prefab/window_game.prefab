@@ -1649,7 +1649,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8106902576449167624
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3270,7 +3270,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8285489815705811337
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3373,10 +3373,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1669558747372089657}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 2224359408337266762}
+        m_TargetAssemblyTypeName: Sango.Game.Render.UI.UIGame, Assembly-CSharp
+        m_MethodName: OnSwitchMessageShow
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -10811,7 +10811,7 @@ MonoBehaviour:
   speedBtnText: {fileID: 839496841388811208}
   miniMapObj: {fileID: 8423305270029362275}
   miniMapBtnObj: {fileID: 2278739049399451819}
-  messageObj: {fileID: 0}
+  messageObj: {fileID: 3076476705880616343}
   gameSettingRect: {fileID: 7725356127961597557}
   gridShow: 1
   troopListShow: 1
@@ -11641,15 +11641,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 339987350857063987, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 339987350857063987, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 339987350857063987, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 6700503356650288884, guid: 6222c9590255bc04bbd865221a867d79, type: 3}
       propertyPath: m_Pivot.x

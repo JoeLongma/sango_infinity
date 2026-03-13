@@ -10,7 +10,8 @@ namespace Sango.Game.Render
         public Person target;
         public override void Enter(Scenario scenario)
         {
-            if (!city.DoJobSearching(person, out target))
+            int rs = city.DoJobSearching(person, out target);
+            if (rs < 0)
             {
                 if (city.BelongCorps.IsPlayer)
                 {
@@ -19,6 +20,7 @@ namespace Sango.Game.Render
                         UIDialog.Close();
                         IsDone = true;
                     });
+                    dialog3.SetPerson(person);
                 }
                 else
                 {
@@ -34,42 +36,56 @@ namespace Sango.Game.Render
                 return;
             }
 
-            string content = $"搜索结果，\n发现了名为<color=#00ffff>{target.Name}</color>的武将。";
-            UIDialog dialog = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, content, () =>
+            if (rs == 0)
             {
-                UIDialog.Close();
 
-                //展示武将
-                GameSystem.GetSystem<PersonRecruit>().Start(person, target, 0, 1, x =>
+                string content = $"搜索结果，\n发现了名为{target.ColorName}的武将。";
+                UIDialog dialog = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, content, () =>
                 {
-                    if (x.result == 1)
+                    UIDialog.Close();
+
+                    //展示武将
+                    GameSystem.GetSystem<PersonRecruit>().Start(person, target, 0, 1, x =>
                     {
-                        UIDialog dialog1 = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, $"成功招募了<color=#00ffff>{target}</color>", () =>
+                        if (x.result == 1)
                         {
-                            UIDialog.Close();
-                            UIDialog dialog2 = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, $"<color=#00ffff>{target}</color>愿为主公献犬马之劳", () =>
+                            UIDialog dialog1 = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, $"成功招募了{target.ColorName}", () =>
+                            {
+                                UIDialog.Close();
+                                UIDialog dialog2 = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, $"{target.ColorName}愿为主公献犬马之劳", () =>
+                                {
+                                    UIDialog.Close();
+                                    IsDone = true;
+                                });
+                                dialog2.SetPerson(target);
+                            });
+                            dialog1.SetPerson(person);
+                        }
+                        else if (x.result == 0)
+                        {
+                            UIDialog dialog1 = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, $"很遗憾，\n未能招募到{target.ColorName}", () =>
                             {
                                 UIDialog.Close();
                                 IsDone = true;
                             });
-                            dialog2.SetPerson(target);
-                        });
-                        dialog1.SetPerson(person);
-                    }
-                    else if (x.result == 0)
-                    {
-                        UIDialog dialog1 = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, $"很遗憾，\n未能招募到<color=#00ffff>{target}</color>", () =>
-                        {
-                            UIDialog.Close();
+                            dialog1.SetPerson(person);
+                        }
+                        else
                             IsDone = true;
-                        });
-                        dialog1.SetPerson(person);
-                    }
-                    else
-                        IsDone = true;
+                    });
                 });
-            });
-            dialog.SetPerson(person);
+                dialog.SetPerson(person);
+            }
+            else
+            {
+
+                UIDialog dialog = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, $"发现了资金{rs}", () =>
+                {
+                    UIDialog.Close();
+                    IsDone = true;
+                });
+                dialog.SetPerson(person);
+            }
         }
 
         public override void Exit(Scenario scenario)

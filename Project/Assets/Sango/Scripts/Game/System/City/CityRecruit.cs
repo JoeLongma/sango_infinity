@@ -124,7 +124,6 @@ namespace Sango.Game.Player
             {
                 UIDialog dialog1 = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, $"交给我吧", () =>
                 {
-                    // TODO:展示武将
                     // 暂时直接招募
                     UIDialog.Close();
                     Done();

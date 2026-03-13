@@ -11,6 +11,8 @@ namespace Sango.Game
     public class Troop : SangoObject
     {
         public override SangoObjectType ObjectType { get { return SangoObjectType.Troops; } }
+
+        public string ColorName => $"<color=#85B964>{Name}</color>";
         public virtual bool AIFinished { get; set; }
         public virtual bool AIPrepared { get; set; }
         /// <summary>

@@ -10,12 +10,17 @@ namespace Sango.Game
     {
         public override SangoObjectType ObjectType { get { return SangoObjectType.Person; } }
 
+        public string ColorName => $"<color=#7CCADB>{Name}</color>";
+
         /// <summary>
         /// 所属势力
         /// </summary>
         [JsonProperty]
         [JsonConverter(typeof(Id2ObjConverter<Force>))]
         public Force BelongForce { get; set; }
+
+        public bool IsPlayer => BelongForce?.IsPlayer ?? false;
+
 
         /// <summary>
         /// 所属军团

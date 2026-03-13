@@ -9,7 +9,8 @@ namespace Sango.Game
     public class Corps : SangoObject
     {
         public override SangoObjectType ObjectType { get { return SangoObjectType.Corps; } }
-        public virtual bool IsPlayer => BelongForce.IsPlayer;
+        public virtual bool IsPlayer => BelongForce?.IsPlayer ?? false;
+
         public virtual bool AIFinished { get; set; }
         public virtual bool AIPrepared { get; set; }
         public override string Name { get { return Comander?.Name; } }

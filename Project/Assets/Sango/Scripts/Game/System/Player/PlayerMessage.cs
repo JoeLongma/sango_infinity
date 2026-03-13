@@ -7,10 +7,15 @@ namespace Sango.Game.Player
     [GameSystem(auto = true)]
     public class PlayerMessage : GameSystem
     {
+        public delegate void PlayerTextMessageCallback(TextMessage msg, PlayerMessage message);
+        public delegate void PlayerPersonMessageCallback(PersonMessage msg, PlayerMessage message);
+
         int maxSaveCount = 100;
         string windowName = "window_player_message";
         bool newDay = true;
         static PlayerMessage Instance;
+
+        public System.Action<bool> onVisibleChange;
 
         public class TextMessage
         {
@@ -29,21 +34,43 @@ namespace Sango.Game.Player
             public string text;
         }
 
-        List<TextMessage> textMessages = new List<TextMessage>();
-        List<PersonMessage> personMessages = new List<PersonMessage>();
+        public List<TextMessage> textMessages = new List<TextMessage>();
+        public List<PersonMessage> personMessages = new List<PersonMessage>();
         Scenario scenario;
+
+        public PlayerTextMessageCallback onTextMessageAdd;
+        public PlayerPersonMessageCallback onPersonMessageAdd;
 
         public override void Init()
         {
             GameEvent.OnScenarioInit += OnScenarioInit;
             GameEvent.OnDayUpdate += OnDayUpdate;
+            GameEvent.OnScenarioStart += OnScenarioStart;
+            GameEvent.OnScenarioEnd += OnScenarioEnd;
+
         }
         public override void Clear()
         {
             GameEvent.OnScenarioInit += OnScenarioInit;
             GameEvent.OnDayUpdate -= OnDayUpdate;
+            GameEvent.OnScenarioStart -= OnScenarioStart;
+            GameEvent.OnScenarioEnd -= OnScenarioEnd;
         }
 
+        void OnScenarioStart(Scenario scenario)
+        {
+            Window.Instance.Open(windowName);
+        }
+
+        void OnScenarioEnd(Scenario scenario)
+        {
+            Window.Instance.Close(windowName);
+        }
+
+        public void SetVisible(bool b)
+        {
+            Window.Instance.SetVisible(windowName, b);
+        }
 
         void OnDayUpdate(Scenario scenario)
         {
@@ -62,13 +89,25 @@ namespace Sango.Game.Player
 
         void _AddTextMessage(string text, Force force, int x, int y)
         {
-            TextMessage message = new TextMessage()
+            TextMessage message;
+            if (textMessages.Count >= maxSaveCount)
             {
-                text = text,
-                force = force,
-                x = x,
-                y = y
-            };
+                message = textMessages[0];
+                textMessages.RemoveAt(0);
+                message.text = text;
+                message.force = force;
+                message.x = x; message.y = y;
+            }
+            else
+            {
+                message = new TextMessage()
+                {
+                    text = text,
+                    force = force,
+                    x = x,
+                    y = y
+                };
+            }
 
             if (newDay)
             {
@@ -78,9 +117,8 @@ namespace Sango.Game.Player
                 newDay = false;
             }
 
-            if (textMessages.Count >= maxSaveCount)
-                textMessages.RemoveAt(0);
             textMessages.Add(message);
+            onTextMessageAdd?.Invoke(message, this);
         }
 
         public static void AddTextMessage(string text, Force force, int x, int y)
@@ -90,15 +128,26 @@ namespace Sango.Game.Player
 
         void _AddPersonMessage(string text, Person person)
         {
-            PersonMessage message = new PersonMessage()
-            {
-                text = text,
-                person = person,
-            };
+            PersonMessage message;
             if (personMessages.Count >= maxSaveCount)
+            {
+                message = personMessages[0];
                 personMessages.RemoveAt(0);
+                message.text = text;
+                message.person = person;
+            }
+            else
+            {
+                message = new PersonMessage()
+                {
+                    text = text,
+                    person = person,
+                };
+            }
             personMessages.Add(message);
+            onPersonMessageAdd?.Invoke(message, this);
         }
+
         public static void AddPersonMessage(string text, Person person)
         {
             Instance._AddPersonMessage(text, person);
