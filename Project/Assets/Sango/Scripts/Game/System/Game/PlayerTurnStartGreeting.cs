@@ -21,6 +21,9 @@ namespace Sango.Game.Player
                 person = force.Governor.BelongCity.allPersons.Get(GameRandom.Range(0, max));
             }
             dialog.SetPerson(person);
+
+            PlayerMessage.AddPersonMessage($"下一步，我们该干些什么呢？。", person);
+
             dialog.cancelAction = () =>
              {
                  Done();
