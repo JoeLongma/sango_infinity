@@ -33,8 +33,7 @@ namespace Sango.Game.Render.UI
             buildCountLabel.text = "";
             buildingTypeDescLabel.text = "";
             limitLabel.text = "";
-            developNumberLabel.text = "";
-            limitLabel.text = "";
+            developNumberLabel.text = "0所";
             durabilityLabel.text = "";
 
 
@@ -78,18 +77,16 @@ namespace Sango.Game.Render.UI
                 if (id < BuildingTypes.Count)
                 {
                     BuildingType buildingType = BuildingTypes[id];
+                    int buildedNum = buildBuildingSys.TargetCity.GetBuildingNumber(buildingType.kind);
+
                     item.SetValid(buildingType.cost <= buildBuildingSys.TargetCity.gold);
                     item.gameObject.SetActive(true);
-                    item.SetBuildingType(buildingType).SetIndex(id).SetSelected(buildingType == buildBuildingSys.TargetBuildingType).SetNum(-1);
-                    int buildedNum = buildBuildingSys.TargetCity.GetBuildingNumber(buildingType.kind);
-                    if (buildedNum > 0)
+                    item.SetBuildingType(buildingType).SetIndex(id).SetSelected(buildingType == buildBuildingSys.TargetBuildingType).SetNum(buildedNum);
+                    item.nameLabel.text = $"{buildingType.Name}（{buildedNum}）";
+
+                    if (buildingType.buildNumLimit > 0 && buildedNum >= buildingType.buildNumLimit)
                     {
-                        item.nameLabel.text = $"{buildingType.Name}（{buildedNum}）";
-                        if (buildingType.buildNumLimit > 0)
-                        {
-                            if (buildedNum >= buildingType.buildNumLimit)
-                                item.SetValid(false);
-                        }
+                        item.SetValid(false);
                     }
                 }
                 else
@@ -146,12 +143,14 @@ namespace Sango.Game.Render.UI
 
         public void OnSelectBuildingType(BuildingType targetBuildingType)
         {
-            buildCountLabel.text = $"{buildBuildingSys.wonderNumber}回";
+            buildCountLabel.text = $"{buildBuildingSys.wonderNumber}0日";
             cityGoldLabel.text = $"{targetBuildingType.cost}/{buildBuildingSys.TargetCity.gold}";
-
             durabilityLabel.text = targetBuildingType.durabilityLimit.ToString();
             buildingTypeDescLabel.text = targetBuildingType.desc;
             limitLabel.text = targetBuildingType.limitDesc;
+
+            int buildedCount = buildBuildingSys.TargetCity.GetBuildingNumber(targetBuildingType.kind);
+            developNumberLabel.text = $"{buildedCount}所";
         }
 
         public void UpdateContent()
