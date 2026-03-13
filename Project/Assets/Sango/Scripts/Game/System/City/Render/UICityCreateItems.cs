@@ -27,6 +27,8 @@ namespace Sango.Game.Render.UI
         CityCreateItems currentSystem;
         int updateNextFrame = 0;
 
+        public Button sureButton;
+
         protected override void Awake()
         {
             base.Awake();
@@ -114,6 +116,9 @@ namespace Sango.Game.Render.UI
         {
             CityCreateItems.ItemTypeInfo curItemType = currentSystem.CurSelectedItemType;
             dayLabel.text = $"{currentSystem.TurnAndDestNumber[0]}回";
+            bool enoughGold = currentSystem.TargetCity.gold >= curItemType.itemType.cost;
+            goldLabel.SetColor(enoughGold ? Color.white : Color.red);
+            sureButton.interactable = enoughGold;
             goldLabel.text = $"{curItemType.itemType.cost}/{currentSystem.TargetCity.gold}";
 
             int totalNum = currentSystem.TargetCity.itemStore.GetNumber(curItemType.itemType);

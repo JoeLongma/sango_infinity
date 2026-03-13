@@ -10,6 +10,7 @@ namespace Sango.Game.Render.UI
         public GameObject selectedObj;
         public GameObject normalObj;
         public GameObject inavtiveObj;
+        public GameObject[] overObj;
         public Image[] colorImage;
         public City city;
         public Action<City, bool> onSelectAction;
@@ -20,7 +21,7 @@ namespace Sango.Game.Render.UI
         public void OnSelect()
         {
             selectedObj.SetActive(!selectedObj.activeSelf);
-            if(city != null)
+            if (city != null)
             {
                 onSelectAction?.Invoke(city, selectedObj.activeSelf);
             }
@@ -45,9 +46,16 @@ namespace Sango.Game.Render.UI
         public UIMapCitySelectItem SetColor(Color c)
         {
             foreach (var item in colorImage)
-                item.color = c;
+                if (item != null)
+                    item.color = c;
             return this;
         }
-
+        public UIMapCitySelectItem SetOver(bool b)
+        {
+            foreach (var item in overObj)
+                if (item != null)
+                    item.SetActive(b);
+            return this;
+        }
     }
 }

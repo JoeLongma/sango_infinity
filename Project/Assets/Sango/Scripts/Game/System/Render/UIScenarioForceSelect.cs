@@ -16,6 +16,7 @@ namespace Sango.Game.Render.UI
     {
         public UITextField scenarioNameLabel;
         public UITextField[] selectedForceNameLabel;
+        public Image[] selectedForceColorImg;
         public UITextField selectedForceCountLabel;
 
         public UITextField forceNameLabel;
@@ -37,6 +38,8 @@ namespace Sango.Game.Render.UI
         public RectTransform mapBounds;
 
         public Button nextBtn;
+        public Button unSelectBtn;
+
         public GameObject cityObject;
         int MaxSelect = 8;
         List<GameObject> cityList = new List<GameObject>();
@@ -68,11 +71,16 @@ namespace Sango.Game.Render.UI
                 {
                     ShortForce force_sel = playerList[i];
                     ShortPerson governor = scenario.personSet[force_sel.Governor];
+                    Flag flag = scenario.CommonData.Flags[force_sel.Flag];
                     selectedForceNameLabel[i].text = governor.Name;
+                    selectedForceColorImg[i].enabled = true;
+                    selectedForceColorImg[i].color = flag.color;
+
                 }
                 else
                 {
                     selectedForceNameLabel[i].text = "";
+                    selectedForceColorImg[i].enabled = false;
                 }
             }
         }
@@ -83,7 +91,7 @@ namespace Sango.Game.Render.UI
             ShortScenario scenario = ShortScenario.CurSelected;
             selectedForceCountLabel.text = $"{playerList.Count}/{selectedForceNameLabel.Length}";
             scenarioNameLabel.text = scenario.GetDateName();
-            if(playerList.Count > 0)
+            if (playerList.Count > 0)
                 ShowForce(playerList[playerList.Count - 1]);
             else
                 ShowForce((ShortForce)null);
@@ -165,6 +173,8 @@ namespace Sango.Game.Render.UI
                 forceFriendLabel.text = "";
                 forceEnemyLabel.text = "";
                 forceInfoLabel.text = "";
+
+
             }
             else
             {
@@ -220,8 +230,6 @@ namespace Sango.Game.Render.UI
             ShortForce force = scenario.forceSet[city.BelongForce];
             if (force == null) return;
 
-            
-
             if (b)
             {
                 if (playerList.Count < selectedForceNameLabel.Length)
@@ -251,6 +259,7 @@ namespace Sango.Game.Render.UI
             //nextBtn.interactable = playerList.Count > 0;
 
             SetSelectedForceName();
+            unSelectBtn.interactable = playerList.Count > 0;
 
             if (!b)
             {
@@ -269,6 +278,41 @@ namespace Sango.Game.Render.UI
             {
                 ShowForce(force);
             }
+        }
+
+
+        public void PointEnterItem(UIMapCitySelectItem item)
+        {
+            if (item.shortCity.BelongForce <= 0)
+                return;
+
+            for (int i = 0; i < cityToggleList.Count; i++)
+            {
+                UIMapCitySelectItem toggle = cityToggleList[i];
+                if (toggle.shortCity.BelongForce == item.shortCity.BelongForce)
+                {
+                    toggle.SetOver(true);
+                }
+            }
+
+            ShowForce(item.shortCity);
+        }
+
+        public void PointExitItem(UIMapCitySelectItem item)
+        {
+            if (item.shortCity.BelongForce <= 0)
+                return;
+
+            for (int i = 0; i < cityToggleList.Count; i++)
+            {
+                UIMapCitySelectItem toggle = cityToggleList[i];
+                if (toggle.shortCity.BelongForce == item.shortCity.BelongForce)
+                {
+                    toggle.SetOver(false);
+                }
+            }
+
+            ShowForce((ShortForce)null);
         }
 
         public override void OnHide()
@@ -291,12 +335,11 @@ namespace Sango.Game.Render.UI
             List<int> forceIds = new List<int>();
             for (int i = 0; i < playerList.Count; i++)
                 forceIds.Add(playerList[i].Id);
-
-            // 确定第一个视角
-            foreach (var x in ShortScenario.CurSelected.forceSet.Values)
+            bool isFind = false;
+            for (int j = 0; j < playerList.Count; j++)
             {
-                bool isFind = false;
-                for (int j = 0; j < playerList.Count; j++)
+                // 确定第一个视角
+                foreach (var x in ShortScenario.CurSelected.forceSet.Values)
                 {
                     if (playerList[j].Id == x.Id)
                     {
@@ -364,6 +407,24 @@ namespace Sango.Game.Render.UI
             //{
             //    Debug.LogError(gameObject.name);
             //}
+        }
+
+        public void UnSelectAllPlayer()
+        {
+            playerList.Clear();
+            for (int i = 0; i < cityToggleList.Count; i++)
+            {
+                UIMapCitySelectItem toggle = cityToggleList[i];
+                toggle.SetSelected(false);
+            }
+            SetSelectedForceName();
+            ShowForce((ShortForce)null);
+            unSelectBtn.interactable = false;
+        }
+
+        public void SwitchSelectShow()
+        {
+
         }
     }
 }
