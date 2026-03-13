@@ -35,14 +35,16 @@ namespace Sango.Game.Player
             customMenuName = "人事/褒赏";
             customMenuOrder = 241;
             windowName = "window_city_reward";
-
         }
 
         public override bool IsValid
         {
             get
             {
-                return TargetCity.gold > 100 && TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.Reward);
+                return TargetCity.gold > 100 &&
+                       TargetCity.CheckJobCost(CityJobType.Reward) &&
+                       TargetCity.GetJobCounter((int)CityJobType.Reward) == 0 &&
+                       TargetCity.BelongCorps.ActionPoint >= JobType.GetJobCostAP((int)CityJobType.Reward);
             }
         }
 
@@ -66,15 +68,13 @@ namespace Sango.Game.Player
             base.OnDestroy();
         }
 
-
         public override void DoJob()
         {
             if (personList.Count <= 0)
                 return;
 
             TargetCity.JobRewardPersons(personList.ToArray());
-            base.Done();
+            Done();
         }
-
     }
 }
