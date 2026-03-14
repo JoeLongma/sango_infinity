@@ -20,6 +20,7 @@ namespace Sango.Game.Render.UI
         public UITextField landTroopTypeDescLabel;
         public UITextField waterTroopTypeDescLabel;
 
+        public Button [] autoMakeButtons;
 
         public UITextField troopsLabel;
         public UITextField goldLabel;
@@ -77,12 +78,19 @@ namespace Sango.Game.Render.UI
             for (int i = slotLength; i < landTroopTypePool.Count; i++)
                 landTroopTypePool[i].gameObject.SetActive(false);
 
+            for(int i = 0; i < autoMakeButtons.Length; i++)
+                autoMakeButtons[i].interactable = false;
+
             for (int i = 0; i < slotLength; i++)
             {
                 TroopType troopType = cityExpeditionSys.ActivedLandTroopTypes[i];
                 UIBuildingTypeItem cityBuildingSlot = landTroopTypePool[i];
                 cityBuildingSlot.SetTroopType(troopType).SetIndex(i).SetSelected(cityExpeditionSys.CurSelectLandTrropTypeIndex == i);
-                cityBuildingSlot.SetValid(cityExpeditionSys.TargetCity.itemStore.CheckItemEnough(troopType.costItems, 1));
+                bool enoughItems = cityExpeditionSys.TargetCity.itemStore.CheckItemEnough(troopType.costItems, 1);
+                cityBuildingSlot.SetValid(enoughItems);
+                int destKind = troopType.kind - 2;
+                if (enoughItems && destKind >= 0 && destKind < autoMakeButtons.Length)
+                    autoMakeButtons[destKind].interactable = true;
             }
 
             slotLength = cityExpeditionSys.ActivedWaterTroopTypes.Count;
