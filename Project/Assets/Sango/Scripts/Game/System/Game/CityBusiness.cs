@@ -5,7 +5,7 @@ namespace Sango.Game
     /// <summary>
     /// 城池商人系统逻辑
     /// </summary>
-    [GameSystem(auto = true, order = 100)]
+    [GameSystem(order = 100)]
     public class CityBusiness : GameSystem
     {
         int[] businessFactor =

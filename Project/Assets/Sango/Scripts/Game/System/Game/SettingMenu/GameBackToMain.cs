@@ -2,7 +2,7 @@
 
 namespace Sango.Game.Player
 {
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class GameBackToMain : GameSettingMenuBase
     {
         public GameBackToMain()

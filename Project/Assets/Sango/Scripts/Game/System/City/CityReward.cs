@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class CityReward : CityBaseSystem
     {
         public List<Person> targetList = new List<Person>();

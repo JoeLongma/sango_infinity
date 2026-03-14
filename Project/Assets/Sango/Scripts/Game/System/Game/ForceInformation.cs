@@ -7,7 +7,7 @@ namespace Sango.Game
     /// <summary>
     /// 势力情报
     /// </summary>
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class ForceInformation : GameSystem
     {
         public Force Target;

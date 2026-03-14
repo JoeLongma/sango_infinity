@@ -7,7 +7,7 @@ namespace Sango.Game.Player
     /// <summary>
     /// 建筑系统菜单
     /// </summary>
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class BuildingSystem : GameSystem
     {
         public override void Init()

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace Sango.Game.Player
 {
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class TroopSystem : GameSystem
     {
         public override void Init()

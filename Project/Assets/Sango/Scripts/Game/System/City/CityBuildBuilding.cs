@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Sango.Game.Player
 {
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class CityBuildBuilding : CityBaseSystem
     {
         public Cell TargetCell { get; set; }
@@ -93,16 +93,23 @@ namespace Sango.Game.Player
 
         public override void OnEnter()
         {
-            TargetBuildingType = null;
             personList.Clear();
-            // 默认选中一个可以建造的类型
-            for (int i = 0; i < canBuildBuildingType.Count; i++)
+
+            if (TargetBuildingType != null && TargetBuildingType.cost <= TargetCity.gold)
+                SelectBuildingType(TargetBuildingType);
+            else
             {
-                BuildingType buildingType = canBuildBuildingType[i];
-                if (buildingType.cost <= TargetCity.gold)
+                TargetBuildingType = null;
+
+                // 默认选中一个可以建造的类型
+                for (int i = 0; i < canBuildBuildingType.Count; i++)
                 {
-                    SelectBuildingType(buildingType);
-                    break;
+                    BuildingType buildingType = canBuildBuildingType[i];
+                    if (buildingType.cost <= TargetCity.gold)
+                    {
+                        SelectBuildingType(buildingType);
+                        break;
+                    }
                 }
             }
 

@@ -7,7 +7,7 @@ using ContextMenu = Sango.Game.Render.UI.ContextMenu;
 
 namespace Sango.Game.Player
 {
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class TroopCommandBuildMenu : TroopActionBase
     {
         protected List<Cell> buildRangeCell = new List<Cell>();

@@ -6,7 +6,7 @@ using UnityEngine;
 using ContextMenu = Sango.Game.Render.UI.ContextMenu;
 namespace Sango.Game.Player
 {
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class TroopActionMenu : GameSystem
     {
         public List<Cell> MovePath;

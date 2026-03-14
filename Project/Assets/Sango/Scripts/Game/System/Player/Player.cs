@@ -1,6 +1,6 @@
 ﻿namespace Sango.Game.Player
 {
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class Player : GameSystem
     {
         public ShortScenario[] all_saved_scenario_list = new ShortScenario[50];

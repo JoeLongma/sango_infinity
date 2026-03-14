@@ -17,8 +17,8 @@ namespace Sango.Game
         public virtual bool AIPrepared { get; set; }
         public virtual bool IsPlayer { get; set; }
 
-        public override string Name => Governor.Name;
-        public virtual string ColorName => Governor.ColorName;
+        public override string Name => Governor?.Name;
+        public virtual string ColorName => Governor?.ColorName;
 
         /// <summary>
         /// 主公

@@ -5,7 +5,7 @@ using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Player
 {
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class CityExpedition : CityBaseSystem
     {
         public List<TroopType> ActivedLandTroopTypes = new List<TroopType>();

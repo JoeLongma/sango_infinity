@@ -8,7 +8,7 @@ namespace Sango.Game.Player
     /// <summary>
     /// 建筑升级
     /// </summary>
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class BuildingActionUpgrade : BuildingActionBase
     {
         public List<Person> personList = new List<Person>();

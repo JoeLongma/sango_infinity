@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace Sango.Game.Player
 {
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class TroopInteractiveDialog : GameSystem
     {
         public List<Cell> MovePath;

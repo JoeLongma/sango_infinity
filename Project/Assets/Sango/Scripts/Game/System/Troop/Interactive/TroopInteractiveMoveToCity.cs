@@ -3,7 +3,7 @@
     /// <summary>
     /// 部队委任-移动到己方城池
     /// </summary>
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class TroopInteractiveMoveToCity : TroopInteractiveBase
     {
         public City TargetCity { get; set; }

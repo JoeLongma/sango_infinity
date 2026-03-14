@@ -206,7 +206,7 @@ namespace Sango.Game.Render.UI
             UIDialog.Open(content, () =>
             {
                 GameSystemManager.Instance.Done();
-                player.Instance.Load(index);
+                player.Load(index);
                 UIDialog.Close();
             });
 #endif

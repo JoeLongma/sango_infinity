@@ -4,7 +4,7 @@ using static Sango.Game.PersonSortFunction;
 
 namespace Sango.Game.Player
 {
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class CityTrade : CityBaseSystem
     {
         public int targetValue;

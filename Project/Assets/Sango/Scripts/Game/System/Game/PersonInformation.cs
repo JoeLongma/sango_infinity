@@ -7,7 +7,7 @@ namespace Sango.Game
     /// <summary>
     /// 城池治安系统逻辑
     /// </summary>
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class PersonInformation : GameSystem
     {
         public Person Target;

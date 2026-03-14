@@ -4,7 +4,7 @@ using ContextMenu = Sango.Game.Render.UI.ContextMenu;
 
 namespace Sango.Game.Player
 {
-    [GameSystem(auto = true)]
+    [GameSystem]
 
     public class GameSettingSystem : GameSystem
     {

@@ -54,9 +54,6 @@ namespace Sango.Game
                 if (moduleAttribute == null)
                     continue;
 
-                if (!moduleAttribute.auto)
-                    continue;
-
                 if (string.IsNullOrEmpty(moduleAttribute.nickName))
                     moduleAttribute.nickName = type.Name;
 
@@ -84,7 +81,8 @@ namespace Sango.Game
                 GameSystem value = propertyInfo.GetValue(null) as GameSystem; // 对于静态属性，此处为null
                 if (value != null)
                 {
-                    value.Init();
+                    if(moduleData.attribute.autoInit)
+                        value.Init();
                     systemMap.Add(moduleData.attribute.nickName, value);
                 }
             }

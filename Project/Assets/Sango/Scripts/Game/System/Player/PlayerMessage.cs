@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Sango.Game.Player
 {
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class PlayerMessage : GameSystem
     {
         public delegate void PlayerTextMessageCallback(TextMessage msg, PlayerMessage message);

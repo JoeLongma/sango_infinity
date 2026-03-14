@@ -9,7 +9,7 @@ namespace Sango.Game
     /// 建筑工作模块
     /// 可指派武将到建筑工作以提升建筑的功能产出
     /// </summary>
-    [GameSystem(auto = true, order = 100)]
+    [GameSystem(order = 100)]
     public class BuildingWorking : GameSystem
     {
         public Building TargetBuilding { get; set; }
@@ -61,7 +61,7 @@ namespace Sango.Game
 
             if (selectedWorkingType == 0)
             {
-                GameSystem.GetSystem<ClassicsCityWorking>().Clear();
+                GameSystem.GetSystem<ClassicsCityWorking>().ScenarioClear();
                 ScenarioInit();
 
                 customTitleName = "建筑工作";
@@ -105,6 +105,10 @@ namespace Sango.Game
 
                 };
             }
+            else
+            {
+                ScenarioClear();
+            }
         }
 
         void OnScenarioEnd(Scenario scenario)
@@ -112,6 +116,7 @@ namespace Sango.Game
             if (selectedWorkingType == 0)
             {
                 ScenarioClear();
+                GameSystem.GetSystem<ClassicsCityWorking>().ScenarioInit();
             }
         }
 

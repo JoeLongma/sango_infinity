@@ -3,7 +3,7 @@
     /// <summary>
     /// 部队委任-占领城池
     /// </summary>
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class TroopInteractiveDestroyTroop : TroopInteractiveBase
     {
         public Troop DestTroop { get; set; }

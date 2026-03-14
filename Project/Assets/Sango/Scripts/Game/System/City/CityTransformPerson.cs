@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class CityTransformPerson : CityBaseSystem
     {
         public List<City> transformTo = new List<City>();

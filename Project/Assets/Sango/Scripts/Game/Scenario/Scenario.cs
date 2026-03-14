@@ -634,6 +634,7 @@ namespace Sango.Game
 
         public void OnGameShutdown()
         {
+            End();
             Clear();
             Cur = null;
         }

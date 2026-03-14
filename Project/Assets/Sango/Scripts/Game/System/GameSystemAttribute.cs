@@ -1,9 +1,4 @@
-﻿using Sango.Game.Action;
-using Sango.Game.Player;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using UnityEngine;
+﻿using System;
 
 namespace Sango.Game
 {
@@ -13,11 +8,6 @@ namespace Sango.Game
     public class GameSystemAttribute : Attribute
     {
         /// <summary>
-        /// 是否自动创建,默认不会创建
-        /// </summary>
-        public bool auto;
-
-        /// <summary>
         /// 排序标志, 越小越前面, nickName相同则只会创建order最大的
         /// </summary>
         public int order;
@@ -26,5 +16,10 @@ namespace Sango.Game
         /// 别名
         /// </summary>
         public string nickName;
+
+        /// <summary>
+        /// 是否自动初始化
+        /// </summary>
+        public bool autoInit = true;
     }
 }

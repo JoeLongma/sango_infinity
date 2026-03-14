@@ -7,7 +7,7 @@ namespace Sango.Game.Player
     /// <summary>
     /// 部队委任-建造建筑
     /// </summary>
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class TroopInteractiveBuildingFix : TroopInteractiveBase
     {
         List<Cell> MovePath { get; set; }

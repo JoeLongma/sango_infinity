@@ -11,7 +11,7 @@ namespace Sango.Game
     /// 经典内政系统
     /// 可指派武将到建筑工作以提升建筑的功能产出
     /// </summary>
-    [GameSystem(auto = true, order = 99)]
+    [GameSystem(order = 99)]
     public class ClassicsCityWorking : GameSystem
     {
         public Building TargetBuilding { get; set; }
@@ -28,6 +28,24 @@ namespace Sango.Game
             //GameSystem.GetSystem<CityTrainTroops>().Init();     // 训练
 
             //GameSystem.GetSystem<CitySeraching>().Init();
+            ScenarioInit();
+        }
+
+        public override void Clear()
+        {
+            ScenarioClear();
+        }
+
+        public void ScenarioInit()
+        {
+            GameSystem.GetSystem<CityRecruitTroops>().Init();   // 征兵
+            GameSystem.GetSystem<CityCreateItems>().Init();
+            //Singleton<CityDevelop>.Instance.Init();
+            //Singleton<CityFarming>.Instance.Init();
+            GameSystem.GetSystem<CityInspection>().Init();
+            GameSystem.GetSystem<CityTrainTroops>().Init();     // 训练
+
+            GameSystem.GetSystem<CitySeraching>().Init();
 
             GameEvent.OnCityMonthStart += OnCityMonthStart;
             GameEvent.OnCitySeasonStart += OnCitySeasonStart;
@@ -35,7 +53,7 @@ namespace Sango.Game
             GameEvent.OnCityAIPrepare += OnCityAIPrepare;
         }
 
-        public override void Clear()
+        public void ScenarioClear()
         {
             // 增加建筑菜单
             GameSystem.GetSystem<CityRecruitTroops>().Clear();   // 征兵
@@ -52,6 +70,7 @@ namespace Sango.Game
             GameEvent.OnCityCalculateHarvest -= OnCityCalculateHarvest;
             GameEvent.OnCityAIPrepare -= OnCityAIPrepare;
         }
+
 
         void OnCityAIPrepare(City city, Scenario scenario)
         {

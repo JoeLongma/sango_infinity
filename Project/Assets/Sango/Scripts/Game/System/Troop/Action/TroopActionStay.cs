@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Sango.Game.Player
 {
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class TroopActionStay : TroopActionBase
     {
         List<Cell> MovePath { get; set; }

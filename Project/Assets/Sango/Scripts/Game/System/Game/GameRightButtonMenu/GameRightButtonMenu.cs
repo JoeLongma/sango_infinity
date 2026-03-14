@@ -6,7 +6,7 @@ namespace Sango.Game.Player
     /// <summary>
     /// 游戏右键菜单
     /// </summary>
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class GameRightButtonMenu : GameSystem
     {
         public override void Init()

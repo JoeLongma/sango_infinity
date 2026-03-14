@@ -6,7 +6,7 @@ namespace Sango.Game
     /// <summary>
     /// 科技研究模块
     /// </summary>
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class TechniqueResearch : GameSystem
     {
         public City TargetCity { get; set; }

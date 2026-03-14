@@ -1,6 +1,6 @@
 ﻿namespace Sango.Game.Player
 {
-    [GameSystem(auto = true)]
+    [GameSystem]
     public class GameSave : GameSettingMenuBase
     {
         public GameSave() {

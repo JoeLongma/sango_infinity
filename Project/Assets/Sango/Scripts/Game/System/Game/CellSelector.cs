@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Sango.Game
 {
-    [GameSystem(auto = true)]
+    [GameSystem]
     internal class CellSelector : GameSystem
     {
         Cell selected;

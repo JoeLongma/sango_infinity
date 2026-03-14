@@ -1,6 +1,7 @@
 
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(RectTransform))]
 public class DragToResizeRectTransform : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
@@ -16,10 +17,19 @@ public class DragToResizeRectTransform : MonoBehaviour, IPointerDownHandler, IDr
     private Vector2 lastMousePosition;
     private float originalHeight;
     private Vector2 originalPosition;
-
+    float scaleFactor = 1;
     void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
+    }
+
+    void Start()
+    {
+        CanvasScaler canvasScaler = GetComponentInParent<CanvasScaler>();
+        if (canvasScaler != null)
+        {
+            scaleFactor = canvasScaler.referenceResolution.y / Screen.height;
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -65,13 +75,13 @@ public class DragToResizeRectTransform : MonoBehaviour, IPointerDownHandler, IDr
         if (isDraggingTopEdge)
         {
             // 向上拖拽增加高度，向下拖拽减少高度
-            float newHeight = originalHeight + delta.y;
+            float newHeight = originalHeight + delta.y * scaleFactor;
             newHeight = Mathf.Clamp(newHeight, minHeight, maxHeight);
 
             // 调整位置以保持底部固定
             float heightDiff = newHeight - rectTransform.rect.height;
             Vector2 newPosition = rectTransform.anchoredPosition;
-            newPosition.y += heightDiff / 2;
+            newPosition.y += heightDiff / 2 * scaleFactor;
 
             rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, newHeight);
             rectTransform.anchoredPosition = newPosition;
@@ -80,13 +90,13 @@ public class DragToResizeRectTransform : MonoBehaviour, IPointerDownHandler, IDr
         else if (isDraggingBottomEdge)
         {
             // 向下拖拽增加高度，向上拖拽减少高度
-            float newHeight = originalHeight - delta.y;
+            float newHeight = originalHeight - delta.y * scaleFactor;
             newHeight = Mathf.Clamp(newHeight, minHeight, maxHeight);
 
             // 调整位置以保持顶部固定
             float heightDiff = newHeight - rectTransform.rect.height;
             Vector2 newPosition = rectTransform.anchoredPosition;
-            newPosition.y -= heightDiff/2;
+            newPosition.y -= heightDiff / 2;
 
             rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, newHeight);
             originalHeight = newHeight;
