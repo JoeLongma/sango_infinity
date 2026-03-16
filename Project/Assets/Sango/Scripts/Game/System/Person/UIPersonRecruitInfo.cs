@@ -47,7 +47,7 @@ namespace Sango.Game.Render.UI
 
         public void OnCancel()
         {
-            personRecruit.ReleaseTarget();
+            personRecruit.Cancel();
         }
 
         public void OnRecruit()
