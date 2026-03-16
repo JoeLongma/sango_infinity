@@ -146,7 +146,7 @@ namespace Sango.Game.Render.UI
             {
                 Cell cell = Scenario.Cur.Map.GetCell(msg.x, msg.y);
                 if (cell != null)
-                    MapRender.Instance.MoveCameraTo(cell.Position);
+                    MapRender.Instance.MoveCameraTo(cell.Position, 0.3f);
             }
         }
     }

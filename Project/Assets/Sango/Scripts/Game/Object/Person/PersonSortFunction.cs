@@ -393,7 +393,11 @@ namespace Sango.Game
         {
             name = "忠诚",
             width = 50,
-            valueGetCall = x => System.Math.Min(100, x.loyalty).ToString(),
+            valueGetCall = (x) =>
+            {
+                if (x.BelongForce == null || x == x.BelongForce.Governor) return "--";
+                return System.Math.Min(100, x.loyalty).ToString();
+            } ,
             personSortFunc = (a, b) => a.loyalty.CompareTo(b.loyalty),
         };
 

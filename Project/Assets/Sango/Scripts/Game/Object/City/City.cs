@@ -1236,15 +1236,23 @@ namespace Sango.Game
         public int Distance(City other)
         {
             if (this == other)
-                return 1;
+                return 0;
 
             if (BelongCity != null)
+            {
+                // 隶属范围内,需要1回合
+                if(BelongCity == other) return 1;
                 return BelongCity.Distance(other);
+            }
 
             if (other.BelongCity != null)
+            {
+                // 隶属范围内,需要1回合
+                if (other.BelongCity == this) return 1;
                 other = other.BelongCity;
+            }
 
-            return Mathf.Max(1, Scenario.Cur.GetCityDistance(this, other));
+            return Scenario.Cur.GetCityDistance(this, other);
         }
 
         public void OnPersonReturnCity(Person person)

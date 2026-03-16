@@ -47,6 +47,13 @@ namespace Sango.Render
         public MapWater mapWater;
         public OnSeasonChange onSeasonChange;
 
+        // camera move
+        Vector3 moveDest;
+        Vector3 moveStart;
+        float smoothMoveTime;
+        float currentMoveTime;
+        bool smoothMove;
+
         public string FileName { set; get; }
         public string WorkContent { set; get; }
         public string DefaultContentName { get { return "Default"; } }
@@ -414,6 +421,15 @@ namespace Sango.Render
         {
             if (mapCamera != null)
             {
+                if (smoothMove)
+                {
+                    currentMoveTime += Time.deltaTime;
+                    float factor = currentMoveTime / smoothMoveTime;
+                    mapCamera.position = Vector3.Lerp(moveStart, moveDest, Mathf.Pow(factor, 0.5f));
+                    if (factor >= 1)
+                        smoothMove = false;
+                }
+
                 mapCamera.Update();
                 float x, y, w, h;
                 if (mapCamera.GetViewRect(showLimitLength, out x, out y, out w, out h))
@@ -637,6 +653,19 @@ namespace Sango.Render
         public void MoveCameraTo(Vector3 pos)
         {
             mapCamera.MoveCameraTo(pos);
+        }
+
+
+
+        public void MoveCameraTo(Vector3 pos, float time)
+        {
+            moveDest = pos;
+            if (mapCamera != null)
+                moveStart = mapCamera.position;
+            if (time <= 0) time = 0.3f;
+            smoothMoveTime = time;
+            currentMoveTime = 0;
+            smoothMove = true;
         }
 
         public void SetCamera(Vector3 pos, Vector3 rot, float dis)
