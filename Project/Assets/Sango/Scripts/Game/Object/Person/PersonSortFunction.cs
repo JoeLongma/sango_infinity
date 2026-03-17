@@ -395,7 +395,7 @@ namespace Sango.Game
             width = 50,
             valueGetCall = (x) =>
             {
-                if (x.BelongForce == null || x == x.BelongForce.Governor) return "--";
+                if (x.BelongForce == null || x == x.BelongForce.Governor) return "---";
                 return System.Math.Min(100, x.loyalty).ToString();
             } ,
             personSortFunc = (a, b) => a.loyalty.CompareTo(b.loyalty),
@@ -432,7 +432,7 @@ namespace Sango.Game
             {
                 name = feature.Name,
                 width = 50,
-                valueGetCall = x => x.HasFeatrue(id) ? "○" : "×",
+                valueGetCall = x => x.HasFeatrue(id) ? "○" : "✕",
                 personSortFunc = (a, b) => a.HasFeatrue(id).CompareTo(b.HasFeatrue(id)),
             };
         }
@@ -444,7 +444,7 @@ namespace Sango.Game
             {
                 name = itemType.Name,
                 width = 50,
-                valueGetCall = x => x.HasItem(id) ? "○" : "×",
+                valueGetCall = x => x.HasItem(id) ? "○" : "✕",
                 personSortFunc = (a, b) => a.HasItem(id).CompareTo(b.HasItem(id)),
             };
         }
@@ -455,7 +455,7 @@ namespace Sango.Game
             {
                 name = title,
                 width = 50,
-                valueGetCall = x => list.Contains(x) ? "○" : "×",
+                valueGetCall = x => list.Contains(x) ? "○" : "✕",
                 personSortFunc = (a, b) => list.Contains(a).CompareTo(list.Contains(b)),
             };
         }
@@ -499,7 +499,7 @@ namespace Sango.Game
         {
             name = "空闲",
             width = 50,
-            valueGetCall = x => x.IsFree ? "○" : "×",
+            valueGetCall = x => x.IsFree ? "○" : "✕",
             personSortFunc = (a, b) => a.IsFree.CompareTo(b.IsFree),
         };
 
@@ -507,7 +507,7 @@ namespace Sango.Game
         {
             name = "在野",
             width = 50,
-            valueGetCall = x => x.IsWild ? "○" : "×",
+            valueGetCall = x => x.IsWild ? "○" : "✕",
             personSortFunc = (a, b) => a.IsWild.CompareTo(b.IsWild),
         };
 
@@ -523,7 +523,7 @@ namespace Sango.Game
         {
             name = "势力",
             width = 50,
-            valueGetCall = x => x.BelongForce?.Name ?? "无",
+            valueGetCall = x => x.BelongForce?.Name ?? "",
             personSortFunc = (a, b) => SangoObject.Compare(a.BelongForce, b.BelongForce),
         };
 
@@ -531,7 +531,7 @@ namespace Sango.Game
         {
             name = "军团",
             width = 60,
-            valueGetCall = x => x.BelongCorps?.Name ?? "无",
+            valueGetCall = x => x.BelongCorps?.Name ?? "",
             personSortFunc = (a, b) => SangoObject.Compare(a.BelongCorps, b.BelongCorps),
         };
 
@@ -539,7 +539,7 @@ namespace Sango.Game
         {
             name = "部队",
             width = 50,
-            valueGetCall = x => x.BelongTroop?.Name ?? "无",
+            valueGetCall = x => x.BelongTroop?.Name ?? "",
             personSortFunc = (a, b) => SangoObject.Compare(a.BelongTroop, b.BelongTroop),
         };
 
@@ -547,9 +547,18 @@ namespace Sango.Game
         {
             name = "所属",
             width = 60,
-            valueGetCall = x => x.BelongCity?.Name ?? "无",
+            valueGetCall = x => x.BelongCity?.Name ?? "",
             personSortFunc = (a, b) => SangoObject.Compare(a.BelongCity, b.BelongCity),
         };
+
+//  未补全剧本
+//        public static SortTitle SortByCurrentCity = new SortTitle()
+//        {
+//            name = "所在",
+//            width = 60,
+//            valueGetCall = x => x.CurrentCity?.Name ?? "",
+//            personSortFunc = (a, b) => SangoObject.Compare(a.CurrentCity, b.CurrentCity),
+//        };
 
         public static SortTitle SortByDescription = new SortTitle()
         {
@@ -595,7 +604,7 @@ namespace Sango.Game
         {
             name = "登场",
             width = 50,
-            valueGetCall = x => x.IsValid ? "○" : "×",
+            valueGetCall = x => x.IsValid ? "○" : "✕",
             personSortFunc = (a, b) => a.IsValid.CompareTo(b.IsValid),
         };
 
@@ -603,7 +612,7 @@ namespace Sango.Game
         {
             name = "已发现",
             width = 50,
-            valueGetCall = x => x.beFinded ? "○" : "×",
+            valueGetCall = x => x.beFinded ? "○" : "✕",
             personSortFunc = (a, b) => a.beFinded.CompareTo(b.beFinded),
         };
 
@@ -643,8 +652,11 @@ namespace Sango.Game
                     case 1: return "一般";
                     case 2: return "未发现";
                     case 3: return "君主";
-                    case 4: return "都督";
+                    case 4: return "俘虏";
+                    case 5: return "都督";
                     case 6: return "死亡";
+                    case 7: return "在野";
+                    case 8: return "太守";
                     default: return x.state.ToString();
                 }
             },

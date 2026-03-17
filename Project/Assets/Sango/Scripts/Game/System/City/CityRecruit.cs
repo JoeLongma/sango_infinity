@@ -16,7 +16,7 @@ namespace Sango.Game.Player
         public CityRecruit()
         {
 
-            customTargetTitleName = "登庸武将";
+            customTargetTitleName = "登庸";
             customTitleName = customTargetTitleName;
             customActionTitleName = "执行武将";
 
@@ -51,23 +51,18 @@ namespace Sango.Game.Player
             customTargetTitleList = new List<ObjectSortTitle>()
             {
                 PersonSortFunction.SortByName,
-                PersonSortFunction.SortByBelongCity,
-                PersonSortFunction.SortByBelongCorps,
-                PersonSortFunction.GetSortByDistanceDay(TargetCity),
+                PersonSortFunction.SortByBelongForce,
+                PersonSortFunction.SortByState,
                 PersonSortFunction.SortByLoyalty,
-                PersonSortFunction.SortByTroopsLimit,
+                PersonSortFunction.GetSortByDistanceDay(TargetCity),
+                PersonSortFunction.SortByBelongCity,
+//                PersonSortFunction.SortByCurrentCity,
+                // 缺履行
                 PersonSortFunction.SortByCommand,
                 PersonSortFunction.SortByStrength,
                 PersonSortFunction.SortByIntelligence,
                 PersonSortFunction.SortByPolitics,
                 PersonSortFunction.SortByGlamour,
-                PersonSortFunction.SortBySpearLv,
-                PersonSortFunction.SortByHalberdLv,
-                PersonSortFunction.SortByCrossbowLv,
-                PersonSortFunction.SortByRideLv,
-                PersonSortFunction.SortByWaterLv,
-                PersonSortFunction.SortByMachineLv,
-                PersonSortFunction.SortByFeatureList,
             };
             targetList.Clear();
             Scenario.Cur.citySet.ForEach(x =>
@@ -91,7 +86,20 @@ namespace Sango.Game.Player
                     }
                 }
             });
-            targetList.Sort((a, b) => -PersonSortFunction.SortByLoyalty.personSortFunc.Invoke(a, b));
+            // 排序：无势力优先 → 无势力按期间(距离天数) → 有势力按忠诚
+            targetList.Sort((a, b) =>
+            {
+                bool aIsWild = a.BelongForce == null;
+                bool bIsWild = b.BelongForce == null;
+
+                if (aIsWild != bIsWild)
+                    return aIsWild ? -1 : 1;
+
+                if (aIsWild)
+                    return a.DistanceDays(TargetCity).CompareTo(b.DistanceDays(TargetCity));
+
+                return a.loyalty.CompareTo(b.loyalty);
+            });
 
             Window.Instance.Open(windowName);
         }
