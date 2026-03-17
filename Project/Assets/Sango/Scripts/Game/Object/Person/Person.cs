@@ -37,6 +37,13 @@ namespace Sango.Game
         public City BelongCity { get; set; }
 
         /// <summary>
+        /// 所在城池
+        /// </summary>
+        [JsonProperty]
+        [JsonConverter(typeof(Id2ObjConverter<City>))]
+        public City CurrentCity { get; set; }
+
+        /// <summary>
         /// 所属部队
         /// </summary>
         [JsonProperty]
@@ -198,6 +205,11 @@ namespace Sango.Game
         /// 血缘
         /// </summary>
         [JsonProperty] public int consanguinity;
+
+        /// <summary>
+        /// 伤病
+        /// </summary>
+        [JsonProperty] public int injury; 
 
         /// <summary>
         /// 父亲

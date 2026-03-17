@@ -649,14 +649,15 @@ namespace Sango.Game
                 if (x == null) return "未知";
                 switch (x.state)
                 {
-                    case 1: return "一般";
-                    case 2: return "未发现";
-                    case 3: return "君主";
-                    case 4: return "俘虏";
-                    case 5: return "都督";
-                    case 6: return "死亡";
-                    case 7: return "在野";
-                    case 8: return "太守";
+                    case 1: return "君主";
+                    case 2: return "都督";
+                    case 3: return "太守";
+                    case 4: return "一般";
+                    case 5: return "在野";
+                    case 6: return "俘虏";
+                    case 7: return "未登场";
+                    case 8: return "未发现";
+                    case 9: return "死亡";
                     default: return x.state.ToString();
                 }
             },
