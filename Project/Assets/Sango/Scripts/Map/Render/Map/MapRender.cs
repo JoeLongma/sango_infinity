@@ -696,5 +696,22 @@ namespace Sango.Render
             return mapModels.IsInView(obj);
 
         }
+
+        public float GetMaxVertexHeight(int x, int y)
+        {
+            float rs = -9999;
+            int x_start = x * 4;
+            int y_start = y * 4 + (x % 2) * 2;
+            for (int j = 0; j < 5; j++)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    int vIndex = j * 5 + i;
+                    MapData.VertexData vertexData = mapData.GetVertexData(x_start + i, y_start + j);
+                    rs = Mathf.Max(rs, vertexData.position.y);
+                }
+            }
+            return rs;
+        }
     }
 }

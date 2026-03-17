@@ -32,8 +32,9 @@ namespace Sango.Game.Render
                 else
                     MapObject.modelAsset = building.BuildingType.modelBroken;
             }
-
-            MapObject.transform.position = Building.CenterCell.Position + new Vector3(0, building.heightOffset, 0);
+            Vector3 p = Building.CenterCell.Position;
+            p.y = MapRender.Instance.GetMaxVertexHeight(Building.CenterCell.x, Building.CenterCell.y);
+            MapObject.transform.position = p;
             MapObject.transform.rotation = Quaternion.Euler(new Vector3(0, Building.rot * Mathf.Rad2Deg, 0));
             MapObject.transform.localScale = Vector3.one;
             MapObject.bounds = new Sango.Tools.Rect(0, 0, 32, 32);

@@ -426,6 +426,9 @@ namespace Sango.Game
                     }
                 }
             }
+
+            if (Variables == null)
+                Variables = new ScenarioVariables();
         }
 
         public void LoadContent()
@@ -455,6 +458,7 @@ namespace Sango.Game
             }
 
             JsonConvert.PopulateObject(File.ReadAllText(FilePath), this);
+
 
             Map.Load(this);
 

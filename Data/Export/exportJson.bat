@@ -1,7 +1,5 @@
 JsonTool.exe -src Common -out ../../Build/Content/Data/Common -combine Common
 JsonTool.exe -src Scenario -out ../../Build/Content/Scenario -combine Scenario
-JsonTool.exe -src Scenario1 -out ../../Build/Content/Scenario -combine Scenario1
-JsonTool.exe -src Scenario2 -out ../../Build/Content/Scenario -combine Scenario2
 JsonTool.exe -src Model -out ../../Build/Content/Data/Model
 JsonTool.exe -src Language -out ../../Build/Content/Language
 pause

@@ -49,7 +49,7 @@ namespace Sango.Game
             if (count > 0) baseValue = content[0];
             int changeId = 1;
             if (count > 1) changeId = content[1];
-
+            if (changeId == 0) changeId = 1;
             changeType = Scenario.Cur.CommonData.AttributeChangeTypes.Get(changeId);
             if (count > 2) valueExp = content[2];
             if (count > 3) valueFacter = content[3];

@@ -394,7 +394,7 @@ namespace Sango.Game
         /// <summary>
         /// 是否可登场
         /// </summary>
-        public virtual bool IsValid => state > 0 && state < 5;
+        public virtual bool IsValid => state > 0 && state != (int)PersonStateType.Invalid && state != (int)PersonStateType.Dead;
 
         /// <summary>
         /// 兵力上限其他更改值(道具等加持)
@@ -495,7 +495,7 @@ namespace Sango.Game
 
         public int Age { get; private set; }
         public bool IsFree { get { return BelongTroop == null && missionType == (int)MissionType.None; } }
-        public bool IsWild { get { return BelongCorps == null; } }
+        public bool IsWild { get { return state == (int)PersonStateType.Unemployed; } }
         public bool IsPrisoner { get { return state == (int)PersonStateType.Prisoner; } }
         public bool Invisible { get { return state == (int)PersonStateType.Invisible; } }
         public bool IsDead { get { return state == (int)PersonStateType.Dead; } }
@@ -561,23 +561,21 @@ namespace Sango.Game
             {
                 if (IsValid && BelongCity != null)
                 {
-                    if (!IsWild)
+
+                    if (Invisible)
+                    {
+                        BelongCity.invisiblePersons.Add(this);
+                    }
+                    else if (IsWild)
+                    {
+                        BelongCity.wildPersons.Add(this);
+                    }
+                    else
                     {
                         BelongCity.Add(this);
                         if (BelongForce != BelongCity.BelongForce || BelongCorps != BelongCity.BelongCorps)
                         {
                             Sango.Log.Error($"[{Id}]{Name}归属force:{BelongForce.Name} corps:{BelongCorps.Name}, 但在city[{BelongCity.Id}] force:{BelongCity.BelongForce.Name} corps:{BelongCity.BelongCorps.Name}");
-                        }
-                    }
-                    else
-                    {
-                        if (Invisible)
-                        {
-                            BelongCity.invisiblePersons.Add(this);
-                        }
-                        else
-                        {
-                            BelongCity.wildPersons.Add(this);
                         }
                     }
                 }
