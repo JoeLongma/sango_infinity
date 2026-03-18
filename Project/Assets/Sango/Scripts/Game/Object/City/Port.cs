@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Sango.Game
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class Port : City
+    public class Port : Gate
     {
         public override void OnPrepareRender()
         {

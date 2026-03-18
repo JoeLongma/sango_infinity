@@ -13,6 +13,7 @@ namespace Sango.Game
         [JsonProperty] public int Governor;
         [JsonProperty] public int Counsellor;
         [JsonProperty] public int Flag;
+        [JsonProperty] public string desc;
         public bool IsPlayer;
     }
 
@@ -46,6 +47,14 @@ namespace Sango.Game
         public string Name;
         public float GridSize;
         HexWorld HexWorld;
+
+        public static List<ShortMap> all_map_info_list = new List<ShortMap>();
+
+        public static ShortMap GetMap(string mpName)
+        {
+            return all_map_info_list.Find(x => x.Name == mpName);
+        }
+
         public void Init(ShortScenario scenario)
         {
             string mapName = scenario.Info.mapType;
@@ -136,8 +145,7 @@ namespace Sango.Game
                 CommonData = GameData.Instance.LoadNewCommonData();
             if (Variables == null)
                 Variables = new ScenarioVariables();
-            if (Map == null)
-                Map = new ShortMap();
+           
             JsonConvert.PopulateObject(File.ReadAllText(FilePath), this);
 
             // 玩家确定
@@ -155,7 +163,16 @@ namespace Sango.Game
                     }
                 }
             }
-            Map.Init(this);
+
+            ShortMap targetMap = ShortMap.GetMap(Info.mapType);
+            if (targetMap == null)
+            {
+                Map = new ShortMap();
+                Map.Init(this);
+                ShortMap.all_map_info_list.Add(Map);
+            }
+            else
+                Map = targetMap;
         }
 
         public string GetIDName()

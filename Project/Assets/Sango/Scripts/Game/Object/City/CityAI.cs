@@ -306,6 +306,8 @@ namespace Sango.Game
 
             if (city.BelongCity == null) return true;
 
+            if(city.food > city.FoodLimit * 95 / 100 && city.gold > city.GoldLimit * 95 / 100) return true;
+
             // 寻找最近的附属城市
             City target = city.GetNearnestForceCity();
 
@@ -355,13 +357,13 @@ namespace Sango.Game
                     var c = scenario.troopsSet[i];
                     if (c != null && c.IsAlive && c.BelongForce == city.BelongForce)
                     {
-                        if (!c.TroopType.isFight && c.missionType == (int)MissionType.TroopTransformGoodsToCity && c.missionTarget == city.Id)
+                        if (!c.LandTroopType.isFight && c.missionType == (int)MissionType.TroopTransformGoodsToCity && c.missionTarget == city.Id)
                             return true;
                     }
                 }
 
                 // 从主城运输兵力过来
-                Troop transport = AIMakeTransportTroop(target, city, 1000, 0, 1000, null, scenario);
+                Troop transport = AIMakeTransportTroop(target, city, 1000, 0, 3000, null, scenario);
                 if (transport != null)
                 {
                     transport.missionParams1 = 1;
@@ -1324,7 +1326,7 @@ namespace Sango.Game
             troop.energy = city.energy;
             troop.morale = city.morale;
             troop.MaxMorale = city.MaxMorale;
-
+            troop.IsAlive = true;
             troop.Leader = leader;
             troop.TroopType = troopType;
             city.troops -= troops;

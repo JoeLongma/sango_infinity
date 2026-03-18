@@ -12,6 +12,12 @@ namespace Sango.Game.Player
 
         public override void OnEnter()
         {
+            OnBack(null);
+        }
+
+
+        public override void OnBack(ICommandEvent whoGone)
+        {
             Force force = Scenario.Cur.CurRunForce;
             UIDialog dialog = UIDialog.Open(UIDialog.DialogStyle.ClickPersonSay, $"{force.ColorName}大人，\n终于轮到我们了啊。", null);
             Person person = force.Counsellor;
@@ -25,9 +31,9 @@ namespace Sango.Game.Player
             PlayerMessage.AddPersonMessage($"下一步，我们该干些什么呢？。", person);
 
             dialog.cancelAction = () =>
-             {
-                 Done();
-             };
+            {
+                Done();
+            };
         }
 
         public override void OnDestroy()

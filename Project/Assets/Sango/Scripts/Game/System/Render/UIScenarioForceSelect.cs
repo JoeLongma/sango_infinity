@@ -220,7 +220,7 @@ namespace Sango.Game.Render.UI
                 forceOfficialLabel.text = "";
                 forceFriendLabel.text = "";
                 forceEnemyLabel.text = "";
-                forceInfoLabel.text = "";
+                forceInfoLabel.text = force.desc;
             }
         }
 
@@ -325,6 +325,7 @@ namespace Sango.Game.Render.UI
 
         public void OnReturn()
         {
+            playerList.Clear();
             Scenario.CurSelected.Clear();
             Window.Instance.Open("window_scenario_select");
             Window.Instance.Close("window_scenario_force_select");

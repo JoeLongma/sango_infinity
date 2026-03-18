@@ -752,7 +752,7 @@ namespace Sango.Game
         public override bool OnForceTurnStart(Scenario scenario)
         {
             //TODO:在野角色随机移动
-            UpdateMission(scenario);
+            //UpdateMission(scenario);
             ActionOver = !IsFree;
             return base.OnForceTurnStart(scenario);
         }

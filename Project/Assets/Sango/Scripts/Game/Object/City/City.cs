@@ -148,13 +148,13 @@ namespace Sango.Game
         /// 基础金钱收入 基础收入 = 基础收入 * 当前商业值 / 最大商业值
         /// </summary>
         [JsonProperty] public int baseGainGold;
-        public int BaseGainGold => baseGainGold + CityLevelType.baseGainGoldAdd;
+        public virtual int BaseGainGold => baseGainGold + CityLevelType.baseGainGoldAdd;
 
         /// <summary>
         /// 基础粮食收入 基础收入 = 基础粮食收入 * 当前农业值 / 最大农业值
         /// </summary>
         [JsonProperty] public int baseGainFood;
-        public int BaseGainFood => baseGainFood + CityLevelType.baseGainFoodAdd;
+        public virtual int BaseGainFood => baseGainFood + CityLevelType.baseGainFoodAdd;
 
         /// <summary>
         /// 最大商业值
@@ -654,12 +654,16 @@ namespace Sango.Game
             GameEvent.OnCityMonthStart?.Invoke(this, scenario);
 
             int cost = -GoldCost(scenario);
-            AddGold(cost);
-            Render?.ShowInfo(cost, (int)InfoType.Gold);
+            if (cost < 0)
+            {
+                AddGold(cost);
+                Render?.ShowInfo(cost, (int)InfoType.Gold);
 
 #if SANGO_DEBUG
-            Sango.Log.Print($"城市：{Name},  支出：{cost}, 现有资金: {gold}");
+                Sango.Log.Print($"城市：{Name},  支出：{cost}, 现有资金: {gold}");
 #endif
+            }
+
             return base.OnMonthStart(scenario);
         }
         public override bool OnDayStart(Scenario scenario)
