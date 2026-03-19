@@ -20,7 +20,7 @@
 
         protected override bool Check(Troop troop, Cell actionCell)
         {
-            if (troop.IsTransport()) return false;
+            if (troop.IsTransport) return false;
 
             if (actionCell.troop == null) return false;
 

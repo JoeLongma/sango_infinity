@@ -19,7 +19,7 @@
 
         protected override bool Check(Troop troop, Cell actionCell)
         {
-            if(troop.IsTransport()) return false;
+            if(troop.IsTransport) return false;
 
             if (actionCell.building == null || actionCell.building.IsCityBase()) return false;
 

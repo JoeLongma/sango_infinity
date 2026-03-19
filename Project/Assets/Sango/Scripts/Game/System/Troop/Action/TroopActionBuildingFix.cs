@@ -28,7 +28,7 @@ namespace Sango.Game.Player
             if (troop.BelongForce != null && troop.BelongForce.IsPlayer && troop.BelongForce == Scenario.Cur.CurRunForce)
             {
                 // 兵器没有修复指令
-                if (troop.IsMachine()) return;
+                if (troop.IsMachine) return;
 
                 TargetTroop = troop;
                 ActionCell = actionCell;
@@ -146,10 +146,6 @@ namespace Sango.Game.Player
 
                         if (fixBuildingCell.Contains(cell))
                         {
-                            if(TargetTroop.cell == TargetTroop.BelongCity.CenterCell)
-                            {
-                                TargetTroop.BelongCorps.ReduceActionPoint(JobType.GetJobCostAP((int)CityJobType.MakeTroop));
-                            }
 
                             Cell stayCell = MovePath[MovePath.Count - 1];
                             targetBuildCell = cell;

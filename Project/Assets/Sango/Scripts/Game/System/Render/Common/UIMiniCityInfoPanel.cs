@@ -16,6 +16,7 @@ namespace Sango.Game.Render.UI
             CitySortFunction.SortBySecurity_SecurityLimit.Copy().SetAlignment((int)TextAnchor.MiddleRight),
             CitySortFunction.SortByDurability_DurabilityLimit.Copy().SetAlignment((int)TextAnchor.MiddleRight),
             CitySortFunction.SortByTroops.Copy().SetAlignment((int)TextAnchor.MiddleRight),
+            CitySortFunction.SortByMorale.Copy().SetAlignment((int)TextAnchor.MiddleRight),
             CitySortFunction.SortByAllPersonCountInfo.Copy().SetAlignment((int)TextAnchor.MiddleRight),
         };
 

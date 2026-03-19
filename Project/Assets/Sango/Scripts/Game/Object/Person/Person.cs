@@ -910,7 +910,8 @@ namespace Sango.Game
             BelongCity = city; ;
             BelongCorps = city.BelongCorps;
             BelongForce = city.BelongForce;
-
+            Official = Scenario.Cur.CommonData.Officials.Get(0);
+            state = (int)PersonStateType.Normal;
             BelongCity.allPersons.Add(this);
 
             return isSameCity;
@@ -925,6 +926,7 @@ namespace Sango.Game
             loyalty = 0;
             BelongCity.allPersons.Remove(this);
             Official = Scenario.Cur.CommonData.Officials.Get(0);
+            state = (int)PersonStateType.Unemployed;
             // 关卡和港口的武将下野到对应的城池里
             if (BelongCity.BelongCity != null)
             {
@@ -965,7 +967,6 @@ namespace Sango.Game
 
         public Person Escape()
         {
-            state = (int)PersonStateType.Normal;
             // 有归属的武将
             if (BelongForce != null && BelongForce.IsAlive)
             {
@@ -980,10 +981,12 @@ namespace Sango.Game
                 }
                 ChangeCity(BelongForce.Governor.BelongCity);
                 ChangeCorps(BelongForce.Governor.BelongCorps);
+                state = (int)PersonStateType.Normal;
                 SetMission(MissionType.PersonReturn, BelongCity, DistanceDays(where));
             }
             else
             {
+                state = (int)PersonStateType.Unemployed;
                 if (BelongCity.allPersons.Contains(this))
                     BelongCity.allPersons.Remove(this);
                 // 下野

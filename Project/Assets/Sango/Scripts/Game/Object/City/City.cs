@@ -272,7 +272,13 @@ namespace Sango.Game
         public List<Cell> areaCellList = new List<Cell>();
 
         // 初始化地图的时候就添加完全了
-        public void AddAreaCell(Cell cell) { areaCellList.Add(cell); }
+        public void AddAreaCell(Cell cell) { 
+            areaCellList.Add(cell); 
+            if(BelongCity != null)
+            {
+                BelongCity.AddAreaCell(cell);
+            }
+        }
 
         /// <summary>
         /// 所有内城设施
@@ -2386,7 +2392,7 @@ namespace Sango.Game
                 if (GameRandom.Chance(probality))
                 {
                     target = invisiblePersons[GameRandom.Range(0, invisiblePersons.Count)];
-                    target.state = (int)PersonStateType.Normal;
+                    target.state = (int)PersonStateType.Unemployed;
 
                     if (IsPlayer)
                     {

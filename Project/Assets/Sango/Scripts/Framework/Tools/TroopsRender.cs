@@ -390,6 +390,7 @@ namespace Sango
             if (id < 0 || id >= aniMaterials.Length)
                 return;
             material = aniMaterials[id];
+
         }
 
         void Add()

@@ -195,12 +195,6 @@ namespace Sango.Game.Player
 
                         if (buildRangeCell.Contains(cell))
                         {
-
-                            if (TargetTroop.cell == TargetTroop.BelongCity.CenterCell)
-                            {
-                                TargetTroop.BelongCorps.ReduceActionPoint(JobType.GetJobCostAP((int)CityJobType.MakeTroop));
-                            }
-
                             Cell stayCell = MovePath[MovePath.Count - 1];
                             targetBuildCell = cell;
 

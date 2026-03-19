@@ -357,7 +357,7 @@ namespace Sango.Game
                     var c = scenario.troopsSet[i];
                     if (c != null && c.IsAlive && c.BelongForce == city.BelongForce)
                     {
-                        if (!c.LandTroopType.isFight && c.missionType == (int)MissionType.TroopTransformGoodsToCity && c.missionTarget == city.Id)
+                        if (c.IsTransport && c.missionType == (int)MissionType.TroopTransformGoodsToCity && c.missionTarget == city.Id)
                             return true;
                     }
                 }

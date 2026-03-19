@@ -564,8 +564,8 @@ namespace Sango.Game
         {
             name = "身平",
             width = 50,
-            valueGetCall = x => GameLanguage.GetString(x.description),
-            personSortFunc = (a, b) => a.description.CompareTo(b.description),
+            valueGetCall = x => GameLanguage.GetString(x.Id),
+            personSortFunc = (a, b) => a.Id.CompareTo(b.Id),
         };
 
         public static SortTitle SortByFamilyName = new SortTitle()

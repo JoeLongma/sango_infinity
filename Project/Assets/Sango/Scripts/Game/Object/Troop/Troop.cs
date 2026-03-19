@@ -664,23 +664,15 @@ namespace Sango.Game
             return IsSameForce(BelongForce, other.BelongForce);
         }
 
-        public bool IsTransport()
-        {
-            return LandTroopType.IsTransport();
-        }
-
-        public bool IsMachine()
-        {
-            return LandTroopType.IsMachine();
-        }
-        public bool IsHelepolis()
-        {
-            return LandTroopType.IsHelepolis();
-        }
+        public bool IsTransport => LandTroopType.IsTransport();
+        public bool IsMachine => LandTroopType.IsMachine();
+        public bool IsHelepolis => LandTroopType.IsHelepolis();
+        public bool IsFight => LandTroopType.isFight;
+        public bool IsRange => LandTroopType.isRange;
 
         public int GetAttackBackFactor(SkillInstance skill, int distance)
         {
-            if (IsMachine())
+            if (IsMachine)
                 return 0;
             if (skill.IsRange() && distance > 1)
                 return 0;
@@ -772,7 +764,7 @@ namespace Sango.Game
             if (attacker.BelongForce != null && attacker.BelongForce.IsPlayer)
                 difficultyDamageFactor = Variables.DifficultyDamageFactor;
 
-            if (attacker.IsHelepolis())
+            if (attacker.IsHelepolis)
             {
                 int damage = (int)(attacker.troops / 25 + Math.Pow(attacker.troops, 0.5f) + Math.Min(Math.Pow(attacker.troops, 0.5f), 40) * attacker.Attack * Math.Pow((1f / 1500f), 0.5f) * (1 + (float)skill.atkDurability / 25f) * buildingType.damageBounds
                // 额外增益 (科技系数等)
@@ -1899,7 +1891,7 @@ namespace Sango.Game
 
         public int GetItemNumber(int itemKind)
         {
-            if (IsTransport())
+            if (IsTransport)
                 return itemStore.GetNumber(itemKind);
             else
             {

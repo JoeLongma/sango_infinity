@@ -49,6 +49,7 @@ namespace Sango.Game.Render
             if (!IsVisible() || Input.GetMouseButtonDown(0))
             {
                 Action();
+                troop?.Render?.SetAniShow(0);
                 IsDone = true;
                 return IsDone;
             }
@@ -57,6 +58,7 @@ namespace Sango.Game.Render
             if (replaceSkill == null)
             {
                 IsDone = true;
+                troop?.Render?.SetAniShow(0);
                 return IsDone;
             }
 

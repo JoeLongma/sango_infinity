@@ -194,11 +194,6 @@ namespace Sango.Game.Player
                             if (!spellSkill.CanSpeellToHere(TargetTroop, cell))
                                 return;
 
-                            if (TargetTroop.cell == TargetTroop.BelongCity.CenterCell)
-                            {
-                                TargetTroop.BelongCorps.ReduceActionPoint(JobType.GetJobCostAP((int)CityJobType.MakeTroop));
-                            }
-
                             GameSystem.GetSystem<TroopActionMenu>().troopRender.Clear();
                             ContextMenu.CloseAll();
                             Cell start = TargetTroop.cell;

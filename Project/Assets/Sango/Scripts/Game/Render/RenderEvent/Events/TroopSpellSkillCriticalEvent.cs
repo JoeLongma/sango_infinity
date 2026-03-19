@@ -43,6 +43,7 @@ namespace Sango.Game.Render
             if (!IsVisible() || Input.GetMouseButtonDown(0))
             {
                 Action();
+                troop?.Render?.SetAniShow(0);
                 IsDone = true;
                 return IsDone;
             }

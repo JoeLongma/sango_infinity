@@ -135,7 +135,7 @@ namespace Sango.Game.Player
                 TargetCity.freePersons.Remove(person);
             });
             TargetCity.Render?.UpdateRender();
-
+            TargetTroop.BelongCorps.ReduceActionPoint(JobType.GetJobCostAP((int)CityJobType.MakeTroop));
             TargetCity.EnsureTroop(TargetTroop, Scenario.Cur);
             Window.Instance.SetVisible(windowName, false);
             GameSystem.GetSystem<TroopSystem>().Start(TargetTroop);
@@ -146,6 +146,7 @@ namespace Sango.Game.Player
             base.OnBack(whoGone);
             if (whoGone is ObjectSelectSystem) return;
             Window.Instance.SetVisible(windowName, true);
+            TargetTroop.BelongCorps.ReduceActionPoint(-JobType.GetJobCostAP((int)CityJobType.MakeTroop));
             TargetTroop.EnterCity(TargetCity);
             TargetTroop.ForEachPerson(person =>
             {
